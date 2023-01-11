@@ -21,41 +21,6 @@
     "text": "VAR_0004\n\ntrain['VAR_0004_mod50'] = train['VAR_0004'] % 50\nhist_it(train['VAR_0004_mod50'])\nplt.ylim((0,0.6))\n\n(0, 0.6)"
   },
   {
-    "objectID": "index copy.html",
-    "href": "index copy.html",
-    "title": "Listing Example",
-    "section": "",
-    "text": "Read the data\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about copy.html",
-    "href": "about copy.html",
-    "title": "kcsgoodboy.github.io",
-    "section": "",
-    "text": "In theory, there is no difference between theory and practice. In practice, there is."
-  },
-  {
-    "objectID": "about copy.html#chanseok-kang",
-    "href": "about copy.html#chanseok-kang",
-    "title": "kcsgoodboy.github.io",
-    "section": "Chanseok Kang",
-    "text": "Chanseok Kang\nI’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time."
-  },
-  {
-    "objectID": "about copy.html#education",
-    "href": "about copy.html#education",
-    "title": "kcsgoodboy.github.io",
-    "section": "Education",
-    "text": "Education\n Seoul National University | Seoul, South Korea  M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 \n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Prof. Bernhard Egger\n\nChung-Ang University | Seoul, South Korea  B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013"
-  },
-  {
-    "objectID": "about copy.html#main-experience",
-    "href": "about copy.html#main-experience",
-    "title": "kcsgoodboy.github.io",
-    "section": "Main Experience",
-    "text": "Main Experience\n LG Electronics | Specialist | Dec 2014 - present\nCarnegie Mellon University | Visiting Researcher | Apr 2019 - Aug 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | Jun 2012 - Dec 2012"
-  },
-  {
     "objectID": "publication.html",
     "href": "publication.html",
     "title": "Chanseok Kang",
@@ -65,15 +30,36 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "kcsgoodboy.github.io",
     "section": "",
-    "text": "About this site"
+    "text": "In theory, there is no difference between theory and practice. In practice, there is."
+  },
+  {
+    "objectID": "about.html#chanseok-kang",
+    "href": "about.html#chanseok-kang",
+    "title": "kcsgoodboy.github.io",
+    "section": "Chanseok Kang",
+    "text": "Chanseok Kang\nI’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "kcsgoodboy.github.io",
+    "section": "Education",
+    "text": "Education\n Seoul National University | Seoul, South Korea  M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 \n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Prof. Bernhard Egger\n\nChung-Ang University | Seoul, South Korea  B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013"
+  },
+  {
+    "objectID": "about.html#main-experience",
+    "href": "about.html#main-experience",
+    "title": "kcsgoodboy.github.io",
+    "section": "Main Experience",
+    "text": "Main Experience\n LG Electronics | Specialist | Dec 2014 - present\nCarnegie Mellon University | Visiting Researcher | Apr 2019 - Aug 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | Jun 2012 - Dec 2012"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "kcsgoodboy.github.io",
+    "title": "Listing Example",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Read the data\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\nNo matching items"
   }
 ]
