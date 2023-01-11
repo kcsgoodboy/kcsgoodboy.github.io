@@ -1,5 +1,68 @@
 [
   {
+    "objectID": "posts/EDA_Springleaf_screencast.html",
+    "href": "posts/EDA_Springleaf_screencast.html",
+    "title": "Read the data",
+    "section": "",
+    "text": "This is a notebook, used in the screencast video. Note, that the data files are not present here in Jupyter hub and you will not be able to run it. But you can always download the notebook to your local machine as well as the competition data and make it interactive. Competition data can be found here: https://www.kaggle.com/c/springleaf-marketing-response/data"
+  },
+  {
+    "objectID": "posts/EDA_Springleaf_screencast.html#var_0002-var_0003",
+    "href": "posts/EDA_Springleaf_screencast.html#var_0002-var_0003",
+    "title": "Read the data",
+    "section": "VAR_0002, VAR_0003",
+    "text": "VAR_0002, VAR_0003\n\nhist_it(train['VAR_0002'])\nplt.ylim((0,0.05))\nplt.xlim((-10,1010))\n\nhist_it(train['VAR_0003'])\nplt.ylim((0,0.03))\nplt.xlim((-10,1010))\n\n(-10, 1010)\n\n\n\n\n\n\n\n\n\ntrain['VAR_0002'].value_counts()\n\n12     5264\n24     4763\n36     3499\n60     2899\n6      2657\n13     2478\n72     2243\n48     2222\n3      2171\n4      1917\n2      1835\n84     1801\n120    1786\n1      1724\n7      1671\n26     1637\n5      1624\n14     1572\n18     1555\n8      1513\n999    1510\n25     1504\n96     1445\n30     1438\n9      1306\n144    1283\n15     1221\n27     1186\n38     1146\n37     1078\n       ... \n877       1\n785       1\n750       1\n653       1\n784       1\n764       1\n751       1\n797       1\n926       1\n691       1\n808       1\n774       1\n902       1\n755       1\n656       1\n814       1\n813       1\n685       1\n739       1\n935       1\n906       1\n807       1\n550       1\n933       1\n804       1\n675       1\n674       1\n745       1\n778       1\n851       1\nName: VAR_0002, Length: 820, dtype: int64\n\n\n\ntrain['VAR_0003'].value_counts()\n\n0      17436\n24      3469\n12      3271\n60      3054\n36      2498\n72      2081\n48      2048\n6       1993\n1       1797\n3       1679\n84      1553\n2       1459\n999     1428\n4       1419\n120     1411\n7       1356\n13      1297\n18      1296\n96      1253\n14      1228\n8       1216\n5       1189\n9       1182\n30      1100\n25      1100\n144     1090\n15      1047\n61      1008\n26       929\n42       921\n       ...  \n560        1\n552        1\n550        1\n804        1\n543        1\n668        1\n794        1\n537        1\n531        1\n664        1\n632        1\n709        1\n597        1\n965        1\n852        1\n648        1\n596        1\n466        1\n592        1\n521        1\n533        1\n636        1\n975        1\n973        1\n587        1\n523        1\n584        1\n759        1\n583        1\n570        1\nName: VAR_0003, Length: 588, dtype: int64\n\n\nWe see there is something special about 12, 24 and so on, sowe can create another feature x mod 12."
+  },
+  {
+    "objectID": "posts/EDA_Springleaf_screencast.html#var_0004",
+    "href": "posts/EDA_Springleaf_screencast.html#var_0004",
+    "title": "Read the data",
+    "section": "VAR_0004",
+    "text": "VAR_0004\n\ntrain['VAR_0004_mod50'] = train['VAR_0004'] % 50\nhist_it(train['VAR_0004_mod50'])\nplt.ylim((0,0.6))\n\n(0, 0.6)"
+  },
+  {
+    "objectID": "index copy.html",
+    "href": "index copy.html",
+    "title": "Listing Example",
+    "section": "",
+    "text": "Read the data\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about copy.html",
+    "href": "about copy.html",
+    "title": "kcsgoodboy.github.io",
+    "section": "",
+    "text": "In theory, there is no difference between theory and practice. In practice, there is."
+  },
+  {
+    "objectID": "about copy.html#chanseok-kang",
+    "href": "about copy.html#chanseok-kang",
+    "title": "kcsgoodboy.github.io",
+    "section": "Chanseok Kang",
+    "text": "Chanseok Kang\nI’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time."
+  },
+  {
+    "objectID": "about copy.html#education",
+    "href": "about copy.html#education",
+    "title": "kcsgoodboy.github.io",
+    "section": "Education",
+    "text": "Education\n Seoul National University | Seoul, South Korea  M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 \n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Prof. Bernhard Egger\n\nChung-Ang University | Seoul, South Korea  B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013"
+  },
+  {
+    "objectID": "about copy.html#main-experience",
+    "href": "about copy.html#main-experience",
+    "title": "kcsgoodboy.github.io",
+    "section": "Main Experience",
+    "text": "Main Experience\n LG Electronics | Specialist | Dec 2014 - present\nCarnegie Mellon University | Visiting Researcher | Apr 2019 - Aug 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | Jun 2012 - Dec 2012"
+  },
+  {
+    "objectID": "publication.html",
+    "href": "publication.html",
+    "title": "Chanseok Kang",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
