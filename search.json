@@ -105,6 +105,13 @@
     "text": "Further analysis\nLet’s analyze it further, and examine possible choices for the learning rate \\(\\alpha\\).\n\nChoice of learning rate\nReminder: In order for Gradient Descent to work you must choose the learning rate wisely. The learning rate \\(\\alpha\\) determines how rapidly we update the parameters. If the learning rate is too large we may “overshoot” the optimal value. Similarly, if it is too small we will need too many iterations to converge to the best values. That’s why it is crucial to use a well-tuned learning rate.\nLet’s compare the learning curve of our model with several choices of learning rates. Run the cell below. This should take about 1 minute. Feel free also to try different values than the three we have initialized the learning_rates variable to contain, and see what happens.\n\nlearning_rates = [0.01, 0.001, 0.0001]\nmodels = {}\n\nfor lr in learning_rates:\n    print (\"Training a model with learning rate: \" + str(lr))\n    models[str(lr)] = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations=1500, learning_rate=lr, print_cost=False)\n    print ('\\n' + \"-------------------------------------------------------\" + '\\n')\n\nfor lr in learning_rates:\n    plt.plot(np.squeeze(models[str(lr)][\"costs\"]), label=str(models[str(lr)][\"learning_rate\"]))\n\nplt.ylabel('cost')\nplt.xlabel('iterations (hundreds)')\n\nlegend = plt.legend(loc='upper center', shadow=True)\nframe = legend.get_frame()\nframe.set_facecolor('0.90')\nplt.show()\n\nTraining a model with learning rate: 0.01\n\n-------------------------------------------------------\n\nTraining a model with learning rate: 0.001\n\n-------------------------------------------------------\n\nTraining a model with learning rate: 0.0001\n\n-------------------------------------------------------\n\n\n\n\n\n\nWhat to remember from this assignment: 1. Preprocessing the dataset is important. 2. You implemented each function separately: initialize(), propagate(), optimize(). Then you built a model(). 3. Tuning the learning rate (which is an example of a “hyperparameter”) can make a big difference to the algorithm.\nBibliography: - http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/ - https://stats.stackexchange.com/questions/211436/why-do-we-normalize-images-by-subtracting-the-datasets-image-mean-and-not-the-c"
   },
   {
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "Chanseok Kang",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "posts/EDA_Springleaf_screencast.html",
     "href": "posts/EDA_Springleaf_screencast.html",
     "title": "Read the data",
@@ -163,8 +170,8 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Listing Example",
+    "title": "Chanseok Kang",
     "section": "",
-    "text": "신경망으로 구현하는 Logistic Regression\n\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\n\n\n\n\n\n\n\nRead the data\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\nNo matching items"
+    "text": "Read the data\n\n\n\n\n\n\n\n\n\n\n \n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\n신경망으로 구현하는 Logistic Regression\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
   }
 ]
