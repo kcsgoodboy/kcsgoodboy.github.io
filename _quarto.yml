@@ -14,7 +14,7 @@ website:
       - text: Posts
         menu: 
           - text: English
-            href: posts/index.qmd
+            href: index.qmd
           - text: 한글
             href: posts/kr.qmd
     right:

@@ -1,0 +1,14 @@
+---
+listing:
+  - categories: true
+    contents: "*/en/*.ipynb"
+    type: default
+    max-description-length: 250
+    date-format: medium
+    sort: "date desc"
+    sort-ui: true
+    filter-ui: true
+
+page-layout: full
+comments: false
+---
