@@ -1,7 +1,15 @@
 [
   {
+    "listing": "/posts/kr.html",
+    "items": []
+  },
+  {
     "listing": "/index.html",
     "items": [
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html",
+      "/posts/kr.html",
+      "/posts/index.html",
       "/posts/EDA_Springleaf_screencast.html"
     ]
   }
