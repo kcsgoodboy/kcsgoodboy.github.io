@@ -1,11 +1,15 @@
 [
   {
     "listing": "/posts/kr.html",
-    "items": []
+    "items": [
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
+    ]
   },
   {
     "listing": "/posts/index.html",
-    "items": []
+    "items": [
+      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
+    ]
   },
   {
     "listing": "/index.html",
