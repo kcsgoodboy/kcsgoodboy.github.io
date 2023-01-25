@@ -3,7 +3,7 @@ project:
   output-dir: _site
 
 website:
-  title: "Chanseok Kang"
+  title: "Chans Lecture Note"
   page-footer: "Copyright 2023, Chanseok Kang" 
   navbar:
     left:

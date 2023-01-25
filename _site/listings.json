@@ -1,8 +1,8 @@
 [
   {
-    "listing": "/posts/kr.html",
+    "listing": "/index.html",
     "items": [
-      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
@@ -12,9 +12,9 @@
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/posts/kr.html",
     "items": [
-      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
     ]
   }
 ]
