@@ -1,5 +1,56 @@
 ---
-title: "About"
+format:
+    html:
+        page-layout: full
 ---
 
-About this site
+<p style="text-align: center; font-family: Brush Script MT; font-size: 1.1em">
+*In theory, there is no difference between theory and practice. In practice, there is.*
+</p>
+
+::: {.grid}
+
+::: {.g-col-4}
+![](image/chanseok.jpg)
+
+<p style="text-align: center;">
+    <a href="https://github.com/goodboychan"> <button type="button" class="btn btn-primary me-md-2 btn-sm">Github</button></a>
+    <a href="[about-es.html](https://www.linkedin.com/in/chanseokk/)"><button type="button" class="btn btn-primary me-md-2 btn-sm">Linkedin</button></a>
+    <a href="docs/resume_chanseok_20200804.pdf"><button type="button" class="btn btn-primary me-md-2 btn-sm">CV</button></a>
+</p>
+
+:::
+
+::: {.g-col-8}
+
+## Chanseok Kang
+
+<font size="3">I’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time. </font>
+
+
+## Education
+<font size="3">
+**Seoul National University** | Seoul, South Korea <br />
+M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 <br />
+
+- Topic: Manycore-based efficient Power Management Framework
+- Thesis: [Hierachical Power Management Framework on Manycore systems using OS Migration Techniques](https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf)
+- Advisor: Prof. Bernhard Egger
+
+**Chung-Ang University** | Seoul, South Korea <br />
+B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013 
+</font>
+
+## Main Experience
+<font size="3">
+**LG Electronics** | Specialist | Dec 2014 - present
+
+**Carnegie Mellon University** | Visiting Researcher | Apr 2019 - Aug 2019
+
+**Korea Institute of Science and Technology (KIST)** | Contract Researcher | Jun 2012 - Dec 2012
+</font>
+:::
+
+:::
+
+

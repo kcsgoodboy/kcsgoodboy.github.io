@@ -1,1 +1,11 @@
 /* css styles */
+
+:root {
+    --bs-blue: #0084ff;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--bs-blue);
+    border-color: var(--bs-blue);
+}

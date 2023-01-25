@@ -1,19 +1,36 @@
 project:
   type: website
+  output-dir: _site
 
 website:
-  title: "kcsgoodboy.github.io"
+  title: "Chanseok Kang"
+  page-footer: "Copyright 2023, Chanseok Kang" 
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
+      - href: publication.qmd
+        text: Publication
+      - text: Posts
+        menu: 
+          - text: English
+            href: posts/index.qmd
+          - text: 한글
+            href: posts/kr.qmd
+    right:
+      - href: https://github.com/goodboychan
+        icon: github
+      - href: https://www.linkedin.com/in/chanseokk/
+        icon: linkedin
 
 format:
   html:
+    smooth-scroll: true
+    page-layout: full
     theme: cosmo
     css: styles.css
     toc: true
 
-
-
+comments:
+  giscus: 
+    repo: kcsgoodboy/en
