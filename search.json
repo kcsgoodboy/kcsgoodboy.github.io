@@ -114,9 +114,23 @@
   {
     "objectID": "publication.html",
     "href": "publication.html",
-    "title": "Chanseok Kang",
+    "title": "Publication",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "(2015) Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques"
+  },
+  {
+    "objectID": "publication.html#papers",
+    "href": "publication.html#papers",
+    "title": "Publication",
+    "section": "Papers",
+    "text": "Papers\n\n(2015) Scheduling for better energy efficiency on many-core chips\n(2020) NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control"
+  },
+  {
+    "objectID": "publication.html#book",
+    "href": "publication.html#book",
+    "title": "Publication",
+    "section": "Book",
+    "text": "Book\n\n그로킹 심층 강화학습"
   },
   {
     "objectID": "about.html",
