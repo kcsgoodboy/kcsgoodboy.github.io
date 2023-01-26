@@ -9,7 +9,7 @@ website:
     left:
       - href: about.qmd
         text: About
-      - href: publication.qmd
+      - href: publication/index.qmd
         text: Publication
       - text: Posts
         menu: 
