@@ -312,7 +312,7 @@
     "href": "publication/GDRL/GDRL-chapter-2.html",
     "title": "Chapter 2: Mathematical foundations of reinforcement learning",
     "section": "",
-    "text": "그로킹 심층 강화학습 중 2장 내용인 “강화학습의 수학적 기초”에 대한 내용입니다.\n\n\n <img class=“notebook-badge-image” src=“{{”../../assets/badges/colab.svg” }}” alt=“Open In Colab”/> \n\n\n\nCode\n!pip install tqdm numpy scikit-learn pyglet setuptools && \\\n!pip install gym asciinema pandas tabulate tornado==5.* PyBullet && \\\n!pip install git+https://github.com/pybox2d/pybox2d#egg=Box2D && \\\n!pip install git+https://github.com/mimoralea/gym-bandits#egg=gym-bandits && \\\n!pip install git+https://github.com/mimoralea/gym-walk#egg=gym-walk && \\\n!pip install git+https://github.com/mimoralea/gym-aima#egg=gym-aima && \\\n!pip install gym[atari]\n\n\n\nimport gym, gym_walk, gym_aima"
+    "text": "그로킹 심층 강화학습 중 2장 내용인 “강화학습의 수학적 기초”에 대한 내용입니다.\n\n\n  \n\n\n\nCode\n!pip install tqdm numpy scikit-learn pyglet setuptools && \\\n!pip install gym asciinema pandas tabulate tornado==5.* PyBullet && \\\n!pip install git+https://github.com/pybox2d/pybox2d#egg=Box2D && \\\n!pip install git+https://github.com/mimoralea/gym-bandits#egg=gym-bandits && \\\n!pip install git+https://github.com/mimoralea/gym-walk#egg=gym-walk && \\\n!pip install git+https://github.com/mimoralea/gym-aima#egg=gym-aima && \\\n!pip install gym[atari]\n\n\n\nimport gym, gym_walk, gym_aima"
   },
   {
     "objectID": "publication/GDRL/GDRL-chapter-2.html#mdps",
