@@ -116,7 +116,7 @@
     "href": "publication/index.html",
     "title": "Chans Lecture Note",
     "section": "",
-    "text": "Research\n\n\n\n\n\n\n\n\n\n\n\n\n Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques    Chanseok Kang  M.S Thesis, 2015  SNU\n\n\n\nFrom hierarchical power management framework implemented on the Intel Single-chip Cloud Computer (SCC) running up to 40 independent Linux instances, We show that our approach, on average, saves the energy consumption by 30% over existing DVFS policies for a wide range of load patterns with minimal performance degradation."
+    "text": "Research\n\n\n\n\n\n\n\n\n\n\n\n\n Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques   Chanseok Kang  M.S Thesis, 2015  SNU\n\n\n\nFrom hierarchical power management framework implemented on the Intel Single-chip Cloud Computer (SCC) running up to 40 independent Linux instances, We show that our approach, on average, saves the energy consumption by 30% over existing DVFS policies for a wide range of load patterns with minimal performance degradation."
   },
   {
     "objectID": "about.html",
