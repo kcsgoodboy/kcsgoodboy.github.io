@@ -1,0 +1,12 @@
+---
+title: "그로킹 심층 강화학습"
+listing:
+  - categories: false
+    contents: "*.ipynb"
+    type: table
+    sort: "title desc"
+    sort-ui: true
+    filter-ui: true
+
+page-layout: full
+---

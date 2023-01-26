@@ -12,6 +12,22 @@
     ]
   },
   {
+    "listing": "/publication/GDRL/index.html",
+    "items": [
+      "/publication/GDRL/GDRL-chapter-9.html",
+      "/publication/GDRL/GDRL-chapter-8.html",
+      "/publication/GDRL/GDRL-chapter-7.html",
+      "/publication/GDRL/GDRL-chapter-6.html",
+      "/publication/GDRL/GDRL-chapter-5.html",
+      "/publication/GDRL/GDRL-chapter-4.html",
+      "/publication/GDRL/GDRL-chapter-3.html",
+      "/publication/GDRL/GDRL-chapter-2.html",
+      "/publication/GDRL/GDRL-chapter-12.html",
+      "/publication/GDRL/GDRL-chapter-11.html",
+      "/publication/GDRL/GDRL-chapter-10.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
