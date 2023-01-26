@@ -70,9 +70,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: [{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: [],
+      searchColumns: ["listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -171,6 +171,19 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-listing quarto-listing-container-table" id="listing-listing-1">
 <div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-1-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing-1'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
     <div class="input-group input-group-sm quarto-listing-filter">
       <span class="input-group-text"><i class="bi bi-search"></i></span>
       <input type="text" class="search form-control" placeholder="Filter">
@@ -180,9 +193,93 @@ ul.task-list li input[type="checkbox"] {
 <table class="quarto-listing-table table">
 <thead>
 <tr>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Title</a>
+</th>
+<th>
+<a class="sort" data-sort="listing-author" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Author</a>
+</th>
 </tr>
 </thead>
 <tbody class="list">
+<tr data-index="0" data-listing-file-modified-sort="1674714336164" data-listing-reading-time-sort="0.23" data-listing-title-sort="Sample-Efficient Value-Based Methods" data-listing-filename-sort="GDRL-chapter-10.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-10.html" class="title">Sample-Efficient Value-Based Methods</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="1" data-listing-file-modified-sort="1674714336148" data-listing-reading-time-sort="0.305" data-listing-title-sort="Policy-Gradient and Actor-Critic Methods" data-listing-filename-sort="GDRL-chapter-11.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-11.html" class="title">Policy-Gradient and Actor-Critic Methods</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+
+<tr data-index="2" data-listing-file-modified-sort="1674714336172" data-listing-reading-time-sort="0.225" data-listing-title-sort="More Stable Value-based Methods" data-listing-filename-sort="GDRL-chapter-9.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-9.html" class="title">More Stable Value-based Methods</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="3" data-listing-file-modified-sort="1674714336584" data-listing-reading-time-sort="2.73" data-listing-title-sort="Mathematical foundations of reinforcement learning" data-listing-filename-sort="GDRL-chapter-2.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-2.html" class="title">Mathematical foundations of reinforcement learning</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="4" data-listing-file-modified-sort="1674714336276" data-listing-reading-time-sort="0.195" data-listing-title-sort="Introduction to Value based Deep Reinforcement Learning" data-listing-filename-sort="GDRL-chapter-8.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-8.html" class="title">Introduction to Value based Deep Reinforcement Learning</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="5" data-listing-file-modified-sort="1674714336332" data-listing-reading-time-sort="0.695" data-listing-title-sort="Improving Agents behaviors" data-listing-filename-sort="GDRL-chapter-6.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-6.html" class="title">Improving Agents behaviors</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="6" data-listing-file-modified-sort="1674714336548" data-listing-reading-time-sort="0.815" data-listing-title-sort="Evaluating Agents behaviors" data-listing-filename-sort="GDRL-chapter-5.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-5.html" class="title">Evaluating Agents behaviors</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="7" data-listing-file-modified-sort="1674714336572" data-listing-reading-time-sort="0.53" data-listing-title-sort="Balancing the gathering and use of information" data-listing-filename-sort="GDRL-chapter-4.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-4.html" class="title">Balancing the gathering and use of information</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="8" data-listing-file-modified-sort="1674714336580" data-listing-reading-time-sort="0.55" data-listing-title-sort="Balancing immediate and long-term goals" data-listing-filename-sort="GDRL-chapter-3.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-3.html" class="title">Balancing immediate and long-term goals</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="9" data-listing-file-modified-sort="1674714336288" data-listing-reading-time-sort="0.88" data-listing-title-sort="Archieving goals more effectively and efficiently" data-listing-filename-sort="GDRL-chapter-7.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-7.html" class="title">Archieving goals more effectively and efficiently</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
+<tr data-index="10" data-listing-file-modified-sort="1674714335652" data-listing-reading-time-sort="0.285" data-listing-title-sort="Advanced Actor-Critic Methods" data-listing-filename-sort="GDRL-chapter-12.ipynb">
+<td class="listing-title">
+<a href="../../publication/GDRL/GDRL-chapter-12.html" class="title">Advanced Actor-Critic Methods</a>
+</td>
+<td class="listing-author">
+</td>
+</tr>
 </tbody>
 
 </table>
