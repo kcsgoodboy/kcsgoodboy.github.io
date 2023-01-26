@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chanseok Kang">
 
-<title>Chans Lecture Note – gdrl-chapter-9</title>
+<title>Chans Lecture Note - Chapter 9: More Stable Value-based Methods</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -188,7 +189,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Chapter 9: More Stable Value-based Methods</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chanseok Kang </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -196,47 +219,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#more-stable-value-based-methods" id="toc-more-stable-value-based-methods" class="nav-link active" data-scroll-target="#more-stable-value-based-methods">More Stable Value-based Methods</a>
-  <ul class="collapse">
+  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
   <li><a href="#dqn" id="toc-dqn" class="nav-link" data-scroll-target="#dqn">DQN</a></li>
   <li><a href="#double-dqn-ddqn" id="toc-double-dqn-ddqn" class="nav-link" data-scroll-target="#double-dqn-ddqn">Double DQN (DDQN)</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
-<section id="more-stable-value-based-methods" class="level1">
-<h1>More Stable Value-based Methods</h1>
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <blockquote class="blockquote">
 <p>그로킹 심층 강화학습 중 9장 내용인 “조금 더 안정적인 가치기반의 학습 방법들”에 대한 내용입니다.</p>
 </blockquote>
-<ul>
-<li>hide: true</li>
-<li>toc: true</li>
-<li>badges: true</li>
-<li>comments: true</li>
-<li>author: Chanseok Kang</li>
-<li>categories: [Python, Reinforcement_Learning, Grokking_Deep_Reinforcement_Learning]</li>
-<li>permalink: /book/:title:output_ext</li>
-<li>search_exclude: false</li>
-</ul>
-<blockquote class="blockquote">
-<p>Note: 실행을 위해 아래의 패키지들을 설치해주기 바랍니다.</p>
-</blockquote>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collapse</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tqdm numpy scikit<span class="op">-</span>learn pyglet setuptools <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym asciinema pandas tabulate tornado<span class="op">==</span><span class="fl">5.</span><span class="op">*</span> PyBullet <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>pybox2d<span class="op">/</span>pybox2d<span class="co">#egg=Box2D &amp;&amp; \</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>bandits<span class="co">#egg=gym-bandits &amp;&amp; \</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>walk<span class="co">#egg=gym-walk &amp;&amp; \</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>aima<span class="co">#egg=gym-aima &amp;&amp; \</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym[atari]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install torch torchvision</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tqdm numpy scikit<span class="op">-</span>learn pyglet setuptools <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym asciinema pandas tabulate tornado<span class="op">==</span><span class="fl">5.</span><span class="op">*</span> PyBullet <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>pybox2d<span class="op">/</span>pybox2d<span class="co">#egg=Box2D &amp;&amp; \</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>bandits<span class="co">#egg=gym-bandits &amp;&amp; \</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>walk<span class="co">#egg=gym-walk &amp;&amp; \</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>aima<span class="co">#egg=gym-aima &amp;&amp; \</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym[atari]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install torch torchvision</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings <span class="op">;</span> warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
@@ -697,6 +708,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
 <span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.size</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="dqn" class="level2">
 <h2 class="anchored" data-anchor-id="dqn">DQN</h2>
 <div class="cell" data-execution_count="19">
@@ -1844,7 +1856,6 @@ Final evaluation score 500.00±0.00 in 226.86s training time, 269.07s wall-clock
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

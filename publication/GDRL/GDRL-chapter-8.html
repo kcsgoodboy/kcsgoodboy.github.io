@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chanseok Kang">
 
-<title>Chans Lecture Note – gdrl-chapter-8</title>
+<title>Chans Lecture Note - Chapter 8: Introduction to Value based Deep Reinforcement Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -188,7 +189,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Chapter 8: Introduction to Value based Deep Reinforcement Learning</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chanseok Kang </p>
+            </div>
+    </div>
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -196,43 +219,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction-to-value-based-deep-reinforcement-learning" id="toc-introduction-to-value-based-deep-reinforcement-learning" class="nav-link active" data-scroll-target="#introduction-to-value-based-deep-reinforcement-learning">Introduction to Value based Deep Reinforcement Learning</a></li>
+  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
-<section id="introduction-to-value-based-deep-reinforcement-learning" class="level1">
-<h1>Introduction to Value based Deep Reinforcement Learning</h1>
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <blockquote class="blockquote">
 <p>그로킹 심층 강화학습 중 8장 내용인 “가치기반 심층 강화학습 개요”에 대한 내용입니다.</p>
 </blockquote>
-<ul>
-<li>hide: true</li>
-<li>toc: true</li>
-<li>badges: true</li>
-<li>comments: true</li>
-<li>author: Chanseok Kang</li>
-<li>categories: [Python, Reinforcement_Learning, Grokking_Deep_Reinforcement_Learning]</li>
-<li>permalink: /book/:title:output_ext</li>
-<li>search_exclude: false</li>
-</ul>
-<blockquote class="blockquote">
-<p>Note: 실행을 위해 아래의 패키지들을 설치해주기 바랍니다.</p>
-</blockquote>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#collapse</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tqdm numpy scikit<span class="op">-</span>learn pyglet setuptools <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym asciinema pandas tabulate tornado<span class="op">==</span><span class="fl">5.</span><span class="op">*</span> PyBullet <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>pybox2d<span class="op">/</span>pybox2d<span class="co">#egg=Box2D &amp;&amp; \</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>bandits<span class="co">#egg=gym-bandits &amp;&amp; \</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>walk<span class="co">#egg=gym-walk &amp;&amp; \</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>aima<span class="co">#egg=gym-aima &amp;&amp; \</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym[atari]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install torch torchvision</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tqdm numpy scikit<span class="op">-</span>learn pyglet setuptools <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym asciinema pandas tabulate tornado<span class="op">==</span><span class="fl">5.</span><span class="op">*</span> PyBullet <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>pybox2d<span class="op">/</span>pybox2d<span class="co">#egg=Box2D &amp;&amp; \</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>bandits<span class="co">#egg=gym-bandits &amp;&amp; \</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>walk<span class="co">#egg=gym-walk &amp;&amp; \</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>mimoralea<span class="op">/</span>gym<span class="op">-</span>aima<span class="co">#egg=gym-aima &amp;&amp; \</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym[atari]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install torch torchvision</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings <span class="op">;</span> warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
@@ -870,7 +883,7 @@ Final evaluation score 473.34±35.27 in 140.87s training time, 342.61s wall-cloc
 <div class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>best_agent.demo_progression()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="32">
-<h2 class="anchored" data-anchor-id="introduction-to-value-based-deep-reinforcement-learning">NFQ Agent progression</h2>
+<h2 class="anchored">NFQ Agent progression</h2>
         <h3 class="anchored">Episode 0</h3>
         <img src="data:image/gif;base64,R0lGODlhAAJVAfcAAAAAAAIDBAEBCgkIBxkaGAwODSoaEDs7Ozc3N1tVOHBTMElJSlJSUlZWVl5eXkZFUWJiYm9vb3Nzc3V1dbSWc7aUd7aZeradfbqbermXdrSNbKGGbMWcXcuaXcuaXcyWXdKUX8+PW8uWYsyYZMqYZMWaacqbasSXZ8qZd8eYds2XbNija3l+y4V5yYZ71H+CyJaCmpCKj6iSkballYqHpoyItqaVqLa2tru7u6inq8WphuTEqf7NrPXXtPTStfnUtfbPsfbCnYaDyYyFz+nWyf/syv/szPvp2e3t7evr6+vn5Pj07/Dw8PX19f/99v/9+v/6/vr+/v39/fr6+v33883NzQAAAAICBQAACQQCDQoLCRwaGxAKDCMUBj8/P2Q9Els9HF1LK1BQUFdXV1lZWV1dXldWXUtJRldUamVlZXNzc2lZU3+BeryOWbiOab2TZbyVa7uXabWVdbWUc7uXc7aafbycfbuXeauRdZSBYcOPW8ORXcmXW8yZXMaZXcOUZMuWY8OaZMyYYcqZZcyYZcqaYsKWa8WabsSaasqZasqabMuXa8Kbc8ubdMOaedCfeMykfMujeNWmetSlcHtykoR3p4R7t4N2k4d6yol704Z22ZZ/xId14ZGQmaqairWcgrybgraUhq+RlbuqmbOij4qDqZOGtZaPsKOYramqp7S0tLShqcOegsWkhNOuhNyzity0hMOqk8esl9m3lMmzmMa1pdS7qcS7s+GyhtnErszDudjGt+PGqPPRr/3UqenOtfTTtPnWuevPsJWE15WEyJKD4cXDwtXMxdnQyfbbwurd0u3d0Prkyeri1/Pj0v/u1Prs3Prl1f/z2v/21u7p5u7t7O/n5PXr5f/85f/96f/+7v/67fzz6vDw8Pb29v/68v//8f/99v/79f/++v3+/vr9/vj3+O3z9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAQHAAAAIf8LTkVUU0NBUEUyLjADAQAAACwAAAAAAAJVAQAI/wDJCRxIsKDBgwgTKlzIsKHDhxAjSpxIsaLFixgzatzIsaPHjyBDihxJsqTJkyhTqlzJsqXLlzBjypxJs6bNmzhz6tzJs6fPn0CDCh1KtKjRo0iTKl3KtKnTp1CjSp1KtarVq1izat3KtavXr2DDih1LtqzZs2jTql3Ltq3bt3Djyp1Lt67du3jz6t3Lt6/fv4ADCx5MuLDhw4gTK17MuLHjx5AjS55MubLly5gza97MubPnz6BDix5NurTp06hTq17NurXr17Bjy55Nu7bt27hz697Nu7fv38CDCx9OvLjx48iTK1/OvLnz59CjS59Ovbr169iza9/Ovbv37+DDi/8fT768+fPo06tfz769+/fw48ufT7++/fv48+vfz7+///8ABijggAQWaOCBCCao4IIMNujggxBGKOGEFFZo4YUYZqjhhhx26OGHIIYo4ogklmjiiSimqOKKLLbo4oswxijjjDTWaOONOOao44489ujjj0AGKeSQRBZp5JFIJqnkkkw26eSTUEYp5ZRUVmnllVhmqeWWXHbp5ZdghinmmGSWaeaZaKap5ppstunmm3DGKeecdNZp55145qnnnnz2uVs5gJbjp1+BCjooX4Ue2legis41zjjhjLMNMsskw803gD7aqFvjdMPLL8HwwgsedLjRjDiAhhPOpm2NY00biyz/8kcjiyDyBjThpLoqq2u5yocgvwoiSCF+jAINOeVoyqtaj/Lixh+B9OGHH33U8YxA4yzbKzm+wAHttHxUe622bD3qSyOI/DFtH33YMS65zI7jyyOKqEttH3cwA2+v8qIbyLrt6rtvWub6C7AdAg98VsGKIHJwwgqXxbDD9yIc8cL9NvzwxWZNvDHHZHlcMcQgg2WuI4hQzK7FJYt1siKJfNyyyeMA4wjM7PYhiLvkKDuzV8DcMcggwgprbc/Z/gy0HIMkQgghRo+btNJcAcO004QAQsjRPVPdldVNP60111N7nRXYWI8ttdlboS321muzffbVb5Mt99xhZw03tndj/+W23nb3bdXfavMteFWE79314VQlHjjjUjn+LuRTgT3I2zxT3vgcT3euuOaRc+7556BDBYzonnNduumod6766k6dPjrpsDMl++iv177U7alPrrtSvLvu++9IBf907sQfZTztyRu1PPLNE/X88NEPNX31xbd+PPXYA3V990V9D7712jM/vk/in+99+dCrv1P67vcEf/zvs889/TfNjz9O+u9vU//+owkAAyiTARIQJgY8oEsSqECWMLCBKnkgBFEiwQmapIIWJAkGMyiSDXIQJB78oEdCKEKOkLCEGjkhCjGiwhVapIUupAgMYyiRGdIQIja8oUNyqEOG8LCHCvkhEP8RIsQhGqSIRiQIEpMokCUy0YlJhKIRpThEKgLRij3Eog61eEMu0tCLMQSjC8W4QjKiMBj2YyJEzGEOb3ijG3CMoxzj6A1e3EFvruMFHN9YjTn6sRpq7IQVBknIQhaSC10IwyQEkbN2teIKVtjCFqwASUMaEpBJLIMlN0lIRfLhk+yqgxyuQEpOWhKTRkyDKTcZBlDgQRSwFIUnPMGFLGShkqu0AiqHqMpcFlIMqCgFMUzBAhZ0YhVZwEIpfblLIPbSl4M8wzAxgYlidgIVkMQCFqDZzB4+E5pnGAY1MUGMF1xzkNrkJhO/6cszZAITmcgEMYhxTiukk5nrhCYhpYn/CU1oYhiZuCYkl5nLbuqQnbk8gylKAc94dqITt9SnLvMpUWB2ohSlOMUpUpGKbUrUoDdE6CrHkIpOpCIPWpDkJCU60SSK1JSk1IIWcMnSQXrDParIqU53ytOe+vSnQA2qUIdK1KIa9ahITapSl6rUY5yhpoOMqRagaoVUMPWqWM2qVrfK1a56lahiCKtYx0rWspr1rGhNq1rXyta2uvWtcI2rXOdq1jGcwQt4zWtexeAFLlD1r4QUwxjoStjCGvawiE2sYhe71u30cY7VuKk5xgBYwKpRk5WlKjXKwcbOepaNgBIhZjNbU5DScLSk/SgTUZtadWaytSw1bQxZC9tVlcrWhbStLSdvu8Lc6vaUq/0tPpMoBuEW1IjmIEcq1MDc5jr3udCNrnShe9MhlqO6asyudrfL3e5697vgDa94x0ve8pr3vOhNr3rXy972uve98I2vfOdL3/ra9774za9+98vf/vr3vwAOsIAHTOACG/jACE6wghfM4AY7+MEQjrCEJ0zhClv4whjOsIY3zOEOe/jDNAoIACH5BAUHAAAALNoAkgAqAHAAAAj/AAEIHEiwoMGDB5cBGIewocOHoPBcA2DuocWLABgxwsjx4SFDzsBV7HiRmqFGBBH9caaNJEZqjBwRHLSypUuL1GTOXJntJs47OgXSZGbTZ0Nqd1gV3JMMm9GHwYICGATgk7SnDoOBMogHa9atBT8984owmJ2ZVcmWvSNQkCCqYtUaDMZ26iBChOLKJRhMDiG7e8vKEUo18NzBA/8aXsy4sePHkCNLnky5suXLmDNr3sy5s+fPoEOLHk26tOnTqFOrXs26tevXsGPLnk27tu3buHPr3s27t+/fwEt/auwLDsGPnqIx9vWGoCFDnqAtPwRo4Mdb0jmmwWjliyQ+A1XWQepiBcCVK3u/uNoz8M8fUuQXd8kznKCoNVgYnzm4Krj//7+pIuCAAwJgzH57iaHgggwCMMYWhpEj4YQTCrTdXgEBACH5BAUHAAAALOUAkgAzAHsAAAj/AAEIHEiwoEFyCBEaXMiwYcNryZhF+7Vr17Fl48YlBEDOocePAMLtcgOpFas7curYGheuI8iXDsHZ2gPI0CFEiOjwIvdtI8yfBLPRUrTIT6E+feC8GtfTJdCn2mQ1UuQHaZ9AsMaJU/j0KbhajRoVOtoHUdatTrvCBDcq7KBBSANJ0spVLUxtyx41ehtXkbKWae1+3LYN0l64fQa1uaUxsGCH4r7p5XsVgK7Gj38+UkR5EIBjPjOD3EwZwJ7LdUV7bJTorSBBABZjVv1RUiJCbwXqQe2YtsE/iloDAGRaF2DfHnH9ES5wz67jyBsyc8NcYC1pqaMXfGYn90A5wsiN/9PO8Bko7wLl9BJPfuGzT+gBqM/eHsB7QoQIzu9N/v2g/APNsd549REkDXyJEDQHMOSEUyBB3HiCE0F0vMKNgw8OhEwgiBDEyBvNgJPhQNe8cQhBh8DhjDYjCkRNHIyg+MaKLQLwYowDpUhjizei+MeOI/Y4UCI/stiiNcsV9EczGI5ozR6eEbRkkxlec5NBn9So5ZZcdvlgMF6G2dU0WgbTykJg1jjNLHoMNMkkAMiipTS87GGQHd3UiE2dd2qZDS9/FMQII9/UqM0ugXrIyDZGZnioiYoy2uKjikTa6IOPnjiQIZFIOqI2vxyiqUCQwFHLpQVmg00jhgykByNwjP+Can3agOMKHARFYkgt2bS4TTiz0EGQIoaMgk2L34wT7LCGxHLsiMkuO5AihziLrLLCTpuItSNuNYscw277bIbhjAMMKAQlkkgrybSYUTZyDpkIHa60iBA2sRC0yCKGvGIvOfimm0i//wYsL8EjllMOvAIjnKHCDA/0liGwtFgOOREL9FYcFSdczjb5SjxIHPV6rI0tBL2FSBzHeLwNNHAK9NrKxoxIzsfbSDLQzIi0nOHN4YgTiaYzv6GLiA8i9I04kOD4GpG59Jo0T+K04ojMgkAtdYEIiROO1VgH8kcu49aHULmt2CEQIGz/wUvZ7SGkUSvoDsf2Hm//LB45waj/DQB+bLfCjN4ZSVOHQIATMocwhI/zzOF/40eIHMA0/jjiklNuOeSST1751BldHjl+mhdqtniOcy75ggCIwzXqoncuIOHkxC45Ha1c+DpC0pCCOX6OuLHMrMjJPU420fxxCG74wQokeQlhHA0cjDBPiPPE+xa9Ns5Qb/0hhjyv3fbTV/8fIeCLH9323ZuPX/rZ08a+G+6j/0c08asWPTjXQELH94b4BdzWlxCNBGMO1sOJJ6Cxu4T04n+SUyADT4eQiz2wc4EIxAK7Ej36EKQbIOzGObzRi+FIjki3mGBDQtiNauSJIx0kQ0OsQEMrXMEKX3AFH6wyiEDUogseqSEN/6+Qpw6SQ4YMESINvwAJPjiRDxkkBRAdokQrFDGGM1QiGGgRilCI4ouikGIQlXjF6CExiUI8wy1OYYphDGMTxEAFF8YoxDIm5IwLUeIWKEEMTGQiE5jAxCkuIZAsoLGOMDQjFYWYBTQAUhOaCKQpKgEALFjSkgWpoh0RgkeDKLGRxYBkJDExSQBk4ZJYyCQZE3nHRdYQC2IYBiY4wYk/moISqRQIJgmiSVZy0pVDRIMpLAHJP5aiElcAJg03eURlWsEMp+hEKUpxilOgAhV0rCEzO6lKIZYhFZ1IBRu4sIVyZnOZviRHGT5CQ4JoQQs/qaI5VEHPehrDCzBp50CSCVKSKqZCDAAN6Bi28KAqCsSIaSioEg+KxQJVsRrp5GZ0HhpRhSLSiBJFTi8xalFtVtShq+QoSC/a0PpstKTtOWn0xNBRGkLUiKlIaH3UQNOaeiMgADs=">
         <h3 class="anchored">Episode 691</h3>
