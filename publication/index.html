@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chans Lecture Note – kr</title>
+<title>Chans Lecture Note – index</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -60,38 +58,8 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing-1 .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing-1'] = new List('listing-listing-1', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -117,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../publication/index.html" rel="" target="">
+    <a class="nav-link active" href="../publication/index.html" rel="" target="" aria-current="page">
  <span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -157,90 +125,40 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Coursera">Coursera <span class="quarto-category-count">(1)</span></div><div class="category" data-category="DeepLearning.AI">DeepLearning.AI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(1)</span></div></div></div>
-<!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing-1">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-1-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing-1'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-         <option value="listing-author" data-direction="asc">
-          Author
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
     </div>
-</div>
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Python,Coursera,DeepLearning.AI" data-listing-date-sort="1652194800000" data-listing-file-modified-sort="1674635297638" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7.075">
-<div class="thumbnail">
-<p><a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"> <img src="../posts/Logistic-Regression-with-a-Neural-Network/images/LogReg_kiank.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html">
-<h3 class="no-anchor listing-title">
-신경망으로 구현하는 Logistic Regression
-</h3>
-<div class="listing-subtitle">
+<!-- main -->
+<main class="content column-page" id="quarto-document-content">
 
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
-Python
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Coursera'); return false;">
-Coursera
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('DeepLearning.AI'); return false;">
-DeepLearning.AI
-</div>
-</div>
-<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html">
-<div class="listing-description">
-In this post, we will build a logistic regression classifier to recognize cats. This is the summary of lecture “Neural Networks and Deep Learning” from DeepLearning.AI. (slightly modified from original assignment)
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html">
-<div class="listing-date">
-May 11, 2022
-</div>
-<div class="listing-author">
-Chanseok Kang
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
+
+
+
+
+<div class="one">
+<pre><code>        &lt;img src='image/os_migration.jpg' width="160"&gt;
+    &lt;/div&gt;
+&lt;/td&gt;
+&lt;td style="padding:20px;width:75%;vertical-align:middle"&gt;
+    &lt;a&gt;
+        &lt;papertitle&gt;Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques
+        &lt;/papertitle&gt;
+    &lt;/a&gt;
+    &lt;br&gt;
+    &lt;strong&gt;Chanseok Kang&lt;/strong&gt;
+    &lt;br&gt;
+    &lt;em&gt;M.S Thesis&lt;/em&gt;, 2015
+    &lt;br&gt;
+    &lt;a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf"&gt;SNU&lt;/a&gt;
+    &lt;p&gt;&lt;/p&gt;
+    &lt;p&gt;
+        From hierarchical power management framework implemented on the Intel Single-chip Cloud Computer (SCC) running up to 40 independent Linux instances, We show that our approach, on average, saves the energy consumption by 30% over existing DVFS policies for a wide range of load patterns with minimal performance degradation.
+    &lt;/p&gt;
+&lt;/td&gt;</code></pre>
+
+
+
+
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -374,6 +292,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://giscus.app/client.js" data-repo="kcsgoodboy/en" data-repo-id="R_kgDOIixJIQ" data-category="General" data-category-id="DIC_kwDOIixJIc4CTiz-" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 <footer class="footer">

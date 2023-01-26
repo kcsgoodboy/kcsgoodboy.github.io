@@ -1,47 +1,5 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Chans Lecture Note",
-    "section": "",
-    "text": "In theory, there is no difference between theory and practice. In practice, there is."
-  },
-  {
-    "objectID": "about.html#chanseok-kang",
-    "href": "about.html#chanseok-kang",
-    "title": "Chans Lecture Note",
-    "section": "Chanseok Kang",
-    "text": "Chanseok Kang\nI’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time."
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "Chans Lecture Note",
-    "section": "Education",
-    "text": "Education\n Seoul National University | Seoul, South Korea  M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 \n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Prof. Bernhard Egger\n\nChung-Ang University | Seoul, South Korea  B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013"
-  },
-  {
-    "objectID": "about.html#main-experience",
-    "href": "about.html#main-experience",
-    "title": "Chans Lecture Note",
-    "section": "Main Experience",
-    "text": "Main Experience\n LG Electronics | Specialist | Dec 2014 - present\nCarnegie Mellon University | Visiting Researcher | Apr 2019 - Aug 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | Jun 2012 - Dec 2012"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Chans Lecture Note",
-    "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/index.html",
-    "href": "posts/index.html",
-    "title": "Chans Lecture Note",
-    "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "posts/kr.html",
     "href": "posts/kr.html",
     "title": "Chans Lecture Note",
@@ -147,10 +105,52 @@
     "text": "Further analysis\nLet’s analyze it further, and examine possible choices for the learning rate \\(\\alpha\\).\n\nChoice of learning rate\nReminder: In order for Gradient Descent to work you must choose the learning rate wisely. The learning rate \\(\\alpha\\) determines how rapidly we update the parameters. If the learning rate is too large we may “overshoot” the optimal value. Similarly, if it is too small we will need too many iterations to converge to the best values. That’s why it is crucial to use a well-tuned learning rate.\nLet’s compare the learning curve of our model with several choices of learning rates. Run the cell below. This should take about 1 minute. Feel free also to try different values than the three we have initialized the learning_rates variable to contain, and see what happens.\n\nlearning_rates = [0.01, 0.001, 0.0001]\nmodels = {}\n\nfor lr in learning_rates:\n    print (\"Training a model with learning rate: \" + str(lr))\n    models[str(lr)] = model(train_set_x, train_set_y, test_set_x, test_set_y, num_iterations=1500, learning_rate=lr, print_cost=False)\n    print ('\\n' + \"-------------------------------------------------------\" + '\\n')\n\nfor lr in learning_rates:\n    plt.plot(np.squeeze(models[str(lr)][\"costs\"]), label=str(models[str(lr)][\"learning_rate\"]))\n\nplt.ylabel('cost')\nplt.xlabel('iterations (hundreds)')\n\nlegend = plt.legend(loc='upper center', shadow=True)\nframe = legend.get_frame()\nframe.set_facecolor('0.90')\nplt.show()\n\nTraining a model with learning rate: 0.01\n\n-------------------------------------------------------\n\nTraining a model with learning rate: 0.001\n\n-------------------------------------------------------\n\nTraining a model with learning rate: 0.0001\n\n-------------------------------------------------------\n\n\n\n\n\n\nWhat to remember from this assignment: 1. Preprocessing the dataset is important. 2. You implemented each function separately: initialize(), propagate(), optimize(). Then you built a model(). 3. Tuning the learning rate (which is an example of a “hyperparameter”) can make a big difference to the algorithm.\nBibliography: - http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/ - https://stats.stackexchange.com/questions/211436/why-do-we-normalize-images-by-subtracting-the-datasets-image-mean-and-not-the-c"
   },
   {
-    "objectID": "publication.html",
-    "href": "publication.html",
-    "title": "Chanseok Kang",
+    "objectID": "posts/index.html",
+    "href": "posts/index.html",
+    "title": "Chans Lecture Note",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "publication/index.html",
+    "href": "publication/index.html",
+    "title": "Chans Lecture Note",
+    "section": "",
+    "text": "<img src='image/os_migration.jpg' width=\"160\">\n    </div>\n</td>\n<td style=\"padding:20px;width:75%;vertical-align:middle\">\n    <a>\n        <papertitle>Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques\n        </papertitle>\n    </a>\n    <br>\n    <strong>Chanseok Kang</strong>\n    <br>\n    <em>M.S Thesis</em>, 2015\n    <br>\n    <a href=\"https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf\">SNU</a>\n    <p></p>\n    <p>\n        From hierarchical power management framework implemented on the Intel Single-chip Cloud Computer (SCC) running up to 40 independent Linux instances, We show that our approach, on average, saves the energy consumption by 30% over existing DVFS policies for a wide range of load patterns with minimal performance degradation.\n    </p>\n</td>"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Chans Lecture Note",
+    "section": "",
+    "text": "In theory, there is no difference between theory and practice. In practice, there is."
+  },
+  {
+    "objectID": "about.html#chanseok-kang",
+    "href": "about.html#chanseok-kang",
+    "title": "Chans Lecture Note",
+    "section": "Chanseok Kang",
+    "text": "Chanseok Kang\nI’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "Chans Lecture Note",
+    "section": "Education",
+    "text": "Education\n Seoul National University | Seoul, South Korea  M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 \n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Prof. Bernhard Egger\n\nChung-Ang University | Seoul, South Korea  B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013"
+  },
+  {
+    "objectID": "about.html#main-experience",
+    "href": "about.html#main-experience",
+    "title": "Chans Lecture Note",
+    "section": "Main Experience",
+    "text": "Main Experience\n LG Electronics | Specialist | Dec 2014 - present\nCarnegie Mellon University | Visiting Researcher | Apr 2019 - Aug 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | Jun 2012 - Dec 2012"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Chans Lecture Note",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
   }
 ]
