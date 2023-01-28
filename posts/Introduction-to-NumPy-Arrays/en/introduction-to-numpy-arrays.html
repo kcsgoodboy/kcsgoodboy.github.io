@@ -230,7 +230,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
+  <li><a href="#about-jupyter-notebooks" id="toc-about-jupyter-notebooks" class="nav-link" data-scroll-target="#about-jupyter-notebooks">About Jupyter Notebooks</a></li>
+  <li><a href="#basics-of-numpy" id="toc-basics-of-numpy" class="nav-link" data-scroll-target="#basics-of-numpy">Basics of NumPy</a>
+  <ul class="collapse">
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
+  <li><a href="#advantages-of-using-numpy-arrays" id="toc-advantages-of-using-numpy-arrays" class="nav-link" data-scroll-target="#advantages-of-using-numpy-arrays">Advantages of using NumPy arrays</a></li>
+  <li><a href="#more-numpy-arrays" id="toc-more-numpy-arrays" class="nav-link" data-scroll-target="#more-numpy-arrays">More NumPy Arrays</a></li>
+  </ul></li>
+  <li><a href="#multidimensional-arrays" id="toc-multidimensional-arrays" class="nav-link" data-scroll-target="#multidimensional-arrays">Multidimensional Arrays</a>
+  <ul class="collapse">
+  <li><a href="#finding-size-shape-dimension." id="toc-finding-size-shape-dimension." class="nav-link" data-scroll-target="#finding-size-shape-dimension.">Finding size, shape, dimension.</a></li>
+  </ul></li>
+  <li><a href="#array-math-operations" id="toc-array-math-operations" class="nav-link" data-scroll-target="#array-math-operations">Array Math Operations</a>
+  <ul class="collapse">
+  <li><a href="#multiplying-vector-with-a-scalar-broadcasting" id="toc-multiplying-vector-with-a-scalar-broadcasting" class="nav-link" data-scroll-target="#multiplying-vector-with-a-scalar-broadcasting">Multiplying vector with a scalar (broadcasting)</a></li>
+  </ul></li>
+  <li><a href="#indexing-and-slicing" id="toc-indexing-and-slicing" class="nav-link" data-scroll-target="#indexing-and-slicing">Indexing and Slicing</a>
+  <ul class="collapse">
   <li><a href="#indexing" id="toc-indexing" class="nav-link" data-scroll-target="#indexing">Indexing</a></li>
+  <li><a href="#slicing" id="toc-slicing" class="nav-link" data-scroll-target="#slicing">Slicing</a></li>
+  </ul></li>
+  <li><a href="#stacking" id="toc-stacking" class="nav-link" data-scroll-target="#stacking">Stacking</a></li>
   </ul>
 </nav>
     </div>
@@ -243,7 +263,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="tldr" class="level2">
 <h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <p>In this notebook, you will use NumPy to create 2-D arrays and easily compute mathematical operations. <a href="https://numpy.org/">NumPy</a> (Numerical Python) is an open-source package that is widely used in science and engineering. This posts summarized the lecture “Linear Algebra for Machine Learning and Data Science” from Coursera.</p>
-<p><a name="0"></a> ## About Jupyter Notebooks ##</p>
+</section>
+<section id="about-jupyter-notebooks" class="level2">
+<h2 class="anchored" data-anchor-id="about-jupyter-notebooks">About Jupyter Notebooks</h2>
 <p>Jupyter Notebooks are interactive coding journals that integrate live code, explanatory text, equations, visualizations and other multimedia resources, all in a single document. As a first exercise, run the test snippet below and the print statement cell for “Hello World”.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Run the "Hello World" in the cell below to print "Hello World". </span></span>
@@ -255,9 +277,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>Hello World</code></pre>
 </div>
 </div>
-<p><a name="1"></a> # Basics of NumPy #</p>
+</section>
+<section id="basics-of-numpy" class="level1">
+<h1>Basics of NumPy</h1>
 <p>NumPy is the main package for scientific computing in Python. It performs a wide variety of advanced mathematical operations with high efficiency. In this practice lab you will learn several key NumPy functions that will help you in future assignments, such as creating arrays, slicing, indexing, reshaping, and stacking.</p>
-<p><a name="1-1"></a> ## Packages ##</p>
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">Packages</h2>
 <p>Before you get started, you have to import NumPy to load its functions. As you may notice, even though there is no expected output, when you run this cell, the Jupyter Notebook will have imported the package (often referred to as the library) and its functions. Try it for yourself and run the following cell.</p>
 <div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -267,7 +292,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>NumPy version: 1.21.5</code></pre>
 </div>
 </div>
-<p><a name="1-2"></a> ## Advantages of using NumPy arrays ##</p>
+</section>
+<section id="advantages-of-using-numpy-arrays" class="level2">
+<h2 class="anchored" data-anchor-id="advantages-of-using-numpy-arrays">Advantages of using NumPy arrays</h2>
 <p>Arrays are one of the core data structures of the NumPy library, essential for organizing your data. You can think of them as a grid of values, all of the same type. If you have used Python lists before, you may remember that they are convenient, as you can store different data types. However, Python lists are limited in functions and take up more space and time than NumPy arrays.</p>
 <p>NumPy provides an array object that is much faster and more compact than Python lists. Through its extensive API integration, the library offers many built-in functions that make computing much easier in only a few lines of code. This can be a huge advantage when performing math operations on large data.</p>
 <p>The array object in NumPy is called <code>ndarray</code> meaning <strong>‘n-dimensional array’</strong>. To begin with, you will use one of the most common array types: the one-dimensional array (‘1-D’). A 1-D array represents a standard list of values entirely in one dimension. Remember that in NumPy, all of the elements within the array are of the same type.</p>
@@ -346,7 +373,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Did you notice that the output of the data type of the <code>char_arr</code> array is <code>&lt;U23</code>? This means that the string (<code>'Welcome to Math for ML!'</code>) is less than a 23-character (23) unicode string (<code>U</code>) on a little-endian architecture. You can learn more about data types <a href="https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.dtypes.html">here</a>.</p>
-<p><a name="1-4"></a> ## More NumPy Arrays ##</p>
+</section>
+<section id="more-numpy-arrays" class="level2">
+<h2 class="anchored" data-anchor-id="more-numpy-arrays">More NumPy Arrays</h2>
 <p>One of the advantages of using NumPy is that you can easily create arrays with built-in functions such as: - <code>numpy.ones()</code> - Returns a new array setting values to one. - <code>numpy.zeros()</code> - Returns a new array setting values to zero. - <code>numpy.empty()</code> - Returns a new uninitialized array. - <code>numpy.random.rand()</code> - Returns a new array with values chosen at random.</p>
 <div class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return a new array with 3 elements of 1. </span></span>
@@ -383,7 +412,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p>Note: The difference between <code>numpy.zeros</code> and <code>numpy.empty</code> is that <code>numpy.empty</code> creates an array with uninitialized elements from available memory space, and <code>numpy.zeros</code> creates 0-initialized array. And maybe <code>numpy.empty</code> is faster to execute.</p>
 </blockquote>
-<p><a name="2"></a> # Multidimensional Arrays #</p>
+</section>
+</section>
+<section id="multidimensional-arrays" class="level1">
+<h1>Multidimensional Arrays</h1>
 <p>With NumPy you can also create arrays with more than one dimension. In the above examples, you encountered 1-D arrays, where you can access their elements using a single index. A multidimensional array has more than one column. Think of a multidimensional array as an excel sheet where each row/column represents a dimension.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -417,7 +449,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  [4 5 6]]</code></pre>
 </div>
 </div>
-<p><a name="2-1"></a> ## Finding size, shape, dimension. ##</p>
+<section id="finding-size-shape-dimension." class="level2">
+<h2 class="anchored" data-anchor-id="finding-size-shape-dimension.">Finding size, shape, dimension.</h2>
 <p>In the future assignments, you will need to know how to find the size, dimension and shape of an array. Using the NumPy built-in functions you can easily identify the followings: - <code>ndarray.ndim()</code> - Returns the number of array dimensions. - <code>ndarray.shape()</code> - Returns the shape of the array. Each number in the tuple denotes the lengths of each corresponding dimension. - <code>ndarray.size()</code> - Counts the number of elements along a given axis. Returns the size of the array.</p>
 <div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dimension of the 2-D array multi_dim_arr</span></span>
@@ -442,7 +475,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>6</code></pre>
 </div>
 </div>
-<p><a name="3"></a> # Array Math Operations # In this section, you will see that NumPy allows you to quickly perform elementwise addition, substraction, multiplication and division for both 1-D and multidimensional arrays, also known as matrices. The operations are done using the math symbol for each ‘+’, ‘-’, ’*’. Recall that addition of python lists works completely differently as it would add (append) two lists together, thus making a longer list, while subtraction and multiplication of python lists do not work.</p>
+</section>
+</section>
+<section id="array-math-operations" class="level1">
+<h1>Array Math Operations</h1>
+<p>In this section, you will see that NumPy allows you to quickly perform elementwise addition, substraction, multiplication and division for both 1-D and multidimensional arrays, also known as matrices. The operations are done using the math symbol for each ‘+’, ‘-’, ’*’. Recall that addition of python lists works completely differently as it would add (append) two lists together, thus making a longer list, while subtraction and multiplication of python lists do not work.</p>
 <div class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>arr_1 <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>])</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>arr_2 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>])</span>
@@ -464,7 +501,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 [ 2 12 30]</code></pre>
 </div>
 </div>
-<p><a name="3-1"></a> ## Multiplying vector with a scalar (broadcasting) ## Suppose you wanted to convert miles to kilometers using the NumPy array functions that you’ve learned so far. You can do this by carrying out an operation between an array (miles) and a single number (the conversion rate which is a scalar). Since, 1 mile = 1.6 km, NumPy computes each multiplication within each cell.</p>
+<section id="multiplying-vector-with-a-scalar-broadcasting" class="level2">
+<h2 class="anchored" data-anchor-id="multiplying-vector-with-a-scalar-broadcasting">Multiplying vector with a scalar (broadcasting)</h2>
+<p>Suppose you wanted to convert miles to kilometers using the NumPy array functions that you’ve learned so far. You can do this by carrying out an operation between an array (miles) and a single number (the conversion rate which is a scalar). Since, 1 mile = 1.6 km, NumPy computes each multiplication within each cell.</p>
 <p>This concept is called <strong>broadcasting</strong>, which allows you to perform operations specifically on arrays of different shapes.</p>
 <div class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>vector <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>])</span>
@@ -479,8 +518,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p></p><figcaption class="figure-caption">broadcasting</figcaption><p></p>
 </figure>
 </div>
-<p><a name="4"></a> # Indexing and Slicing # Indexing is very useful as it allows you to select specific elements from an array. It also lets you select entire rows/columns or planes as you’ll see in future assignments for multi-dimensional arrays.</p>
 </section>
+</section>
+<section id="indexing-and-slicing" class="level1">
+<h1>Indexing and Slicing</h1>
+<p>Indexing is very useful as it allows you to select specific elements from an array. It also lets you select entire rows/columns or planes as you’ll see in future assignments for multi-dimensional arrays.</p>
 <section id="indexing" class="level2">
 <h2 class="anchored" data-anchor-id="indexing">Indexing</h2>
 <p>Let us select specific elements from the arrays as given.</p>
@@ -509,7 +551,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>8</code></pre>
 </div>
 </div>
-<p><a name="4-2"></a> ## Slicing ## Slicing gives you a sublist of elements that you specify from the array. The slice notation specifies a start and end value, and copies the list from start up to but not including the end (end-exlusive).</p>
+</section>
+<section id="slicing" class="level2">
+<h2 class="anchored" data-anchor-id="slicing">Slicing</h2>
+<p>Slicing gives you a sublist of elements that you specify from the array. The slice notation specifies a start and end value, and copies the list from start up to but not including the end (end-exlusive).</p>
 <div class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Slice the array a to give the output [2,3,4]</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>sliced_arr <span class="op">=</span> a[<span class="dv">1</span>:<span class="dv">4</span>]</span>
@@ -543,7 +588,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>[2 5 8]</code></pre>
 </div>
 </div>
-<p><a name="5"></a> # Stacking # Finally, stacking is a feature of NumPy that leads to increased customization of arrays. It basically means to join two or more arrays, either horizontally or vertically, meaning that it is done along a new axis.</p>
+</section>
+</section>
+<section id="stacking" class="level1">
+<h1>Stacking</h1>
+<p>Finally, stacking is a feature of NumPy that leads to increased customization of arrays. It basically means to join two or more arrays, either horizontally or vertically, meaning that it is done along a new axis.</p>
 <ul>
 <li><code>vstack</code> - stacks vertically</li>
 <li><code>hstack</code> - stacks horizontally</li>
