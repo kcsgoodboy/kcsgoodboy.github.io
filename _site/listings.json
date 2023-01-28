@@ -1,14 +1,22 @@
 [
   {
-    "listing": "/posts/kr.html",
+    "listing": "/index.html",
     "items": [
-      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
       "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
+    ]
+  },
+  {
+    "listing": "/posts/kr.html",
+    "items": [
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
@@ -25,12 +33,6 @@
       "/publication/GDRL/GDRL-chapter-12.html",
       "/publication/GDRL/GDRL-chapter-11.html",
       "/publication/GDRL/GDRL-chapter-10.html"
-    ]
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
     ]
   }
 ]
