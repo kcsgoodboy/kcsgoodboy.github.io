@@ -2,82 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kcsgoodboy.github.io/about.html</loc>
-    <lastmod>2023-01-28T15:46:27.302Z</lastmod>
+    <lastmod>2023-02-01T14:45:20.352Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/index.html</loc>
-    <lastmod>2023-01-28T15:46:27.681Z</lastmod>
+    <lastmod>2023-02-01T14:45:20.942Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/index.html</loc>
-    <lastmod>2023-01-28T15:46:28.024Z</lastmod>
+    <lastmod>2023-02-01T14:45:21.320Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html</loc>
-    <lastmod>2023-01-28T15:46:29.053Z</lastmod>
+    <lastmod>2023-02-01T14:45:22.525Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/kr.html</loc>
-    <lastmod>2023-01-28T15:46:29.338Z</lastmod>
+    <lastmod>2023-02-01T14:45:22.833Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html</loc>
-    <lastmod>2023-01-28T15:46:30.661Z</lastmod>
+    <lastmod>2023-02-01T14:45:24.037Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html</loc>
-    <lastmod>2023-01-28T15:46:31.782Z</lastmod>
+    <lastmod>2023-02-01T14:45:25.213Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html</loc>
+    <lastmod>2023-02-01T14:45:26.419Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-10.html</loc>
-    <lastmod>2023-01-28T15:46:33.424Z</lastmod>
+    <lastmod>2023-02-01T14:45:28.097Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-11.html</loc>
-    <lastmod>2023-01-28T15:46:36.884Z</lastmod>
+    <lastmod>2023-02-01T14:45:30.653Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-12.html</loc>
-    <lastmod>2023-01-28T15:46:51.455Z</lastmod>
+    <lastmod>2023-02-01T14:45:46.810Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-2.html</loc>
-    <lastmod>2023-01-28T15:46:52.673Z</lastmod>
+    <lastmod>2023-02-01T14:45:48.194Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-3.html</loc>
-    <lastmod>2023-01-28T15:46:53.761Z</lastmod>
+    <lastmod>2023-02-01T14:45:49.450Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-4.html</loc>
-    <lastmod>2023-01-28T15:46:59.888Z</lastmod>
+    <lastmod>2023-02-01T14:45:57.001Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-5.html</loc>
-    <lastmod>2023-01-28T15:47:01.784Z</lastmod>
+    <lastmod>2023-02-01T14:45:59.306Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-6.html</loc>
-    <lastmod>2023-01-28T15:47:04.140Z</lastmod>
+    <lastmod>2023-02-01T14:46:01.962Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-7.html</loc>
-    <lastmod>2023-01-28T15:47:07.027Z</lastmod>
+    <lastmod>2023-02-01T14:46:05.770Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-8.html</loc>
-    <lastmod>2023-01-28T15:47:08.245Z</lastmod>
+    <lastmod>2023-02-01T14:46:07.018Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-9.html</loc>
-    <lastmod>2023-01-28T15:47:09.908Z</lastmod>
+    <lastmod>2023-02-01T14:46:08.768Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/index.html</loc>
-    <lastmod>2023-01-28T15:47:10.842Z</lastmod>
+    <lastmod>2023-02-01T14:46:09.779Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/index.html</loc>
-    <lastmod>2023-01-28T15:47:11.684Z</lastmod>
+    <lastmod>2023-02-01T14:46:10.663Z</lastmod>
   </url>
 </urlset>

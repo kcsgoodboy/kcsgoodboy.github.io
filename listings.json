@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
       "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
       "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
     ]
@@ -9,6 +10,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
       "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
       "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
     ]
