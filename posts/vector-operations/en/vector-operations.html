@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.128">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chanseok Kang">
+<meta name="dcterms.date" content="2023-02-05">
+
+<title>Chans Lecture Note - Vector Operations: Scalar Multiplication, Sum and Dot Product of Vectors</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Chans Lecture Note</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../publication/index.html" rel="" target="">
+ <span class="menu-text">Publication</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../index.html" rel="" target="">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../posts/kr.html" rel="" target="">
+ <span class="dropdown-text">한글</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Vector Operations: Scalar Multiplication, Sum and Dot Product of Vectors</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Python</div>
+                <div class="quarto-category">Coursera</div>
+                <div class="quarto-category">DeepLearning.AI</div>
+                <div class="quarto-category">Math</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chanseok Kang </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 5, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages">Packages</a></li>
+  <li><a href="#scalar-multiplication-and-sum-of-vectors" id="toc-scalar-multiplication-and-sum-of-vectors" class="nav-link" data-scroll-target="#scalar-multiplication-and-sum-of-vectors">Scalar Multiplication and Sum of Vectors</a>
+  <ul class="collapse">
+  <li><a href="#visualization-of-a-vector-vinmathbbr2" id="toc-visualization-of-a-vector-vinmathbbr2" class="nav-link" data-scroll-target="#visualization-of-a-vector-vinmathbbr2">Visualization of a Vector <span class="math inline">\(v\in\mathbb{R}^2\)</span></a></li>
+  <li><a href="#scalar-multiplication" id="toc-scalar-multiplication" class="nav-link" data-scroll-target="#scalar-multiplication">Scalar Multiplication</a></li>
+  <li><a href="#sum-of-vectors" id="toc-sum-of-vectors" class="nav-link" data-scroll-target="#sum-of-vectors">Sum of Vectors</a></li>
+  <li><a href="#norm-of-a-vector" id="toc-norm-of-a-vector" class="nav-link" data-scroll-target="#norm-of-a-vector">Norm of a Vector</a></li>
+  </ul></li>
+  <li><a href="#dot-product" id="toc-dot-product" class="nav-link" data-scroll-target="#dot-product">Dot Product</a>
+  <ul class="collapse">
+  <li><a href="#algebraic-definition-of-the-dot-product" id="toc-algebraic-definition-of-the-dot-product" class="nav-link" data-scroll-target="#algebraic-definition-of-the-dot-product">Algebraic Definition of the Dot Product</a></li>
+  <li><a href="#dot-product-using-python" id="toc-dot-product-using-python" class="nav-link" data-scroll-target="#dot-product-using-python">Dot Product using Python</a></li>
+  <li><a href="#speed-of-calculations-in-vectorized-form" id="toc-speed-of-calculations-in-vectorized-form" class="nav-link" data-scroll-target="#speed-of-calculations-in-vectorized-form">Speed of Calculations in Vectorized Form</a></li>
+  <li><a href="#geometric-definition-of-the-dot-product" id="toc-geometric-definition-of-the-dot-product" class="nav-link" data-scroll-target="#geometric-definition-of-the-dot-product">Geometric Definition of the Dot Product</a></li>
+  <li><a href="#application-of-the-dot-product-vector-similarity" id="toc-application-of-the-dot-product-vector-similarity" class="nav-link" data-scroll-target="#application-of-the-dot-product-vector-similarity">Application of the Dot Product: Vector Similarity</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>In this notebook, you will use Python and <code>NumPy</code> functions to perform main vector operations: scalar multiplication, sum of vectors and their dot product. You will also investigate the speed of calculations using loop and vectorized forms of these main linear algebra operations.</p>
+</section>
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">Packages</h2>
+<p>Load the <code>NumPy</code> package to access its functions.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"NumPy version: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(np.__version__))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NumPy version: 1.21.5</code></pre>
+</div>
+</div>
+</section>
+<section id="scalar-multiplication-and-sum-of-vectors" class="level2">
+<h2 class="anchored" data-anchor-id="scalar-multiplication-and-sum-of-vectors">Scalar Multiplication and Sum of Vectors</h2>
+<section id="visualization-of-a-vector-vinmathbbr2" class="level3">
+<h3 class="anchored" data-anchor-id="visualization-of-a-vector-vinmathbbr2">Visualization of a Vector <span class="math inline">\(v\in\mathbb{R}^2\)</span></h3>
+<p>You already have seen in the videos and labs, that vectors can be visualized as arrows, and it is easy to do it for a <span class="math inline">\(v\in\mathbb{R}^2\)</span>, e.g. <span class="math inline">\(v=\begin{bmatrix}  1 &amp; 3 \end{bmatrix}^T\)</span></p>
+<p>The following code will show the visualization.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_vectors(list_v, list_label, list_color):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    _, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ax.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks(np.arange(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ax.set_yticks(np.arange(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    plt.axis([<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>])</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(list_v):</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        sgn <span class="op">=</span> <span class="fl">0.4</span> <span class="op">*</span> np.array([[<span class="dv">1</span>] <span class="cf">if</span> i<span class="op">==</span><span class="dv">0</span> <span class="cf">else</span> [i] <span class="cf">for</span> i <span class="kw">in</span> np.sign(v)])</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        plt.quiver(v[<span class="dv">0</span>], v[<span class="dv">1</span>], color<span class="op">=</span>list_color[i], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        ax.text(v[<span class="dv">0</span>]<span class="op">-</span><span class="fl">0.2</span><span class="op">+</span>sgn[<span class="dv">0</span>], v[<span class="dv">1</span>]<span class="op">-</span><span class="fl">0.2</span><span class="op">+</span>sgn[<span class="dv">1</span>], list_label[i], fontsize<span class="op">=</span><span class="dv">14</span>, color<span class="op">=</span>list_color[i])</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    plt.grid()</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    plt.gca().set_aspect(<span class="st">"equal"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">3</span>]])</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Arguments: list of vectors as NumPy arrays, labels, colors.</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plot_vectors([v], [<span class="ss">f"$v$"</span>], [<span class="st">"black"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="vector-operations_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The vector is defined by its <strong>norm (length, magnitude)</strong> and <strong>direction</strong>, not its actual position. But for clarity and convenience vectors are often plotted starting in the origin (in <span class="math inline">\(\mathbb{R}^2\)</span> it is a point <span class="math inline">\((0,0)\)</span>) .</p>
+</section>
+<section id="scalar-multiplication" class="level3">
+<h3 class="anchored" data-anchor-id="scalar-multiplication">Scalar Multiplication</h3>
+<p><strong>Scalar multiplication</strong> of a vector <span class="math inline">\(v=\begin{bmatrix}  v_1 &amp; v_2 &amp; \ldots &amp; v_n \end{bmatrix}^T\in\mathbb{R}^n\)</span> by a scalar <span class="math inline">\(k\)</span> is a vector <span class="math inline">\(kv=\begin{bmatrix}  kv_1 &amp; kv_2 &amp; \ldots &amp; kv_n \end{bmatrix}^T\)</span> (element by element multiplication). If <span class="math inline">\(k&gt;0\)</span>, then <span class="math inline">\(kv\)</span> is a vector pointing in the same direction as <span class="math inline">\(v\)</span> and it is <span class="math inline">\(k\)</span> times as long as <span class="math inline">\(v\)</span>. If <span class="math inline">\(k=0\)</span>, then <span class="math inline">\(kv\)</span> is a zero vector. If <span class="math inline">\(k&lt;0\)</span>, vector <span class="math inline">\(kv\)</span> will be pointing in the opposite direction. In Python you can perform this operation with a <code>*</code> operator. Check out the example below:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot_vectors([v, <span class="dv">2</span><span class="op">*</span>v, <span class="op">-</span><span class="dv">2</span><span class="op">*</span>v], [<span class="ss">f"$v$"</span>, <span class="ss">f"$2v$"</span>, <span class="ss">f"$-2v$"</span>], [<span class="st">"black"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="vector-operations_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="sum-of-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="sum-of-vectors">Sum of Vectors</h3>
+<p><strong>Sum of vectors (vector addition)</strong> can be performed by adding the corresponding components of the vectors: if <span class="math inline">\(v=\begin{bmatrix}  v_1 &amp; v_2 &amp; \ldots &amp; v_n \end{bmatrix}^T\in\mathbb{R}^n\)</span> and<br>
+<span class="math inline">\(w=\begin{bmatrix}  w_1 &amp; w_2 &amp; \ldots &amp; w_n \end{bmatrix}^T\in\mathbb{R}^n\)</span>, then <span class="math inline">\(v + w=\begin{bmatrix}  v_1 + w_1 &amp; v_2 + w_2 &amp; \ldots &amp; v_n + w_n \end{bmatrix}^T\in\mathbb{R}^n\)</span>. The so-called <strong>parallelogram law</strong> gives the rule for vector addition. For two vectors <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> represented by the adjacent sides (both in magnitude and direction) of a parallelogram drawn from a point, the vector sum <span class="math inline">\(u+v\)</span> is is represented by the diagonal of the parallelogram drawn from the same point:</p>
+<p><img src="../images/sum_of_vectors.png" width="230" align="middle"></p>
+<p>In Python you can either use <code>+</code> operator or <code>NumPy</code> function <code>np.add()</code>. In the following code you can uncomment the line to check that the result will be the same:</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> np.array([[<span class="dv">1</span>],[<span class="dv">3</span>]])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.array([[<span class="dv">4</span>],[<span class="op">-</span><span class="dv">1</span>]])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>plot_vectors([v, w, v <span class="op">+</span> w], [<span class="ss">f"$v$"</span>, <span class="ss">f"$w$"</span>, <span class="ss">f"$v + w$"</span>], [<span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="vector-operations_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_vectors([v, w, np.add(v, w)], [<span class="ss">f"$v$"</span>, <span class="ss">f"$w$"</span>, <span class="ss">f"$v + w$"</span>], [<span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"red"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="vector-operations_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="norm-of-a-vector" class="level3">
+<h3 class="anchored" data-anchor-id="norm-of-a-vector">Norm of a Vector</h3>
+<p>The norm of a vector <span class="math inline">\(v\)</span> is denoted as <span class="math inline">\(\lvert v\rvert\)</span>. It is a nonnegative number that describes the extent of the vector in space (its length). The norm of a vector can be found using <code>NumPy</code> function <code>np.linalg.norm()</code>:</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Norm of a vector v is"</span>, np.linalg.norm(v))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Norm of a vector v is 3.1622776601683795</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="dot-product" class="level2">
+<h2 class="anchored" data-anchor-id="dot-product">Dot Product</h2>
+<section id="algebraic-definition-of-the-dot-product" class="level3">
+<h3 class="anchored" data-anchor-id="algebraic-definition-of-the-dot-product">Algebraic Definition of the Dot Product</h3>
+<p>The <strong>dot product</strong> (or <strong>scalar product</strong>) is an algebraic operation that takes two vectors <span class="math inline">\(x=\begin{bmatrix}  x_1 &amp; x_2 &amp; \ldots &amp; x_n \end{bmatrix}^T\in\mathbb{R}^n\)</span> and<br>
+<span class="math inline">\(y=\begin{bmatrix}  y_1 &amp; y_2 &amp; \ldots &amp; y_n \end{bmatrix}^T\in\mathbb{R}^n\)</span> and returns a single scalar. The dot product can be represented with a dot operator <span class="math inline">\(x\cdot y\)</span> and defined as:</p>
+<p><span class="math display">\[x\cdot y = \sum_{i=1}^{n} x_iy_i = x_1y_1+x_2y_2+\ldots+x_ny_n \tag{1}\]</span></p>
+</section>
+<section id="dot-product-using-python" class="level3">
+<h3 class="anchored" data-anchor-id="dot-product-using-python">Dot Product using Python</h3>
+<p>The simplest way to calculate dot product in Python is to take the sum of element by element multiplications. You can define the vectors <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> by listing their coordinates:</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="op">-</span><span class="dv">2</span>, <span class="op">-</span><span class="dv">5</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">3</span>, <span class="op">-</span><span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, let’s define a function <code>dot(x,y)</code> for the dot product calculation:</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dot(x, y):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    s<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi, yi <span class="kw">in</span> <span class="bu">zip</span>(x, y):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        s <span class="op">+=</span> xi <span class="op">*</span> yi</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the sake of simplicity, let’s assume that the vectors passed to the above function are always of the same size, so that you don’t need to perform additional checks.</p>
+<p>Now everything is ready to perform the dot product calculation calling the function <code>dot(x,y)</code>:</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The dot product of x and y is"</span>, dot(x, y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The dot product of x and y is 3</code></pre>
+</div>
+</div>
+<p>Dot product is very a commonly used operator, so <code>NumPy</code> linear algebra package provides quick way to calculate it using function <code>np.dot()</code>:</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"np.dot(x,y) function returns dot product of x and y:"</span>, np.dot(x, y)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>np.dot(x,y) function returns dot product of x and y: 3</code></pre>
+</div>
+</div>
+<p>Note that you did not have to define vectors <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> as <code>NumPy</code> arrays, the function worked even with the lists. But there are alternative functions in Python, such as explicit operator <code>@</code> for the dot product, which can be applied only to the <code>NumPy</code> arrays. You can run the following cell to check that.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"This line output is a dot product of x and y: "</span>, np.array(x) <span class="op">@</span> np.array(y))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">This line output is an error:"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(x <span class="op">@</span> y)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">TypeError</span> <span class="im">as</span> err:</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(err)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>This line output is a dot product of x and y:  3
+
+This line output is an error:
+unsupported operand type(s) for @: 'list' and 'list'</code></pre>
+</div>
+</div>
+<p>As both <code>np.dot()</code> and <code>@</code> operators are commonly used, it is recommended to define vectors as <code>NumPy</code> arrays to avoid errors. Let’s redefine vectors <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> as <code>NumPy</code> arrays to be safe:</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array(x)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="speed-of-calculations-in-vectorized-form" class="level3">
+<h3 class="anchored" data-anchor-id="speed-of-calculations-in-vectorized-form">Speed of Calculations in Vectorized Form</h3>
+<p>Dot product operations in Machine Learning applications are applied to the large vectors with hundreds or thousands of coordinates (called <strong>high dimensional vectors</strong>). Training models based on large datasets often takes hours and days even on powerful machines. Speed of calculations is crucial for the training and deployment of your models.</p>
+<p>It is important to understand the difference in the speed of calculations using vectorized and the loop forms of the vectors and functions. In the loop form operations are performed one by one, while in the vectorized form they can be performed in parallel. In the section above you defined loop version of the dot product calculation (function <code>dot()</code>), while <code>np.dot()</code> and <code>@</code> are the functions representing vectorized form.</p>
+<p>Let’s perform a simple experiment to compare their speed. Define new vectors <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> of the same size <span class="math inline">\(1,000,000\)</span>:</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> np.random.rand(<span class="dv">1000000</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.random.rand(<span class="dv">1000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>time.time()</code> function to evaluate amount of time (in seconds) required to calculate dot product using the function <code>dot(x,y)</code> which you defined above:</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>tic <span class="op">=</span> time.time()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> dot(a,b)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>toc <span class="op">=</span> time.time()</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dot product: "</span>, c)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"Time for the loop version:"</span> <span class="op">+</span> <span class="bu">str</span>(<span class="dv">1000</span><span class="op">*</span>(toc<span class="op">-</span>tic)) <span class="op">+</span> <span class="st">" ms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dot product:  249642.47515074877
+Time for the loop version:205.99746704101562 ms</code></pre>
+</div>
+</div>
+<p>Now compare it with the speed of the vectorized versions:</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tic <span class="op">=</span> time.time()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> np.dot(a,b)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>toc <span class="op">=</span> time.time()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dot product: "</span>, c)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"Time for the vectorized version, np.dot() function: "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="dv">1000</span><span class="op">*</span>(toc<span class="op">-</span>tic)) <span class="op">+</span> <span class="st">" ms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dot product:  249642.47515074533
+Time for the vectorized version, np.dot() function: 12.999773025512695 ms</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tic <span class="op">=</span> time.time()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> a <span class="op">@</span> b</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>toc <span class="op">=</span> time.time()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dot product: "</span>, c)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="st">"Time for the vectorized version, @ function: "</span> <span class="op">+</span> <span class="bu">str</span>(<span class="dv">1000</span><span class="op">*</span>(toc<span class="op">-</span>tic)) <span class="op">+</span> <span class="st">" ms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Dot product:  249642.47515074533
+Time for the vectorized version, @ function: 1.033782958984375 ms</code></pre>
+</div>
+</div>
+<p>You can see that vectorization is extremely beneficial in terms of the speed of calculations!</p>
+</section>
+<section id="geometric-definition-of-the-dot-product" class="level3">
+<h3 class="anchored" data-anchor-id="geometric-definition-of-the-dot-product">Geometric Definition of the Dot Product</h3>
+<p>In <a href="https://en.wikipedia.org/wiki/Euclidean_space">Euclidean space</a>, a Euclidean vector has both magnitude and direction. The dot product of two vectors <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is defined by:</p>
+<p><span class="math display">\[x\cdot y = \lvert x\rvert \lvert y\rvert \cos(\theta),\tag{2}\]</span></p>
+<p>where <span class="math inline">\(\theta\)</span> is the angle between the two vectors:</p>
+<p><img src="../images/dot_product_geometric.png" width="230" align="middle"></p>
+<p>This provides an easy way to test the orthogonality between vectors. If <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are orthogonal (the angle between vectors is <span class="math inline">\(90^{\circ}\)</span>), then since <span class="math inline">\(\cos(90^{\circ})=0\)</span>, it implies that <strong>the dot product of any two orthogonal vectors must be <span class="math inline">\(0\)</span></strong>. Let’s test it, taking two vectors <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> we know are orthogonal:</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The dot product of i and j is"</span>, dot(i, j))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The dot product of i and j is 0</code></pre>
+</div>
+</div>
+</section>
+<section id="application-of-the-dot-product-vector-similarity" class="level3">
+<h3 class="anchored" data-anchor-id="application-of-the-dot-product-vector-similarity">Application of the Dot Product: Vector Similarity</h3>
+<p>Geometric definition of a dot product is used in one of the applications - to evaluate <strong>vector similarity</strong>. In Natural Language Processing (NLP) words or phrases from vocabulary are mapped to a corresponding vector of real numbers. Similarity between two vectors can be defined as a cosine of the angle between them. When they point in the same direction, their similarity is 1 and it decreases with the increase of the angle.</p>
+<p>Then equation <span class="math inline">\((2)\)</span> can be rearranged to evaluate cosine of the angle between vectors:</p>
+<p><span class="math inline">\(\cos(\theta)=\frac{x \cdot y}{\lvert x\rvert \lvert y\rvert}.\tag{3}\)</span></p>
+<p>Zero value corresponds to the zero similarity between vectors (and words corresponding to those vectors). Largest value is when vectors point in the same direction, lowest value is when vectors point in the opposite directions.</p>
+<p>This example of vector similarity is given to link the material with the Machine Learning applications.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kcsgoodboy/en" data-repo-id="R_kgDOIixJIQ" data-category="General" data-category-id="DIC_kwDOIixJIc4CTiz-" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+  </div>
+</footer>
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
