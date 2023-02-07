@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Chans Lecture Note"
+  google-analytics: "G-0JHM3R8BEZ"
   page-footer: "Copyright 2023, Chanseok Kang" 
   navbar:
     left:
