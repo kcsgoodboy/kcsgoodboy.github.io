@@ -1,12 +1,8 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/posts/kr.html",
     "items": [
-      "/posts/vector-operations/en/vector-operations.html",
-      "/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html",
-      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
-      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
@@ -17,12 +13,6 @@
       "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
       "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
       "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
-    ]
-  },
-  {
-    "listing": "/posts/kr.html",
-    "items": [
-      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
@@ -39,6 +29,16 @@
       "/publication/GDRL/GDRL-chapter-12.html",
       "/publication/GDRL/GDRL-chapter-11.html",
       "/publication/GDRL/GDRL-chapter-10.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/vector-operations/en/vector-operations.html",
+      "/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html",
+      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
+      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
     ]
   }
 ]

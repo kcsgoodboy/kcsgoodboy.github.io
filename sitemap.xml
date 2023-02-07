@@ -1,95 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kcsgoodboy.github.io/about.html</loc>
-    <lastmod>2023-02-06T15:17:49.989Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/index.html</loc>
-    <lastmod>2023-02-06T15:17:50.653Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/index.html</loc>
-    <lastmod>2023-02-06T15:17:51.081Z</lastmod>
+    <loc>https://kcsgoodboy.github.io/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html</loc>
+    <lastmod>2023-02-07T04:59:01.332Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html</loc>
-    <lastmod>2023-02-06T15:17:52.216Z</lastmod>
+    <lastmod>2023-02-07T04:59:02.408Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/kr.html</loc>
-    <lastmod>2023-02-06T15:17:52.569Z</lastmod>
+    <lastmod>2023-02-07T04:59:02.648Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html</loc>
-    <lastmod>2023-02-06T15:17:53.861Z</lastmod>
+    <lastmod>2023-02-07T04:59:03.748Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html</loc>
-    <lastmod>2023-02-06T15:17:55.024Z</lastmod>
+    <lastmod>2023-02-07T04:59:04.944Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html</loc>
-    <lastmod>2023-02-06T15:17:56.082Z</lastmod>
+    <lastmod>2023-02-07T04:59:05.972Z</lastmod>
   </url>
   <url>
-    <loc>https://kcsgoodboy.github.io/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html</loc>
-    <lastmod>2023-02-06T15:17:57.525Z</lastmod>
+    <loc>https://kcsgoodboy.github.io/posts/index.html</loc>
+    <lastmod>2023-02-07T04:59:06.312Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/vector-operations/en/vector-operations.html</loc>
-    <lastmod>2023-02-06T15:17:58.548Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-10.html</loc>
-    <lastmod>2023-02-06T15:18:00.378Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-11.html</loc>
-    <lastmod>2023-02-06T15:18:03.080Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-12.html</loc>
-    <lastmod>2023-02-06T15:18:19.440Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-2.html</loc>
-    <lastmod>2023-02-06T15:18:20.806Z</lastmod>
+    <lastmod>2023-02-07T04:59:07.200Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-3.html</loc>
-    <lastmod>2023-02-06T15:18:22.082Z</lastmod>
+    <lastmod>2023-02-07T04:59:08.272Z</lastmod>
   </url>
   <url>
-    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-4.html</loc>
-    <lastmod>2023-02-06T15:18:28.428Z</lastmod>
+    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-10.html</loc>
+    <lastmod>2023-02-07T04:59:09.799Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-12.html</loc>
+    <lastmod>2023-02-07T04:59:25.363Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-5.html</loc>
-    <lastmod>2023-02-06T15:18:30.554Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-6.html</loc>
-    <lastmod>2023-02-06T15:18:33.025Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-7.html</loc>
-    <lastmod>2023-02-06T15:18:36.720Z</lastmod>
+    <lastmod>2023-02-07T04:59:27.495Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-8.html</loc>
-    <lastmod>2023-02-06T15:18:38.014Z</lastmod>
+    <lastmod>2023-02-07T04:59:29.067Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-9.html</loc>
-    <lastmod>2023-02-06T15:18:39.774Z</lastmod>
+    <lastmod>2023-02-07T04:59:30.595Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-11.html</loc>
+    <lastmod>2023-02-07T04:59:32.743Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-7.html</loc>
+    <lastmod>2023-02-07T04:59:34.999Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-2.html</loc>
+    <lastmod>2023-02-07T04:59:36.187Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/index.html</loc>
-    <lastmod>2023-02-06T15:18:40.718Z</lastmod>
+    <lastmod>2023-02-07T04:59:36.975Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-4.html</loc>
+    <lastmod>2023-02-07T04:59:38.947Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-6.html</loc>
+    <lastmod>2023-02-07T04:59:40.771Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/index.html</loc>
-    <lastmod>2023-02-06T15:18:41.664Z</lastmod>
+    <lastmod>2023-02-07T04:59:41.579Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/about.html</loc>
+    <lastmod>2023-02-07T04:59:42.335Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/index.html</loc>
+    <lastmod>2023-02-07T04:59:42.651Z</lastmod>
   </url>
 </urlset>
