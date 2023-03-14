@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/Differentiation-in-python/en/differentiation-in-python.html",
       "/posts/Linear-Transformation/en/Linear-Transformation.html",
       "/posts/Matrix-Multiplication/en/Matrix-Multiplication.html",
       "/posts/vector-operations/en/vector-operations.html",
@@ -14,6 +15,7 @@
   {
     "listing": "/posts/index.html",
     "items": [
+      "/posts/Differentiation-in-python/en/differentiation-in-python.html",
       "/posts/Linear-Transformation/en/Linear-Transformation.html",
       "/posts/Matrix-Multiplication/en/Matrix-Multiplication.html",
       "/posts/vector-operations/en/vector-operations.html",
