@@ -7,7 +7,13 @@ categories: [PaperReview, ReinforcementLearning]
 title-block-banner: true
 ---
 
+- 저자: Ilya kostrikov, Ashvin Nair, Sergey Levine
+- 발표: ICLR 2022
+- [논문](https://openreview.net/pdf?id=68n2s9ZJWF8)
+- [OpenReview](https://openreview.net/forum?id=68n2s9ZJWF8)
+- [Code (Jax)](https://github.com/ikostrikov/implicit_q_learning)
+
 ## TL;DR
 
-이 논문은
+이 논문은 Offline RL 알고리즘 중 하나인 Implicit Q-Learning에 대한 내용을 담고 있다.
 
