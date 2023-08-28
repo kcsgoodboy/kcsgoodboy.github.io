@@ -466,14 +466,14 @@
     "href": "posts/Implicit-Q-Learning/kr/IQL.html",
     "title": "Offline Reinforcement Learning with Implicit Q-Learning",
     "section": "",
-    "text": "이 논문은"
+    "text": "저자: Ilya kostrikov, Ashvin Nair, Sergey Levine\n논문 정보\nOpenReview\nCode (Jax)\n\n\n\n이 논문은 Offline RL 알고리즘 중 하나인 Implicit Q-Learning에 대한 내용을 담고 있다."
   },
   {
     "objectID": "posts/Implicit-Q-Learning/kr/IQL.html#tldr",
     "href": "posts/Implicit-Q-Learning/kr/IQL.html#tldr",
     "title": "Offline Reinforcement Learning with Implicit Q-Learning",
     "section": "",
-    "text": "이 논문은"
+    "text": "이 논문은 Offline RL 알고리즘 중 하나인 Implicit Q-Learning에 대한 내용을 담고 있다."
   },
   {
     "objectID": "index.html",
