@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chanseok Kang">
+<meta name="dcterms.date" content="2023-08-29">
 
-<title>Chans Lecture Note – index</title>
+<title>Chans Lecture Note - Offline Reinforcement Learning with Implicit Q-Learning</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,7 +73,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -81,7 +83,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
   </div>
@@ -92,11 +94,11 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html" rel="" target="">
+    <a class="nav-link" href="../../../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../publication/index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../../../publication/index.html" rel="" target="">
  <span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -105,11 +107,11 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../index.html" rel="" target="">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../posts/kr.html" rel="" target="">
+    <a class="dropdown-item" href="../../../posts/kr.html" rel="" target="">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -134,85 +136,59 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Offline Reinforcement Learning with Implicit Q-Learning</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">PaperReview</div>
+                <div class="quarto-category">ReinforcementLearning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chanseok Kang </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 29, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
-<section id="research" class="level2">
-<h2 class="anchored" data-anchor-id="research">Research</h2>
 
-<table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-<tbody>
-<tr>
-<td style="padding:20px;width:25%;vertical-align:middle">
-<img src="../image/os_migration.png" width="300">
-</td>
-<td style="padding:20px;width:75%;vertical-align:middle">
-<a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf"> Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques </a> <br> <strong>Chanseok Kang</strong> <br> <em>M.S Thesis</em>, 2015 <br>
-<p>
-</p>
-</td>
-</tr>
-<tr>
-<td style="padding:20px;width:25%;vertical-align:middle">
-<img src="../image/scc.jpg" width="300" height="300">
-</td>
-<td style="padding:20px;width:75%;vertical-align:middle">
-<a href="https://link.springer.com/chapter/10.1007/978-3-319-61756-5_3"> Scheduling for better energy efficiency on many-core chips </a> <br> <strong>Chanseok Kang</strong>, <a>Seungyul Lee</a>, <a>Yong-Jun Lee</a>, <a>Jaejin Lee</a>, <a>Bernhard Egger</a> <br> <em>Workshop on Job Scheduling Strategies for Parallel Processing (JSSPP)</em>, 2015 <br>
-<p>
-</p>
-<p>
-Identical version of M.S Thesis
-</p>
-</td>
-</tr>
-<tr>
-<td style="padding:20px;width:25%;vertical-align:middle">
-<img src="../image/NuPow.png" width="300">
-</td>
-<td style="padding:20px;width:75%;vertical-align:middle">
-<a href="http://www.gecon-conference.org/articlesgecon2020/no12_paper29.pdf"> NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control </a> <br> <a>Changmin Ahn</a>, <a>Seungyul Lee</a>, <strong>Chanseok Kang</strong>, <a>Bernhard Egger</a> <br> <em>International Conference on the Economics of Grids, Clouds, Systems, and Services (GECON)</em>, 2020 <br>
-<p>
-</p>
-</td>
-</tr>
-</tbody>
-
-</table>
-</section>
-<section id="translation-review" class="level2">
-<h2 class="anchored" data-anchor-id="translation-review">Translation &amp; Review</h2>
-
-<table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;">
-<tbody>
-<tr>
-<td style="padding:20px;width:25%;vertical-align:middle">
-<img src="../image/GDRL-bookcover.png" width="300" height="300">
-</td>
-<td style="padding:20px;width:75%;vertical-align:middle">
-<a href="../publication/GDRL/index.html"> 그로킹 심층 강화학습 (Grokking Deep Reinforcement Learning) </a> <br> <a>Miguel Morales</a>, <strong>강찬석(번역)</strong> <br> <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8984169041">한빛미디어</a>, 2021 <br> <font color="red"><strong>22년 대한민국학술원 선정 우수학술도서</strong></font> <br>
-<p>
-</p>
-</td>
-</tr>
-<tr>
-<td style="padding:20px;width:25%;vertical-align:middle">
-<img src="../image/mlwt-bookcover.jpg" width="300" height="300">
-</td>
-<td style="padding:20px;width:75%;vertical-align:middle">
-<a> 텐서플로를 활용한 머신러닝 (Machine Learning with Tensorflow) </a> <br> <a href="https://shukla.io/">Nishant Shukla</a>, <a>송교석(번역)</a>, <strong>강찬석(감수)</strong> <br> <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8108682495">한빛미디어</a>, 2019 <br>
-<p>
-</p>
-</td>
-</tr>
-</tbody>
-
-</table>
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>이 논문은</p>
 
 
 </section>
@@ -468,5 +444,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
