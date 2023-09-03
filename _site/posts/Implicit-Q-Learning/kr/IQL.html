@@ -300,16 +300,21 @@ L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s,
 <section id="expectile-regression" class="level3">
 <h3 class="anchored" data-anchor-id="expectile-regression">Expectile Regression</h3>
 <p>Expectile Regression은 quantile regression의 일종으로, 주어진 distribution 내에서의 quantile을 추정하는 방법이다. 어떤 random variable <span class="math inline">\(X\)</span> 에 대한 expectile <span class="math inline">\(\tau \in (0, 1)\)</span> 은 asymmetric least sqaures problem에 대한 solution으로 정의된다. 여기서 asymmetric least sqaures problem은 다음과 같다.</p>
-<p><span class="math display">\[
+<p><span id="eq-ALS"><span class="math display">\[
 \arg\min_{m_\tau} \mathbb{E}_{x \sim X}[L_2^{\tau}(x - m_\tau)]
-\]</span></p>
+\tag{4}\]</span></span></p>
 <p>여기서 <span class="math inline">\(L_2^{\tau}(u) = | \tau - \mathbb{1}(u \lt 0)| u^2\)</span> 이다.</p>
-<div class="quarto-figure quarto-figure-center">
+<div id="fig-expectile-regression" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="../fig/expectile_regression.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Expectile Regression</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;1: Expectile Regression</figcaption>
 </figure>
 </div>
+<p><a href="#fig-expectile-regression">Figure&nbsp;1</a> 의 첫번째 그림이 바로 <span class="math inline">\(\tau\)</span> 에 따른 assymentric squared loss를 보여주는 것이다. 0.5의 값을 가질 경우 일반적인 MSE loss가 되지만, <span class="math inline">\(\tau = 0.9\)</span> 일 경우, 양의 구간에 조금 더 가중치가 가해진 것을 그림을 통해서 확인할 수 있다. 결과적으로 <span class="math inline">\(m_{\tau}\)</span> 보다 작은 <span class="math inline">\(x\)</span>가 loss에 미치는 영향을 줄이고, <span class="math inline">\(m_{\tau}\)</span> 보다 큰 <span class="math inline">\(x\)</span>가 loss에 미치는 영향을 늘리는 효과를 가지게 된다. 이를 통해서 <span class="math inline">\(\tau\)</span> 에 따른 quantile을 추정할 수 있게 된다. 또한 <a href="#eq-ALS">Equation&nbsp;4</a> 의 <span class="math inline">\(x\)</span> 를 <span class="math inline">\(y\)</span> 로 대체함으로써 어떤 conditional distribution에 대한 expectile도 예측하게끔 설계할 수 있다.</p>
+<p><span id="eq-ALS-conditional"><span class="math display">\[
+\arg\min_{m_\tau} \mathbb{E}_{x \sim X}[L_2^{\tau}(x - m_\tau)]
+\tag{5}\]</span></span></p>
+<p>위 식을 Stochastic Gradient Descent를 통해서 최적화를 하게 되면, 결과적으로 unbiased gradient를 구할수도 있고, 쉽게 구현할 수도 있다.</p>
 
 
 </section>

@@ -79,7 +79,7 @@ $$ {#eq-ALS}
 
 여기서 $L_2^{\tau}(u) = | \tau - \mathbb{1}(u \lt 0)| u^2$ 이다. 
 
-![Expectile Regression](../fig/expectile_regression.png) {#fig-expectile-regression}
+![Expectile Regression](../fig/expectile_regression.png){#fig-expectile-regression}
 
 @fig-expectile-regression 의 첫번째 그림이 바로 $\tau$ 에 따른 assymentric squared loss를 보여주는 것이다. 0.5의 값을 가질 경우 일반적인 MSE loss가 되지만, $\tau = 0.9$ 일 경우, 양의 구간에 조금 더 가중치가 가해진 것을 그림을 통해서 확인할 수 있다. 결과적으로 $m_{\tau}$ 보다 작은 $x$가 loss에 미치는 영향을 줄이고, $m_{\tau}$ 보다 큰 $x$가 loss에 미치는 영향을 늘리는 효과를 가지게 된다. 이를 통해서 $\tau$ 에 따른 quantile을 추정할 수 있게 된다. 또한 @eq-ALS 의 $x$ 를 $y$ 로 대체함으로써 어떤 conditional distribution에 대한 expectile도 예측하게끔 설계할 수 있다.
 
