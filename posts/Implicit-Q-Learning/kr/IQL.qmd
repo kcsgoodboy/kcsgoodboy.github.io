@@ -34,7 +34,7 @@ Online (On-policy 나 Off-policy) RL 과는 다르게, Offline RL은 환경과�
 이때 temporal difference error를 최소화하는 방향으로 학습이 이뤄지는데, 이에 대한 Loss는 @eq-TD-Error-Loss 와 같다.
 
 $$ 
-L_{\text{TD}}(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s')} \sim \mathcal{D}} [(r(s, a) + \textcolor{red}{\gamma \max_{a'} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2] 
+L_{\text{TD}}(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s')} \sim \mathcal{D}} [(r(s, a) + \gamma \textcolor{red}{\max_{a'} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2] 
 $$ {#eq-TD-Error-Loss}
 
 여기서 $\mathcal{D}$ 는 수집된 dataset이고, $Q_{\theta}(s, a)$ 는 $\theta$ 로 파라미터화된 Q-function이다. 그리고 $Q_{\hat{\theta}}(s', a')$ 는 Polyak averaging 같은 방식을 통해서 parameter를 soft update하는 target network을 의미하고, 우리가 찾는 policy $\pi(s) = \arg\max_{a}Q_{\theta}(s, a)$ 가 된다. 대부분의 offline RL 알고리즘은 이 loss에 constraint를 추가하는 방식 등으로 loss를 바꿔서 적어도 학습된 policy가 수집된 데이터의 distribution을 따르게 하거나 아니면 policy에 constrain을 주는 방식으로 학습을 수행한다. Offline RL의 가장 큰 문제 중 하나는 수집된 데이터 내에 없는 action $a'$, 즉 out-of-distribution action이 나올 경우 target network에 의해서 계산된 $Q_{\hat{\theta}}(s', a')$ 가 너무 큰 값이 나오게 되는데, 이는 학습이 불안정해지는 overestimation의 원인이 된다.
@@ -48,13 +48,35 @@ $$ {#eq-TD-Error-Loss}
 :::
 
 $$
-L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s, a) + \textcolor{red}{\gamma Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
+L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s, a) + \gamma\textcolor{red}{Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
 $$ {#eq-SARSA-Error-Loss}
 
 @eq-TD-Error-Loss 와는 다르게, @eq-SARSA-Error-Loss 에서는 빨간색 부분에서 확인할 수 있는 것처럼 Q value를 계산할 때 사용하는 next action $a'$ 도 dataset $\mathcal{D}$ 에서 나온 action이기 때문에 out-of-sample action이 나올 경우에 대한 문제가 발생하지 않는다. 또한 loss function 내에서 TD target ($r(s, a) + \gamma Q_{\hat{\theta}}(s', a')$ 을 예측할 수 있도록 학습할 때 mean sequared error를 사용하기 때문에 만약 dataset이 충분해서 sampling error가 없다고 가정할 수 있다면 이상적인 Q function을 찾을 수도 있게 된다.
 
 $$ 
-Q_{\theta^{*}}(s, a) \approx r(s, a) + \gamma \mathcal{E}_{s' \sim p(\cdot|s, a) \\ a' \sim \pi_{\beta}(\cdot|s)}[Q_{\hat{\theta}}(s', a')]
+Q_{\theta^{*}}(s, a) \approx r(s, a) + \gamma \mathbb{E}_{\substack{s' \sim p(\cdot|s, a) \\ a' \sim \pi_{\beta}(\cdot|s)}}[Q_{\hat{\theta}}(s', a')]
 $$ {#eq-ideal-Q-function}
 
 여기에 complex task에서 활용할 수 있는 multi-step dynamic programming의 이점을 활용하기 위해서 @eq-SARSA-Error-Loss 의 이점을 살리면서 약간 수정하는 형태를 취했다. 
+
+::: {.callout-note}
+일반적인 dynamic programming의 경우, $Q(s, a)$ 를 계산할 때 $s$ 에서 $a$ 를 선택하고, 이후에 $s'$ 에서 $a'$ 를 선택하는 형태로 계산을 하게 된다. 이에 비해 multi-step dynamic programming은 $s$ 에서 $a$ 를 선택하고, 이후에 $s'$ 에서 $a'$ 를 선택하고, 이후에 $s''$ 에서 $a''$ 를 선택하는 형태로 확장된 식이다. 이렇게 하면 일반적인 dynamic programming에 비해 계산량이 많아지지만, 이를 통해서 복잡한 task에 대해서 좋은 결과를 얻을 수 있다는 장점이 있다.
+:::
+
+그리고 실제로 out-of-sample action이 나왔을 때, 학습된 Q function을 사용하지 않더라도 주어진 distribution 내에서의 maximum Q value 를 추정할 수 있도록 하기 위해서 Expectile Regression을 사용했다. 이에 대한 간단한 설명은 다음 section에서 하고, 최종적으로는 다음의 loss function을 기반으로 value function을 학습하게 된다.
+
+$$
+L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s, a) + \gamma \textcolor{red}{\max_{\substack{a' \in \mathcal{A} \\ \text{s.t. } \pi_{\beta}(a'|s') \gt 0}} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
+$$
+
+### Expectile Regression
+
+Expectile Regression은 quantile regression의 일종으로, 주어진 distribution 내에서의 quantile을 추정하는 방법이다. 어떤 random variable $X$ 에 대한 expectile $\tau \in (0, 1)$ 은 asymmetric least sqaures problem에 대한 solution으로 정의된다. 여기서 asymmetric least sqaures problem은 다음과 같다.
+
+$$
+\arg\min_{m_\tau} \mathbb{E}_{x \sim X}[L_2^{\tau}(x - m_\tau)]
+$$
+
+여기서 $L_2^{\tau}(u) = | \tau - \mathbb{1}(u \lt 0)| u^2$ 이다. 
+
+![Expectile Regression](../fig/expectile_regression.png)

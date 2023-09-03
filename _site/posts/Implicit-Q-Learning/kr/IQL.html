@@ -208,6 +208,7 @@ MathJax = {
   <li><a href="#내용-정리" id="toc-내용-정리" class="nav-link" data-scroll-target="#내용-정리">내용 정리</a>
   <ul class="collapse">
   <li><a href="#offline-rl의-문제점" id="toc-offline-rl의-문제점" class="nav-link" data-scroll-target="#offline-rl의-문제점">Offline RL의 문제점</a></li>
+  <li><a href="#implicit-q-learning" id="toc-implicit-q-learning" class="nav-link" data-scroll-target="#implicit-q-learning">Implicit Q-Learning</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -251,7 +252,32 @@ Note
 <p><span id="eq-TD-Error-Loss"><span class="math display">\[
 L_{\text{TD}}(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s')} \sim \mathcal{D}} [(r(s, a) + \textcolor{red}{\gamma \max_{a'} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
 \tag{1}\]</span></span></p>
-<p>여기서 <span class="math inline">\(\mathcal{D}\)</span>는 수집된 데이터셋이고, <span class="math inline">\(Q_{\theta}(s, a)\)</span>는 <span class="math inline">\(\theta\)</span>로 파라미터화된 Q-function이다. 그리고 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span>는 Polyak averaging 같은 방식을 통해서 parameter를 soft update하는 target network을 의미하고, 우리가 찾는 policy <span class="math inline">\(\pi(s) = \arg\max_{a}Q_{\theta}(s, a)\)</span>가 된다. 대부분의 offline RL 알고리즘은 이 loss에 constraint를 추가하는 방식 등으로 loss를 바꿔서 적어도 학습된 policy가 수집된 데이터의 distribution을 따르게 하거나 아니면 policy에 constrain을 주는 방식으로 학습을 수행한다. Offline RL의 가장 큰 문제 중 하나는 수집된 데이터 내에 없는 action <span class="math inline">\(a'\)</span>, 즉 out-of-distribution action이 나올 경우 target network에 의해서 계산된 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span>가 너무 큰 값이 나오게 되는데, 이는 학습이 불안정해지는 overestimation 원인이 된다.</p>
+<p>여기서 <span class="math inline">\(\mathcal{D}\)</span> 는 수집된 dataset이고, <span class="math inline">\(Q_{\theta}(s, a)\)</span> 는 <span class="math inline">\(\theta\)</span> 로 파라미터화된 Q-function이다. 그리고 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span> 는 Polyak averaging 같은 방식을 통해서 parameter를 soft update하는 target network을 의미하고, 우리가 찾는 policy <span class="math inline">\(\pi(s) = \arg\max_{a}Q_{\theta}(s, a)\)</span> 가 된다. 대부분의 offline RL 알고리즘은 이 loss에 constraint를 추가하는 방식 등으로 loss를 바꿔서 적어도 학습된 policy가 수집된 데이터의 distribution을 따르게 하거나 아니면 policy에 constrain을 주는 방식으로 학습을 수행한다. Offline RL의 가장 큰 문제 중 하나는 수집된 데이터 내에 없는 action <span class="math inline">\(a'\)</span>, 즉 out-of-distribution action이 나올 경우 target network에 의해서 계산된 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span> 가 너무 큰 값이 나오게 되는데, 이는 학습이 불안정해지는 overestimation의 원인이 된다.</p>
+</section>
+<section id="implicit-q-learning" class="level3">
+<h3 class="anchored" data-anchor-id="implicit-q-learning">Implicit Q-Learning</h3>
+<p>이 알고리즘의 목표는 <a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 에서 사용될 action 중 out-of-sample action, 다시 말해 <span class="math inline">\(\mathcal{D}\)</span> 에서 나오지 않은 action이 나올 경우를 완전히 배제하는 것이다. 이를 위해서 먼저 <a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 을 SARSA 형태로 바꾸고 dataset을 쌓을 때 사용했던 policy인 <span class="math inline">\(\pi_{\beta}\)</span> (Behavior Policy)의 value를 학습하도록 fitted Q evaluation을 수행하는 것부터 시작해본다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Fitted Q-evaluation (FQE)</strong> 이란 <strong>Fitted Q Iteration (FQI)</strong>이라고도 하며, 데이터를 사용해서 Q-function을 근사화하는 기법이다. 이를 위해서 먼저 Behavior policy를 통해서 data를 수집한 후 해당 데이터를 사용하여 Q-function을 근사화하는 모델을 학습하는 형태로 되어 있다. 이때 이 모델은 상태 <span class="math inline">\(s\)</span> 와 action <span class="math inline">\(a\)</span> 를 입력으로 받아서 <span class="math inline">\(Q(s, a)\)</span> 를 출력하는 형태로 되어 있다. 이후에는 이 모델을 사용해서 target network를 업데이트하고, 이를 바탕으로 다시 Q-function을 근사화하는 과정을 반복한다.</p>
+</div>
+</div>
+<p><span id="eq-SARSA-Error-Loss"><span class="math display">\[
+L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s, a) + \textcolor{red}{\gamma Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
+\tag{2}\]</span></span></p>
+<p><a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 와는 다르게, <a href="#eq-SARSA-Error-Loss">Equation&nbsp;2</a> 에서는 빨간색 부분에서 확인할 수 있는 것처럼 Q value를 계산할 때 사용하는 next action <span class="math inline">\(a'\)</span> 도 dataset <span class="math inline">\(\mathcal{D}\)</span> 에서 나온 action이기 때문에 out-of-sample action이 나올 경우에 대한 문제가 발생하지 않는다. 또한 loss function 내에서 TD target (<span class="math inline">\(r(s, a) + \gamma Q_{\hat{\theta}}(s', a')\)</span> 을 예측할 수 있도록 학습할 때 mean sequared error를 사용하기 때문에 만약 dataset이 충분해서 sampling error가 없다고 가정할 수 있다면 이상적인 Q function을 찾을 수도 있게 된다.</p>
+<p><span id="eq-ideal-Q-function"><span class="math display">\[
+Q_{\theta^{*}}(s, a) \approx r(s, a) + \gamma \mathcal{E}_{s' \sim p(\cdot|s, a) \\ a' \sim \pi_{\beta}(\cdot|s)}[Q_{\hat{\theta}}(s', a')]
+\tag{3}\]</span></span></p>
+<p>여기에 complex task에서 활용할 수 있는 multi-step dynamic programming의 이점을 활용하기 위해서 <a href="#eq-SARSA-Error-Loss">Equation&nbsp;2</a> 의 이점을 살리면서 약간 수정하는 형태를 취했다.</p>
 
 
 </section>
