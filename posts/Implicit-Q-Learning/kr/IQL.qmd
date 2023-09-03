@@ -5,6 +5,8 @@ author: "Chanseok Kang"
 toc: true 
 categories: [PaperReview, ReinforcementLearning]
 title-block-banner: true
+filters:
+    - pseudocode
 ---
 
 - 저자: Ilya kostrikov, Ashvin Nair, Sergey Levine
