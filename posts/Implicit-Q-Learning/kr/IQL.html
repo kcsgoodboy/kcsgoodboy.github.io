@@ -157,7 +157,39 @@ MathJax = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Offline Reinforcement Learning with Implicit Q-Learning</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">PaperReview</div>
+                <div class="quarto-category">ReinforcementLearning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chanseok Kang </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 29, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -165,7 +197,8 @@ MathJax = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#tldr" id="toc-tldr" class="nav-link" data-scroll-target="#tldr">TL;DR</a></li>
   <li><a href="#내용-정리" id="toc-내용-정리" class="nav-link" data-scroll-target="#내용-정리">내용 정리</a>
   <ul class="collapse">
   <li><a href="#offline-rl의-문제점" id="toc-offline-rl의-문제점" class="nav-link" data-scroll-target="#offline-rl의-문제점">Offline RL의 문제점</a></li>
@@ -174,40 +207,10 @@ MathJax = {
 </nav>
     </div>
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Offline Reinforcement Learning with Implicit Q-Learning</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">PaperReview</div>
-    <div class="quarto-category">ReinforcementLearning</div>
-  </div>
-  </div>
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Chanseok Kang </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 29, 2023</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-</header>
 
 <ul>
 <li>저자: Ilya kostrikov, Ashvin Nair, Sergey Levine</li>
@@ -216,6 +219,10 @@ MathJax = {
 <li><a href="https://openreview.net/forum?id=68n2s9ZJWF8">OpenReview</a></li>
 <li><a href="https://github.com/ikostrikov/implicit_q_learning">Code (Jax)</a></li>
 </ul>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Implicit Q-Learning (IQL)</p>
+</section>
 <section id="tldr" class="level2">
 <h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <p>이 논문은 Offline RL 알고리즘 중 하나인 Implicit Q-Learning에 대한 내용을 담고 있다. 이 알고리즘의 핵심은 가장 마지막에 학습된 policy를 가지고 unseen action에 대해서 평가를 하지 않고, state value function을 일종의 random variable로 간주하여, policy improvement step을 <strong>implicit</strong>하게 근사하는 것이다. 그리고 나서 해당 state에 대한 best action의 value를 추정하기 위해 해당 random variable에 대한 state conditional upper expectile을 구했다.</p>

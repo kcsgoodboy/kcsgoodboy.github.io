@@ -546,6 +546,13 @@
     "text": "저자: Ilya kostrikov, Ashvin Nair, Sergey Levine\n발표: ICLR 2022\n논문\nOpenReview\nCode (Jax)"
   },
   {
+    "objectID": "posts/Implicit-Q-Learning/kr/IQL.html#summary",
+    "href": "posts/Implicit-Q-Learning/kr/IQL.html#summary",
+    "title": "Offline Reinforcement Learning with Implicit Q-Learning",
+    "section": "Summary",
+    "text": "Summary\nImplicit Q-Learning (IQL)"
+  },
+  {
     "objectID": "posts/Implicit-Q-Learning/kr/IQL.html#tldr",
     "href": "posts/Implicit-Q-Learning/kr/IQL.html#tldr",
     "title": "Offline Reinforcement Learning with Implicit Q-Learning",
