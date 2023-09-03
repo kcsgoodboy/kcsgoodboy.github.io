@@ -247,10 +247,10 @@ Note
 <p><strong>Approximate Dynamic Programming</strong>이란 Function Approximation 과정을 통해 state space를 discretize 하고, 이를 바탕으로 Dynamic Programming을 수행하는 방식이다. 이는 일반적인 Dynamic Programming의 경우, state space가 커지면 연산량이 기하급수적으로 증가하는 문제를 해결하기 위한 방법이다.</p>
 </div>
 </div>
-<p>이때 temporal difference error를 최소화하는 방향으로 학습이 이뤄지는데, 이에 대한 Loss는 <span class="citation" data-cites="TD-Error-Loss">@TD-Error-Loss</span> 와 같다.</p>
-<p><span class="math display">\[
+<p>이때 temporal difference error를 최소화하는 방향으로 학습이 이뤄지는데, 이에 대한 Loss는 <a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 와 같다.</p>
+<p><span id="eq-TD-Error-Loss"><span class="math display">\[
 L_{\text{TD}}(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s')} \sim \mathcal{D}} [(r(s, a) + \textcolor{red}{\gamma \max_{a'} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
-\]</span> {#TD-Error-Loss}</p>
+\tag{1}\]</span></span></p>
 <p>여기서 <span class="math inline">\(\mathcal{D}\)</span>는 수집된 데이터셋이고, <span class="math inline">\(Q_{\theta}(s, a)\)</span>는 <span class="math inline">\(\theta\)</span>로 파라미터화된 Q-function이다. 그리고 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span>는 Polyak averaging 같은 방식을 통해서 parameter를 soft update하는 target network을 의미하고, 우리가 찾는 policy <span class="math inline">\(\pi(s) = \arg\max_{a}Q_{\theta}(s, a)\)</span>가 된다. 대부분의 offline RL 알고리즘은 이 loss에 constraint를 추가하는 방식 등으로 loss를 바꿔서 적어도 학습된 policy가 수집된 데이터의 distribution을 따르게 하거나 아니면 policy에 constrain을 주는 방식으로 학습을 수행한다. Offline RL의 가장 큰 문제 중 하나는 수집된 데이터 내에 없는 action <span class="math inline">\(a'\)</span>, 즉 out-of-distribution action이 나올 경우 target network에 의해서 계산된 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span>가 너무 큰 값이 나오게 되는데, 이는 학습이 불안정해지는 overestimation 원인이 된다.</p>
 
 
