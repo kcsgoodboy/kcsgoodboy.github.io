@@ -17,5 +17,17 @@ filters:
 
 ## TL;DR
 
-이 논문은 Offline RL 알고리즘 중 하나인 Implicit Q-Learning에 대한 내용을 담고 있다.
+이 논문은 Offline RL 알고리즘 중 하나인 Implicit Q-Learning에 대한 내용을 담고 있다. 이 알고리즘의 핵심은 가장 마지막에 학습된 policy를 가지고 unseen action에 대해서 평가를 하지 않고, state value function을 일종의 random variable로 간주하여, policy improvement step을 **implicit**하게 근사하는 것이다. 그리고 나서 해당 state에 대한 best action의 value를 추정하기 위해 해당 random variable에 대한 state conditional upper expectile을 구했다. 
+
+## 내용 정리
+
+Online (On-policy 나 Off-policy) RL 과는 다르게, Offline RL은 환경과의 interaction없이 기존에 수집한 데이터를 바탕으로 모델을 학습하는 구조로 되어 있다. 일반적으로 이 방식을 따르는 알고리즘들은 Approximate Dynamic Programming (ADP)의 형태를 띄게 된다.
+
+::: {.callout-note}
+**Approximate Dynamic Programming**이란 Function Approximation 과정을 통해 state space를 discretize 하고, 이를 바탕으로 Dynamic Programming을 수행하는 방식이다. 이는 일반적인 Dynamic Programming의 경우, state space가 커지면 연산량이 기하급수적으로 증가하는 문제를 해결하기 위한 방법이다.
+:::
+
+이때 temporal difference error를 최소화하는 방향으로 학습이 이뤄지는데, 이에 대한 Loss는 아래와 같다.
+
+$$ L_{\text{TD}}(\theta) = \mathbb{E}_{(s, a, s') \sim \mathcal{D}} [(r(s, a) + \gamma \max_{a'} Q_{\hat{\theta}}(s', a') - Q_{\theta}(s, a))^2] $$
 
