@@ -1,5 +1,7 @@
 ---
 title: "Offline Reinforcement Learning with Implicit Q-Learning"
+subtitle: "Implicit Q-Learning (IQL)"
+description: Offline RL method with only dataset actions.
 date: 2023-08-29
 author: "Chanseok Kang"
 toc: true 
@@ -29,11 +31,30 @@ Online (On-policy 나 Off-policy) RL 과는 다르게, Offline RL은 환경과�
 **Approximate Dynamic Programming**이란 Function Approximation 과정을 통해 state space를 discretize 하고, 이를 바탕으로 Dynamic Programming을 수행하는 방식이다. 이는 일반적인 Dynamic Programming의 경우, state space가 커지면 연산량이 기하급수적으로 증가하는 문제를 해결하기 위한 방법이다.
 :::
 
-이때 temporal difference error를 최소화하는 방향으로 학습이 이뤄지는데, 이에 대한 Loss는 @TD-Error-Loss 와 같다.
+이때 temporal difference error를 최소화하는 방향으로 학습이 이뤄지는데, 이에 대한 Loss는 @eq-TD-Error-Loss 와 같다.
 
 $$ 
 L_{\text{TD}}(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s')} \sim \mathcal{D}} [(r(s, a) + \textcolor{red}{\gamma \max_{a'} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2] 
-$$ {#TD-Error-Loss}
+$$ {#eq-TD-Error-Loss}
 
-여기서 $\mathcal{D}$는 수집된 데이터셋이고, $Q_{\theta}(s, a)$는 $\theta$로 파라미터화된 Q-function이다. 그리고 $Q_{\hat{\theta}}(s', a')$는 Polyak averaging 같은 방식을 통해서 parameter를 soft update하는 target network을 의미하고, 우리가 찾는 policy $\pi(s) = \arg\max_{a}Q_{\theta}(s, a)$가 된다. 대부분의 offline RL 알고리즘은 이 loss에 constraint를 추가하는 방식 등으로 loss를 바꿔서 적어도 학습된 policy가 수집된 데이터의 distribution을 따르게 하거나 아니면 policy에 constrain을 주는 방식으로 학습을 수행한다. Offline RL의 가장 큰 문제 중 하나는 수집된 데이터 내에 없는 action $a'$, 즉 out-of-distribution action이 나올 경우 target network에 의해서 계산된 $Q_{\hat{\theta}}(s', a')$가 너무 큰 값이 나오게 되는데, 이는 학습이 불안정해지는 overestimation 원인이 된다.
+여기서 $\mathcal{D}$ 는 수집된 dataset이고, $Q_{\theta}(s, a)$ 는 $\theta$ 로 파라미터화된 Q-function이다. 그리고 $Q_{\hat{\theta}}(s', a')$ 는 Polyak averaging 같은 방식을 통해서 parameter를 soft update하는 target network을 의미하고, 우리가 찾는 policy $\pi(s) = \arg\max_{a}Q_{\theta}(s, a)$ 가 된다. 대부분의 offline RL 알고리즘은 이 loss에 constraint를 추가하는 방식 등으로 loss를 바꿔서 적어도 학습된 policy가 수집된 데이터의 distribution을 따르게 하거나 아니면 policy에 constrain을 주는 방식으로 학습을 수행한다. Offline RL의 가장 큰 문제 중 하나는 수집된 데이터 내에 없는 action $a'$, 즉 out-of-distribution action이 나올 경우 target network에 의해서 계산된 $Q_{\hat{\theta}}(s', a')$ 가 너무 큰 값이 나오게 되는데, 이는 학습이 불안정해지는 overestimation의 원인이 된다.
 
+### Implicit Q-Learning
+
+이 알고리즘의 목표는 @eq-TD-Error-Loss 에서 사용될 action 중 out-of-sample action, 다시 말해 $\mathcal{D}$ 에서 나오지 않은 action이 나올 경우를 완전히 배제하는 것이다. 이를 위해서 먼저 @eq-TD-Error-Loss 을 SARSA 형태로 바꾸고 dataset을 쌓을 때 사용했던 policy인 $\pi_{\beta}$ (Behavior Policy)의 value를 학습하도록 fitted Q evaluation을 수행하는 것부터 시작해본다.
+
+::: {.callout-note}
+**Fitted Q-evaluation (FQE)** 이란 **Fitted Q Iteration (FQI)**이라고도 하며, 데이터를 사용해서 Q-function을 근사화하는 기법이다. 이를 위해서 먼저 Behavior policy를 통해서 data를 수집한 후 해당 데이터를 사용하여 Q-function을 근사화하는 모델을 학습하는 형태로 되어 있다. 이때 이 모델은 상태 $s$ 와 action $a$ 를 입력으로 받아서 $Q(s, a)$ 를 출력하는 형태로 되어 있다. 이후에는 이 모델을 사용해서 target network를 업데이트하고, 이를 바탕으로 다시 Q-function을 근사화하는 과정을 반복한다. 
+:::
+
+$$
+L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s, a) + \textcolor{red}{\gamma Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
+$$ {#eq-SARSA-Error-Loss}
+
+@eq-TD-Error-Loss 와는 다르게, @eq-SARSA-Error-Loss 에서는 빨간색 부분에서 확인할 수 있는 것처럼 Q value를 계산할 때 사용하는 next action $a'$ 도 dataset $\mathcal{D}$ 에서 나온 action이기 때문에 out-of-sample action이 나올 경우에 대한 문제가 발생하지 않는다. 또한 loss function 내에서 TD target ($r(s, a) + \gamma Q_{\hat{\theta}}(s', a')$ 을 예측할 수 있도록 학습할 때 mean sequared error를 사용하기 때문에 만약 dataset이 충분해서 sampling error가 없다고 가정할 수 있다면 이상적인 Q function을 찾을 수도 있게 된다.
+
+$$ 
+Q_{\theta^{*}}(s, a) \approx r(s, a) + \gamma \mathcal{E}_{s' \sim p(\cdot|s, a) \\ a' \sim \pi_{\beta}(\cdot|s)}[Q_{\hat{\theta}}(s', a')]
+$$ {#eq-ideal-Q-function}
+
+여기에 complex task에서 활용할 수 있는 multi-step dynamic programming의 이점을 활용하기 위해서 @eq-SARSA-Error-Loss 의 이점을 살리면서 약간 수정하는 형태를 취했다. 
