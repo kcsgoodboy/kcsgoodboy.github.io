@@ -9,4 +9,6 @@ listing:
     filter-ui: true
 
 page-layout: full
+execute:
+  freeze: auto
 ---
