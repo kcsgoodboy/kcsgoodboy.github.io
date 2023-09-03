@@ -14,6 +14,13 @@
     ]
   },
   {
+    "listing": "/posts/kr.html",
+    "items": [
+      "/posts/Implicit-Q-Learning/kr/IQL.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
+    ]
+  },
+  {
     "listing": "/posts/index.html",
     "items": [
       "/posts/Principal-component-analysis/en/principal-component-analysis.html",
@@ -25,13 +32,6 @@
       "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
       "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
       "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
-    ]
-  },
-  {
-    "listing": "/posts/kr.html",
-    "items": [
-      "/posts/Implicit-Q-Learning/kr/IQL.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
