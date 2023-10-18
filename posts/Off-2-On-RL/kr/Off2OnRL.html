@@ -279,9 +279,17 @@ MathJax = {
 <figcaption class="figure-caption">Figure&nbsp;4: Off2OnRL</figcaption>
 </figure>
 </div>
-<section id="balanced-replay" class="level4">
-<h4 class="anchored" data-anchor-id="balanced-replay">Balanced Replay</h4>
-<p>물론 balanced replay 내에서 sampling을 하는데 있어 priority가 존재하고, 이를 토대로 sampling하는 형태 자체는 Prioritized Experience Replay (PER)에서 소개하는 방식과 비슷하다. 다만 TD-error를 기반으로 priority를 매기는 PER과는 다르게 Balanced Replay에서는 <strong>online-ness</strong> 라는 것을 계산해서 priority를 계산한다. 이 지수의 목적은 framework내 online RL에 나와있는 것처럼 online data를 우선적으로 사용하면서도, near-on-policy인 offline data를 fine-tune에 활용하고자 하는 것이다.</p>
+<section id="balanced-experience-replay" class="level4">
+<h4 class="anchored" data-anchor-id="balanced-experience-replay">Balanced Experience Replay</h4>
+<p>물론 balanced replay 내에서 sampling을 하는데 있어 priority가 존재하고, 이를 토대로 sampling하는 형태 자체는 Prioritized Experience Replay (PER)에서 소개하는 방식과 비슷하다. 다만 TD-error를 기반으로 priority를 매기는 PER과는 다르게 Balanced Replay에서는 <strong>online-ness</strong> 라는 것을 계산해서 priority를 계산한다. 이 지수의 목적은 framework내 online RL에 나와있는 것처럼 online data를 우선적으로 사용하면서도, near-on-policy인 offline data를 fine-tune에 활용하고자 하는 것이다. 조금 더 자세하게 설명하자면, offline data와 online data가 섞인 buffer에서 transition <span class="math inline">\((s, a, s')\)</span>을 sampling을 하되, 이 때 sampling 하는 확률을 일종의 density ratio <span class="math inline">\(w(s, a) := d^{\text{on}}(s, a) / d^{\text{off}}(s, a)\)</span> 에 비례하게 정하자는 것이다. 물론 이 density ratio가 1에 가깝다는 것은 online data의 distribution과 offline data의 distribution이 동일하다는 것을 의미하고, 이 비율대로 뽑게 되면 offline buffer <span class="math inline">\(\cal{B}^{\text{off}}\)</span> 에 속하는 데이터 중 최대한 near-on-policy에 해당하는 sample을 얻을 수 있게 되는 것이다. 하지만 위의 <span class="math inline">\(w(s, a)\)</span> 를 계산하는데 필요한 정보인 <span class="math inline">\(d^{\text{on}}(s, a)\)</span> 와 <span class="math inline">\(d^{\text{off}}(s, a)\)</span> 는 실제로는 구하기 어려운 값이기 때문에, 논문에서는 <span class="math inline">\(\psi\)</span> 를 weight으로 가지는 network으로 학습된 <span class="math inline">\(w_{\psi}(s, a)\)</span>로 density ratio를 계산하는 방법을 취했다.</p>
+</section>
+<section id="pessimistic-q-ensemble" class="level4">
+<h4 class="anchored" data-anchor-id="pessimistic-q-ensemble">Pessimistic Q-Ensemble</h4>
+<p><a href="#fig-off2onrl">Figure&nbsp;4</a> 에 소개되어 있는 것처럼, 이 논문에서 제안하는 모델은 multiple agent가 pessimistic 하게 (<span class="math inline">\(\approx \text{CQL}\)</span>) 학습한 Q-function 들을 ensemble하는 형태를 가지고 있고, 이는 offline rl에서 발생하는 distribution shift 문제를 대응하기 위함이라고 되어 있다. 구체적으로는 <span class="math inline">\(N\)</span> 개의 CQL agent를 offline data로 학습시켜서 <span class="math inline">\(\{ Q_{\theta_i}, \pi_{\phi_i}\}^N_{i=1}\)</span> 를 얻은 후, 아래와 같은 Q-function과 policy을 가지는 agent들의 ensemble 모델을 만든다.</p>
+<p><span class="math display">\[
+Q_{\theta} := \frac{1}{N} \sum^N_{i=1} Q_{\theta_i}, \quad \pi_{\phi}(\cdot | s) = \cal{N}(\frac{1}{N} \sum^N_{i=1} \mu_{\phi_i}(s), \frac{1}{N} \sum^N_{i=1} (\sigma^2_{\phi_i}(s) + \mu^2_{\phi_i}(s)) - \mu^2_{\phi}(s))
+\]</span></p>
+<p>참고로 각 network의 parameter인 <span class="math inline">\(\theta\)</span> 와 <span class="math inline">\(\phi\)</span> 는 fine-tuning 단계에서 업데이트되는데, 이렇게 되면 초기 fine-tuning 단계에서 나타는 unstable한 현상, 즉 해당 state에 취해지는 unseen action에 대한 pessimism을 유지할 수 있게 된다. (아무래도 한개일때보다는 여러개의 ensemble model이 조금더 안정된 형태가 아닐까.. 물론 그만큼 resource를 잡아먹겠지만….)</p>
 
 
 </section>
