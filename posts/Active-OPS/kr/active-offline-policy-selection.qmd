@@ -22,3 +22,8 @@ filters:
 
 이 논문에서는 offline rl policy를 로봇이나 추천 시스템과 같은 실제 도메인에 적용시킬 때 최적의 policy를 선택하는 방법에 대한 내용을 담고 있다. 기존에도 Off-policy Evaluation (OPE)에 대한 내용들이 다뤄지고 있었지만, 여전히 OPE에 의한 evaluation과 fully online evaluation간의 gap이 존재하던 것은 사실이다. 이 논문에서는 Active offline policy selection이란 방법을 통해서 offline data와 online interaction을 통해서 지속적으로 best policy를 찾는 방법에 대해서 다룬다. 먼저 OPE estimate을 사용해서 online evalution에 대한 warm start를 수행한 후, policy similarity를 나타내는 kernel을 활용한 Bayesian Optimization 을 통해서 다음으로 evaluate할 policy 를 선택하는 과정을 반복한다.
 
+## Introduction
+
+![Off-policy Selection](../images/ops.png){#fig-off-policy-selection}
+
+대부분의 offline rl 논문은 simulator에 의존해서 성능을 평가하고 이를 토대로 evaluation을 수행하지만 enviornment와의 interaction에 대한 cost가 큰 실제 환경에서는 이런 training과 evaluation 과정이 제한적일 수 밖에 없다. 이때문에 Offline RL 문제에서는 여러개의 알고리즘과 각각의 hyperparameter의 구성으로 모델을 학습시키고, @fig-off-policy-selection 에 소개되어 있는 것처럼 off-policy policy evalution (OPE)를 통해서 모델을 선택하는 과정을 거치게 된다. 일반적인 online RL처럼 policy evaluation을 하되, 주어진 데이터 내에서 policy evaluation을 수행하는 것인데, 문제는 이 OPE가 어떤 좋은 모델을 고르기에는 정확하지 않다는 것이다. 또한 OPE 자체가 주어진 데이터 내로 한정되어 evaluation을 수행하기 때문에 offline RL이 겪는 distribution shift 문제, 즉 data를 수집할 때 취했던 behavior policy와 실제 학습된 policy간의 차이가 존재하는 문제를 겪게 된다. 
