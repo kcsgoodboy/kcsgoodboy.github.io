@@ -209,8 +209,6 @@ MathJax = {
   <ul class="collapse">
   <li><a href="#offline-rl-agent-fine-tuning" id="toc-offline-rl-agent-fine-tuning" class="nav-link" data-scroll-target="#offline-rl-agent-fine-tuning">Offline RL Agent Fine-tuning</a></li>
   <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method">Method</a></li>
-  <li><a href="#implicit-q-learning" id="toc-implicit-q-learning" class="nav-link" data-scroll-target="#implicit-q-learning">Implicit Q-Learning</a></li>
-  <li><a href="#expectile-regression" id="toc-expectile-regression" class="nav-link" data-scroll-target="#expectile-regression">Expectile Regression</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -281,87 +279,20 @@ MathJax = {
 <figcaption class="figure-caption">Figure&nbsp;4: Off2OnRL</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Approximate Dynamic Programming</strong>이란 Function Approximation 과정을 통해 state space를 discretize 하고, 이를 바탕으로 Dynamic Programming을 수행하는 방식이다. 이는 일반적인 Dynamic Programming의 경우, state space가 커지면 연산량이 기하급수적으로 증가하는 문제를 해결하기 위한 방법이다.</p>
-</div>
-</div>
-<p>이때 temporal difference error를 최소화하는 방향으로 학습이 이뤄지는데, 이에 대한 Loss는 <a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 와 같다.</p>
-<p><span id="eq-TD-Error-Loss"><span class="math display">\[
-L_{\text{TD}}(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s')} \sim \mathcal{D}} [(r(s, a) + \gamma \textcolor{red}{\max_{a'} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
-\tag{1}\]</span></span></p>
-<p>여기서 <span class="math inline">\(\mathcal{D}\)</span> 는 수집된 dataset이고, <span class="math inline">\(Q_{\theta}(s, a)\)</span> 는 <span class="math inline">\(\theta\)</span> 로 파라미터화된 Q-function이다. 그리고 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span> 는 Polyak averaging 같은 방식을 통해서 parameter를 soft update하는 target network을 의미하고, 우리가 찾는 policy <span class="math inline">\(\pi(s) = \arg\max_{a}Q_{\theta}(s, a)\)</span> 가 된다. 대부분의 offline RL 알고리즘은 이 loss에 constraint를 추가하는 방식 등으로 loss를 바꿔서 적어도 학습된 policy가 수집된 데이터의 distribution을 따르게 하거나 아니면 policy에 constrain을 주는 방식으로 학습을 수행한다. Offline RL의 가장 큰 문제 중 하나는 수집된 데이터 내에 없는 action <span class="math inline">\(a'\)</span>, 즉 out-of-distribution action이 나올 경우 target network에 의해서 계산된 <span class="math inline">\(Q_{\hat{\theta}}(s', a')\)</span> 가 너무 큰 값이 나오게 되는데, 이는 학습이 불안정해지는 overestimation의 원인이 된다.</p>
+<section id="balanced-experience-replay" class="level4">
+<h4 class="anchored" data-anchor-id="balanced-experience-replay">Balanced Experience Replay</h4>
+<p>물론 balanced replay 내에서 sampling을 하는데 있어 priority가 존재하고, 이를 토대로 sampling하는 형태 자체는 Prioritized Experience Replay (PER)에서 소개하는 방식과 비슷하다. 다만 TD-error를 기반으로 priority를 매기는 PER과는 다르게 Balanced Replay에서는 <strong>online-ness</strong> 라는 것을 계산해서 priority를 계산한다. 이 지수의 목적은 framework내 online RL에 나와있는 것처럼 online data를 우선적으로 사용하면서도, near-on-policy인 offline data를 fine-tune에 활용하고자 하는 것이다. 조금 더 자세하게 설명하자면, offline data와 online data가 섞인 buffer에서 transition <span class="math inline">\((s, a, s')\)</span>을 sampling을 하되, 이 때 sampling 하는 확률을 일종의 density ratio <span class="math inline">\(w(s, a) := d^{\text{on}}(s, a) / d^{\text{off}}(s, a)\)</span> 에 비례하게 정하자는 것이다. 물론 이 density ratio가 1에 가깝다는 것은 online data의 distribution과 offline data의 distribution이 동일하다는 것을 의미하고, 이 비율대로 뽑게 되면 offline buffer <span class="math inline">\(\cal{B}^{\text{off}}\)</span> 에 속하는 데이터 중 최대한 near-on-policy에 해당하는 sample을 얻을 수 있게 되는 것이다. 하지만 위의 <span class="math inline">\(w(s, a)\)</span> 를 계산하는데 필요한 정보인 <span class="math inline">\(d^{\text{on}}(s, a)\)</span> 와 <span class="math inline">\(d^{\text{off}}(s, a)\)</span> 는 실제로는 구하기 어려운 값이기 때문에, 논문에서는 <span class="math inline">\(\psi\)</span> 를 weight으로 가지는 network으로 학습된 <span class="math inline">\(w_{\psi}(s, a)\)</span>로 density ratio를 계산하는 방법을 취했다.</p>
 </section>
-<section id="implicit-q-learning" class="level3">
-<h3 class="anchored" data-anchor-id="implicit-q-learning">Implicit Q-Learning</h3>
-<p>이 알고리즘의 목표는 <a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 에서 사용될 action 중 out-of-sample action, 다시 말해 <span class="math inline">\(\mathcal{D}\)</span> 에서 나오지 않은 action이 나올 경우를 완전히 배제하는 것이다. 이를 위해서 먼저 <a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 을 SARSA 형태로 바꾸고 dataset을 쌓을 때 사용했던 policy인 <span class="math inline">\(\pi_{\beta}\)</span> (Behavior Policy)의 value를 학습하도록 fitted Q evaluation을 수행하는 것부터 시작해본다.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Fitted Q-evaluation (FQE)</strong> 이란 <strong>Fitted Q Iteration (FQI)</strong>이라고도 하며, 데이터를 사용해서 Q-function을 근사화하는 기법이다. 이를 위해서 먼저 Behavior policy를 통해서 data를 수집한 후 해당 데이터를 사용하여 Q-function을 근사화하는 모델을 학습하는 형태로 되어 있다. 이때 이 모델은 상태 <span class="math inline">\(s\)</span> 와 action <span class="math inline">\(a\)</span> 를 입력으로 받아서 <span class="math inline">\(Q(s, a)\)</span> 를 출력하는 형태로 되어 있다. 이후에는 이 모델을 사용해서 target network를 업데이트하고, 이를 바탕으로 다시 Q-function을 근사화하는 과정을 반복한다.</p>
-</div>
-</div>
-<p><span id="eq-SARSA-Error-Loss"><span class="math display">\[
-L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s, a) + \gamma\textcolor{red}{Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
-\tag{2}\]</span></span></p>
-<p><a href="#eq-TD-Error-Loss">Equation&nbsp;1</a> 와는 다르게, <a href="#eq-SARSA-Error-Loss">Equation&nbsp;2</a> 에서는 빨간색 부분에서 확인할 수 있는 것처럼 Q value를 계산할 때 사용하는 next action <span class="math inline">\(a'\)</span> 도 dataset <span class="math inline">\(\mathcal{D}\)</span> 에서 나온 action이기 때문에 out-of-sample action이 나올 경우에 대한 문제가 발생하지 않는다. 또한 loss function 내에서 TD target (<span class="math inline">\(r(s, a) + \gamma Q_{\hat{\theta}}(s', a')\)</span> 을 예측할 수 있도록 학습할 때 mean sequared error를 사용하기 때문에 만약 dataset이 충분해서 sampling error가 없다고 가정할 수 있다면 이상적인 Q function을 찾을 수도 있게 된다.</p>
-<p><span id="eq-ideal-Q-function"><span class="math display">\[
-Q_{\theta^{*}}(s, a) \approx r(s, a) + \gamma \mathbb{E}_{\substack{s' \sim p(\cdot|s, a) \\ a' \sim \pi_{\beta}(\cdot|s)}}[Q_{\hat{\theta}}(s', a')]
-\tag{3}\]</span></span></p>
-<p>여기에 complex task에서 활용할 수 있는 multi-step dynamic programming의 이점을 활용하기 위해서 <a href="#eq-SARSA-Error-Loss">Equation&nbsp;2</a> 의 이점을 살리면서 약간 수정하는 형태를 취했다.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>일반적인 dynamic programming의 경우, <span class="math inline">\(Q(s, a)\)</span> 를 계산할 때 <span class="math inline">\(s\)</span> 에서 <span class="math inline">\(a\)</span> 를 선택하고, 이후에 <span class="math inline">\(s'\)</span> 에서 <span class="math inline">\(a'\)</span> 를 선택하는 형태로 계산을 하게 된다. 이에 비해 multi-step dynamic programming은 <span class="math inline">\(s\)</span> 에서 <span class="math inline">\(a\)</span> 를 선택하고, 이후에 <span class="math inline">\(s'\)</span> 에서 <span class="math inline">\(a'\)</span> 를 선택하고, 이후에 <span class="math inline">\(s''\)</span> 에서 <span class="math inline">\(a''\)</span> 를 선택하는 형태로 확장된 식이다. 이렇게 하면 일반적인 dynamic programming에 비해 계산량이 많아지지만, 이를 통해서 복잡한 task에 대해서 좋은 결과를 얻을 수 있다는 장점이 있다.</p>
-</div>
-</div>
-<p>그리고 실제로 out-of-sample action이 나왔을 때, 학습된 Q function을 사용하지 않더라도 주어진 distribution 내에서의 maximum Q value 를 추정할 수 있도록 하기 위해서 Expectile Regression을 사용했다. 이에 대한 간단한 설명은 다음 section에서 하고, 최종적으로는 다음의 loss function을 기반으로 value function을 학습하게 된다.</p>
+<section id="pessimistic-q-ensemble" class="level4">
+<h4 class="anchored" data-anchor-id="pessimistic-q-ensemble">Pessimistic Q-Ensemble</h4>
+<p><a href="#fig-off2onrl">Figure&nbsp;4</a> 에 소개되어 있는 것처럼, 이 논문에서 제안하는 모델은 multiple agent가 pessimistic 하게 (<span class="math inline">\(\approx \text{CQL}\)</span>) 학습한 Q-function 들을 ensemble하는 형태를 가지고 있고, 이는 offline rl에서 발생하는 distribution shift 문제를 대응하기 위함이라고 되어 있다. 구체적으로는 <span class="math inline">\(N\)</span> 개의 CQL agent를 offline data로 학습시켜서 <span class="math inline">\(\{ Q_{\theta_i}, \pi_{\phi_i}\}^N_{i=1}\)</span> 를 얻은 후, 아래와 같은 Q-function과 policy을 가지는 agent들의 ensemble 모델을 만든다.</p>
 <p><span class="math display">\[
-L(\theta) = \mathbb{E}_{\textcolor{red}{(s, a, s', a')} \sim \mathcal{D}} [(r(s, a) + \gamma \textcolor{red}{\max_{\substack{a' \in \mathcal{A} \\ \text{s.t. } \pi_{\beta}(a'|s') \gt 0}} Q_{\hat{\theta}}(s', a')} - Q_{\theta}(s, a))^2]
+Q_{\theta} := \frac{1}{N} \sum^N_{i=1} Q_{\theta_i}, \quad \pi_{\phi}(\cdot | s) = \cal{N}(\frac{1}{N} \sum^N_{i=1} \mu_{\phi_i}(s), \frac{1}{N} \sum^N_{i=1} (\sigma^2_{\phi_i}(s) + \mu^2_{\phi_i}(s)) - \mu^2_{\phi}(s))
 \]</span></p>
+<p>참고로 각 network의 parameter인 <span class="math inline">\(\theta\)</span> 와 <span class="math inline">\(\phi\)</span> 는 fine-tuning 단계에서 업데이트되는데, 이렇게 되면 초기 fine-tuning 단계에서 나타는 unstable한 현상, 즉 해당 state에 취해지는 unseen action에 대한 pessimism을 유지할 수 있게 된다. (아무래도 한개일때보다는 여러개의 ensemble model이 조금더 안정된 형태가 아닐까.. 물론 그만큼 resource를 잡아먹겠지만….)</p>
+
+
 </section>
-<section id="expectile-regression" class="level3">
-<h3 class="anchored" data-anchor-id="expectile-regression">Expectile Regression</h3>
-<p>Expectile Regression은 quantile regression의 일종으로, 주어진 distribution 내에서의 quantile을 추정하는 방법이다. 어떤 random variable <span class="math inline">\(X\)</span> 에 대한 expectile <span class="math inline">\(\tau \in (0, 1)\)</span> 은 asymmetric least sqaures problem에 대한 solution으로 정의된다. 여기서 asymmetric least sqaures problem은 다음과 같다.</p>
-<p><span id="eq-ALS"><span class="math display">\[
-\arg\min_{m_\tau} \mathbb{E}_{x \sim X}[L_2^{\tau}(x - m_\tau)]
-\tag{4}\]</span></span></p>
-<p>여기서 <span class="math inline">\(L_2^{\tau}(u) = | \tau - \mathbb{1}(u \lt 0)| u^2\)</span> 이다.</p>
-<div id="fig-expectile-regression" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="../fig/expectile_regression.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Expectile Regression</figcaption>
-</figure>
-</div>
-<p><a href="#fig-expectile-regression">Figure&nbsp;5</a> 의 첫번째 그림이 바로 <span class="math inline">\(\tau\)</span> 에 따른 assymentric squared loss를 보여주는 것이다. 0.5의 값을 가질 경우 일반적인 MSE loss가 되지만, <span class="math inline">\(\tau = 0.9\)</span> 일 경우, 양의 구간에 조금 더 가중치가 가해진 것을 그림을 통해서 확인할 수 있다. 결과적으로 <span class="math inline">\(m_{\tau}\)</span> 보다 작은 <span class="math inline">\(x\)</span>가 loss에 미치는 영향을 줄이고, <span class="math inline">\(m_{\tau}\)</span> 보다 큰 <span class="math inline">\(x\)</span>가 loss에 미치는 영향을 늘리는 효과를 가지게 된다. 이를 통해서 <span class="math inline">\(\tau\)</span> 에 따른 quantile을 추정할 수 있게 된다. 또한 <a href="#eq-ALS">Equation&nbsp;4</a> 의 <span class="math inline">\(x\)</span> 를 <span class="math inline">\(y\)</span> 로 대체함으로써 어떤 conditional distribution에 대한 expectile도 예측하게끔 설계할 수 있다.</p>
-<p><span id="eq-ALS-conditional"><span class="math display">\[
-\arg\min_{m_\tau} \mathbb{E}_{x \sim X}[L_2^{\tau}(x - m_\tau)]
-\tag{5}\]</span></span></p>
-<p>위 식을 Stochastic Gradient Descent를 통해서 최적화를 하게 되면, 결과적으로 unbiased gradient를 구할수도 있고, 쉽게 구현할 수도 있다.</p>
-
-
 </section>
 </section>
 

@@ -1,0 +1,24 @@
+---
+title: "Active Offline Policy Selection"
+subtitle: "A-OPS"
+description: A sequential decision approach that combines logged data with online interaction to identify the best policy.
+date: 2023-10-19
+author: "Chanseok Kang"
+toc: true 
+categories: [PaperReview, ReinforcementLearning]
+title-block-banner: true
+filters:
+    - pseudocode
+---
+
+- 저자: Ksenia Konyushkova, Yutian Chen, Tom Le Paine, Caglar Gulcehre, Cosmin Paduraru, Daniel J Mankowitz, Misha Denil, Nando de Freitas
+- 발표: NeurIPS 2021
+- [논문](https://openreview.net/pdf?id=Zsrn9wXWN0)
+- [Project Site](https://sites.google.com/corp/view/active-ops)
+- [OpenReview](https://openreview.net/forum?id=Zsrn9wXWN0)
+- [Code (Tensorflow & Tensorflow Probability)](https://github.com/google-deepmind/active_ops)
+
+## TL;DR
+
+이 논문에서는 offline rl policy를 로봇이나 추천 시스템과 같은 실제 도메인에 적용시킬 때 최적의 policy를 선택하는 방법에 대한 내용을 담고 있다. 기존에도 Off-policy Evaluation (OPE)에 대한 내용들이 다뤄지고 있었지만, 여전히 OPE에 의한 evaluation과 fully online evaluation간의 gap이 존재하던 것은 사실이다. 이 논문에서는 Active offline policy selection이란 방법을 통해서 offline data와 online interaction을 통해서 지속적으로 best policy를 찾는 방법에 대해서 다룬다. 먼저 OPE estimate을 사용해서 online evalution에 대한 warm start를 수행한 후, policy similarity를 나타내는 kernel을 활용한 Bayesian Optimization 을 통해서 다음으로 evaluate할 policy 를 선택하는 과정을 반복한다.
+
