@@ -1,0 +1,41 @@
+---
+title: "Actor-Critic Algorithms"
+description: UC Berkeley CS285 (2023) Lecture 6 Review
+date: 2023-10-19
+author: "Chanseok Kang"
+toc: true 
+categories: [LectureReview, ReinforcementLearning]
+title-block-banner: true
+filters:
+    - pseudocode
+---
+
+## Improving the policy gradient
+
+Policy Gradient에서는 다음과 같은 cost function을 minimize 하는 방향으로 학습이 이뤄진다.
+
+$$
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) \Big( \sum_{t'=1}^T r(s_{i, t'}, a_{i, t'}) \Big)
+$$
+
+이 식에서 마지막에 있는 $\sum_{t'=1}^T r(s_{i, t'}, a_{i, t'})$ 부분을 **reward-to-go** (이동 보상)이라고 하는데, 식이 의미하는 것은 $i$ 번째 iteration에서 얻을 수 있는 reward의 총합이다. 이렇게 reward의 총합으로 사용할 수도 있고, 이를 대신하여 $\hat{Q}_{i, t}$ 를 사용할 수도 있다. 이는 특정 state $s_{i, t}$ 에서 action $a_{i, t}$ 를 취했을 때, 얻을 수 있는 expected reward의 추정치를 나타내는 것인데, 그러면 이 추정치를 얼마나 정확하게 구할 수 있을까가 문제가 된다. 당연히 현재의 환경이 randomness를 띄는 이상, 동일한 trajectory를 수행해도 expected reward가 다를 수 있다. 그래서 single trajectory를 통해서 reward-to-go를 구하면, 그만큼 high variance를 가지게 되고, 동일한 trajectory를 여러번 수행하면서 누적된 reward를 바탕으로 reward-to-go를 구하면, low variance를 가질 것이다. 이렇게 우리가 만약 진짜 expected reward-to-go를 아래와 같이
+
+$$
+Q(s_t, a_t) = \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t]
+$$
+
+이라고 정의할 수 있다면, 앞에서 소개한 cost function의 마지막 부분도 위 식으로 대체할 수 있을 것이다.
+
+$$
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) Q(s_{i, t}, a_{i, t})
+$$
+
+## What about the baseline?
+
+여기에서 단순히 Q-value를 사용하면 좋고 나쁜 정도의 scale에 의한 차이가 발생하게 되고, 이로 이해서 bias가 발생하게 된다. 이 bias를 없애기 위한 방법으로 그냥 Q-value를 사용하는게 아니라, Q-value의 average를 빼는 방법을 사용할 수 있는데, 이를 **baseline** 이라고 한다. 
+
+$$
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) ( Q(s_{i, t}, a_{i, t}) - b) \\ \text{where } b_t = \frac{1}{N} \sum_{i=1}^N Q(s_{i, t}, a_{i, t})
+$$
+
+이렇게 baseline을 빼주면 Q-value의 평균보다 높은 부분과 
