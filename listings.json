@@ -1,15 +1,6 @@
 [
   {
-    "listing": "/posts/kr.html",
-    "items": [
-      "/posts/Active-OPS/kr/active-offline-policy-selection.html",
-      "/posts/Off-2-On-RL/kr/Off2OnRL.html",
-      "/posts/Implicit-Q-Learning/kr/IQL.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
-    ]
-  },
-  {
-    "listing": "/posts/index.html",
+    "listing": "/index.html",
     "items": [
       "/posts/Principal-component-analysis/en/principal-component-analysis.html",
       "/posts/Differentiation-in-python/en/differentiation-in-python.html",
@@ -23,7 +14,16 @@
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/posts/kr.html",
+    "items": [
+      "/posts/Active-OPS/kr/active-offline-policy-selection.html",
+      "/posts/Off-2-On-RL/kr/Off2OnRL.html",
+      "/posts/Implicit-Q-Learning/kr/IQL.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
+    ]
+  },
+  {
+    "listing": "/posts/index.html",
     "items": [
       "/posts/Principal-component-analysis/en/principal-component-analysis.html",
       "/posts/Differentiation-in-python/en/differentiation-in-python.html",
