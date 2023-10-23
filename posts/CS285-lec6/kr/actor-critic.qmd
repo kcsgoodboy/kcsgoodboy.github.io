@@ -82,7 +82,7 @@ $$
 
 이와 같이 total reward를 사용하는 monte calro estimate를 사용하게 되면 bias가 발생하지 않지만, 이렇게 계산한 total reward는 policy가 어떤 trajectory를 따라 갔느냐에 따라서 다르게 나오게 되기에, single sample에 대한 variance가 매우 크게 나타난다. 
 
-![policy_gradient](../images/pg.png) {#fig-policy-gradient}
+![policy_gradient](../images/pg.png){#fig-policy-gradient}
 
 @fig-policy-gradient 에 나와 있는 것처럼 Policy Gradient의 수행은 
 
