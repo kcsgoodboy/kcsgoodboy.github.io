@@ -205,6 +205,8 @@ MathJax = {
   <ul>
   <li><a href="#improving-the-policy-gradient" id="toc-improving-the-policy-gradient" class="nav-link active" data-scroll-target="#improving-the-policy-gradient">Improving the policy gradient</a></li>
   <li><a href="#what-about-the-baseline" id="toc-what-about-the-baseline" class="nav-link" data-scroll-target="#what-about-the-baseline">What about the baseline?</a></li>
+  <li><a href="#state-state-action-value-functions" id="toc-state-state-action-value-functions" class="nav-link" data-scroll-target="#state-state-action-value-functions">State &amp; State-action value functions</a></li>
+  <li><a href="#value-function-fitting" id="toc-value-function-fitting" class="nav-link" data-scroll-target="#value-function-fitting">Value function fitting</a></li>
   </ul>
 </nav>
     </div>
@@ -233,9 +235,69 @@ Q(s_t, a_t) = \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, 
 <h2 class="anchored" data-anchor-id="what-about-the-baseline">What about the baseline?</h2>
 <p>여기에서 단순히 Q-value를 사용하면 좋고 나쁜 정도의 scale에 의한 차이가 발생하게 되고, 이로 이해서 bias가 발생하게 된다. 이 bias를 없애기 위한 방법으로 그냥 Q-value를 사용하는게 아니라, Q-value의 average를 빼는 방법을 사용할 수 있는데, 이를 <strong>baseline</strong> 이라고 한다.</p>
 <p><span class="math display">\[
+\begin{aligned}
 \nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) ( Q(s_{i, t}, a_{i, t}) - b) \\ \text{where } b_t = \frac{1}{N} \sum_{i=1}^N Q(s_{i, t}, a_{i, t})
+\end{aligned}
 \]</span></p>
-<p>이렇게 baseline을 빼주면 Q-value의 평균보다 높은 부분과</p>
+<p>이렇게 baseline을 빼주면 Q-value의 평균보다 높은 부분과 낮은 부분이 명확하게 구분되면서 unbiased 한 성격을 띄게 되고, 이는 variance를 줄여주는 효과를 가지게 된다. 그런데 단순히 Q-value의 평균을 빼주는 것이 아니라, 다른 값으로도 baseline을 빼주는 것이 가능하다. 보통 Q-function은 state와 action에 대한 함수인데, 이를 state에 대한 함수, 즉 Value function $ V(s_t) = <em>{a_t </em>{}(a_t | s_t)} [Q(s_t, a_t)] $ 로 사용할 수도 있다. 그러면 기존의 cost function은 아래와 같이 변형될 수 있다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) ( Q(s_{i, t}, a_{i, t}) - V(s_{i, t}))
+\]</span></p>
+<p>이렇게 Q-value에서 V-value를 빼주는 것의 의미는 state <span class="math inline">\(s_{i, t}\)</span> 에서 action <span class="math inline">\(a_{i, t}\)</span> 를 취했을 때, <span class="math inline">\(s_{i, t}\)</span> 에서 얻을 수 있는 평균 value보다 얼마나 좋은지를 나타내는 지표가 되는 것이다. 그러면 이에 대한 gradient descent를 취하게 되면 평균보다 좋은 action에 대해서는 encourage하고, 평균보다 나쁜 action에 대해서는 discourage하는 효과를 가지게 되고, 결과적으로 variance를 줄여주면서 policy gradient의 학습을 더 빠르게 만들어주는 효과를 가지게 된다. 참고로 이 부분을 <strong>advantage function</strong> 이라고 한다.</p>
+</section>
+<section id="state-state-action-value-functions" class="level2">
+<h2 class="anchored" data-anchor-id="state-state-action-value-functions">State &amp; State-action value functions</h2>
+<p>그러면 advantage function을 계산할 때 필요한 각각의 value function이 어떤 의미를 가지는지 다시 살펴볼 필요가 있다.</p>
+<p><span class="math display">\[
+Q^{\pi}(s_t, a_t) = \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t]
+\]</span></p>
+<p>Q value, 혹은 state-action value function 이라는 것은 state <span class="math inline">\(s_t\)</span> 에서 <span class="math inline">\(a_t\)</span> 를 취했을 때 얻을 수 있는 total reward를 말한다. policy마다 이 Q value가 다 다를수 있기 때문에 이를 명시하기 위해서 <span class="math inline">\(\pi\)</span> 라는 것을 Q에 넣어주는 표기를 취한다.</p>
+<p><span class="math display">\[
+V^{\pi}(s_t) = \mathbb{E}_{a_t \sim \pi_{\theta}(a_t | s_t)} [Q^{\pi}(s_t, a_t)]
+\]</span></p>
+<p>V value (state value function)는 state <span class="math inline">\(s_t\)</span> 에서 얻을 수 있는 total reward의 기댓값을 말한다. 이 때는 policy <span class="math inline">\(\pi\)</span> 에 의해서 action이 결정되기 때문에 위의 Q value의 총합의 형태로 나오게 된다. 그리고 이어서 나오는 값이 앞에서 나온 advantage function이다.</p>
+<p><span class="math display">\[
+A^{\pi}(s_{t}, a_{t}) = Q^{\pi}(s_{t}, a_{t}) - V^{\pi}(s_{t})
+\]</span></p>
+<p>Advantage function은 state <span class="math inline">\(s_t\)</span> 에서 취한 action <span class="math inline">\(a_t\)</span>가 평균보다 얼마나 좋은지, 말그대로 얼마나 advantage를 가지는지를 나타내는 값이다. 이를 활용하면 앞에서 소개한 Policy Gradient 식은 다음과 같이 정리할 수 있다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) A^{\pi}(s_{i, t}, a_{i, t})
+\]</span></p>
+<p>만약 advantage의 추정값이 정확해진다면, 그만큼 잘된 action과 잘못된 action에 대한 차이가 명확해지고, 이는 variance를 줄여주는 효과를 가지게 된다. 물론 추정값이 정확하지 않으면서 bias가 생기는 문제를 해결하기 위해서 baseline을 빼주는 방법을 사용할 수 있다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) \big( \sum^T_{t=t'} r(s_{i, t'}, a_{i, t'}) - b \big)
+\]</span></p>
+<p>이와 같이 total reward를 사용하는 monte calro estimate를 사용하게 되면 bias가 발생하지 않지만, 이렇게 계산한 total reward는 policy가 어떤 trajectory를 따라 갔느냐에 따라서 다르게 나오게 되기에, single sample에 대한 variance가 매우 크게 나타난다.</p>
+<div id="fig-policy-gradient" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../images/pg.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: policy_gradient</figcaption>
+</figure>
+</div>
+<p><a href="#fig-policy-gradient">Figure&nbsp;1</a> 에 나와 있는 것처럼 Policy Gradient의 수행은</p>
+<ul>
+<li>주어진 policy <span class="math inline">\(\pi_{\theta}\)</span> 에 대해서 trajectory를 생성한다.</li>
+<li>trajectory의 return을 추정할 수 있는 model을 학습한다.</li>
+<li>model을 기반으로 policy를 update한다.</li>
+</ul>
+<p>의 과정으로 나눠질텐데, 이제 성능을 개선하기 위해서는 trejectory의 return을 얼마나 정확하게 학습할 것인지가 중요해진다.</p>
+</section>
+<section id="value-function-fitting" class="level2">
+<h2 class="anchored" data-anchor-id="value-function-fitting">Value function fitting</h2>
+<p>그러면 소개된 내용처럼 다양한 value function (<span class="math inline">\(Q^{\pi}, V^{\pi}, A^{\pi}\)</span>)이 있고, 이 중 어떤 것을 사용할 것인지 궁금할 수 있다. 먼저 Q value를 다시 나열해보면</p>
+<p><span class="math display">\[ \begin{aligned}
+Q^{\pi}(s_t, a_t) &amp;= \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t] \\
+&amp;= r(s_t, a_t) + \sum_{t'=t+1}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t] \\
+\end{aligned}
+\]</span></p>
+<p>와 같이 현재의 reward와 state <span class="math inline">\(s_t\)</span>, action <span class="math inline">\(a_t\)</span> 에서의 future reward의 합으로 표현할 수 있는데, 사실 뒤의 식은 <span class="math inline">\(s_{t+1}\)</span> 에서의 V value와 같다는 것을 알 수 있다. 그러면</p>
+<p><span class="math display">\[
+\begin{aligned}
+Q^{\pi}(s_t, a_t) &amp;= r(s_t, a_t) + \mathbb{E}_{s_{t+1} \sim p(s_{t+1} | s_t, a_t)} [V^{\pi}(s_{t+1})] \\
+&amp;\approx r(s_t, a_t) + V^{\pi}(s_{t+1})
+\end{aligned}
+\]</span></p>
+<p>라는 근사값으로 도출할 수 있다. 물론 위의 두번째 식처럼 근사한 값이 정확한 것은 아니지만,</p>
 
 
 </section>
