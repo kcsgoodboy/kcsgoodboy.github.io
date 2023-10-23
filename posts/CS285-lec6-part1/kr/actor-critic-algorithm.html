@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chanseok Kang">
+<meta name="dcterms.date" content="2023-10-19">
+<meta name="description" content="UC Berkeley CS285 (2023) Lecture 6 Review">
+
+<title>Chans Lecture Note - Actor-Critic Algorithms</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script>
+MathJax = {
+  loader: {
+    load: ['[tex]/boldsymbol']
+  },
+  tex: {
+    tags: "all",
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    packages: {
+      '[+]': ['boldsymbol']
+    }
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<link href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" rel="stylesheet">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Chans Lecture Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../publication/index.html" rel="" target="">
+ <span class="menu-text">Publication</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Posts</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="../../../index.html" rel="" target="">
+ <span class="dropdown-text">English</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../posts/kr.html" rel="" target="">
+ <span class="dropdown-text">한글</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Actor-Critic Algorithms</h1>
+                  <div>
+        <div class="description">
+          UC Berkeley CS285 (2023) Lecture 6 Review
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">LectureReview</div>
+                <div class="quarto-category">ReinforcementLearning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chanseok Kang </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 19, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#improving-the-policy-gradient" id="toc-improving-the-policy-gradient" class="nav-link active" data-scroll-target="#improving-the-policy-gradient">Improving the policy gradient</a></li>
+  <li><a href="#what-about-the-baseline" id="toc-what-about-the-baseline" class="nav-link" data-scroll-target="#what-about-the-baseline">What about the baseline?</a></li>
+  <li><a href="#state-state-action-value-functions" id="toc-state-state-action-value-functions" class="nav-link" data-scroll-target="#state-state-action-value-functions">State &amp; State-action value functions</a></li>
+  <li><a href="#value-function-fitting" id="toc-value-function-fitting" class="nav-link" data-scroll-target="#value-function-fitting">Value function fitting</a></li>
+  <li><a href="#policy-evaluation" id="toc-policy-evaluation" class="nav-link" data-scroll-target="#policy-evaluation">Policy evaluation</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+<section id="improving-the-policy-gradient" class="level2">
+<h2 class="anchored" data-anchor-id="improving-the-policy-gradient">Improving the policy gradient</h2>
+<p>Policy Gradient에서는 다음과 같은 cost function을 minimize 하는 방향으로 학습이 이뤄진다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) \Big( \sum_{t'=1}^T r(s_{i, t'}, a_{i, t'}) \Big)
+\]</span></p>
+<p>이 식에서 마지막에 있는 <span class="math inline">\(\sum_{t'=1}^T r(s_{i, t'}, a_{i, t'})\)</span> 부분을 <strong>reward-to-go</strong> (이동 보상)이라고 하는데, 식이 의미하는 것은 <span class="math inline">\(i\)</span> 번째 iteration에서 얻을 수 있는 reward의 총합이다. 이렇게 reward의 총합으로 사용할 수도 있고, 이를 대신하여 <span class="math inline">\(\hat{Q}_{i, t}\)</span> 를 사용할 수도 있다. 이는 특정 state <span class="math inline">\(s_{i, t}\)</span> 에서 action <span class="math inline">\(a_{i, t}\)</span> 를 취했을 때, 얻을 수 있는 expected reward의 추정치를 나타내는 것인데, 그러면 이 추정치를 얼마나 정확하게 구할 수 있을까가 문제가 된다. 당연히 현재의 환경이 randomness를 띄는 이상, 동일한 trajectory를 수행해도 expected reward가 다를 수 있다. 그래서 single trajectory를 통해서 reward-to-go를 구하면, 그만큼 high variance를 가지게 되고, 동일한 trajectory를 여러번 수행하면서 누적된 reward를 바탕으로 reward-to-go를 구하면, low variance를 가질 것이다. 이렇게 우리가 만약 진짜 expected reward-to-go를 아래와 같이</p>
+<p><span class="math display">\[
+Q(s_t, a_t) = \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t]
+\]</span></p>
+<p>이라고 정의할 수 있다면, 앞에서 소개한 cost function의 마지막 부분도 위 식으로 대체할 수 있을 것이다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) Q(s_{i, t}, a_{i, t})
+\]</span></p>
+</section>
+<section id="what-about-the-baseline" class="level2">
+<h2 class="anchored" data-anchor-id="what-about-the-baseline">What about the baseline?</h2>
+<p>여기에서 단순히 Q-value를 사용하면 좋고 나쁜 정도의 scale에 의한 차이가 발생하게 되고, 이로 이해서 bias가 발생하게 된다. 이 bias를 없애기 위한 방법으로 그냥 Q-value를 사용하는게 아니라, Q-value의 average를 빼는 방법을 사용할 수 있는데, 이를 <strong>baseline</strong> 이라고 한다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) ( Q(s_{i, t}, a_{i, t}) - b) \\ \text{where } b_t = \frac{1}{N} \sum_{i=1}^N Q(s_{i, t}, a_{i, t})
+\end{aligned}
+\]</span></p>
+<p>이렇게 baseline을 빼주면 Q-value의 평균보다 높은 부분과 낮은 부분이 명확하게 구분되면서 unbiased 한 성격을 띄게 되고, 이는 variance를 줄여주는 효과를 가지게 된다. 그런데 단순히 Q-value의 평균을 빼주는 것이 아니라, 다른 값으로도 baseline을 빼주는 것이 가능하다. 보통 Q-function은 state와 action에 대한 함수인데, 이를 state에 대한 함수, 즉 Value function $ V(s_t) = <em>{a_t </em>{}(a_t | s_t)} [Q(s_t, a_t)] $ 로 사용할 수도 있다. 그러면 기존의 cost function은 아래와 같이 변형될 수 있다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) ( Q(s_{i, t}, a_{i, t}) - V(s_{i, t}))
+\]</span></p>
+<p>이렇게 Q-value에서 V-value를 빼주는 것의 의미는 state <span class="math inline">\(s_{i, t}\)</span> 에서 action <span class="math inline">\(a_{i, t}\)</span> 를 취했을 때, <span class="math inline">\(s_{i, t}\)</span> 에서 얻을 수 있는 평균 value보다 얼마나 좋은지를 나타내는 지표가 되는 것이다. 그러면 이에 대한 gradient descent를 취하게 되면 평균보다 좋은 action에 대해서는 encourage하고, 평균보다 나쁜 action에 대해서는 discourage하는 효과를 가지게 되고, 결과적으로 variance를 줄여주면서 policy gradient의 학습을 더 빠르게 만들어주는 효과를 가지게 된다. 참고로 이 부분을 <strong>advantage function</strong> 이라고 한다.</p>
+</section>
+<section id="state-state-action-value-functions" class="level2">
+<h2 class="anchored" data-anchor-id="state-state-action-value-functions">State &amp; State-action value functions</h2>
+<p>그러면 advantage function을 계산할 때 필요한 각각의 value function이 어떤 의미를 가지는지 다시 살펴볼 필요가 있다.</p>
+<p><span class="math display">\[
+Q^{\pi}(s_t, a_t) = \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t]
+\]</span></p>
+<p>Q value, 혹은 state-action value function 이라는 것은 state <span class="math inline">\(s_t\)</span> 에서 <span class="math inline">\(a_t\)</span> 를 취했을 때 얻을 수 있는 total reward를 말한다. policy마다 이 Q value가 다 다를수 있기 때문에 이를 명시하기 위해서 <span class="math inline">\(\pi\)</span> 라는 것을 Q에 넣어주는 표기를 취한다.</p>
+<p><span class="math display">\[
+V^{\pi}(s_t) = \mathbb{E}_{a_t \sim \pi_{\theta}(a_t | s_t)} [Q^{\pi}(s_t, a_t)]
+\]</span></p>
+<p>V value (state value function)는 state <span class="math inline">\(s_t\)</span> 에서 얻을 수 있는 total reward의 기댓값을 말한다. 이 때는 policy <span class="math inline">\(\pi\)</span> 에 의해서 action이 결정되기 때문에 위의 Q value의 총합의 형태로 나오게 된다. 그리고 이어서 나오는 값이 앞에서 나온 advantage function이다.</p>
+<p><span class="math display">\[
+A^{\pi}(s_{t}, a_{t}) = Q^{\pi}(s_{t}, a_{t}) - V^{\pi}(s_{t})
+\]</span></p>
+<p>Advantage function은 state <span class="math inline">\(s_t\)</span> 에서 취한 action <span class="math inline">\(a_t\)</span>가 평균보다 얼마나 좋은지, 말그대로 얼마나 advantage를 가지는지를 나타내는 값이다. 이를 활용하면 앞에서 소개한 Policy Gradient 식은 다음과 같이 정리할 수 있다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) A^{\pi}(s_{i, t}, a_{i, t})
+\]</span></p>
+<p>만약 advantage의 추정값이 정확해진다면, 그만큼 잘된 action과 잘못된 action에 대한 차이가 명확해지고, 이는 variance를 줄여주는 효과를 가지게 된다. 물론 추정값이 정확하지 않으면서 bias가 생기는 문제를 해결하기 위해서 baseline을 빼주는 방법을 사용할 수 있다.</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log \pi_{\theta}(a_{i, t} | s_{i, t}) \big( \sum^T_{t=t'} r(s_{i, t'}, a_{i, t'}) - b \big)
+\]</span></p>
+<p>이와 같이 total reward를 사용하는 monte calro estimate를 사용하게 되면 bias가 발생하지 않지만, 이렇게 계산한 total reward는 policy가 어떤 trajectory를 따라 갔느냐에 따라서 다르게 나오게 되기에, single sample에 대한 variance가 매우 크게 나타난다.</p>
+<div id="fig-policy-gradient" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../images/pg.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: policy_gradient</figcaption>
+</figure>
+</div>
+<p><a href="#fig-policy-gradient">Figure&nbsp;1</a> 에 나와 있는 것처럼 Policy Gradient의 수행은</p>
+<ul>
+<li>주어진 policy <span class="math inline">\(\pi_{\theta}\)</span> 에 대해서 trajectory를 생성한다.</li>
+<li>trajectory의 return을 추정할 수 있는 model을 학습한다.</li>
+<li>model을 기반으로 policy를 update한다.</li>
+</ul>
+<p>의 과정으로 나눠질텐데, 이제 성능을 개선하기 위해서는 trejectory의 return을 얼마나 정확하게 학습할 것인지가 중요해진다.</p>
+</section>
+<section id="value-function-fitting" class="level2">
+<h2 class="anchored" data-anchor-id="value-function-fitting">Value function fitting</h2>
+<p>그러면 소개된 내용처럼 다양한 value function (<span class="math inline">\(Q^{\pi}, V^{\pi}, A^{\pi}\)</span>)이 있고, 이 중 어떤 것을 사용할 것인지 궁금할 수 있다. 먼저 Q value를 다시 나열해보면</p>
+<p><span class="math display">\[ \begin{aligned}
+Q^{\pi}(s_t, a_t) &amp;= \sum_{t'=t}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t] \\
+&amp;= r(s_t, a_t) + \sum_{t'=t+1}^T \mathbb{E}_{\pi_{\theta}} [r(s_{t'}, a_{t'}) | s_t, a_t] \\
+\end{aligned}
+\]</span></p>
+<p>와 같이 현재의 reward와 state <span class="math inline">\(s_t\)</span>, action <span class="math inline">\(a_t\)</span> 에서의 future reward의 합으로 표현할 수 있는데, 사실 뒤의 식은 <span class="math inline">\(s_{t+1}\)</span> 에서의 V value와 같다는 것을 알 수 있다. 그러면</p>
+<p><span class="math display">\[
+\begin{aligned}
+Q^{\pi}(s_t, a_t) &amp;= r(s_t, a_t) + \mathbb{E}_{s_{t+1} \sim p(s_{t+1} | s_t, a_t)} [V^{\pi}(s_{t+1})] \\
+&amp;\approx r(s_t, a_t) + V^{\pi}(s_{t+1})
+\end{aligned}
+\]</span></p>
+<p>라고 정리할 수 있다. 여기서 두번째 식을 보면 expectation 값이 하나의 V value로 근사화되어 있는 것이 보이는데, 물론 이 값은 정확한 값이 아니다. 앞에서 언급된 것처럼 single sample로 reward sum을 계산한 값은 variance가 크기 때문에 정확하다고 볼수는 없지만, 그래도 single sample에 대해서 근사한 값을 결과적으로 전체 sample에 대해서 fitting하게 되므로 결과적으로 이런 근사값을 그대로 사용할 수 있다. 그럼 이 값을 굳이 왜 구했느냐? 바로 아래 식으로 정리하기 위해서다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+A^{\pi}(s_t, a_t) &amp;\approx Q^{\pi}(s_t, a_t) - V^{\pi}(s_t) \\
+&amp;\approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
+\end{aligned}
+\]</span></p>
+<p>Advantage function이 Q value와 V value로 이뤄져 있지만, Q value가 결국은 V value로 구할 수 있는 값이기에, 다시 정리를 하면 V value, 즉 state에만 dependent한 function이 되는 것이다. 이렇게 되면 굳이 state와 action 두가지 변수가 아닌 state 하나만 신경쓰면 되기 때문에 조금 더 학습이 용이해진다. 그러면 이제 V function만 잘 추정할 수 있는 신경망 모델을 학습시키면 된다. (물론 추후에 다루겠지만, state와 action을 모두 학습하는 형태도 존재한다.)</p>
+</section>
+<section id="policy-evaluation" class="level2">
+<h2 class="anchored" data-anchor-id="policy-evaluation">Policy evaluation</h2>
+<p>결과적으로</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="kcsgoodboy/en" data-repo-id="R_kgDOIixJIQ" data-category="General" data-category-id="DIC_kwDOIixJIc4CTiz-" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+(function(d) {
+  d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+    let pseudocodeOptions = {
+      indentSize: el.dataset.indentSize || "1.2em",
+      commentDelimiter: el.dataset.commentDelimiter || "//",
+      lineNumber: el.dataset.lineNumber === "true" ? true : false,
+      lineNumberPunc: el.dataset.lineNumberPunc || ":",
+      noEnd: el.dataset.noEnd === "true" ? true : false,
+      titlePrefix: el.dataset.algTitle || "Algorithm"
+    };
+    pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+  });
+})(document);
+(function(d) {
+  d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+    titleSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+    titlePrefix = el.dataset.algTitle;
+    titleIndex = el.dataset.chapterLevel ? el.dataset.chapterLevel + "." + el.dataset.pseudocodeIndex : el.dataset.pseudocodeIndex;
+    titleSpan.innerHTML = titlePrefix + " " + titleIndex + " ";
+  });
+})(document);
+</script>
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
