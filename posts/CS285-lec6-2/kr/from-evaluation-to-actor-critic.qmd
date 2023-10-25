@@ -1,0 +1,11 @@
+---
+title: "From Evaluation to Actor Critic"
+description: UC Berkeley CS285 (2023) Lecture 6-2 Review
+date: 2023-10-26
+author: "Chanseok Kang"
+toc: true 
+categories: [LectureReview, ReinforcementLearning]
+title-block-banner: true
+filters:
+    - pseudocode
+---

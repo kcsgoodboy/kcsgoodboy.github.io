@@ -1,6 +1,6 @@
 ---
 title: "Actor-Critic Algorithms"
-description: UC Berkeley CS285 (2023) Lecture 6 Review
+description: UC Berkeley CS285 (2023) Lecture 6-1 Review
 date: 2023-10-19
 author: "Chanseok Kang"
 toc: true 
