@@ -30,7 +30,8 @@
   {
     "listing": "/posts/kr.html",
     "items": [
-      "/posts/DSP-lect4-1/kr/Multivariate-gaussian-distribution.html",
+      "/posts/DSP-lec4-3/kr/Covariance-Matrix.html",
+      "/posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html",
       "/posts/Active-OPS/kr/active-offline-policy-selection.html",
       "/posts/CS285-lec6-1/kr/actor-critic-algorithm.html",
       "/posts/Off-2-On-RL/kr/Off2OnRL.html",
