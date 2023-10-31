@@ -2,6 +2,8 @@
   {
     "listing": "/posts/kr.html",
     "items": [
+      "/posts/DSP-lec4-4/kr/Pearson-Correlation.html",
+      "/posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
       "/posts/DSP-lec4-3/kr/Covariance-Matrix.html",
       "/posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html",
       "/posts/Active-OPS/kr/active-offline-policy-selection.html",

@@ -9,3 +9,42 @@ title-block-banner: true
 filters:
     - pseudocode
 ---
+
+## An actor-critic algorithm
+
+지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.
+
+```pseudocode
+#| label: alg-actor-critic
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+
+\begin{algorithm}
+\caption{(batch) actor-critic algorithm}
+\begin{algorithmic}
+\State sample \{$s_i, a_i$\} from $\pi_{\theta}(a|s)$ (interaction)
+\State fit $\hat{V}^{\pi}_{\phi}(s)$ to sampled reward sums
+\State evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \hat{V}^{\pi}_{\phi}(s_{i+1}) - \hat{V}^{\pi}_{\phi}(s_i)$
+\State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i|s_i) \hat{A}^{\pi}(s_i, a_i)$
+\State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$
+\end{algorithmic}
+\end{algorithm}
+```
+
+결과적으로 actor-critic algorithm의 핵심은 샘플링된 reward sum을 estimate할 수 있는 value function $\hat{V}^{\pi}_{\phi}(s)$ 를 학습하는 것이고, 이를 바탕으로 advantage function $\hat{A}^{\pi}(s_i, a_i)$ 까지 계산하는 것이다. 그리고 이전에 학습된 신경망에서 뽑은 값으로 next target을 구하는 bootstrapping 방식을 사용한다는 것까지 다뤘다.
+
+## Aside: discount factors
+
+그래서 결국 value function을 fit 하는 문제는 아래와 같이 정의할 수 있게 된다.
+
+$$ 
+y_{i, t} \approx r(s_{i, t}, a_{i, t}) + \hat{V}^{\pi}_{\phi}(s_{i, t+1}) 
+$$
+$$
+\mathcal{L}(\phi) = \frac{1}{2} \sum_{i} \Vert \hat{V}^{\pi}_{\phi}(s_{i, t}) - y_{i, t} \Vert^2
+$$
