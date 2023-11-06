@@ -217,7 +217,7 @@ MathJax = {
 <section id="an-actor-critic-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="an-actor-critic-algorithm">An actor-critic algorithm</h2>
 <p>지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.</p>
-<div id="alg-actor-critic" class="pseudocode-container" data-alg-title="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-no-end="false" data-line-number-punc=":" data-line-number="true" data-pseudocode-index="1">
+<div id="alg-actor-critic" class="pseudocode-container" data-pseudocode-index="1" data-indent-size="1.2em" data-line-number="true" data-alg-title="Algorithm" data-no-end="false" data-line-number-punc=":" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{(batch) actor-critic algorithm} \begin{algorithmic} \State sample \{$s_i, a_i$\} from $\pi_{\theta}(a|s)$ (interaction) \State fit $\hat{V}^{\pi}_{\phi}(s)$ to sampled reward sums \State evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \hat{V}^{\pi}_{\phi}(s_{i+1}) - \hat{V}^{\pi}_{\phi}(s_i)$ \State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i|s_i) \hat{A}^{\pi}(s_i, a_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$ \end{algorithmic} \end{algorithm}
 </div>

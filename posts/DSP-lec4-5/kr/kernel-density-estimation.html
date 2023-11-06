@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chanseok Kang">
-<meta name="dcterms.date" content="2023-10-24">
-<meta name="description" content="KAIST Data Science Programming 1 - 4.1 Multivariate Gaussian Distribution 에 대한 내용입니다.">
+<meta name="dcterms.date" content="2023-11-07">
+<meta name="description" content="KAIST Data Science Programming 1 - 4-5-1. Kernel Density Estimation에 대한 내용입니다.">
 
-<title>Chans Lecture Note - Multivariate Gaussian Distribution</title>
+<title>Chans Lecture Note - Kernel Density Estimation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -193,11 +193,11 @@ MathJax = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Multivariate Gaussian Distribution</h1>
+    <div class="quarto-title column-page">
+      <h1 class="title">Kernel Density Estimation</h1>
                   <div>
         <div class="description">
-          KAIST Data Science Programming 1 - 4.1 Multivariate Gaussian Distribution 에 대한 내용입니다.
+          KAIST Data Science Programming 1 - 4-5-1. Kernel Density Estimation에 대한 내용입니다.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -221,7 +221,7 @@ MathJax = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 24, 2023</p>
+        <p class="date">November 7, 2023</p>
       </div>
     </div>
     
@@ -232,84 +232,59 @@ MathJax = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#relation-between-two-random-variables" id="toc-relation-between-two-random-variables" class="nav-link active" data-scroll-target="#relation-between-two-random-variables">Relation between Two Random Variables</a></li>
-  <li><a href="#multivariate-gaussian-distribution" id="toc-multivariate-gaussian-distribution" class="nav-link" data-scroll-target="#multivariate-gaussian-distribution">Multivariate Gaussian Distribution</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
 
-<section id="relation-between-two-random-variables" class="level2">
-<h2 class="anchored" data-anchor-id="relation-between-two-random-variables">Relation between Two Random Variables</h2>
-<p>2개의 random variables로 구성된 분포에서 정보를 얻고자 할 때 가장 처음 시도해볼 수 있는 것이 바로 <a href="https://en.wikipedia.org/wiki/Scatter_plot">scatter plot</a>이다.</p>
-<div class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>objData <span class="op">=</span> pd.read_excel(<span class="st">'../../data/default of credit card clients.xls'</span>, skiprows<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">2</span>])</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>objData[<span class="st">'X12'</span>], y<span class="op">=</span>objData[<span class="st">'X13'</span>])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X12'</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'X13'</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>objFigure <span class="op">=</span> sns.kdeplot(data<span class="op">=</span>objData[<span class="st">'X1'</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="Multivariate-gaussian-distribution_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+<p><img src="kernel-density-estimation_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<p>위의 그림에서도 보이듯 이 scatterplot을 통해서 random variable 간의 correlation이나 outlier의 유무, 어디에 밀집되어 있는지 등의 정보를 얻을 수 있다. 이렇게 variable이 2개이상인 multivariate distribution에서 variable간의 관계를 측정(measure)하기 위해서는 결국 해당 distribution을 표현할 수 있는 model을 만들어야 한다. 이번 장에서는 Multivariate Gaussian(Normal) Distribution을 대상으로 설명한다.</p>
-</section>
-<section id="multivariate-gaussian-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="multivariate-gaussian-distribution">Multivariate Gaussian Distribution</h2>
-<p>Gaussian Distribution의 probability density function은 아래와 같이 정의할 수 있다.</p>
+<p><strong>Kernel Density Estimation</strong>이라는 것은 분포의 밀집한 정도, 즉 Density를 kernel을 사용해서 추정하는 방법이다. 위의 그림은 <code>seaborn</code> 패키지를 사용해서 KDE Plot을 그린 것이고, 이 그래프를 그린 함수를 <span class="math inline">\(\hat{f}_h(x)\)</span> 라고 하면 아래와 같이 정의할 수 있다.</p>
 <p><span class="math display">\[
-\mathcal{N}(x \vert \mu, \sigma^2) =  \frac{1}{\sqrt{2 \pi \sigma^2}} \exp(- \frac{1}{2 \sigma^2}(x - \mu)^2)
+\hat{f}_h(x) = \frac{1}{n} \sum_{i=1}^n K_h(x - x_i) = \frac{1}{nh}\sum_{i=1}^n K(\frac{x - x_i}{h})
 \]</span></p>
-<p>이를 Multivariate로 확장하게 되면, 기존에 sample의 standard deviation (<span class="math inline">\(\sigma^2\)</span>)를 사용하던게 Covariance (<span class="math inline">\(\Sigma\)</span>)로 변하게 되고, 표현식이 행렬 형태로 주어지게 된다.</p>
+<p>여기에서 <span class="math inline">\(K\)</span>를 kernel function이라고 표현한다. 사실 Density Estimation을 하는 것이 무슨 의미인지 궁금해할 수 있지만, 실제 값과 추정한 값 간의 차이 (<span class="math inline">\(x - x_i\)</span>) 를 어떤 Kernel function을 적용해서 표현하겠다는 것을 의미하는 것이다. 이 차이를 <span class="math inline">\(Z\)</span>라고 표현하면 Kernel function이 적용된 term은 다음과 같이 적용할 수 있다.</p>
 <p><span class="math display">\[
-\mathcal{N}(x \vert \mu, \Sigma) = \frac{1}{(2\pi)^{D/2}} \frac{1}{\vert \Sigma \vert^{1/2}} \exp (-\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu))
+K_h(x - x_i) = \frac{1}{h} K(\frac{Z}{h})
 \]</span></p>
-<p>(참고로 <span class="math inline">\(D\)</span> 는 distribution의 dimension을 나타냄)</p>
-<p>위 식에 대한 MLE Solution을 구해보려면 우선 주어진 분포에 대한 log likelihood를 계산해볼 수 있다. (pdf내에 exponential form이 있기 때문에 log likelihood를 사용하면 해당 form을 줄일 수 있다.)</p>
+<p>이 때, Kernel은 다양한 kernel을 시도해볼 수 있다. 만약 Kernel을 uniform kernel을 써보겠다 하면, 이 말은 실제값과 추정치간의 차이가 -1과 1 사이의 값은 하나로 구분하겠다는 것을 의미하고 결국 다음과 같이 어떤 비례의 형태로 표현할 수 있다. 참고로 <span class="math inline">\(\mathcal{1}\)</span> 함수는 -1과 1 사이에서만 counting 하는 indicator function이다.</p>
 <p><span class="math display">\[
-\begin{aligned}
-\ln \mathcal{N}(x \vert \mu, \Sigma) &amp;= -\frac{1}{2} \ln | \Sigma | - \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) + C \quad (\text{Vector form}) \\
-&amp;= -\frac{1}{2} \ln | \Sigma | - \frac{1}{2} \sum^N_{n=1} (x_n - \mu)^T \Sigma^{-1} (x_n - \mu) + C \quad (\text{Element form})
-\end{aligned}
+K(\frac{Z}{h}) \propto \frac{1}{2} \mathcal{1}_{-1 &lt; \frac{Z}{h} &lt; 1}
 \]</span></p>
-<p>여기서 <a href="https://statisticaloddsandends.wordpress.com/2019/12/29/the-trace-trick-and-the-expectation-of-a-quadratic-form/">trace trick</a> 이라는 것을 쓰면, 중간의 <span class="math inline">\(\Sigma^{-1}\)</span> 부분을 따로 뺄수 있게 된다.</p>
-<blockquote class="blockquote">
-<p><strong><em>NOTE:</em></strong> Trace trick을 간단하게 요약하면 다음과 같다. 1) <span class="math inline">\(\frac{d}{dA} \log |A| = A^{-T} \quad\)</span>, 2) <span class="math inline">\(\frac{d}{dA}Tr[AB] = \frac{d}{dA}Tr[BA] = B^T\)</span></p>
-</blockquote>
-<p>그러면 정확한 값은 아니지만 기존의 값과 비례하는 형태로 아래와 같이 정리할 수 있다.</p>
+<p>반면 gaussian kernel을 사용하면 우리가 일반적으로 표현하는 gaussian distribution의 형태로 정의할 수 있다.</p>
 <p><span class="math display">\[
-\begin{aligned}
-\ln \mathcal{N}(x \vert \mu, \Sigma) &amp;\propto -\frac{1}{2} \ln | \Sigma | - \frac{1}{2} \sum^N_{n=1} Tr [ \Sigma^{-1}(x_n - \mu)(x_n - \mu)^T] \\
-&amp;= -\frac{1}{2} \ln | \Sigma | - \frac{1}{2} Tr[\Sigma^{-1} \sum^N_{n=1} ((x_n - \mu)(x_n - \mu)^T)]
-\end{aligned}
+K(\frac{Z}{h}) \propto \exp(-\frac{1}{2} (\frac{Z}{h})^2)
 \]</span></p>
-<p>이중 뒤에 있는 <span class="math inline">\(\sum^N_{n=1} ((x_n - \mu)(x_n - \mu)^T)\)</span> 부분은 각 sample을 mean 값으로 빼준 것에 대한 총합이므로 결국 variance라는 것을 알 수 있고, log likelihood가 variance에 비례하다는 결론을 얻을 수 있다.</p>
-<p>Log-likelihood의 optimization을 위해서, 위 식을 각각의 변수 (<span class="math inline">\(\mu, \Sigma\)</span>)로 미분하고, 미분한 식에 대한 solution을 구해보면 다음과 같이 된다.</p>
-<p><span class="math display">\[
-\frac{d}{d\mu} \ln \mathcal{N}(X \vert \mu, \Sigma) = 0 \rightarrow -\frac{1}{2} \times 2 \times -1 \times \Sigma^{-1} \sum^N_{n=1}(x_n - \hat{\mu}) = 0 \\
-\hat{\mu} = \frac{\sum^N_{n=1}x_n}{N}
-\]</span></p>
-<p><span class="math display">\[
-\frac{d}{d\Sigma^{-1}} \ln \mathcal{N}(X \vert \mu, \Sigma) = 0 \\
-\hat{\Sigma} = \frac{1}{N} \sum^N_{n=1}(x_n - \hat{\mu})(x_n - \hat{\mu})^T
-\]</span></p>
-<p>이렇게 Estimated MLE Solution을 구하면 결국 mean 값은 기존 sample의 mean과 동일하고, covariance는 기존 sample의 variance를 sample의 크기로 나눠준 형태와 동일하다는 것을 확인할 수 있다.</p>
+<p>사실 어떤 분포를 정확히 추정하는 것은 거의 어렵다. 그렇기 때문에 위와 같이 실제값과 추정치간의 차이값으로 분포를 추정하는 방식이 쓰이는 것이고, 어떤 Kernel을 사용했느냐에 따라서 기존의 분포를 정확히 추정할 수 있고, 혹은 조금 smoothing된 형태로 추정할 수도 있는 것이다. <a href="https://seaborn.pydata.org/tutorial/distributions.html#kernel-density-estimation">여기</a>에 소개되어 있는 내용이지만, seaborn에서는 기본적으로 Gaussian Kernel을 사용하여 observation에 대한 결과를 smoothing해준다고 되어 있다.</p>
+<p>일단 kernel density estimation은 kernel을 어떤 것을 선택하냐만 다른 것이지 기존의 분포를 추정한다는 결과는 변함이 없기 때문에 일종의 non-parametric density estimation이라고 할 수 있다. 다만 output의 형태는 앞에서 소개한 것처럼 <span class="math inline">\(h\)</span> 에 의해서 scale이 조절이 되기 때문에 다른 한편으로는 parameter가 존재한다고 할 수 있다. 참고로 kdeplot의 argument에는 <em>bw</em> (bin width) 값이 있는데, 이 bin width에 따라서 분포의 형태가 조금 다르게 표현되기도 한다. 아래의 그림은 그에 대한 결과이다.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">121</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>objFigure <span class="op">=</span> sns.kdeplot(data<span class="op">=</span>objData[<span class="st">'X1'</span>], fill<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'r'</span>, bw_adjust<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">122</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>objFigure <span class="op">=</span> sns.kdeplot(data<span class="op">=</span>objData[<span class="st">'X1'</span>], fill<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span><span class="st">'b'</span>, bw_adjust<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="kernel-density-estimation_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
