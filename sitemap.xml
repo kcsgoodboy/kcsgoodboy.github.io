@@ -2,146 +2,150 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kcsgoodboy.github.io/publication/index.html</loc>
-    <lastmod>2023-11-06T16:04:42.000Z</lastmod>
+    <lastmod>2023-11-08T16:05:55.140Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-9.html</loc>
-    <lastmod>2023-11-06T16:04:39.828Z</lastmod>
+    <lastmod>2023-11-08T16:05:53.000Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-7.html</loc>
-    <lastmod>2023-11-06T16:04:36.412Z</lastmod>
+    <lastmod>2023-11-08T16:05:49.660Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-5.html</loc>
-    <lastmod>2023-11-06T16:04:29.668Z</lastmod>
+    <lastmod>2023-11-08T16:05:43.441Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-3.html</loc>
-    <lastmod>2023-11-06T16:04:18.653Z</lastmod>
+    <lastmod>2023-11-08T16:05:32.690Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-12.html</loc>
-    <lastmod>2023-11-06T16:04:15.775Z</lastmod>
+    <lastmod>2023-11-08T16:05:29.803Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-10.html</loc>
-    <lastmod>2023-11-06T16:03:55.372Z</lastmod>
+    <lastmod>2023-11-08T16:05:10.906Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html</loc>
-    <lastmod>2023-11-06T16:03:52.170Z</lastmod>
+    <lastmod>2023-11-08T16:05:07.771Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Principal-component-analysis/en/principal-component-analysis.html</loc>
-    <lastmod>2023-11-06T16:03:49.632Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Matrix-Multiplication/en/Matrix-Multiplication.html</loc>
-    <lastmod>2023-11-06T16:03:47.261Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html</loc>
-    <lastmod>2023-11-06T16:03:44.675Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/kr.html</loc>
-    <lastmod>2023-11-06T16:03:42.052Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/index.html</loc>
-    <lastmod>2023-11-06T16:03:39.692Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-5/kr/kernel-density-estimation.html</loc>
-    <lastmod>2023-11-06T16:03:37.377Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-3/kr/Covariance-Matrix.html</loc>
-    <lastmod>2023-11-06T16:03:35.367Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Differentiation-in-python/en/differentiation-in-python.html</loc>
-    <lastmod>2023-11-06T16:03:33.320Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/CS285-lec6-1/kr/actor-critic-algorithm.html</loc>
-    <lastmod>2023-11-06T16:03:30.582Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/index.html</loc>
-    <lastmod>2023-11-06T16:03:28.212Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/about.html</loc>
-    <lastmod>2023-11-06T16:03:26.821Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Active-OPS/kr/active-offline-policy-selection.html</loc>
-    <lastmod>2023-11-06T16:03:29.402Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html</loc>
-    <lastmod>2023-11-06T16:03:31.823Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html</loc>
-    <lastmod>2023-11-06T16:03:34.327Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-4/kr/Pearson-Correlation.html</loc>
-    <lastmod>2023-11-06T16:03:36.391Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Implicit-Q-Learning/kr/IQL.html</loc>
-    <lastmod>2023-11-06T16:03:38.669Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html</loc>
-    <lastmod>2023-11-06T16:03:40.961Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Linear-Transformation/en/Linear-Transformation.html</loc>
-    <lastmod>2023-11-06T16:03:43.277Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html</loc>
-    <lastmod>2023-11-06T16:03:46.167Z</lastmod>
+    <lastmod>2023-11-08T16:05:05.245Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Off-2-On-RL/kr/Off2OnRL.html</loc>
-    <lastmod>2023-11-06T16:03:48.387Z</lastmod>
+    <lastmod>2023-11-08T16:05:02.567Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html</loc>
+    <lastmod>2023-11-08T16:05:00.276Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Linear-Transformation/en/Linear-Transformation.html</loc>
+    <lastmod>2023-11-08T16:04:57.444Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html</loc>
+    <lastmod>2023-11-08T16:04:54.891Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Implicit-Q-Learning/kr/IQL.html</loc>
+    <lastmod>2023-11-08T16:04:52.561Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-4/kr/Pearson-Correlation.html</loc>
+    <lastmod>2023-11-08T16:04:50.360Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html</loc>
+    <lastmod>2023-11-08T16:04:48.278Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html</loc>
+    <lastmod>2023-11-08T16:04:45.790Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Active-OPS/kr/active-offline-policy-selection.html</loc>
+    <lastmod>2023-11-08T16:04:43.523Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/about.html</loc>
+    <lastmod>2023-11-08T16:04:41.350Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/index.html</loc>
+    <lastmod>2023-11-08T16:04:42.447Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/CS285-lec6-1/kr/actor-critic-algorithm.html</loc>
+    <lastmod>2023-11-08T16:04:44.745Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Differentiation-in-python/en/differentiation-in-python.html</loc>
+    <lastmod>2023-11-08T16:04:47.292Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-3/kr/Covariance-Matrix.html</loc>
+    <lastmod>2023-11-08T16:04:49.338Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/DSP-lec4-5/kr/kernel-density-estimation.html</loc>
+    <lastmod>2023-11-08T16:04:51.356Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/index.html</loc>
+    <lastmod>2023-11-08T16:04:53.557Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/kr.html</loc>
+    <lastmod>2023-11-08T16:04:56.132Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html</loc>
+    <lastmod>2023-11-08T16:04:58.892Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Matrix-Multiplication/en/Matrix-Multiplication.html</loc>
+    <lastmod>2023-11-08T16:05:01.317Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/posts/Offline-Sequential-Evaluation/kr/OSE.html</loc>
+    <lastmod>2023-11-08T16:05:03.706Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html</loc>
-    <lastmod>2023-11-06T16:03:50.925Z</lastmod>
+    <lastmod>2023-11-08T16:05:06.543Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/vector-operations/en/vector-operations.html</loc>
-    <lastmod>2023-11-06T16:03:53.365Z</lastmod>
+    <lastmod>2023-11-08T16:05:09.005Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-11.html</loc>
-    <lastmod>2023-11-06T16:03:58.349Z</lastmod>
+    <lastmod>2023-11-08T16:05:13.714Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-2.html</loc>
-    <lastmod>2023-11-06T16:04:17.311Z</lastmod>
+    <lastmod>2023-11-08T16:05:31.297Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-4.html</loc>
-    <lastmod>2023-11-06T16:04:27.175Z</lastmod>
+    <lastmod>2023-11-08T16:05:41.028Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-6.html</loc>
-    <lastmod>2023-11-06T16:04:32.374Z</lastmod>
+    <lastmod>2023-11-08T16:05:46.104Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/GDRL-chapter-8.html</loc>
-    <lastmod>2023-11-06T16:04:37.861Z</lastmod>
+    <lastmod>2023-11-08T16:05:51.053Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publication/GDRL/index.html</loc>
-    <lastmod>2023-11-06T16:04:41.032Z</lastmod>
+    <lastmod>2023-11-08T16:05:54.088Z</lastmod>
   </url>
 </urlset>
