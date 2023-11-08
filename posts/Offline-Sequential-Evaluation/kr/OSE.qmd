@@ -1,0 +1,65 @@
+---
+title: "Bridging the Gap Between Offline and Online Reinforcement Learning Evaluation Methodologies"
+subtitle: "Offline Sequential Evaluation"
+description: Sequential Approach to evaluate Offline RL algorithms as a function of the training set size
+date: 2023-11-09
+author: "Chanseok Kang"
+toc: true 
+categories: [PaperReview, ReinforcementLearning]
+title-block-banner: true
+filters:
+    - pseudocode
+---
+
+- 저자: Shivakanth Sujit, Pedro H.M Braga, Jorg Bornschein, Semira Ebrahimi Kahou
+- 발표: Offline Reinforcement Learning Workshop, NeurIPS 2022
+- [논문](https://arxiv.org/abs/2212.08131)
+- [OpenReview](https://openreview.net/forum?id=lT4dOUtZYZ)
+
+## TL;DR
+
+Deep RL에서 가장 큰 어려움 중 하나는 학습을 위해서는 환경과의 interaction이 수없이 이뤄져야 한다는 것이다. 만약 로봇과 같이 interaction에서 소요되는 비용이 큰 경우에는 적용하기 어려운 부분이 존재한다. 이러한 문제를 해결하기 위해서 처음부터 환경과의 interaction 없이 존재하는 log만으로 학습하는 Offline RL 기법이 제안되고 있다. 하지만 Online RL과는 다르게 Offline RL을 평가하기 위한 어떤 정형화된 evaluation method가 많지 않고, 이 논문에서는 log를 활용하여 Offline RL 알고리즘을 Sequantial Evaluation 하는 방법에 대해서 소개하고 있다. Sequential Evaluation을 통해서 학습 과정에서 사용되는 데이터를 더 효율적으로 활용함과 동시에 Offline과 Online 사이에 발생하는 distribution shift에 대해서 적절하게 대응할 수 있다는 것이 주요 특징이다. 사실 워크샵 논문이라 내용이 길지 않을 뿐더러, 논문에서 소개하고 있는 방식이 어떤 수식에 의존한 알고리즘에 대한 내용이 아니라 evaluation을 하는 process에 대한 내용이어서 내용이 어렵지가 않다.
+
+## 내용 소개
+
+### Squential Evaluation of Offline RL Algorithms
+
+Offline RL 알고리즘에 대한 evaluation을 하는 방법 중 하나는 dataset에 대해서 training을 여러 epoch 수행하는 것인데, 이러한 방식은 몇가지 문제를 가지고 있다. 첫째로, training시 모든 data를 사용하기 때문에 사용된 알고리즘이 sample efficiency 측면에서 좋은지를 평가하기 어렵다는 것이다. 이로 인해서 실제 환경에 적용했을 때도, 현재 사용하고 있는 학습데이터의 양이 충분한지 여부를 판단하기 어려운 문제로 이어진다. 또한, log를 쌓을 때 사용된 policy의 quality에 따라서 distribution change가 존재할 수 있다. 그리고 마지막으로, Online RL에서 사용되는 Evaluation 방식을 Offline RL에서 그대로 활용하기 때문에, 실질적으로 Offline RL의 성능이 어느 정도인지 (적어도 Online RL과 비교하려해도) 어려운 문제가 있다.
+
+그래서 논문에서 제안하는 방식은 시간에 따라서 학습하는 agent가 사용할 수 있는 데이터의 비율을 점점 변화시키면서 해당 데이터를 바탕으로 evaluation을 수행하는 것이다. (전제 데이터를 한번에 다 쓰지 말고...) 이를 위해서 기존의 Online Deep RL에서 많이 사용되는 **replay-buffer** 기반의 training scheme을 활용하게 된다. 대신 Online RL에서처럼 현재 학습하고 있는 agent의 experience를 넣는 것이 아니라, offline log를 시간에 따라서 조금씩 추가하는 것이 핵심이다. 그래서 새롭게 추가되는 샘플들과 buffer에서 sampling된 mini batch data를 바탕으로 gradient update를 수행한다. 상세한 알고리즘의 구성은 @offline-sequential-evaluation 과 같다.
+
+```pseudocode
+#| label: offline-sequential-evaluation
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+
+\begin{algorithm}
+\caption{Sequential Evaluation in the offline setting}
+\begin{algorithmic}
+\Input{ Algorithm $A$, Offline data $\mathcal{D} = \{ s_t, a_t, r_t, s_{t+1}\}_{t=1}^{T_0}$, increment-size $\gamma$, gradient steps per increment $K$}
+\State{Replay-buffer $\mathcal{B} \gets \{s_t, a_t, r_t, s_{t+1}\}_{t=1}^{T_0}$}
+\State{$t \gets T_0$}
+\While{$t < T$}
+    \State{Update replay-buffer $ \mathcal{B} \gets \mathcal{B} \cup \{s_t, a_t, r_t, s_{t+1}\}_{t}^{t+\gamma}$}
+    \State{Sample a training batch, ensure new data is included: batch $\sim \mathcal{B}$}
+    \State{Perform training step with $A$ on batch}
+    \State{$t \gets t + \gamma$}
+    \For{$j=1, \cdots, K$}
+        \State{Sample a training batch $\sim \mathcal{B}$}
+        \State{Perform training step with $A$ on batch}
+    \EndFor
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+```
+
+위 알고리즘을 통해서 epoch-style로 학습할 때 발생하는 문제를 대응할 수 있는데, 먼저 데이터를 증가시키는 정도를 나타내는 $\gamma$와 학습을 수행하는 횟수를 나타내는 $K$ 를 다르게 함으로써, dataset의 size가 변화함에 따라서 성능 변화의 추이(예를 들어서 어떤 size에서 bottleneck이 발생하는지...)를 확인할 수 있다. 그리고 알고리즘을 보면 알겠지만, Online RL에서 환경과의 interaction을 여러 번 수행하면서 evaluation 하는 것과 비슷한 형태로 되어 있어서, 이와 같은 방식을 통해서 replay-buffer의 size에 따라서 Offline RL의 성능 변화가 발생하는 것을 확인할 수 있다. 또한 모든 offline log가 replay-buffer에 들어간 이후에 online finetune을 수행하면서도 새롭게 추가된 데이터를 활용할 수 있기 때문에, Offline-to-Online RL 환경에서 Seamless하게 evaluation 수행할 수 있다. 무엇보다도, 알고리즘 자체를 개선했다기 보다는 데이터를 어떻게 활용할 것인지에 대한 방법을 제시한 것이기 때문에, 기존의 학습 과정을 크게 수정하지 않고도 적용할 수 있다는 장점이 있다.
+
+
+
+
