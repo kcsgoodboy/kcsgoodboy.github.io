@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.26">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
 </style>
@@ -58,8 +58,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
@@ -92,7 +91,6 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
@@ -109,31 +107,30 @@ MathJax = {
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html" rel="" target="">
+    <a class="nav-link" href="../../../about.html" rel="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../publication/index.html" rel="" target="">
+    <a class="nav-link" href="../../../publication/index.html" rel="">
  <span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../../index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../index.html" rel="">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../posts/kr.html" rel="" target="">
+    <a class="dropdown-item" href="../../../posts/kr.html" rel="">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -141,18 +138,17 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan" rel=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
+              <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -207,7 +203,8 @@ MathJax = {
   <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">TL;DR</a></li>
   <li><a href="#내용-소개" id="toc-내용-소개" class="nav-link" data-scroll-target="#내용-소개">내용 소개</a>
   <ul class="collapse">
-  <li><a href="#squential-evaluation-of-offline-rl-algorithms" id="toc-squential-evaluation-of-offline-rl-algorithms" class="nav-link" data-scroll-target="#squential-evaluation-of-offline-rl-algorithms">Squential Evaluation of Offline RL Algorithms</a></li>
+  <li><a href="#sec-implement" id="toc-sec-implement" class="nav-link" data-scroll-target="#sec-implement">Squential Evaluation of Offline RL Algorithms</a></li>
+  <li><a href="#experiments" id="toc-experiments" class="nav-link" data-scroll-target="#experiments">Experiments</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -230,16 +227,54 @@ MathJax = {
 </section>
 <section id="내용-소개" class="level2">
 <h2 class="anchored" data-anchor-id="내용-소개">내용 소개</h2>
-<section id="squential-evaluation-of-offline-rl-algorithms" class="level3">
-<h3 class="anchored" data-anchor-id="squential-evaluation-of-offline-rl-algorithms">Squential Evaluation of Offline RL Algorithms</h3>
+<section id="sec-implement" class="level3">
+<h3 class="anchored" data-anchor-id="sec-implement">Squential Evaluation of Offline RL Algorithms</h3>
 <p>Offline RL 알고리즘에 대한 evaluation을 하는 방법 중 하나는 dataset에 대해서 training을 여러 epoch 수행하는 것인데, 이러한 방식은 몇가지 문제를 가지고 있다. 첫째로, training시 모든 data를 사용하기 때문에 사용된 알고리즘이 sample efficiency 측면에서 좋은지를 평가하기 어렵다는 것이다. 이로 인해서 실제 환경에 적용했을 때도, 현재 사용하고 있는 학습데이터의 양이 충분한지 여부를 판단하기 어려운 문제로 이어진다. 또한, log를 쌓을 때 사용된 policy의 quality에 따라서 distribution change가 존재할 수 있다. 그리고 마지막으로, Online RL에서 사용되는 Evaluation 방식을 Offline RL에서 그대로 활용하기 때문에, 실질적으로 Offline RL의 성능이 어느 정도인지 (적어도 Online RL과 비교하려해도) 어려운 문제가 있다.</p>
 <p>그래서 논문에서 제안하는 방식은 시간에 따라서 학습하는 agent가 사용할 수 있는 데이터의 비율을 점점 변화시키면서 해당 데이터를 바탕으로 evaluation을 수행하는 것이다. (전제 데이터를 한번에 다 쓰지 말고…) 이를 위해서 기존의 Online Deep RL에서 많이 사용되는 <strong>replay-buffer</strong> 기반의 training scheme을 활용하게 된다. 대신 Online RL에서처럼 현재 학습하고 있는 agent의 experience를 넣는 것이 아니라, offline log를 시간에 따라서 조금씩 추가하는 것이 핵심이다. 그래서 새롭게 추가되는 샘플들과 buffer에서 sampling된 mini batch data를 바탕으로 gradient update를 수행한다. 상세한 알고리즘의 구성은 <a href="#offline-sequential-evaluation">Algorithm 1</a> 과 같다.</p>
-<div id="offline-sequential-evaluation" class="pseudocode-container" data-pseudocode-index="1" data-line-number="true" data-line-number-punc=":" data-alg-title="Algorithm" data-no-end="false" data-indent-size="1.2em" data-comment-delimiter="//">
+<div id="offline-sequential-evaluation" class="pseudocode-container" data-pseudocode-index="1" data-indent-size="1.2em" data-line-number-punc=":" data-alg-title="Algorithm" data-no-end="false" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Sequential Evaluation in the offline setting} \begin{algorithmic} \Input{ Algorithm $A$, Offline data $\mathcal{D} = \{ s_t, a_t, r_t, s_{t+1}\}_{t=1}^{T_0}$, increment-size $\gamma$, gradient steps per increment $K$} \State{Replay-buffer $\mathcal{B} \gets \{s_t, a_t, r_t, s_{t+1}\}_{t=1}^{T_0}$} \State{$t \gets T_0$} \While{$t &lt; T$} \State{Update replay-buffer $ \mathcal{B} \gets \mathcal{B} \cup \{s_t, a_t, r_t, s_{t+1}\}_{t}^{t+\gamma}$} \State{Sample a training batch, ensure new data is included: batch $\sim \mathcal{B}$} \State{Perform training step with $A$ on batch} \State{$t \gets t + \gamma$} \For{$j=1, \cdots, K$} \State{Sample a training batch $\sim \mathcal{B}$} \State{Perform training step with $A$ on batch} \EndFor \EndWhile \end{algorithmic} \end{algorithm}
 </div>
 </div>
-<p>위 알고리즘을 통해서 epoch-style로 학습할 때 발생하는 문제를 대응할 수 있는데, 먼저 데이터를 증가시키는 정도를 나타내는 <span class="math inline">\(\gamma\)</span>와 학습을 수행하는 횟수를 나타내는 <span class="math inline">\(K\)</span> 를 다르게 함으로써, dataset의 size가 변화함에 따라서 성능 변화의 추이(예를 들어서 어떤 size에서 bottleneck이 발생하는지…)를 확인할 수 있다. 그리고 알고리즘을 보면 알겠지만, Online RL에서 환경과의 interaction을 여러 번 수행하면서 evaluation 하는 것과 비슷한 형태로 되어 있어서, 이와 같은 방식을 통해서 replay-buffer의 size에 따라서 Offline RL의 성능 변화가 발생하는 것을 확인할 수 있다. 또한 모든 offline log가 replay-buffer에 들어간 이후에 online finetune을 수행하면서도 새롭게 추가된 데이터를 활용할 수 있기 때문에, Offline-to-Online RL 환경에서 Seamless하게 evaluation 수행할 수 있다. 무엇보다도, 알고리즘 자체를 개선했다기 보다는 데이터를 어떻게 활용할 것인지에 대한 방법을 제시한 것이기 때문에, 기존의 학습 과정을 크게 수정하지 않고도 적용할 수 있다는 장점이 있다.</p>
+<p>위 알고리즘을 통해서 epoch-style로 학습할 때 발생하는 문제를 대응할 수 있는데, 먼저 데이터를 증가시키는 정도를 나타내는 <span class="math inline">\(\gamma\)</span> 와 학습을 수행하는 횟수를 나타내는 <span class="math inline">\(K\)</span> 를 다르게 함으로써, dataset의 size가 변화함에 따라서 성능 변화의 추이(예를 들어서 어떤 size에서 bottleneck이 발생하는지…)를 확인할 수 있다. 그리고 알고리즘을 보면 알겠지만, Online RL에서 환경과의 interaction을 여러 번 수행하면서 evaluation 하는 것과 비슷한 형태로 되어 있어서, 이와 같은 방식을 통해서 replay-buffer의 size에 따라서 Offline RL의 성능 변화가 발생하는 것을 확인할 수 있다. 또한 모든 offline log가 replay-buffer에 들어간 이후에 online finetune을 수행하면서도 새롭게 추가된 데이터를 활용할 수 있기 때문에, Offline-to-Online RL 환경에서 Seamless하게 evaluation 수행할 수 있다. 무엇보다도, 알고리즘 자체를 개선했다기 보다는 데이터를 어떻게 활용할 것인지에 대한 방법을 제시한 것이기 때문에, 기존의 학습 과정을 크게 수정하지 않고도 적용할 수 있다는 장점이 있다.</p>
+</section>
+<section id="experiments" class="level3">
+<h3 class="anchored" data-anchor-id="experiments">Experiments</h3>
+<p>성능 검증을 위한 실험에서 비교군으로 IQL, CQL, TD3+B, AWAC, BC 등의 알고리즘에 위의 Sequential Evaluation 방법을 적용해서 결과를 비교하고자 했다. 데이터는 D4RL에서 제공하는 <code>HalfCheetah-v2</code>, <code>Walker2D-v2</code>, <code>Hopper-v2</code> 를 사용했고, 데이터 내에서 제공하는 4가지 버전 (random, medium, medium-expert, medium-replay)에 대해서 실험을 진행했다.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>D4RL</strong> dataset에서 제공하는 환경에는 random, medium, mixed 라는 3가지 버전의 데이터가 존재하고, 논문의 ablation test를 위해서 medium-expert, medium-replay 라는 2가지 버전의 데이터를 만들었다. Random은 random policy로 1M data point만큼 수집한 데이터이고, medium은 원래 D4RL에서는 학습중인 policy가 쌓은 데이터 중 중간 9M~10M사이에 수집된 데이터를 의미한다. 그리고 expert는 학습중인 policy가 쌓은 데이터 중 마지막 1M개를 뽑은 것인데, 논문에서는 조금 다르게 설명되어 있다. 여기에서는 medium이 expert policy로 학습되기까지 걸리는 시간 중 1/3까지 학습되는 동안 (즉 medium policy) 수집된 데이터가 1M 만큼 존재하는 것으로 설명되어 있다. Medium-replay는 medium처럼 학습된 형태지만, 이 때 사용된 replay buffer를 담은 1M 개의 데이터이고, medium-expert는 medium policy가 쌓은 데이터 1M와 expert policy가 쌓은 데이터 1M가 혼합된 형태를 의미한다. 그리고 마지막 Mixed는 expert와 다르게 처음 뽑은 1M개의 데이터를 의미한다. 역시 이 정의도 논문에서는 다르게 정의되어 있다. (논문에서는 mixed가 33%를 random data, 33%를 논문에서 정의한 medium data, 그리고 나머지를 expert dataset에서 뽑았다고 되어 있다.)</p>
+</div>
+</div>
+<div id="fig-performance1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../images/performance1.PNG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Performance Curves on the D4RL benchmark of Offline RL</figcaption><p></p>
+</figure>
+</div>
+<p><a href="#fig-performance1">Figure&nbsp;1</a> 에서는 다양한 dataset으로 학습한 Offline RL 알고리즘들이 학습이 되어가면서 성능 개선이 되는 모습을 보여주고 있다. 이렇게 다양한 버전에 대한 실험을 진행함으로써, dataset quality에 따라 각 agent의 성능 개선폭에 변화가 있는지를 확인하는데 유용하게 쓰일 수 있다.</p>
+<div id="fig-performance2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../images/performance1.PNG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Performance Curves for online fine-tuning</figcaption><p></p>
+</figure>
+</div>
+<p><a href="#fig-performance2">Figure&nbsp;2</a> 에서 보여주고자 하는 것은 offline RL agent가 Online fine-tuning을 통해서 성능 개선할 때 동일한 접근 방법으로 성능이 개선이 되는, 일명 seamless integration을 보여주는 것이다. 각 그래프 별로 점선으로 된 세로선이 있는데, 이 선이 바로 online fine-tuning이 시작한 시점이고, 사용한 버전에 따라 차이는 존재하지만, 일반적으로 finetune 되는 시점부터 성능이 급격히 올라가는 것을 확인할 수 있다.</p>
+<div id="fig-performance3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="../images/performance3.PNG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Performance Curve for Mixed dataset with varying data quality</figcaption><p></p>
+</figure>
+</div>
+<p>논문에서 정의한 D4RL의 data quality와 실제 D4RL의 data quality 정의가 조금 다르긴 한데, 아무튼 논문에서는 다양한 data quality에 대해서의 성능 변화 실험을 통해 ablation test를 수행했다.</p>
 
 
 </section>
@@ -273,23 +308,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -354,92 +375,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -484,13 +419,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">
-      &nbsp;
-    </div>   
-    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
-    <div class="nav-footer-right">
-      &nbsp;
-    </div>
+      <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
   </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js" type="text/javascript"></script>
