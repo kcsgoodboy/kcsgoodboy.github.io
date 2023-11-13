@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.26">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,7 +20,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -58,7 +58,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
@@ -91,6 +92,7 @@ MathJax = {
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 <link href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" rel="stylesheet">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
@@ -107,30 +109,31 @@ MathJax = {
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html" rel="">
+    <a class="nav-link" href="../../../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../publication/index.html" rel="">
+    <a class="nav-link" href="../../../publication/index.html" rel="" target="">
  <span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../../index.html" rel="">
+    <a class="dropdown-item" href="../../../index.html" rel="" target="">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../posts/kr.html" rel="">
+    <a class="dropdown-item" href="../../../posts/kr.html" rel="" target="">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -138,17 +141,18 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -201,6 +205,7 @@ MathJax = {
   <ul>
   <li><a href="#an-actor-critic-algorithm" id="toc-an-actor-critic-algorithm" class="nav-link active" data-scroll-target="#an-actor-critic-algorithm">An actor-critic algorithm</a></li>
   <li><a href="#aside-discount-factors" id="toc-aside-discount-factors" class="nav-link" data-scroll-target="#aside-discount-factors">Aside: discount factors</a></li>
+  <li><a href="#aside-discount-factors-for-policy-gradient" id="toc-aside-discount-factors-for-policy-gradient" class="nav-link" data-scroll-target="#aside-discount-factors-for-policy-gradient">Aside: discount factors for policy gradient</a></li>
   </ul>
 </nav>
     </div>
@@ -213,7 +218,7 @@ MathJax = {
 <section id="an-actor-critic-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="an-actor-critic-algorithm">An actor-critic algorithm</h2>
 <p>지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.</p>
-<div id="alg-actor-critic" class="pseudocode-container" data-no-end="false" data-line-number="true" data-pseudocode-index="1" data-line-number-punc=":" data-indent-size="1.2em" data-comment-delimiter="//" data-alg-title="Algorithm">
+<div id="alg-actor-critic" class="pseudocode-container" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-alg-title="Algorithm" data-pseudocode-index="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{(batch) actor-critic algorithm} \begin{algorithmic} \State sample \{$s_i, a_i$\} from $\pi_{\theta}(a|s)$ (interaction) \State fit $\hat{V}^{\pi}_{\phi}(s)$ to sampled reward sums \State evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \hat{V}^{\pi}_{\phi}(s_{i+1}) - \hat{V}^{\pi}_{\phi}(s_i)$ \State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i|s_i) \hat{A}^{\pi}(s_i, a_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -228,6 +233,26 @@ y_{i, t} \approx r(s_{i, t}, a_{i, t}) + \hat{V}^{\pi}_{\phi}(s_{i, t+1})
 \]</span> <span class="math display">\[
 \mathcal{L}(\phi) = \frac{1}{2} \sum_{i} \Vert \hat{V}^{\pi}_{\phi}(s_{i, t}) - y_{i, t} \Vert^2
 \]</span></p>
+<p>그런데 만약, value function의 boundary, 즉 episode의 길이가 무한정이라면 어떻게 될까? 그 말은 episode가 끝나지 않으면서 계속 reward를 더하는 형태로 value function이 update될 것이고, 위 식에 따르면 <span class="math inline">\(\hat{V}_{\phi}^{\pi}\)</span> 도 역시 무한정으로 커지게 된다. 이를 다룰 수 있는 방법은 현재의 순간과 가까운 시점에 받은 reward에 대해서 더 큰 가중치를 주는 것이고, 이때 discount factor <span class="math inline">\(\gamma\)</span> 를 사용한다. 그러면 value function은 다시 정의할 수 있다.</p>
+<p><span class="math display">\[
+y_{i, t} \approx r(s_{i, t}, a_{i, t}) + \gamma \hat{V}^{\pi}_{\phi}(s_{i, t+1}) \qquad ,\gamma \in [0, 1]
+\]</span></p>
+<p>일반적으로 <span class="math inline">\(\gamma\)</span> 는 0.99라는 1에 가까운 값을 사용하는데, 현재 시점에 먼 시점에 reward를 받은 것에 대해서는 <span class="math inline">\(\gamma^n\)</span> 의 형태로 가중치가 감가된다. (n은 시점의 차이, 그래서 보통 번역본에는 감가 상수라고 표현되어 있다.) 보통 <span class="math inline">\(\gamma\)</span> 는 학습자가 정하는 hyperparameter로 알려져 있지만, 실제로 어떤 <span class="math inline">\(\gamma\)</span> 를 사용했느냐에 따라서 MDP가 변하는 경우도 존재한다. 강의에서는 <span class="math inline">\(n\)</span> step후에 죽는 경우에 대한 예시를 들었는데, 어떤 값을 선택하냐에 따라서 episode가 끝나는 시점이 달라지면서, 결국에는 환경의 transition probability에 영향을 주기도 한다.</p>
+</section>
+<section id="aside-discount-factors-for-policy-gradient" class="level2">
+<h2 class="anchored" data-anchor-id="aside-discount-factors-for-policy-gradient">Aside: discount factors for policy gradient</h2>
+<p>그러면 위에서 다룬 discount factor를 (monte carlo) policy gradient에 적용할 수 있느냐에 대한 의문이 생길 수 있다. 다르게 표현하면 policy gradient에서도 현재에 가까운 시점에 받은 reward의 비중을 더 크게 반영할 수 있느냐인데, 실제 식으로 넣게 된다면 해당 강의에서 다뤘던 reward-to-go 부분에 <span class="math inline">\(\gamma\)</span> 를 넣어주면 된다.</p>
+<p><span class="math display">\[
+\text{Option 1:} \qquad \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}(a_{i, t}|s_{i, t}) \left( \sum_{t'=t}^{T} \gamma^{t'-t} r(s_{i, t'}, a_{i, t'}) \right)
+\]</span></p>
+<p><span class="math display">\[
+\text{Option 2:} \qquad \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \left( \sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}(a_{i, t}|s_{i, t}) \right) \left( \sum_{t=1}^{T} \gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \right)
+\]</span></p>
+<p>여기에서 잠깐 Option 2에 대해서 살펴볼 필요가 있다. 이 식은 바로 위에 있는 Option 1과 유사해보이지만, 뒤에 reward가 더해지는 부분에서 reward-to-go가 아닌 처음 시점부터 보게끔 되어 있다는 부분에서 조금 차이가 있다. 그런데 사실 첫번째 bracket과 두번째 bracket의 시점이 <span class="math inline">\(t=1\)</span> 부터 <span class="math inline">\(T\)</span> 까지의 시점이므로, 두번째 bracket의 <span class="math inline">\(\gamma\)</span> 를 쪼개서 (<span class="math inline">\(\gamma \rightarrow \gamma^{1 \sim t-1} \times \gamma^{t \sim T}\)</span>) 첫번째 bracket에 넣어주면 Option 1과 유사한 식이 만들어진다.</p>
+<p><span class="math display">\[
+\nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N}  \sum_{t=1}^{T} {\color{red}\gamma^{t-1}} \nabla_{\theta} \log \pi_{\theta}(a_{i, t}|s_{i, t}) \left( \sum_{t=1}^{T} \gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \right)
+\]</span></p>
+<p>사실 위 식의 <span class="math inline">\(\gamma^{t-1}\)</span> 의 역할은 reward에서의 discount factor의 역할과 비슷하다. reward에서의 discount factor는 정의 그대로 현재에 가까운 시점에 받은 reward에 대한 가중치를 의미하고, 위 식의 <span class="math inline">\(\gamma\)</span> 도 역시 현재에 가까운 시점에 취한 policy <span class="math inline">\(\pi_{\theta}\)</span>에 가중치를 더 부여하겠다는 것을 의미한다. 예를 들어서 내가 현재 시점에 100 달러를 받으면서 한 행동과 1년 뒤에 100 달러를 받으면서 한 행동의 가치를 다르게 부여하겠다는 것이다. 어떻게 보면 Option 2에서 정의한 식이 실제 policy gradient를 계산하는데 더 적합하다고 볼 수도 있다.</p>
 
 
 </section>
@@ -260,9 +285,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -327,6 +366,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -371,7 +496,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js" type="text/javascript"></script>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.26">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -57,7 +57,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -118,6 +119,7 @@ MathJax = {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
@@ -134,30 +136,31 @@ MathJax = {
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html" rel="">
+    <a class="nav-link" href="../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../publication/index.html" rel="">
+    <a class="nav-link" href="../publication/index.html" rel="" target="">
  <span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../index.html" rel="">
+    <a class="dropdown-item" href="../index.html" rel="" target="">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../posts/kr.html" rel="">
+    <a class="dropdown-item" href="../posts/kr.html" rel="" target="">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -165,17 +168,18 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -223,9 +227,9 @@ MathJax = {
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1699455600000" data-listing-file-modified-sort="1699505689112" data-listing-reading-time-sort="4.475">
+<div class="quarto-post image-right" data-index="0" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1699455600000" data-listing-file-modified-sort="1699459439504" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<p><a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html"> <img src="../posts/Offline-Sequential-Evaluation/images/performance1.PNG" class="thumnail-image"> </a></p>
+<p><a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html">
@@ -261,13 +265,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1699282800000" data-listing-file-modified-sort="1699502951415" data-listing-reading-time-sort="1.41">
+<div class="quarto-post image-right" data-index="1" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1699282800000" data-listing-file-modified-sort="1699286560825" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html"></a></p>
+<p><a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html"> <p class="card-img-top"><img src="DSP-lec4-5\kr\kernel-density-estimation_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html">
@@ -306,13 +306,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698678000000" data-listing-file-modified-sort="1699502951414" data-listing-reading-time-sort="1.65">
+<div class="quarto-post image-right" data-index="2" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698678000000" data-listing-file-modified-sort="1698681724596" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html"></a></p>
+<p><a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html">
@@ -351,13 +347,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1698246000000" data-listing-file-modified-sort="1699502951412" data-listing-reading-time-sort="0.685">
+<div class="quarto-post image-right" data-index="3" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1698246000000" data-listing-file-modified-sort="1699891521477" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html"></a></p>
+<p><a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html">
@@ -393,13 +385,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698159600000" data-listing-file-modified-sort="1699502951413" data-listing-reading-time-sort="1.84">
+<div class="quarto-post image-right" data-index="4" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698159600000" data-listing-file-modified-sort="1698245071887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html"></a></p>
+<p><a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
 </div>
 <div class="body">
 <a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html">
@@ -438,13 +426,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698073200000" data-listing-file-modified-sort="1699502951413" data-listing-reading-time-sort="1.95">
+<div class="quarto-post image-right" data-index="5" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698073200000" data-listing-file-modified-sort="1699286539312" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html"></a></p>
+<p><a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html"> <p class="card-img-top"><img src="DSP-lec4-1\kr\Multivariate-gaussian-distribution_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html">
@@ -483,9 +467,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1699502951410" data-listing-reading-time-sort="2.47">
+<div class="quarto-post image-right" data-index="6" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1697725249436" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<p><a href="../posts/Active-OPS/kr/active-offline-policy-selection.html"> <img src="../posts/Active-OPS/images/ops.png" class="thumnail-image"> </a></p>
+<p><a href="../posts/Active-OPS/kr/active-offline-policy-selection.html"> <p class="card-img-top"><img src="Active-OPS\images\ops.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="../posts/Active-OPS/kr/active-offline-policy-selection.html">
@@ -521,9 +505,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1699502951411" data-listing-reading-time-sort="6.895">
+<div class="quarto-post image-right" data-index="7" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1698249191277" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <div class="thumbnail">
-<p><a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html"> <img src="../posts/CS285-lec6-1/images/pg.png" class="thumnail-image"> </a></p>
+<p><a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html"> <p class="card-img-top"><img src="CS285-lec6-1\images\pg.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html">
@@ -559,9 +543,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1696863600000" data-listing-file-modified-sort="1699502951460" data-listing-reading-time-sort="4.755">
+<div class="quarto-post image-right" data-index="8" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1696863600000" data-listing-file-modified-sort="1697641725748" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <div class="thumbnail">
-<p><a href="../posts/Off-2-On-RL/kr/Off2OnRL.html"> <img src="../posts/Off-2-On-RL/images/distribution_shift.png" class="thumnail-image"> </a></p>
+<p><a href="../posts/Off-2-On-RL/kr/Off2OnRL.html"> <p class="card-img-top"><img src="Off-2-On-RL\images\distribution_shift.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="../posts/Off-2-On-RL/kr/Off2OnRL.html">
@@ -597,9 +581,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1693234800000" data-listing-file-modified-sort="1699502951421" data-listing-reading-time-sort="4.04">
+<div class="quarto-post image-right" data-index="9" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1693234800000" data-listing-file-modified-sort="1693758939827" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <div class="thumbnail">
-<p><a href="../posts/Implicit-Q-Learning/kr/IQL.html"> <img src="../posts/Implicit-Q-Learning/fig/expectile_regression.png" class="thumnail-image"> </a></p>
+<p><a href="../posts/Implicit-Q-Learning/kr/IQL.html"> <p class="card-img-top"><img src="Implicit-Q-Learning\fig\expectile_regression.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="../posts/Implicit-Q-Learning/kr/IQL.html">
@@ -635,9 +619,9 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="Python,Coursera,DeepLearning.AI" data-listing-date-sort="1652194800000" data-listing-file-modified-sort="1699502951457" data-listing-reading-time-sort="7.075">
+<div class="quarto-post image-right" data-index="10" data-categories="Python,Coursera,DeepLearning.AI" data-listing-date-sort="1652194800000" data-listing-file-modified-sort="1674660016977" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
 <div class="thumbnail">
-<p><a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"> <img src="../posts/Logistic-Regression-with-a-Neural-Network/images/LogReg_kiank.png" class="thumnail-image"> </a></p>
+<p><a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"> <img src="../posts/Logistic-Regression-with-a-Neural-Network/images/LogReg_kiank.png" class="thumbnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html">
@@ -708,9 +692,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -775,6 +773,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -817,7 +901,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
 
