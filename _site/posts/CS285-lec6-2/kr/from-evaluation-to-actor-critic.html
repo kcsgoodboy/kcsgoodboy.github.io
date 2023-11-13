@@ -205,6 +205,7 @@ MathJax = {
   <ul>
   <li><a href="#an-actor-critic-algorithm" id="toc-an-actor-critic-algorithm" class="nav-link active" data-scroll-target="#an-actor-critic-algorithm">An actor-critic algorithm</a></li>
   <li><a href="#aside-discount-factors" id="toc-aside-discount-factors" class="nav-link" data-scroll-target="#aside-discount-factors">Aside: discount factors</a></li>
+  <li><a href="#aside-discount-factors-for-policy-gradient" id="toc-aside-discount-factors-for-policy-gradient" class="nav-link" data-scroll-target="#aside-discount-factors-for-policy-gradient">Aside: discount factors for policy gradient</a></li>
   </ul>
 </nav>
     </div>
@@ -217,7 +218,7 @@ MathJax = {
 <section id="an-actor-critic-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="an-actor-critic-algorithm">An actor-critic algorithm</h2>
 <p>지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.</p>
-<div id="alg-actor-critic" class="pseudocode-container" data-indent-size="1.2em" data-no-end="false" data-alg-title="Algorithm" data-pseudocode-index="1" data-line-number-punc=":" data-comment-delimiter="//" data-line-number="true">
+<div id="alg-actor-critic" class="pseudocode-container" data-line-number="true" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-pseudocode-index="1" data-alg-title="Algorithm" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{(batch) actor-critic algorithm} \begin{algorithmic} \State sample \{$s_i, a_i$\} from $\pi_{\theta}(a|s)$ (interaction) \State fit $\hat{V}^{\pi}_{\phi}(s)$ to sampled reward sums \State evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \hat{V}^{\pi}_{\phi}(s_{i+1}) - \hat{V}^{\pi}_{\phi}(s_i)$ \State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i|s_i) \hat{A}^{\pi}(s_i, a_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -232,6 +233,26 @@ y_{i, t} \approx r(s_{i, t}, a_{i, t}) + \hat{V}^{\pi}_{\phi}(s_{i, t+1})
 \]</span> <span class="math display">\[
 \mathcal{L}(\phi) = \frac{1}{2} \sum_{i} \Vert \hat{V}^{\pi}_{\phi}(s_{i, t}) - y_{i, t} \Vert^2
 \]</span></p>
+<p>그런데 만약, value function의 boundary, 즉 episode의 길이가 무한정이라면 어떻게 될까? 그 말은 episode가 끝나지 않으면서 계속 reward를 더하는 형태로 value function이 update될 것이고, 위 식에 따르면 <span class="math inline">\(\hat{V}_{\phi}^{\pi}\)</span> 도 역시 무한정으로 커지게 된다. 이를 다룰 수 있는 방법은 현재의 순간과 가까운 시점에 받은 reward에 대해서 더 큰 가중치를 주는 것이고, 이때 discount factor <span class="math inline">\(\gamma\)</span> 를 사용한다. 그러면 value function은 다시 정의할 수 있다.</p>
+<p><span class="math display">\[
+y_{i, t} \approx r(s_{i, t}, a_{i, t}) + \gamma \hat{V}^{\pi}_{\phi}(s_{i, t+1}) \qquad ,\gamma \in [0, 1]
+\]</span></p>
+<p>일반적으로 <span class="math inline">\(\gamma\)</span> 는 0.99라는 1에 가까운 값을 사용하는데, 현재 시점에 먼 시점에 reward를 받은 것에 대해서는 <span class="math inline">\(\gamma^n\)</span> 의 형태로 가중치가 감가된다. (n은 시점의 차이, 그래서 보통 번역본에는 감가 상수라고 표현되어 있다.) 보통 <span class="math inline">\(\gamma\)</span> 는 학습자가 정하는 hyperparameter로 알려져 있지만, 실제로 어떤 <span class="math inline">\(\gamma\)</span> 를 사용했느냐에 따라서 MDP가 변하는 경우도 존재한다. 강의에서는 <span class="math inline">\(n\)</span> step후에 죽는 경우에 대한 예시를 들었는데, 어떤 값을 선택하냐에 따라서 episode가 끝나는 시점이 달라지면서, 결국에는 환경의 transition probability에 영향을 주기도 한다.</p>
+</section>
+<section id="aside-discount-factors-for-policy-gradient" class="level2">
+<h2 class="anchored" data-anchor-id="aside-discount-factors-for-policy-gradient">Aside: discount factors for policy gradient</h2>
+<p>그러면 위에서 다룬 discount factor를 (monte carlo) policy gradient에 적용할 수 있느냐에 대한 의문이 생길 수 있다. 다르게 표현하면 policy gradient에서도 현재에 가까운 시점에 받은 reward의 비중을 더 크게 반영할 수 있느냐인데, 실제 식으로 넣게 된다면 해당 강의에서 다뤘던 reward-to-go 부분에 <span class="math inline">\(\gamma\)</span> 를 넣어주면 된다.</p>
+<p><span class="math display">\[
+\text{Option 1:} \qquad \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}(a_{i, t}|s_{i, t}) \left( \sum_{t'=t}^{T} \gamma^{t'-t} r(s_{i, t'}, a_{i, t'}) \right)
+\]</span></p>
+<p><span class="math display">\[
+\text{Option 2:} \qquad \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \left( \sum_{t=1}^{T} \nabla_{\theta} \log \pi_{\theta}(a_{i, t}|s_{i, t}) \right) \left( \sum_{t=1}^{T} \gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \right)
+\]</span></p>
+<p>여기에서 잠깐 Option 2에 대해서 살펴볼 필요가 있다. 이 식은 바로 위에 있는 Option 1과 유사해보이지만, 뒤에 reward가 더해지는 부분에서 reward-to-go가 아닌 처음 시점부터 보게끔 되어 있다는 부분에서 조금 차이가 있다. 그런데 사실 첫번째 bracket과 두번째 bracket의 시점이 <span class="math inline">\(t=1\)</span> 부터 <span class="math inline">\(T\)</span> 까지의 시점이므로, 두번째 bracket의 <span class="math inline">\(\gamma\)</span> 를 쪼개서 ($^{1 t-1} ^{t T}) 첫번째 bracket에 넣어주면 Option 1과 유사한 식이 만들어진다.</p>
+<p><span class="math display">\[
+\nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N}  \sum_{t=1}^{T} {\color{red}\gamma^{t-1}} \nabla_{\theta} \log \pi_{\theta}(a_{i, t}|s_{i, t}) \left( \sum_{t=1}^{T} \gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \right)
+\]</span></p>
+<p>사실 위 식의 <span class="math inline">\(\gamma^{t-1}\)</span> 의 역할은 reward에서의 discount factor의 역할과 비슷하다. reward에서의 discount factor는 정의 그대로 현재에 가까운 시점에 받은 reward에 대한 가중치를 의미하고, 위 식의 <span class="math inline">\(\gamma\)</span> 도 역시 현재에 가까운 시점에 취한 policy <span class="math inline">\(\pi_{\theta}\)</span>에 가중치를 더 부여하겠다는 것을 의미한다.</p>
 
 
 </section>
