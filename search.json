@@ -546,111 +546,6 @@
     "text": "Multivariate Gaussian Distribution\nGaussian Distribution의 probability density function은 아래와 같이 정의할 수 있다.\n\\[\n\\mathcal{N}(x \\vert \\mu, \\sigma^2) =  \\frac{1}{\\sqrt{2 \\pi \\sigma^2}} \\exp(- \\frac{1}{2 \\sigma^2}(x - \\mu)^2)\n\\]\n이를 Multivariate로 확장하게 되면, 기존에 sample의 standard deviation (\\(\\sigma^2\\))를 사용하던게 Covariance (\\(\\Sigma\\))로 변하게 되고, 표현식이 행렬 형태로 주어지게 된다.\n\\[\n\\mathcal{N}(x \\vert \\mu, \\Sigma) = \\frac{1}{(2\\pi)^{D/2}} \\frac{1}{\\vert \\Sigma \\vert^{1/2}} \\exp (-\\frac{1}{2} (x - \\mu)^T \\Sigma^{-1} (x - \\mu))\n\\]\n(참고로 \\(D\\) 는 distribution의 dimension을 나타냄)\n위 식에 대한 MLE Solution을 구해보려면 우선 주어진 분포에 대한 log likelihood를 계산해볼 수 있다. (pdf내에 exponential form이 있기 때문에 log likelihood를 사용하면 해당 form을 줄일 수 있다.)\n\\[\n\\begin{aligned}\n\\ln \\mathcal{N}(x \\vert \\mu, \\Sigma) &= -\\frac{1}{2} \\ln | \\Sigma | - \\frac{1}{2} (x - \\mu)^T \\Sigma^{-1} (x - \\mu) + C \\quad (\\text{Vector form}) \\\\\n&= -\\frac{1}{2} \\ln | \\Sigma | - \\frac{1}{2} \\sum^N_{n=1} (x_n - \\mu)^T \\Sigma^{-1} (x_n - \\mu) + C \\quad (\\text{Element form})\n\\end{aligned}\n\\]\n여기서 trace trick 이라는 것을 쓰면, 중간의 \\(\\Sigma^{-1}\\) 부분을 따로 뺄수 있게 된다.\n\nNOTE: Trace trick을 간단하게 요약하면 다음과 같다. 1) \\(\\frac{d}{dA} \\log |A| = A^{-T} \\quad\\), 2) \\(\\frac{d}{dA}Tr[AB] = \\frac{d}{dA}Tr[BA] = B^T\\)\n\n그러면 정확한 값은 아니지만 기존의 값과 비례하는 형태로 아래와 같이 정리할 수 있다.\n\\[\n\\begin{aligned}\n\\ln \\mathcal{N}(x \\vert \\mu, \\Sigma) &\\propto -\\frac{1}{2} \\ln | \\Sigma | - \\frac{1}{2} \\sum^N_{n=1} Tr [ \\Sigma^{-1}(x_n - \\mu)(x_n - \\mu)^T] \\\\\n&= -\\frac{1}{2} \\ln | \\Sigma | - \\frac{1}{2} Tr[\\Sigma^{-1} \\sum^N_{n=1} ((x_n - \\mu)(x_n - \\mu)^T)]\n\\end{aligned}\n\\]\n이중 뒤에 있는 \\(\\sum^N_{n=1} ((x_n - \\mu)(x_n - \\mu)^T)\\) 부분은 각 sample을 mean 값으로 빼준 것에 대한 총합이므로 결국 variance라는 것을 알 수 있고, log likelihood가 variance에 비례하다는 결론을 얻을 수 있다.\nLog-likelihood의 optimization을 위해서, 위 식을 각각의 변수 (\\(\\mu, \\Sigma\\))로 미분하고, 미분한 식에 대한 solution을 구해보면 다음과 같이 된다.\n\\[\n\\frac{d}{d\\mu} \\ln \\mathcal{N}(X \\vert \\mu, \\Sigma) = 0 \\rightarrow -\\frac{1}{2} \\times 2 \\times -1 \\times \\Sigma^{-1} \\sum^N_{n=1}(x_n - \\hat{\\mu}) = 0 \\\\\n\\hat{\\mu} = \\frac{\\sum^N_{n=1}x_n}{N}\n\\]\n\\[\n\\frac{d}{d\\Sigma^{-1}} \\ln \\mathcal{N}(X \\vert \\mu, \\Sigma) = 0 \\\\\n\\hat{\\Sigma} = \\frac{1}{N} \\sum^N_{n=1}(x_n - \\hat{\\mu})(x_n - \\hat{\\mu})^T\n\\]\n이렇게 Estimated MLE Solution을 구하면 결국 mean 값은 기존 sample의 mean과 동일하고, covariance는 기존 sample의 variance를 sample의 크기로 나눠준 형태와 동일하다는 것을 확인할 수 있다."
   },
   {
-    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
-    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
-    "title": "From Evaluation to Actor Critic",
-    "section": "",
-    "text": "지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.\n\n\n\\begin{algorithm} \\caption{(batch) actor-critic algorithm} \\begin{algorithmic} \\State sample \\{$s_i, a_i$\\} from $\\pi_{\\theta}(a|s)$ (interaction) \\State fit $\\hat{V}^{\\pi}_{\\phi}(s)$ to sampled reward sums \\State evaluate $\\hat{A}^{\\pi}(s_i, a_i) = r(s_i, a_i) + \\hat{V}^{\\pi}_{\\phi}(s_{i+1}) - \\hat{V}^{\\pi}_{\\phi}(s_i)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a_i|s_i) \\hat{A}^{\\pi}(s_i, a_i)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}\n\n\n결과적으로 actor-critic algorithm의 핵심은 샘플링된 reward sum을 estimate할 수 있는 value function \\(\\hat{V}^{\\pi}_{\\phi}(s)\\) 를 학습하는 것이고, 이를 바탕으로 advantage function \\(\\hat{A}^{\\pi}(s_i, a_i)\\) 까지 계산하는 것이다. 그리고 이전에 학습된 신경망에서 뽑은 값으로 next target을 구하는 bootstrapping 방식을 사용한다는 것까지 다뤘다."
-  },
-  {
-    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#an-actor-critic-algorithm",
-    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#an-actor-critic-algorithm",
-    "title": "From Evaluation to Actor Critic",
-    "section": "",
-    "text": "지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.\n\n\n\\begin{algorithm} \\caption{(batch) actor-critic algorithm} \\begin{algorithmic} \\State sample \\{$s_i, a_i$\\} from $\\pi_{\\theta}(a|s)$ (interaction) \\State fit $\\hat{V}^{\\pi}_{\\phi}(s)$ to sampled reward sums \\State evaluate $\\hat{A}^{\\pi}(s_i, a_i) = r(s_i, a_i) + \\hat{V}^{\\pi}_{\\phi}(s_{i+1}) - \\hat{V}^{\\pi}_{\\phi}(s_i)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a_i|s_i) \\hat{A}^{\\pi}(s_i, a_i)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}\n\n\n결과적으로 actor-critic algorithm의 핵심은 샘플링된 reward sum을 estimate할 수 있는 value function \\(\\hat{V}^{\\pi}_{\\phi}(s)\\) 를 학습하는 것이고, 이를 바탕으로 advantage function \\(\\hat{A}^{\\pi}(s_i, a_i)\\) 까지 계산하는 것이다. 그리고 이전에 학습된 신경망에서 뽑은 값으로 next target을 구하는 bootstrapping 방식을 사용한다는 것까지 다뤘다."
-  },
-  {
-    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors",
-    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors",
-    "title": "From Evaluation to Actor Critic",
-    "section": "Aside: discount factors",
-    "text": "Aside: discount factors\n그래서 결국 value function을 fit 하는 문제는 아래와 같이 정의할 수 있게 된다.\n\\[\ny_{i, t} \\approx r(s_{i, t}, a_{i, t}) + \\hat{V}^{\\pi}_{\\phi}(s_{i, t+1})\n\\] \\[\n\\mathcal{L}(\\phi) = \\frac{1}{2} \\sum_{i} \\Vert \\hat{V}^{\\pi}_{\\phi}(s_{i, t}) - y_{i, t} \\Vert^2\n\\]\n그런데 만약, value function의 boundary, 즉 episode의 길이가 무한정이라면 어떻게 될까? 그 말은 episode가 끝나지 않으면서 계속 reward를 더하는 형태로 value function이 update될 것이고, 위 식에 따르면 \\(\\hat{V}_{\\phi}^{\\pi}\\) 도 역시 무한정으로 커지게 된다. 이를 다룰 수 있는 방법은 현재의 순간과 가까운 시점에 받은 reward에 대해서 더 큰 가중치를 주는 것이고, 이때 discount factor \\(\\gamma\\) 를 사용한다. 그러면 value function은 다시 정의할 수 있다.\n\\[\ny_{i, t} \\approx r(s_{i, t}, a_{i, t}) + \\gamma \\hat{V}^{\\pi}_{\\phi}(s_{i, t+1}) \\qquad ,\\gamma \\in [0, 1]\n\\]\n일반적으로 \\(\\gamma\\) 는 0.99라는 1에 가까운 값을 사용하는데, 현재 시점에 먼 시점에 reward를 받은 것에 대해서는 \\(\\gamma^n\\) 의 형태로 가중치가 감가된다. (n은 시점의 차이, 그래서 보통 번역본에는 감가 상수라고 표현되어 있다.) 보통 \\(\\gamma\\) 는 학습자가 정하는 hyperparameter로 알려져 있지만, 실제로 어떤 \\(\\gamma\\) 를 사용했느냐에 따라서 MDP가 변하는 경우도 존재한다. 강의에서는 \\(n\\) step후에 죽는 경우에 대한 예시를 들었는데, 어떤 값을 선택하냐에 따라서 episode가 끝나는 시점이 달라지면서, 결국에는 환경의 transition probability에 영향을 주기도 한다."
-  },
-  {
-    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors-for-policy-gradient",
-    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors-for-policy-gradient",
-    "title": "From Evaluation to Actor Critic",
-    "section": "Aside: discount factors for policy gradient",
-    "text": "Aside: discount factors for policy gradient\n그러면 위에서 다룬 discount factor를 (monte carlo) policy gradient에 적용할 수 있느냐에 대한 의문이 생길 수 있다. 다르게 표현하면 policy gradient에서도 현재에 가까운 시점에 받은 reward의 비중을 더 크게 반영할 수 있느냐인데, 실제 식으로 넣게 된다면 해당 강의에서 다뤘던 reward-to-go 부분에 \\(\\gamma\\) 를 넣어주면 된다.\n\\[\n\\text{Option 1:} \\qquad \\nabla_{\\theta}J(\\theta) \\approx \\frac{1}{N} \\sum_{i=1}^{N} \\sum_{t=1}^{T} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_{i, t}|s_{i, t}) \\left( \\sum_{t'=t}^{T} \\gamma^{t'-t} r(s_{i, t'}, a_{i, t'}) \\right)\n\\]\n\\[\n\\text{Option 2:} \\qquad \\nabla_{\\theta}J(\\theta) \\approx \\frac{1}{N} \\sum_{i=1}^{N} \\left( \\sum_{t=1}^{T} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_{i, t}|s_{i, t}) \\right) \\left( \\sum_{t=1}^{T} \\gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \\right)\n\\]\n여기에서 잠깐 Option 2에 대해서 살펴볼 필요가 있다. 이 식은 바로 위에 있는 Option 1과 유사해보이지만, 뒤에 reward가 더해지는 부분에서 reward-to-go가 아닌 처음 시점부터 보게끔 되어 있다는 부분에서 조금 차이가 있다. 그런데 사실 첫번째 bracket과 두번째 bracket의 시점이 \\(t=1\\) 부터 \\(T\\) 까지의 시점이므로, 두번째 bracket의 \\(\\gamma\\) 를 쪼개서 (\\(\\gamma \\rightarrow \\gamma^{1 \\sim t-1} \\times \\gamma^{t \\sim T}\\)) 첫번째 bracket에 넣어주면 Option 1과 유사한 식이 만들어진다.\n\\[\n\\nabla_{\\theta}J(\\theta) \\approx \\frac{1}{N} \\sum_{i=1}^{N}  \\sum_{t=1}^{T} {\\color{red}\\gamma^{t-1}} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_{i, t}|s_{i, t}) \\left( \\sum_{t=1}^{T} \\gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \\right)\n\\]\n사실 위 식의 \\(\\gamma^{t-1}\\) 의 역할은 reward에서의 discount factor의 역할과 비슷하다. reward에서의 discount factor는 정의 그대로 현재에 가까운 시점에 받은 reward에 대한 가중치를 의미하고, 위 식의 \\(\\gamma\\) 도 역시 현재에 가까운 시점에 취한 policy \\(\\pi_{\\theta}\\)에 가중치를 더 부여하겠다는 것을 의미한다. 예를 들어서 내가 현재 시점에 100 달러를 받으면서 한 행동과 1년 뒤에 100 달러를 받으면서 한 행동의 가치를 다르게 부여하겠다는 것이다. 어떻게 보면 Option 2에서 정의한 식이 실제 policy gradient를 계산하는데 더 적합하다고 볼 수도 있다. 강의에서는 이를 later steps matter less, 즉 뒤로 갈수록 더 적은 가중치를 부여한다고 표현하였다."
-  },
-  {
-    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#which-version-is-the-right-one",
-    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#which-version-is-the-right-one",
-    "title": "From Evaluation to Actor Critic",
-    "section": "Which version is the right one?",
-    "text": "Which version is the right one?\n그럼에도 불구하고 실제로 사용하는 식은 Option 2가 아닌, Option 1이다. 왜일까? 사실 우리가 discount factor를 사용함으로써 원하는 것은 policy의 영향력을 변화시키는 것이 아니라, 현재와 가까운 reward에 가중치를 부여하는 것이다. 앞에서 언급한 것처럼 finite한 episode 상에서는 최대한 빠르게 goal에 도달하는 것을 원하기 때문에, 상식적으로는 Option 2처럼 policy에도 \\(\\gamma\\) 를 가하는게 맞는 것처럼 보일지는 몰라도 실제로는 Option 1처럼 reward-to-go term에만 \\(\\gamma\\) 를 사용하는 것이다. 그리고 이는 결국 policy gradient의 variance를 줄여주는 역할도 같이 수행한다."
-  },
-  {
-    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#actor-critic-algorithm-with-discount",
-    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#actor-critic-algorithm-with-discount",
-    "title": "From Evaluation to Actor Critic",
-    "section": "Actor-critic algorithm (with discount)",
-    "text": "Actor-critic algorithm (with discount)\n그래서 결국 discount factor가 적용된 actor-critic algorithm은 아래와 같이 정의할 수 있다. 사실 Algorithm 1 에서 3번째 줄의 advantage function을 계산하는 부분에서 discount factor를 적용하는 차이가 생기는 것일뿐, 거의 동일하다.\n\n\n\\begin{algorithm} \\caption{(batch) actor-critic algorithm with discount} \\begin{algorithmic} \\State sample \\{$s_i, a_i$\\} from $\\pi_{\\theta}(a|s)$ (interaction) \\State fit $\\hat{V}^{\\pi}_{\\phi}(s)$ to sampled reward sums \\State evaluate $\\hat{A}^{\\pi}(s_i, a_i) = r(s_i, a_i) + {\\color{red} \\gamma}\\hat{V}^{\\pi}_{\\phi}(s_{i+1}) - \\hat{V}^{\\pi}_{\\phi}(s_i)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a_i|s_i) \\hat{A}^{\\pi}(s_i, a_i)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}\n\n\n혹은 online 상황에서 single time step에서 얻은 trajectory로 update하는 경우에는 아래와 같이 정의할 수 있다.\n\n\n\\begin{algorithm} \\caption{online actor-critic algorithm with discount} \\begin{algorithmic} \\State take action $a \\sim \\pi_{\\theta}(a|s)$, get $(s, a, s', r)$ \\State update $\\hat{V}^{\\pi}_{\\phi}$ using target $r + \\gamma \\hat{V}^{\\pi}_{\\phi}(s')$ \\State evaluate $\\hat{A}^{\\pi}(s, a) = r(s, a) + \\gamma \\hat{V}^{\\pi}_{\\phi}(s') - \\hat{V}^{\\pi}_{\\phi}(s)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a|s) \\hat{A}^{\\pi}(s, a)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}"
-  },
-  {
-    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html",
-    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html",
-    "title": "Active Offline Policy Selection",
-    "section": "",
-    "text": "저자: Ksenia Konyushkova, Yutian Chen, Tom Le Paine, Caglar Gulcehre, Cosmin Paduraru, Daniel J Mankowitz, Misha Denil, Nando de Freitas\n발표: NeurIPS 2021\n논문\nProject Site\nOpenReview\nCode (Tensorflow & Tensorflow Probability)"
-  },
-  {
-    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html#tldr",
-    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html#tldr",
-    "title": "Active Offline Policy Selection",
-    "section": "TL;DR",
-    "text": "TL;DR\n이 논문에서는 offline rl policy를 로봇이나 추천 시스템과 같은 실제 도메인에 적용시킬 때 최적의 policy를 선택하는 방법에 대한 내용을 담고 있다. 기존에도 Off-policy Evaluation (OPE)에 대한 내용들이 다뤄지고 있었지만, 여전히 OPE에 의한 evaluation과 fully online evaluation간의 gap이 존재하던 것은 사실이다. 이 논문에서는 Active offline policy selection이란 방법을 통해서 offline data와 online interaction을 통해서 지속적으로 best policy를 찾는 방법에 대해서 다룬다. 먼저 OPE estimate을 사용해서 online evalution에 대한 warm start를 수행한 후, policy similarity를 나타내는 kernel을 활용한 Bayesian Optimization 을 통해서 다음으로 evaluate할 policy 를 선택하는 과정을 반복한다."
-  },
-  {
-    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html#introduction",
-    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html#introduction",
-    "title": "Active Offline Policy Selection",
-    "section": "Introduction",
-    "text": "Introduction\n\n\n\nFigure 1: Off-policy Selection\n\n\n대부분의 offline rl 논문은 simulator에 의존해서 성능을 평가하고 이를 토대로 evaluation을 수행하지만 enviornment와의 interaction에 대한 cost가 큰 실제 환경에서는 이런 training과 evaluation 과정이 제한적일 수 밖에 없다. 이때문에 Offline RL 문제에서는 여러개의 알고리즘과 각각의 hyperparameter의 구성으로 모델을 학습시키고, Figure 1 에 소개되어 있는 것처럼 off-policy policy evalution (OPE)를 통해서 모델을 선택하는 과정을 거치게 된다. 일반적인 online RL처럼 policy evaluation을 하되, 주어진 데이터 내에서 policy evaluation을 수행하는 것인데, 문제는 이 OPE가 어떤 좋은 모델을 고르기에는 정확하지 않다는 것이다. 또한 OPE 자체가 주어진 데이터 내로 한정되어 evaluation을 수행하기 때문에 offline RL이 겪는 distribution shift 문제, 즉 data를 수집할 때 취했던 behavior policy와 실제 학습된 policy간의 차이가 존재하는 문제를 겪게 된다.\n그래서 논문에서 제안하는 Active Offline Policy Selection 는 Figure 1 의 두번째 그림에서 소개되고 있는 것처럼 offline data와 소량이긴 하지만 online evaluation 결과를 활용하여 best policy를 찾는 방법에 대한 것이다. 기본적으로는 Bayesian Optimization (BO)을 활용하고, 각 policy별 좋은 정도(논문에서는 expected return을 사용했다.)를 추정하는데 Gaussian Process (GP)를 사용했다. 핵심적인 요소는 딱 두가지가 있는데, 먼저 기존에 알려져있는 OPE 추정치를 환경상에 존재하는 추가적인 noise observation으로 활용해서, 실제로 online evaluation 할때 조금더 GP에 의한 hyperparameter optimization을 쉽게 할 수 있도록 일종의 warm start 역할을 수행하게 한다. 그 다음에 여러 개의 후보군 policy 들 중에서 동일 state에 대한 action을 어떻게 취했는지에 대한 similarity를 나타내는 kernel을 활용해서 모델링을 했고, 이를 통해서 다음ㅇ로 evaluate할 policy를 선택하게 된다. 이를 통해 굳이 실제 환경에서 수행하지 않더라도 best policy를 찾는 근거를 제공하기 때문에 그만큼 데이터 활용에 대한 효율성을 높일 수 있다. 자세한 내용은 다른 파트에서 부연 설명하고자 한다.\n\nOff-policy policy evaluation and selection\n보통 Policy Evalutation이라고 하는 것은 policy \\(\\pi\\) 의 가치를 구하는 것을 의미하며, discounted reward에 대한 expected sum을 통해서 계산할 수 있다.\n\\[\n\\mu_{\\pi} = \\mathbb{E}\\Big[\\sum_{t=0}^{\\infty} \\gamma^t R(s_t, a_t) \\Big], \\text{with } s_0 \\sim d_0(\\cdot), a_t \\sim \\pi(\\cdot|s_t), s_{t+1} \\sim T(\\cdot|s_t, a_t)\n\\]\nOnline RL에서는 해당 policy를 주어진 환경에서 직접 수행하면서 \\(\\mu_{\\pi}\\) 의 가치를 추정할 수 있지만, offline RL에서는 주어진 데이터만 활용한 OPE 기법을 사용한다. 일반적으로 OPE는 현재 policy가 아닌 별도의 behavior policy \\(\\pi_{\\beta}\\) 에 의해서 수집된 trajectory들의 집합 \\(\\mathcal{D}\\) 를 사용해서 value \\(\\hat{\\mu_{\\pi}}\\) 을 추정한다. 그리고 이어지는 Offline Policy Selection (OPS)을 통해 후보군 policy 들 중에서 가장 좋은 estimated value를 가지는 policy 를 찾는 과정이 이뤄진다. 이렇게 OPE 추정치를 직접적으로 활용하는 방법도 있고, 별도의 quality metric를 정해서 이를 통해서 policy를 선택하는 방법도 있다."
-  },
-  {
-    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html#active-offline-policy-selection",
-    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html#active-offline-policy-selection",
-    "title": "Active Offline Policy Selection",
-    "section": "Active Offline Policy Selection",
-    "text": "Active Offline Policy Selection\n\nProblem Definition"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Chans Lecture Note",
-    "section": "",
-    "text": "In theory, there is no difference between theory and practice. In practice, there is."
-  },
-  {
-    "objectID": "about.html#chanseok-kang",
-    "href": "about.html#chanseok-kang",
-    "title": "Chans Lecture Note",
-    "section": "Chanseok Kang",
-    "text": "Chanseok Kang\nI’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time."
-  },
-  {
-    "objectID": "about.html#education",
-    "href": "about.html#education",
-    "title": "Chans Lecture Note",
-    "section": "Education",
-    "text": "Education\n Seoul National University | Seoul, South Korea  M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 \n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Prof. Bernhard Egger\n\nChung-Ang University | Seoul, South Korea  B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013"
-  },
-  {
-    "objectID": "about.html#main-experience",
-    "href": "about.html#main-experience",
-    "title": "Chans Lecture Note",
-    "section": "Main Experience",
-    "text": "Main Experience\n LG Electronics | Specialist | Dec 2014 - present\nCarnegie Mellon University | Visiting Researcher | Apr 2019 - Aug 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | Jun 2012 - Dec 2012"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Chans Lecture Note",
-    "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nDimensionality Reduction\n\n\n\n\n\n\n\nPython\n\n\n\n\n\n\n\n\n\n\n\nMar 15, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nDifferentiation in python\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nMar 14, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nLinear Transformation\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 8, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nMatrix Multiplication\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 8, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nVector Operations: Scalar Multiplication, Sum and Dot Product of Vectors\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 5, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nSolving Linear Systems: 3 Variables\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 2, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nSolving Linear Systems: 2 Variables\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 1, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nIntroduction to NumPy Arrays\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nJan 29, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "posts/CS285-lec6-1/kr/actor-critic-algorithm.html",
     "href": "posts/CS285-lec6-1/kr/actor-critic-algorithm.html",
     "title": "Actor-Critic Algorithms",
@@ -705,6 +600,111 @@
     "title": "Actor-Critic Algorithms",
     "section": "Can we do better?",
     "text": "Can we do better?\n우리가 label로 사용하고 있는 \\(V{\\pi}\\) 는 사실 expectation을 구할 수 없기 때문에 대체로 사용한 근사값이고 실제로는 아래와 같은 label을 사용하는 것이 맞다.\n\\[\n\\begin{aligned}\ny_{i, t} &= \\sum_{t'=t}^T \\mathbb{E}_{\\pi_{\\theta}}[r(s_{i, t'}, a_{i, t'}) | s_{i, t}] \\\\\n&\\approx r(s_{i, t}, a_{i, t}) + \\sum_{t'=t+1}^T \\mathbb{E}_{\\pi_{\\theta}}[r(s_{i, t'}, a_{i, t'}) | s_{i, t+1}]\n\\end{aligned}\n\\]\n그런데 뒤에 있는 식도 앞에서 근사화했던 논리를 그대로 가져오면 동일하게 value function으로 근사한 값으로 볼 수 있다. \\[\ny_{i, t} \\approx r(s_{i, t}, a_{i, t}) + V^{\\pi}(s_{i, t+1}) \\approx r(s_{i, t}, a_{i, t}) + \\hat{V}^{\\pi}_{\\phi}(s_{i, t+1})   \n\\]\n그래서 앞 장에서 소개한 것처럼 신경망을 사용한 function approximation을 동일하게 사용할 수 있는데, 사실 엄밀하게 말하면 이때 계산되는 function value는 실제로 구하는 value가 아니라, 이전에 주어진 training data를 통해서 학습된 것을 사용하는, bootstrap estimator를 통해 나온 값이다. 그러면 기존의 training data인 (\\(s_{i, t}, \\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\\)) 가 아닌, (\\(s_{i, t}, r(s_{i, t}, a_{i, t}) + \\hat{V}^{\\pi}_{\\phi}(s_{i, t+1})\\)) 를 사용하게 되는데, 이렇게 이전에 학습된 모델을 사용하는 방식을 bootstrapping 이라고 하고,이전에 학습된 모델을 사용하면서 variance가 줄어들게 되고, 학습이 더 빠르게 이뤄지는 효과를 가지게 된다. 물론 신경망에 의존한 bootstrapped estimate을 사용하기 때문에 한번 잘못된 값이 나오면 이에 대한 bias가 커지는 trade-off가 존재한다."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Chans Lecture Note",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nDimensionality Reduction\n\n\n\n\n\n\n\nPython\n\n\n\n\n\n\n\n\n\n\n\nMar 15, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nDifferentiation in python\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nMar 14, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nLinear Transformation\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 8, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nMatrix Multiplication\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 8, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nVector Operations: Scalar Multiplication, Sum and Dot Product of Vectors\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 5, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nSolving Linear Systems: 3 Variables\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 2, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nSolving Linear Systems: 2 Variables\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nFeb 1, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nIntroduction to NumPy Arrays\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\nMath\n\n\n\n\n\n\n\n\n\n\n\nJan 29, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nLogistic Regression with a Neural Network mindset\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Chans Lecture Note",
+    "section": "",
+    "text": "In theory, there is no difference between theory and practice. In practice, there is."
+  },
+  {
+    "objectID": "about.html#chanseok-kang",
+    "href": "about.html#chanseok-kang",
+    "title": "Chans Lecture Note",
+    "section": "Chanseok Kang",
+    "text": "Chanseok Kang\nI’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "Chans Lecture Note",
+    "section": "Education",
+    "text": "Education\n Seoul National University | Seoul, South Korea  M.S in Electrical Engineering and Computer Science | Mar 2013 - Feb 2015 \n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Prof. Bernhard Egger\n\nChung-Ang University | Seoul, South Korea  B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013"
+  },
+  {
+    "objectID": "about.html#main-experience",
+    "href": "about.html#main-experience",
+    "title": "Chans Lecture Note",
+    "section": "Main Experience",
+    "text": "Main Experience\n LG Electronics | Specialist | Dec 2014 - present\nCarnegie Mellon University | Visiting Researcher | Apr 2019 - Aug 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | Jun 2012 - Dec 2012"
+  },
+  {
+    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html",
+    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html",
+    "title": "Active Offline Policy Selection",
+    "section": "",
+    "text": "저자: Ksenia Konyushkova, Yutian Chen, Tom Le Paine, Caglar Gulcehre, Cosmin Paduraru, Daniel J Mankowitz, Misha Denil, Nando de Freitas\n발표: NeurIPS 2021\n논문\nProject Site\nOpenReview\nCode (Tensorflow & Tensorflow Probability)"
+  },
+  {
+    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html#tldr",
+    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html#tldr",
+    "title": "Active Offline Policy Selection",
+    "section": "TL;DR",
+    "text": "TL;DR\n이 논문에서는 offline rl policy를 로봇이나 추천 시스템과 같은 실제 도메인에 적용시킬 때 최적의 policy를 선택하는 방법에 대한 내용을 담고 있다. 기존에도 Off-policy Evaluation (OPE)에 대한 내용들이 다뤄지고 있었지만, 여전히 OPE에 의한 evaluation과 fully online evaluation간의 gap이 존재하던 것은 사실이다. 이 논문에서는 Active offline policy selection이란 방법을 통해서 offline data와 online interaction을 통해서 지속적으로 best policy를 찾는 방법에 대해서 다룬다. 먼저 OPE estimate을 사용해서 online evalution에 대한 warm start를 수행한 후, policy similarity를 나타내는 kernel을 활용한 Bayesian Optimization 을 통해서 다음으로 evaluate할 policy 를 선택하는 과정을 반복한다."
+  },
+  {
+    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html#introduction",
+    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html#introduction",
+    "title": "Active Offline Policy Selection",
+    "section": "Introduction",
+    "text": "Introduction\n\n\n\nFigure 1: Off-policy Selection\n\n\n대부분의 offline rl 논문은 simulator에 의존해서 성능을 평가하고 이를 토대로 evaluation을 수행하지만 enviornment와의 interaction에 대한 cost가 큰 실제 환경에서는 이런 training과 evaluation 과정이 제한적일 수 밖에 없다. 이때문에 Offline RL 문제에서는 여러개의 알고리즘과 각각의 hyperparameter의 구성으로 모델을 학습시키고, Figure 1 에 소개되어 있는 것처럼 off-policy policy evalution (OPE)를 통해서 모델을 선택하는 과정을 거치게 된다. 일반적인 online RL처럼 policy evaluation을 하되, 주어진 데이터 내에서 policy evaluation을 수행하는 것인데, 문제는 이 OPE가 어떤 좋은 모델을 고르기에는 정확하지 않다는 것이다. 또한 OPE 자체가 주어진 데이터 내로 한정되어 evaluation을 수행하기 때문에 offline RL이 겪는 distribution shift 문제, 즉 data를 수집할 때 취했던 behavior policy와 실제 학습된 policy간의 차이가 존재하는 문제를 겪게 된다.\n그래서 논문에서 제안하는 Active Offline Policy Selection 는 Figure 1 의 두번째 그림에서 소개되고 있는 것처럼 offline data와 소량이긴 하지만 online evaluation 결과를 활용하여 best policy를 찾는 방법에 대한 것이다. 기본적으로는 Bayesian Optimization (BO)을 활용하고, 각 policy별 좋은 정도(논문에서는 expected return을 사용했다.)를 추정하는데 Gaussian Process (GP)를 사용했다. 핵심적인 요소는 딱 두가지가 있는데, 먼저 기존에 알려져있는 OPE 추정치를 환경상에 존재하는 추가적인 noise observation으로 활용해서, 실제로 online evaluation 할때 조금더 GP에 의한 hyperparameter optimization을 쉽게 할 수 있도록 일종의 warm start 역할을 수행하게 한다. 그 다음에 여러 개의 후보군 policy 들 중에서 동일 state에 대한 action을 어떻게 취했는지에 대한 similarity를 나타내는 kernel을 활용해서 모델링을 했고, 이를 통해서 다음ㅇ로 evaluate할 policy를 선택하게 된다. 이를 통해 굳이 실제 환경에서 수행하지 않더라도 best policy를 찾는 근거를 제공하기 때문에 그만큼 데이터 활용에 대한 효율성을 높일 수 있다. 자세한 내용은 다른 파트에서 부연 설명하고자 한다.\n\nOff-policy policy evaluation and selection\n보통 Policy Evalutation이라고 하는 것은 policy \\(\\pi\\) 의 가치를 구하는 것을 의미하며, discounted reward에 대한 expected sum을 통해서 계산할 수 있다.\n\\[\n\\mu_{\\pi} = \\mathbb{E}\\Big[\\sum_{t=0}^{\\infty} \\gamma^t R(s_t, a_t) \\Big], \\text{with } s_0 \\sim d_0(\\cdot), a_t \\sim \\pi(\\cdot|s_t), s_{t+1} \\sim T(\\cdot|s_t, a_t)\n\\]\nOnline RL에서는 해당 policy를 주어진 환경에서 직접 수행하면서 \\(\\mu_{\\pi}\\) 의 가치를 추정할 수 있지만, offline RL에서는 주어진 데이터만 활용한 OPE 기법을 사용한다. 일반적으로 OPE는 현재 policy가 아닌 별도의 behavior policy \\(\\pi_{\\beta}\\) 에 의해서 수집된 trajectory들의 집합 \\(\\mathcal{D}\\) 를 사용해서 value \\(\\hat{\\mu_{\\pi}}\\) 을 추정한다. 그리고 이어지는 Offline Policy Selection (OPS)을 통해 후보군 policy 들 중에서 가장 좋은 estimated value를 가지는 policy 를 찾는 과정이 이뤄진다. 이렇게 OPE 추정치를 직접적으로 활용하는 방법도 있고, 별도의 quality metric를 정해서 이를 통해서 policy를 선택하는 방법도 있다."
+  },
+  {
+    "objectID": "posts/Active-OPS/kr/active-offline-policy-selection.html#active-offline-policy-selection",
+    "href": "posts/Active-OPS/kr/active-offline-policy-selection.html#active-offline-policy-selection",
+    "title": "Active Offline Policy Selection",
+    "section": "Active Offline Policy Selection",
+    "text": "Active Offline Policy Selection\n\nProblem Definition"
+  },
+  {
+    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
+    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
+    "title": "From Evaluation to Actor Critic",
+    "section": "",
+    "text": "지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.\n\n\n\\begin{algorithm} \\caption{(batch) actor-critic algorithm} \\begin{algorithmic} \\State sample \\{$s_i, a_i$\\} from $\\pi_{\\theta}(a|s)$ (interaction) \\State fit $\\hat{V}^{\\pi}_{\\phi}(s)$ to sampled reward sums \\State evaluate $\\hat{A}^{\\pi}(s_i, a_i) = r(s_i, a_i) + \\hat{V}^{\\pi}_{\\phi}(s_{i+1}) - \\hat{V}^{\\pi}_{\\phi}(s_i)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a_i|s_i) \\hat{A}^{\\pi}(s_i, a_i)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}\n\n\n결과적으로 actor-critic algorithm의 핵심은 샘플링된 reward sum을 estimate할 수 있는 value function \\(\\hat{V}^{\\pi}_{\\phi}(s)\\) 를 학습하는 것이고, 이를 바탕으로 advantage function \\(\\hat{A}^{\\pi}(s_i, a_i)\\) 까지 계산하는 것이다. 그리고 이전에 학습된 신경망에서 뽑은 값으로 next target을 구하는 bootstrapping 방식을 사용한다는 것까지 다뤘다."
+  },
+  {
+    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#an-actor-critic-algorithm",
+    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#an-actor-critic-algorithm",
+    "title": "From Evaluation to Actor Critic",
+    "section": "",
+    "text": "지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.\n\n\n\\begin{algorithm} \\caption{(batch) actor-critic algorithm} \\begin{algorithmic} \\State sample \\{$s_i, a_i$\\} from $\\pi_{\\theta}(a|s)$ (interaction) \\State fit $\\hat{V}^{\\pi}_{\\phi}(s)$ to sampled reward sums \\State evaluate $\\hat{A}^{\\pi}(s_i, a_i) = r(s_i, a_i) + \\hat{V}^{\\pi}_{\\phi}(s_{i+1}) - \\hat{V}^{\\pi}_{\\phi}(s_i)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a_i|s_i) \\hat{A}^{\\pi}(s_i, a_i)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}\n\n\n결과적으로 actor-critic algorithm의 핵심은 샘플링된 reward sum을 estimate할 수 있는 value function \\(\\hat{V}^{\\pi}_{\\phi}(s)\\) 를 학습하는 것이고, 이를 바탕으로 advantage function \\(\\hat{A}^{\\pi}(s_i, a_i)\\) 까지 계산하는 것이다. 그리고 이전에 학습된 신경망에서 뽑은 값으로 next target을 구하는 bootstrapping 방식을 사용한다는 것까지 다뤘다."
+  },
+  {
+    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors",
+    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors",
+    "title": "From Evaluation to Actor Critic",
+    "section": "Aside: discount factors",
+    "text": "Aside: discount factors\n그래서 결국 value function을 fit 하는 문제는 아래와 같이 정의할 수 있게 된다.\n\\[\ny_{i, t} \\approx r(s_{i, t}, a_{i, t}) + \\hat{V}^{\\pi}_{\\phi}(s_{i, t+1})\n\\] \\[\n\\mathcal{L}(\\phi) = \\frac{1}{2} \\sum_{i} \\Vert \\hat{V}^{\\pi}_{\\phi}(s_{i, t}) - y_{i, t} \\Vert^2\n\\]\n그런데 만약, value function의 boundary, 즉 episode의 길이가 무한정이라면 어떻게 될까? 그 말은 episode가 끝나지 않으면서 계속 reward를 더하는 형태로 value function이 update될 것이고, 위 식에 따르면 \\(\\hat{V}_{\\phi}^{\\pi}\\) 도 역시 무한정으로 커지게 된다. 이를 다룰 수 있는 방법은 현재의 순간과 가까운 시점에 받은 reward에 대해서 더 큰 가중치를 주는 것이고, 이때 discount factor \\(\\gamma\\) 를 사용한다. 그러면 value function은 다시 정의할 수 있다.\n\\[\ny_{i, t} \\approx r(s_{i, t}, a_{i, t}) + \\gamma \\hat{V}^{\\pi}_{\\phi}(s_{i, t+1}) \\qquad ,\\gamma \\in [0, 1]\n\\]\n일반적으로 \\(\\gamma\\) 는 0.99라는 1에 가까운 값을 사용하는데, 현재 시점에 먼 시점에 reward를 받은 것에 대해서는 \\(\\gamma^n\\) 의 형태로 가중치가 감가된다. (n은 시점의 차이, 그래서 보통 번역본에는 감가 상수라고 표현되어 있다.) 보통 \\(\\gamma\\) 는 학습자가 정하는 hyperparameter로 알려져 있지만, 실제로 어떤 \\(\\gamma\\) 를 사용했느냐에 따라서 MDP가 변하는 경우도 존재한다. 강의에서는 \\(n\\) step후에 죽는 경우에 대한 예시를 들었는데, 어떤 값을 선택하냐에 따라서 episode가 끝나는 시점이 달라지면서, 결국에는 환경의 transition probability에 영향을 주기도 한다."
+  },
+  {
+    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors-for-policy-gradient",
+    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#aside-discount-factors-for-policy-gradient",
+    "title": "From Evaluation to Actor Critic",
+    "section": "Aside: discount factors for policy gradient",
+    "text": "Aside: discount factors for policy gradient\n그러면 위에서 다룬 discount factor를 (monte carlo) policy gradient에 적용할 수 있느냐에 대한 의문이 생길 수 있다. 다르게 표현하면 policy gradient에서도 현재에 가까운 시점에 받은 reward의 비중을 더 크게 반영할 수 있느냐인데, 실제 식으로 넣게 된다면 해당 강의에서 다뤘던 reward-to-go 부분에 \\(\\gamma\\) 를 넣어주면 된다.\n\\[\n\\text{Option 1:} \\qquad \\nabla_{\\theta}J(\\theta) \\approx \\frac{1}{N} \\sum_{i=1}^{N} \\sum_{t=1}^{T} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_{i, t}|s_{i, t}) \\left( \\sum_{t'=t}^{T} \\gamma^{t'-t} r(s_{i, t'}, a_{i, t'}) \\right)\n\\]\n\\[\n\\text{Option 2:} \\qquad \\nabla_{\\theta}J(\\theta) \\approx \\frac{1}{N} \\sum_{i=1}^{N} \\left( \\sum_{t=1}^{T} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_{i, t}|s_{i, t}) \\right) \\left( \\sum_{t=1}^{T} \\gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \\right)\n\\]\n여기에서 잠깐 Option 2에 대해서 살펴볼 필요가 있다. 이 식은 바로 위에 있는 Option 1과 유사해보이지만, 뒤에 reward가 더해지는 부분에서 reward-to-go가 아닌 처음 시점부터 보게끔 되어 있다는 부분에서 조금 차이가 있다. 그런데 사실 첫번째 bracket과 두번째 bracket의 시점이 \\(t=1\\) 부터 \\(T\\) 까지의 시점이므로, 두번째 bracket의 \\(\\gamma\\) 를 쪼개서 (\\(\\gamma \\rightarrow \\gamma^{1 \\sim t-1} \\times \\gamma^{t \\sim T}\\)) 첫번째 bracket에 넣어주면 Option 1과 유사한 식이 만들어진다.\n\\[\n\\nabla_{\\theta}J(\\theta) \\approx \\frac{1}{N} \\sum_{i=1}^{N}  \\sum_{t=1}^{T} {\\color{red}\\gamma^{t-1}} \\nabla_{\\theta} \\log \\pi_{\\theta}(a_{i, t}|s_{i, t}) \\left( \\sum_{t=1}^{T} \\gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \\right)\n\\]\n사실 위 식의 \\(\\gamma^{t-1}\\) 의 역할은 reward에서의 discount factor의 역할과 비슷하다. reward에서의 discount factor는 정의 그대로 현재에 가까운 시점에 받은 reward에 대한 가중치를 의미하고, 위 식의 \\(\\gamma\\) 도 역시 현재에 가까운 시점에 취한 policy \\(\\pi_{\\theta}\\)에 가중치를 더 부여하겠다는 것을 의미한다. 예를 들어서 내가 현재 시점에 100 달러를 받으면서 한 행동과 1년 뒤에 100 달러를 받으면서 한 행동의 가치를 다르게 부여하겠다는 것이다. 어떻게 보면 Option 2에서 정의한 식이 실제 policy gradient를 계산하는데 더 적합하다고 볼 수도 있다. 강의에서는 이를 later steps matter less, 즉 뒤로 갈수록 더 적은 가중치를 부여한다고 표현하였다."
+  },
+  {
+    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#which-version-is-the-right-one",
+    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#which-version-is-the-right-one",
+    "title": "From Evaluation to Actor Critic",
+    "section": "Which version is the right one?",
+    "text": "Which version is the right one?\n그럼에도 불구하고 실제로 사용하는 식은 Option 2가 아닌, Option 1이다. 왜일까? 사실 우리가 discount factor를 사용함으로써 원하는 것은 policy의 영향력을 변화시키는 것이 아니라, 현재와 가까운 reward에 가중치를 부여하는 것이다. 앞에서 언급한 것처럼 finite한 episode 상에서는 최대한 빠르게 goal에 도달하는 것을 원하기 때문에, 상식적으로는 Option 2처럼 policy에도 \\(\\gamma\\) 를 가하는게 맞는 것처럼 보일지는 몰라도 실제로는 Option 1처럼 reward-to-go term에만 \\(\\gamma\\) 를 사용하는 것이다. 그리고 이는 결국 policy gradient의 variance를 줄여주는 역할도 같이 수행한다."
+  },
+  {
+    "objectID": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#actor-critic-algorithm-with-discount",
+    "href": "posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html#actor-critic-algorithm-with-discount",
+    "title": "From Evaluation to Actor Critic",
+    "section": "Actor-critic algorithm (with discount)",
+    "text": "Actor-critic algorithm (with discount)\n그래서 결국 discount factor가 적용된 actor-critic algorithm은 아래와 같이 정의할 수 있다. 사실 Algorithm 1 에서 3번째 줄의 advantage function을 계산하는 부분에서 discount factor를 적용하는 차이가 생기는 것일뿐, 거의 동일하다.\n\n\n\\begin{algorithm} \\caption{(batch) actor-critic algorithm with discount} \\begin{algorithmic} \\State sample \\{$s_i, a_i$\\} from $\\pi_{\\theta}(a|s)$ (interaction) \\State fit $\\hat{V}^{\\pi}_{\\phi}(s)$ to sampled reward sums \\State evaluate $\\hat{A}^{\\pi}(s_i, a_i) = r(s_i, a_i) + {\\color{red} \\gamma}\\hat{V}^{\\pi}_{\\phi}(s_{i+1}) - \\hat{V}^{\\pi}_{\\phi}(s_i)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a_i|s_i) \\hat{A}^{\\pi}(s_i, a_i)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}\n\n\n혹은 online 상황에서 single time step에서 얻은 trajectory로 update하는 경우에는 아래와 같이 정의할 수 있다.\n\n\n\\begin{algorithm} \\caption{online actor-critic algorithm with discount} \\begin{algorithmic} \\State take action $a \\sim \\pi_{\\theta}(a|s)$, get $(s, a, s', r)$ \\State update $\\hat{V}^{\\pi}_{\\phi}$ using target $r + \\gamma \\hat{V}^{\\pi}_{\\phi}(s')$ \\State evaluate $\\hat{A}^{\\pi}(s, a) = r(s, a) + \\gamma \\hat{V}^{\\pi}_{\\phi}(s') - \\hat{V}^{\\pi}_{\\phi}(s)$ \\State $\\nabla_{\\theta} \\approx \\sum_i \\nabla_{\\theta} \\log \\pi_{\\theta}(a|s) \\hat{A}^{\\pi}(s, a)$ \\State $\\theta \\leftarrow \\theta + \\alpha \\nabla_{\\theta}$ \\end{algorithmic} \\end{algorithm}"
   },
   {
     "objectID": "posts/Differentiation-in-python/en/differentiation-in-python.html",
@@ -795,7 +795,7 @@
     "href": "posts/kr.html",
     "title": "Chans Lecture Note",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nBridging the Gap Between Offline and Online Reinforcement Learning Evaluation Methodologies\n\n\nOffline Sequential Evaluation\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nSequential Approach to evaluate Offline RL algorithms as a function of the training set size\n\n\n\n\n\n\nNov 9, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nKernel Density Estimation\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4-5-1. Kernel Density Estimation에 대한 내용입니다.\n\n\n\n\n\n\nNov 7, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nPearson Correlation\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4-4. Pearson Correlation에 대한 내용입니다.\n\n\n\n\n\n\nOct 31, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nFrom Evaluation to Actor Critic\n\n\n\n\n\n\n\nLectureReview\n\n\nReinforcementLearning\n\n\n\n\nUC Berkeley CS285 (2023) Lecture 6-2 Review\n\n\n\n\n\n\nOct 26, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nCovariance Matrix\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4-3. Covariance Matrix에 대한 내용입니다.\n\n\n\n\n\n\nOct 25, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nMultivariate Gaussian Distribution\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4.1 Multivariate Gaussian Distribution 에 대한 내용입니다.\n\n\n\n\n\n\nOct 24, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nActive Offline Policy Selection\n\n\nA-OPS\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nA sequential decision approach that combines logged data with online interaction to identify the best policy.\n\n\n\n\n\n\nOct 19, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nActor-Critic Algorithms\n\n\n\n\n\n\n\nLectureReview\n\n\nReinforcementLearning\n\n\n\n\nUC Berkeley CS285 (2023) Lecture 6-1 Review\n\n\n\n\n\n\nOct 19, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nOffline-to-Online Reinforcement Learning via Balanced Replay and Pessimistic Q-Ensemble\n\n\nOff2OnRL\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nBalanced replay scheme that prioritizes samples encountered online while also encouraging the use of near-on-policy samples from offline dataset.\n\n\n\n\n\n\nOct 10, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nOffline Reinforcement Learning with Implicit Q-Learning\n\n\nImplicit Q-Learning (IQL)\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nOffline RL method with only dataset actions.\n\n\n\n\n\n\nAug 29, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\n신경망으로 구현하는 Logistic Regression\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n  \n\n\n\n\nActor-Critic Design Decisions\n\n\n\n\n\n\n\nLectureReview\n\n\nReinforcementLearning\n\n\n\n\nUC Berkeley CS285 (2023) Lecture 6-3 Review\n\n\n\n\n\n\nNov 15, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nBridging the Gap Between Offline and Online Reinforcement Learning Evaluation Methodologies\n\n\nOffline Sequential Evaluation\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nSequential Approach to evaluate Offline RL algorithms as a function of the training set size\n\n\n\n\n\n\nNov 9, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nKernel Density Estimation\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4-5-1. Kernel Density Estimation에 대한 내용입니다.\n\n\n\n\n\n\nNov 7, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nPearson Correlation\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4-4. Pearson Correlation에 대한 내용입니다.\n\n\n\n\n\n\nOct 31, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nFrom Evaluation to Actor Critic\n\n\n\n\n\n\n\nLectureReview\n\n\nReinforcementLearning\n\n\n\n\nUC Berkeley CS285 (2023) Lecture 6-2 Review\n\n\n\n\n\n\nOct 26, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nCovariance Matrix\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4-3. Covariance Matrix에 대한 내용입니다.\n\n\n\n\n\n\nOct 25, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nMultivariate Gaussian Distribution\n\n\n\n\n\n\n\nPython\n\n\nKAIST\n\n\nStatistics\n\n\n\n\nKAIST Data Science Programming 1 - 4.1 Multivariate Gaussian Distribution 에 대한 내용입니다.\n\n\n\n\n\n\nOct 24, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nActive Offline Policy Selection\n\n\nA-OPS\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nA sequential decision approach that combines logged data with online interaction to identify the best policy.\n\n\n\n\n\n\nOct 19, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nActor-Critic Algorithms\n\n\n\n\n\n\n\nLectureReview\n\n\nReinforcementLearning\n\n\n\n\nUC Berkeley CS285 (2023) Lecture 6-1 Review\n\n\n\n\n\n\nOct 19, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nOffline-to-Online Reinforcement Learning via Balanced Replay and Pessimistic Q-Ensemble\n\n\nOff2OnRL\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nBalanced replay scheme that prioritizes samples encountered online while also encouraging the use of near-on-policy samples from offline dataset.\n\n\n\n\n\n\nOct 10, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\nOffline Reinforcement Learning with Implicit Q-Learning\n\n\nImplicit Q-Learning (IQL)\n\n\n\n\nPaperReview\n\n\nReinforcementLearning\n\n\n\n\nOffline RL method with only dataset actions.\n\n\n\n\n\n\nAug 29, 2023\n\n\nChanseok Kang\n\n\n\n\n\n\n  \n\n\n\n\n신경망으로 구현하는 Logistic Regression\n\n\n\n\n\n\n\nPython\n\n\nCoursera\n\n\nDeepLearning.AI\n\n\n\n\n\n\n\n\n\n\n\nMay 11, 2022\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html",

@@ -30,6 +30,7 @@
   {
     "listing": "/posts/kr.html",
     "items": [
+      "/posts/CS285-lec6-3/kr/actor-critic-design-decisions.html",
       "/posts/Offline-Sequential-Evaluation/kr/OSE.html",
       "/posts/DSP-lec4-5/kr/kernel-density-estimation.html",
       "/posts/DSP-lec4-4/kr/Pearson-Correlation.html",
