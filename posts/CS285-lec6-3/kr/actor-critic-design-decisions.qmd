@@ -1,0 +1,11 @@
+---
+title: "Actor-Critic Design Decisions"
+description: UC Berkeley CS285 (2023) Lecture 6-3 Review
+date: 2023-11-15
+author: "Chanseok Kang"
+toc: true 
+categories: [LectureReview, ReinforcementLearning]
+title-block-banner: true
+filters:
+    - pseudocode
+---

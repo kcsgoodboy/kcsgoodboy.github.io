@@ -11,3 +11,6 @@ listing:
 page-layout: full
 comments: false
 ---
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6747875619665490"
+     crossorigin="anonymous"></script>
