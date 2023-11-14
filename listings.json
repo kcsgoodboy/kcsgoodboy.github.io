@@ -1,19 +1,5 @@
 [
   {
-    "listing": "/index.html",
-    "items": [
-      "/posts/Principal-component-analysis/en/principal-component-analysis.html",
-      "/posts/Differentiation-in-python/en/differentiation-in-python.html",
-      "/posts/Linear-Transformation/en/Linear-Transformation.html",
-      "/posts/Matrix-Multiplication/en/Matrix-Multiplication.html",
-      "/posts/vector-operations/en/vector-operations.html",
-      "/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html",
-      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
-      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
-    ]
-  },
-  {
     "listing": "/posts/index.html",
     "items": [
       "/posts/Principal-component-analysis/en/principal-component-analysis.html",
