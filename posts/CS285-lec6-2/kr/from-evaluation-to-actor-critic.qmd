@@ -75,4 +75,58 @@ $$
 \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N}  \sum_{t=1}^{T} {\color{red}\gamma^{t-1}} \nabla_{\theta} \log \pi_{\theta}(a_{i, t}|s_{i, t}) \left( \sum_{t=1}^{T} \gamma^{t-1} r(s_{i, t'}, a_{i, t'}) \right)
 $$
 
-사실 위 식의 $\gamma^{t-1}$ 의 역할은 reward에서의 discount factor의 역할과 비슷하다. reward에서의 discount factor는 정의 그대로 현재에 가까운 시점에 받은 reward에 대한 가중치를 의미하고, 위 식의 $\gamma$ 도 역시 현재에 가까운 시점에 취한 policy $\pi_{\theta}$에 가중치를 더 부여하겠다는 것을 의미한다. 예를 들어서 내가 현재 시점에 100 달러를 받으면서 한 행동과 1년 뒤에 100 달러를 받으면서 한 행동의 가치를 다르게 부여하겠다는 것이다. 어떻게 보면 Option 2에서 정의한 식이 실제 policy gradient를 계산하는데 더 적합하다고 볼 수도 있다.
+사실 위 식의 $\gamma^{t-1}$ 의 역할은 reward에서의 discount factor의 역할과 비슷하다. reward에서의 discount factor는 정의 그대로 현재에 가까운 시점에 받은 reward에 대한 가중치를 의미하고, 위 식의 $\gamma$ 도 역시 현재에 가까운 시점에 취한 policy $\pi_{\theta}$에 가중치를 더 부여하겠다는 것을 의미한다. 예를 들어서 내가 현재 시점에 100 달러를 받으면서 한 행동과 1년 뒤에 100 달러를 받으면서 한 행동의 가치를 다르게 부여하겠다는 것이다. 어떻게 보면 Option 2에서 정의한 식이 실제 policy gradient를 계산하는데 더 적합하다고 볼 수도 있다. 강의에서는 이를 later steps matter less, 즉 뒤로 갈수록 더 적은 가중치를 부여한다고 표현하였다.
+
+## Which version is the right one?
+
+그럼에도 불구하고 실제로 사용하는 식은 Option 2가 아닌, Option 1이다. 왜일까? 사실 우리가 discount factor를 사용함으로써 원하는 것은 policy의 영향력을 변화시키는 것이 아니라, 현재와 가까운 reward에 가중치를 부여하는 것이다. 앞에서 언급한 것처럼 finite한 episode 상에서는 최대한 빠르게 goal에 도달하는 것을 원하기 때문에, 상식적으로는 Option 2처럼 policy에도 $\gamma$ 를 가하는게 맞는 것처럼 보일지는 몰라도 실제로는 Option 1처럼 reward-to-go term에만 $\gamma$ 를 사용하는 것이다. 그리고 이는 결국 policy gradient의 variance를 줄여주는 역할도 같이 수행한다.
+
+## Actor-critic algorithm (with discount)
+
+그래서 결국 discount factor가 적용된 actor-critic algorithm은 아래와 같이 정의할 수 있다. 사실 @alg-actor-critic 에서 3번째 줄의 advantage function을 계산하는 부분에서 discount factor를 적용하는 차이가 생기는 것일뿐, 거의 동일하다.
+
+```pseudocode
+#| label: alg-actor-critic-discount
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+
+\begin{algorithm}
+\caption{(batch) actor-critic algorithm with discount}
+\begin{algorithmic}
+\State sample \{$s_i, a_i$\} from $\pi_{\theta}(a|s)$ (interaction)
+\State fit $\hat{V}^{\pi}_{\phi}(s)$ to sampled reward sums
+\State evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + {\color{red} \gamma}\hat{V}^{\pi}_{\phi}(s_{i+1}) - \hat{V}^{\pi}_{\phi}(s_i)$
+\State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i|s_i) \hat{A}^{\pi}(s_i, a_i)$
+\State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$
+\end{algorithmic}
+\end{algorithm}
+```
+
+혹은 online 상황에서 single time step에서 얻은 trajectory로 update하는 경우에는 아래와 같이 정의할 수 있다.
+
+```pseudocode
+#| label: alg-online-actor-critic-discount
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+
+\begin{algorithm}
+\caption{online actor-critic algorithm with discount}
+\begin{algorithmic}
+\State take action $a \sim \pi_{\theta}(a|s)$, get $(s, a, s', r)$
+\State update $\hat{V}^{\pi}_{\phi}$ using target $r + \gamma \hat{V}^{\pi}_{\phi}(s')$
+\State evaluate $\hat{A}^{\pi}(s, a) = r(s, a) + \gamma \hat{V}^{\pi}_{\phi}(s') - \hat{V}^{\pi}_{\phi}(s)$
+\State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a|s) \hat{A}^{\pi}(s, a)$
+\State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$
+\end{algorithmic}
+\end{algorithm}
+```
