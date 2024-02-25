@@ -1,16 +1,20 @@
 [
   {
-    "listing": "/index.html",
+    "listing": "/posts/kr.html",
     "items": [
-      "/posts/Principal-component-analysis/en/principal-component-analysis.html",
-      "/posts/Differentiation-in-python/en/differentiation-in-python.html",
-      "/posts/Linear-Transformation/en/Linear-Transformation.html",
-      "/posts/Matrix-Multiplication/en/Matrix-Multiplication.html",
-      "/posts/vector-operations/en/vector-operations.html",
-      "/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html",
-      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
-      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Learning-Ray/kr/learning-ray.html",
+      "/posts/CS285-lec6-3/kr/actor-critic-design-decisions.html",
+      "/posts/Offline-Sequential-Evaluation/kr/OSE.html",
+      "/posts/DSP-lec4-5/kr/kernel-density-estimation.html",
+      "/posts/DSP-lec4-4/kr/Pearson-Correlation.html",
+      "/posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
+      "/posts/DSP-lec4-3/kr/Covariance-Matrix.html",
+      "/posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html",
+      "/posts/Active-OPS/kr/active-offline-policy-selection.html",
+      "/posts/CS285-lec6-1/kr/actor-critic-algorithm.html",
+      "/posts/Off-2-On-RL/kr/Off2OnRL.html",
+      "/posts/Implicit-Q-Learning/kr/IQL.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
@@ -28,20 +32,17 @@
     ]
   },
   {
-    "listing": "/posts/kr.html",
+    "listing": "/index.html",
     "items": [
-      "/posts/CS285-lec6-3/kr/actor-critic-design-decisions.html",
-      "/posts/Offline-Sequential-Evaluation/kr/OSE.html",
-      "/posts/DSP-lec4-5/kr/kernel-density-estimation.html",
-      "/posts/DSP-lec4-4/kr/Pearson-Correlation.html",
-      "/posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
-      "/posts/DSP-lec4-3/kr/Covariance-Matrix.html",
-      "/posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html",
-      "/posts/Active-OPS/kr/active-offline-policy-selection.html",
-      "/posts/CS285-lec6-1/kr/actor-critic-algorithm.html",
-      "/posts/Off-2-On-RL/kr/Off2OnRL.html",
-      "/posts/Implicit-Q-Learning/kr/IQL.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Principal-component-analysis/en/principal-component-analysis.html",
+      "/posts/Differentiation-in-python/en/differentiation-in-python.html",
+      "/posts/Linear-Transformation/en/Linear-Transformation.html",
+      "/posts/Matrix-Multiplication/en/Matrix-Multiplication.html",
+      "/posts/vector-operations/en/vector-operations.html",
+      "/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html",
+      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
+      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
     ]
   },
   {
