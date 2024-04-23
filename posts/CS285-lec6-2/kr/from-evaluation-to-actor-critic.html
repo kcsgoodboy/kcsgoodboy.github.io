@@ -221,7 +221,7 @@ MathJax = {
 <section id="an-actor-critic-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="an-actor-critic-algorithm">An actor-critic algorithm</h2>
 <p>지난 글에서 다뤘던 기본적인 (batch) actor-critic 알고리즘은 아래와 같다.</p>
-<div id="alg-actor-critic" class="pseudocode-container" data-no-end="false" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number-punc=":" data-indent-size="1.2em" data-pseudocode-index="1" data-line-number="true">
+<div id="alg-actor-critic" class="pseudocode-container" data-indent-size="1.2em" data-line-number-punc=":" data-alg-title="Algorithm" data-pseudocode-index="1" data-line-number="true" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{(batch) actor-critic algorithm} \begin{algorithmic} \State sample \{$s_i, a_i$\} from $\pi_{\theta}(a|s)$ (interaction) \State fit $\hat{V}^{\pi}_{\phi}(s)$ to sampled reward sums \State evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \hat{V}^{\pi}_{\phi}(s_{i+1}) - \hat{V}^{\pi}_{\phi}(s_i)$ \State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i|s_i) \hat{A}^{\pi}(s_i, a_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -264,13 +264,13 @@ y_{i, t} \approx r(s_{i, t}, a_{i, t}) + \gamma \hat{V}^{\pi}_{\phi}(s_{i, t+1})
 <section id="actor-critic-algorithm-with-discount" class="level2">
 <h2 class="anchored" data-anchor-id="actor-critic-algorithm-with-discount">Actor-critic algorithm (with discount)</h2>
 <p>그래서 결국 discount factor가 적용된 actor-critic algorithm은 아래와 같이 정의할 수 있다. 사실 <a href="#alg-actor-critic">Algorithm 1</a> 에서 3번째 줄의 advantage function을 계산하는 부분에서 discount factor를 적용하는 차이가 생기는 것일뿐, 거의 동일하다.</p>
-<div id="alg-actor-critic-discount" class="pseudocode-container" data-no-end="false" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number-punc=":" data-indent-size="1.2em" data-pseudocode-index="2" data-line-number="true">
+<div id="alg-actor-critic-discount" class="pseudocode-container" data-indent-size="1.2em" data-line-number-punc=":" data-alg-title="Algorithm" data-pseudocode-index="2" data-line-number="true" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{(batch) actor-critic algorithm with discount} \begin{algorithmic} \State sample \{$s_i, a_i$\} from $\pi_{\theta}(a|s)$ (interaction) \State fit $\hat{V}^{\pi}_{\phi}(s)$ to sampled reward sums \State evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + {\color{red} \gamma}\hat{V}^{\pi}_{\phi}(s_{i+1}) - \hat{V}^{\pi}_{\phi}(s_i)$ \State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i|s_i) \hat{A}^{\pi}(s_i, a_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
 <p>혹은 online 상황에서 single time step에서 얻은 trajectory로 update하는 경우에는 아래와 같이 정의할 수 있다.</p>
-<div id="alg-online-actor-critic-discount" class="pseudocode-container" data-no-end="false" data-alg-title="Algorithm" data-comment-delimiter="//" data-line-number-punc=":" data-indent-size="1.2em" data-pseudocode-index="3" data-line-number="true">
+<div id="alg-online-actor-critic-discount" class="pseudocode-container" data-indent-size="1.2em" data-line-number-punc=":" data-alg-title="Algorithm" data-pseudocode-index="3" data-line-number="true" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{online actor-critic algorithm with discount} \begin{algorithmic} \State take action $a \sim \pi_{\theta}(a|s)$, get $(s, a, s', r)$ \State update $\hat{V}^{\pi}_{\phi}$ using target $r + \gamma \hat{V}^{\pi}_{\phi}(s')$ \State evaluate $\hat{A}^{\pi}(s, a) = r(s, a) + \gamma \hat{V}^{\pi}_{\phi}(s') - \hat{V}^{\pi}_{\phi}(s)$ \State $\nabla_{\theta} \approx \sum_i \nabla_{\theta} \log \pi_{\theta}(a|s) \hat{A}^{\pi}(s, a)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta}$ \end{algorithmic} \end{algorithm}
 </div>
