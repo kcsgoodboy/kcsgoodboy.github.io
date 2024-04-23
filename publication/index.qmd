@@ -105,15 +105,15 @@ format:
         </td>
         <td style="padding:20px;width:75%;vertical-align:middle">
             <a href="GDRL/index.qmd">
-                그로?�� ?���? 강화?��?�� (Grokking Deep Reinforcement Learning)
+                그로킹 심층 강화학습 (Grokking Deep Reinforcement Learning)
             </a>
             <br>
             <a>Miguel Morales</a>,
-            <strong>강찬?��(번역)</strong>
+            <strong>강찬석(번역)</strong>
             <br>
-            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8984169041">?��빛�?�디?��</a>, 2021 
+            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8984169041">한빛미디어</a>, 2021 
             <br>
-            <font color="red"><strong>22?�� ????��민국?��?��?�� ?��?�� ?��?��?��?��?��?��</strong></font>
+            <font color="red"><strong>22년 대한민국 학술원 선정 우수학술도서</strong></font>
             <br>
             <p></p>
         </td>
@@ -124,14 +124,14 @@ format:
         </td>
         <td style="padding:20px;width:75%;vertical-align:middle">
             <a>
-                ?��?��?��로�?? ?��?��?�� 머신?��?�� (Machine Learning with Tensorflow)
+                텐서플로를 활용한 머신러닝 (Machine Learning with Tensorflow)
             </a>
             <br>
             <a href="https://shukla.io/">Nishant Shukla</a>,
-            <a>?��교석(번역)</a>,
-            <strong>강찬?��(감수)</strong>
+            <a>송교석(번역)</a>,
+            <strong>강찬석(감수)</strong>
             <br>
-            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8108682495">?��빛�?�디?��</a>, 2019
+            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8108682495">한빛미디어</a>, 2019
             <br>
             <p></p>
         </td>
