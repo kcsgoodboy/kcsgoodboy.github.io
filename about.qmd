@@ -25,7 +25,7 @@ format:
 
 ## Chanseok Kang
 
-<font size="3">I’m Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I’m very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time. </font>
+<font size="3">I'm Research Engineer in LG Electronics. My role is to deploy energy-efficient algorithm in commercial/business product(refrigerator, washing machine, HVAC etc). Also, I have an experience on developing BSP drivers on 5G environment. I'm very interested in learning something new(AI, Embedded System, Mathematics). Especially, I enjoyed taking MOOC (Massive Open Online Course) when I have free time. </font>
 
 
 ## Education
@@ -52,5 +52,6 @@ B.S in Electrical and Electronics Engineering | Mar 2006 - Feb 2013
 :::
 
 :::
+
 
 

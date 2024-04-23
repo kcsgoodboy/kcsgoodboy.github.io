@@ -67,6 +67,30 @@ format:
             <p></p>
         </td>
     </tr>
+    <tr>
+        <td style="padding:20px;width:25%;vertical-align:middle">
+            <img src='../image/dou_framework.png' width="300">
+        </td>
+        <td style="padding:20px;width:75%;vertical-align:middle">
+            <a>
+                Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines
+            </a>
+            <br>
+            <strong>Chanseok Kang</strong>,
+            <a>Guntae Bae</a>,
+            <a>Daesung Kim</a>,
+            <a>Kyoungwoo Lee</a>,
+            <a>Dohyeon Son</a>,
+            <a>Chul Lee</a>,
+            <a>Jaeho Lee</a>,
+            <a>Jinwoo Lee</a>,
+            <a>Jae Woong Yun</a>
+            <br>
+            <em>IEEE Conference on AI (CAI)</em>, 2024 (To be appeared)
+            <br>
+            <p></p>
+        </td>
+    </tr>
 
 </tbody>
 </table>
@@ -81,15 +105,15 @@ format:
         </td>
         <td style="padding:20px;width:75%;vertical-align:middle">
             <a href="GDRL/index.qmd">
-                ê·¸ë¡œí‚¹ ì‹¬ì¸µ ê°•í™”í•™ìŠµ (Grokking Deep Reinforcement Learning)
+                ê·¸ë¡œ?‚¹ ?‹¬ì¸? ê°•í™”?•™?Šµ (Grokking Deep Reinforcement Learning)
             </a>
             <br>
             <a>Miguel Morales</a>,
-            <strong>ê°•ì°¬ì„(ë²ˆì—­)</strong>
+            <strong>ê°•ì°¬?„(ë²ˆì—­)</strong>
             <br>
-            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8984169041">í•œë¹›ë¯¸ë””ì–´</a>, 2021 
+            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8984169041">?•œë¹›ë?¸ë””?–´</a>, 2021 
             <br>
-            <font color="red"><strong>22ë…„ ëŒ€í•œë¯¼êµ­í•™ìˆ ì› ì„ ì • ìš°ìˆ˜í•™ìˆ ë„ì„œ</strong></font>
+            <font color="red"><strong>22?…„ ????•œë¯¼êµ­?•™?ˆ ?› ?„ ? • ?š°?ˆ˜?•™?ˆ ?„?„œ</strong></font>
             <br>
             <p></p>
         </td>
@@ -100,14 +124,14 @@ format:
         </td>
         <td style="padding:20px;width:75%;vertical-align:middle">
             <a>
-                í…ì„œí”Œë¡œë¥¼ í™œìš©í•œ ë¨¸ì‹ ëŸ¬ë‹ (Machine Learning with Tensorflow)
+                ?…?„œ?”Œë¡œë?? ?™œ?š©?•œ ë¨¸ì‹ ?Ÿ¬?‹ (Machine Learning with Tensorflow)
             </a>
             <br>
             <a href="https://shukla.io/">Nishant Shukla</a>,
-            <a>ì†¡êµì„(ë²ˆì—­)</a>,
-            <strong>ê°•ì°¬ì„(ê°ìˆ˜)</strong>
+            <a>?†¡êµì„(ë²ˆì—­)</a>,
+            <strong>ê°•ì°¬?„(ê°ìˆ˜)</strong>
             <br>
-            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8108682495">í•œë¹›ë¯¸ë””ì–´</a>, 2019
+            <a href="https://hanbit.co.kr/store/books/look.php?p_code=B8108682495">?•œë¹›ë?¸ë””?–´</a>, 2019
             <br>
             <p></p>
         </td>
