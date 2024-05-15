@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -80,7 +80,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -89,6 +95,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -131,10 +138,10 @@ MathJax = {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
@@ -146,24 +153,24 @@ MathJax = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../publication/index.html" rel="" target="">
- <span class="menu-text">Publication</span></a>
+    <a class="nav-link" href="../../publication/index.html"> 
+<span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../index.html" rel="" target="">
+    <a class="dropdown-item" href="../../index.html">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../posts/kr.html" rel="" target="">
+    <a class="dropdown-item" href="../../posts/kr.html">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -171,19 +178,19 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -196,7 +203,7 @@ MathJax = {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Author</div>
@@ -239,6 +246,7 @@ MathJax = {
 
 
 
+
 <p style="text-align: right;">
 <a href="https://github.com/kcsgoodboy/kcsgoodboy.github.io/blob/main/publication/GDRL/GDRL-chapter-3.ipynb" role="button" target="_blank"> <img class="notebook-badge-image" src="../../assets/badges/github.svg" alt="View On GitHub"> </a> <a href="https://colab.research.google.com/github/kcsgoodboy/kcsgoodboy.github.io/blob/main/publication/GDRL/GDRL-chapter-3.ipynb" target="_blank"> <img class="notebook-badge-image" src="../../assets/badges/colab.svg" alt="Open In Colab"> </a> <a href="https://mybinder.org/v2/gh/kcsgoodboy/kcsgoodboy.github.io/main?filepath=publication/GDRL/GDRL-chapter-3.ipynb" target="_blank"> <img class="notebook-badge-image" src="../../assets/badges/binder.svg" alt="Open In Binder"> </a>
 </p>
@@ -247,8 +255,8 @@ MathJax = {
 <blockquote class="blockquote">
 <p>그로킹 심층 강화학습 중 3장 내용인 “순간 목표와 장기 목표간의 균형”에 대한 내용입니다.</p>
 </blockquote>
-<div class="cell">
-<details>
+<div id="cell-3" class="cell">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tqdm numpy scikit<span class="op">-</span>learn pyglet setuptools <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym asciinema pandas tabulate tornado<span class="op">==</span><span class="fl">5.</span><span class="op">*</span> PyBullet <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
@@ -259,7 +267,7 @@ MathJax = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym[atari]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="1">
+<div id="cell-4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym, gym_walk, gym_aima</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -270,7 +278,7 @@ MathJax = {
 <li><a href="https://github.com/mimoralea/gym-walk">gym_walk</a></li>
 <li><a href="https://github.com/mimoralea/gym-aima">gym_aima</a></li>
 </ul>
-<div class="cell" data-execution_count="1">
+<div id="cell-6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings <span class="op">;</span> warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym, gym_walk, gym_aima</span>
@@ -287,7 +295,7 @@ MathJax = {
 </div>
 <section id="출력을-위한-helper-function" class="level3">
 <h3 class="anchored" data-anchor-id="출력을-위한-helper-function">출력을 위한 helper function</h3>
-<div class="cell" data-execution_count="2">
+<div id="cell-8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_policy(pi, P, action_symbols<span class="op">=</span>(<span class="st">'&lt;'</span>, <span class="st">'v'</span>, <span class="st">'&gt;'</span>, <span class="st">'^'</span>), n_cols<span class="op">=</span><span class="dv">4</span>, title<span class="op">=</span><span class="st">'정책:'</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(title)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    arrs <span class="op">=</span> {k:v <span class="cf">for</span> k,v <span class="kw">in</span> <span class="bu">enumerate</span>(action_symbols)}</span>
@@ -300,7 +308,7 @@ MathJax = {
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="bu">str</span>(s).zfill(<span class="dv">2</span>), arrs[a].rjust(<span class="dv">6</span>), end<span class="op">=</span><span class="st">" "</span>)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (s <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> n_cols <span class="op">==</span> <span class="dv">0</span>: <span class="bu">print</span>(<span class="st">"|"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="3">
+<div id="cell-9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_state_value_function(V, P, n_cols<span class="op">=</span><span class="dv">4</span>, prec<span class="op">=</span><span class="dv">3</span>, title<span class="op">=</span><span class="st">'상태-가치 함수:'</span>):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(title)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(P)):</span>
@@ -312,7 +320,7 @@ MathJax = {
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="bu">str</span>(s).zfill(<span class="dv">2</span>), <span class="st">'</span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(np.<span class="bu">round</span>(v, prec)).rjust(<span class="dv">6</span>), end<span class="op">=</span><span class="st">" "</span>)</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (s <span class="op">+</span> <span class="dv">1</span>) <span class="op">%</span> n_cols <span class="op">==</span> <span class="dv">0</span>: <span class="bu">print</span>(<span class="st">"|"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="4">
+<div id="cell-10" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_action_value_function(Q, </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                                optimal_Q<span class="op">=</span><span class="va">None</span>, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                                action_symbols<span class="op">=</span>(<span class="st">'&lt;'</span>, <span class="st">'&gt;'</span>), </span>
@@ -327,7 +335,7 @@ MathJax = {
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        arr <span class="op">=</span> np.hstack((arr, np.<span class="bu">round</span>(optimal_Q, prec), np.<span class="bu">round</span>(optimal_Q<span class="op">-</span>Q, prec)))</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tabulate(arr, headers, tablefmt<span class="op">=</span><span class="st">"fancy_grid"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="5">
+<div id="cell-11" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> probability_success(env, pi, goal_state, n_episodes<span class="op">=</span><span class="dv">100</span>, max_steps<span class="op">=</span><span class="dv">200</span>):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    random.seed(<span class="dv">123</span>)<span class="op">;</span> np.random.seed(<span class="dv">123</span>) <span class="op">;</span> env.seed(<span class="dv">123</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
@@ -339,7 +347,7 @@ MathJax = {
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        results.append(state <span class="op">==</span> goal_state)</span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(results)<span class="op">/</span><span class="bu">len</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="6">
+<div id="cell-12" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_return(env, pi, n_episodes<span class="op">=</span><span class="dv">100</span>, max_steps<span class="op">=</span><span class="dv">200</span>):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    random.seed(<span class="dv">123</span>)<span class="op">;</span> np.random.seed(<span class="dv">123</span>) <span class="op">;</span> env.seed(<span class="dv">123</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> []</span>
@@ -355,7 +363,7 @@ MathJax = {
 </section>
 <section id="slippery-walk-five-mdp-and-sample-policy" class="level3">
 <h3 class="anchored" data-anchor-id="slippery-walk-five-mdp-and-sample-policy">Slippery Walk Five MDP and sample policy</h3>
-<div class="cell" data-execution_count="7">
+<div id="cell-14" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'SlipperyWalkFive-v0'</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> env.env.P</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>init_state <span class="op">=</span> env.reset()</span>
@@ -377,7 +385,7 @@ Reaches goal 7.00%. Obtains an average undiscounted return of 0.0700.</code></pr
 </div>
 <section id="정책-평가법" class="level4">
 <h4 class="anchored" data-anchor-id="정책-평가법">정책 평가법</h4>
-<div class="cell" data-execution_count="8">
+<div id="cell-16" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> policy_evaluation(pi, P, gamma<span class="op">=</span><span class="fl">1.0</span>, theta<span class="op">=</span><span class="fl">1e-10</span>):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    prev_V <span class="op">=</span> np.zeros(<span class="bu">len</span>(P), dtype<span class="op">=</span>np.float64)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
@@ -390,7 +398,7 @@ Reaches goal 7.00%. Obtains an average undiscounted return of 0.0700.</code></pr
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        prev_V <span class="op">=</span> V.copy()</span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> V</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="9">
+<div id="cell-17" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> policy_evaluation(pi, P)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(V, P, n_cols<span class="op">=</span><span class="dv">7</span>, prec<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -401,7 +409,7 @@ Reaches goal 7.00%. Obtains an average undiscounted return of 0.0700.</code></pr
 </section>
 <section id="정책-개선법" class="level4">
 <h4 class="anchored" data-anchor-id="정책-개선법">정책 개선법</h4>
-<div class="cell" data-execution_count="10">
+<div id="cell-19" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> policy_improvement(V, P, gamma<span class="op">=</span><span class="fl">1.0</span>):</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    Q <span class="op">=</span> np.zeros((<span class="bu">len</span>(P), <span class="bu">len</span>(P[<span class="dv">0</span>])), dtype<span class="op">=</span>np.float64)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> s <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(P)):</span>
@@ -411,7 +419,7 @@ Reaches goal 7.00%. Obtains an average undiscounted return of 0.0700.</code></pr
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    new_pi <span class="op">=</span> <span class="kw">lambda</span> s: {s:a <span class="cf">for</span> s, a <span class="kw">in</span> <span class="bu">enumerate</span>(np.argmax(Q, axis<span class="op">=</span><span class="dv">1</span>))}[s]</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> new_pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="11">
+<div id="cell-20" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>improved_pi <span class="op">=</span> policy_improvement(V, P)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>print_policy(improved_pi, P, action_symbols<span class="op">=</span>(<span class="st">'&lt;'</span>, <span class="st">'&gt;'</span>), n_cols<span class="op">=</span><span class="dv">7</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -423,7 +431,7 @@ Reaches goal 7.00%. Obtains an average undiscounted return of 0.0700.</code></pr
 Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="12">
+<div id="cell-21" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># how about we evaluate the improved policy?</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>improved_V <span class="op">=</span> policy_evaluation(improved_pi, P)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>print_state_value_function(improved_V, P, n_cols<span class="op">=</span><span class="dv">7</span>, prec<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -432,7 +440,7 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.</code></p
 |           | 01 0.66758 | 02 0.89011 | 03 0.96429 | 04 0.98901 | 05 0.99725 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="13">
+<div id="cell-22" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># can we improved the improved policy?</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>improved_improved_pi <span class="op">=</span> policy_improvement(improved_V, P)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>print_policy(improved_improved_pi, P, action_symbols<span class="op">=</span>(<span class="st">'&lt;'</span>, <span class="st">'&gt;'</span>), n_cols<span class="op">=</span><span class="dv">7</span>)</span>
@@ -445,7 +453,7 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.</code></p
 Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="14">
+<div id="cell-23" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># it is the same policy</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># if we evaluate again, we can see there is nothing to improve </span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co"># that also means we reached the optimal policy</span></span>
@@ -456,7 +464,7 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.</code></p
 |           | 01 0.66758 | 02 0.89011 | 03 0.96429 | 04 0.98901 | 05 0.99725 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="15">
+<div id="cell-24" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># state-value function didn't improve, then we reach the optimal policy</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.<span class="bu">all</span>(improved_V <span class="op">==</span> improved_improved_V)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -464,7 +472,7 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.</code></p
 </section>
 <section id="정책-반복법" class="level3">
 <h3 class="anchored" data-anchor-id="정책-반복법">정책 반복법</h3>
-<div class="cell" data-execution_count="16">
+<div id="cell-26" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> policy_iteration(P, gamma<span class="op">=</span><span class="fl">1.0</span>, theta<span class="op">=</span><span class="fl">1e-10</span>):</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    random_actions <span class="op">=</span> np.random.choice(<span class="bu">tuple</span>(P[<span class="dv">0</span>].keys()), <span class="bu">len</span>(P))</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    pi <span class="op">=</span> <span class="kw">lambda</span> s: {s:a <span class="cf">for</span> s, a <span class="kw">in</span> <span class="bu">enumerate</span>(random_actions)}[s]</span>
@@ -476,7 +484,7 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.</code></p
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> V, pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="17">
+<div id="cell-27" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>optimal_V, optimal_pi <span class="op">=</span> policy_iteration(P)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimal policy and state-value function (PI):'</span>)</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>print_policy(optimal_pi, P, action_symbols<span class="op">=</span>(<span class="st">'&lt;'</span>, <span class="st">'&gt;'</span>), n_cols<span class="op">=</span><span class="dv">7</span>)</span>
@@ -495,13 +503,13 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.
 |           | 01 0.66758 | 02 0.89011 | 03 0.96429 | 04 0.98901 | 05 0.99725 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="18">
+<div id="cell-28" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.<span class="bu">all</span>(improved_V <span class="op">==</span> optimal_V)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="frozen-lake-mdp-and-sample-policies" class="level3">
 <h3 class="anchored" data-anchor-id="frozen-lake-mdp-and-sample-policies">Frozen Lake MDP and sample policies</h3>
-<div class="cell" data-execution_count="19">
+<div id="cell-30" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'FrozenLake-v0'</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> env.env.P</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>init_state <span class="op">=</span> env.reset()</span>
@@ -527,7 +535,7 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.
 Reaches goal 12.00%. Obtains an average undiscounted return of 0.1200.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="20">
+<div id="cell-31" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>go_get_pi <span class="op">=</span> <span class="kw">lambda</span> s: {</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>:RIGHT, <span class="dv">1</span>:RIGHT, <span class="dv">2</span>:DOWN, <span class="dv">3</span>:LEFT,</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>:DOWN, <span class="dv">5</span>:LEFT, <span class="dv">6</span>:DOWN, <span class="dv">7</span>:LEFT,</span>
@@ -547,7 +555,7 @@ Reaches goal 12.00%. Obtains an average undiscounted return of 0.1200.</code></p
 Reaches goal 5.00%. Obtains an average undiscounted return of 0.0500.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="21">
+<div id="cell-32" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>careful_pi <span class="op">=</span> <span class="kw">lambda</span> s: {</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>:LEFT, <span class="dv">1</span>:UP, <span class="dv">2</span>:UP, <span class="dv">3</span>:UP,</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>:LEFT, <span class="dv">5</span>:LEFT, <span class="dv">6</span>:UP, <span class="dv">7</span>:LEFT,</span>
@@ -569,7 +577,7 @@ Reaches goal 52.00%. Obtains an average undiscounted return of 0.5200.</code></p
 </div>
 <section id="정책-평가법-1" class="level4">
 <h4 class="anchored" data-anchor-id="정책-평가법-1">정책 평가법</h4>
-<div class="cell" data-execution_count="22">
+<div id="cell-34" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> policy_evaluation(careful_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(V, P, prec<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -583,7 +591,7 @@ Reaches goal 52.00%. Obtains an average undiscounted return of 0.5200.</code></p
 </section>
 <section id="정책-개선법-1" class="level4">
 <h4 class="anchored" data-anchor-id="정책-개선법-1">정책 개선법</h4>
-<div class="cell" data-execution_count="23">
+<div id="cell-36" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>careful_plus_pi <span class="op">=</span> policy_improvement(V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>print_policy(careful_plus_pi, P)</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -598,7 +606,7 @@ Reaches goal 52.00%. Obtains an average undiscounted return of 0.5200.</code></p
 Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="24">
+<div id="cell-37" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>new_V <span class="op">=</span> policy_evaluation(careful_plus_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(new_V, P, prec<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -609,7 +617,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 |           | 13 0.7417 | 14 0.8628 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="25">
+<div id="cell-38" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>print_state_value_function(new_V <span class="op">-</span> V, P, prec<span class="op">=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>상태-가치 함수:
@@ -622,7 +630,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 </section>
 <section id="alternating-between-evaluation-and-improvement" class="level4">
 <h4 class="anchored" data-anchor-id="alternating-between-evaluation-and-improvement">Alternating between evaluation and improvement</h4>
-<div class="cell" data-execution_count="26">
+<div id="cell-40" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>adversarial_pi <span class="op">=</span> <span class="kw">lambda</span> s: {</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>:UP, <span class="dv">1</span>:UP, <span class="dv">2</span>:UP, <span class="dv">3</span>:UP,</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>:UP, <span class="dv">5</span>:LEFT, <span class="dv">6</span>:UP, <span class="dv">7</span>:LEFT,</span>
@@ -642,7 +650,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="27">
+<div id="cell-41" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> policy_evaluation(adversarial_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(V, P, prec<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -653,7 +661,7 @@ Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pr
 |           | 13    0.0 | 14    0.0 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
+<div id="cell-42" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>i_pi <span class="op">=</span> policy_improvement(V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>print_policy(i_pi, P)</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -668,7 +676,7 @@ Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pr
 Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="29">
+<div id="cell-43" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>i_V <span class="op">=</span> policy_evaluation(i_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(i_V, P, prec<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -679,7 +687,7 @@ Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pr
 |           | 13    0.0 | 14    0.5 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="30">
+<div id="cell-44" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>ii_pi <span class="op">=</span> policy_improvement(i_V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>print_policy(ii_pi, P)</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -694,7 +702,7 @@ Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pr
 Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="31">
+<div id="cell-45" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>ii_V <span class="op">=</span> policy_evaluation(ii_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(ii_V, P, prec<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -705,7 +713,7 @@ Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pr
 |           | 13   0.33 | 14   0.67 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="32">
+<div id="cell-46" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>iii_pi <span class="op">=</span> policy_improvement(ii_V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>print_policy(iii_pi, P)</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -720,7 +728,7 @@ Reaches goal 0.00%. Obtains an average undiscounted return of 0.0000.</code></pr
 Reaches goal 20.00%. Obtains an average undiscounted return of 0.2000.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="33">
+<div id="cell-47" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>iii_V <span class="op">=</span> policy_evaluation(iii_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(iii_V, P, prec<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -731,7 +739,7 @@ Reaches goal 20.00%. Obtains an average undiscounted return of 0.2000.</code></p
 |           | 13   0.53 | 14   0.71 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="34">
+<div id="cell-48" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>iiii_pi <span class="op">=</span> policy_improvement(iii_V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>print_policy(iiii_pi, P)</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -746,7 +754,7 @@ Reaches goal 20.00%. Obtains an average undiscounted return of 0.2000.</code></p
 Reaches goal 73.00%. Obtains an average undiscounted return of 0.7300.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="35">
+<div id="cell-49" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>iiii_V <span class="op">=</span> policy_evaluation(iiii_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(iiii_V, P, prec<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -757,7 +765,7 @@ Reaches goal 73.00%. Obtains an average undiscounted return of 0.7300.</code></p
 |           | 13   0.72 | 14   0.85 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="36">
+<div id="cell-50" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>iiiii_pi <span class="op">=</span> policy_improvement(iiii_V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>print_policy(iiiii_pi, P)</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -772,7 +780,7 @@ Reaches goal 73.00%. Obtains an average undiscounted return of 0.7300.</code></p
 Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="37">
+<div id="cell-51" class="cell" data-execution_count="37">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>iiiii_V <span class="op">=</span> policy_evaluation(iiiii_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(iiiii_V, P, prec<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -783,7 +791,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 |           | 13   0.73 | 14   0.86 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="38">
+<div id="cell-52" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>iiiiii_pi <span class="op">=</span> policy_improvement(iiiii_V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>print_policy(iiiiii_pi, P)</span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -798,7 +806,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="39">
+<div id="cell-53" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>iiiiii_V <span class="op">=</span> policy_evaluation(iiiiii_pi, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(iiiiii_V, P, prec<span class="op">=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -809,7 +817,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 |           | 13   0.74 | 14   0.86 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="40">
+<div id="cell-54" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>iiiiiii_pi <span class="op">=</span> policy_improvement(iiiiii_V, P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>print_policy(iiiiiii_pi, P)</span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -827,7 +835,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 </section>
 <section id="정책-반복법-1" class="level4">
 <h4 class="anchored" data-anchor-id="정책-반복법-1">정책 반복법</h4>
-<div class="cell" data-execution_count="41">
+<div id="cell-56" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>V_best_p, pi_best_p <span class="op">=</span> policy_iteration(P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>print_state_value_function(V_best_p, P, prec<span class="op">=</span><span class="dv">4</span>)</span>
 <span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
@@ -856,7 +864,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 </section>
 <section id="slippery-walk-five" class="level3">
 <h3 class="anchored" data-anchor-id="slippery-walk-five">Slippery Walk Five</h3>
-<div class="cell" data-execution_count="42">
+<div id="cell-58" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'SlipperyWalkFive-v0'</span>)</span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>init_state <span class="op">=</span> env.reset()</span>
 <span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>goal_state <span class="op">=</span> <span class="dv">6</span></span>
@@ -864,7 +872,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 </div>
 <section id="가치-반복법" class="level4">
 <h4 class="anchored" data-anchor-id="가치-반복법">가치 반복법</h4>
-<div class="cell" data-execution_count="43">
+<div id="cell-60" class="cell" data-execution_count="43">
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> value_iteration(P, gamma<span class="op">=</span><span class="fl">1.0</span>, theta<span class="op">=</span><span class="fl">1e-10</span>):</span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> np.zeros(<span class="bu">len</span>(P), dtype<span class="op">=</span>np.float64)</span>
 <span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="va">True</span>:</span>
@@ -879,7 +887,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.</code></p
 <span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>    pi <span class="op">=</span> <span class="kw">lambda</span> s: {s:a <span class="cf">for</span> s, a <span class="kw">in</span> <span class="bu">enumerate</span>(np.argmax(Q, axis<span class="op">=</span><span class="dv">1</span>))}[s]</span>
 <span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> V, pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="44">
+<div id="cell-61" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>optimal_V, optimal_pi <span class="op">=</span> value_iteration(P)</span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimal policy and state-value function (PI):'</span>)</span>
 <span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>print_policy(optimal_pi, P, action_symbols<span class="op">=</span>(<span class="st">'&lt;'</span>, <span class="st">'&gt;'</span>), n_cols<span class="op">=</span><span class="dv">7</span>)</span>
@@ -903,13 +911,13 @@ Reaches goal 93.00%. Obtains an average undiscounted return of 0.9300.
 </section>
 <section id="frozen-lake-mdp" class="level3">
 <h3 class="anchored" data-anchor-id="frozen-lake-mdp">Frozen Lake MDP</h3>
-<div class="cell" data-execution_count="45">
+<div id="cell-63" class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'FrozenLake-v0'</span>)</span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>init_state <span class="op">=</span> env.reset()</span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>goal_state <span class="op">=</span> <span class="dv">15</span></span>
 <span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> env.env.P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="46">
+<div id="cell-64" class="cell" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>V_best_v, pi_best_v <span class="op">=</span> value_iteration(P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimal policy and state-value function (VI):'</span>)</span>
 <span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>print_policy(pi_best_v, P)</span>
@@ -934,7 +942,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.
 |           | 13 0.7417 | 14 0.8628 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="47">
+<div id="cell-65" class="cell" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'For comparison, optimal policy and state-value function (PI):'</span>)</span>
 <span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>print_policy(pi_best_p, P)</span>
 <span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Reaches goal </span><span class="sc">{:.2f}</span><span class="st">%. Obtains an average undiscounted return of </span><span class="sc">{:.4f}</span><span class="st">.'</span>.<span class="bu">format</span>(</span>
@@ -961,7 +969,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.
 </section>
 <section id="changing-the-frozen-lake-environment-mdp" class="level3">
 <h3 class="anchored" data-anchor-id="changing-the-frozen-lake-environment-mdp">Changing the Frozen Lake environment MDP</h3>
-<div class="cell" data-execution_count="48">
+<div id="cell-67" class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'FrozenLake-v0'</span>)</span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> env.env.P</span>
 <span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1004,7 +1012,7 @@ Reaches goal 74.00%. Obtains an average undiscounted return of 0.7400.
 <span id="cb83-40"><a href="#cb83-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb83-41"><a href="#cb83-41" aria-hidden="true" tabindex="-1"></a>env.env.P <span class="op">=</span> P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="49">
+<div id="cell-68" class="cell" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>V_best, pi_best <span class="op">=</span> policy_iteration(env.env.P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimal policy and state-value function (PI):'</span>)</span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>print_policy(pi_best, P)</span>
@@ -1029,7 +1037,7 @@ Reaches goal 78.00%. Obtains an average undiscounted return of 0.3657.
 |           | 13  0.945 | 14  0.977 |           |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="50">
+<div id="cell-69" class="cell" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>V_best, pi_best <span class="op">=</span> value_iteration(env.env.P, gamma<span class="op">=</span><span class="fl">0.99</span>)</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimal policy and state-value function (PI):'</span>)</span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>print_policy(pi_best, P)</span>
@@ -1057,13 +1065,13 @@ Reaches goal 78.00%. Obtains an average undiscounted return of 0.3657.
 </section>
 <section id="russell-norvigs-gridworld" class="level3">
 <h3 class="anchored" data-anchor-id="russell-norvigs-gridworld">Russell &amp; Norvig’s Gridworld</h3>
-<div class="cell" data-execution_count="51">
+<div id="cell-71" class="cell" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'RussellNorvigGridworld-v0'</span>)</span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>init_state <span class="op">=</span> env.reset()</span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>goal_state <span class="op">=</span> <span class="dv">3</span></span>
 <span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> env.env.P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="52">
+<div id="cell-72" class="cell" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>V_best_p, pi_best <span class="op">=</span> policy_iteration(P)</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimal policy and state-value function (PI):'</span>)</span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>print_policy(pi_best, P)</span>
@@ -1086,7 +1094,7 @@ Reaches goal 96.00%. Obtains an average undiscounted return of 0.6424.
 | 08  0.705 | 09  0.655 | 10  0.611 | 11  0.388 |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="53">
+<div id="cell-73" class="cell" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>V_best_v, pi_best <span class="op">=</span> value_iteration(P)</span>
 <span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Optimal policy and state-value function (PI):'</span>)</span>
 <span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>print_policy(pi_best, P)</span>
@@ -1109,7 +1117,7 @@ Reaches goal 96.00%. Obtains an average undiscounted return of 0.6424.
 | 08  0.705 | 09  0.655 | 10  0.611 | 11  0.388 |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="54">
+<div id="cell-74" class="cell" data-execution_count="54">
 <div class="sourceCode cell-code" id="cb93"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>LEFT, DOWN, RIGHT, UP <span class="op">=</span> <span class="bu">range</span>(<span class="dv">4</span>)</span>
 <span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> <span class="kw">lambda</span> s: {</span>
 <span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>:RIGHT, <span class="dv">1</span>:RIGHT, <span class="dv">2</span>:RIGHT, <span class="dv">3</span>:LEFT,</span>
@@ -1130,7 +1138,7 @@ Reaches goal 96.00%. Obtains an average undiscounted return of 0.6424.
 Reaches goal 96.00%. Obtains an average undiscounted return of 0.6424.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="55">
+<div id="cell-75" class="cell" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> policy_evaluation(pi, P)</span>
 <span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Evaluate optimal policy:'</span>)</span>
 <span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>print_state_value_function(V, P)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1142,7 +1150,7 @@ Reaches goal 96.00%. Obtains an average undiscounted return of 0.6424.</code></p
 | 08  0.705 | 09  0.655 | 10  0.611 | 11  0.388 |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="56">
+<div id="cell-76" class="cell" data-execution_count="56">
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> policy_improvement(V, P)</span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Improve optimal policy (nothing to improve -- it is the same policy, because it is optimal):'</span>)</span>
 <span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>print_policy(pi, P)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1154,7 +1162,7 @@ Reaches goal 96.00%. Obtains an average undiscounted return of 0.6424.</code></p
 | 08      ^ | 09      &lt; | 10      &lt; | 11      &lt; |</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="57">
+<div id="cell-77" class="cell" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'There are no differences, nothing to improve on the optimal policy and state-value function:'</span>)</span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">abs</span>(V_best_p <span class="op">-</span> V))</span>
 <span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">abs</span>(V_best_v <span class="op">-</span> V))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1249,10 +1257,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1262,8 +1287,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1275,7 +1309,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1319,6 +1476,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1344,6 +1502,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1405,18 +1589,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="kcsgoodboy/en" data-repo-id="R_kgDOIixJIQ" data-category="General" data-category-id="DIC_kwDOIixJIc4CTiz-" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-center">
+<p>Copyright 2023, Chanseok Kang</p>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 

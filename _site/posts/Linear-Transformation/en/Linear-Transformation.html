@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -128,16 +135,43 @@ MathJax = {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
@@ -149,24 +183,24 @@ MathJax = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../publication/index.html" rel="" target="">
- <span class="menu-text">Publication</span></a>
+    <a class="nav-link" href="../../../publication/index.html"> 
+<span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../../index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../index.html">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../posts/kr.html" rel="" target="">
+    <a class="dropdown-item" href="../../../posts/kr.html">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -174,19 +208,19 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -205,7 +239,7 @@ MathJax = {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Author</div>
@@ -253,6 +287,7 @@ MathJax = {
 
 
 
+
 <section id="tldr" class="level2">
 <h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <p>In this notebook, you will explore linear transformations, visualize their results and master matrix multiplication to apply various linear transformations. This post is summarized the lecture “Linear Algebra for Machine Learning and Data Science” from Coursera.</p>
@@ -260,7 +295,7 @@ MathJax = {
 <section id="packages" class="level2">
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
 <p>Run the following cell to load the package you’ll need.</p>
-<div class="cell" data-execution_count="1">
+<div id="b27d8efb-e08e-4e0f-be9a-f9b85ef5bae7" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -288,7 +323,7 @@ OpenCV version:  4.5.4</code></pre>
           \end{bmatrix}
           \tag{1}
           \]</span></p>
-<div class="cell" data-execution_count="2">
+<div id="043ba2fd-ce3d-4a93-ae78-6f051f138902" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> T(v):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> np.zeros((<span class="dv">3</span>,<span class="dv">1</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    w[<span class="dv">0</span>,<span class="dv">0</span>] <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>v[<span class="dv">0</span>,<span class="dv">0</span>]</span>
@@ -358,7 +393,7 @@ OpenCV version:  4.5.4</code></pre>
           \end{bmatrix} =
           T(u)+T(v).\tag{3}\]</span></p>
 <p>You can change the values of <span class="math inline">\(k\)</span> or vectors <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> in the cell below, to check that this is true for some specific values.</p>
-<div class="cell" data-execution_count="3">
+<div id="ce69215d-2d93-4788-9f5b-0356697c8ea9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.array([[<span class="dv">1</span>], [<span class="op">-</span><span class="dv">2</span>]])</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> np.array([[<span class="dv">2</span>], [<span class="dv">4</span>]])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -444,7 +479,7 @@ T(u+v):
           \end{bmatrix}\tag{5}
           \]</span></p>
 <p>Can you see now what should be the values of the elements <span class="math inline">\(a_{i,j}\)</span> of matrix <span class="math inline">\(A\)</span> to make the equalities <span class="math inline">\((5)\)</span> correct? Find out the answer in the following code cell:</p>
-<div class="cell" data-execution_count="4">
+<div id="ff9c7d99-b43a-4208-96f6-685d49b33a5f" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> L(v):</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> np.array([[<span class="dv">3</span>,<span class="dv">0</span>], [<span class="dv">0</span>,<span class="dv">0</span>], [<span class="dv">0</span>,<span class="op">-</span><span class="dv">2</span>]])</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Transformation matrix:</span><span class="ch">\n</span><span class="st">"</span>, A, <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
@@ -486,7 +521,7 @@ Original vector:
 <section id="example-1-horizontal-scaling-dilation" class="level3">
 <h3 class="anchored" data-anchor-id="example-1-horizontal-scaling-dilation">Example 1: Horizontal Scaling (Dilation)</h3>
 <p>Horizontal scaling (factor <span class="math inline">\(2\)</span> in this example) can be defined considering transformation of a vector <span class="math inline">\(e_1=\begin{bmatrix}1 \\ 0\end{bmatrix}\)</span> into a vector <span class="math inline">\(\begin{bmatrix}2 \\ 0\end{bmatrix}\)</span> and leaving vector <span class="math inline">\(e_2=\begin{bmatrix}0 \\ 1\end{bmatrix}\)</span> without any changes. The following function <code>T_hscaling()</code> corresponds to the horizontal scaling (factor <span class="math inline">\(2\)</span>) of a vector. The second function <code>transform_vectors()</code> applies defined transformation to a set of vectors (here two vectors).</p>
-<div class="cell" data-execution_count="5">
+<div id="1b7f54f6-abf2-47d1-92a3-f435cfcda9a7" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> T_hscaling(v):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> np.array([[<span class="dv">2</span>,<span class="dv">0</span>], [<span class="dv">0</span>,<span class="dv">1</span>]])</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> A <span class="op">@</span> v</span>
@@ -522,7 +557,7 @@ Original vector:
 </div>
 </div>
 <p>You can get a visual understanding of the transformation, producing a plot which displays input vectors, and their transformations. Do not worry if the code in the following cell will not be clear - at this stage this is not important code to understand.</p>
-<div class="cell" data-execution_count="7">
+<div id="6292237e-7381-4452-91d6-d4b357bf730b" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_transformation(T, e1, e2):</span>
@@ -572,7 +607,11 @@ C:\Users\kcsgo\anaconda3\lib\site-packages\ipykernel_launcher.py:31: VisibleDepr
 C:\Users\kcsgo\anaconda3\lib\site-packages\ipykernel_launcher.py:34: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Linear-Transformation_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Linear-Transformation_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>You can observe that the polygon has been stretched in the horizontal direction as a result of the transformation.</p>
@@ -580,7 +619,7 @@ C:\Users\kcsgo\anaconda3\lib\site-packages\ipykernel_launcher.py:34: VisibleDepr
 <section id="example-2-reflection-about-y-axis-the-vertical-axis" class="level3">
 <h3 class="anchored" data-anchor-id="example-2-reflection-about-y-axis-the-vertical-axis">Example 2: Reflection about y-axis (the vertical axis)</h3>
 <p>Function <code>T_reflection_yaxis()</code> defined below corresponds to the reflection about y-axis:</p>
-<div class="cell" data-execution_count="8">
+<div id="5b86af1d-fd28-4e85-a2c0-eb54ebf51479" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> T_reflection_yaxis(v):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> np.array([[<span class="op">-</span><span class="dv">1</span>,<span class="dv">0</span>], [<span class="dv">0</span>,<span class="dv">1</span>]])</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> A <span class="op">@</span> v</span>
@@ -609,7 +648,7 @@ C:\Users\kcsgo\anaconda3\lib\site-packages\ipykernel_launcher.py:34: VisibleDepr
 </div>
 </div>
 <p>You can visualize this transformation:</p>
-<div class="cell" data-execution_count="9">
+<div id="83abc7f6-db70-4ec3-a29f-9a8a02639b79" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_transformation(T_reflection_yaxis, e1, e2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>C:\Users\kcsgo\anaconda3\lib\site-packages\numpy\core\shape_base.py:65: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
@@ -620,7 +659,11 @@ C:\Users\kcsgo\anaconda3\lib\site-packages\ipykernel_launcher.py:31: VisibleDepr
 C:\Users\kcsgo\anaconda3\lib\site-packages\ipykernel_launcher.py:34: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="Linear-Transformation_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Linear-Transformation_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>There are many more standard linear transformations to explore. But now you have the required tools to apply them and visualize the results.</p>
@@ -635,56 +678,69 @@ C:\Users\kcsgo\anaconda3\lib\site-packages\ipykernel_launcher.py:34: VisibleDepr
 <p><img src="../images/barnsley_fern.png" width="200" align="center"></p>
 <p>All of the subleafs are similar and can be prepared as just linear transformations of one original leaf.</p>
 <p>Let’s see a simple example of two transformations applied to a leaf image. For the image transformations you can use an <code>OpenCV</code> library. First, upload and show the image:</p>
-<div class="cell" data-execution_count="10">
+<div id="77405c0e-18d3-41df-9667-b1d8c41404ba" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> cv2.imread(<span class="st">'../images/leaf_original.png'</span>, <span class="dv">0</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(img)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>&lt;matplotlib.image.AxesImage at 0x187ae0c7c08&gt;</code></pre>
-</div>
 <div class="cell-output cell-output-display">
-<p><img src="Linear-Transformation_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Linear-Transformation_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Of course, this is just a very simple leaf image (not a real example in preparation of the proper art work), but it will help you to get the idea how a few transformations can be applied in a row. Try to rotate the image 90 degrees clockwise and then apply a shear transformation, which can be visualized as:</p>
 <p><img src="../images/shear_transformation.png" width="400" align="center"></p>
 <p>Rotate the image:</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>img_rotated <span class="op">=</span> cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_rotated)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="36ba9eab-fe65-4b42-828a-3eb42c6fbbf1" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>img_rotated <span class="op">=</span> cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_rotated)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="Linear-Transformation_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Linear-Transformation_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Applying the shear you will get the following output:</p>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rows, cols <span class="op">=</span> img_rotated.shape</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> np.float32([[<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]])</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>img_rotated_sheared <span class="op">=</span> cv2.warpPerspective(img_rotated, M, (<span class="bu">int</span>(cols), <span class="bu">int</span>(rows)))</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_rotated_sheared)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="0a934025-1b36-40af-938b-9b849c8612de" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rows, cols <span class="op">=</span> img_rotated.shape</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> np.float32([[<span class="dv">1</span>, <span class="fl">0.5</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>img_rotated_sheared <span class="op">=</span> cv2.warpPerspective(img_rotated, M, (<span class="bu">int</span>(cols), <span class="bu">int</span>(rows)))</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_rotated_sheared)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="Linear-Transformation_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Linear-Transformation_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>What if you will apply those two transformations in the opposite order? Do you think the result will be the same? Run the following code to check that:</p>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>img_sheared <span class="op">=</span> cv2.warpPerspective(img, M, (<span class="bu">int</span>(cols), <span class="bu">int</span>(rows)))</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>img_sheared_rotated <span class="op">=</span> cv2.rotate(img_sheared, cv2.ROTATE_90_CLOCKWISE)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_sheared_rotated)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="f8b9efd4-8b47-4bd4-abfa-c627a3e24c74" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>img_sheared <span class="op">=</span> cv2.warpPerspective(img, M, (<span class="bu">int</span>(cols), <span class="bu">int</span>(rows)))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>img_sheared_rotated <span class="op">=</span> cv2.rotate(img_sheared, cv2.ROTATE_90_CLOCKWISE)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>plt.imshow(img_sheared_rotated)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="Linear-Transformation_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Linear-Transformation_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Comparing last two images, you can clearly see that the outputs are different. This is because linear transformation can be defined as a matrix multiplication. Then, applying two transformations in a row, e.g.&nbsp;with matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, you perform multiplications <span class="math inline">\(B(Av)=(BA)v\)</span>, where <span class="math inline">\(v\)</span> is a vector. And remember, that generally you cannot change the order in the matrix multiplication (most of the time <span class="math inline">\(BA\neq AB\)</span>). Let’s check that! Define two matrices, corresponding to the rotation and shear transformations:</p>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>M_rotation_90_clockwise <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">1</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>]])</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>M_shear_x <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="fl">0.5</span>], [<span class="dv">0</span>, <span class="dv">1</span>]])</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"90 degrees clockwise rotation matrix:</span><span class="ch">\n</span><span class="st">"</span>, M_rotation_90_clockwise)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrix for the shear along x-axis:</span><span class="ch">\n</span><span class="st">"</span>, M_shear_x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="23572834-2449-4d4f-a516-1bf690693376" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>M_rotation_90_clockwise <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">1</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>]])</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>M_shear_x <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="fl">0.5</span>], [<span class="dv">0</span>, <span class="dv">1</span>]])</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"90 degrees clockwise rotation matrix:</span><span class="ch">\n</span><span class="st">"</span>, M_rotation_90_clockwise)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrix for the shear along x-axis:</span><span class="ch">\n</span><span class="st">"</span>, M_shear_x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>90 degrees clockwise rotation matrix:
  [[ 0  1]
@@ -695,9 +751,9 @@ Matrix for the shear along x-axis:
 </div>
 </div>
 <p>Now check that the results of their multiplications <code>M_rotation_90_clockwise @ M_shear_x</code> and <code>M_shear_x @ M_rotation_90_clockwise</code> are different:</p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"M_rotation_90_clockwise by M_shear_x:</span><span class="ch">\n</span><span class="st">"</span>, M_rotation_90_clockwise <span class="op">@</span> M_shear_x)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"M_shear_x by M_rotation_90_clockwise:</span><span class="ch">\n</span><span class="st">"</span>, M_shear_x <span class="op">@</span> M_rotation_90_clockwise)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="2c5a9e20-9574-41d5-952b-c1f018df6481" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"M_rotation_90_clockwise by M_shear_x:</span><span class="ch">\n</span><span class="st">"</span>, M_rotation_90_clockwise <span class="op">@</span> M_shear_x)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"M_shear_x by M_rotation_90_clockwise:</span><span class="ch">\n</span><span class="st">"</span>, M_shear_x <span class="op">@</span> M_rotation_90_clockwise)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>M_rotation_90_clockwise by M_shear_x:
  [[ 0.   1. ]
@@ -792,10 +848,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -805,8 +878,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -818,7 +900,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -862,6 +1067,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -887,6 +1093,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -948,18 +1180,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="kcsgoodboy/en" data-repo-id="R_kgDOIixJIQ" data-category="General" data-category-id="DIC_kwDOIixJIc4CTiz-" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-center">
+<p>Copyright 2023, Chanseok Kang</p>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 

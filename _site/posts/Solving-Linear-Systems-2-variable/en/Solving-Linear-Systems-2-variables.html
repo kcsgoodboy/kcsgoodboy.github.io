@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -128,16 +135,43 @@ MathJax = {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
@@ -149,24 +183,24 @@ MathJax = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../publication/index.html" rel="" target="">
- <span class="menu-text">Publication</span></a>
+    <a class="nav-link" href="../../../publication/index.html"> 
+<span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../../index.html" rel="" target="">
+    <a class="dropdown-item" href="../../../index.html">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../posts/kr.html" rel="" target="">
+    <a class="dropdown-item" href="../../../posts/kr.html">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -174,19 +208,19 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -205,7 +239,7 @@ MathJax = {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Author</div>
@@ -259,6 +293,7 @@ MathJax = {
 
 
 
+
 <section id="tldr" class="level2">
 <h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <p>In this notebook you will use NumPy linear algebra package to find the solutions of the system of linear equations, and find the solution for the system of linear equations using elimination method. Also, you will evaluate the determinant of the matrix and examine the relationship between matrix singularity and number of solutions of the linear system. This posts summarized the lecture “Linear Algebra for Machine Learning and Data Science” from Coursera.</p>
@@ -266,7 +301,7 @@ MathJax = {
 <section id="packages" class="level2">
 <h2 class="anchored" data-anchor-id="packages">Packages</h2>
 <p>Load <code>NumPy</code> package to access its functions.</p>
-<div class="cell" data-execution_count="1">
+<div id="ed6fa92a-8591-4f93-871f-4db4e6d68053" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"NumPy version: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(np.__version__))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -290,7 +325,7 @@ MathJax = {
 <p>Linear systems with two equations are easy to solve manually, but preparing for more complicated cases, you will investigate some solution techniques.</p>
 <p><code>NumPy</code> linear algebra package provides quick and reliable way to solve the system of linear equations using function <code>np.linalg.solve(A, b)</code>. Here <span class="math inline">\(A\)</span> is a matrix, each row of which represents one equation in the system and each column corresponds to the variable <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>. And <span class="math inline">\(b\)</span> is a 1-D array of the free (right side) coefficients. More information about the <code>np.linalg.solve()</code> function can be found in <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html">documentation</a>.</p>
 <p>Given the system of linear equations <span class="math inline">\((1)\)</span>, you can set matrix <span class="math inline">\(A\)</span> and 1-D array <span class="math inline">\(b\)</span> as:</p>
-<div class="cell" data-execution_count="2">
+<div id="c05246fd-67bb-4507-9166-6e000c76d12d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    [<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>],</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    [<span class="dv">3</span>, <span class="dv">2</span>],</span>
@@ -298,7 +333,7 @@ MathJax = {
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">7</span>, <span class="dv">1</span>], dtype<span class="op">=</span>np.dtype(<span class="bu">float</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="4">
+<div id="dd46db85-f2a6-4278-8e84-457d4e37448d" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrix A: "</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Matrix b: "</span>)</span>
@@ -312,7 +347,7 @@ Matrix b:
 </div>
 </div>
 <p>Check the dimensions of <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span> using the <code>shape</code> attribute (you can also use <code>np.shape()</code> as an alternative):</p>
-<div class="cell" data-execution_count="5">
+<div id="2f023ad2-cafe-4886-9b12-dabd9c634fbb" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of A: </span><span class="sc">{</span>A<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of b: </span><span class="sc">{</span>b<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -320,7 +355,7 @@ Matrix b:
 Shape of b: (2,)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="7">
+<div id="1f4e9662-c419-4665-ba7d-2521f02d433e" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of A: </span><span class="sc">{</span>np<span class="sc">.</span>shape(A)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of b: </span><span class="sc">{</span>np<span class="sc">.</span>shape(b)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -329,7 +364,7 @@ Shape of b: (2,)</code></pre>
 </div>
 </div>
 <p>Now simply use <code>np.linalg.solve(A, b)</code> function to find the solution of the system <span class="math inline">\((1)\)</span>. The result will be saved in the 1-D array <span class="math inline">\(x\)</span>. The elements will correspond to the values of <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>:</p>
-<div class="cell" data-execution_count="8">
+<div id="41402ec3-90b5-4426-895b-71524571db97" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linalg.solve(A, b)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Solution: </span><span class="sc">{</span>x<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -342,7 +377,7 @@ Shape of b: (2,)</code></pre>
 <h3 class="anchored" data-anchor-id="evaluating-determinant-of-a-matrix">Evaluating Determinant of a Matrix</h3>
 <p>Matrix <span class="math inline">\(A\)</span> corresponding to the linear system <span class="math inline">\((1)\)</span> is a <strong>square matrix</strong> - it has the same number of rows and columns. In case of a square matrix it is possible to calculate its determinant - a real number which characterizes some properties of the matrix. Linear system containing two (or more) equations with the same number of unknown variables will have one solution if and only if matrix <span class="math inline">\(A\)</span> has non-zero determinant.</p>
 <p>Let’s calculate the determinant using <code>NumPy</code> linear algebra package. You can do it with the <code>np.linalg.det(A)</code> function. More information about it can be found in <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.det.html">documentation</a>.</p>
-<div class="cell" data-execution_count="9">
+<div id="91d688d4-9db0-4b37-a1c8-9d62e58361b2" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> np.linalg.det(A)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Determinant of matrix A: </span><span class="sc">{</span>d<span class="sc">: .2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -375,14 +410,12 @@ x_1=-1, \\ x_2=2. \end{cases}\tag{4}\]</span></p>
 </section>
 <section id="preparation-for-the-implementation-of-elimination-method-in-the-code" class="level3">
 <h3 class="anchored" data-anchor-id="preparation-for-the-implementation-of-elimination-method-in-the-code">Preparation for the Implementation of Elimination Method in the Code</h3>
-Representing the system in a matrix form as $
-<span class="math display">\[\begin{bmatrix}
+<p>Representing the system in a matrix form as <span class="math inline">\(\begin{bmatrix}
 -1 &amp; 3 &amp; 7 \\
 3 &amp; 2 &amp; 1
-\end{bmatrix}\]</span>
-<p>, $ you can apply the same operations to the rows of the matrix with Python code.</p>
+\end{bmatrix},\)</span> you can apply the same operations to the rows of the matrix with Python code.</p>
 <p>Unify matrix <span class="math inline">\(A\)</span> and array <span class="math inline">\(b\)</span> into one matrix using <code>np.hstack()</code> function. Note that the shape of the originally defined array <span class="math inline">\(b\)</span> was <span class="math inline">\((2,)\)</span>, to stack it with the <span class="math inline">\((2, 2)\)</span> matrix you need to use <code>.reshape((2, 1))</code> function:</p>
-<div class="cell" data-execution_count="10">
+<div id="09e5efb6-bd8b-42e5-b08b-20cf43959afa" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>A_system <span class="op">=</span> np.hstack((A, b.reshape(<span class="dv">2</span>, <span class="dv">1</span>)))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A_system)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -392,7 +425,7 @@ Representing the system in a matrix form as $
 </div>
 </div>
 <p>Let’s review how to extract a row of a matrix, which will help later to perform required operations with the rows. Remember, that indexing of arrays in Python starts from zero, so to extract second row of a matrix, you need to use the following code:</p>
-<div class="cell" data-execution_count="11">
+<div id="cd0c4b6c-6e62-4820-a89d-09456824b1ec" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A_system[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[3. 2. 1.]</code></pre>
@@ -405,10 +438,10 @@ Representing the system in a matrix form as $
 <blockquote class="blockquote">
 <p>Note: <code>Function .copy()</code> is used to keep the original matrix without any changes.</p>
 </blockquote>
-<div class="cell" data-execution_count="12">
+<div id="00814d44-9060-4f59-95ac-a00e66faef28" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>A_system_res <span class="op">=</span> A_system.copy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="14">
+<div id="15c127b4-f0b0-49a4-8271-52739df86e86" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>A_system_res[<span class="dv">1</span>] <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> A_system_res[<span class="dv">0</span>] <span class="op">+</span> A_system_res[<span class="dv">1</span>]</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A_system_res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -418,7 +451,7 @@ Representing the system in a matrix form as $
 </div>
 </div>
 <p>Multipy second row by <span class="math inline">\(1/11\)</span>:</p>
-<div class="cell" data-execution_count="15">
+<div id="c3ff67f4-95fa-49fe-8294-4df232b32186" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>A_system_res[<span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span><span class="op">/</span><span class="dv">11</span> <span class="op">*</span> A_system_res[<span class="dv">1</span>]</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A_system_res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -432,7 +465,7 @@ Representing the system in a matrix form as $
 <h3 class="anchored" data-anchor-id="graphical-representation-of-the-solution">Graphical Representation of the Solution</h3>
 <p>A linear equation in two variables (here, <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>) is represented geometrically by a line which points <span class="math inline">\((x_1, x_2)\)</span> make up the collection of solutions of the equation. This is called the <strong>graph of the linear equation</strong>. In case of the system of two equations there will be two lines corresponding to each of the equations, and the solution will be the intersection point of those lines.</p>
 <p>In the following code you will define a function <code>plot_lines()</code> to plot the lines and use it later to represent the solution which you found earlier. Do not worry if the code in the following cell will not be clear - at this stage this is not important code to understand.</p>
-<div class="cell" data-execution_count="16">
+<div id="2b9d5a6e-47aa-4900-a13a-2639ee635a9b" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_lines(M):</span>
@@ -470,10 +503,14 @@ Representing the system in a matrix form as $
 <span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="17">
+<div id="d9e6b4b4-fd81-4dac-9139-d9b2757a21ea" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plot_lines(A_system)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="Solving-Linear-Systems-2-variables_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Solving-Linear-Systems-2-variables_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -484,7 +521,7 @@ Representing the system in a matrix form as $
 <p><span class="math display">\[\begin{cases}
 -x_1+3x_2=7, \\ 3x_1-9x_2=1, \end{cases}\tag{5}\]</span></p>
 <p>let’s find the determinant of the corresponding matrix.</p>
-<div class="cell" data-execution_count="18">
+<div id="366d8dad-593e-49c2-baf7-96620f95ff41" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>A_2 <span class="op">=</span> np.array([</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>        [<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>],</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        [<span class="dv">3</span>, <span class="op">-</span><span class="dv">9</span>]</span>
@@ -500,7 +537,7 @@ Representing the system in a matrix form as $
 </div>
 </div>
 <p>It is equal to zero, thus the system cannot have one unique solution. It will have either infinitely many solutions or none. The consistency of it will depend on the free coefficients (right side coefficients). You can run the code in the following cell to check that the <code>np.linalg.solve()</code> function will give an error due to singularity.</p>
-<div class="cell" data-execution_count="19">
+<div id="ece956d6-9d49-44eb-b80a-916cbe418623" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    x_2 <span class="op">=</span> np.linalg.solve(A_2, b_2)</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> np.linalg.LinAlgError <span class="im">as</span> err:</span>
@@ -510,7 +547,7 @@ Representing the system in a matrix form as $
 </div>
 </div>
 <p>Prepare to apply the elimination method, constructing the matrix, corresponding to this linear system:</p>
-<div class="cell" data-execution_count="20">
+<div id="1842eb74-d924-4205-addc-83780e40f87a" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>A_2_system <span class="op">=</span> np.hstack((A_2, b_2.reshape((<span class="dv">2</span>, <span class="dv">1</span>))))</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A_2_system)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -519,7 +556,7 @@ Representing the system in a matrix form as $
 </div>
 </div>
 <p>Perform elimination:</p>
-<div class="cell" data-execution_count="21">
+<div id="b681dd7b-6d8a-4c8e-bfd2-25d4858c03fe" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy() matrix.</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>A_2_system_res <span class="op">=</span> A_2_system.copy()</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -532,10 +569,14 @@ Representing the system in a matrix form as $
 </div>
 </div>
 <p>The last row will correspond to the equation <span class="math inline">\(0=22\)</span> which has no solution. Thus the whole linear system <span class="math inline">\((5)\)</span> has no solutions. Let’s see what will be on the graph. Do you expect the corresponding two lines to intersect?</p>
-<div class="cell" data-execution_count="22">
+<div id="0657df97-4e2d-474b-b7de-91f3fc7c2961" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plot_lines(A_2_system)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="Solving-Linear-Systems-2-variables_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Solving-Linear-Systems-2-variables_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -544,11 +585,11 @@ Representing the system in a matrix form as $
 <p>Changing free coefficients of the system <span class="math inline">\((5)\)</span> you can bring it to consistency:</p>
 <p><span class="math display">\[\begin{cases}
 -x_1+3x_2=7, \\ 3x_1-9x_2=-21, \end{cases}\tag{6}\]</span></p>
-<div class="cell" data-execution_count="23">
+<div id="11f54020-1d6b-49a5-bc1d-7a83d978d1d1" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>b_3 <span class="op">=</span> np.array([<span class="dv">7</span>, <span class="op">-</span><span class="dv">21</span>], dtype<span class="op">=</span>np.dtype(<span class="bu">float</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Prepare the new matrix, corresponding to the system <span class="math inline">\((6)\)</span>:</p>
-<div class="cell" data-execution_count="24">
+<div id="79267d67-cb19-42a2-8b41-964d92f9135e" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>A_3_system <span class="op">=</span> np.hstack((A_2, b_3.reshape((<span class="dv">2</span>, <span class="dv">1</span>))))</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(A_3_system)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -557,7 +598,7 @@ Representing the system in a matrix form as $
 </div>
 </div>
 <p>Perform elimination using elementary operations:</p>
-<div class="cell" data-execution_count="25">
+<div id="22cc70f5-7059-496d-8887-27cb7857163b" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># copy() matrix.</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>A_3_system_res <span class="op">=</span> A_3_system.copy()</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -576,10 +617,14 @@ Representing the system in a matrix form as $
 <p><span class="math display">\[x_1=3x_2-7, \tag{8}\]</span></p>
 <p>where <span class="math inline">\(x_2\)</span> is any real number.</p>
 <p>If you plot the equations of the system, how many lines do you expect to see in the graph now? Check it, using the code below:</p>
-<div class="cell" data-execution_count="26">
+<div id="c09e4294-c7bb-422a-877f-aae5c3497614" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plot_lines(A_3_system)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="Solving-Linear-Systems-2-variables_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="Solving-Linear-Systems-2-variables_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -666,10 +711,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -679,8 +741,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -692,7 +763,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -736,6 +930,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -761,6 +956,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -822,18 +1043,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="kcsgoodboy/en" data-repo-id="R_kgDOIixJIQ" data-category="General" data-category-id="DIC_kwDOIixJIc4CTiz-" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-center">
+<p>Copyright 2023, Chanseok Kang</p>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 

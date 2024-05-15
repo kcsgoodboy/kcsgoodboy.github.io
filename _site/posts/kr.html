@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Chans Lecture Note – kr</title>
+<title>Chans Lecture Note</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -47,7 +47,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -56,6 +62,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -123,6 +130,33 @@ MathJax = {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../styles.css">
 </head>
 
@@ -130,9 +164,9 @@ MathJax = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
@@ -144,24 +178,24 @@ MathJax = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../publication/index.html" rel="" target="">
- <span class="menu-text">Publication</span></a>
+    <a class="nav-link" href="../publication/index.html"> 
+<span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../index.html" rel="" target="">
+    <a class="dropdown-item" href="../index.html">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../posts/kr.html" rel="" target="">
+    <a class="dropdown-item" href="../posts/kr.html">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -169,19 +203,19 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -191,9 +225,10 @@ MathJax = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(14)</span></div><div class="category" data-category="Book">Book <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Coursera">Coursera <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Deep Learning">Deep Learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="DeepLearning.AI">DeepLearning.AI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="KAIST">KAIST <span class="quarto-category-count">(4)</span></div><div class="category" data-category="LectureReview">LectureReview <span class="quarto-category-count">(3)</span></div><div class="category" data-category="PaperReview">PaperReview <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Ray">Ray <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ReinforcementLearning">ReinforcementLearning <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Statistics">Statistics <span class="quarto-category-count">(4)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(15)</span></div><div class="category" data-category="Book">Book <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Coursera">Coursera <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Data Structure">Data Structure <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Deep Learning">Deep Learning <span class="quarto-category-count">(1)</span></div><div class="category" data-category="DeepLearning.AI">DeepLearning.AI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="KAIST">KAIST <span class="quarto-category-count">(4)</span></div><div class="category" data-category="LectureReview">LectureReview <span class="quarto-category-count">(3)</span></div><div class="category" data-category="PaperReview">PaperReview <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Ray">Ray <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ReinforcementLearning">ReinforcementLearning <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Statistics">Statistics <span class="quarto-category-count">(4)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
+
 
 
 
@@ -228,19 +263,55 @@ MathJax = {
     </div>
 </div>
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Book,Deep Learning" data-listing-date-sort="1711206000000" data-listing-file-modified-sort="1711211439501" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="0" data-categories="Book,Data Structure" data-listing-date-sort="1715785200000" data-listing-file-modified-sort="1715791605796" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="362">
 <div class="thumbnail">
-<p><a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html"> <p class="card-img-top"><img src="Fundamentals-of-Deep-Learning-2nd\images\bookcover.jpg"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html" class="no-external"></a></p><a href="../posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html" class="no-external">
+<p class="card-img-top"><img src="Data-Structure-the-fun-way\images\bookcover.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html">
 <h3 class="no-anchor listing-title">
-딥러닝의 정석 2판
+<a href="../posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html" class="no-external">읽고 나면 진짜 쉬워지는 자료 구조</a>
 </h3>
 <div class="listing-subtitle">
-Fundamentals of Deep Learning (2nd)
+<a href="../posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html" class="no-external">Data Stuctures The Fun Way</a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
+Book
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Data Structure'); return false;">
+Data Structure
+</div>
+</div>
+<div class="listing-description">
+<a href="../posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html" class="no-external">길벗 출판사에서 출판한 “읽고 나면 진짜 쉬워지는 자료구조”에 대한 리뷰</a>
+</div>
+</div>
+<div class="metadata">
+<a href="../posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html" class="no-external">
+<div class="listing-date">
+May 16, 2024
+</div>
+<div class="listing-author">
+Chanseok Kang
 </div>
 </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Book,Deep Learning" data-listing-date-sort="1711206000000" data-listing-file-modified-sort="1715790896364" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="348">
+<div class="thumbnail">
+<p><a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html" class="no-external"></a></p><a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html" class="no-external">
+<p class="card-img-top"><img src="Fundamentals-of-Deep-Learning-2nd\images\bookcover.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html" class="no-external">딥러닝의 정석 2판</a>
+</h3>
+<div class="listing-subtitle">
+<a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html" class="no-external">Fundamentals of Deep Learning (2nd)</a>
+</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
 Book
@@ -249,14 +320,12 @@ Book
 Deep Learning
 </div>
 </div>
-<a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html">
 <div class="listing-description">
-<p>한빛미디어에서 출판한 “딥러닝의 정석 (2판)”에 대한 리뷰</p>
+<a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html" class="no-external">한빛미디어에서 출판한 “딥러닝의 정석 (2판)”에 대한 리뷰</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html">
+<a href="../posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html" class="no-external">
 <div class="listing-date">
 Mar 24, 2024
 </div>
@@ -266,19 +335,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Book,Ray" data-listing-date-sort="1708873200000" data-listing-file-modified-sort="1711210977469" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="2" data-categories="Book,Ray" data-listing-date-sort="1708873200000" data-listing-file-modified-sort="1715790896520" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="457">
 <div class="thumbnail">
-<p><a href="../posts/Learning-Ray/kr/learning-ray.html"> <p class="card-img-top"><img src="Learning-Ray\images\bookcover.jpg"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/Learning-Ray/kr/learning-ray.html" class="no-external"></a></p><a href="../posts/Learning-Ray/kr/learning-ray.html" class="no-external">
+<p class="card-img-top"><img src="Learning-Ray\images\bookcover.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/Learning-Ray/kr/learning-ray.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/Learning-Ray/kr/learning-ray.html">
 <h3 class="no-anchor listing-title">
-러닝 레이
+<a href="../posts/Learning-Ray/kr/learning-ray.html" class="no-external">러닝 레이</a>
 </h3>
 <div class="listing-subtitle">
-Learning Ray
+<a href="../posts/Learning-Ray/kr/learning-ray.html" class="no-external">Learning Ray</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Book'); return false;">
 Book
@@ -287,14 +356,12 @@ Book
 Ray
 </div>
 </div>
-<a href="../posts/Learning-Ray/kr/learning-ray.html">
 <div class="listing-description">
-<p>한빛미디어에서 출판한 “러닝 레이”에 대한 리뷰</p>
+<a href="../posts/Learning-Ray/kr/learning-ray.html" class="no-external">한빛미디어에서 출판한 “러닝 레이”에 대한 리뷰</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/Learning-Ray/kr/learning-ray.html">
+<a href="../posts/Learning-Ray/kr/learning-ray.html" class="no-external">
 <div class="listing-date">
 Feb 26, 2024
 </div>
@@ -304,19 +371,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1699974000000" data-listing-file-modified-sort="1699975542274" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="3" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1699974000000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <div class="thumbnail">
-<p><a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html" class="no-external"></a></p><a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html">
 <h3 class="no-anchor listing-title">
-Actor-Critic Design Decisions
+<a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html" class="no-external">Actor-Critic Design Decisions</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('LectureReview'); return false;">
 LectureReview
@@ -325,14 +392,12 @@ LectureReview
 ReinforcementLearning
 </div>
 </div>
-<a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html">
 <div class="listing-description">
-<p>UC Berkeley CS285 (2023) Lecture 6-3 Review</p>
+<a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html" class="no-external">UC Berkeley CS285 (2023) Lecture 6-3 Review</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html">
+<a href="../posts/CS285-lec6-3/kr/actor-critic-design-decisions.html" class="no-external">
 <div class="listing-date">
 Nov 15, 2023
 </div>
@@ -342,19 +407,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1699455600000" data-listing-file-modified-sort="1699459439504" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="4" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1699455600000" data-listing-file-modified-sort="1715790896583" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="575">
 <div class="thumbnail">
-<p><a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html" class="no-external"></a></p><a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html">
 <h3 class="no-anchor listing-title">
-Bridging the Gap Between Offline and Online Reinforcement Learning Evaluation Methodologies
+<a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html" class="no-external">Bridging the Gap Between Offline and Online Reinforcement Learning Evaluation Methodologies</a>
 </h3>
 <div class="listing-subtitle">
-Offline Sequential Evaluation
+<a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html" class="no-external">Offline Sequential Evaluation</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('PaperReview'); return false;">
 PaperReview
@@ -363,14 +428,12 @@ PaperReview
 ReinforcementLearning
 </div>
 </div>
-<a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html">
 <div class="listing-description">
-<p>Sequential Approach to evaluate Offline RL algorithms as a function of the training set size</p>
+<a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html" class="no-external">Sequential Approach to evaluate Offline RL algorithms as a function of the training set size</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html">
+<a href="../posts/Offline-Sequential-Evaluation/kr/OSE.html" class="no-external">
 <div class="listing-date">
 Nov 9, 2023
 </div>
@@ -380,19 +443,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1699282800000" data-listing-file-modified-sort="1699286560825" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="5" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1699282800000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="282">
 <div class="thumbnail">
-<p><a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html"> <p class="card-img-top"><img src="DSP-lec4-5\kr\kernel-density-estimation_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html" class="no-external"></a></p><a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html" class="no-external">
+<p class="card-img-top"><img src="DSP-lec4-5\kr\kernel-density-estimation_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html">
 <h3 class="no-anchor listing-title">
-Kernel Density Estimation
+<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html" class="no-external">Kernel Density Estimation</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -404,14 +467,12 @@ KAIST
 Statistics
 </div>
 </div>
-<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html">
 <div class="listing-description">
-<p>KAIST Data Science Programming 1 - 4-5-1. Kernel Density Estimation에 대한 내용입니다.</p>
+<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html" class="no-external">KAIST Data Science Programming 1 - 4-5-1. Kernel Density Estimation에 대한 내용입니다.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html">
+<a href="../posts/DSP-lec4-5/kr/kernel-density-estimation.html" class="no-external">
 <div class="listing-date">
 Nov 7, 2023
 </div>
@@ -421,19 +482,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698678000000" data-listing-file-modified-sort="1698681724596" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="6" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698678000000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="330">
 <div class="thumbnail">
-<p><a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html" class="no-external"></a></p><a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html">
 <h3 class="no-anchor listing-title">
-Pearson Correlation
+<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html" class="no-external">Pearson Correlation</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -445,14 +506,12 @@ KAIST
 Statistics
 </div>
 </div>
-<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html">
 <div class="listing-description">
-<p>KAIST Data Science Programming 1 - 4-4. Pearson Correlation에 대한 내용입니다.</p>
+<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html" class="no-external">KAIST Data Science Programming 1 - 4-4. Pearson Correlation에 대한 내용입니다.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html">
+<a href="../posts/DSP-lec4-4/kr/Pearson-Correlation.html" class="no-external">
 <div class="listing-date">
 Oct 31, 2023
 </div>
@@ -462,19 +521,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1698246000000" data-listing-file-modified-sort="1699974775747" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="7" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1698246000000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="794">
 <div class="thumbnail">
-<p><a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html" class="no-external"></a></p><a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html">
 <h3 class="no-anchor listing-title">
-From Evaluation to Actor Critic
+<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html" class="no-external">From Evaluation to Actor Critic</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('LectureReview'); return false;">
 LectureReview
@@ -483,14 +542,12 @@ LectureReview
 ReinforcementLearning
 </div>
 </div>
-<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html">
 <div class="listing-description">
-<p>UC Berkeley CS285 (2023) Lecture 6-2 Review</p>
+<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html" class="no-external">UC Berkeley CS285 (2023) Lecture 6-2 Review</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html">
+<a href="../posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html" class="no-external">
 <div class="listing-date">
 Oct 26, 2023
 </div>
@@ -500,19 +557,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698159600000" data-listing-file-modified-sort="1698245071887" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="8" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698159600000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="368">
 <div class="thumbnail">
-<p><a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html" class="no-external"></a></p><a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html">
 <h3 class="no-anchor listing-title">
-Covariance Matrix
+<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html" class="no-external">Covariance Matrix</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -524,14 +581,12 @@ KAIST
 Statistics
 </div>
 </div>
-<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html">
 <div class="listing-description">
-<p>KAIST Data Science Programming 1 - 4-3. Covariance Matrix에 대한 내용입니다.</p>
+<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html" class="no-external">KAIST Data Science Programming 1 - 4-3. Covariance Matrix에 대한 내용입니다.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html">
+<a href="../posts/DSP-lec4-3/kr/Covariance-Matrix.html" class="no-external">
 <div class="listing-date">
 Oct 25, 2023
 </div>
@@ -541,19 +596,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698073200000" data-listing-file-modified-sort="1699286539312" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="9" data-categories="Python,KAIST,Statistics" data-listing-date-sort="1698073200000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="390">
 <div class="thumbnail">
-<p><a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html"> <p class="card-img-top"><img src="DSP-lec4-1\kr\Multivariate-gaussian-distribution_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html" class="no-external"></a></p><a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html" class="no-external">
+<p class="card-img-top"><img src="DSP-lec4-1\kr\Multivariate-gaussian-distribution_files\figure-html\cell-3-output-1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html">
 <h3 class="no-anchor listing-title">
-Multivariate Gaussian Distribution
+<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html" class="no-external">Multivariate Gaussian Distribution</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -565,14 +620,12 @@ KAIST
 Statistics
 </div>
 </div>
-<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html">
 <div class="listing-description">
-<p>KAIST Data Science Programming 1 - 4.1 Multivariate Gaussian Distribution 에 대한 내용입니다.</p>
+<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html" class="no-external">KAIST Data Science Programming 1 - 4.1 Multivariate Gaussian Distribution 에 대한 내용입니다.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html">
+<a href="../posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html" class="no-external">
 <div class="listing-date">
 Oct 24, 2023
 </div>
@@ -582,19 +635,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1697725249436" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="10" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="494">
 <div class="thumbnail">
-<p><a href="../posts/Active-OPS/kr/active-offline-policy-selection.html"> <p class="card-img-top"><img src="Active-OPS\images\ops.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/Active-OPS/kr/active-offline-policy-selection.html" class="no-external"></a></p><a href="../posts/Active-OPS/kr/active-offline-policy-selection.html" class="no-external">
+<p class="card-img-top"><img src="Active-OPS\images\ops.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/Active-OPS/kr/active-offline-policy-selection.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/Active-OPS/kr/active-offline-policy-selection.html">
 <h3 class="no-anchor listing-title">
-Active Offline Policy Selection
+<a href="../posts/Active-OPS/kr/active-offline-policy-selection.html" class="no-external">Active Offline Policy Selection</a>
 </h3>
 <div class="listing-subtitle">
-A-OPS
+<a href="../posts/Active-OPS/kr/active-offline-policy-selection.html" class="no-external">A-OPS</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('PaperReview'); return false;">
 PaperReview
@@ -603,14 +656,12 @@ PaperReview
 ReinforcementLearning
 </div>
 </div>
-<a href="../posts/Active-OPS/kr/active-offline-policy-selection.html">
 <div class="listing-description">
-<p>A sequential decision approach that combines logged data with online interaction to identify the best policy.</p>
+<a href="../posts/Active-OPS/kr/active-offline-policy-selection.html" class="no-external">A sequential decision approach that combines logged data with online interaction to identify the best policy.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/Active-OPS/kr/active-offline-policy-selection.html">
+<a href="../posts/Active-OPS/kr/active-offline-policy-selection.html" class="no-external">
 <div class="listing-date">
 Oct 19, 2023
 </div>
@@ -620,19 +671,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1698249191277" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="11" data-categories="LectureReview,ReinforcementLearning" data-listing-date-sort="1697641200000" data-listing-file-modified-sort="1715790896176" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1379">
 <div class="thumbnail">
-<p><a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html"> <p class="card-img-top"><img src="CS285-lec6-1\images\pg.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html" class="no-external"></a></p><a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html" class="no-external">
+<p class="card-img-top"><img src="CS285-lec6-1\images\pg.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html">
 <h3 class="no-anchor listing-title">
-Actor-Critic Algorithms
+<a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html" class="no-external">Actor-Critic Algorithms</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('LectureReview'); return false;">
 LectureReview
@@ -641,14 +692,12 @@ LectureReview
 ReinforcementLearning
 </div>
 </div>
-<a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html">
 <div class="listing-description">
-<p>UC Berkeley CS285 (2023) Lecture 6-1 Review</p>
+<a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html" class="no-external">UC Berkeley CS285 (2023) Lecture 6-1 Review</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html">
+<a href="../posts/CS285-lec6-1/kr/actor-critic-algorithm.html" class="no-external">
 <div class="listing-date">
 Oct 19, 2023
 </div>
@@ -658,19 +707,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1696863600000" data-listing-file-modified-sort="1697641725748" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="12" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1696863600000" data-listing-file-modified-sort="1715790896583" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="951">
 <div class="thumbnail">
-<p><a href="../posts/Off-2-On-RL/kr/Off2OnRL.html"> <p class="card-img-top"><img src="Off-2-On-RL\images\distribution_shift.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/Off-2-On-RL/kr/Off2OnRL.html" class="no-external"></a></p><a href="../posts/Off-2-On-RL/kr/Off2OnRL.html" class="no-external">
+<p class="card-img-top"><img src="Off-2-On-RL\images\distribution_shift.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/Off-2-On-RL/kr/Off2OnRL.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/Off-2-On-RL/kr/Off2OnRL.html">
 <h3 class="no-anchor listing-title">
-Offline-to-Online Reinforcement Learning via Balanced Replay and Pessimistic Q-Ensemble
+<a href="../posts/Off-2-On-RL/kr/Off2OnRL.html" class="no-external">Offline-to-Online Reinforcement Learning via Balanced Replay and Pessimistic Q-Ensemble</a>
 </h3>
 <div class="listing-subtitle">
-Off2OnRL
+<a href="../posts/Off-2-On-RL/kr/Off2OnRL.html" class="no-external">Off2OnRL</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('PaperReview'); return false;">
 PaperReview
@@ -679,14 +728,12 @@ PaperReview
 ReinforcementLearning
 </div>
 </div>
-<a href="../posts/Off-2-On-RL/kr/Off2OnRL.html">
 <div class="listing-description">
-<p>Balanced replay scheme that prioritizes samples encountered online while also encouraging the use of near-on-policy samples from offline dataset.</p>
+<a href="../posts/Off-2-On-RL/kr/Off2OnRL.html" class="no-external">Balanced replay scheme that prioritizes samples encountered online while also encouraging the use of near-on-policy samples from offline dataset.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/Off-2-On-RL/kr/Off2OnRL.html">
+<a href="../posts/Off-2-On-RL/kr/Off2OnRL.html" class="no-external">
 <div class="listing-date">
 Oct 10, 2023
 </div>
@@ -696,19 +743,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1693234800000" data-listing-file-modified-sort="1693758939827" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="13" data-categories="PaperReview,ReinforcementLearning" data-listing-date-sort="1693234800000" data-listing-file-modified-sort="1715790896364" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="808">
 <div class="thumbnail">
-<p><a href="../posts/Implicit-Q-Learning/kr/IQL.html"> <p class="card-img-top"><img src="Implicit-Q-Learning\fig\expectile_regression.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="../posts/Implicit-Q-Learning/kr/IQL.html" class="no-external"></a></p><a href="../posts/Implicit-Q-Learning/kr/IQL.html" class="no-external">
+<p class="card-img-top"><img src="Implicit-Q-Learning\fig\expectile_regression.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="../posts/Implicit-Q-Learning/kr/IQL.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/Implicit-Q-Learning/kr/IQL.html">
 <h3 class="no-anchor listing-title">
-Offline Reinforcement Learning with Implicit Q-Learning
+<a href="../posts/Implicit-Q-Learning/kr/IQL.html" class="no-external">Offline Reinforcement Learning with Implicit Q-Learning</a>
 </h3>
 <div class="listing-subtitle">
-Implicit Q-Learning (IQL)
+<a href="../posts/Implicit-Q-Learning/kr/IQL.html" class="no-external">Implicit Q-Learning (IQL)</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('PaperReview'); return false;">
 PaperReview
@@ -717,14 +764,12 @@ PaperReview
 ReinforcementLearning
 </div>
 </div>
-<a href="../posts/Implicit-Q-Learning/kr/IQL.html">
 <div class="listing-description">
-<p>Offline RL method with only dataset actions.</p>
+<a href="../posts/Implicit-Q-Learning/kr/IQL.html" class="no-external">Offline RL method with only dataset actions.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/Implicit-Q-Learning/kr/IQL.html">
+<a href="../posts/Implicit-Q-Learning/kr/IQL.html" class="no-external">
 <div class="listing-date">
 Aug 29, 2023
 </div>
@@ -734,19 +779,19 @@ Chanseok Kang
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="Python,Coursera,DeepLearning.AI" data-listing-date-sort="1652194800000" data-listing-file-modified-sort="1674660016977" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="14" data-categories="Python,Coursera,DeepLearning.AI" data-listing-date-sort="1652194800000" data-listing-file-modified-sort="1715790896567" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1415">
 <div class="thumbnail">
-<p><a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"> <img src="../posts/Logistic-Regression-with-a-Neural-Network/images/LogReg_kiank.png" class="thumbnail-image"> </a></p>
+<p><a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html" class="no-external"></a></p><a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html" class="no-external">
+<p><img src="../posts/Logistic-Regression-with-a-Neural-Network/images/LogReg_kiank.png" class="thumbnail-image"></p>
+</a><p><a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html">
 <h3 class="no-anchor listing-title">
-신경망으로 구현하는 Logistic Regression
+<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html" class="no-external">신경망으로 구현하는 Logistic Regression</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Python'); return false;">
 Python
@@ -758,14 +803,12 @@ Coursera
 DeepLearning.AI
 </div>
 </div>
-<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html">
 <div class="listing-description">
-In this post, we will build a logistic regression classifier to recognize cats. This is the summary of lecture “Neural Networks and Deep Learning” from DeepLearning.AI. (slightly modified from original assignment)
+<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html" class="no-external">In this post, we will build a logistic regression classifier to recognize cats. This is the summary of lecture “Neural Networks and Deep Learning” from DeepLearning.AI. (slightly modified from original assignment)</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html">
+<a href="../posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html" class="no-external">
 <div class="listing-date">
 May 11, 2022
 </div>
@@ -859,10 +902,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -872,8 +932,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -885,7 +954,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -929,6 +1121,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -954,6 +1147,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1019,12 +1238,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-center">
+<p>Copyright 2023, Chanseok Kang</p>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 
