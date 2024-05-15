@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -80,7 +80,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -89,6 +95,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -131,10 +138,10 @@ MathJax = {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Chans Lecture Note</span>
     </a>
@@ -146,24 +153,24 @@ MathJax = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../publication/index.html" rel="" target="">
- <span class="menu-text">Publication</span></a>
+    <a class="nav-link" href="../../publication/index.html"> 
+<span class="menu-text">Publication</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Posts</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-posts">    
         <li>
-    <a class="dropdown-item" href="../../index.html" rel="" target="">
+    <a class="dropdown-item" href="../../index.html">
  <span class="dropdown-text">English</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../posts/kr.html" rel="" target="">
+    <a class="dropdown-item" href="../../posts/kr.html">
  <span class="dropdown-text">한글</span></a>
   </li>  
     </ul>
@@ -171,19 +178,19 @@ MathJax = {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/goodboychan" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/goodboychan"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/" rel="" target=""><i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/"> <i class="bi bi-linkedin" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -196,7 +203,7 @@ MathJax = {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       <div>
       <div class="quarto-title-meta-heading">Author</div>
@@ -239,6 +246,7 @@ MathJax = {
 
 
 
+
 <p style="text-align: right;">
 <a href="https://github.com/kcsgoodboy/kcsgoodboy.github.io/blob/main/publication/GDRL/GDRL-chapter-2.ipynb" role="button" target="_blank"> <img class="notebook-badge-image" src="../../assets/badges/github.svg" alt="View On GitHub"> </a> <a href="https://colab.research.google.com/github/kcsgoodboy/kcsgoodboy.github.io/blob/main/publication/GDRL/GDRL-chapter-2.ipynb" target="_blank"> <img class="notebook-badge-image" src="../../assets/badges/colab.svg" alt="Open In Colab"> </a> <a href="https://mybinder.org/v2/gh/kcsgoodboy/kcsgoodboy.github.io/main?filepath=publication/GDRL/GDRL-chapter-2.ipynb" target="_blank"> <img class="notebook-badge-image" src="../../assets/badges/binder.svg" alt="Open In Binder"> </a>
 </p>
@@ -247,8 +255,8 @@ MathJax = {
 <blockquote class="blockquote">
 <p>그로킹 심층 강화학습 중 2장 내용인 “강화학습의 수학적 기초”에 대한 내용입니다.</p>
 </blockquote>
-<div class="cell">
-<details>
+<div id="cell-3" class="cell">
+<details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install tqdm numpy scikit<span class="op">-</span>learn pyglet setuptools <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym asciinema pandas tabulate tornado<span class="op">==</span><span class="fl">5.</span><span class="op">*</span> PyBullet <span class="op">&amp;&amp;</span> <span class="op">\</span></span>
@@ -259,7 +267,7 @@ MathJax = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install gym[atari]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="1">
+<div id="cell-4" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> gym, gym_walk, gym_aima</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -276,7 +284,7 @@ MathJax = {
 <li>에이전트는 상태 1에서 시작함. (walk의 중간입니다) T-1-T</li>
 <li>행동: 왼쪽 (0) 또는 오른쪽 (1)</li>
 </ul>
-<div class="cell" data-execution_count="2">
+<div id="cell-7" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> {</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: {</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>: [(<span class="fl">1.0</span>, <span class="dv">0</span>, <span class="fl">0.0</span>, <span class="va">True</span>)],</span>
@@ -302,7 +310,7 @@ MathJax = {
 <blockquote class="blockquote">
 <p>Note: OpenAI Gym에 구현되어 있는 BanditWalk env를 사용할 수 있음</p>
 </blockquote>
-<div class="cell" data-execution_count="3">
+<div id="cell-9" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> gym.make(<span class="st">'BanditWalk-v0'</span>).env.P</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -326,7 +334,7 @@ MathJax = {
 <li>에이전트는 상태 1에서 시작함 (walk의 중간입니다) T-1-T</li>
 <li>행동: 왼쪽 (0) 또는 오른쪽 (1)</li>
 </ul>
-<div class="cell" data-execution_count="4">
+<div id="cell-11" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> {</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: {</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>: [(<span class="fl">1.0</span>, <span class="dv">0</span>, <span class="fl">0.0</span>, <span class="va">True</span>)],</span>
@@ -353,7 +361,7 @@ MathJax = {
 <blockquote class="blockquote">
 <p>Note: OpenAI Gym에 구현되어 있는 BanditSlipperyWalk env를 사용할 수 있음</p>
 </blockquote>
-<div class="cell" data-execution_count="5">
+<div id="cell-13" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> gym.make(<span class="st">'BanditSlipperyWalk-v0'</span>).env.P</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -376,7 +384,7 @@ MathJax = {
 <li>에이전트는 상태 2에서 시작함. (walk의 중간) T-1-2-3-T</li>
 <li>행동: 왼쪽 (0) 또는 오른쪽 (1)</li>
 </ul>
-<div class="cell" data-execution_count="6">
+<div id="cell-15" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> {</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: {</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>: [(<span class="fl">1.0</span>, <span class="dv">0</span>, <span class="fl">0.0</span>, <span class="va">True</span>)],</span>
@@ -412,7 +420,7 @@ MathJax = {
 <blockquote class="blockquote">
 <p>Note: OpenAI Gym에 구현되어 있는 WalkThree env를 사용할 수 있습니다.</p>
 </blockquote>
-<div class="cell" data-execution_count="7">
+<div id="cell-17" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> gym.make(<span class="st">'WalkThree-v0'</span>).env.P</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -440,7 +448,7 @@ MathJax = {
 <li>에이전트는 상태 2에서 시작함 (walk의 중간) T-1-2-3-T</li>
 <li>행동: 왼쪽 (0) 또는 오른쪽 (1)</li>
 </ul>
-<div class="cell" data-execution_count="8">
+<div id="cell-19" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> {</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: {</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>: [(<span class="fl">1.0</span>, <span class="dv">0</span>, <span class="fl">0.0</span>, <span class="va">True</span>)],</span>
@@ -509,7 +517,7 @@ MathJax = {
 <blockquote class="blockquote">
 <p>Note: OpenAI Gym에 구현되어 있는 SlipperyWalkThree env를 사용할 수 있습니다.</p>
 </blockquote>
-<div class="cell" data-execution_count="9">
+<div id="cell-21" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> gym.make(<span class="st">'SlipperyWalkThree-v0'</span>).env.P</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -556,7 +564,7 @@ MathJax = {
 <li>에이전트는 상태 3에서 시작함 (walk의 중간) T-1-2-3-4-5-T</li>
 <li>행동: 왼쪽 (0) 또는 오른쪽 (1)이나, 무작위로 동작하기 때문에 별 차이가 없음</li>
 </ul>
-<div class="cell" data-execution_count="10">
+<div id="cell-23" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> {</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: {</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>: [(<span class="fl">1.0</span>, <span class="dv">0</span>, <span class="fl">0.0</span>, <span class="va">True</span>)],</span>
@@ -607,7 +615,7 @@ MathJax = {
 <blockquote class="blockquote">
 <p>Note: OpenAI Gym에 구현되어 있는 RandomWalk env를 사용할 수 있습니다.</p>
 </blockquote>
-<div class="cell" data-execution_count="11">
+<div id="cell-25" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> gym.make(<span class="st">'RandomWalk-v0'</span>).env.P</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -641,7 +649,7 @@ MathJax = {
 <li>에이전트는 상태 0 (가장 왼쪽 구석)에서 시작함</li>
 <li>행동: 왼쪽(0), 아래 (1), 오른쪽 (2), 위 (3)</li>
 </ul>
-<div class="cell" data-execution_count="12">
+<div id="cell-27" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> {</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: {</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>: [(<span class="fl">0.9</span>, <span class="dv">0</span>, <span class="op">-</span><span class="fl">0.04</span>, <span class="va">False</span>),</span>
@@ -832,7 +840,7 @@ MathJax = {
 <blockquote class="blockquote">
 <p>Note: OpenAI Gym에서 RussellNorvigGridworld env를 사용할 수 있습니다.</p>
 </blockquote>
-<div class="cell" data-execution_count="13">
+<div id="cell-29" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> gym.make(<span class="st">'RussellNorvigGridworld-v0'</span>).env.P</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
@@ -928,7 +936,7 @@ MathJax = {
 <li>에이전트는 상태 0 (가장 왼쪽 구석)에서 시작함</li>
 <li>행동: 왼쪽(0), 아래 (1), 오른쪽 (2), 위 (3)</li>
 </ul>
-<div class="cell" data-execution_count="14">
+<div id="cell-31" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> {</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>: {</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="dv">0</span>: [(<span class="fl">0.6666666666666666</span>, <span class="dv">0</span>, <span class="fl">0.0</span>, <span class="va">False</span>),</span>
@@ -1310,7 +1318,7 @@ MathJax = {
 <blockquote class="blockquote">
 <p>Note: OpenAI gym의 FrozenLake env를 사용할 수 있습니다.</p>
 </blockquote>
-<div class="cell" data-execution_count="15">
+<div id="cell-33" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> gym.make(<span class="st">'FrozenLake-v0'</span>).env.P</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
@@ -1475,7 +1483,7 @@ MathJax = {
 <li>참고로 MDP는 더 복잡하고 클 수 있습니다.</li>
 <li>64개의 상태를 가지는 FrozenLake도 살펴보기 바랍니다.</li>
 </ul>
-<div class="cell" data-execution_count="16">
+<div id="cell-35" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>env <span class="op">=</span> gym.make(<span class="st">'FrozenLake8x8-v0'</span>)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>P <span class="op">=</span> env.env.P</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2247,10 +2255,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2260,8 +2285,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2273,7 +2307,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2317,6 +2474,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2342,6 +2500,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2403,18 +2587,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="kcsgoodboy/en" data-repo-id="R_kgDOIixJIQ" data-category="General" data-category-id="DIC_kwDOIixJIc4CTiz-" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
       &nbsp;
     </div>   
-    <div class="nav-footer-center">Copyright 2023, Chanseok Kang</div>
+    <div class="nav-footer-center">
+<p>Copyright 2023, Chanseok Kang</p>
+</div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
   </div>
 </footer>
+
 
 
 
