@@ -1,7 +1,9 @@
 ---
 listing:
   - categories: true
-    contents: "*/en/*.ipynb"
+    contents: 
+    - "*/en.ipynb"
+    - "*/en.qmd"
     type: default
     date-format: medium
     sort: "date desc"

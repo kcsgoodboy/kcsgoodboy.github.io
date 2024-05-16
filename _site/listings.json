@@ -2,49 +2,49 @@
   {
     "listing": "/posts/kr.html",
     "items": [
-      "/posts/Data-Structure-the-fun-way/kr/data-structure-the-fun-way.html",
-      "/posts/Fundamentals-of-Deep-Learning-2nd/kr/fundamentals-of-deep-learning-2nd.html",
-      "/posts/Learning-Ray/kr/learning-ray.html",
-      "/posts/CS285-lec6-3/kr/actor-critic-design-decisions.html",
-      "/posts/Offline-Sequential-Evaluation/kr/OSE.html",
-      "/posts/DSP-lec4-5/kr/kernel-density-estimation.html",
-      "/posts/DSP-lec4-4/kr/Pearson-Correlation.html",
-      "/posts/CS285-lec6-2/kr/from-evaluation-to-actor-critic.html",
-      "/posts/DSP-lec4-3/kr/Covariance-Matrix.html",
-      "/posts/DSP-lec4-1/kr/Multivariate-gaussian-distribution.html",
-      "/posts/Active-OPS/kr/active-offline-policy-selection.html",
-      "/posts/CS285-lec6-1/kr/actor-critic-algorithm.html",
-      "/posts/Off-2-On-RL/kr/Off2OnRL.html",
-      "/posts/Implicit-Q-Learning/kr/IQL.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/kr/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Data-Structure-the-fun-way/kr.html",
+      "/posts/Fundamentals-of-Deep-Learning-2nd/kr.html",
+      "/posts/Learning-Ray/kr.html",
+      "/posts/CS285-lec6-3-actor-critic-design-decisions/kr.html",
+      "/posts/Offline-Sequential-Evaluation/kr.html",
+      "/posts/DSP-lec4-5-kernel-density-estimation/kr.html",
+      "/posts/DSP-lec4-4-pearson-correlation/kr.html",
+      "/posts/CS285-lec6-2-from-evaluation-to-actor-critic/kr.html",
+      "/posts/DSP-lec4-3-covariance-matrix/kr.html",
+      "/posts/DSP-lec4-1-multivariate-gaussian-distribution/kr.html",
+      "/posts/Active-OPS/kr.html",
+      "/posts/CS285-lec6-1-actor-critic-algorithms/kr.html",
+      "/posts/Off-2-On-RL/kr.html",
+      "/posts/Implicit-Q-Learning/kr.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/kr.html"
     ]
   },
   {
     "listing": "/posts/index.html",
     "items": [
-      "/posts/Principal-component-analysis/en/principal-component-analysis.html",
-      "/posts/Differentiation-in-python/en/differentiation-in-python.html",
-      "/posts/Linear-Transformation/en/Linear-Transformation.html",
-      "/posts/Matrix-Multiplication/en/Matrix-Multiplication.html",
-      "/posts/vector-operations/en/vector-operations.html",
-      "/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html",
-      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
-      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Principal-component-analysis/en.html",
+      "/posts/Differentiation-in-python/en.html",
+      "/posts/Linear-Transformation/en.html",
+      "/posts/Matrix-Multiplication/en.html",
+      "/posts/vector-operations/en.html",
+      "/posts/Solving-Linear-systems-3-variable/en.html",
+      "/posts/Solving-Linear-Systems-2-variable/en.html",
+      "/posts/Introduction-to-NumPy-Arrays/en.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/en.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
-      "/posts/Principal-component-analysis/en/principal-component-analysis.html",
-      "/posts/Differentiation-in-python/en/differentiation-in-python.html",
-      "/posts/Linear-Transformation/en/Linear-Transformation.html",
-      "/posts/Matrix-Multiplication/en/Matrix-Multiplication.html",
-      "/posts/vector-operations/en/vector-operations.html",
-      "/posts/Solving-Linear-systems-3-variable/en/Solving-Linear-Systems-3-variables.html",
-      "/posts/Solving-Linear-Systems-2-variable/en/Solving-Linear-Systems-2-variables.html",
-      "/posts/Introduction-to-NumPy-Arrays/en/introduction-to-numpy-arrays.html",
-      "/posts/Logistic-Regression-with-a-Neural-Network/en/Logistic-Regression-with-a-Neural-Network.html"
+      "/posts/Principal-component-analysis/en.html",
+      "/posts/Differentiation-in-python/en.html",
+      "/posts/Linear-Transformation/en.html",
+      "/posts/Matrix-Multiplication/en.html",
+      "/posts/vector-operations/en.html",
+      "/posts/Solving-Linear-systems-3-variable/en.html",
+      "/posts/Solving-Linear-Systems-2-variable/en.html",
+      "/posts/Introduction-to-NumPy-Arrays/en.html",
+      "/posts/Logistic-Regression-with-a-Neural-Network/en.html"
     ]
   },
   {

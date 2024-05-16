@@ -2,8 +2,8 @@
 listing:
   - categories: true
     contents: 
-    - "*/kr/*.ipynb"
-    - "*/kr/*.qmd"
+    - "*/kr.ipynb"
+    - "*/kr.qmd"
     type: default
     max-description-length: 250
     date-format: medium

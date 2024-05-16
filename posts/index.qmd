@@ -1,7 +1,9 @@
 ---
 listing:
   - categories: true
-    contents: "*/en/*.ipynb"
+    contents: 
+    - "*/en.ipynb"
+    - "*/en.qmd"
     type: default
     max-description-length: 250
     date-format: medium
