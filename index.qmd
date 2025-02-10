@@ -9,6 +9,7 @@ listing:
     sort: "date desc"
     sort-ui: true
     filter-ui: true
+    image-placeholder: "image/default.jpg"
 
 page-layout: full
 comments: false
