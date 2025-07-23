@@ -3,10 +3,16 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - text: Book Reviews
-        href: book-reviews/index.qmd
-      - text: Device Reviews
-        href: device-reviews/index.qmd
-      - text: Tech Posts
-        href: tech-posts/index.qmd
-      - about.qmd
+      - text: About
+        href: about.qmd
+      - text: Posts
+        href: posts/index.qmd # Assuming you'll create a posts directory with an index.qmd
+      - text: Publications
+        href: publications/index.qmd # Assuming you'll create a publications directory with an index.qmd
+    right:
+      - text: "한국어"
+        href: /ko/
+      - icon: github
+        href: https://github.com/kcsgoodboy # REPLACE WITH YOUR GITHUB URL
+      - icon: linkedin
+        href: https://linkedin.com/in/yourprofile # REPLACE WITH YOUR LINKEDIN URL

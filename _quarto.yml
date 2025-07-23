@@ -6,12 +6,6 @@ website:
   page-footer:
     left: "© 2023 kcsgoodboy"
     right: "Built with Quarto"
-  navbar:
-    right:
-      - text: "English"
-        href: /en/
-      - text: "한국어"
-        href: /ko/
   
 
 language:
