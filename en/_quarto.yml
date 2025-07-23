@@ -2,9 +2,6 @@ project:
   type: website
   output-dir: .
 
-website:
-  _quarto-en.yml
-
 include-in-header:
   - text: |
       <script>

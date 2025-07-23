@@ -6,13 +6,35 @@ website:
   page-footer:
     left: "© 2023 kcsgoodboy"
     right: "Built with Quarto"
-  
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - text: About
+        href: about.qmd
+      - text: Posts
+        href: posts/index.qmd
+      - text: Publications
+        href: publications/index.qmd
+    right:
+      - icon: github
+        href: https://github.com/goodboychan
+      - icon: linkedin
+        href: https://linkedin.com/in/chanseokk
 
 language:
   ko:
     default-text: "한국어"
+    navbar:
+      right:
+        - text: "English"
+          href: /en/
   en:
     default-text: "English"
+    navbar:
+      right:
+        - text: "한국어"
+          href: /ko/
 
 format:
   html:
@@ -23,6 +45,3 @@ format:
     toc: true
 
 output-dir: docs
-
-
-
