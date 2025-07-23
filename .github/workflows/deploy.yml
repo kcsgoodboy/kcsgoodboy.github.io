@@ -24,8 +24,11 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
 
+      - name: Clean docs directory
+        run: rm -rf docs
+
       - name: Render Quarto project
-        run: quarto render
+        run: quarto render --output-dir docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
