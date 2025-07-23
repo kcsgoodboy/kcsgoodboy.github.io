@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: .
+
+website:
+  _quarto-ko.yml
+
+include-in-header:
+  - text: |
+      <script>
+        window.quartoToggleLanguage = function() {
+          const currentPath = window.location.pathname;
+          if (currentPath.includes('/ko/')) {
+            window.location.href = currentPath.replace('/ko/', '/en/');
+          } else if (currentPath.includes('/en/')) {
+            window.location.href = currentPath.replace('/en/', '/ko/');
+          } else {
+            // Default to English if not in ko or en
+            window.location.href = '/en/' + currentPath;
+          }
+        };
+      </script>

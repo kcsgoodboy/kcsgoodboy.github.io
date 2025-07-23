@@ -3,17 +3,28 @@ project:
 
 website:
   title: "kcsgoodboy.github.io"
+  page-footer:
+    left: "© 2023 kcsgoodboy"
+    right: "Built with Quarto"
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+    right:
+      - text: "English"
+        href: /en/
+      - text: "한국어"
+        href: /ko/
+  
+
+language:
+  ko:
+    default-text: "한국어"
+  en:
+    default-text: "English"
 
 format:
   html:
     theme:
-      - cosmo
-      - brand
+      light: cosmo
+      dark: darkly
     css: styles.css
     toc: true
 

@@ -1,0 +1,12 @@
+website:
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - text: Book Reviews
+        href: book-reviews/index.qmd
+      - text: Device Reviews
+        href: device-reviews/index.qmd
+      - text: Tech Posts
+        href: tech-posts/index.qmd
+      - about.qmd

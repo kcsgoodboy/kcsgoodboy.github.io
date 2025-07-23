@@ -1,0 +1,12 @@
+website:
+  navbar:
+    left:
+      - href: index.qmd
+        text: 홈
+      - text: 책 리뷰
+        href: book-reviews/index.qmd
+      - text: 기기 리뷰
+        href: device-reviews/index.qmd
+      - text: 기술 포스트
+        href: tech-posts/index.qmd
+      - about.qmd
