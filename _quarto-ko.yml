@@ -6,13 +6,13 @@ website:
       - text: 소개
         href: about.qmd
       - text: 포스트
-        href: posts/index.qmd # Assuming you'll create a posts directory with an index.qmd
+        href: posts/index.qmd
       - text: 출판물
-        href: publications/index.qmd # Assuming you'll create a publications directory with an index.qmd
+        href: publications/index.qmd
     right:
       - text: "English"
         href: /en/
       - icon: github
-        href: https://github.com/kcsgoodboy # REPLACE WITH YOUR GITHUB URL
+        href: https://github.com/kcsgoodboy
       - icon: linkedin
-        href: https://linkedin.com/in/yourprofile # REPLACE WITH YOUR LINKEDIN URL
+        href: https://linkedin.com/in/yourprofile
