@@ -1,27 +1,39 @@
 name: Build & Deploy Multilang Site
-
 on:
   push:
     branches: [main]
 
+permissions:
+  contents: read          # checkout
+  pages: write            # deploy
+  id-token: write
+
+concurrency:              # 중복 실행 방지(선택)
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        lang: [ko, en]
     steps:
+      # 1) 소스 체크아웃
       - uses: actions/checkout@v4
+
+      # 2) Quarto 설치
       - uses: quarto-dev/quarto-actions/setup@v2
-      - run: quarto render --profile ${{ matrix.lang }}
+        with:
+          version: 1.6.3   # 필요시 고정
+
+      # 3) 두 프로필 순차 빌드
+      - name: Render ko & en
+        run: |
+          quarto render --profile ko --clean
+          quarto render --profile en --clean
+
+      # 4) 정적 사이트 아티팩트 업로드 (단 한 번)
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    steps:
+          path: docs       # docs/ko docs/en 모두 포함
+
+      # 5) GitHub Pages 배포
       - uses: actions/deploy-pages@v4
