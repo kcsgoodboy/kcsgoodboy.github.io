@@ -1,4 +1,8 @@
+project: 
+  output-dir: docs/kr
+
 website:
+  title: "생각많은 소심남의 노트"
   navbar:
     left:
       - href: index.qmd
@@ -7,11 +11,11 @@ website:
         href: about.qmd
       - text: 포스트
         href: posts/index.qmd
-      - text: 출판물
+      - text: 출간물
         href: publications/index.qmd
     right:
       - text: "English"
-        href: /en/
+        href: ../en/
       - icon: github
         href: https://github.com/goodboychan
       - icon: linkedin
