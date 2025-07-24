@@ -27,8 +27,11 @@ jobs:
       - name: Clean docs directory
         run: rm -rf docs
 
-      - name: Render Quarto project
-        run: quarto render --output-dir docs
+      - name: Render Korean site
+        run: quarto render --profile ko
+
+      - name: Render English site
+        run: quarto render --profile en
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
