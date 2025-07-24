@@ -15,6 +15,11 @@ concurrency:              # 중복 실행 방지(선택)
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+
+    environment:               # ⭐ 필수
+      name: github-pages       # Pages 전용 환경 이름
+      url:  ${{ steps.deploy.outputs.page_url }}  # 선택·자동 URL 표시
+
     steps:
       # 1) 소스 체크아웃
       - uses: actions/checkout@v4
