@@ -34,7 +34,7 @@ jobs:
         run: quarto render --profile en
 
       - name: Create redirect index.html
-        run: echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=./kr/"></head><body></body></html>' > docs/index.html
+        run: echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=./ko/"></head><body></body></html>' > docs/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
