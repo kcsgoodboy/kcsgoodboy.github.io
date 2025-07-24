@@ -1,25 +1,6 @@
 project:
   type: website
-  output-dir: docs
 
-profile:
-  default: ko
-  
-website:
-  page-footer:
-    left: "© 2025 kcsgoodboy"
-    right: "Built with Quarto"
-  navbar:
-    right: 
-      - icon: github
-        href: https://github.com/goodboychan
-      - icon: linkedin
-        href: https://linkedin.com/in/chanseokk
-
-format:
-  html:
-    theme:
-      light: cosmo
-      dark: darkly
-    css: styles.css
-    toc: true
+profile:               # 다국어 묶음
+    default: ko          # 기본 언어
+    group:   [ko, en]

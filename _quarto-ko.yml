@@ -1,5 +1,5 @@
-project: 
-  output-dir: docs
+project:
+  output-dir: docs/ko     # 빌드 산출물 경로
 
 lang: ko
 
@@ -9,15 +9,15 @@ website:
     left:
       - href: index.qmd
         text: 홈
-      - text: 소개
-        href: about.qmd
-      - text: 포스트
-        href: posts/index.qmd
-      - text: 출간물
-        href: publications/index.qmd
+      - href: about.qmd
+        text: 소개
+      - href: posts/index.qmd
+        text: 포스트
+      - href: publications/index.qmd
+        text: 출간물
     right:
-      - text: "English"
-        href: ./en/
+      - text: English      # ↔ 언어 토글
+        href: ../en/       # 영어 홈 상대경로
       - icon: github
         href: https://github.com/goodboychan
       - icon: linkedin

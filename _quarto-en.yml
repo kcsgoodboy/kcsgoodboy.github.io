@@ -1,5 +1,7 @@
-project: 
+project:
   output-dir: docs/en
+
+lang: en
 
 website:
   title: "Chan's Lab"
@@ -7,15 +9,15 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - text: About
-        href: about.qmd
-      - text: Posts
-        href: posts/index.qmd
-      - text: Publications
-        href: publications/index.qmd
+      - href: about.qmd
+        text: About
+      - href: posts/index.qmd
+        text: Posts
+      - href: publications/index.qmd
+        text: Publications
     right:
-      - text: "한국어"
-        href: ../
+      - text: 한국어
+        href: ../ko/
       - icon: github
         href: https://github.com/goodboychan
       - icon: linkedin

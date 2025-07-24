@@ -1,43 +1,27 @@
-name: Deploy Quarto Website
+name: Build & Deploy Multilang Site
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
+    strategy:
+      matrix:
+        lang: [ko, en]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Clean docs directory
-        run: rm -rf docs
-
-      - name: Render Korean site
-        run: quarto render --profile ko
-
-      - name: Render English site
-        run: quarto render --profile en
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - run: quarto render --profile ${{ matrix.lang }}
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/deploy-pages@v4
