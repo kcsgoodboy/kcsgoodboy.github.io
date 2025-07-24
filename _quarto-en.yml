@@ -15,7 +15,7 @@ website:
         href: publications/index.qmd
     right:
       - text: "한국어"
-        href: ../ko/
+        href: ../
       - icon: github
         href: https://github.com/goodboychan
       - icon: linkedin

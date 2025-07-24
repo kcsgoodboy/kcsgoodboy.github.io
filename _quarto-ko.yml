@@ -1,5 +1,7 @@
 project: 
-  output-dir: docs/kr
+  output-dir: docs
+
+lang: ko
 
 website:
   title: "생각많은 소심남의 노트"
@@ -15,7 +17,7 @@ website:
         href: publications/index.qmd
     right:
       - text: "English"
-        href: ../en/
+        href: ./en/
       - icon: github
         href: https://github.com/goodboychan
       - icon: linkedin
