@@ -1,7 +1,7 @@
 website:
   navbar:
     background: primary
-    right:
+    left:
       - href: index.qmd
       - href: about.qmd
         text: 소개
