@@ -4,7 +4,5 @@ website:
     right:
       - href: index.qmd
       - href: about.qmd
-        text: 소개
       - href: blog.qmd
-        text: 블로그
       - href: publications.qmd
