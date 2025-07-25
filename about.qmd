@@ -1,5 +1,5 @@
 ---
-title: Chanseok Kang
+title: about
 lang: en
 about:
   template: trestles

@@ -1,5 +1,5 @@
 ---
-title: 생각많은 소심남
+title: 소개
 lang: ko
 about:
   template: trestles

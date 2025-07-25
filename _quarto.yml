@@ -21,6 +21,7 @@ format:
 
 # babelquarto 설정
 babelquarto:
+  languagelinks: sidebar
   languagecodes:
   - name: en
     text: "English"
