@@ -1,44 +1,34 @@
-name: Build & Deploy Multilang Site
+name: Build & Deploy multilingual site
 on:
   push:
     branches: [main]
 
 permissions:
-  contents: read          # checkout
-  pages: write            # deploy
+  contents: read
+  pages: write
   id-token: write
-
-concurrency:              # 중복 실행 방지(선택)
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-
-    environment:               # ⭐ 필수
-      name: github-pages       # Pages 전용 환경 이름
-      url:  ${{ steps.deploy.outputs.page_url }}  # 선택·자동 URL 표시
+    environment:
+      name: github-pages
 
     steps:
-      # 1) 소스 체크아웃
       - uses: actions/checkout@v4
 
-      # 2) Quarto 설치
+      # 1) Quarto + R 설치
       - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: 1.6.3   # 필요시 고정
+      - uses: r-lib/actions/setup-r@v2
+      - name: Install babelquarto
+        run: Rscript -e "install.packages('babelquarto')"
 
-      # 3) 두 프로필 순차 빌드
-      - name: Render ko & en
-        run: |
-          quarto render --profile ko --clean
-          quarto render --profile en --clean
+      # 2) 다국어 사이트 렌더 (_site/ko, _site/en 생성)
+      - name: Render multilingual site
+        run: Rscript -e "babelquarto::render_website()"
 
-      # 4) 정적 사이트 아티팩트 업로드 (단 한 번)
+      # 3) GitHub Pages artifact 업로드 & 배포
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs       # docs/ko docs/en 모두 포함
-
-      # 5) GitHub Pages 배포
+          path: _site
       - uses: actions/deploy-pages@v4

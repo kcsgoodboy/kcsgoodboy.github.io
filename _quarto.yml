@@ -1,6 +1,37 @@
 project:
   type: website
 
-profile:               # 다국어 묶음
-    default: ko          # 기본 언어
-    group:   [ko, en]
+website:
+  title: "Chan's Research Note"
+  page-navigation: true
+  navbar:
+    background: primary
+    right:
+      - text: 한국어
+      - icon: github      # 일반 버튼(아이콘 등)도 함께 가능
+        href: https://github.com/goodboychan
+      - icon: linkedin
+        href: https://linkedin.com/in/chanseokk
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark:  darkly
+    css:  styles.css            # 2‑3 절
+    toc: true
+    # include-in-header: header.html   # 2‑2 절
+
+# babelquarto 설정
+babelquarto:
+  languagecodes:
+  - name: en
+    text: "English"
+  - name: ko
+    text: "한국어"
+  mainlanguage: ko
+  languages: [en]
+title-ko: 생각많은 소심남
+description-ko: 생각많은 소심남의 연구노트
+author-ko: Chanseok Kang
+lang: en

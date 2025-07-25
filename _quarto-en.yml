@@ -1,24 +1,10 @@
-project:
-  output-dir: docs/en
-
-lang: en
-
 website:
-  title: "Chan's Lab"
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - href: about.qmd
-        text: About
-      - href: posts/index.qmd
-        text: Posts
-      - href: publications/index.qmd
-        text: Publications
+    background: primary
     right:
-      - text: 한국어
-        href: ../ko/
-      - icon: github
-        href: https://github.com/goodboychan
-      - icon: linkedin
-        href: https://linkedin.com/in/chanseokk
+      - href: index.qmd
+      - href: about.qmd
+        text: 소개
+      - href: blog.qmd
+        text: 블로그
+      - href: publications.qmd
