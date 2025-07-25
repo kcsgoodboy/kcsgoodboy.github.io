@@ -15,7 +15,7 @@ format:
     theme:
       light: flatly
       dark:  darkly
-    css:  styles.css            # 2‑3 절
+    css:  styles.css            
     toc: true
     # include-in-header: header.html   # 2‑2 절
 
@@ -26,8 +26,8 @@ babelquarto:
     text: "English"
   - name: ko
     text: "한국어"
-  mainlanguage: 'ko'
-  languages: ['en']
+  mainlanguage: 'en'
+  languages: ['ko']
 title-ko: 생각많은 소심남
 description-ko: 생각많은 소심남의 연구노트
 author-ko: Chanseok Kang
