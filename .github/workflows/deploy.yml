@@ -18,17 +18,28 @@ jobs:
       - uses: actions/checkout@v4
 
       # 1) Quarto + R 설치
-      - uses: quarto-dev/quarto-actions/setup@v2
-      - uses: r-lib/actions/setup-r@v2
-      - name: Remove Dependencies
-        run: Rscript -e "install.packages('httr')"
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: pre-release
 
-      - name: Install babelquarto
-        run: Rscript -e "install.packages('babelquarto', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
+      - name: Install R package deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install libcurl4-openssl-dev libfribidi-dev libharfbuzz-dev libxslt1-dev
 
-      # 2) 다국어 사이트 렌더 (_site/ko, _site/en 생성)
-      - name: Render multilingual site
-        run: Rscript -e "babelquarto::render_website()"
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.4.0"
+
+      - name: Install R Dependencies
+        uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 1
+
+      - name: Render book
+        run: Rscript -e 'babelquarto::render_website()'
 
       # 3) GitHub Pages artifact 업로드 & 배포
       - uses: actions/upload-pages-artifact@v3
