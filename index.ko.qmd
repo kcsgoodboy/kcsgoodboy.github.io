@@ -1,3 +1,4 @@
 ---
-title: "kcsgoodboy.github.io"
+title: 바탕화면
+
 ---

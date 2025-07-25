@@ -1,0 +1,17 @@
+---
+title: 생각많은 소심남
+lang: ko
+about:
+  template: trestles
+  image: "content/images/chanseok.jpg"
+  image-width: "200px;"
+  links: 
+    - icon: github
+      href: https://github.com/goodboychan
+    - icon: linkedin
+      href: https://www.linkedin.com/in/chanseokk/
+execute: 
+  echo: false
+comments: false
+
+---

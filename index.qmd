@@ -1,3 +1,4 @@
 ---
-title: "kcsgoodboy.github.io"
+title: index
+
 ---
