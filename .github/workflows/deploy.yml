@@ -21,7 +21,7 @@ jobs:
       - uses: quarto-dev/quarto-actions/setup@v2
       - uses: r-lib/actions/setup-r@v2
       - name: Install babelquarto
-        run: Rscript -e "install.packages('babelquarto')"
+        run: Rscript -e "install.packages('babelquarto', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
 
       # 2) 다국어 사이트 렌더 (_site/ko, _site/en 생성)
       - name: Render multilingual site
