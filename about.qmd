@@ -3,7 +3,7 @@ title: about
 lang: en
 about:
   template: trestles
-  image: "content/images/chanseok.jpg"
+  image: "contents/images/chanseok.jpg"
   image-width: "200px;"
   links: 
     - icon: github
@@ -15,3 +15,50 @@ execute:
 comments: false
 
 ---
+
+:::{.column-body-outset}
+
+## Bio
+
+I am Chanseok Kang, an AI Engineer in the CTO Division at [LG Electronics](https://www.lge.co.kr/). Rather than working in headline AI areas such as speech or vision, I specialize in **control**, applying energy‑efficient AI algorithms to home appliances and deploying them in mass‑produced products.
+
+I usually work with **reinforcement learning (RL)** as a problem solver. To make RL practical on the resource‑constrained hardware found in appliances, I have hands‑on experience with **data‑driven RL pipelines** as well as **model quantization and optimization**. Drawing on my background in platform software and device‑driver development, I also build communication interfaces between appliances and PCs, **creating unique RL environments that did not previously exist**. 
+
+- Selected Experience
+  - Tuned PID coefficients for HVAC systems in confined spaces by combining RL with classic control theory.
+  - Developed a compressor‑control strategy for refrigerators that proactively responds to load changes using data‑driven statistical models.
+  - Reduced spin‑cycle vibration across diverse loads in washing machines through data‑centric RL and devised a methodology for continual improvement with real‑world data.
+  - Designed optimal drying motions for varied laundry loads by applying RL to dryers, resulting in measurable performance gains.
+
+I am committed to continuous personal growth through external engagements, including:
+
+- 1 conference paper, 1 registered patent
+- Translator of "Grokking Deep Reinforcement Learning" (Hanbit Media) and technical reviewer for "Machine Learning with TensorFlow" (Hanbit Media).
+- Technical reviewer for multiple specialized publications (Hanbit Media, Jpub, Gilbut, and others).
+
+For more details, please visit my [blog](blog.html).
+
+## Education
+
+- **Seoul National University** | M.S in Computer Science | 2013 - 2015
+  - Topic: Manycore-based efficient Power Management Framework
+  - Thesis: [Hierachical Power Management Framework on Manycore systems using OS Migration Techniques](https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf)
+  - Advisor: [Bernhard Egger](https://csap.snu.ac.kr/bernhard)
+
+- **Chung-Ang University** | B.S in Electrical and Electronics Engineering | 2006 - 2013
+
+## Experience
+
+- **LG Electronics** | Specialist | 2014 - present
+
+- **Carnegie Mellon University** | Visiting Researcher | 2019
+
+- **Korea Institute of Science and Technology (KIST)** | Contract Researcher | 2012
+
+## Contact
+
+- Inquiries about my blog content, career guidance, or seminar invitations are always welcome.
+
+- Please reach me at kcsgoodboy [at] gmail.com.
+
+:::
