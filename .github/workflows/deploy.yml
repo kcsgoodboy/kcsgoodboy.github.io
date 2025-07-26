@@ -39,7 +39,10 @@ jobs:
 
       - name: Install distilltools
         if: ${{ hashFiles('renv.lock') == '' }}
-        run: Rscript -e "install.packages('distill', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
+        run: |
+          Rscript -e "install.packages('distill', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
+          Rscript -e "install.packages('remotes')"
+          Rscript -e "remotes::install_github('EllaKaye/distilltools')"
 
       - name: Install babelquarto (no renv.lock)
         if: ${{ hashFiles('renv.lock') == '' }}
