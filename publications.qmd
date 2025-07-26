@@ -10,6 +10,12 @@ execute:
 comments: false
 ---
 
+```{r}
+#| label: setup
+#| include: false
+library(distilltools)
+```
+
 `r icon_link("google-scholar", "Google Scholar", "https://scholar.google.com/citations?user=tyjigLkAAAAJ&hl=en")`
 
 <!-- Manually add forthcoming pubs, e.g. 
