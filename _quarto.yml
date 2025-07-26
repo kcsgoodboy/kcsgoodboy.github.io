@@ -19,7 +19,6 @@ format:
       - assets/css/styles.css            
       - assets/css/lang-toggle.css
     toc: true
-    # include-in-header: header.html   # 2‑2 절
 
 # babelquarto 설정
 babelquarto:

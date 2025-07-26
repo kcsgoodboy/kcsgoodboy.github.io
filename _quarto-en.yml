@@ -6,3 +6,4 @@ website:
       - href: about.qmd
       - href: blog.qmd
       - href: publications.qmd
+      - href: activities.qmd

@@ -9,3 +9,5 @@ website:
         text: 블로그
       - href: publications.qmd
         text: 출간물
+      - href: activities.qmd
+        text: 활동

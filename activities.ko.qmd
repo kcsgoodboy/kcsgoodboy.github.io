@@ -1,0 +1,11 @@
+---
+title: "활동"
+lang: ko
+date: today
+output: distill::distill_article
+editor_options: 
+  chunk_output_type: console
+execute:
+  echo: false
+comments: false
+---
