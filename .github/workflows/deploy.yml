@@ -11,6 +11,8 @@ permissions:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     environment:
       name: github-pages
 
@@ -42,6 +44,7 @@ jobs:
         run: |
           Rscript -e "install.packages('distill', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
           Rscript -e "install.packages('remotes')"
+          Rscript -e 'install.packages(c("remotes", "gitcreds"))'
           Rscript -e "remotes::install_github('EllaKaye/distilltools')"
 
       - name: Install babelquarto (no renv.lock)
