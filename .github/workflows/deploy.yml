@@ -37,6 +37,10 @@ jobs:
         if: ${{ hashFiles('renv.lock') != '' }}
         uses: r-lib/actions/setup-renv@v2   # renv 캐시 + 복원
 
+      - name: Install distilltools
+        if: ${{ hashFiles('renv.lock') == '' }}
+        run: Rscript -e "install.packages('distill', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
+
       - name: Install babelquarto (no renv.lock)
         if: ${{ hashFiles('renv.lock') == '' }}
         run: Rscript -e "install.packages('babelquarto', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
