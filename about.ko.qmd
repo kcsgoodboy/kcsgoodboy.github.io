@@ -3,7 +3,7 @@ title: 소개
 lang: ko
 about:
   template: trestles
-  image: "content/images/chanseok.jpg"
+  image: "contents/images/chanseok.jpg"
   image-width: "200px;"
   links: 
     - icon: github
