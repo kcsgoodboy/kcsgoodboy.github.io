@@ -3,7 +3,7 @@ title: Ascent of Applied Wisdom
 lang: en
 about:
   template: marquee
-  image: "contents/images/persona.jpg"
+  image: "contents/images/persona.png"
   image-alt: "My Persona"
 
 ---

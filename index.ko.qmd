@@ -3,7 +3,7 @@ title: 실천적 지혜의 상승
 lang: ko
 about:
   template: marquee
-  image: "contents/images/persona.jpg"
+  image: "contents/images/persona.png"
   image-alt: "나의 페르소나"
 ---
 
