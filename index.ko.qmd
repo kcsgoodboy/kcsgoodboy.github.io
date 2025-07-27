@@ -5,6 +5,9 @@ about:
   template: marquee
   image: "contents/images/persona.png"
   image-alt: "나의 페르소나"
+format:
+  html:
+    title-block-banner: false
 execute: 
   echo: false
 comments: false
