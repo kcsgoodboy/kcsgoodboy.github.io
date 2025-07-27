@@ -9,3 +9,31 @@ execute:
   echo: false
 comments: false
 ---
+
+```{r}
+#| label: setup
+#| include: false
+library(distilltools)
+```
+
+## 2024
+
+(2024. 09) 서울대학교 컴퓨터공학부 학생회에서 주최하는 ComSee 행사에서 **"실물 환경에서의 데이터 기반 강화학습 적용 방안"**이란 주제로 기업 강연 및 채용설명회를 진행했습니다.
+`r icon_link(text = "File", url = "contents/files/AI_ComSee_RWRL.pdf")`
+
+(2024. 06) 싱가포르에서 진행된 2024 [IEEE Conference on Artificial Intelligence (CAI)](https://ieeecai.org/)에서 **"Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines"**이란 주제로 포스터 세션을 진행했습니다.
+
+## 2022
+
+(2022. 11) LG전자에서 진행된 소프트웨어 개발자 컨퍼런스 (LG SDC)에서 **"실환경 데이터 기반 모델 성능 개선"**이란 주제로 발표를 진행했습니다.
+`r icon_link(text = "Link", url = "https://live.lge.co.kr/2211-lg-sdc-2022-post/")`
+`r icon_link(text = "File", url = "contents/files/T2_D1_Kang_DDRL.pdf")`
+
+(2022. 09) 제가 번역한 **"그로킹 심층 강화학습"** (한빛미디어) 책이 2022년 대한민국학술원 우수학술도서로 선정되었습니다.
+`r icon_link(text = "Link", url = "https://www.nas.go.kr/page/59725ab6-21c4-11ec-8e17-001e6746f4e8?searchGubun=N&page=1&reqst_dt=2022&book_lclas_cd_old=&book_lclas_cd=BOOK_LCLAS_04&search_type=&search_text=")`
+
+## 2019
+
+(2019. 10) LG전자에서 **인공지능 전문가(제어 분야)**로 선발되었습니다.
+`r icon_link(text = "Press 1", url = "https://live.lge.co.kr/lg_ai_specialist_1020/")`
+`r icon_link(text = "Press 2", url = "https://www.yna.co.kr/view/PYH20191020018800013")`

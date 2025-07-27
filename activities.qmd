@@ -9,3 +9,31 @@ execute:
   echo: false
 comments: false
 ---
+
+```{r}
+#| label: setup
+#| include: false
+library(distilltools)
+```
+
+## 2024
+
+(2024. 09) I gave a corporate presentation and recruitment session at ComSee, an event hosted by the Student Association of Seoul National University’s Department of Computer Science and Engineering, on the topic **“Data‑Driven Reinforcement Learning in Real‑World Environments.”**
+`r icon_link(text = "File", url = "contents/files/AI_ComSee_RWRL.pdf")`
+
+(2024. 06) I presented a poster entitled **"Data‑Driven Reinforcement Learning for Optimal Motor Control in Washing Machines"** at the 2024 [IEEE Conference on Artificial Intelligence (CAI)](https://ieeecai.org/) in Singapore.
+
+## 2022
+
+(2022. 11) I delivered a presentation titled **"Improving Model Performance with Real‑World Data"** at a software developer conference hosted by LG Electronics (LG SDC).
+`r icon_link(text = "Link", url = "https://live.lge.co.kr/2211-lg-sdc-2022-post/")`
+`r icon_link(text = "File", url = "contents/files/T2_D1_Kang_DDRL.pdf")`
+
+(2022. 09) The Korean translation of **"Grokking Deep Reinforcement Learning"** (Hanbit Media) that I produced was selected as an Excellent Academic Book by the National Academy of Sciences, Republic of Korea, in 2022.
+`r icon_link(text = "Link", url = "https://www.nas.go.kr/page/59725ab6-21c4-11ec-8e17-001e6746f4e8?searchGubun=N&page=1&reqst_dt=2022&book_lclas_cd_old=&book_lclas_cd=BOOK_LCLAS_04&search_type=&search_text=")`
+
+## 2019
+
+(2019. 10) I was selected by LG Electronics as an AI Specialist (Control Domain).
+`r icon_link(text = "Press 1", url = "https://live.lge.co.kr/lg_ai_specialist_1020/")`
+`r icon_link(text = "Press 2", url = "https://www.yna.co.kr/view/PYH20191020018800013")`
