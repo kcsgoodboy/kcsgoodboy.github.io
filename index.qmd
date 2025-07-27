@@ -1,4 +1,24 @@
 ---
-title: Home
+title: Ascent of Applied Wisdom
+lang: en
+about:
+  template: marquee
+  image: "contents/images/persona.jpg"
+  image-alt: "My Persona"
 
 ---
+
+:::{#hero-heading}
+
+A practitioner‑scholar climbs an endless, DNA-shaped staircase woven from streams of binary code. Each step is a piece of lived experience: experiments, applications, and theories.
+
+## Meaning
+
+- Spiral stairway: Continuous personal growth; knowledge is never linear.
+- Binary‑rooted tree of light: The fusion of data and insight blooming into sustainable innovation.
+- Circuit‑blueprint backdrop of home appliances: Grounding philosophy in real‑world engineering.
+- Interlocking gear & leaf icons: The symbiosis of efficiency and environmental care—technology in service of life.
+
+Together they frame a meditation on praxis: how deep learning—both human and algorithmic—emerges when theory meets the constraints of the physical world, and how every hard‑won lesson becomes the next foothold upward.
+
+:::

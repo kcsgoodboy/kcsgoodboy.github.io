@@ -3,6 +3,7 @@ website:
     background: primary
     left:
       - href: index.qmd
+        text: Home
       - href: about.qmd
         text: 소개
       - href: blog.qmd
