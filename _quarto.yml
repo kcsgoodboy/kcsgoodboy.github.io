@@ -12,6 +12,7 @@ website:
 
 format:
   html:
+    lib-dir: /site_libs
     theme:
       light: flatly
       dark:  darkly

@@ -9,7 +9,8 @@ author:
     affiliation-url: https://www.lge.co.kr/
 
 format: 
-  html: default
+  html: 
+    lib-dir: /site_libs
   pdf: 
     pdf-engine: xelatex
     lang: en

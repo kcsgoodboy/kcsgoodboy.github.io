@@ -20,7 +20,8 @@ execute:
 
 # Default format
 format: 
-  html: default
+  html: 
+    lib-dir: /site_libs
   pdf: 
     pdf-engine: xelatex
     mainfont: "Noto Serif CJK KR"
