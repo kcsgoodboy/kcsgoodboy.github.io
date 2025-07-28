@@ -3,13 +3,20 @@
 # Enable banner style title blocks
 title-block-banner: true
 
+# Default author
+author:
+  - name: Chanseok Kang
+    url: https://kcsgoodboy.github.io
+    affiliation: LG Electronics
+    affiliation-url: https://www.lge.co.kr/
+
 # Enable CC licence appendix
 license: "CC BY"
 
 # Default for table of contents
 toc: true
 toc-location: left
-toc-title: "On this page"
+toc-title: Table of contents
 
 # freeze computational output
 execute:
@@ -28,6 +35,20 @@ format:
     lang: ko
     fontsize: 12pt
   ipynb: default
+
+comments:
+  giscus:
+    repo: kcsgoodboy/kcsgoodboy.github.io
+    repo-id: R_kgDOPRiawA
+    mapping: pathname
+    category: General
+    category-id: DIC_kwDOPRiawM4CtfeS
+    reactions-enabled: true
+    input-position: bottom
+    theme: 
+      light: light
+      dark: dark_dimmed
+    loading: lazy
 
 # Default language
 lang: en
