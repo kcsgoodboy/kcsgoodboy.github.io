@@ -8,6 +8,15 @@ author:
     affiliation: 엘지전자
     affiliation-url: https://www.lge.co.kr/
 
+format: 
+  html: default
+  pdf: 
+    pdf-engine: xelatex
+    mainfont: "Noto Serif CJK KR"
+    lang: ko
+    fontsize: 12pt
+  ipynb: default
+
 # Giscus Comments
 comments:
   giscus:

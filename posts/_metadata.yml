@@ -23,3 +23,5 @@ execute:
   echo: true
   message: true
   warning: true
+
+jupyter: python3
