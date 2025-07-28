@@ -41,3 +41,8 @@ library(distilltools)
 **(2019. 10)** I was selected by LG Electronics as an **AI Specialist** (Control Domain).
 `r icon_link(text = "Press 1", url = "https://live.lge.co.kr/lg_ai_specialist_1020/")`
 `r icon_link(text = "Press 2", url = "https://www.yna.co.kr/view/PYH20191020018800013")`
+
+## 2010
+
+**(2010. 08)** I published technical articles through tistory, named **"Talking About Me"**,
+`r icon_link(text = "Link", url = "https://talkingaboutme.tistory.com/")`
