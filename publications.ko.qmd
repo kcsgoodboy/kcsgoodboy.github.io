@@ -39,7 +39,7 @@ library(distilltools)
 
 ## 2021
 
-**Chanseok Kang**. (2021) "그로킹 심층 강화학습". 한빛미디어
+**Chanseok Kang**. (2021) "그로킹 심층 강화학습". 한빛미디어.
 
 `r icon_link(text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8984169041")`
 
@@ -48,6 +48,11 @@ library(distilltools)
 Changmin Ahn, Seungyul Lee, **Chanseok Kang**, Bernhard Egger. (2020) "NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control".  International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.
 
 `r icon_link(text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-030-63058-4_12")`
+
+## 2019
+
+송교석, **강찬석** (감수). (2019) "텐서플로를 활용한 머신러닝". 한빛미디어.
+`r icon_link(text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495")`
 
 ## 2017
 

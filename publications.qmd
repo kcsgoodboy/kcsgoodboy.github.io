@@ -49,6 +49,11 @@ Changmin Ahn, Seungyul Lee, **Chanseok Kang**, Bernhard Egger. (2020) "NuPow: Ma
 
 `r icon_link(icon = "springer", text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-030-63058-4_12")`
 
+## 2019
+
+Kyo-seok Song, **Chanseok Kang** (Reviewer). (2019) "Machine Learning with Tensorflow" (Korean). Hanbit Media.
+`r icon_link(text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495")`
+
 ## 2017
 
 **Chanseok Kang**, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) "Scheduling for Better Energy Efficiency on Many-Core Chips". Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.
