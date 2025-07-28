@@ -27,7 +27,7 @@ comments:
     reactions-enabled: true
     input-position: "bottom"
     lang: "en"
-    theme: "preferred_color_scheme"
+    theme: "dark_dimmed"
     loading: "lazy"
 
 lang: en
