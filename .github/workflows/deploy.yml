@@ -42,6 +42,7 @@ jobs:
       - name: Install distilltools
         if: ${{ hashFiles('renv.lock') == '' }}
         run: |
+          Rscript -e "install.packages('tinytex')"
           Rscript -e "install.packages('distill', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
           Rscript -e "install.packages('remotes')"
           Rscript -e 'install.packages(c("remotes", "gitcreds"))'
