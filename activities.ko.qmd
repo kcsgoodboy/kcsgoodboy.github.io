@@ -36,6 +36,12 @@ library(distilltools)
 **(2022. 09)** 제가 번역한 **"그로킹 심층 강화학습"** (한빛미디어) 책이 2022년 대한민국학술원 우수학술도서로 선정되었습니다.
 `r icon_link(text = "Link", url = "https://www.nas.go.kr/page/59725ab6-21c4-11ec-8e17-001e6746f4e8?searchGubun=N&page=1&reqst_dt=2022&book_lclas_cd_old=&book_lclas_cd=BOOK_LCLAS_04&search_type=&search_text=")`
 
+## 2020
+
+**(2020. 05)** [fastpages](https://fastpages.fast.ai/)를 활용하여, **"Chan's Jupyter"**란 기술 블로그를 운영하기 시작했습니다.
+(해당 블로그에 있는 내용은 현재 블로그로 이전할 예정입니다.)
+`r icon_link(text = "Link", url = "https://goodboychan.github.io/")`
+
 ## 2019
 
 **(2019. 10)** LG전자에서 **인공지능 전문가(제어 분야)**로 선발되었습니다.

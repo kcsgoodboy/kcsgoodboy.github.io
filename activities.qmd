@@ -36,6 +36,12 @@ library(distilltools)
 **(2022. 09)** The Korean translation of **"Grokking Deep Reinforcement Learning"** (Hanbit Media) that I produced was selected as an Excellent Academic Book by the National Academy of Sciences, Republic of Korea, in 2022.
 `r icon_link(text = "Link", url = "https://www.nas.go.kr/page/59725ab6-21c4-11ec-8e17-001e6746f4e8?searchGubun=N&page=1&reqst_dt=2022&book_lclas_cd_old=&book_lclas_cd=BOOK_LCLAS_04&search_type=&search_text=")`
 
+## 2020
+
+**(2020. 05)** I published multi-lingual-targeted technical articles through [fastpages](https://fastpages.fast.ai/), named **"Chan's Jupyter"**.
+(Contents will be migrated in near future.)
+`r icon_link(text = "Link", url = "https://goodboychan.github.io/")`
+
 ## 2019
 
 **(2019. 10)** I was selected by LG Electronics as an **AI Specialist** (Control Domain).
