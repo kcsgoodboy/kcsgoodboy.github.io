@@ -50,9 +50,13 @@ comments: false
 
 - **엘지전자** | 선임연구원 | 2014년 - (재직중)
 
-- **Carnegie Mellon University** | 방문연구원 | 2019년
+- **Carnegie Mellon University (CMU)** | 방문연구원 | 2019년
 
 - **한국과학기술연구원 (KIST)** | 위촉연구원 | 2012년
+
+- **서울시립대학교 (UoS)** | 강사 | 2012년
+
+- **울산과학기술대학교 (UNIST)** | 동계 학부연구원 | 2011년
 
 ## Contact
 

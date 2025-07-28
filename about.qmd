@@ -51,9 +51,13 @@ For more details, please visit my [blog](blog.html).
 
 - **LG Electronics** | Specialist | 2014 - present
 
-- **Carnegie Mellon University** | Visiting Researcher | 2019
+- **Carnegie Mellon University (CMU)** | Visiting Researcher | 2019
 
 - **Korea Institute of Science and Technology (KIST)** | Contract Researcher | 2012
+
+- **University of Seoul (UoS)** | Lecturer | 2012
+
+- **Ulsan National Institute of Science and Technology (UNIST)** | Undergraduate Researcher | 2011
 
 ## Contact
 
