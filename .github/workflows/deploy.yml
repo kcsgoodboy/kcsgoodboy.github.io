@@ -39,6 +39,9 @@ jobs:
         if: ${{ hashFiles('renv.lock') != '' }}
         uses: r-lib/actions/setup-renv@v2   # renv 캐시 + 복원
 
+      - name: Install TinyTex
+        uses: r-lib/actions/setup-tinytex@v2
+
       - name: Install distilltools
         if: ${{ hashFiles('renv.lock') == '' }}
         run: |
