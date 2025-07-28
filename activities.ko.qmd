@@ -25,7 +25,8 @@ library(distilltools)
 
 ## 2023
 **(2023. 02)** 제가 속한 팀에서 만든, 세계 최초로 Offline RL이 적용된 탈수 모델이 세탁기에 탑재되어 출시했습니다.
-`r icon_link(text = "Press", url = "https://www.lge.co.kr/wash-combo/fh25lmth")`
+`r icon_link(text = "Press 1", url = "https://www.lge.co.kr/wash-combo/fh25lmth")`
+`r icon_link(text = "Press 2", url = "https://live.lge.co.kr/2402-lg-signature/")`
 
 ## 2022
 
