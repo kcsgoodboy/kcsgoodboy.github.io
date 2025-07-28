@@ -5,6 +5,8 @@
   },
   {
     "listing": "/blog.ko.html",
-    "items": []
+    "items": [
+      "/posts/2025-07-28_taylor_expansion_of_exponential_function/index.ko.html"
+    ]
   }
 ]

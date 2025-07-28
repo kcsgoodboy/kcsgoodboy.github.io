@@ -1,0 +1,11 @@
+# Default for table of contents
+toc-title: Table of contents
+
+# Default author
+author:
+  - name: Chanseok Kang
+    url: https://kcsgoodboy.github.io
+    affiliation: LG Electronics
+    affiliation-url: https://www.lge.co.kr/
+
+lang: en

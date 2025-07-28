@@ -1,0 +1,11 @@
+# Default for table of contents
+toc-title: 목차
+
+# Default author
+author:
+  - name: 강찬석
+    url: https://kcsgoodboy.github.io
+    affiliation: 엘지전자
+    affiliation-url: https://www.lge.co.kr/
+
+lang: ko
