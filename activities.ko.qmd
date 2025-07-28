@@ -23,6 +23,10 @@ library(distilltools)
 
 (2024. 06) 싱가포르에서 진행된 2024 [IEEE Conference on Artificial Intelligence (CAI)](https://ieeecai.org/)에서 **"Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines"**이란 주제로 포스터 세션을 진행했습니다.
 
+## 2023
+**(2023. 02)** 제가 속한 팀에서 만든, 세계 최초로 Offline RL이 적용된 탈수 모델이 세탁기에 탑재되어 출시했습니다.
+`r icon_link(text = "Press", url = "https://www.lge.co.kr/wash-combo/fh25lmth")`
+
 ## 2022
 
 (2022. 11) LG전자에서 진행된 소프트웨어 개발자 컨퍼런스 (LG SDC)에서 **"실환경 데이터 기반 모델 성능 개선"**이란 주제로 발표를 진행했습니다.

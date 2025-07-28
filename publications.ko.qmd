@@ -31,7 +31,7 @@ library(distilltools)
 
 **Chanseok Kang**, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) "Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines". 2024 IEEE Conference on Artificial Intelligence (CAI).
 
-`r icon_link(icon = "ieee", text = "Preprint", url = "https://ieeexplore.ieee.org/abstract/document/10605463")`
+`r icon_link(text = "Preprint", url = "https://ieeexplore.ieee.org/abstract/document/10605463")`
 
 **강찬석**. (2024) "실물 환경에서의 데이터 기반 강화학습 적용방안". 2024 대한전자공학회.
 
@@ -47,10 +47,10 @@ library(distilltools)
 
 Changmin Ahn, Seungyul Lee, **Chanseok Kang**, Bernhard Egger. (2020) "NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control".  International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.
 
-`r icon_link(icon = "springer", text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-030-63058-4_12")`
+`r icon_link(text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-030-63058-4_12")`
 
 ## 2017
 
 **Chanseok Kang**, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) "Scheduling for Better Energy Efficiency on Many-Core Chips". Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.
 
-`r icon_link(icon = "springer", text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-319-61756-5_3")`
+`r icon_link(text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-319-61756-5_3")`
