@@ -20,15 +20,17 @@ format:
 # Giscus Comments
 comments:
   giscus:
-    repo: "kcsgoodboy/kcsgoodboy.github.io"
-    repo-id: "R_kgDOPRiawA"
-    mapping: "pathname"
-    category: "General"
-    category-id: "DIC_kwDOPRiawM4CtfeS"
+    repo: kcsgoodboy/kcsgoodboy.github.io
+    repo-id: R_kgDOPRiawA
+    mapping: pathname
+    category: General
+    category-id: DIC_kwDOPRiawM4CtfeS
     reactions-enabled: true
-    input-position: "bottom"
-    lang: "ko"
-    theme: "dark_dimmed"
-    loading: "lazy"
+    input-position: bottom
+    lang: ko
+    theme: 
+      light: light
+      dark: dark_dimmed
+    loading: lazy
 
 lang: ko
