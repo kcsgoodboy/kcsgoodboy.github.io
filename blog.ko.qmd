@@ -8,5 +8,4 @@ listing:
   sort: "date desc"
   type: default
   categories: true
-comments: false
 ---
