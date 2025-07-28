@@ -8,4 +8,18 @@ author:
     affiliation: 엘지전자
     affiliation-url: https://www.lge.co.kr/
 
+# Giscus Comments
+comments:
+  giscus:
+    repo: "kcsgoodboy/kcsgoodboy.github.io"
+    repo-id: "R_kgDOPRiawA"
+    mapping: "pathname"
+    category: "General"
+    category-id: "DIC_kwDOPRiawM4CtfeS"
+    reactions-enabled: true
+    input-position: "bottom"
+    lang: "ko"
+    theme: "preferred_color_scheme"
+    loading: "lazy"
+
 lang: ko
