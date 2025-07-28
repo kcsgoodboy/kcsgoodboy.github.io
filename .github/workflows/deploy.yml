@@ -45,13 +45,12 @@ jobs:
         
       - name: Install packages for korean rendering
         if: ${{ hashFiles('renv.lock') == '' }}
-        run: tlmgr install kotex noto-otf adobemapping
+        run: tlmgr install collection-langcjk xetexko luatexko nanumtype1
 
       - name: Install distilltools
         if: ${{ hashFiles('renv.lock') == '' }}
         run: |
           Rscript -e "install.packages('tinytex')"
-          Rscript -e "tinytex::tlmgr_install(c('kotex', 'noto-otf', 'adobemapping'))"
           Rscript -e "install.packages('distill', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
           Rscript -e "install.packages('remotes')"
           Rscript -e 'install.packages(c("remotes", "gitcreds"))'
