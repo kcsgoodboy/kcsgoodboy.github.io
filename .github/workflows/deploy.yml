@@ -22,8 +22,6 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          version: pre-release
 
       - name: Install R package deps
         run: |
@@ -61,7 +59,9 @@ jobs:
         run: Rscript -e "install.packages('babelquarto', repos = c('https://ropensci.r-universe.dev', 'https://cloud.r-project.org'))"
 
       - name: Render book
-        run: Rscript -e 'babelquarto::render_website()'
+        run: |
+          git clean -fdx
+          Rscript -e 'babelquarto::render_website()'
 
       - uses: actions/upload-pages-artifact@v3
         with:
