@@ -18,7 +18,6 @@ format:
       dark:  darkly
     css:  
       - assets/css/styles.css            
-      - assets/css/lang-toggle.css
     toc: true
 
 # babelquarto 설정
