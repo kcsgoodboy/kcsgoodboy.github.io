@@ -28,7 +28,7 @@ babelquarto:
     text: "English"
   - name: ko
     text: "한국어"
-  mainlanguage: 'en'
+  mainlanguage: en
   languages: ['ko']
 title-ko: 생각많은 소심남의 연구노트
 description-ko: 생각많은 소심남의 연구노트
