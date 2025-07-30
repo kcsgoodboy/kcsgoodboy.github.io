@@ -9,4 +9,5 @@ listing:
   sort: "date desc"
   type: default
   categories: true
+format: html
 ---

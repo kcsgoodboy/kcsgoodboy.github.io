@@ -8,4 +8,4 @@ website:
       - href: blog.qmd
       - href: publications.qmd
       - href: activities.qmd
-
+lang: en

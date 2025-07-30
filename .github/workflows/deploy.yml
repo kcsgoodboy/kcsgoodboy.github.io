@@ -83,3 +83,6 @@ jobs:
         with:
           path: _site
       - uses: actions/deploy-pages@v4
+        with:
+          path: _site
+          render: false
