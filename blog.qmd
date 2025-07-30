@@ -1,6 +1,7 @@
 ---
 title: "Blog"
 lang: en
+comments: false
 listing:
   contents: posts
   include:
