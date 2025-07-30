@@ -22,6 +22,9 @@ jobs:
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: "1.8.17"      # ← 로컬과 동일하게 명시
+          tinytex: true          # PDF도 빌드한다면 유지
         
       - name: setup Python
         run: |
@@ -65,7 +68,6 @@ jobs:
       - name: Render book
         run: |
           rm -rf _site docs site_libs
-          git clean -fdx
           Rscript -e 'babelquarto::render_website(site_url="https://kcsgoodboy.github.io/")'
 
       - uses: actions/upload-pages-artifact@v3
