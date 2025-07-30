@@ -23,7 +23,7 @@ jobs:
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: "1.8.17"
+          version: "latest"
 
       - name: Install R package deps
         run: |
