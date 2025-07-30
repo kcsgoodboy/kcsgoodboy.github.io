@@ -3,8 +3,8 @@ title: "포스트"
 lang: ko
 listing:
   contents: 
-    - "posts/*.ko.ipynb"
-    - "posts/*.ko.qmd"
+    - "posts/*/*.ko.ipynb"
+    - "posts/*/*.ko.qmd"
   sort: "date desc"
   type: default
   categories: true
