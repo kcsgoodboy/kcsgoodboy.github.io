@@ -2,9 +2,9 @@
 title: "포스트"
 lang: ko
 listing:
-  contents: posts
-  include:
-    lang: ko
+  contents: 
+    - "posts/*.ko.ipynb"
+    - "posts/*.ko.qmd"
   sort: "date desc"
   type: default
   categories: true
