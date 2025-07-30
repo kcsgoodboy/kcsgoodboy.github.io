@@ -72,7 +72,7 @@ jobs:
         run: |
           quarto render blog.ko.qmd --profile ko --quiet   # ② CI가 어떻게 해석하는지
           echo "---- HEAD TAGS ----"
-          grep -i "<script" blog.ko.html | head -n 5       # ③ JS 삽입 확인
+          grep -i "<script" _site/ko/blog.html | head -n 5
 
       - name: Render book
         run: |
