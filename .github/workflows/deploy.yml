@@ -25,7 +25,7 @@ jobs:
         
       - name: setup Python
         run: |
-          python -m pip install nbformat nbclient ipykernel jupyter
+          python -m pip install nbformat nbclient ipykernel jupyter numpy scipy matplotlib
 
       - name: Install R package deps
         run: |
