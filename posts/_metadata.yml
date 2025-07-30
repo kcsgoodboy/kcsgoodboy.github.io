@@ -28,11 +28,11 @@ execute:
 # Default format
 format: 
   html: default
-  # pdf: 
-  #   pdf-engine: xelatex
+  pdf: 
+    pdf-engine: xelatex
   #   # mainfont: "Noto Serif CJK KR"
   #   lang: ko
-  #   fontsize: 12pt
+    fontsize: 12pt
   ipynb: default
 
 # Default language

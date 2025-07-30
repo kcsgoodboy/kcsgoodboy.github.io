@@ -64,10 +64,9 @@ jobs:
 
       - name: Render book
         run: |
-          rm -rf _site docs
+          rm -rf _site docs site_libs
           git clean -fdx
-          Rscript -e 'babelquarto::render_website(profile="_quarto.yml")'
-          Rscript -e 'babelquarto::render_website(profile="_quarto-ko.yml")'
+          Rscript -e 'babelquarto::render_website(site_url="https://kcsgoodboy.github.io/")'
 
       - uses: actions/upload-pages-artifact@v3
         with:
