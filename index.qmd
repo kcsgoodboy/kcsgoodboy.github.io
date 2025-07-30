@@ -5,9 +5,6 @@ about:
   template: marquee
   image: "contents/images/persona.png"
   image-alt: "My Persona"
-format:
-  html:
-    title-block-banner: false
 execute: 
   echo: false
 comments: false

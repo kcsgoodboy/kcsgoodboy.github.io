@@ -27,28 +27,13 @@ execute:
 
 # Default format
 format: 
-  html: 
-    lib-dir: /site_libs
+  html: default
   pdf: 
     pdf-engine: xelatex
     mainfont: "Noto Serif CJK KR"
     lang: ko
     fontsize: 12pt
   ipynb: default
-
-comments:
-  giscus:
-    repo: kcsgoodboy/kcsgoodboy.github.io
-    repo-id: R_kgDOPRiawA
-    mapping: pathname
-    category: General
-    category-id: DIC_kwDOPRiawM4CtfeS
-    reactions-enabled: true
-    input-position: bottom
-    theme: 
-      light: light
-      dark: dark_dimmed
-    loading: lazy
 
 # Default language
 lang: en

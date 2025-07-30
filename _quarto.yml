@@ -12,13 +12,23 @@ website:
 
 format:
   html:
-    lib-dir: /site_libs
     theme:
       light: flatly
       dark:  darkly
     css:  
       - assets/css/styles.css            
     toc: true
+    comments:
+      giscus:
+        repo: kcsgoodboy/kcsgoodboy.github.io
+        repo-id: R_kgDOPRiawA
+        category: General
+        category-id: DIC_kwDOPRiawM4CtfeS
+        mapping: pathname
+        reactions-enabled: true
+        input-position: bottom
+        language: en
+    include-in-header: header.html
 
 # babelquarto 설정
 babelquarto:
