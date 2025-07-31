@@ -1,7 +1,7 @@
 name: Build & Deploy multilingual site
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+
 
 permissions:
   contents: read
@@ -68,12 +68,6 @@ jobs:
       - name: 🔍 Debug | Check Quarto version
         run: quarto --version       # ① 실제 버전 출력
 
-      - name: 🔍 Debug | Render single page & show head
-        run: |
-          quarto render blog.ko.qmd --profile ko --quiet   # ② CI가 어떻게 해석하는지
-          echo "---- HEAD TAGS ----"
-          grep -i "<script" _site/ko/blog.html | head -n 5
-
       - name: Render book
         run: |
           rm -rf _site docs site_libs
@@ -85,4 +79,3 @@ jobs:
       - uses: actions/deploy-pages@v4
         with:
           path: _site
-          render: false

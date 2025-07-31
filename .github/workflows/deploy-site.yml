@@ -1,0 +1,35 @@
+name: Build & Deploy pre-rendered multilingual site to gh-pages
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    environment:
+      name: github-pages
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Add .nojekyll
+        run: touch _site/.nojekyll
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
+          keep_files: false
+          commit_message: |
+            Deploy _site -> gh-pages
+            built from ${{ github.sha }}
