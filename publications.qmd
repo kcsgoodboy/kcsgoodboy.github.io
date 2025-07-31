@@ -52,7 +52,7 @@ Changmin Ahn, Seungyul Lee, **Chanseok Kang**, Bernhard Egger. (2020) "NuPow: Ma
 ## 2019
 
 Kyo-seok Song, **Chanseok Kang** (Reviewer). (2019) "Machine Learning with Tensorflow" (Korean). Hanbit Media.
-`r icon_link(text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495")`
+`r icon_link(icon = 'book', text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495")`
 
 ## 2017
 

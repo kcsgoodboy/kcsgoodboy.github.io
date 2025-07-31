@@ -52,7 +52,7 @@ Changmin Ahn, Seungyul Lee, **Chanseok Kang**, Bernhard Egger. (2020) "NuPow: Ma
 ## 2019
 
 송교석, **강찬석** (감수). (2019) "텐서플로를 활용한 머신러닝". 한빛미디어.
-`r icon_link(text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495")`
+`r icon_link(icon = 'book', text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495")`
 
 ## 2017
 
