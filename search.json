@@ -1,0 +1,198 @@
+[
+  {
+    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html",
+    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html",
+    "title": "Taylor Expansion",
+    "section": "",
+    "text": "import numpy as np\nimport scipy\nimport matplotlib.pyplot as plt\n\n\n\n\n\n\n\nNote\n\n\n\nThis content is a summary of Börge Göbel’s “Computational Physics: Scientific Programming with Python” on Udemy."
+  },
+  {
+    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#package-import",
+    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#package-import",
+    "title": "Taylor Expansion",
+    "section": "",
+    "text": "import numpy as np\nimport scipy\nimport matplotlib.pyplot as plt\n\n\n\n\n\n\n\nNote\n\n\n\nThis content is a summary of Börge Göbel’s “Computational Physics: Scientific Programming with Python” on Udemy."
+  },
+  {
+    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#why-taylor-expansion",
+    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#why-taylor-expansion",
+    "title": "Taylor Expansion",
+    "section": "Why Taylor Expansion?",
+    "text": "Why Taylor Expansion?\nThe reason for using Taylor Expansion is to approximate complex functions into simple polynomial forms. When studying mathematics, various formulas appear, and the original forms of the equations we often encounter in theory are usually composed of trigonometric or exponential functions. Operations between these functions are too complex and computationally expensive to calculate directly, but using Taylor Expansion, these complex expressions can be easily represented. For example, if the derivative of a function can be calculated, an approximate value of the function for a specific point can be expressed using this derivative.\n\\[f(x)=\\sum_{n=0}^\\infty \\frac{1}{n!}f^{(n)}(x_0)\\,(x-x_0)^n\\]\nHere, \\(f^{(n)}\\) is the \\(n\\)-th derivative of \\(f(x)\\), and \\(x_0\\) represents the position of the value we want to calculate."
+  },
+  {
+    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#exponential-function",
+    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#exponential-function",
+    "title": "Taylor Expansion",
+    "section": "1.1 Exponential Function",
+    "text": "1.1 Exponential Function\nIf the original form of the function we want to find is an exponential function, we can easily apply the Taylor Expansion.\n\\[f(x)=f'(x)=f''(x)=\\dots=f^{(n)}(x)=\\exp(x)\\]\nThis is because the derivative of the exponential function is the exponential function itself. The code and visualization for this can be expressed as follows.\n\ndef ExpTaylor(x, x0, nmax):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + (np.exp(x0) * (x - x0) ** n) / scipy.special.factorial(n)\n    return t\n\n\n\n\n\n\n\nNote\n\n\n\nIn the original example, np.math.factorial was used for the factorial calculation, but the math sub-package was not originally provided by numpy. So, as the version was updated and math was removed, the example above was changed to calculate it through scipy.special. The result is the same as we think.\n\n\n\nnp.exp(1), ExpTaylor(1, 0, 10)\n\n(np.float64(2.718281828459045), np.float64(2.7182818011463845))\n\n\nSo, if you compare the actual value of the natural function with the approximate value, you can see that they are quite similar.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-5, 100])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, np.exp(x_list), label='exponential')\n\nnmax = 5\nplt.plot(x_list, ExpTaylor(x_list, 0, nmax), c='blue', label='$x_0$=0')\nplt.plot(x_list, ExpTaylor(x_list, -3, nmax), c='red', label='$x_0$=-3')\nplt.plot(x_list, ExpTaylor(x_list, 2, nmax), c='green', label='$x_0$=2')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nIn fact, it is an area of approximation to reduce the amount of computation, and the part that cannot accurately represent the function can be seen just by checking the result of changing the initial point. However, if an appropriate initial point is selected, an approximate value that is close to the original function we want to find can be obtained."
+  },
+  {
+    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#sin-function-at-x_00",
+    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#sin-function-at-x_00",
+    "title": "Taylor Expansion",
+    "section": "1.2 Sin function at \\(x_0=0\\)",
+    "text": "1.2 Sin function at \\(x_0=0\\)\nThe Taylor expansion of the sin function among trigonometric functions is expressed as follows.\n\\(f(0) = f''(0) = f^{(4)}(0) = \\dots = 0\\)\n\\(f'(0) = f^{(5)}(0) = f^{(9)}(0) = \\dots = 1\\)\n\\(f'''(0) = f^{(7)}(0) = f^{(11)}(0) = \\dots = -1\\)\n\\(\\sin(x) = x - \\frac{1}{3!}x^3 + \\frac{1}{5!}x^5  - \\frac{1}{7!}x^7 \\pm \\dots = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n+1)!}x^{2n+1}\\)\n\ndef SinTaylor(x, nmax):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + ((-1) ** n / scipy.special.factorial(2 * n + 1)) * (x ** (2 * n + 1))\n    return t\n\n\nx_list = np.linspace(-10, 10, 101)\nplt.ylim([-2, 2])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, np.sin(x_list), label='sine')\n\nplt.plot(x_list, SinTaylor(x_list, 3), c='blue', label='$x_0$=0')\nplt.plot(x_list, SinTaylor(x_list, 6), c='red', label='$x_0$=-3')\nplt.plot(x_list, SinTaylor(x_list, 10), c='green', label='$x_0$=10')\nplt.plot(x_list, SinTaylor(x_list, 20), c='black', label='$x_0$=20')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\nnp.sin(2.5), SinTaylor(2.5, 10)\n\n(np.float64(0.5984721441039565), np.float64(0.598472144104011))"
+  },
+  {
+    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#implementation-of-general-function",
+    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#implementation-of-general-function",
+    "title": "Taylor Expansion",
+    "section": "1.3 Implementation of General Function",
+    "text": "1.3 Implementation of General Function\nThe previous example was shown assuming that the derivative for a simple function is known, and the formula for obtaining the actual derivative is as follows.\n\\[f'(x) = \\lim_{h\\rightarrow 0} \\frac{f(x+h)-f(x)}{h}\\]\n\ndef derivative(f, x, h):\n    # Adding Small number to avoid ZeroDivision Error\n    return (f(x + h) - f(x)) / (h + 0.000001)\n\nHowever, the above formula was for obtaining the first derivative, and the \\(n\\)-th derivative, which is differentiated \\(n\\) times, is obtained by repeatedly performing the above formula, which is expressed a little more complicatedly as follows.\n\\[f^{(n)}(x) = \\lim_{h\\rightarrow 0} \\frac{1}{h^n}\\sum_{k=0}^n(-1)^{k+n} \\,\\frac{n!}{k!(n-k)!} \\,f(x+kh)\\]\n\ndef nDerivative(f, x, h, n):\n    t = 0\n    for k in range(n + 1):\n        t = t + (-1) **(k + n) * scipy.special.factorial(n) / (scipy.special.factorial(k) * scipy.special.factorial(n - k)) * f(x + k * h)\n    return t / (h ** n)\n\nlet’s find the derivative for the following equation.\n\\[f(x) = 2 * \\sin^2(x) + x\\]\n\ndef func(x):\n    return 2 * np.sin(x) ** 2 + x\n\n\nx0 = 10.5\nh = 0.1\n\n\nfunc(x0)\n\nnp.float64(12.04772926022427)\n\n\n\nderivative(func, x0, h)\n\nnp.float64(2.5529714426967454)\n\n\n\nnDerivative(func, x0, h, 0), nDerivative(func, x0, h, 1), nDerivative(func, x0, h, 2)\n\n(np.float64(12.04772926022427),\n np.float64(2.5529969724111723),\n np.float64(-2.802754599797907))\n\n\n\nnDerivative(func, x0, h, 1)\n\nnp.float64(2.5529969724111723)"
+  },
+  {
+    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#taylor-expansion-of-general-function",
+    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#taylor-expansion-of-general-function",
+    "title": "Taylor Expansion",
+    "section": "1.4 Taylor Expansion of General Function",
+    "text": "1.4 Taylor Expansion of General Function\nNow, let’s bring back the Taylor Expansion formula introduced at the beginning:\n\\[f(x)=\\sum_{n=0}^\\infty \\frac{1}{n!}f^{(n)}(x_0)\\,(x-x_0)^n\\]\nUltimately, this formula allows for approximation only if the derivative of the function can be found. Now, let’s replace the derivative part with the function defined above.\n\ndef taylor(f, x, x0, nmax, h):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + nDerivative(f, x0, h, n) * (x - x0) ** n / scipy.special.factorial(n)\n    return t\n\nFirst, if we approximate with 5 samples and set the derivative step to 0.1, it approximates well within a certain range, but if it goes out of range, the value jumps out.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-10, 10])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, func(x_list), label='sin')\n\nnmax = 5\nh = 0.1\n\nplt.plot(x_list, taylor(func, x_list, 0, nmax, h), c='blue', label='$x_0$=0')\nplt.plot(x_list, taylor(func, x_list, 2, nmax, h), c='red', label='$x_0$=2')\nplt.plot(x_list, taylor(func, x_list, -3, nmax, h), c='green', label='$x_0$=-3')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nIf nmax is increased by 10, the output gets more accurate result besides previous ones.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-10, 10])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, func(x_list), label='sin')\n\nnmax = 10\nh = 0.1\n\nplt.plot(x_list, taylor(func, x_list, 0, nmax, h), c='blue', label='$x_0$=0')\nplt.plot(x_list, taylor(func, x_list, 2, nmax, h), c='red', label='$x_0$=2')\nplt.plot(x_list, taylor(func, x_list, -3, nmax, h), c='green', label='$x_0$=-3')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nAdditionally, we can get more accurate result if we decrease the step size that used to calculate the derivative.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-10, 10])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, func(x_list), label='sin')\n\nnmax = 10\nh = 0.01\n\nplt.plot(x_list, taylor(func, x_list, 0, nmax, h), c='blue', label='$x_0$=0')\nplt.plot(x_list, taylor(func, x_list, 2, nmax, h), c='red', label='$x_0$=2')\nplt.plot(x_list, taylor(func, x_list, -3, nmax, h), c='green', label='$x_0$=-3')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nIn short, if a function is computationally expensive to evaluate, obtaining its derivative can help. Additionally, the more samples you have of the function, the better you can approximate its true value."
+  },
+  {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Google Scholar"
+  },
+  {
+    "objectID": "publications.html#section",
+    "href": "publications.html#section",
+    "title": "Publications",
+    "section": "2024",
+    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Preprint\nChanseok Kang. (2024) “Applying Data-Driven Reinforcement Learning Approach in Real World Environment”. 2024 Journal of Institute of Electronics and Information Engineers (IEIE).\nPreprint"
+  },
+  {
+    "objectID": "publications.html#section-1",
+    "href": "publications.html#section-1",
+    "title": "Publications",
+    "section": "2021",
+    "text": "2021\nChanseok Kang. (2021) “Grokking Deep Reinforcement Learning” (Korean). Hanbit Media.\nBook"
+  },
+  {
+    "objectID": "publications.html#section-2",
+    "href": "publications.html#section-2",
+    "title": "Publications",
+    "section": "2020",
+    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
+  },
+  {
+    "objectID": "publications.html#section-3",
+    "href": "publications.html#section-3",
+    "title": "Publications",
+    "section": "2019",
+    "text": "2019\nKyo-seok Song, Chanseok Kang (Reviewer). (2019) “Machine Learning with Tensorflow” (Korean). Hanbit Media. Book"
+  },
+  {
+    "objectID": "publications.html#section-4",
+    "href": "publications.html#section-4",
+    "title": "Publications",
+    "section": "2017",
+    "text": "2017\nChanseok Kang, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.\n Preprint"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Ascent of Applied Wisdom",
+    "section": "",
+    "text": "A practitioner‑scholar climbs an endless, DNA-shaped staircase woven from streams of binary code. Each step is a piece of lived experience: experiments, applications, and theories.\n\n\n\nSpiral stairway: Continuous personal growth; knowledge is never linear.\nBinary‑rooted tree of light: The fusion of data and insight blooming into sustainable innovation.\nCircuit‑blueprint backdrop of home appliances: Grounding philosophy in real‑world engineering.\nInterlocking gear & leaf icons: The symbiosis of efficiency and environmental care—technology in service of life.\n\nTogether they frame a meditation on praxis: how deep learning—both human and algorithmic—emerges when theory meets the constraints of the physical world, and how every hard‑won lesson becomes the next foothold upward."
+  },
+  {
+    "objectID": "index.html#meaning",
+    "href": "index.html#meaning",
+    "title": "Ascent of Applied Wisdom",
+    "section": "",
+    "text": "Spiral stairway: Continuous personal growth; knowledge is never linear.\nBinary‑rooted tree of light: The fusion of data and insight blooming into sustainable innovation.\nCircuit‑blueprint backdrop of home appliances: Grounding philosophy in real‑world engineering.\nInterlocking gear & leaf icons: The symbiosis of efficiency and environmental care—technology in service of life.\n\nTogether they frame a meditation on praxis: how deep learning—both human and algorithmic—emerges when theory meets the constraints of the physical world, and how every hard‑won lesson becomes the next foothold upward."
+  },
+  {
+    "objectID": "activities.html",
+    "href": "activities.html",
+    "title": "Activities",
+    "section": "",
+    "text": "(2024. 09) I gave a corporate presentation and recruitment session at ComSee, an event hosted by the Student Association of Seoul National University’s Department of Computer Science and Engineering, on the topic “Data‑Driven Reinforcement Learning in Real‑World Environments.” File\n(2024. 06) I presented a poster entitled “Data‑Driven Reinforcement Learning for Optimal Motor Control in Washing Machines” at the 2024 IEEE Conference on Artificial Intelligence (CAI) in Singapore."
+  },
+  {
+    "objectID": "activities.html#section",
+    "href": "activities.html#section",
+    "title": "Activities",
+    "section": "",
+    "text": "(2024. 09) I gave a corporate presentation and recruitment session at ComSee, an event hosted by the Student Association of Seoul National University’s Department of Computer Science and Engineering, on the topic “Data‑Driven Reinforcement Learning in Real‑World Environments.” File\n(2024. 06) I presented a poster entitled “Data‑Driven Reinforcement Learning for Optimal Motor Control in Washing Machines” at the 2024 IEEE Conference on Artificial Intelligence (CAI) in Singapore."
+  },
+  {
+    "objectID": "activities.html#section-1",
+    "href": "activities.html#section-1",
+    "title": "Activities",
+    "section": "2023",
+    "text": "2023\n(2023. 02) AI dehydration model with Offline RL created by our team has been launched in a washing machine. Press 1 Press 2"
+  },
+  {
+    "objectID": "activities.html#section-2",
+    "href": "activities.html#section-2",
+    "title": "Activities",
+    "section": "2022",
+    "text": "2022\n(2022. 11) I delivered a presentation titled “Improving Model Performance with Real‑World Data” at a software developer conference hosted by LG Electronics (LG SDC). Link File\n(2022. 09) The Korean translation of “Grokking Deep Reinforcement Learning” (Hanbit Media) that I produced was selected as an Excellent Academic Book by the National Academy of Sciences, Republic of Korea, in 2022. Link"
+  },
+  {
+    "objectID": "activities.html#section-3",
+    "href": "activities.html#section-3",
+    "title": "Activities",
+    "section": "2020",
+    "text": "2020\n(2020. 05) I published multi-lingual-targeted technical articles through fastpages, named “Chan’s Jupyter”. (Contents will be migrated in near future.) Link"
+  },
+  {
+    "objectID": "activities.html#section-4",
+    "href": "activities.html#section-4",
+    "title": "Activities",
+    "section": "2019",
+    "text": "2019\n(2019. 10) I was selected by LG Electronics as an AI Specialist (Control Domain). Press 1 Press 2"
+  },
+  {
+    "objectID": "activities.html#section-5",
+    "href": "activities.html#section-5",
+    "title": "Activities",
+    "section": "2010",
+    "text": "2010\n(2010. 08) I published technical articles through tistory, named “Talking About Me”, Link"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am Chanseok Kang, an AI Engineer in the CTO Division at LG Electronics. Rather than working in headline AI areas such as speech or vision, I specialize in control, applying energy‑efficient AI algorithms to home appliances and deploying them in mass‑produced products.\nI usually work with reinforcement learning (RL) as a problem solver. To make RL practical on the resource‑constrained hardware found in appliances, I have hands‑on experience with data‑driven RL pipelines as well as model quantization and optimization. Drawing on my background in platform software and device‑driver development, I also build communication interfaces between appliances and PCs, creating unique RL environments that did not previously exist.\n\nSelected Experience\n\nTuned PID coefficients for HVAC systems in confined spaces by combining RL with classic control theory.\nDeveloped a compressor‑control strategy for refrigerators that proactively responds to load changes using data‑driven statistical models.\nReduced spin‑cycle vibration across diverse loads in washing machines through data‑centric RL and devised a methodology for continual improvement with real‑world data.\nDesigned optimal drying motions for varied laundry loads by applying RL to dryers, resulting in measurable performance gains.\n\n\nI am committed to continuous personal growth through external engagements, including:\n\n1 conference paper, 1 registered patent\nTranslator of “Grokking Deep Reinforcement Learning” (Hanbit Media) and technical reviewer for “Machine Learning with TensorFlow” (Hanbit Media).\nTechnical reviewer for multiple specialized publications (Hanbit Media, Jpub, Gilbut, and others).\n\nFor more details, please visit my blog.\n\n\n\n\nSeoul National University | M.S in Computer Science | 2013 - 2015\n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Bernhard Egger\n\nChung-Ang University | B.S in Electrical and Electronics Engineering | 2006 - 2013\n\n\n\n\n\nLG Electronics | Specialist | 2014 - present\nCarnegie Mellon University (CMU) | Visiting Researcher | 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | 2012\nUniversity of Seoul (UoS) | Lecturer | 2012\nUlsan National Institute of Science and Technology (UNIST) | Undergraduate Researcher | 2011\n\n\n\n\n\nInquiries about my blog content, career guidance, or seminar invitations are always welcome.\nPlease reach me at kcsgoodboy [at] gmail.com."
+  },
+  {
+    "objectID": "about.html#bio",
+    "href": "about.html#bio",
+    "title": "About",
+    "section": "",
+    "text": "I am Chanseok Kang, an AI Engineer in the CTO Division at LG Electronics. Rather than working in headline AI areas such as speech or vision, I specialize in control, applying energy‑efficient AI algorithms to home appliances and deploying them in mass‑produced products.\nI usually work with reinforcement learning (RL) as a problem solver. To make RL practical on the resource‑constrained hardware found in appliances, I have hands‑on experience with data‑driven RL pipelines as well as model quantization and optimization. Drawing on my background in platform software and device‑driver development, I also build communication interfaces between appliances and PCs, creating unique RL environments that did not previously exist.\n\nSelected Experience\n\nTuned PID coefficients for HVAC systems in confined spaces by combining RL with classic control theory.\nDeveloped a compressor‑control strategy for refrigerators that proactively responds to load changes using data‑driven statistical models.\nReduced spin‑cycle vibration across diverse loads in washing machines through data‑centric RL and devised a methodology for continual improvement with real‑world data.\nDesigned optimal drying motions for varied laundry loads by applying RL to dryers, resulting in measurable performance gains.\n\n\nI am committed to continuous personal growth through external engagements, including:\n\n1 conference paper, 1 registered patent\nTranslator of “Grokking Deep Reinforcement Learning” (Hanbit Media) and technical reviewer for “Machine Learning with TensorFlow” (Hanbit Media).\nTechnical reviewer for multiple specialized publications (Hanbit Media, Jpub, Gilbut, and others).\n\nFor more details, please visit my blog."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "",
+    "text": "Seoul National University | M.S in Computer Science | 2013 - 2015\n\nTopic: Manycore-based efficient Power Management Framework\nThesis: Hierachical Power Management Framework on Manycore systems using OS Migration Techniques\nAdvisor: Bernhard Egger\n\nChung-Ang University | B.S in Electrical and Electronics Engineering | 2006 - 2013"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About",
+    "section": "",
+    "text": "LG Electronics | Specialist | 2014 - present\nCarnegie Mellon University (CMU) | Visiting Researcher | 2019\nKorea Institute of Science and Technology (KIST) | Contract Researcher | 2012\nUniversity of Seoul (UoS) | Lecturer | 2012\nUlsan National Institute of Science and Technology (UNIST) | Undergraduate Researcher | 2011"
+  },
+  {
+    "objectID": "about.html#contact",
+    "href": "about.html#contact",
+    "title": "About",
+    "section": "",
+    "text": "Inquiries about my blog content, career guidance, or seminar invitations are always welcome.\nPlease reach me at kcsgoodboy [at] gmail.com."
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Taylor Expansion\n\n\n\n\n\n\npython\n\n\nnumpy\n\n\nmath\n\n\n\nApplying Taylor Expansion in various functions.\n\n\n\n\n\nJul 28, 2025\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
+  }
+]
