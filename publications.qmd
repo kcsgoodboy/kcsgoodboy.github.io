@@ -41,7 +41,7 @@ library(distilltools)
 
 **Chanseok Kang**. (2021) "Grokking Deep Reinforcement Learning" (Korean). Hanbit Media.
 
-`r icon_link(text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8984169041")`
+`r icon_link(icon = 'book', text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8984169041")`
 
 ## 2020
 
