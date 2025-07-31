@@ -12,6 +12,12 @@ categories:
 jupyter: python3
 ---
 
+::: {.callout-note}
+
+해당 내용은 Udemy에 올려져있는 Börge Göbel의 ["Computational Physics: Scientific Programming with Python"](https://www.udemy.com/course/computational-physics) 내용을 요약한 것입니다.
+
+:::
+
 ## Package Import
 
 ```{python}
@@ -19,10 +25,6 @@ import numpy as np
 import scipy
 import matplotlib.pyplot as plt
 ```
-
-### Note
-
-해당 내용은 Udemy에 올려져있는 Börge Göbel의 ["Computational Physics: Scientific Programming with Python"](https://www.udemy.com/course/computational-physics) 내용을 요약한 것입니다.
 
 ## Why Taylor Expansion?
 
