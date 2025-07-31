@@ -28,7 +28,6 @@ execute:
 # Default format
 format: 
   html: default
-  ipynb: default
 
 # Default language
 lang: en
