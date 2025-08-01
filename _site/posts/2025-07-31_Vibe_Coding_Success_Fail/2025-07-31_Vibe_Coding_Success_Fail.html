@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/activities.html" />
-<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/activities.ko.html" />
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.ko.html" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.3">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>활동 – 생각많은 소심남의 연구노트</title>
+<meta name="author" content="Chanseok Kang">
+<meta name="dcterms.date" content="2025-07-31">
+<meta name="description" content="My experience using ChatGPT and Gemini Code Assist (Agent Mode)">
+<title>Experiences I had while doing Vibe Coding – Chan’s Research Note</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,13 +24,13 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 </style>
-<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-81b5c3e63835cfde897ecd3d35a35a41.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-c634bf5241e7a0f0add955421922332b.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b6e37bdcbafced0e52fd80a9abb9b147.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-d12c58620e17f937c7966df6e126be9a.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-81b5c3e63835cfde897ecd3d35a35a41.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-c634bf5241e7a0f0add955421922332b.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-b6e37bdcbafced0e52fd80a9abb9b147.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d12c58620e17f937c7966df6e126be9a.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -42,121 +45,215 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "일치 없음",
-    "search-matching-documents-text": "일치된 문서",
-    "search-copy-link-title": "검색 링크 복사",
-    "search-hide-matches-text": "추가 검색 결과 숨기기",
-    "search-more-match-text": "추가 검색결과",
-    "search-more-matches-text": "추가 검색결과",
-    "search-clear-button-title": "제거",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "취소",
-    "search-submit-button-title": "검색",
-    "search-label": "검색"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
-<body class="nav-fixed">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="검색"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item"><div class="dropdown" id="languages-links-parent">
-<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/activities.html" id="language-link-en">English</a></li></ul>
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html" id="language-link-ko">한국어</a></li></ul>
 </div></li>
 <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">소개</span></a>
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
-<span class="menu-text">블로그</span></a>
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./publications.html"> 
-<span class="menu-text">출간물</span></a>
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./activities.html" aria-current="page"> 
-<span class="menu-text">활동</span></a>
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
   </li>  
 </ul>
 <ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Experiences I had while doing Vibe Coding</h1>
+                  <div>
+        <div class="description">
+          My experience using ChatGPT and Gemini Code Assist (Agent Mode)
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">GenAI</div>
+                <div class="quarto-category">Life</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 31, 2025</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">August 1, 2025</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">목차</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">2024</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">2023</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">2022</a></li>
-  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">2020</a></li>
-  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">2019</a></li>
-  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">2010</a></li>
-  </ul></nav>
-</div>
-<!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">활동</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-    <div>
-    <div class="quarto-title-meta-heading">공개</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2025년 8월 1일</p>
+<li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">tl;dr</a></li>
+  <li><a href="#%EC%84%9C%EB%91%90" id="toc-서두" class="nav-link" data-scroll-target="#서두">서두</a></li>
+  <li>
+<a href="#useful-cases-using-genai" id="toc-useful-cases-using-genai" class="nav-link" data-scroll-target="#useful-cases-using-genai">Useful cases using GenAI</a>
+  <ul class="collapse">
+<li><a href="#problem-solving-through-chatgpt" id="toc-problem-solving-through-chatgpt" class="nav-link" data-scroll-target="#problem-solving-through-chatgpt">Problem solving through ChatGPT</a></li>
+  <li><a href="#retrospect-1" id="toc-retrospect-1" class="nav-link" data-scroll-target="#retrospect-1">Retrospect 1</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#a-case-where-the-illusion-about-genai-was-shattered" id="toc-a-case-where-the-illusion-about-genai-was-shattered" class="nav-link" data-scroll-target="#a-case-where-the-illusion-about-genai-was-shattered">A case where the illusion about GenAI was shattered</a>
+  <ul class="collapse">
+<li><a href="#case-1" id="toc-case-1" class="nav-link" data-scroll-target="#case-1">Case 1</a></li>
+  <li><a href="#case-2" id="toc-case-2" class="nav-link" data-scroll-target="#case-2">Case 2</a></li>
+  <li><a href="#retrospect-2" id="toc-retrospect-2" class="nav-link" data-scroll-target="#retrospect-2">Retrospect 2</a></li>
+  </ul>
+</li>
+  <li><a href="#in-short" id="toc-in-short" class="nav-link" data-scroll-target="#in-short">In Short</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
-  </div>
-  
-    
-  </div>
-  
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">tl;dr</h2>
+<p>Domain knowledge and experience are still necessary for coding.</p>
+</section><section id="서두" class="level2"><h2 class="anchored" data-anchor-id="서두">서두</h2>
+<p>I enjoy buying hardware and other things as a hobby and leaving them sitting in a corner. Then, when I get an idea, I take them out, assemble them, play around with them, do other things, and then dig deeper again. It’s a series of processes. In fact, “digging deeper” mostly means searching for solutions to problems I’ve tried but can’t seem to solve. Previously, I’d spend a lot of time searching, diligently reading and applying what others had written. But since I started using GenAI tools like ChatGPT and Gemini, that search time has been significantly shortened, and the resulting output is better than I expected. With that in mind, I sometimes struggle when asked to do complex tasks… I’d like to share some of that experience.</p>
+</section><section id="useful-cases-using-genai" class="level2"><h2 class="anchored" data-anchor-id="useful-cases-using-genai">Useful cases using GenAI</h2>
+<div id="fig-orin_case" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="./images/orin_case.jpeg" class="img-fluid figure-img"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="./images/orin_case_2.jpeg" class="img-fluid figure-img"></p>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 1: Orin with Yahboom case
+</figcaption></figure>
+</div>
+<p>My most recent hardware experience was installing my newly purchased Jetson Orin Nano Super Devkit into a <a href="https://www.yahboom.net/study/CUBE_NANO">CUBE NANO</a> I purchased from Amazon. The seller’s description states that the case can accommodate models ranging from the older TX2 NX to the latest Orin NX. The advantages of this case over other cases are that it comes with an LED strip, a small fan cooler, a Wi-Fi antenna, and an OLED screen to monitor the board’s CPU usage and network bandwidth. (It didn’t actually improve performance when using the Jetson board, though.) I assembled it solely for its aesthetic appeal. The problem was that even though I installed the necessary drivers and software packages as instructed in the guide, the LEDs wouldn’t work. I searched the web and couldn’t find any other cases that had installed this type of case on a Jetson Orin like mine. I left a Q&amp;A on the manufacturer’s website, but there was no answer, which was a bit frustrating. ChatGPT solved this problem.</p>
+<section id="problem-solving-through-chatgpt" class="level3"><h3 class="anchored" data-anchor-id="problem-solving-through-chatgpt">Problem solving through ChatGPT</h3>
+<p>The model used was ChatGPT-o3, which allowed me to visually observe the thought processes required to arrive at a conclusion. When I actually observed the thought processes, I felt like I was thinking like someone with knowledge in the field. First, the prompt I gave was:</p>
+<ul>
+<li>Prompt : I’m using a CUBE NANO case and trying to attach a Jetson Orin Nano Super to it. However, the OLED display on the case isn’t working. (Sharing the case specifications and the source code for the SW package)</li>
+<li>Reasoning 1: Search for CUBE NANO specifications -&gt; Through search, I confirmed that the OLED is SD1306 made by Adafruit.</li>
+<li>Reasoning 2: After checking the specifications of the SD1306, it confirmed that the OLED operates via I2C. Furthermore, after checking the board schematic of the Jetson Orin Nano, it confirmed the locations of the pins (MOSI, MISO, SCK) required for I2C communication.</li>
+<li>Output: After confirming the connection between the OLED and the board, use the <code>i2cdetect</code> command to confirm normal recognition. A simple test application is provided for this purpose.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For reference, <a href="https://linux.die.net/man/8/i2cdetect">i2cdetect</a> is a Linux user program that can check the status of devices communicating via the i2c bus.</p>
+</div>
+</div>
+<p>Thanks to this, I was able to confirm that the I2C port was properly connected. Strangely, it was connected to I2C bus 7, unlike the guide that said it was connected to bus 1. I also checked the SW provided by the manufacturer and confirmed that I2C was hardcoded to bus 1, and was able to correct it. Thanks to this, I can now see how hard the Jetson is working through the OLED.</p>
+</section><section id="retrospect-1" class="level3"><h3 class="anchored" data-anchor-id="retrospect-1">Retrospect 1</h3>
+<p>I’d previously heard of someone who had no prior knowledge of circuit design building a board using ChatGPT and <a href="https://www.kicad.org/">kicad</a>. This time, I was impressed by the hardware specifics they also helped me with. While my basic knowledge of I2C made it easy to understand, GPT’s answers were so detailed that even a complete beginner could solve the problem. From then on, I began receiving a lot of help with questions that were difficult to find through searches.</p>
+</section></section><section id="a-case-where-the-illusion-about-genai-was-shattered" class="level2"><h2 class="anchored" data-anchor-id="a-case-where-the-illusion-about-genai-was-shattered">A case where the illusion about GenAI was shattered</h2>
+<section id="case-1" class="level3"><h3 class="anchored" data-anchor-id="case-1">Case 1</h3>
+<p>As I work on model training at work, I often need help setting up the environment for model training. In particular, the recently released Gemini Code Assist provides Agent mode, which, although only a preview, allows you to see it in action, and it even generates and debugs code on its own. (Debugging is limited due to permissions issues, of course.) While it doesn’t yet support document context like PDFs, it implements algorithms presented in papers, and it even provides a custom implementation. Perhaps because it’s still a preview, it often self-develops.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./images/fail_case1.png" class="img-fluid figure-img"></p>
+<figcaption>wtf?</figcaption></figure>
+</div>
+<p>This was a typical example. I left it alone because it seemed to be working hard, but upon closer inspection, I noticed that it sometimes claimed to have implemented code, only to have it sit idle without actually being implemented. Or it would modify existing implementations and then re-implement them in the next response. I’m not sure if this was the reason, but after a few iterations, a message would pop up saying my quota was exhausted. Ultimately, while Gemini did a great job of establishing the framework for the implementation, I felt like reviewing and reimplementing the final product was something I had to do manually. (I also had to conduct experiments in a real-world environment…)</p>
+</section><section id="case-2" class="level3"><h3 class="anchored" data-anchor-id="case-2">Case 2</h3>
+<p>In fact, when I created this blog using Quarto, ChatGPT and Gemini did their best, but looking back, it only resulted in delays. The initial goal I had for Quarto was as follows:</p>
+<ul>
+<li>Build a personal research portfolio</li>
+<li>Bi-language support with Korean/English toggle</li>
+<li>Output to PDF/Jupyter for each post</li>
+</ul>
+<p>Originally, quarto introduced a multi-profile feature starting with version 1.5, and I thought leveraging this feature would satisfy the second requirement. However, I personally failed to implement it due to a lack of understanding of YAML syntax and the principles of rendering in quarto. This was also the case with ChatGPT and Gemini. When I asked them to implement something in Python, they did it well, but even when I asked them to organize the YAML file to avoid errors, they only returned incorrect results. I personally explored the R package “babelquarto”, which supports multi-language rendering, and tried to use it to help with the implementation, but this issue remained unresolved. Furthermore, when executing GitHub actions, the layout would strangely break, and when I tried to relay warnings via workflow files and logs, they often failed to recognize the error, likely due to permissions issues. ChatGPT even responded that even though the YAML file, which recognizes syntax based on indentation, was correctly uploaded, it would be printed on a single line, breaking the layout. I even shared a screenshot with them to get their response corrected.</p>
+</section><section id="retrospect-2" class="level3"><h3 class="anchored" data-anchor-id="retrospect-2">Retrospect 2</h3>
+<p>Recent examples show that even those with limited coding experience can easily implement their desired functionality using Vibe Coding, such as ChatGPT, Copilot, and Claude. However, from personal experience, I’ve noticed that there are still areas that require manual coding, such as those requiring specialized code or requiring access privileges. (Thanks to this, I was able to learn a bit about YAML inheritance structures and R syntax through my own research.)</p>
+</section></section><section id="in-short" class="level2"><h2 class="anchored" data-anchor-id="in-short">In Short</h2>
+<p>Although GenAI implements code, and it’s certainly easier than before, it’s difficult to blindly trust the output, and I think that related people still need the ability to review and modify it together. And above all, seeing cases where the model can’t properly identify problems due to access rights issues, I think that at least for the model to modify it as a person wants, it needs at least an eye to look at the computer screen or a robotic arm(?) that can control I/O. So, I think HuggingFace is trying to overcome these limitations with things like <a href="https://huggingface.co/lerobot">lerobot</a> or <a href="https://huggingface.co/blog/reachy-mini">Reachy Mini</a>. I’d like to buy one of these and try it out, but for now, I’d like to try something like the <a href="https://minipupperdocs.readthedocs.io/en/latest/">robot dog</a> that I have at home.</p>
 
 
-</header><section id="section" class="level2"><h2 class="anchored" data-anchor-id="section">2024</h2>
-<p><strong>(2024. 09)</strong> 서울대학교 컴퓨터공학부 학생회에서 주최하는 ComSee 행사에서 <strong>“실물 환경에서의 데이터 기반 강화학습 적용 방안”</strong>이란 주제로 기업 강연 및 채용설명회를 진행했습니다. <a href="contents/files/AI_ComSee_RWRL.pdf" class="icon-link" target="_blank" rel="noopener">File</a></p>
-<p><strong>(2024. 06)</strong> 싱가포르에서 진행된 2024 <a href="https://ieeecai.org/">IEEE Conference on Artificial Intelligence (CAI)</a>에서 <strong>“Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”</strong>이란 주제로 포스터 세션을 진행했습니다.</p>
-</section><section id="section-1" class="level2"><h2 class="anchored" data-anchor-id="section-1">2023</h2>
-<p><strong>(2023. 02)</strong> 제가 속한 팀에서 만든, 세계 최초로 Offline RL이 적용된 탈수 모델이 세탁기에 탑재되어 출시했습니다. <a href="https://www.lge.co.kr/wash-combo/fh25lmth" class="icon-link" target="_blank" rel="noopener">Press 1</a> <a href="https://live.lge.co.kr/2402-lg-signature/" class="icon-link" target="_blank" rel="noopener">Press 2</a></p>
-</section><section id="section-2" class="level2"><h2 class="anchored" data-anchor-id="section-2">2022</h2>
-<p><strong>(2022. 11)</strong> LG전자에서 진행된 소프트웨어 개발자 컨퍼런스 (LG SDC)에서 <strong>“실환경 데이터 기반 모델 성능 개선”</strong>이란 주제로 발표를 진행했습니다. <a href="https://live.lge.co.kr/2211-lg-sdc-2022-post/" class="icon-link" target="_blank" rel="noopener">Link</a> <a href="contents/files/T2_D1_Kang_DDRL.pdf" class="icon-link" target="_blank" rel="noopener">File</a></p>
-<p><strong>(2022. 09)</strong> 제가 번역한 <strong>“그로킹 심층 강화학습”</strong> (한빛미디어) 책이 2022년 대한민국학술원 우수학술도서로 선정되었습니다. <a href="https://www.nas.go.kr/page/59725ab6-21c4-11ec-8e17-001e6746f4e8?searchGubun=N&amp;page=1&amp;reqst_dt=2022&amp;book_lclas_cd_old=&amp;book_lclas_cd=BOOK_LCLAS_04&amp;search_type=&amp;search_text=" class="icon-link" target="_blank" rel="noopener">Link</a></p>
-</section><section id="section-3" class="level2"><h2 class="anchored" data-anchor-id="section-3">2020</h2>
-<p><strong>(2020. 05)</strong> <a href="https://fastpages.fast.ai/">fastpages</a>를 활용하여, <strong>“Chan’s Jupyter”</strong>란 기술 블로그를 운영하기 시작했습니다. (해당 블로그에 있는 내용은 현재 블로그로 이전할 예정입니다.) <a href="https://goodboychan.github.io/" class="icon-link" target="_blank" rel="noopener">Link</a></p>
-</section><section id="section-4" class="level2"><h2 class="anchored" data-anchor-id="section-4">2019</h2>
-<p><strong>(2019. 10)</strong> LG전자에서 <strong>인공지능 전문가(제어 분야)</strong>로 선발되었습니다. <a href="https://live.lge.co.kr/lg_ai_specialist_1020/" class="icon-link" target="_blank" rel="noopener">Press 1</a> <a href="https://www.yna.co.kr/view/PYH20191020018800013" class="icon-link" target="_blank" rel="noopener">Press 2</a></p>
-</section><section id="section-5" class="level2"><h2 class="anchored" data-anchor-id="section-5">2010</h2>
-<p><strong>(2010. 08)</strong> 티스토리에서 <strong>자신에 대한 고찰</strong> 이란 기술 블로그를 운영하기 시작했습니다. <a href="https://talkingaboutme.tistory.com/" class="icon-link" target="_blank" rel="noopener">Link</a></p>
-
-
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -343,12 +440,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "복사완료!");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "복사완료!");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -390,7 +487,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -716,7 +813,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><script src="https://giscus.app/client.js" data-repo="kcsgoodboy/kcsgoodboy.github.io" data-repo-id="R_kgDOPRiawA" data-category="General" data-category-id="DIC_kwDOPRiawM4CtfeS" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 
 

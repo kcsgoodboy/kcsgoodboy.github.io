@@ -1,0 +1,87 @@
+---
+title: Experiences I had while doing Vibe Coding
+description: My experience using ChatGPT and Gemini Code Assist (Agent Mode)
+date: '2025-07-31'
+date-modified: today
+image: ./images/orin_case.jpeg
+lang: en
+categories:
+  - GenAI
+  - Life
+---
+
+## tl;dr
+
+Domain knowledge and experience are still necessary for coding.
+
+## 서두
+
+I enjoy buying hardware and other things as a hobby and leaving them sitting in a corner. Then, when I get an idea, I take them out, assemble them, play around with them, do other things, and then dig deeper again. It's a series of processes.
+In fact, "digging deeper" mostly means searching for solutions to problems I've tried but can't seem to solve. Previously, I'd spend a lot of time searching, diligently reading and applying what others had written. But since I started using GenAI tools like ChatGPT and Gemini,
+that search time has been significantly shortened, and the resulting output is better than I expected. With that in mind, I sometimes struggle when asked to do complex tasks... I'd like to share some of that experience.
+
+## Useful cases using GenAI
+
+::: {#fig-orin_case layout-ncol=2}
+
+![](./images/orin_case.jpeg)
+
+![](./images/orin_case_2.jpeg)
+
+Orin with Yahboom case
+:::
+
+My most recent hardware experience was installing my newly purchased Jetson Orin Nano Super Devkit into a [CUBE NANO](https://www.yahboom.net/study/CUBE_NANO) I purchased from Amazon. The seller's description states that the case can accommodate models ranging from the older TX2 NX to the latest Orin NX.
+The advantages of this case over other cases are that it comes with an LED strip, a small fan cooler, a Wi-Fi antenna, and an OLED screen to monitor the board's CPU usage and network bandwidth. (It didn't actually improve performance when using the Jetson board, though.) I assembled it solely for its aesthetic appeal.
+The problem was that even though I installed the necessary drivers and software packages as instructed in the guide, the LEDs wouldn't work. I searched the web and couldn't find any other cases that had installed this type of case on a Jetson Orin like mine. I left a Q&A on the manufacturer's website, but there was no answer, which was a bit frustrating. ChatGPT solved this problem.
+
+### Problem solving through ChatGPT
+
+The model used was ChatGPT-o3, which allowed me to visually observe the thought processes required to arrive at a conclusion. When I actually observed the thought processes, I felt like I was thinking like someone with knowledge in the field. First, the prompt I gave was:
+
+- Prompt : I'm using a CUBE NANO case and trying to attach a Jetson Orin Nano Super to it. However, the OLED display on the case isn't working. (Sharing the case specifications and the source code for the SW package)
+- Reasoning 1: Search for CUBE NANO specifications -> Through search, I confirmed that the OLED is SD1306 made by Adafruit.
+- Reasoning 2: After checking the specifications of the SD1306, it confirmed that the OLED operates via I2C. Furthermore, after checking the board schematic of the Jetson Orin Nano, it confirmed the locations of the pins (MOSI, MISO, SCK) required for I2C communication.
+- Output: After confirming the connection between the OLED and the board, use the `i2cdetect` command to confirm normal recognition. A simple test application is provided for this purpose.
+
+::: {.callout-note}
+
+For reference, [i2cdetect](https://linux.die.net/man/8/i2cdetect) is a Linux user program that can check the status of devices communicating via the i2c bus.
+
+:::
+
+Thanks to this, I was able to confirm that the I2C port was properly connected. Strangely, it was connected to I2C bus 7, unlike the guide that said it was connected to bus 1. I also checked the SW provided by the manufacturer and confirmed that I2C was hardcoded to bus 1, and was able to correct it. Thanks to this, I can now see how hard the Jetson is working through the OLED.
+
+### Retrospect 1
+
+I'd previously heard of someone who had no prior knowledge of circuit design building a board using ChatGPT and [kicad](https://www.kicad.org/). This time, I was impressed by the hardware specifics they also helped me with. While my basic knowledge of I2C made it easy to understand, GPT's answers were so detailed that even a complete beginner could solve the problem. From then on, I began receiving a lot of help with questions that were difficult to find through searches.
+
+## A case where the illusion about GenAI was shattered
+
+### Case 1
+
+As I work on model training at work, I often need help setting up the environment for model training. In particular, the recently released Gemini Code Assist provides Agent mode, which, although only a preview, allows you to see it in action, and it even generates and debugs code on its own. (Debugging is limited due to permissions issues, of course.)
+While it doesn't yet support document context like PDFs, it implements algorithms presented in papers, and it even provides a custom implementation. Perhaps because it's still a preview, it often self-develops. 
+
+![wtf?](./images/fail_case1.png)
+
+This was a typical example. I left it alone because it seemed to be working hard, but upon closer inspection, I noticed that it sometimes claimed to have implemented code, only to have it sit idle without actually being implemented. Or it would modify existing implementations and then re-implement them in the next response. I'm not sure if this was the reason, but after a few iterations, a message would pop up saying my quota was exhausted. Ultimately, while Gemini did a great job of establishing the framework for the implementation, I felt like reviewing and reimplementing the final product was something I had to do manually. (I also had to conduct experiments in a real-world environment...)
+
+### Case 2
+
+In fact, when I created this blog using Quarto, ChatGPT and Gemini did their best, but looking back, it only resulted in delays. The initial goal I had for Quarto was as follows:
+
+- Build a personal research portfolio
+- Bi-language support with Korean/English toggle
+- Output to PDF/Jupyter for each post
+
+Originally, quarto introduced a multi-profile feature starting with version 1.5, and I thought leveraging this feature would satisfy the second requirement. However, I personally failed to implement it due to a lack of understanding of YAML syntax and the principles of rendering in quarto. This was also the case with ChatGPT and Gemini. When I asked them to implement something in Python, they did it well, but even when I asked them to organize the YAML file to avoid errors, they only returned incorrect results. I personally explored the R package "babelquarto", which supports multi-language rendering, and tried to use it to help with the implementation, but this issue remained unresolved. Furthermore, when executing GitHub actions, the layout would strangely break, and when I tried to relay warnings via workflow files and logs, they often failed to recognize the error, likely due to permissions issues. ChatGPT even responded that even though the YAML file, which recognizes syntax based on indentation, was correctly uploaded, it would be printed on a single line, breaking the layout. I even shared a screenshot with them to get their response corrected.
+
+### Retrospect 2
+
+Recent examples show that even those with limited coding experience can easily implement their desired functionality using Vibe Coding, such as ChatGPT, Copilot, and Claude. However, from personal experience, I've noticed that there are still areas that require manual coding, such as those requiring specialized code or requiring access privileges. (Thanks to this, I was able to learn a bit about YAML inheritance structures and R syntax through my own research.)
+
+## In Short
+
+Although GenAI implements code, and it's certainly easier than before, it's difficult to blindly trust the output, and I think that related people still need the ability to review and modify it together. And above all, seeing cases where the model can't properly identify problems due to access rights issues, I think that at least for the model to modify it as a person wants, it needs at least an eye to look at the computer screen or a robotic arm(?) that can control I/O. So, I think HuggingFace is trying to overcome these limitations with things like [lerobot](https://huggingface.co/lerobot) or [Reachy Mini](https://huggingface.co/blog/reachy-mini). I'd like to buy one of these and try it out, but for now, I'd like to try something like the [robot dog](https://minipupperdocs.readthedocs.io/en/latest/) that I have at home.
+
