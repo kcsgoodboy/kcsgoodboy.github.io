@@ -14,7 +14,7 @@ categories:
 
 Domain knowledge and experience are still necessary for coding.
 
-## 서두
+## Intro
 
 I enjoy buying hardware and other things as a hobby and leaving them sitting in a corner. Then, when I get an idea, I take them out, assemble them, play around with them, do other things, and then dig deeper again. It's a series of processes.
 In fact, "digging deeper" mostly means searching for solutions to problems I've tried but can't seem to solve. Previously, I'd spend a lot of time searching, diligently reading and applying what others had written. But since I started using GenAI tools like ChatGPT and Gemini,
