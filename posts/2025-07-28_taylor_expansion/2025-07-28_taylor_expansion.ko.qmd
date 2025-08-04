@@ -11,6 +11,12 @@ categories:
   - math
 format:
   ipynb: default
+filters:
+  - colab
+colab:
+  gh-user: "kcsgoodboy"
+  gh-repo: "kcsgoodboy.github.io"
+  gh-branch: "main"
 jupyter: python3
 ---
 

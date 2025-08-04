@@ -1,5 +1,47 @@
 [
   {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Google Scholar"
+  },
+  {
+    "objectID": "publications.html#section",
+    "href": "publications.html#section",
+    "title": "Publications",
+    "section": "2024",
+    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Preprint\nChanseok Kang. (2024) “Applying Data-Driven Reinforcement Learning Approach in Real World Environment”. 2024 Journal of Institute of Electronics and Information Engineers (IEIE).\nPreprint"
+  },
+  {
+    "objectID": "publications.html#section-1",
+    "href": "publications.html#section-1",
+    "title": "Publications",
+    "section": "2021",
+    "text": "2021\nChanseok Kang. (2021) “Grokking Deep Reinforcement Learning” (Korean). Hanbit Media.\n Book"
+  },
+  {
+    "objectID": "publications.html#section-2",
+    "href": "publications.html#section-2",
+    "title": "Publications",
+    "section": "2020",
+    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
+  },
+  {
+    "objectID": "publications.html#section-3",
+    "href": "publications.html#section-3",
+    "title": "Publications",
+    "section": "2019",
+    "text": "2019\nKyo-seok Song, Chanseok Kang (Reviewer). (2019) “Machine Learning with Tensorflow” (Korean). Hanbit Media.  Book"
+  },
+  {
+    "objectID": "publications.html#section-4",
+    "href": "publications.html#section-4",
+    "title": "Publications",
+    "section": "2017",
+    "text": "2017\nChanseok Kang, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.\n Preprint"
+  },
+  {
     "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html",
     "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html",
     "title": "Taylor Expansion",
@@ -32,7 +74,7 @@
     "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#sin-function-at-x_00",
     "title": "Taylor Expansion",
     "section": "1.2 Sin function at \\(x_0=0\\)",
-    "text": "1.2 Sin function at \\(x_0=0\\)\nThe Taylor expansion of the sin function among trigonometric functions is expressed as follows.\n\\(f(0) = f''(0) = f^{(4)}(0) = \\dots = 0\\)\n\\(f'(0) = f^{(5)}(0) = f^{(9)}(0) = \\dots = 1\\)\n\\(f'''(0) = f^{(7)}(0) = f^{(11)}(0) = \\dots = -1\\)\n\\(\\sin(x) = x - \\frac{1}{3!}x^3 + \\frac{1}{5!}x^5  - \\frac{1}{7!}x^7 \\pm \\dots = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n+1)!}x^{2n+1}\\)\n\ndef SinTaylor(x, nmax):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + ((-1) ** n / scipy.special.factorial(2 * n + 1)) * (x ** (2 * n + 1))\n    return t\n\n\nx_list = np.linspace(-10, 10, 101)\nplt.ylim([-2, 2])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, np.sin(x_list), label='sine')\n\nplt.plot(x_list, SinTaylor(x_list, 3), c='blue', label='$x_0$=0')\nplt.plot(x_list, SinTaylor(x_list, 6), c='red', label='$x_0$=-3')\nplt.plot(x_list, SinTaylor(x_list, 10), c='green', label='$x_0$=10')\nplt.plot(x_list, SinTaylor(x_list, 20), c='black', label='$x_0$=20')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\nnp.sin(2.5), SinTaylor(2.5, 10)\n\n(np.float64(0.5984721441039565), np.float64(0.598472144104011))"
+    "text": "1.2 Sin function at \\(x_0=0\\)\nThe Taylor expansion of the sin function among trigonometric functions is expressed as follows.\n\\(f(0) = f''(0) = f^{(4)}(0) = \\dots = 0\\)\n\\(f'(0) = f^{(5)}(0) = f^{(9)}(0) = \\dots = 1\\)\n\\(f'''(0) = f^{(7)}(0) = f^{(11)}(0) = \\dots = -1\\)\n\\(\\sin(x) = x - \\frac{1}{3!}x^3 + \\frac{1}{5!}x^5  - \\frac{1}{7!}x^7 \\pm \\dots = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n+1)!}x^{2n+1}\\)\n\ndef SinTaylor(x, nmax):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + ((-1) ** n / scipy.special.factorial(2 * n + 1)) * (x ** (2 * n + 1))\n    return t\n\n\nx_list = np.linspace(-10, 10, 101)\nplt.ylim([-2, 2])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, np.sin(x_list), label='sine')\n\nplt.plot(x_list, SinTaylor(x_list, 3), c='blue', label='$x_0$=0')\nplt.plot(x_list, SinTaylor(x_list, 6), c='red', label='$x_0$=-3')\nplt.plot(x_list, SinTaylor(x_list, 10), c='green', label='$x_0$=10')\nplt.plot(x_list, SinTaylor(x_list, 20), c='black', label='$x_0$=20')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\nnp.sin(2.5), SinTaylor(2.5, 10)\n\n(np.float64(0.5984721441039564), np.float64(0.598472144104011))"
   },
   {
     "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#implementation-of-general-function",
@@ -152,48 +194,6 @@
     "title": "Ascent of Applied Wisdom",
     "section": "",
     "text": "Spiral stairway: Continuous personal growth; knowledge is never linear.\nBinary‑rooted tree of light: The fusion of data and insight blooming into sustainable innovation.\nCircuit‑blueprint backdrop of home appliances: Grounding philosophy in real‑world engineering.\nInterlocking gear & leaf icons: The symbiosis of efficiency and environmental care—technology in service of life.\n\nTogether they frame a meditation on praxis: how deep learning—both human and algorithmic—emerges when theory meets the constraints of the physical world, and how every hard‑won lesson becomes the next foothold upward."
-  },
-  {
-    "objectID": "publications.html",
-    "href": "publications.html",
-    "title": "Publications",
-    "section": "",
-    "text": "Google Scholar"
-  },
-  {
-    "objectID": "publications.html#section",
-    "href": "publications.html#section",
-    "title": "Publications",
-    "section": "2024",
-    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Preprint\nChanseok Kang. (2024) “Applying Data-Driven Reinforcement Learning Approach in Real World Environment”. 2024 Journal of Institute of Electronics and Information Engineers (IEIE).\nPreprint"
-  },
-  {
-    "objectID": "publications.html#section-1",
-    "href": "publications.html#section-1",
-    "title": "Publications",
-    "section": "2021",
-    "text": "2021\nChanseok Kang. (2021) “Grokking Deep Reinforcement Learning” (Korean). Hanbit Media.\n Book"
-  },
-  {
-    "objectID": "publications.html#section-2",
-    "href": "publications.html#section-2",
-    "title": "Publications",
-    "section": "2020",
-    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
-  },
-  {
-    "objectID": "publications.html#section-3",
-    "href": "publications.html#section-3",
-    "title": "Publications",
-    "section": "2019",
-    "text": "2019\nKyo-seok Song, Chanseok Kang (Reviewer). (2019) “Machine Learning with Tensorflow” (Korean). Hanbit Media.  Book"
-  },
-  {
-    "objectID": "publications.html#section-4",
-    "href": "publications.html#section-4",
-    "title": "Publications",
-    "section": "2017",
-    "text": "2017\nChanseok Kang, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.\n Preprint"
   },
   {
     "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html",
