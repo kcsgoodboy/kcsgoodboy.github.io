@@ -1,91 +1,49 @@
 [
   {
-    "objectID": "publications.html",
-    "href": "publications.html",
-    "title": "Publications",
-    "section": "",
-    "text": "Google Scholar"
-  },
-  {
-    "objectID": "publications.html#section",
-    "href": "publications.html#section",
-    "title": "Publications",
-    "section": "2024",
-    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Preprint\nChanseok Kang. (2024) “Applying Data-Driven Reinforcement Learning Approach in Real World Environment”. 2024 Journal of Institute of Electronics and Information Engineers (IEIE).\nPreprint"
-  },
-  {
-    "objectID": "publications.html#section-1",
-    "href": "publications.html#section-1",
-    "title": "Publications",
-    "section": "2021",
-    "text": "2021\nChanseok Kang. (2021) “Grokking Deep Reinforcement Learning” (Korean). Hanbit Media.\n Book"
-  },
-  {
-    "objectID": "publications.html#section-2",
-    "href": "publications.html#section-2",
-    "title": "Publications",
-    "section": "2020",
-    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
-  },
-  {
-    "objectID": "publications.html#section-3",
-    "href": "publications.html#section-3",
-    "title": "Publications",
-    "section": "2019",
-    "text": "2019\nKyo-seok Song, Chanseok Kang (Reviewer). (2019) “Machine Learning with Tensorflow” (Korean). Hanbit Media.  Book"
-  },
-  {
-    "objectID": "publications.html#section-4",
-    "href": "publications.html#section-4",
-    "title": "Publications",
-    "section": "2017",
-    "text": "2017\nChanseok Kang, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.\n Preprint"
-  },
-  {
-    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html",
-    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html",
+    "objectID": "posts/2025-07-28_taylor_expansion/post.html",
+    "href": "posts/2025-07-28_taylor_expansion/post.html",
     "title": "Taylor Expansion",
     "section": "",
     "text": "import numpy as np\nimport scipy\nimport matplotlib.pyplot as plt\n\n\n\n\n\n\n\nNote\n\n\n\nThis content is a summary of Börge Göbel’s “Computational Physics: Scientific Programming with Python” on Udemy."
   },
   {
-    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#package-import",
-    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#package-import",
+    "objectID": "posts/2025-07-28_taylor_expansion/post.html#package-import",
+    "href": "posts/2025-07-28_taylor_expansion/post.html#package-import",
     "title": "Taylor Expansion",
     "section": "",
     "text": "import numpy as np\nimport scipy\nimport matplotlib.pyplot as plt\n\n\n\n\n\n\n\nNote\n\n\n\nThis content is a summary of Börge Göbel’s “Computational Physics: Scientific Programming with Python” on Udemy."
   },
   {
-    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#why-taylor-expansion",
-    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#why-taylor-expansion",
+    "objectID": "posts/2025-07-28_taylor_expansion/post.html#why-taylor-expansion",
+    "href": "posts/2025-07-28_taylor_expansion/post.html#why-taylor-expansion",
     "title": "Taylor Expansion",
     "section": "Why Taylor Expansion?",
     "text": "Why Taylor Expansion?\nThe reason for using Taylor Expansion is to approximate complex functions into simple polynomial forms. When studying mathematics, various formulas appear, and the original forms of the equations we often encounter in theory are usually composed of trigonometric or exponential functions. Operations between these functions are too complex and computationally expensive to calculate directly, but using Taylor Expansion, these complex expressions can be easily represented. For example, if the derivative of a function can be calculated, an approximate value of the function for a specific point can be expressed using this derivative.\n\\[f(x)=\\sum_{n=0}^\\infty \\frac{1}{n!}f^{(n)}(x_0)\\,(x-x_0)^n\\]\nHere, \\(f^{(n)}\\) is the \\(n\\)-th derivative of \\(f(x)\\), and \\(x_0\\) represents the position of the value we want to calculate."
   },
   {
-    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#exponential-function",
-    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#exponential-function",
+    "objectID": "posts/2025-07-28_taylor_expansion/post.html#exponential-function",
+    "href": "posts/2025-07-28_taylor_expansion/post.html#exponential-function",
     "title": "Taylor Expansion",
     "section": "1.1 Exponential Function",
     "text": "1.1 Exponential Function\nIf the original form of the function we want to find is an exponential function, we can easily apply the Taylor Expansion.\n\\[f(x)=f'(x)=f''(x)=\\dots=f^{(n)}(x)=\\exp(x)\\]\nThis is because the derivative of the exponential function is the exponential function itself. The code and visualization for this can be expressed as follows.\n\ndef ExpTaylor(x, x0, nmax):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + (np.exp(x0) * (x - x0) ** n) / scipy.special.factorial(n)\n    return t\n\n\n\n\n\n\n\nNote\n\n\n\nIn the original example, np.math.factorial was used for the factorial calculation, but the math sub-package was not originally provided by numpy. So, as the version was updated and math was removed, the example above was changed to calculate it through scipy.special. The result is the same as we think.\n\n\n\nnp.exp(1), ExpTaylor(1, 0, 10)\n\n(np.float64(2.718281828459045), np.float64(2.7182818011463845))\n\n\nSo, if you compare the actual value of the natural function with the approximate value, you can see that they are quite similar.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-5, 100])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, np.exp(x_list), label='exponential')\n\nnmax = 5\nplt.plot(x_list, ExpTaylor(x_list, 0, nmax), c='blue', label='$x_0$=0')\nplt.plot(x_list, ExpTaylor(x_list, -3, nmax), c='red', label='$x_0$=-3')\nplt.plot(x_list, ExpTaylor(x_list, 2, nmax), c='green', label='$x_0$=2')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nIn fact, it is an area of approximation to reduce the amount of computation, and the part that cannot accurately represent the function can be seen just by checking the result of changing the initial point. However, if an appropriate initial point is selected, an approximate value that is close to the original function we want to find can be obtained."
   },
   {
-    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#sin-function-at-x_00",
-    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#sin-function-at-x_00",
+    "objectID": "posts/2025-07-28_taylor_expansion/post.html#sin-function-at-x_00",
+    "href": "posts/2025-07-28_taylor_expansion/post.html#sin-function-at-x_00",
     "title": "Taylor Expansion",
     "section": "1.2 Sin function at \\(x_0=0\\)",
-    "text": "1.2 Sin function at \\(x_0=0\\)\nThe Taylor expansion of the sin function among trigonometric functions is expressed as follows.\n\\(f(0) = f''(0) = f^{(4)}(0) = \\dots = 0\\)\n\\(f'(0) = f^{(5)}(0) = f^{(9)}(0) = \\dots = 1\\)\n\\(f'''(0) = f^{(7)}(0) = f^{(11)}(0) = \\dots = -1\\)\n\\(\\sin(x) = x - \\frac{1}{3!}x^3 + \\frac{1}{5!}x^5  - \\frac{1}{7!}x^7 \\pm \\dots = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n+1)!}x^{2n+1}\\)\n\ndef SinTaylor(x, nmax):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + ((-1) ** n / scipy.special.factorial(2 * n + 1)) * (x ** (2 * n + 1))\n    return t\n\n\nx_list = np.linspace(-10, 10, 101)\nplt.ylim([-2, 2])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, np.sin(x_list), label='sine')\n\nplt.plot(x_list, SinTaylor(x_list, 3), c='blue', label='$x_0$=0')\nplt.plot(x_list, SinTaylor(x_list, 6), c='red', label='$x_0$=-3')\nplt.plot(x_list, SinTaylor(x_list, 10), c='green', label='$x_0$=10')\nplt.plot(x_list, SinTaylor(x_list, 20), c='black', label='$x_0$=20')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\nnp.sin(2.5), SinTaylor(2.5, 10)\n\n(np.float64(0.5984721441039564), np.float64(0.598472144104011))"
+    "text": "1.2 Sin function at \\(x_0=0\\)\nThe Taylor expansion of the sin function among trigonometric functions is expressed as follows.\n\\(f(0) = f''(0) = f^{(4)}(0) = \\dots = 0\\)\n\\(f'(0) = f^{(5)}(0) = f^{(9)}(0) = \\dots = 1\\)\n\\(f'''(0) = f^{(7)}(0) = f^{(11)}(0) = \\dots = -1\\)\n\\(\\sin(x) = x - \\frac{1}{3!}x^3 + \\frac{1}{5!}x^5  - \\frac{1}{7!}x^7 \\pm \\dots = \\sum_{n=0}^\\infty \\frac{(-1)^n}{(2n+1)!}x^{2n+1}\\)\n\ndef SinTaylor(x, nmax):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + ((-1) ** n / scipy.special.factorial(2 * n + 1)) * (x ** (2 * n + 1))\n    return t\n\n\nx_list = np.linspace(-10, 10, 101)\nplt.ylim([-2, 2])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, np.sin(x_list), label='sine')\n\nplt.plot(x_list, SinTaylor(x_list, 3), c='blue', label='$x_0$=0')\nplt.plot(x_list, SinTaylor(x_list, 6), c='red', label='$x_0$=-3')\nplt.plot(x_list, SinTaylor(x_list, 10), c='green', label='$x_0$=10')\nplt.plot(x_list, SinTaylor(x_list, 20), c='black', label='$x_0$=20')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\nnp.sin(2.5), SinTaylor(2.5, 10)\n\n(np.float64(0.5984721441039565), np.float64(0.598472144104011))"
   },
   {
-    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#implementation-of-general-function",
-    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#implementation-of-general-function",
+    "objectID": "posts/2025-07-28_taylor_expansion/post.html#implementation-of-general-function",
+    "href": "posts/2025-07-28_taylor_expansion/post.html#implementation-of-general-function",
     "title": "Taylor Expansion",
     "section": "1.3 Implementation of General Function",
     "text": "1.3 Implementation of General Function\nThe previous example was shown assuming that the derivative for a simple function is known, and the formula for obtaining the actual derivative is as follows.\n\\[f'(x) = \\lim_{h\\rightarrow 0} \\frac{f(x+h)-f(x)}{h}\\]\n\ndef derivative(f, x, h):\n    # Adding Small number to avoid ZeroDivision Error\n    return (f(x + h) - f(x)) / (h + 0.000001)\n\nHowever, the above formula was for obtaining the first derivative, and the \\(n\\)-th derivative, which is differentiated \\(n\\) times, is obtained by repeatedly performing the above formula, which is expressed a little more complicatedly as follows.\n\\[f^{(n)}(x) = \\lim_{h\\rightarrow 0} \\frac{1}{h^n}\\sum_{k=0}^n(-1)^{k+n} \\,\\frac{n!}{k!(n-k)!} \\,f(x+kh)\\]\n\ndef nDerivative(f, x, h, n):\n    t = 0\n    for k in range(n + 1):\n        t = t + (-1) **(k + n) * scipy.special.factorial(n) / (scipy.special.factorial(k) * scipy.special.factorial(n - k)) * f(x + k * h)\n    return t / (h ** n)\n\nlet’s find the derivative for the following equation.\n\\[f(x) = 2 * \\sin^2(x) + x\\]\n\ndef func(x):\n    return 2 * np.sin(x) ** 2 + x\n\n\nx0 = 10.5\nh = 0.1\n\n\nfunc(x0)\n\nnp.float64(12.04772926022427)\n\n\n\nderivative(func, x0, h)\n\nnp.float64(2.5529714426967454)\n\n\n\nnDerivative(func, x0, h, 0), nDerivative(func, x0, h, 1), nDerivative(func, x0, h, 2)\n\n(np.float64(12.04772926022427),\n np.float64(2.5529969724111723),\n np.float64(-2.802754599797907))\n\n\n\nnDerivative(func, x0, h, 1)\n\nnp.float64(2.5529969724111723)"
   },
   {
-    "objectID": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#taylor-expansion-of-general-function",
-    "href": "posts/2025-07-28_taylor_expansion/2025-07-28_taylor_expansion.html#taylor-expansion-of-general-function",
+    "objectID": "posts/2025-07-28_taylor_expansion/post.html#taylor-expansion-of-general-function",
+    "href": "posts/2025-07-28_taylor_expansion/post.html#taylor-expansion-of-general-function",
     "title": "Taylor Expansion",
     "section": "1.4 Taylor Expansion of General Function",
     "text": "1.4 Taylor Expansion of General Function\nNow, let’s bring back the Taylor Expansion formula introduced at the beginning:\n\\[f(x)=\\sum_{n=0}^\\infty \\frac{1}{n!}f^{(n)}(x_0)\\,(x-x_0)^n\\]\nUltimately, this formula allows for approximation only if the derivative of the function can be found. Now, let’s replace the derivative part with the function defined above.\n\ndef taylor(f, x, x0, nmax, h):\n    t = 0\n    for n in range(nmax + 1):\n        t = t + nDerivative(f, x0, h, n) * (x - x0) ** n / scipy.special.factorial(n)\n    return t\n\nFirst, if we approximate with 5 samples and set the derivative step to 0.1, it approximates well within a certain range, but if it goes out of range, the value jumps out.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-10, 10])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, func(x_list), label='sin')\n\nnmax = 5\nh = 0.1\n\nplt.plot(x_list, taylor(func, x_list, 0, nmax, h), c='blue', label='$x_0$=0')\nplt.plot(x_list, taylor(func, x_list, 2, nmax, h), c='red', label='$x_0$=2')\nplt.plot(x_list, taylor(func, x_list, -3, nmax, h), c='green', label='$x_0$=-3')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nIf nmax is increased by 10, the output gets more accurate result besides previous ones.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-10, 10])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, func(x_list), label='sin')\n\nnmax = 10\nh = 0.1\n\nplt.plot(x_list, taylor(func, x_list, 0, nmax, h), c='blue', label='$x_0$=0')\nplt.plot(x_list, taylor(func, x_list, 2, nmax, h), c='red', label='$x_0$=2')\nplt.plot(x_list, taylor(func, x_list, -3, nmax, h), c='green', label='$x_0$=-3')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nAdditionally, we can get more accurate result if we decrease the step size that used to calculate the derivative.\n\nx_list = np.linspace(-5, 5, 101)\nplt.ylim([-10, 10])\n\nplt.xlabel('x')\nplt.ylabel('y')\nplt.scatter(x_list, func(x_list), label='sin')\n\nnmax = 10\nh = 0.01\n\nplt.plot(x_list, taylor(func, x_list, 0, nmax, h), c='blue', label='$x_0$=0')\nplt.plot(x_list, taylor(func, x_list, 2, nmax, h), c='red', label='$x_0$=2')\nplt.plot(x_list, taylor(func, x_list, -3, nmax, h), c='green', label='$x_0$=-3')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nIn short, if a function is computationally expensive to evaluate, obtaining its derivative can help. Additionally, the more samples you have of the function, the better you can approximate its true value."
@@ -95,7 +53,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Experiences I had while doing Vibe Coding\n\n\n \n\n\nGenAI\n\nLife\n\n\n \n\nMy experience using ChatGPT and Gemini Code Assist (Agent Mode)\n\n\n\nJul 31, 2025\nChanseok Kang\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTaylor Expansion\n\n\n \n\n\npython\n\nnumpy\n\nmath\n\n\n \n\nApplying Taylor Expansion in various functions.\n\n\n\nJul 28, 2025\nChanseok Kang\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Experiences I had while doing Vibe Coding\n\n\n\n\n\n\nGenAI\n\n\nLife\n\n\n\nMy experience using ChatGPT and Gemini Code Assist (Agent Mode)\n\n\n\n\n\nJul 31, 2025\n\n\nChanseok Kang\n\n\n\n\n\n\n\n\n\n\n\n\nTaylor Expansion\n\n\n\n\n\n\npython\n\n\nnumpy\n\n\nmath\n\n\n\nApplying Taylor Expansion in various functions.\n\n\n\n\n\nJul 28, 2025\n\n\nChanseok Kang\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -203,43 +161,85 @@
     "text": "Spiral stairway: Continuous personal growth; knowledge is never linear.\nBinary‑rooted tree of light: The fusion of data and insight blooming into sustainable innovation.\nCircuit‑blueprint backdrop of home appliances: Grounding philosophy in real‑world engineering.\nInterlocking gear & leaf icons: The symbiosis of efficiency and environmental care—technology in service of life.\n\nTogether they frame a meditation on praxis: how deep learning—both human and algorithmic—emerges when theory meets the constraints of the physical world, and how every hard‑won lesson becomes the next foothold upward."
   },
   {
-    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html",
-    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html",
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Google Scholar"
+  },
+  {
+    "objectID": "publications.html#section",
+    "href": "publications.html#section",
+    "title": "Publications",
+    "section": "2024",
+    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Preprint\nChanseok Kang. (2024) “Applying Data-Driven Reinforcement Learning Approach in Real World Environment”. 2024 Journal of Institute of Electronics and Information Engineers (IEIE).\nPreprint"
+  },
+  {
+    "objectID": "publications.html#section-1",
+    "href": "publications.html#section-1",
+    "title": "Publications",
+    "section": "2021",
+    "text": "2021\nChanseok Kang. (2021) “Grokking Deep Reinforcement Learning” (Korean). Hanbit Media.\n Book"
+  },
+  {
+    "objectID": "publications.html#section-2",
+    "href": "publications.html#section-2",
+    "title": "Publications",
+    "section": "2020",
+    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
+  },
+  {
+    "objectID": "publications.html#section-3",
+    "href": "publications.html#section-3",
+    "title": "Publications",
+    "section": "2019",
+    "text": "2019\nKyo-seok Song, Chanseok Kang (Reviewer). (2019) “Machine Learning with Tensorflow” (Korean). Hanbit Media.  Book"
+  },
+  {
+    "objectID": "publications.html#section-4",
+    "href": "publications.html#section-4",
+    "title": "Publications",
+    "section": "2017",
+    "text": "2017\nChanseok Kang, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.\n Preprint"
+  },
+  {
+    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html",
+    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html",
     "title": "Experiences I had while doing Vibe Coding",
     "section": "",
     "text": "Domain knowledge and experience are still necessary for coding."
   },
   {
-    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#tldr",
-    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#tldr",
+    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#tldr",
+    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#tldr",
     "title": "Experiences I had while doing Vibe Coding",
     "section": "",
     "text": "Domain knowledge and experience are still necessary for coding."
   },
   {
-    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#intro",
-    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#intro",
+    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#intro",
+    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#intro",
     "title": "Experiences I had while doing Vibe Coding",
     "section": "Intro",
     "text": "Intro\nI enjoy buying hardware and other things as a hobby and leaving them sitting in a corner. Then, when I get an idea, I take them out, assemble them, play around with them, do other things, and then dig deeper again. It’s a series of processes. In fact, “digging deeper” mostly means searching for solutions to problems I’ve tried but can’t seem to solve. Previously, I’d spend a lot of time searching, diligently reading and applying what others had written. But since I started using GenAI tools like ChatGPT and Gemini, that search time has been significantly shortened, and the resulting output is better than I expected. With that in mind, I sometimes struggle when asked to do complex tasks… I’d like to share some of that experience."
   },
   {
-    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#useful-cases-using-genai",
-    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#useful-cases-using-genai",
+    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#useful-cases-using-genai",
+    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#useful-cases-using-genai",
     "title": "Experiences I had while doing Vibe Coding",
     "section": "Useful cases using GenAI",
     "text": "Useful cases using GenAI\n\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 1: Orin with Yahboom case\n\n\n\nMy most recent hardware experience was installing my newly purchased Jetson Orin Nano Super Devkit into a CUBE NANO I purchased from Amazon. The seller’s description states that the case can accommodate models ranging from the older TX2 NX to the latest Orin NX. The advantages of this case over other cases are that it comes with an LED strip, a small fan cooler, a Wi-Fi antenna, and an OLED screen to monitor the board’s CPU usage and network bandwidth. (It didn’t actually improve performance when using the Jetson board, though.) I assembled it solely for its aesthetic appeal. The problem was that even though I installed the necessary drivers and software packages as instructed in the guide, the LEDs wouldn’t work. I searched the web and couldn’t find any other cases that had installed this type of case on a Jetson Orin like mine. I left a Q&A on the manufacturer’s website, but there was no answer, which was a bit frustrating. ChatGPT solved this problem.\n\nProblem solving through ChatGPT\nThe model used was ChatGPT-o3, which allowed me to visually observe the thought processes required to arrive at a conclusion. When I actually observed the thought processes, I felt like I was thinking like someone with knowledge in the field. First, the prompt I gave was:\n\nPrompt : I’m using a CUBE NANO case and trying to attach a Jetson Orin Nano Super to it. However, the OLED display on the case isn’t working. (Sharing the case specifications and the source code for the SW package)\nReasoning 1: Search for CUBE NANO specifications -&gt; Through search, I confirmed that the OLED is SD1306 made by Adafruit.\nReasoning 2: After checking the specifications of the SD1306, it confirmed that the OLED operates via I2C. Furthermore, after checking the board schematic of the Jetson Orin Nano, it confirmed the locations of the pins (MOSI, MISO, SCK) required for I2C communication.\nOutput: After confirming the connection between the OLED and the board, use the i2cdetect command to confirm normal recognition. A simple test application is provided for this purpose.\n\n\n\n\n\n\n\nNote\n\n\n\nFor reference, i2cdetect is a Linux user program that can check the status of devices communicating via the i2c bus.\n\n\nThanks to this, I was able to confirm that the I2C port was properly connected. Strangely, it was connected to I2C bus 7, unlike the guide that said it was connected to bus 1. I also checked the SW provided by the manufacturer and confirmed that I2C was hardcoded to bus 1, and was able to correct it. Thanks to this, I can now see how hard the Jetson is working through the OLED.\n\n\nRetrospect 1\nI’d previously heard of someone who had no prior knowledge of circuit design building a board using ChatGPT and kicad. This time, I was impressed by the hardware specifics they also helped me with. While my basic knowledge of I2C made it easy to understand, GPT’s answers were so detailed that even a complete beginner could solve the problem. From then on, I began receiving a lot of help with questions that were difficult to find through searches."
   },
   {
-    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#a-case-where-the-illusion-about-genai-was-shattered",
-    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#a-case-where-the-illusion-about-genai-was-shattered",
+    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#a-case-where-the-illusion-about-genai-was-shattered",
+    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#a-case-where-the-illusion-about-genai-was-shattered",
     "title": "Experiences I had while doing Vibe Coding",
     "section": "A case where the illusion about GenAI was shattered",
     "text": "A case where the illusion about GenAI was shattered\n\nCase 1\nAs I work on model training at work, I often need help setting up the environment for model training. In particular, the recently released Gemini Code Assist provides Agent mode, which, although only a preview, allows you to see it in action, and it even generates and debugs code on its own. (Debugging is limited due to permissions issues, of course.) While it doesn’t yet support document context like PDFs, it implements algorithms presented in papers, and it even provides a custom implementation. Perhaps because it’s still a preview, it often self-develops.\n\n\n\nwtf?\n\n\nThis was a typical example. I left it alone because it seemed to be working hard, but upon closer inspection, I noticed that it sometimes claimed to have implemented code, only to have it sit idle without actually being implemented. Or it would modify existing implementations and then re-implement them in the next response. I’m not sure if this was the reason, but after a few iterations, a message would pop up saying my quota was exhausted. Ultimately, while Gemini did a great job of establishing the framework for the implementation, I felt like reviewing and reimplementing the final product was something I had to do manually. (I also had to conduct experiments in a real-world environment…)\n\n\nCase 2\nIn fact, when I created this blog using Quarto, ChatGPT and Gemini did their best, but looking back, it only resulted in delays. The initial goal I had for Quarto was as follows:\n\nBuild a personal research portfolio\nBi-language support with Korean/English toggle\nOutput to PDF/Jupyter for each post\n\nOriginally, quarto introduced a multi-profile feature starting with version 1.5, and I thought leveraging this feature would satisfy the second requirement. However, I personally failed to implement it due to a lack of understanding of YAML syntax and the principles of rendering in quarto. This was also the case with ChatGPT and Gemini. When I asked them to implement something in Python, they did it well, but even when I asked them to organize the YAML file to avoid errors, they only returned incorrect results. I personally explored the R package “babelquarto”, which supports multi-language rendering, and tried to use it to help with the implementation, but this issue remained unresolved. Furthermore, when executing GitHub actions, the layout would strangely break, and when I tried to relay warnings via workflow files and logs, they often failed to recognize the error, likely due to permissions issues. ChatGPT even responded that even though the YAML file, which recognizes syntax based on indentation, was correctly uploaded, it would be printed on a single line, breaking the layout. I even shared a screenshot with them to get their response corrected.\n\n\nRetrospect 2\nRecent examples show that even those with limited coding experience can easily implement their desired functionality using Vibe Coding, such as ChatGPT, Copilot, and Claude. However, from personal experience, I’ve noticed that there are still areas that require manual coding, such as those requiring specialized code or requiring access privileges. (Thanks to this, I was able to learn a bit about YAML inheritance structures and R syntax through my own research.)"
   },
   {
-    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#in-short",
-    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/2025-07-31_Vibe_Coding_Success_Fail.html#in-short",
+    "objectID": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#in-short",
+    "href": "posts/2025-07-31_Vibe_Coding_Success_Fail/post.html#in-short",
     "title": "Experiences I had while doing Vibe Coding",
     "section": "In Short",
     "text": "In Short\nAlthough GenAI implements code, and it’s certainly easier than before, it’s difficult to blindly trust the output, and I think that related people still need the ability to review and modify it together. And above all, seeing cases where the model can’t properly identify problems due to access rights issues, I think that at least for the model to modify it as a person wants, it needs at least an eye to look at the computer screen or a robotic arm(?) that can control I/O. So, I think HuggingFace is trying to overcome these limitations with things like lerobot or Reachy Mini. I’d like to buy one of these and try it out, but for now, I’d like to try something like the robot dog that I have at home."
