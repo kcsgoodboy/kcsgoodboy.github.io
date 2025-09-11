@@ -17,6 +17,13 @@ library(distilltools)
 ```
 
 ## 2025
+
+**(2025. 09)** 제가 베타리더로 참여한 **"LLM 프로덕션 엔지니어링"** (제이펍) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217428546")`
+
+**(2025. 08)** 제가 베타리더로 참여한 **"딥러닝 제대로 이해하기"** (제이펍) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217252460")`
+
 **(2025. 08)** 제가 베타리더로 참여한 **"(LUVIT) 커서로 시작하는 바이브 코딩"** (제이펍) 책이 출간되었습니다.
 `r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217127882")`
 
