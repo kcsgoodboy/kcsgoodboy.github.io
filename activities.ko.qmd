@@ -18,9 +18,35 @@ library(distilltools)
 
 ## 2025
 
-**(2025. 09)** 제가 베타리더로 참여한 **요즘 개발자를 위한 시스템 설계 수업"** (길벗) 책이 출간되었습니다.
-`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217576068")`
+**(2025. 11)** 제가 베타리더로 참여한 **"바이브 코딩 너머 개발자 생존법"** (한빛미디어) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218400836")`
 
+**(2025. 11)** 제가 베타리더로 참여한 **"그림으로 배우는 StatQuest 신경망 & AI 강의"** (제이펍) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218314999")`
+
+**(2025. 10)** 제가 베타리더로 참여한 **"라마인덱스로 배우는 데이터 기반 AI 애플리케이션"** (제이펍) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218191644")`
+
+**(2025. 10)** 제가 베타리더로 참여한 **"0과 1 사이"** (한빛미디어) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218172019")`
+
+**(2025. 10)** 제가 베타리더로 참여한 **"실무로 통하는 LLM 어플리케이션 설계"** (한빛미디어) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218171872")`
+
+**(2025. 10)** 제가 베타리더로 참여한 **"유니티 교과서"** (길벗) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218148306")`
+
+**(2025. 09)** 제가 베타리더로 참여한 **"AI 엔지니어링"** (한빛미디어) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217939673")`
+
+**(2025. 09)** 제가 베타리더로 참여한 **"AI 프로덕트 기획과 운영"** (한빛미디어) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217939667")`
+
+**(2025. 09)** 제가 베타리더로 참여한 **"할루시네이션을 줄여주는 프롬프트 엔지니어링"** (한빛미디어) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217930344")`
+
+**(2025. 09)** 제가 베타리더로 참여한 **"요즘 개발자를 위한 시스템 설계 수업"** (길벗) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217576068")`
 
 **(2025. 09)** 제가 베타리더로 참여한 **"쏙쏙 들어오는 자료구조"** (제이펍) 책이 출간되었습니다.
 `r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217555322")`
