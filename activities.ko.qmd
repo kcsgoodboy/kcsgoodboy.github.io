@@ -17,6 +17,17 @@ library(distilltools)
 ```
 
 ## 2025
+**(2025. 12)** 제가 베타리더로 참여한 **"AI를 움직이는 수학 이야기"** (한빛미디어) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218821406")`
+
+**(2025. 12)** 제가 베타리더로 참여한 **"프로그램을 읽는 기술"** (길벗) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218795409")`
+
+**(2025. 12)** 제가 베타리더로 참여한 **"한 번에 끝내는 라마인덱스 × RAG × AI 에이전트"** (제이펍) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218777354")`
+
+**(2025. 12)** 제가 베타리더로 참여한 **"AI 자율학습 밑바닥부터 배우는 AI 에이전트"** (길벗) 책이 출간되었습니다.
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218729898")`
 
 **(2025. 11)** 제가 베타리더로 참여한 **"바이브 코딩 너머 개발자 생존법"** (한빛미디어) 책이 출간되었습니다.
 `r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218400836")`

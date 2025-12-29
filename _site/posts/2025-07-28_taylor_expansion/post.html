@@ -63,8 +63,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -142,7 +142,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item"><div class="dropdown" id="languages-links-parent">
-<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2025-07-28_taylor_expansion/post.html" id="language-link-ko">한국어</a></li></ul>
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2025-07-28_taylor_expansion/post.html" id="language-link-ko">한국어</a></li></ul>
 </div></li>
 <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
@@ -216,7 +216,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 18, 2025</p>
+        <p class="date-modified">December 29, 2025</p>
       </div>
     </div>
       
@@ -244,7 +244,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content"><section id="package-import" class="level2"><h2 class="anchored" data-anchor-id="package-import">Package Import</h2>
-<div id="95475423" class="cell" data-execution_count="1">
+<div id="144db526" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -270,7 +270,7 @@ Note
 <p>If the original form of the function we want to find is an exponential function, we can easily apply the Taylor Expansion.</p>
 <p><span class="math display">\[f(x)=f'(x)=f''(x)=\dots=f^{(n)}(x)=\exp(x)\]</span></p>
 <p>This is because the derivative of the exponential function is the exponential function itself. The code and visualization for this can be expressed as follows.</p>
-<div id="a4fb7b89" class="cell" data-execution_count="2">
+<div id="dfdf4067" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ExpTaylor(x, x0, nmax):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax <span class="op">+</span> <span class="dv">1</span>):</span>
@@ -290,14 +290,14 @@ Note
 <p>In the original example, <code>np.math.factorial</code> was used for the factorial calculation, but the <code>math</code> sub-package was not originally provided by <code>numpy</code>. So, as the version was updated and <code>math</code> was removed, the example above was changed to calculate it through <code>scipy.special</code>. The result is the same as we think.</p>
 </div>
 </div>
-<div id="1bc3bb5a" class="cell" data-execution_count="3">
+<div id="c0cafb4d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>np.exp(<span class="dv">1</span>), ExpTaylor(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(np.float64(2.718281828459045), np.float64(2.7182818011463845))</code></pre>
 </div>
 </div>
 <p>So, if you compare the actual value of the natural function with the approximate value, you can see that they are quite similar.</p>
-<div id="5190232a" class="cell" data-execution_count="4">
+<div id="d89fc64b" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">5</span>, <span class="dv">100</span>])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -313,7 +313,7 @@ Note
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><img src="post_files/figure-html/cell-5-output-1.png" width="593" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -326,14 +326,14 @@ Note
 <p><span class="math inline">\(f'(0) = f^{(5)}(0) = f^{(9)}(0) = \dots = 1\)</span></p>
 <p><span class="math inline">\(f'''(0) = f^{(7)}(0) = f^{(11)}(0) = \dots = -1\)</span></p>
 <p><span class="math inline">\(\sin(x) = x - \frac{1}{3!}x^3 + \frac{1}{5!}x^5  - \frac{1}{7!}x^7 \pm \dots = \sum_{n=0}^\infty \frac{(-1)^n}{(2n+1)!}x^{2n+1}\)</span></p>
-<div id="d124337b" class="cell" data-execution_count="5">
+<div id="8a76b465" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SinTaylor(x, nmax):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> t <span class="op">+</span> ((<span class="op">-</span><span class="dv">1</span>) <span class="op">**</span> n <span class="op">/</span> scipy.special.factorial(<span class="dv">2</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span>)) <span class="op">*</span> (x <span class="op">**</span> (<span class="dv">2</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span>))</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ef04b3c7" class="cell" data-execution_count="6">
+<div id="fe341832" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">101</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>])</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -349,28 +349,28 @@ Note
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><img src="post_files/figure-html/cell-7-output-1.png" width="600" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="6e67cbc6" class="cell" data-execution_count="7">
+<div id="ee904681" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>np.sin(<span class="fl">2.5</span>), SinTaylor(<span class="fl">2.5</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>(np.float64(0.5984721441039564), np.float64(0.598472144104011))</code></pre>
+<pre><code>(np.float64(0.5984721441039565), np.float64(0.598472144104011))</code></pre>
 </div>
 </div>
 </section><section id="implementation-of-general-function" class="level2"><h2 class="anchored" data-anchor-id="implementation-of-general-function">1.3 Implementation of General Function</h2>
 <p>The previous example was shown assuming that the derivative for a simple function is known, and the formula for obtaining the actual derivative is as follows.</p>
 <p><span class="math display">\[f'(x) = \lim_{h\rightarrow 0} \frac{f(x+h)-f(x)}{h}\]</span></p>
-<div id="d2beca9a" class="cell" data-execution_count="8">
+<div id="c87485c1" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> derivative(f, x, h):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adding Small number to avoid ZeroDivision Error</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (f(x <span class="op">+</span> h) <span class="op">-</span> f(x)) <span class="op">/</span> (h <span class="op">+</span> <span class="fl">0.000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>However, the above formula was for obtaining the first derivative, and the <span class="math inline">\(n\)</span>-th derivative, which is differentiated <span class="math inline">\(n\)</span> times, is obtained by repeatedly performing the above formula, which is expressed a little more complicatedly as follows.</p>
 <p><span class="math display">\[f^{(n)}(x) = \lim_{h\rightarrow 0} \frac{1}{h^n}\sum_{k=0}^n(-1)^{k+n} \,\frac{n!}{k!(n-k)!} \,f(x+kh)\]</span></p>
-<div id="16b3517d" class="cell" data-execution_count="9">
+<div id="41a86f1b" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nDerivative(f, x, h, n):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">+</span> <span class="dv">1</span>):</span>
@@ -379,27 +379,27 @@ Note
 </div>
 <p>let’s find the derivative for the following equation.</p>
 <p><span class="math display">\[f(x) = 2 * \sin^2(x) + x\]</span></p>
-<div id="0d9c0196" class="cell" data-execution_count="10">
+<div id="bd3c12dd" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(x):</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> np.sin(x) <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="161e8b9c" class="cell" data-execution_count="11">
+<div id="bb2d26d2" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">10.5</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="853261ab" class="cell" data-execution_count="12">
+<div id="93cd2c55" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>func(x0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>np.float64(12.04772926022427)</code></pre>
 </div>
 </div>
-<div id="754884ce" class="cell" data-execution_count="13">
+<div id="e3e15fcb" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>derivative(func, x0, h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>np.float64(2.5529714426967454)</code></pre>
 </div>
 </div>
-<div id="57837e54" class="cell" data-execution_count="14">
+<div id="3b83c65c" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nDerivative(func, x0, h, <span class="dv">0</span>), nDerivative(func, x0, h, <span class="dv">1</span>), nDerivative(func, x0, h, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>(np.float64(12.04772926022427),
@@ -407,7 +407,7 @@ Note
  np.float64(-2.802754599797907))</code></pre>
 </div>
 </div>
-<div id="ff0e8d74" class="cell" data-execution_count="15">
+<div id="6f4f0fc9" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nDerivative(func, x0, h, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>np.float64(2.5529969724111723)</code></pre>
@@ -417,7 +417,7 @@ Note
 <p>Now, let’s bring back the Taylor Expansion formula introduced at the beginning:</p>
 <p><span class="math display">\[f(x)=\sum_{n=0}^\infty \frac{1}{n!}f^{(n)}(x_0)\,(x-x_0)^n\]</span></p>
 <p>Ultimately, this formula allows for approximation only if the derivative of the function can be found. Now, let’s replace the derivative part with the function defined above.</p>
-<div id="e758765b" class="cell" data-execution_count="16">
+<div id="6a94011a" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> taylor(f, x, x0, nmax, h):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax <span class="op">+</span> <span class="dv">1</span>):</span>
@@ -425,7 +425,7 @@ Note
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>First, if we approximate with 5 samples and set the derivative step to 0.1, it approximates well within a certain range, but if it goes out of range, the value jumps out.</p>
-<div id="02388165" class="cell" data-execution_count="17">
+<div id="fcc29e71" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>])</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -443,13 +443,13 @@ Note
 <span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><img src="post_files/figure-html/cell-18-output-1.png" width="608" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>If nmax is increased by 10, the output gets more accurate result besides previous ones.</p>
-<div id="f3f70bba" class="cell" data-execution_count="18">
+<div id="972fcb1e" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>])</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -467,13 +467,13 @@ Note
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><img src="post_files/figure-html/cell-19-output-1.png" width="608" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Additionally, we can get more accurate result if we decrease the step size that used to calculate the derivative.</p>
-<div id="19f69cd4" class="cell" data-execution_count="19">
+<div id="37c08ae8" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>])</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -491,7 +491,7 @@ Note
 <span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><img src="post_files/figure-html/cell-20-output-1.png" width="608" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
