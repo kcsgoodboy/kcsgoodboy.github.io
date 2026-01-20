@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chanseok Kang">
+<meta name="description" content="2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약">
 
-<title>Blog – Chan’s Research Note</title>
+<title>Multi-task learning – Chan’s Research Note</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +25,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -57,48 +57,19 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
 
 <script type="text/javascript">
@@ -141,22 +112,22 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -164,160 +135,171 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="R2VuQUk=">GenAI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGlmZQ==">Life <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWF0aA==">math <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bnVtcHk=">numpy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div></div></div>
-<!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Multi-task learning</h1>
+                  <div>
+        <div class="description">
+          2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+              </div>
+                  </div>
   </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 1월 20일</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2026년 1월 20일</p>
+      </div>
+    </div>
+      
+    </div>
+    
   
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#task의-정의" id="toc-task의-정의" class="nav-link" data-scroll-target="#task의-정의">Task의 정의</a></li>
+  <li><a href="#single-task-vs.-multi-task" id="toc-single-task-vs.-multi-task" class="nav-link" data-scroll-target="#single-task-vs.-multi-task">Single-task vs.&nbsp;Multi-task</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
-</header>
 
 
 
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-
-<div class="quarto-post image-right" data-index="0" data-categories="TGlmZQ==" data-listing-date-sort="1766934000000" data-listing-file-modified-sort="1767054554928" data-listing-date-modified-sort="1768834800000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1340">
-
-<div class="thumbnail">
-<a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">
-
-<img loading="lazy" src="./posts/2025-12-29_retrospective_of_2025/images/tsne_visualization.png" class="thumbnail-image">
-
-</a>
-</div>
-
-<div class="body">
-
-<h3 class="no-anchor listing-title"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">retrospective of 2025</a></h3>
-<div class="listing-subtitle"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external"></a></div>
-
- 
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGlmZQ=='); return false;">Life</div>
+<section id="강의-및-자료" class="level3">
+<h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<div>
 
 </div>
- 
-
-<div class="delink listing-description"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">Reflections on 2025 - Achievements, Regrets, and Resolutions</a></div>
-
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://youtu.be/vI46tzt4O7Y?si=lhD3KJkDHqIYaiyd"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid figure-img"></a></p>
+<figcaption>YouTube</figcaption>
+</figure>
 </div>
-<div class="metadata"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">
-<div class="listing-date">Dec 29, 2025</div>
-<div class="listing-author">Chanseok Kang</div>
-
-</a></div>
-
 </div>
-
-<div class="quarto-post image-right" data-index="1" data-categories="R2VuQUklMkNMaWZl" data-listing-date-sort="1753887600000" data-listing-file-modified-sort="1766993453470" data-listing-date-modified-sort="1768834800000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1315">
-
-<div class="thumbnail">
-<a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">
-
-<img loading="lazy" src="./posts/2025-07-31_Vibe_Coding_Success_Fail/images/orin_case.jpeg" class="thumbnail-image">
-
-</a>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://cs330.stanford.edu/materials/cs330_multitask_transfer_2023.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid figure-img"></a></p>
+<figcaption>Slides</figcaption>
+</figure>
 </div>
-
-<div class="body">
-
-<h3 class="no-anchor listing-title"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">Experiences I had while doing Vibe Coding</a></h3>
-<div class="listing-subtitle"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external"></a></div>
-
- 
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2VuQUk='); return false;">GenAI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGlmZQ=='); return false;">Life</div>
-
 </div>
- 
-
-<div class="delink listing-description"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">My experience using ChatGPT and Gemini Code Assist (Agent Mode)</a></div>
-
 </div>
-<div class="metadata"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">
-<div class="listing-date">Jul 31, 2025</div>
-<div class="listing-author">Chanseok Kang</div>
-
-</a></div>
-
 </div>
-
-<div class="quarto-post image-right" data-index="2" data-categories="cHl0aG9uJTJDbnVtcHklMkNtYXRo" data-listing-date-sort="1753628400000" data-listing-file-modified-sort="1766993453469" data-listing-date-modified-sort="1768834800000" data-listing-reading-time-sort="6" data-listing-word-count-sort="1003">
-
-<div class="thumbnail">
-<a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">
-
-<img loading="lazy" src="./posts/2025-07-28_taylor_expansion/images/taylor_expansion.png" class="thumbnail-image">
-
-</a>
+</section>
+<section id="task의-정의" class="level2">
+<h2 class="anchored" data-anchor-id="task의-정의">Task의 정의</h2>
+<p>강의에서 소개하고 있는 task의 정의는 다음과 같다.</p>
+<p><span id="eq-task-definition"><span class="math display">\[
+\mathcal{T}_i \triangleq \{p_i(x), p_i(y \vert x), \mathcal{L}_i\}
+\tag{1}\]</span></span></p>
+<p>이 수식은 특정 task <span class="math inline">\(\mathcal{T}_i\)</span>가 지금까지 많이 다뤄졌던 single-task learning과 같이 단순한 데이터 덩어리가 아니라, 각 세가지의 핵심 요소의 집합으로 정의된다는 것을 의미한다. 우선 <span class="math inline">\(p_i(x)\)</span> 는 주어진 task에서 나오는 문제의 형태 (Input Distribution)가 된다. 엄밀히 말하면 <span class="math inline">\(p\)</span> 자체가 데이터의 분포가 될텐데, 이미지나 텍스트같은 모델에 입력되는 데이터 <span class="math inline">\(x\)</span>가 어떤 특성을 가지고 생성되는지를 나타낸다. 예를 들어서 여러 언어의 필기체를 인식하는 문제가 주어져 있을 때, 영어 문장을 구성하는 이미지의 생김새와 한글 문장을 인식하는 이미지가 생김새가 완전히 다르기 때문에, (즉, <span class="math inline">\(x\)</span>가 다르기 때문에) 이 경우는 <span class="math inline">\(p(x)\)</span>가 서로 다른 케이스가 될 것이다.</p>
+<p>두번째 요소인 <span class="math inline">\(p_i(y \vert x)\)</span>는 주어진 문제에 대한 정답은 무엇인가 (Label Distribution)를 정의한다. 앞에서 정의한 것처럼 주어진 문제를 표현하는 <span class="math inline">\(x\)</span>에 대해서 정답 레이블인 <span class="math inline">\(y\)</span>에 대한 확률 분포를 표현한 것이고, 쉽게 말하면 입력을 보고 정답을 매기는 “규칙”이 되겠다.</p>
+<p>마지막 요소인 <span class="math inline">\(\mathcal{L}_i\)</span>은 흔히 통용되는 표현인 손실함수인데, 어떤 모델을 학습시킬 때는 해당 모델에게 잘했는지 못했는지에 대한 점수를 정의한 것이다. 결과적으로 모델이 주어진 입력에 대한 예측값을 구했을 때, 이를 실제값간의 차이를 토대로 얼마나 잘했는지 여부를 결정하게 된다. 물론 이 부분은 task마다 계산하는 방식이 다르게 될 것이다. 예를 들어서 어떤 task는 분류 문제를 해결해야 하고, 다른 task에서는 회귀 문제를 풀어야 한다면 각 task마다 정의되어야 할 손실함수는 다를 것이다.</p>
+<p>그래서 이 수식이 설명하는 것은 앞에서 설명했던 것처럼 task를 어떤 단순한 데이터셋으로 정의하지 말고, 하나의 분포(Distribution)으로 봐야 한다는 부분이다. 그래서 모델이 단순히 데이터셋 자체를 암기하는 것을 넘어서 task의 근본적인 분포를 배워 새로운 데이터에서도 잘 적응(Generalization)할 수 있는지를 평가하는 것이 중요하다.</p>
+</section>
+<section id="single-task-vs.-multi-task" class="level2">
+<h2 class="anchored" data-anchor-id="single-task-vs.-multi-task">Single-task vs.&nbsp;Multi-task</h2>
+<div id="fig-tasks" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-tasks" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-single-task" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-single-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/single_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks">
 </div>
-
-<div class="body">
-
-<h3 class="no-anchor listing-title"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">Taylor Expansion</a></h3>
-<div class="listing-subtitle"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external"></a></div>
-
- 
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bnVtcHk='); return false;">numpy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aA=='); return false;">math</div>
-
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-single-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Single-task model
+</figcaption>
+</figure>
 </div>
- 
-
-<div class="delink listing-description"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">Applying Taylor Expansion in various functions.</a></div>
-
 </div>
-<div class="metadata"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">
-<div class="listing-date">Jul 28, 2025</div>
-<div class="listing-author">Chanseok Kang</div>
-
-</a></div>
-
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-tasks" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-multi-task" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-multi-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/multi_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks">
 </div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Multi-task model
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;1: task의 형태에 대응되는 모델 구조
+</figcaption>
+</figure>
+</div>
+<p>Single-task를 다루는 모델과 multi-task를 다루는 모델간의 근본적인 차이는 해결해야 할 task를 어떻게 정의하고 입력으로 받느냐에 따른 것이다. <a href="#fig-single-task" class="quarto-xref">그림&nbsp;1 (a)</a> 에서 보듯이, Single-task를 다루는 모델의 경우는 단일 데이터셋에 대한 손실함수를 최소화하는 파라미터 <span class="math inline">\(\theta\)</span>를 찾는 것이 목적이다. 이 경우 모델은 입력 데이터 <span class="math inline">\(x\)</span>만 보고 <span class="math inline">\(y\)</span>를 추론하는 <span class="math inline">\(f_{\theta}(y \vert x)\)</span>의 형태를 가진다. 참고로 여기에는 하나의 가정이 포함되어 있는데, 훈련 데이터와 테스트 데이터가 동일한 분포에서 추출되었다는 가정이 녹아져 있다. 이때는 task에 대한 정보를 따로 넣어주지 않기 때문에 다른 표현으로는 <strong>task-agnostic</strong>이란 이름으로 정의하기도 한다.</p>
+<p>반면, Multi-task를 다루는 모델의 경우 여러 개의 task <span class="math inline">\(\mathcal{T}_i\)</span> 집합을 동시에 학습한다. 여기서 각 task는 앞에서 소개한 <a href="#eq-task-definition" class="quarto-xref">방정식&nbsp;1</a> 에 정의되어 있는 세가지 요소로 구성된다. 여기서 이전의 single-task와 구분되는 큰 특징 중 하나는 바로 task descriptor <span class="math inline">\(z_i\)</span>, 쉽게 말해서 현재 수행해야 할 task가 어떤 것인지에 대한 정보를 부가적으로 입력해준다는 것이다. 그래서 모델의 형태도 <span class="math inline">\(f_{\theta}(y \vert x, z_i)\)</span> 로 정의되어, 다중 task에 대한 손실함수를 최소화하는 파라미터 <span class="math inline">\(\theta\)</span>를 찾는 것이 목적이 된다. 강의 자료에서는 아래와 같이 표현했다.</p>
+<p><span class="math display">\[
+\min_{\theta} \sum_{i=1}^T \mathcal{L}_i (\theta, \mathcal{D}_i)
+\]</span></p>
 
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -505,12 +487,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -878,6 +860,55 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
 </script>
 </div> <!-- /content -->
 

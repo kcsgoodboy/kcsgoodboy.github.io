@@ -1,0 +1,72 @@
+---
+title: Multi-task learning
+description: 2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약
+date: '2026-01-20'
+date-modified: today
+image: ''
+lang: ko
+categories:
+  - Lecture
+---
+### 강의 및 자료
+
+::: {layout-ncol=2}
+[![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://youtu.be/vI46tzt4O7Y?si=lhD3KJkDHqIYaiyd)
+
+[![Slides](https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&logo=googleslides&logoColor=white)](https://cs330.stanford.edu/materials/cs330_multitask_transfer_2023.pdf)
+:::
+
+포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.
+
+## Task의 정의
+
+강의에서 소개하고 있는 task의 정의는 다음과 같다.
+
+$$ 
+\mathcal{T}_i \triangleq \{p_i(x), p_i(y \vert x), \mathcal{L}_i\}
+$$ {#eq-task-definition}
+
+ 이 수식은 특정 task $\mathcal{T}_i$가 지금까지 많이 다뤄졌던 single-task learning과 같이 단순한 데이터 덩어리가 아니라, 각 세가지의 핵심 요소의 집합으로 정의된다는 것을 의미한다. 우선 $p_i(x)$ 는 주어진 task에서 나오는 문제의 형태 (Input Distribution)가 된다. 엄밀히 말하면 $p$ 자체가 데이터의 분포가 될텐데, 이미지나 텍스트같은 모델에 입력되는 데이터 $x$가 어떤 특성을 가지고 생성되는지를 나타낸다. 예를 들어서 여러 언어의 필기체를 인식하는 문제가 주어져 있을 때, 영어 문장을 구성하는 이미지의 생김새와 한글 문장을 인식하는 이미지가 생김새가 완전히 다르기 때문에, (즉, $x$가 다르기 때문에) 이 경우는 $p(x)$가 서로 다른 케이스가 될 것이다. 
+
+ 두번째 요소인 $p_i(y \vert x)$는 주어진 문제에 대한 정답은 무엇인가 (Label Distribution)를 정의한다. 앞에서 정의한 것처럼 주어진 문제를 표현하는 $x$에 대해서 정답 레이블인 $y$에 대한 확률 분포를 표현한 것이고, 쉽게 말하면 입력을 보고 정답을 매기는 "규칙"이 되겠다.
+
+ 마지막 요소인 $\mathcal{L}_i$은 흔히 통용되는 표현인 손실함수인데, 어떤 모델을 학습시킬 때는 해당 모델에게 잘했는지 못했는지에 대한 점수를 정의한 것이다. 결과적으로 모델이 주어진 입력에 대한 예측값을 구했을 때, 이를 실제값간의 차이를 토대로 얼마나 잘했는지 여부를 결정하게 된다. 물론 이 부분은 task마다 계산하는 방식이 다르게 될 것이다. 예를 들어서 어떤 task는 분류 문제를 해결해야 하고, 다른 task에서는 회귀 문제를 풀어야 한다면 각 task마다 정의되어야 할 손실함수는 다를 것이다.
+
+ 그래서 이 수식이 설명하는 것은 앞에서 설명했던 것처럼 task를 어떤 단순한 데이터셋으로 정의하지 말고, 하나의 분포(Distribution)으로 봐야 한다는 부분이다. 그래서 모델이 단순히 데이터셋 자체를 암기하는 것을 넘어서 task의 근본적인 분포를 배워 새로운 데이터에서도 잘 적응(Generalization)할 수 있는지를 평가하는 것이 중요하다.
+
+## Single-task vs. Multi-task
+
+::: {#fig-tasks layout-ncol=2}
+
+![Single-task model](./images/single_task.png){#fig-single-task}
+
+![Multi-task model](./images/multi_task.png){#fig-multi-task}
+
+task의 형태에 대응되는 모델 구조
+:::
+
+ Single-task를 다루는 모델과 multi-task를 다루는 모델간의 근본적인 차이는 해결해야 할 task를 어떻게 정의하고 입력으로 받느냐에 따른 것이다. @fig-single-task 에서 보듯이, Single-task를 다루는 모델의 경우는 단일 데이터셋에 대한 손실함수를 최소화하는 파라미터 $\theta$를 찾는 것이 목적이다. 이 경우 모델은 입력 데이터 $x$만 보고 $y$를 추론하는 $f_{\theta}(y \vert x)$의 형태를 가진다. 참고로 여기에는 하나의 가정이 포함되어 있는데, 훈련 데이터와 테스트 데이터가 동일한 분포에서 추출되었다는 가정이 녹아져 있다. 이때는 task에 대한 정보를 따로 넣어주지 않기 때문에 다른 표현으로는 **task-agnostic**이란 이름으로 정의하기도 한다.
+
+반면, Multi-task를 다루는 모델의 경우 여러 개의 task $\mathcal{T}_i$ 집합을 동시에 학습한다. 여기서 각 task는 앞에서 소개한 @eq-task-definition 에 정의되어 있는 세가지 요소로 구성된다. 여기서 이전의 single-task와 구분되는 큰 특징 중 하나는 바로 task descriptor $z_i$, 쉽게 말해서 현재 수행해야 할 task가 어떤 것인지에 대한 정보를 부가적으로 입력해준다는 것이다. 그래서 모델의 형태도 $f_{\theta}(y \vert x, z_i)$ 로 정의되어, 다중 task에 대한 손실함수를 최소화하는 파라미터 $\theta$를 찾는 것이 목적이 된다. 강의 자료에서는 아래와 같이 표현했다.
+
+$$
+\min_{\theta} \sum_{i=1}^T \mathcal{L}_i (\theta, \mathcal{D}_i)
+$$
+
+그러면 task descriptor $z_i$는 어떻게 졍의하나가 multi-task의 관건이 될텐데, 사실 학습하기 나름이다. 뭔가 task에 대한 정보를 숫자로 표현해서 다르다는 것을 표기하려면 그냥 정수 형태로 구분지어도 되고, 혹은 one-hot vector의 형태로 부여할 수 있다. 아니면 사람이 정의하는 것처럼 언어 형태로도 정의할 수 있고, 뭔가 task에 대한 specification을 담은 정보를 줄 수도 있다. 이를 정의하는 문제도 역시 Multi-task 학습의 효율성 측면에서 고민해볼 부분이 되겠다.
+
+여기까지 오면 이제 multi-task를 다루는 모델을 학습하기 위해서는 몇가지 정의할 부분이 생긴다. 크게
+
+- $z_i$를 어떻게 정의하고, 조건을 구분할 수 있을까?
+- 각각의 task의 학습을 위한 objective function은 어떻게 정의할 수 있을까?
+- 여러 개의 objective function을 어떻게 최적화할 수 있을까?
+
+로 나눌 수 있는데, 각 부분에 대해서 강의에서 소개하고 있다.
+
+## Conditioning on the task
+
+먼저, task descriptor를 어떻게 정의하고, 모델 학습시 개별적으로 학습할 수 있을지에 대한 부분이다. 우선, 쉬운 이해를 위해서 task decriptor를 one-hot vector로 정의한다고 가정해보자. 그러면 모델을 만드는 입장에서 고민해볼 수 있는 부분은 과연 어떻게 하면 multi-task에 대응할 수 있는 모델을 task에 conditioning해서 학습시킬 수 있을까 하는 것이다. 
+
+![independent-training](./images/independent_training.png) {#fig-independent-training}
+
+가장 쉽게 생각해볼 수 있는 부분은 개별 Task에 해당하는 모델을 각각 학습시키고 출력단에서 conditioning하는 것이다. 쉽게 말해 multiplicative gating, 즉 task descriptor가 해당 Task일때만 해당 task로 학습시킨 network의 출력을 사용하는 방법이다. 물론 이 경우는 내부의 network 간의 parameter sharing은 발생하지 않고, 외부에서 바라봤을 때는 하나의 큰 network처럼 보이게 된다.
