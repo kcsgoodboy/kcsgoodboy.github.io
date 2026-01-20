@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Chanseok Kang">
+<meta name="description" content="Kickstarter를 통해 투자한 Particle Tachyon 수령 및 환경 구성">
 
-<title>Blog – Chan’s Research Note</title>
+<title>Particle Tachyon 개봉 – Chan’s Research Note</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +25,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -57,48 +57,19 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
 
 <script type="text/javascript">
@@ -111,52 +82,23 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -164,160 +106,173 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="R2VuQUk=">GenAI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TGlmZQ==">Life <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWF0aA==">math <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bnVtcHk=">numpy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(1)</span></div></div></div>
-<!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Blog</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Particle Tachyon 개봉</h1>
+                  <div>
+        <div class="description">
+          Kickstarter를 통해 투자한 Particle Tachyon 수령 및 환경 구성
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Life</div>
+                <div class="quarto-category">Kickstarter</div>
+                <div class="quarto-category">EdgeAI</div>
+              </div>
+                  </div>
   </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025년 8월 7일</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2026년 1월 20일</p>
+      </div>
+    </div>
+      
+    </div>
+    
   
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">tl;dr</a></li>
+  <li><a href="#서두" id="toc-서두" class="nav-link" data-scroll-target="#서두">서두</a></li>
+  <li><a href="#particle-tachyon" id="toc-particle-tachyon" class="nav-link" data-scroll-target="#particle-tachyon">Particle Tachyon</a></li>
+  <li><a href="#환경-구성" id="toc-환경-구성" class="nav-link" data-scroll-target="#환경-구성">환경 구성</a></li>
+  <li><a href="#문제" id="toc-문제" class="nav-link" data-scroll-target="#문제">문제</a></li>
+  <li><a href="#결론-및-계획" id="toc-결론-및-계획" class="nav-link" data-scroll-target="#결론-및-계획">결론 및 계획</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
-</header>
 
 
 
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-
-<div class="quarto-post image-right" data-index="0" data-categories="TGlmZQ==" data-listing-date-sort="1766934000000" data-listing-file-modified-sort="1767054554928" data-listing-date-modified-sort="1768834800000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1340">
-
-<div class="thumbnail">
-<a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">
-
-<img loading="lazy" src="./posts/2025-12-29_retrospective_of_2025/images/tsne_visualization.png" class="thumbnail-image">
-
-</a>
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">tl;dr</h2>
+<p>Particle Tachyon은 USB alt 모드를 지원하는데, c-to-c display가 안되더라</p>
+</section>
+<section id="서두" class="level2">
+<h2 class="anchored" data-anchor-id="서두">서두</h2>
+<p>이전에 언급했던 것처럼 Mini pupper 2라는 로봇개를 조립하고 있다. 그런데 제조사 사이트를 참고하면 Raspberry PI CM4가 있어야 보드에 직결해서 사용이 가능하다고 한다. 직접 물어본 바로는 일반 Raspberry PI 4로도 연결이 가능하긴 한데, 선 연결이 필요하다고 설명을 해주는데, 부연으로 7월 정도에 퀄컴칩을 쓴 좋은 모듈이 나와서 살 생각이 없냐고 물어본다. 처음에는 그걸 써야 다른 거랑 연동해서 실시간 제어가 가능하겠다 싶었는데… 생각해보니까 내가 이전에 Kickstarter를 통해서 펀딩을 해놓은 게(?) 있었다는게 떠올라서 기다리고, 얼마전에 수령했다.</p>
+</section>
+<section id="particle-tachyon" class="level2">
+<h2 class="anchored" data-anchor-id="particle-tachyon">Particle Tachyon</h2>
+<div id="fig-orin_case" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="./images/particle.jpg" class="img-fluid figure-img"></p>
 </div>
-
-<div class="body">
-
-<h3 class="no-anchor listing-title"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">retrospective of 2025</a></h3>
-<div class="listing-subtitle"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external"></a></div>
-
- 
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGlmZQ=='); return false;">Life</div>
-
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="./images/front.jpg" class="img-fluid figure-img"></p>
 </div>
- 
-
-<div class="delink listing-description"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">Reflections on 2025 - Achievements, Regrets, and Resolutions</a></div>
-
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="./images/backplate.jpg" class="img-fluid figure-img"></p>
 </div>
-<div class="metadata"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">
-<div class="listing-date">Dec 29, 2025</div>
-<div class="listing-author">Chanseok Kang</div>
-
-</a></div>
-
 </div>
-
-<div class="quarto-post image-right" data-index="1" data-categories="R2VuQUklMkNMaWZl" data-listing-date-sort="1753887600000" data-listing-file-modified-sort="1766993453470" data-listing-date-modified-sort="1768834800000" data-listing-reading-time-sort="7" data-listing-word-count-sort="1315">
-
-<div class="thumbnail">
-<a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">
-
-<img loading="lazy" src="./posts/2025-07-31_Vibe_Coding_Success_Fail/images/orin_case.jpeg" class="thumbnail-image">
-
-</a>
 </div>
-
-<div class="body">
-
-<h3 class="no-anchor listing-title"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">Experiences I had while doing Vibe Coding</a></h3>
-<div class="listing-subtitle"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external"></a></div>
-
- 
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('R2VuQUk='); return false;">GenAI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('TGlmZQ=='); return false;">Life</div>
-
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;1: Particle Tachyon
+</figcaption>
+</figure>
 </div>
- 
-
-<div class="delink listing-description"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">My experience using ChatGPT and Gemini Code Assist (Agent Mode)</a></div>
-
+<p>내가 Kickstarter를 통해서 펀딩한 제품은 <a href="https://www.particle.io/">Particle</a>이란 회사에서 구입한 <a href="https://www.particle.io/tachyon/">Tachyon</a>이란 Single Computer Board (SBC)이다. 사실 Raspberry PI가 이미 대중화가 되어버린 시점에서 Raspberry PI의 GPIO 핀배열과 호환되는 SBC들이 많이 출시되고 있고, 단순하게 보면 Tachyon도 그런 SBC 중 하나라고 볼수 있지만, 이 보드는 퀄컴의 dragonwing QCM6490을 달고 나온 최초의 SBC이다. 다른 SBC랑 비교한다면 퀄컴칩을 달고 있기 때문에, 칩에서 5G 및 WIFI 6E가 지원되어 다른 플랫폼보다는 Connectivity 측면에서 좋고, 자체적으로 NPU가 내장되어 있어 AI 연산시 도움을 받을 수 있다. (소개 페이지상에서는 12 TOPS 정도의 성능이 나온다고 한다.) 상세한 스펙은 아래 그림을 참고하면 좋을거 같다.</p>
+<p><img src="./images/spec.png" class="img-fluid"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="metadata"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">
-<div class="listing-date">Jul 31, 2025</div>
-<div class="listing-author">Chanseok Kang</div>
-
-</a></div>
-
+<div class="callout-title-container flex-fill">
+노트
 </div>
-
-<div class="quarto-post image-right" data-index="2" data-categories="cHl0aG9uJTJDbnVtcHklMkNtYXRo" data-listing-date-sort="1753628400000" data-listing-file-modified-sort="1766993453469" data-listing-date-modified-sort="1768834800000" data-listing-reading-time-sort="6" data-listing-word-count-sort="1003">
-
-<div class="thumbnail">
-<a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">
-
-<img loading="lazy" src="./posts/2025-07-28_taylor_expansion/images/taylor_expansion.png" class="thumbnail-image">
-
-</a>
 </div>
-
-<div class="body">
-
-<h3 class="no-anchor listing-title"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">Taylor Expansion</a></h3>
-<div class="listing-subtitle"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external"></a></div>
-
- 
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('cHl0aG9u'); return false;">python</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bnVtcHk='); return false;">numpy</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWF0aA=='); return false;">math</div>
-
+<div class="callout-body-container callout-body">
+<p>참고로 8년전에 공부한다고 <a href="https://www.qualcomm.com/products/technology/processors/application-processors/dragonboard-410c">Dragonboard 410c</a>란 보드도 가지고 windows 10 IoT도 올리고 이것저것 해봤었는데, 어느 시점에선가 개발지원이 끊겼다.</p>
 </div>
- 
-
-<div class="delink listing-description"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">Applying Taylor Expansion in various functions.</a></div>
-
 </div>
-<div class="metadata"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">
-<div class="listing-date">Jul 28, 2025</div>
-<div class="listing-author">Chanseok Kang</div>
-
-</a></div>
-
+</section>
+<section id="환경-구성" class="level2">
+<h2 class="anchored" data-anchor-id="환경-구성">환경 구성</h2>
+<p>일반적으로 사용되는 SBC라면 SD카드를 통해서 OS를 설치하거나, 별도의 SSD를 설치하여 Jetson처럼 Host PC에서 보드에 OS를 직접 설치하는 방식이 있는데, Tachyon은 후자방법으로 진행하며, Particle CLI 라는 것을 통해서 Firmware 및 OS flash가 이뤄진다.</p>
+<div id="fig-orin_case" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="./images/particle_console.png" class="img-fluid figure-img"></p>
 </div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="./images/installation.jpg" class="img-fluid figure-img"></p>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;2: Tachyon 설정 과정
+</figcaption>
+</figure>
+</div>
+<p>특이하게 개발문서상에서는 외장배터리를 연결한 상태에서 진행하게 되어있고, 이를 위해서 동봉된 배터리를 연결한 상태에서 Windows host PC에서 필요한 프로그램을 설치했다.</p>
+</section>
+<section id="문제" class="level2">
+<h2 class="anchored" data-anchor-id="문제">문제</h2>
+<p>이 보드가 앞에서 설명한 특징을 가지고 있는데, 한가지 다루는데 있어서 불편한 부분은 외부와 연결할 수 있는 I/O 인터페이스가 USB-c 2개만 나와있다는 것이다. 그래서 이 보드를 사용하기 위해서는 USB-c 허브가 필요하며, 특히 headless가 아닌 GUI를 위한 display가 필요하다면 별도의 HDMI 포트가 달린 허브를 준비해야 한다. 애초에 난 USB-c용 display가 있어서 c-to-c display가 될 줄 알고 연결했는데 출력이 나오지 않았다. 알고보니 <a href="https://community.particle.io/t/tachyon-wont-output-video/69612/6">제조사</a>에서 언급하기론 usb-c가 alt mode를 지원하는데, usb c-to-c 연결을 위해서는 충분한 전원 공급(대략 5A?)가 필요하다고 한다. 덕분에 hdmi 포트가 달린 허브를 구매해서 환경 설정을 마무리했다.</p>
+</section>
+<section id="결론-및-계획" class="level2">
+<h2 class="anchored" data-anchor-id="결론-및-계획">결론 및 계획</h2>
+<p><img src="./images/setup.jpg" class="img-fluid"></p>
+<p>결과적으로 이렇게 케이블을 둘러둘러 연결하면서 화면출력도 확인했고, 기타 기능 검증도 해봤다. 사실 퀄컴에서 홍보하는 것처럼 이 보드의 장점인 NPU를 활용해봐야 제대로된 사용이 될 거 같다. 다행히도 퀄컴에서도 자체 <a href="https://aihub.qualcomm.com/models">AI hub</a>를 통해서 다양한 모델들을 지원하고 있는것으로 보이며, 특히 Computer vision 분야에는 6490을 위한 몇가지 모델이 올라와있다. 다만 QCM6490이 시중에 나와있는 Elite 모델에 비해 성능이 부족하기 때문에, 원래 모델이 아니라 w8a8와 같이 quantization이 적용된 모델을 돌릴 수 있는거 같다. 그래서 Quantization 관련 강의도 좀 보면서 모델도 직접 올려보고 해보고 싶다. 뭐 이게 잘되면 원래 계획했던 것처럼 Mini Pupper의 제어보드가 될지도..</p>
 
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -505,12 +460,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -878,6 +833,55 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
 </script>
 </div> <!-- /content -->
 
