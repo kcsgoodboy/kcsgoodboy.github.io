@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-01-20_Multi-task_learning/post.html" />
 <link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-01-20_Multi-task_learning/post.ko.html" />
@@ -8,8 +8,9 @@
 <meta name="generator" content="quarto-1.7.6">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Chanseok Kang">
-<meta name="description" content="2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약">
-<title>Multi-task learning – 생각많은 소심남의 연구노트</title>
+<meta name="dcterms.date" content="2026-01-20">
+<meta name="description" content="Summary of lecture CS330 (2022) Lecture 2. Multi-task learning">
+<title>Multi-task learning – Chan’s Research Note</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,17 +66,17 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "일치 없음",
-    "search-matching-documents-text": "일치된 문서",
-    "search-copy-link-title": "검색 링크 복사",
-    "search-hide-matches-text": "추가 검색 결과 숨기기",
-    "search-more-match-text": "추가 검색결과",
-    "search-more-matches-text": "추가 검색결과",
-    "search-clear-button-title": "제거",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "취소",
-    "search-submit-button-title": "검색",
-    "search-label": "검색"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
 
@@ -132,17 +133,17 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="검색"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item"><div class="dropdown" id="languages-links-parent">
-<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/posts/2026-01-20_Multi-task_learning/post.html" id="language-link-en">English</a></li></ul>
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2026-01-20_Multi-task_learning/post.html" id="language-link-ko">한국어</a></li></ul>
 </div></li>
 <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
@@ -150,25 +151,25 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">소개</span></a>
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../blog.html"> 
-<span class="menu-text">블로그</span></a>
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../publications.html"> 
-<span class="menu-text">출간물</span></a>
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../activities.html"> 
-<span class="menu-text">활동</span></a>
+<span class="menu-text">Activities</span></a>
   </li>  
 </ul>
 <ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
@@ -176,7 +177,7 @@ window.Quarto = {
       <h1 class="title">Multi-task learning</h1>
                   <div>
         <div class="description">
-          2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약
+          Summary of lecture CS330 (2022) Lecture 2. Multi-task learning
         </div>
       </div>
                           <div class="quarto-categories">
@@ -186,8 +187,8 @@ window.Quarto = {
   </div>
     
   <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">저자</div>
-    <div class="quarto-title-meta-heading">소속</div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
       <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
@@ -205,16 +206,16 @@ window.Quarto = {
 
         
       <div>
-      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2026년 1월 20일</p>
+        <p class="date">January 20, 2026</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">2026년 1월 21일</p>
+        <p class="date-modified">January 21, 2026</p>
       </div>
     </div>
       
@@ -226,7 +227,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#%EA%B0%95%EC%9D%98-%EB%B0%8F-%EC%9E%90%EB%A3%8C" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+<li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
   <li><a href="#definition-of-task" id="toc-definition-of-task" class="nav-link" data-scroll-target="#definition-of-task">Definition of Task</a></li>
   <li><a href="#single-task-vs.-multi-task" id="toc-single-task-vs.-multi-task" class="nav-link" data-scroll-target="#single-task-vs.-multi-task">Single-task vs. Multi-task</a></li>
   <li><a href="#conditioning-on-the-task" id="toc-conditioning-on-the-task" class="nav-link" data-scroll-target="#conditioning-on-the-task">Conditioning on the task</a></li>
@@ -245,7 +246,7 @@ window.Quarto = {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="강의-및-자료" class="level3"><h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="resource" class="level3"><h3 class="anchored" data-anchor-id="resource">Resource</h3>
 <div>
 
 </div>
@@ -259,16 +260,15 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
 </section><section id="definition-of-task" class="level2"><h2 class="anchored" data-anchor-id="definition-of-task">Definition of Task</h2>
-<p>강의에서 소개하고 있는 task의 정의는 다음과 같다.</p>
 <p><span id="eq-task-definition"><span class="math display">\[
 \mathcal{T}_i \triangleq \{p_i(x), p_i(y \vert x), \mathcal{L}_i\}
 \tag{1}\]</span></span></p>
-<p>이 수식은 특정 task <span class="math inline">\(\mathcal{T}_i\)</span>가 지금까지 많이 다뤄졌던 single-task learning과 같이 단순한 데이터 덩어리가 아니라, 각 세가지의 핵심 요소의 집합으로 정의된다는 것을 의미한다. 우선 <span class="math inline">\(p_i(x)\)</span> 는 주어진 task에서 나오는 문제의 형태 (Input Distribution)가 된다. 엄밀히 말하면 <span class="math inline">\(p\)</span> 자체가 데이터의 분포가 될텐데, 이미지나 텍스트같은 모델에 입력되는 데이터 <span class="math inline">\(x\)</span>가 어떤 특성을 가지고 생성되는지를 나타낸다. 예를 들어서 여러 언어의 필기체를 인식하는 문제가 주어져 있을 때, 영어 문장을 구성하는 이미지의 생김새와 한글 문장을 인식하는 이미지가 생김새가 완전히 다르기 때문에, (즉, <span class="math inline">\(x\)</span>가 다르기 때문에) 이 경우는 <span class="math inline">\(p(x)\)</span>가 서로 다른 케이스가 될 것이다.</p>
-<p>두번째 요소인 <span class="math inline">\(p_i(y \vert x)\)</span>는 주어진 문제에 대한 정답은 무엇인가 (Label Distribution)를 정의한다. 앞에서 정의한 것처럼 주어진 문제를 표현하는 <span class="math inline">\(x\)</span>에 대해서 정답 레이블인 <span class="math inline">\(y\)</span>에 대한 확률 분포를 표현한 것이고, 쉽게 말하면 입력을 보고 정답을 매기는 “규칙”이 되겠다.</p>
-<p>마지막 요소인 <span class="math inline">\(\mathcal{L}_i\)</span>은 흔히 통용되는 표현인 손실함수인데, 어떤 모델을 학습시킬 때는 해당 모델에게 잘했는지 못했는지에 대한 점수를 정의한 것이다. 결과적으로 모델이 주어진 입력에 대한 예측값을 구했을 때, 이를 실제값간의 차이를 토대로 얼마나 잘했는지 여부를 결정하게 된다. 물론 이 부분은 task마다 계산하는 방식이 다르게 될 것이다. 예를 들어서 어떤 task는 분류 문제를 해결해야 하고, 다른 task에서는 회귀 문제를 풀어야 한다면 각 task마다 정의되어야 할 손실함수는 다를 것이다.</p>
-<p>그래서 이 수식이 설명하는 것은 앞에서 설명했던 것처럼 task를 어떤 단순한 데이터셋으로 정의하지 말고, 하나의 분포(Distribution)으로 봐야 한다는 부분이다. 그래서 모델이 단순히 데이터셋 자체를 암기하는 것을 넘어서 task의 근본적인 분포를 배워 새로운 데이터에서도 잘 적응(Generalization)할 수 있는지를 평가하는 것이 중요하다.</p>
+<p><a href="#eq-task-definition" class="quarto-xref">Equation 1</a> implies that a specific task <span class="math inline">\(\mathcal{T}_i\)</span> is defined not merely as a simple chunk of data—as is common in single-task learning—but as a set of three core elements.</p>
+<p>First, <span class="math inline">\(p_i(x)\)</span> represents the <strong>Input Distribution</strong>, or the form of the problem arising from the given task. Strictly speaking, while <span class="math inline">\(p\)</span> itself is the distribution of the data, here it indicates the characteristics under which the input data <span class="math inline">\(x\)</span> (such as images or text) is generated. For example, in a problem involving handwriting recognition across multiple languages, the visual appearance of images constituting English sentences differs completely from that of Korean sentences. Since the data <span class="math inline">\(x\)</span> differs, this constitutes a case where the distributions <span class="math inline">\(p(x)\)</span> are distinct.</p>
+<p>The second element, <span class="math inline">\(p_i(y \vert x)\)</span>, defines the <strong>Label Distribution</strong>—essentially, what the correct answer is for the given problem. As defined earlier, it represents the probability distribution of the ground truth label <span class="math inline">\(y\)</span> given the input <span class="math inline">\(x\)</span>. Simply put, it serves as the “rule” for labeling the input.</p>
+<p>The final element, <span class="math inline">\(\mathcal{L}_i\)</span>, is the commonly known <strong>Loss Function</strong>. This defines a score indicating how well or poorly the model is performing during training. When the model generates a prediction for a given input, this function determines the model’s performance based on the discrepancy between the prediction and the actual value. Naturally, the calculation method varies by task. For instance, the loss function defined for a classification task will differ from that of a regression task.</p>
+<p>In conclusion, this equation explains that a task should be viewed as a <strong>distribution</strong> rather than a simple dataset. Therefore, it is crucial to evaluate whether a model can go beyond simply memorizing the dataset itself and instead learn the fundamental distribution of the task to achieve Generalization on new data.</p>
 </section><section id="single-task-vs.-multi-task" class="level2"><h2 class="anchored" data-anchor-id="single-task-vs.-multi-task">Single-task vs. Multi-task</h2>
 <div id="fig-tasks" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -296,48 +296,46 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 1: task의 형태에 대응되는 모델 구조
+Figure 1: General architecture of task handling
 </figcaption></figure>
 </div>
-<p>Single-task를 다루는 모델과 multi-task를 다루는 모델간의 근본적인 차이는 해결해야 할 task를 어떻게 정의하고 입력으로 받느냐에 따른 것이다. <a href="#fig-single-task" class="quarto-xref">그림 1 (a)</a> 에서 보듯이, Single-task를 다루는 모델의 경우는 단일 데이터셋에 대한 손실함수를 최소화하는 parameter <span class="math inline">\(\theta\)</span>를 찾는 것이 목적이다. 이 경우 모델은 입력 데이터 <span class="math inline">\(x\)</span>만 보고 <span class="math inline">\(y\)</span>를 추론하는 <span class="math inline">\(f_{\theta}(y \vert x)\)</span>의 형태를 가진다. 참고로 여기에는 하나의 가정이 포함되어 있는데, 훈련 데이터와 테스트 데이터가 동일한 분포에서 추출되었다는 가정이 녹아져 있다. 이때는 task에 대한 정보를 따로 넣어주지 않기 때문에 다른 표현으로는 <strong>task-agnostic</strong>이란 이름으로 정의하기도 한다.</p>
-<p>반면, Multi-task를 다루는 모델의 경우 여러 개의 task <span class="math inline">\(\mathcal{T}_i\)</span> 집합을 동시에 학습한다. 여기서 각 task는 앞에서 소개한 <a href="#eq-task-definition" class="quarto-xref">방정식 1</a> 에 정의되어 있는 세가지 요소로 구성된다. 여기서 이전의 single-task와 구분되는 큰 특징 중 하나는 바로 task descriptor <span class="math inline">\(z_i\)</span>, 쉽게 말해서 현재 수행해야 할 task가 어떤 것인지에 대한 정보를 부가적으로 입력해준다는 것이다. 그래서 모델의 형태도 <span class="math inline">\(f_{\theta}(y \vert x, z_i)\)</span> 로 정의되어, 다중 task에 대한 손실함수를 최소화하는 parameter <span class="math inline">\(\theta\)</span>를 찾는 것이 목적이 된다. 강의 자료에서는 아래와 같이 표현했다.</p>
+<p>The fundamental difference between models dealing with single-task learning and those dealing with multi-task learning lies in how the task to be solved is defined and received as input.</p>
+<p>As shown in <a href="#fig-single-task" class="quarto-xref">Figure 1 (a)</a>, the goal of a single-task model is to find the parameter <span class="math inline">\(\theta\)</span> that minimizes the loss function for a single dataset. In this case, the model takes the form <span class="math inline">\(f_{\theta}(y \vert x)\)</span>, inferring <span class="math inline">\(y\)</span> based solely on the input data <span class="math inline">\(x\)</span>. Note that this implies an underlying assumption: the training and test data are drawn from the same distribution. Since no separate task information is provided, this approach is also referred to as being <strong>task-agnostic</strong>.</p>
+<p>On the other hand, multi-task models learn a set of multiple tasks <span class="math inline">\(\mathcal{T}_i\)</span> simultaneously. Here, each task consists of the three elements defined earlier in <a href="#eq-task-definition" class="quarto-xref">Equation 1</a>. One major feature distinguishing this from single-task learning is the <strong>task descriptor</strong> <span class="math inline">\(z_i\)</span>. Simply put, this provides additional input information about which task is currently being performed. Consequently, the model is defined as <span class="math inline">\(f_{\theta}(y \vert x, z_i)\)</span>, and the goal becomes finding the parameter <span class="math inline">\(\theta\)</span> that minimizes the loss functions across multiple tasks. The lecture materials express this as follows:</p>
 <p><span class="math display">\[
 \min_{\theta} \sum_{i=1}^T \mathcal{L}_i (\theta, \mathcal{D}_i)
 \]</span></p>
-<p>그러면 task descriptor <span class="math inline">\(z_i\)</span>는 어떻게 졍의하나가 multi-task의 관건이 될텐데, 사실 학습하기 나름이다. 뭔가 task에 대한 정보를 숫자로 표현해서 다르다는 것을 표기하려면 그냥 정수 형태로 구분지어도 되고, 혹은 one-hot vector의 형태로 부여할 수 있다. 아니면 사람이 정의하는 것처럼 언어 형태로도 정의할 수 있고, 뭔가 task에 대한 specification을 담은 정보를 줄 수도 있다. 이를 정의하는 문제도 역시 Multi-task 학습의 효율성 측면에서 고민해볼 부분이 되겠다.</p>
-<p>여기까지 오면 이제 multi-task를 다루는 모델을 학습하기 위해서는 몇가지 정의할 부분이 생긴다. 크게</p>
+<p>The key to multi-task learning then becomes how to define the task descriptor <span class="math inline">\(z_i\)</span>, which ultimately depends on the implementation. To numerically distinguish between tasks, one could use simple integers or assign them as one-hot vectors. Alternatively, tasks can be defined in natural language, as humans do, or provided as information containing specific task specifications. How this is defined is an aspect worth considering regarding the efficiency of multi-task learning.</p>
+<p>At this point, several key components need to be defined to train a multi-task model. These can be broadly categorized into the following questions, which the lecture addresses individually:</p>
 <ul>
-<li>
-<span class="math inline">\(z_i\)</span>를 어떻게 정의하고, 조건을 구분할 수 있을까?</li>
-<li>각각의 task의 학습을 위한 objective function은 어떻게 정의할 수 있을까?</li>
-<li>여러 개의 objective function을 어떻게 최적화할 수 있을까?</li>
-</ul>
-<p>로 나눌 수 있는데, 각 부분에 대해서 강의에서 소개하고 있다.</p>
-</section><section id="conditioning-on-the-task" class="level2"><h2 class="anchored" data-anchor-id="conditioning-on-the-task">Conditioning on the task</h2>
-<p>먼저, task descriptor를 어떻게 정의하고, 모델 학습시 개별적으로 학습할 수 있을지에 대한 부분이다. 우선, 쉬운 이해를 위해서 task decriptor를 one-hot vector로 정의한다고 가정해보자. 그러면 모델을 만드는 입장에서 고민해볼 수 있는 부분은 과연 어떻게 하면 multi-task에 대응할 수 있는 모델을 task에 conditioning해서 학습시킬 수 있을까 하는 것이다.</p>
+<li>How should we define <span class="math inline">\(z_i\)</span> and condition the model?</li>
+<li>How can we define the objective function for each task?</li>
+<li>How do we optimize multiple objective functions?</li>
+</ul></section><section id="conditioning-on-the-task" class="level2"><h2 class="anchored" data-anchor-id="conditioning-on-the-task">Conditioning on the task</h2>
+<p>First, we address how to define the task descriptor and how to train the model for individual tasks. For ease of understanding, let’s assume the task descriptor is defined as a one-hot vector. From a model design perspective, the question then becomes: “How can we condition the model on the task to enable multi-task learning?”</p>
 <div id="fig-independent-training" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-independent-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/independent_training.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-independent-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 2: independent-training
+Figure 2: independent-training
 </figcaption></figure>
 </div>
-<p>가장 쉽게 생각해볼 수 있는 부분은 개별 Task에 해당하는 모델을 각각 학습시키고 출력단에서 conditioning하는 것이다. <a href="#fig-independent-training" class="quarto-xref">그림 2</a> 에서 보여지는 것처럼 쉽게 말해 multiplicative gating, 즉 task descriptor가 해당 Task일때만 해당 task로 학습시킨 network의 출력을 사용하는 방법이다. 물론 이 경우는 내부의 network 간의 parameter sharing은 발생하지 않고, 외부에서 바라봤을 때는 하나의 큰 network처럼 보이게 된다. 어떻게 보면 가장 간단하게 생각해볼 수 있는 multi-task 대응 방법이겠지만, 네트워크의 연산 효율성 측면이나 크기 측면에서는 고려되지 않는다.</p>
+<p>The simplest approach is to train separate models corresponding to each individual task and condition them at the output stage. As shown in <a href="#fig-independent-training" class="quarto-xref">Figure 2</a>, this essentially employs multiplicative gating—using the output of a network trained for a specific task only when the task descriptor matches that task. Of course, in this case, no parameter sharing occurs between the internal networks, though from the outside, it appears as a single large network. While this might be the most straightforward way to conceive a multi-task solution, it fails to consider computational efficiency or model size.</p>
 <div id="fig-all-shared-training" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-all-shared-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/11p_all_shared_training.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-shared-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 3: all-shared-training
+Figure 3: all-shared-training
 </figcaption></figure>
 </div>
-<p>그러면 또다른 극단적인 케이스으로는 task간 학습시 모든 parameter를 공유하는 구조도 생각해볼 수 있다. 단 <a href="#fig-all-shared-training" class="quarto-xref">그림 3</a> 의 구조처럼 parameter는 공유하되, 출력이 나오는 FC Layer나 activation 쪽에서 task descriptor <span class="math inline">\(z_i\)</span>를 concatenate하는 방식이 될 것이다. 이 경우, task내에 공통적인 요소, 앞에서 설명한 표현을 가져오자면 여러 개의 문제 중 정답에 대한 내면적인 규칙을 공유하는 형태가 되므로, 연산 효율성이나 크기 측면에서는 조금 더 고려해볼 여지가 생긴다.</p>
-<p>그러면 이제 이렇게 parameter는 공유하는 구조로 잡는다면 모델 parameter <span class="math inline">\(\theta\)</span> 도 공유 parameter <span class="math inline">\(\theta^{sh}\)</span>와 task별로 구분되는 task-specific parameter <span class="math inline">\(\theta^{i}\)</span>로 나눠서 표현할 수 있고, 이에 따라서 해당 모델의 objective function도 다음과 같이 바꿔서 표현할 수 있다.</p>
+<p>Another extreme case to consider is a structure where all parameters are shared across tasks during training. However, as illustrated in <a href="#fig-all-shared-training" class="quarto-xref">Figure 3</a>, while parameters are shared, the task descriptor <span class="math inline">\(z_i\)</span> would be concatenated at the FC Layer or activation stage where the output is generated. In this scenario, common elements within the tasks—or to borrow the earlier expression, the internal rules regarding the answers to multiple problems—are shared. This opens up room for better computational efficiency and size optimization.</p>
+<p>If we adopt this parameter-sharing structure, the model parameter <span class="math inline">\(\theta\)</span> can be divided into shared parameters <span class="math inline">\(\theta^{sh}\)</span> and task-specific parameters <span class="math inline">\(\theta^{i}\)</span>. Accordingly, the objective function for the model can be reformulated as follows:</p>
 <p><span class="math display">\[
 \min_{\theta^{sh}, \theta^1, \dots, \theta^T} \sum_{i=1}^T \mathcal{L}_i ( {\theta^{sh}, \theta^i}, \mathcal{D}_i)
 \]</span></p>
-<p>사실 지금까지 multi-task를 대응하는 형태에 대해서 어떤 사전적인 배경지식없이 상식적으로 생각해볼만한 부분에 대해서 설명이 이뤄졌다. 여기까지의 결론으로는 뭔가 모델을 학습하는데 있어서 task descriptor라는 것이 필요하고, 과연 이 정보를 어떻게 conditioning해서 넣느냐에 따라서 parameter를 어떻게, 어떤 layer에서 공유하게 될지 결정하는 문제에 고민해봐야 된다는 부분이다. 그래서 다음 그림을 통해서 conditioning 방식을 통해 모델을 구성할 때의 구조에 대해서 공유해본다.</p>
+<p>So far, we have explored common-sense approaches to handling multi-task scenarios without deep prior knowledge. The conclusion up to this point is that training such a model requires a task descriptor, and depending on how this information is conditioned, one must decide how and in which layers to share parameters. The following figures illustrate various model structures based on these conditioning methods.</p>
 <div id="fig-conditioning" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
@@ -386,13 +384,15 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 4: Conditioning에 따른 몇가지 common choice (출처: <a href="https://distill.pub/2018/feature-wise-transformations/">feature-wise transformation</a>)
+Figure 4: Some common choices for conditioning (Source: <a href="https://distill.pub/2018/feature-wise-transformations/">feature-wise transformation</a>)
 </figcaption></figure>
 </div>
-<p><a href="#fig-concatenation-based-conditioning" class="quarto-xref">그림 4 (a)</a> 와 <a href="#fig-additive-conditioning" class="quarto-xref">그림 4 (b)</a> 은 앞에서 소개한 구조이다. 전자는 input data가 들어갈때 task descriptor가 concatenate되는 방식이고, 후자의 경우는 layer를 거쳐서 나온 결과에 가산(additive)하는 방식이다. 굳이 의미를 부여하자면 Concatenation 방식은 입력단에서 정보를 합친 후, 모든 레이어의 파라미터를 공유하여 Task 정보를 처리한다. 단, 입력층의 Weight Matrix에서 Task Descriptor <span class="math inline">\(z\)</span>와 연산되는 부분은 해당 Task 고유의 편향(Bias)으로 작용하게 된다. 그리고 additive 방식은 linear layer로부터 나온 bias vector에 task descriptor가 더해지기 때문에, task에 대한 representation 별로 다른 편향을 부여하고 구분지어줄 수 있다는 특성이 있다.</p>
-<p>강의에서 언급한 내용 중 기억할 부분은 <a href="#fig-concatenation-based-conditioning" class="quarto-xref">그림 4 (a)</a> 나 <a href="#fig-additive-conditioning" class="quarto-xref">그림 4 (b)</a> 구조가 외형적으로는 다르게 보이나, 사실 수학적으로 살펴보면 완전히 동일하다는 점이다. 예를 들어서, concatenation 방식으로 정해서 어떤 입력 데이터 <span class="math inline">\(x\)</span>와 task descriptor <span class="math inline">\(z\)</span> 가 결합된 벡터인 <span class="math inline">\([x; z]\)</span>가 있다고 가정했을 때, 이를 weight <span class="math inline">\(W_1, W_2\)</span>에 곱해서 나온 결과는 <span class="math inline">\(W = W \dot [x; z] = W_1 x + W_2 z\)</span> 의 형태가 되므로 결과적으로 additive 한 결과로 나온다. 물론 중간에 ReLU같은 nonlinearity가 가해진다면 표현력 측면에서는 차이가 발생할 수는 있으나, 수학적으로 계산되는 부분은 동일하다는 것을 확인할 수 있다.</p>
-<p>이 밖에도 <a href="#fig-multi-head" class="quarto-xref">그림 4 (c)</a> 에서 보이는 것처럼 가장 간단하게 task에 specific하게 layer를 두어 일종의 switch 방식처럼 모델의 활성화 영역을 제어하는 multi-head 구조 (<span class="citation" data-cites="ruder2017overview">Ruder (<a href="#ref-ruder2017overview" role="doc-biblioref">2017</a>)</span>) 도 있고, 이전의 additive 대신 multiplicative 방식으로 conditioning (<a href="#fig-multiplicative-conditioning" class="quarto-xref">그림 4 (d)</a>) 해서 조금 더 task별로 layer의 표현력을 주어 generalization 측면에서 조금 이점을 가져오는 구조도 존재한다.</p>
-<p>이 밖에도 multi-task를 대응하기 위한 모델 구조에 대한 연구는 현재도 활발하게 진행되고 있고, 강의에서도 일부 구조를 소개하고 있다.</p>
+<p><a href="#fig-concatenation-based-conditioning" class="quarto-xref">Figure 4 (a)</a> and <a href="#fig-additive-conditioning" class="quarto-xref">Figure 4 (b)</a> represent the structures introduced earlier. The former concatenates the task descriptor with the input data, while the latter adds it to the result after passing through a layer.</p>
+<p>To elaborate, the concatenation method combines information at the input stage and processes it by <strong>sharing parameters across all subsequent layers</strong>. However, the specific section of the input layer’s weight matrix that interacts with the task descriptor <span class="math inline">\(z\)</span> effectively functions as a <strong>task-specific bias</strong>.</p>
+<p>Meanwhile, the additive method adds the task descriptor directly to the bias vector output from the linear layer. This characteristic allows the model to assign distinct biases and differentiate representations for each task.</p>
+<p>A key takeaway from the lecture is that while <a href="#fig-concatenation-based-conditioning" class="quarto-xref">Figure 4 (a)</a> and <a href="#fig-additive-conditioning" class="quarto-xref">Figure 4 (b)</a> appear different externally, they are mathematically identical. For instance, assuming a concatenated vector <span class="math inline">\([x; z]\)</span> of input data <span class="math inline">\(x\)</span> and task descriptor <span class="math inline">\(z\)</span>, multiplying this by weights <span class="math inline">\(W_1, W_2\)</span> results in <span class="math inline">\(W \cdot [x; z] = W_1 x + W_2 z\)</span>, which is effectively an additive result. Although the presence of nonlinearity like ReLU in between can cause differences in expressivity, the mathematical computation remains fundamentally the same.</p>
+<p>Additionally, as seen in <a href="#fig-multi-head" class="quarto-xref">Figure 4 (c)</a>, there exists a multi-head architecture (<span class="citation" data-cites="ruder2017overview">Ruder (<a href="#ref-ruder2017overview" role="doc-biblioref">2017</a>)</span>) that dedicates specific layers to tasks, acting like a switch to control the model’s active regions. There is also a structure using multiplicative conditioning (<a href="#fig-multiplicative-conditioning" class="quarto-xref">Figure 4 (d)</a>) instead of additive, which grants more expressivity to layers per task, offering potential benefits in terms of generalization.</p>
+<p>Research on model architectures for multi-task learning is actively ongoing, and the lecture introduces several such structures.</p>
 <div id="fig-architecture" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
@@ -441,38 +441,42 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 5: 다양한 multi-task architecture (<a href="@misra2016cross">a (Misra et al)</a>, <a href="@liu2019end">b (Liu et al)</a>, <a href="@long2017learning">c (Long et al)</a>, <a href="@jaegle2021perceiver">d (Jaegle et al)</a>)
+Figure 5: Various multi-task architectures (<a href="@misra2016cross">a (Misra et al)</a>, <a href="@liu2019end">b (Liu et al)</a>, <a href="@long2017learning">c (Long et al)</a>, <a href="@jaegle2021perceiver">d (Jaegle et al)</a>)
 </figcaption></figure>
 </div>
-<p>사실 multi-task를 대응하는 모델 구조에 있어서 rule of thumb은 없다. task의 형태에 따라 잘 동작하는 구조도 있는가하면, 경우에 따라서는 오히려 single task 모델보다 성능이 열화되는 경우도 발생한다. 이는 우리가 해결하고자 하는 문제, 즉 task의 유형에 따라 달라지며, 어쩌면 intuition이나 domain knowledge가 필요할 수도 있다.</p>
+<p>In reality, there is no rule of thumb for model architectures in multi-task learning. Some structures work well depending on the task form, while in other cases, performance may degrade compared to single-task models. This depends on the type of problem—or task—we are trying to solve, and may require intuition or domain knowledge.</p>
 </section><section id="objective-function" class="level2"><h2 class="anchored" data-anchor-id="objective-function">Objective function</h2>
-<p>이전의 Task의 정의 부분에서도 가장 간단하게 정의할 수 있는 multi-task의 objective function에 대해서 설명한 바 있다.</p>
-<p><span class="math display">\[
+<p>We previously touched upon the simplest form of the multi-task objective function in the task definition section: <span class="math display">\[
 \min_{\theta} \sum_{i=1}^T \mathcal{L}_i ( \theta, \mathcal{D}_i)
 \]</span></p>
-<p>그런데 만약 해결하고자 하는 task의 유형중에도 어떤 task는 어렵고, 어떤 task는 쉽다던지 하는 난이도의 차이가 존재할 것이다. 물론 이와 같은 경우를 대응하기 위해서는 어려운 task에 대해서는 조금더 학습을 많이하고, 쉬운 task에 대해서는 적게 학습하는 형태의 가중치를 적용할 수 있을 것이다.</p>
+<p>However, among the tasks we aim to solve, there may be variations in difficulty—some tasks might be significantly harder than others. To address this, we can apply weights to prioritize learning for more difficult tasks while placing less emphasis on easier ones.</p>
 <p><span class="math display">\[
 \min_{\theta} \sum_{i=1}^T w_i \mathcal{L}_i ( \theta, \mathcal{D}_i)
 \]</span></p>
-<p>그러면 task에 대한 가중치 <span class="math inline">\(w_i\)</span>는 어떻게 부여할 수 있을까? 가장 쉬운 방법은 앞의 예시처럼 난이도에 따라서 importance나 priority를 부여하는 것이다. 여기는 당연히 계산하는 기준이 있을 것이다. 아니면 training 도중에 보여지는 학습 경향에 따라서 dynamic하게 <span class="math inline">\(w_i\)</span>를 조절하는 방법도 생각해볼 수 있다. 강의에서는 두가지 주제에 대해서 소개하고 있는데, 우선은 <span class="citation" data-cites="chen2018gradnorm">Chen 기타 (<a href="#ref-chen2018gradnorm" role="doc-biblioref">2018</a>)</span> 에서 제안하는 gradnorm이란 기법을 사용하는 것이다. 만약 task별로 gradient를 계산했을 때, 유사한 magnitude를 가진 gradient들이 있을 경우 해당 방향으로 gradient descent를 통해 값을 계산하는 방식이다. 아니면 여러개의 Task에 대한 loss를 최소화하는 문제를 일종의 min-max 문제로 정의하여 최적화를 수행하는 것이다. ($__i _i (, _i) $) 식을 풀어쓰자면, 가장 성능이 나쁜 task의 loss에 대해서 최적화하는 방법이 될 것이다. 해당 내용은 <span class="citation" data-cites="kuhn2025distributionally">Kuhn, Shafiee, 와/과 Wiesemann (<a href="#ref-kuhn2025distributionally" role="doc-biblioref">2025</a>)</span> 에서 <strong>Distributionally Robust Optimization (DRO)</strong> 라는 내용으로 소개되어 있다. 이 밖에도 task의 robustness나 fairness 관점에서도 objective function을 정의할 수도 있다.</p>
+<p>How, then, should we assign the weight <span class="math inline">\(w_i\)</span> for each task? The simplest method is to assign importance or priority based on difficulty, as in the previous example. Naturally, this requires a specific criterion for calculation. Alternatively, one could consider dynamically adjusting <span class="math inline">\(w_i\)</span> based on training trends observed during the process.</p>
+<p>The lecture introduces two main approaches regarding this topic. The first is <strong>GradNorm</strong>, proposed by <span class="citation" data-cites="chen2018gradnorm">Chen et al. (<a href="#ref-chen2018gradnorm" role="doc-biblioref">2018</a>)</span>. This technique balances the training process by normalizing the gradient magnitudes across tasks, ensuring that tasks with similar gradient scales guide the gradient descent.</p>
+<p>Another approach is to frame the problem of minimizing losses across multiple tasks as a min-max optimization problem (<span class="math inline">\(\min_\theta \max_i \mathcal{L}_i (\theta, \mathcal{D}_i)\)</span>). In other words, this method focuses on optimizing the loss of the worst-performing task. This concept is presented as <strong>Distributionally Robust Optimization (DRO)</strong> in <span class="citation" data-cites="kuhn2025distributionally">Kuhn, Shafiee, and Wiesemann (<a href="#ref-kuhn2025distributionally" role="doc-biblioref">2025</a>)</span>. Beyond these methods, objective functions can also be defined from the perspectives of task robustness or fairness.</p>
 </section><section id="optimizing-the-objective" class="level2"><h2 class="anchored" data-anchor-id="optimizing-the-objective">Optimizing the objective</h2>
-<p>우선 앞에서 언급한 task별 가중치를 고려하지 않은 기본적인 objective function을 최적화하기 위한 과정은 다음과 같다.</p>
-<div class="pseudocode-container quarto-float" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm">
+<p>We begin by outlining the optimization process for the basic objective function, excluding the task-specific weights discussed earlier.</p>
+<div class="pseudocode-container quarto-float" data-line-number="true" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="1" data-comment-delimiter="//" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Basic Version} \begin{algorithmic} \State Sample mini-batch of tasks $\mathcal{B} \sim {\mathcal{T}_i}$ \State Sample mini-batch of datapoints for each task $\mathcal{D}_i^b \sim \mathcal{D}_i$ \State Compute loss on the mini-batch: $\hat{\mathcal{L}}(\theta, \mathcal{B}) = \sum_{\mathcal{T}_k \in \mathcal{B}} \mathcal{L}_k (\theta, \mathcal{D}_k^b)$ \State Backpropagate loss to compute gradient $\nabla_{\theta} \hat{\mathcal{L}}$ \State Apply gradient with your favorite neural net optimizer (e.g. Adam) \end{algorithmic} \end{algorithm}
 </div>
 </div>
-<p>일반적인 딥러닝 학습은 데이터셋에서 배치를 무작위로 추출하지만, multi-task learning에서는 두 단계의 샘플링 프로세스로 나눠서 진행한다. 먼저, task의 종류에 대한 미니배치를 샘플링한다. 이 단계에서는 전체 task의 집합 <span class="math inline">\(\mathcal{T}\)</span> 중에서 학습에 사용할 task 들을 먼저 무작위로 뽑는다. 해결해야할 task의 범주가 작다면 전체를 다 사용해도 좋지만, 그 종류가 많다면 일부만 선택하게 된다. 다음으로는 샘플링된 task에 해당하는 데이터셋을 미니배치 샘플링하는 단계이다. 이렇게 두 단계로 나눠서 샘플링을 진행하는 이유는 샘플링 과정에서 발생할 수 있는 Data Imbalance 문제를 완화시키기 위해서다. 만약 task의 구분없이 모든 task에 대한 데이터셋을 무작위로 추출한다면, task 내에서도 방대한 양을 가진 task의 데이터셋은 그렇지 않은 task의 데이터셋보다 뽑일 확률이 상대적으로 높다. 이로 인해 task에 대한 bias가 발생할 수 있기 때문에, 이를 완화하는 방법으로 먼저 task에 대해 균등하게 샘플링함으로써, 데이터가 적은 task도 동일한 빈도로 학습 기회를 부여할 수 있다. 물론, 이전에 설명했던 가중치같은게 고려된다면 이런 샘플링 확률도 task별로 조절할 수 있다.</p>
-<p>이후의 손실을 계산하고 최적화하는 단계는 일반적인 딥러닝 학습과정과 동일하다. 대신 한가지 고려해야 할 부분은 label에 대한 scale이다. 예를 들어서 어떤 Task는 -5 에서 5 사이의 값이 나오고, 다른 Task에서는 -100에서 100 사이의 값이 나온다면, 스케일이 작은 task는 거의 학습이 되지 않을 수도 있다. 특히 회귀(Regression) 문제나 강화학습의 보상(Reward)을 다룰 때에는 label에 대해서도 normalization을 취해 전체 task에 대한 loss의 scale이 어느 정도의 일관성을 가지도록 조절하는 것이 중요하다. 그래서 전체적인 과정을 요약하자면, 먼저 task를 샘플링하고, 그 다음 task에서 데이터를 샘플링한 후, 그 다음 label에 대한 normalization을 수행하는 것이 일반적인 관행이라고 강의에서 소개하고 있다.</p>
+<p>Unlike standard deep learning training, where batches are sampled randomly from the entire dataset, multi-task learning typically employs a <strong>two-stage sampling process</strong>. First, a mini-batch of tasks is sampled. In this step, a subset of tasks to be used for training is randomly selected from the entire set of tasks <span class="math inline">\(\mathcal{T}\)</span>. If the number of tasks is small, all may be used; however, if the variety is extensive, only a subset is selected. The next step involves sampling a mini-batch of data corresponding to each of the selected tasks.</p>
+<p>This two-stage approach is designed to mitigate <strong>Data Imbalance</strong> issues. If we were to sample randomly from the aggregated dataset without distinguishing between tasks, tasks with massive amounts of data would have a significantly higher probability of being selected compared to those with smaller datasets. This can lead to bias toward dominant tasks. By sampling tasks uniformly first, we ensure that tasks with fewer data points receive equal training opportunities. Of course, if the previously mentioned weighting strategies are applied, these sampling probabilities can also be adjusted per task.</p>
+<p>The subsequent steps of calculating loss and optimizing remain the same as in standard deep learning. However, one critical factor to consider is the <strong>scale of the labels</strong>.</p>
+<p>For instance, if one task outputs values between -5 and 5 while another outputs values between -100 and 100, the task with the smaller scale might barely be learned. <strong>Especially when dealing with regression problems or rewards in reinforcement learning</strong>, it is crucial to apply <strong>normalization</strong> to the labels to ensure consistency in the loss scales across all tasks.</p>
+<p>To summarize, the lecture presents the standard practice as follows: first sample the tasks, then sample data from those tasks, and finally perform normalization on the labels.</p>
 </section><section id="challenges" class="level2"><h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
-<p>Single task와는 다르게 multi-task를 다루는 입장에서 기존과는 다른 문제점들이 존재한다. 강의에서는 Negative Transfer와 Overfitting, 그리고 task의 수에 대해서 언급했다.</p>
+<p>Transitioning from single-task to multi-task learning introduces a distinct set of challenges. The lecture specifically highlighted three key issues: <strong>Negative Transfer</strong>, <strong>Overfitting</strong>, and <strong>the number of tasks</strong>.</p>
 <section id="negative-trasfer-overfitting" class="level3"><h3 class="anchored" data-anchor-id="negative-trasfer-overfitting">Negative Trasfer &amp; Overfitting</h3>
 <div id="fig-negative-transfer" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-negative-transfer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/22p_negative-transfer.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-negative-transfer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 6: Negative Transfer
+Figure 6: Negative Transfer
 </figcaption></figure>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -481,22 +485,25 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-노트
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="https://github.com/minhbtnguyen/multitask_learning_vit/blob/main/multitask-learning-cnn-cifar10.ipynb">Multi-task CIFAR-10/100</a>란 별도로 공식적으로 지정된 데이터셋이 아닌, 알려져있는 CIFAR-10/100 데이터셋을 Multi-task 형태로 변형한 형태이다. 일반적으로는 계층적으로 Task가 구분되며, 크게 Multi-class Classification과 Super-class Classification으로 나눠서 평가하는 형태로 되어 있다.</p>
+<p>Note that <a href="https://github.com/minhbtnguyen/multitask_learning_vit/blob/main/multitask-learning-cnn-cifar10.ipynb">Multi-task CIFAR-10/100</a> does not refer to a separate official dataset but rather a modification of the well-known CIFAR-10/100 datasets into a multi-task format. Typically, tasks are distinguished hierarchically, where evaluation is divided into Multi-class Classification and Super-class Classification.</p>
 </div>
 </div>
-<p>앞에서도 sharing에 대한 내용을 언급하긴 했지만, 항상 연산 효율성을 위해서 parameter를 sharing하는 것이 좋은 것은 아니다. <span class="citation" data-cites="yu2020gradient">Yu 기타 (<a href="#ref-yu2020gradient" role="doc-biblioref">2020</a>)</span> 논문에서도 Multi-task CIFAR-100 을 대상으로 한 실험에서 오히려 single task를 대상으로 한 independent network의 성능이 제일 좋았음을 보여주고 있다. (<a href="#fig-negative-transfer" class="quarto-xref">그림 6</a>) 본래의 의도라면 task내의 정의하는 문제의 공통적인 요소를 찾기 위한 과정으로 sharing을 활용한 것이지만, 오히려 task 간의 특징을 잘 구분짓지 못하는 특성으로 인해 negative transfer가 발생하는 것이다. 이처럼 task간에 발생하는 cross-task inference나 모델이 개별 task별로 학습되는 경향의 차이로 인해 optimization 관점에서의 어려움이 발생한다. 또한 이로 인해서 Task에 대한 representation을 활용하기 위해서는 일반적으로 single task에 비해 모델 사이즈도 커지게 된다.</p>
-<p>그래서 강의에서 소개한 개념은 <strong>soft parameter sharing</strong> 이란 방법이다.</p>
+<p>Although we previously discussed parameter sharing, sharing parameters for the sake of computational efficiency is not always beneficial. In fact, <span class="citation" data-cites="yu2020gradient">Yu et al. (<a href="#ref-yu2020gradient" role="doc-biblioref">2020</a>)</span> demonstrated in experiments using Multi-task CIFAR-100 that independent networks (single-task) actually performed best (<a href="#fig-negative-transfer" class="quarto-xref">Figure 6</a>). While the original intent of sharing is to discover common underlying elements of the problems, it can ironically lead to <strong>negative transfer</strong> due to the model’s inability to distinctly characterize features between tasks. This results in optimization difficulties caused by cross-task inference or differences in learning dynamics across individual tasks. Furthermore, to effectively utilize task representations, the model size generally needs to be larger compared to single-task models.</p>
+<p>To address this, the lecture introduces the concept of <strong>soft parameter sharing</strong>.</p>
 <p><span class="math display">\[
 \min_{\theta^{sh}, \theta^1, \dots, \theta^T} \sum_{i=1}^T \mathcal{L}_i({\theta^{sh}, \theta^i}, \mathcal{D}_i) + \lambda \sum_{i'=1}^T \Vert \theta^i - \theta^{i'} \Vert
 \]</span></p>
-<p>앞에서 소개한 concatenation이나 multiplicative 방식처럼 parameter를 전부 공유하는 hard parameter sharing과 다르게, soft parameter sharing에서는 task <span class="math inline">\(i\)</span>와 task <span class="math inline">\(i'\)</span>간의 값 차이 (여기에서는 L2 Distance를 사용했다)를 계산해서 각 task가 자신만의 parameter를 갖되, 다른 task의 parameter와는 너무 떨어지지않게끔 Regularization term을 추가한 것이다. 이렇게 하면 만약 task간에 유사한 task가 존재한다면, parameter가 비슷할수록 loss가 줄어드므로, 자연스럽게 parameter가 공유되고, 반례로 서로 상충되는 task가 있을 경우는 regularization loss를 감안하면서 loss를 최소화하는 방향으로 학습이 이뤄질 것이다. 이렇게 하면 task간의 parameter를 유동적으로 변경할 수 있다는 장점을 가지게 되는데, 한편으로는 각 task별로 별도의 parameter를 가지고 있음으로 인한 memory 사용량이 증가하고, 또한 regularization term에 대한 tuning도 별도로 이뤄져야 한다는 점도 염두해두어야 한다. 반대의 상황도 마찬가지이다. negative transfer가 아니고 오히려 task에 대한 overfitting이 발생한다면, parameter sharing을 적극적으로 고려할 필요가 있다.</p>
-<p>보다시피 이렇게 multi-task에 대한 대응과 일반화 관점에서 고려하려 서로 상충되는 요소들이 있고, 여기에 대한 최적의 방법이나 closed-form solution은 없기 때문에 multi-task에 대한 구조에 대해서 고민은 많이 필요하다.</p>
+<p>Unlike <strong>hard parameter sharing</strong> (such as the concatenation or multiplicative methods mentioned earlier) where parameters are fully shared, soft parameter sharing assigns separate parameters to each task. However, it adds a <strong>regularization term</strong> that calculates the difference (here, L2 distance) between the parameters of task <span class="math inline">\(i\)</span> and task <span class="math inline">\(i'\)</span> to ensure they do not diverge too much.</p>
+<p>Consequently, if tasks are similar, their parameters will naturally align to minimize the loss, effectively leading to sharing. Conversely, for conflicting tasks, the model learns by balancing the task loss against the regularization penalty. This offers the advantage of fluidly adjusting parameter sharing between tasks. However, one must keep in mind the downsides: increased memory usage due to maintaining separate parameters per task and the additional burden of tuning the regularization term.</p>
+<p>The reverse situation also holds true. If <strong>overfitting</strong> occurs on specific tasks rather than negative transfer, one should actively consider increasing parameter sharing.</p>
+<p>As demonstrated, there are conflicting factors when balancing multi-task capabilities with generalization. Since there is no single optimal method or closed-form solution, the design of multi-task architectures requires significant deliberation.</p>
 </section><section id="a-lot-of-tasks" class="level3"><h3 class="anchored" data-anchor-id="a-lot-of-tasks">A Lot of Tasks</h3>
-<p>multi-task를 다루게 되면 task의 종류가 많은 경우가 발생한다. 그러면 학습 효율성 관점에서 봤을때, 모든 task에 대해서 다 학습하면 좋을지, 아니면 비슷한 task끼리 묶어서 학습시켜야 좋을지에 결정하는 것이 문제로 작용한다. 앞에서 언급한 negative transfer나 positive transfer 처럼 task간의 유사함을 사전에 알거나 수치적으로 판단할 수 있는 방법은 존재하지 않는다. task similarity는 단순히 task의 내용 뿐만 아니라 데이터셋의 특성, 적용해야 될 모델의 구조, optimizer, 학습의 진행 단계같은 것이 달리지기 때문이다. 대신 task의 유사성을 어느정도 approximation 하는 방법에 대한 연구가 이뤄지고 있다.</p>
+<p>When dealing with multi-task learning, one often encounters scenarios involving a large number of tasks. From the perspective of training efficiency, a critical decision arises: should we train on all tasks simultaneously, or is it better to group similar tasks together?</p>
+<p>As discussed with negative and positive transfer, there is no definitive method to determine or numerically quantify task similarity in advance. This is because task similarity depends not only on the content of the tasks themselves but also on dataset characteristics, the model architecture, the optimizer, and the current stage of training. Instead, research is currently focused on methods to <strong>approximate</strong> this similarity.</p>
 <div id="fig-similarity" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
@@ -523,38 +530,40 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 7: Task Grouping에 대한 연구
+Figure 7: Research on Task Grouping
 </figcaption></figure>
 </div>
-<p>기본적인 개념은 전체 task를 포함해서 단일 모델을 한번 학습시키면서, 이때의 최적화 과정이나 gradient를 보고 어떤 task의 gradient가 유사한 방향으로 가는지를 파악하여 grouping을 하는 것이다. 강의에서는 두가지 논문을 소개했는데, <span class="citation" data-cites="fifty2021efficiently">Fifty 기타 (<a href="#ref-fifty2021efficiently" role="doc-biblioref">2021</a>)</span> 에서는 Task Affinity Grouping (TAG) 라는 Framework를 통해서 task간의 친화도 (inter-task affinities)를 계산하고 이에 따라 네트워크를 선택하는 방식을 언급했고, <span class="citation" data-cites="xie2023doremi">Xie 기타 (<a href="#ref-xie2023doremi" role="doc-biblioref">2023</a>)</span> 논문에서는 Language Model을 사전학습시키는데 있어 사용되는 task별 데이터의 혼합비율을 최적화하는 방법을 소개했다.</p>
+<p>The fundamental concept involves training a single model on all tasks and analyzing the optimization process or gradients. Specifically, it identifies which tasks exhibit gradients moving in similar directions and groups them accordingly.</p>
+<p>The lecture introduced two papers regarding this approach. <span class="citation" data-cites="fifty2021efficiently">Fifty et al. (<a href="#ref-fifty2021efficiently" role="doc-biblioref">2021</a>)</span> proposed a framework called <strong>Task Affinity Grouping (TAG)</strong>, which calculates <strong>inter-task affinities</strong> to select appropriate networks. Meanwhile, <span class="citation" data-cites="xie2023doremi">Xie et al. (<a href="#ref-xie2023doremi" role="doc-biblioref">2023</a>)</span> introduced a method (DoReMi) for optimizing the mixture weights of task-specific data used in pre-training Language Models.</p>
 </section></section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>해당 강의에서는 multi-task learning의 이해에 필요한 task의 정의와 multi-task learning을 대응할 수 있는 기본적인 모델 구조, objective function, 그리고 이를 최적화할 수 있는 방법에 대해서 소개했다. 가장 핵심은 single task와 다르게 task descriptor라는 것을 활용하여 모델을 학습하되, task간의 상관관계를 고려해야 학습 효율성을 가져올 수 있다는 점에 대해서 정리했다.</p>
+<p>This lecture covered the foundational elements required to understand multi-task learning, including the definition of a task, basic model architectures capable of handling multiple tasks, objective functions, and strategies for optimization.</p>
+<p>The core takeaway is that while multi-task learning distinguishes itself from single-task learning by utilizing a task descriptor to train the model, achieving true learning efficiency requires a careful consideration of the correlations between tasks.</p>
 
 
 
 </section><div id="quarto-appendix" class="default">
-<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2>
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-chen2018gradnorm" class="csl-entry" role="listitem">
-Chen, Zhao, Vijay Badrinarayanan, Chen-Yu Lee, 와/과 Andrew Rabinovich. 2018. <span>“Gradnorm: Gradient normalization for adaptive loss balancing in deep multitask networks”</span>. In <em>International conference on machine learning</em>, 794–803. PMLR.
+Chen, Zhao, Vijay Badrinarayanan, Chen-Yu Lee, and Andrew Rabinovich. 2018. <span>“Gradnorm: Gradient Normalization for Adaptive Loss Balancing in Deep Multitask Networks.”</span> In <em>International Conference on Machine Learning</em>, 794–803. PMLR.
 </div>
 <div id="ref-fifty2021efficiently" class="csl-entry" role="listitem">
-Fifty, Chris, Ehsan Amid, Zhe Zhao, Tianhe Yu, Rohan Anil, 와/과 Chelsea Finn. 2021. <span>“Efficiently identifying task groupings for multi-task learning”</span>. <em>Advances in Neural Information Processing Systems</em> 34: 27503–16.
+Fifty, Chris, Ehsan Amid, Zhe Zhao, Tianhe Yu, Rohan Anil, and Chelsea Finn. 2021. <span>“Efficiently Identifying Task Groupings for Multi-Task Learning.”</span> <em>Advances in Neural Information Processing Systems</em> 34: 27503–16.
 </div>
 <div id="ref-kuhn2025distributionally" class="csl-entry" role="listitem">
-Kuhn, Daniel, Soroosh Shafiee, 와/과 Wolfram Wiesemann. 2025. <span>“Distributionally robust optimization”</span>. <em>Acta Numerica</em> 34: 579–804.
+Kuhn, Daniel, Soroosh Shafiee, and Wolfram Wiesemann. 2025. <span>“Distributionally Robust Optimization.”</span> <em>Acta Numerica</em> 34: 579–804.
 </div>
 <div id="ref-ruder2017overview" class="csl-entry" role="listitem">
-Ruder, Sebastian. 2017. <span>“An overview of multi-task learning in deep neural networks”</span>. <em>arXiv preprint arXiv:1706.05098</em>.
+Ruder, Sebastian. 2017. <span>“An Overview of Multi-Task Learning in Deep Neural Networks.”</span> <em>arXiv Preprint arXiv:1706.05098</em>.
 </div>
 <div id="ref-xie2023doremi" class="csl-entry" role="listitem">
-Xie, Sang Michael, Hieu Pham, Xuanyi Dong, Nan Du, Hanxiao Liu, Yifeng Lu, Percy S Liang, Quoc V Le, Tengyu Ma, 와/과 Adams Wei Yu. 2023. <span>“Doremi: Optimizing data mixtures speeds up language model pretraining”</span>. <em>Advances in Neural Information Processing Systems</em> 36: 69798–818.
+Xie, Sang Michael, Hieu Pham, Xuanyi Dong, Nan Du, Hanxiao Liu, Yifeng Lu, Percy S Liang, Quoc V Le, Tengyu Ma, and Adams Wei Yu. 2023. <span>“Doremi: Optimizing Data Mixtures Speeds up Language Model Pretraining.”</span> <em>Advances in Neural Information Processing Systems</em> 36: 69798–818.
 </div>
 <div id="ref-yu2020gradient" class="csl-entry" role="listitem">
-Yu, Tianhe, Saurabh Kumar, Abhishek Gupta, Sergey Levine, Karol Hausman, 와/과 Chelsea Finn. 2020. <span>“Gradient surgery for multi-task learning”</span>. <em>Advances in neural information processing systems</em> 33: 5824–36.
+Yu, Tianhe, Saurabh Kumar, Abhishek Gupta, Sergey Levine, Karol Hausman, and Chelsea Finn. 2020. <span>“Gradient Surgery for Multi-Task Learning.”</span> <em>Advances in Neural Information Processing Systems</em> 33: 5824–36.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2>
-<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section>
 </div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -742,12 +751,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "복사완료!");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "복사완료!");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -789,7 +798,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

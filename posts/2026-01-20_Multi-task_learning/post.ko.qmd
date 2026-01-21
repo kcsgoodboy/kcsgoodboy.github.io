@@ -100,9 +100,9 @@ $$
 Conditioning에 따른 몇가지 common choice (출처: [feature-wise transformation](https://distill.pub/2018/feature-wise-transformations/))
 :::
 
-@fig-concatenation-based-conditioning 와 @fig-additive-conditioning 은 앞에서 소개한 구조이다. 전자는 input data가 들어갈때 task descriptor가 concatenate되는 방식이고, 후자의 경우는 layer를 거쳐서 나온 결과에 가산(additive)하는 방식이다. 굳이 의미를 부여하자면 concatenation 방식은 모델의 parameter가 모든 task에 대해서 공유하게 만드는 방식이되, concatenation 이후에 정의되는 parameter에 대해서는 parameter가 공유되지 않는 특성을 가진다. 그리고 additive 방식은 linear layer로부터 나온 bias vector에 task descriptor가 더해지기 때문에, task에 대한 representation 별로 다른 편향을 부여하고 구분지어줄 수 있다는 특성이 있다. 
+@fig-concatenation-based-conditioning 와 @fig-additive-conditioning 은 앞에서 소개한 구조이다. 전자는 input data가 들어갈때 task descriptor가 concatenate되는 방식이고, 후자의 경우는 layer를 거쳐서 나온 결과에 가산(additive)하는 방식이다. 굳이 의미를 부여하자면 Concatenation 방식은 입력단에서 정보를 합친 후, 모든 레이어의 파라미터를 공유하여 Task 정보를 처리한다. 단, 입력층의 Weight Matrix에서 Task Descriptor $z$와 연산되는 부분은 해당 Task 고유의 편향(Bias)으로 작용하게 된다. 그리고 additive 방식은 linear layer로부터 나온 bias vector에 task descriptor가 더해지기 때문에, task에 대한 representation 별로 다른 편향을 부여하고 구분지어줄 수 있다는 특성이 있다. 
 
- 강의에서 언급한 내용 중 기억할 부분은 @fig-concatenation-based-conditioning 나 @fig-additive-conditioning 구조가 외형적으로는 다르게 보이나, 사실 수학적으로 살펴보면 완전히 동일하다는 점이다. 예를 들어서, concatenation 방식으로 정해서 어떤 입력 데이터 $x$와 task descriptor $z$ 가 결합된 벡터인 $[x; z]$가 있다고 가정했을 때, 이를 weight $W_1, W_2$에 곱해서 나온 결과는 $W = W \dot [x; z] = W_1 x + W_2 z$ 의 형태가 되므로 결과적으로는 additive 한 결과로 나온다. 물론 중간에 ReLU같은 nonlinearity가 가해진다면 표현력 측면에서는 차이가 발생할 수는 있으나, 수학적으로 계산되는 부분은 동일하다는 것을 확인할 수 있다. 
+ 강의에서 언급한 내용 중 기억할 부분은 @fig-concatenation-based-conditioning 나 @fig-additive-conditioning 구조가 외형적으로는 다르게 보이나, 사실 수학적으로 살펴보면 완전히 동일하다는 점이다. 예를 들어서, concatenation 방식으로 정해서 어떤 입력 데이터 $x$와 task descriptor $z$ 가 결합된 벡터인 $[x; z]$가 있다고 가정했을 때, 이를 weight $W_1, W_2$에 곱해서 나온 결과는 $W = W \dot [x; z] = W_1 x + W_2 z$ 의 형태가 되므로 결과적으로 additive 한 결과로 나온다. 물론 중간에 ReLU같은 nonlinearity가 가해진다면 표현력 측면에서는 차이가 발생할 수는 있으나, 수학적으로 계산되는 부분은 동일하다는 것을 확인할 수 있다. 
 
 이 밖에도 @fig-multi-head 에서 보이는 것처럼 가장 간단하게 task에 specific하게 layer를 두어 일종의 switch 방식처럼 모델의 활성화 영역을 제어하는 multi-head 구조 (@ruder2017overview) 도 있고, 이전의 additive 대신 multiplicative 방식으로 conditioning (@fig-multiplicative-conditioning) 해서 조금 더 task별로 layer의 표현력을 주어 generalization 측면에서 조금 이점을 가져오는 구조도 존재한다.
 
@@ -166,7 +166,7 @@ $$
 
 일반적인 딥러닝 학습은 데이터셋에서 배치를 무작위로 추출하지만, multi-task learning에서는 두 단계의 샘플링 프로세스로 나눠서 진행한다. 먼저, task의 종류에 대한 미니배치를 샘플링한다. 이 단계에서는 전체 task의 집합 $\mathcal{T}$ 중에서 학습에 사용할 task 들을 먼저 무작위로 뽑는다. 해결해야할 task의 범주가 작다면 전체를 다 사용해도 좋지만, 그 종류가 많다면 일부만 선택하게 된다. 다음으로는 샘플링된 task에 해당하는 데이터셋을 미니배치 샘플링하는 단계이다. 이렇게 두 단계로 나눠서 샘플링을 진행하는 이유는 샘플링 과정에서 발생할 수 있는 Data Imbalance 문제를 완화시키기 위해서다. 만약 task의 구분없이 모든 task에 대한 데이터셋을 무작위로 추출한다면, task 내에서도 방대한 양을 가진 task의 데이터셋은 그렇지 않은 task의 데이터셋보다 뽑일 확률이 상대적으로 높다. 이로 인해 task에 대한 bias가 발생할 수 있기 때문에, 이를 완화하는 방법으로 먼저 task에 대해 균등하게 샘플링함으로써, 데이터가 적은 task도 동일한 빈도로 학습 기회를 부여할 수 있다. 물론, 이전에 설명했던 가중치같은게 고려된다면 이런 샘플링 확률도 task별로 조절할 수 있다.
 
-이후의 손실을 계산하고 최적화하는 단계는 일반적인 딥러닝 학습과정과 동일하다. 대신 한가지 고려해야 할 부분은 label에 대한 scale이다. 예를 들어서 어떤 Task는 -5 에서 5 사이의 값이 나오고, 다른 Task에서는 -100에서 100 사이의 값이 나온다면, 스케일이 작은 task는 거의 학습이 되지 않을 수도 있다. 그렇기 때문에 label에 대해서도 normalization을 취해 전체 task에 대한 loss의 scale이 어느정도의 일관성을 가지도록 조절하는 것이 중요하다. 그래서 전체적인 과정을 요약하자면, 먼저 task를 샘플링하고, 그 다음 task에서 데이터를 샘플링한 후, 그 다음 label에 대한 normalization을 수행하는 것이 일반적인 관행이라고 강의에서 소개하고 있다.
+이후의 손실을 계산하고 최적화하는 단계는 일반적인 딥러닝 학습과정과 동일하다. 대신 한가지 고려해야 할 부분은 label에 대한 scale이다. 예를 들어서 어떤 Task는 -5 에서 5 사이의 값이 나오고, 다른 Task에서는 -100에서 100 사이의 값이 나온다면, 스케일이 작은 task는 거의 학습이 되지 않을 수도 있다. 특히 회귀(Regression) 문제나 강화학습의 보상(Reward)을 다룰 때에는 label에 대해서도 normalization을 취해 전체 task에 대한 loss의 scale이 어느 정도의 일관성을 가지도록 조절하는 것이 중요하다. 그래서 전체적인 과정을 요약하자면, 먼저 task를 샘플링하고, 그 다음 task에서 데이터를 샘플링한 후, 그 다음 label에 대한 normalization을 수행하는 것이 일반적인 관행이라고 강의에서 소개하고 있다.
 
 ## Challenges
 
