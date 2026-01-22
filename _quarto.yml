@@ -1,6 +1,9 @@
 project:
   type: website
 
+execute:
+  freeze: auto
+
 website:
   site-url: https://kcsgoodboy.github.io/
   repo-url: https://github.com/kcsgoodboy/kcsgoodboy.github.io

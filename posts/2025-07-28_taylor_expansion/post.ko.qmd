@@ -9,8 +9,8 @@ categories:
   - python
   - numpy
   - math
-format:
-  ipynb: default
+# format:
+#   ipynb: default
 filters:
   - colab
 colab:
