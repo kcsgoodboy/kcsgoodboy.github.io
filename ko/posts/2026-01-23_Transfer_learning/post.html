@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-<head>
-<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2025-12-29_retrospective_of_2025/post.html" />
-<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2025-12-29_retrospective_of_2025/post.ko.html" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-01-23_Transfer_learning/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-01-23_Transfer_learning/post.ko.html" />
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
 <meta name="author" content="Chanseok Kang">
-<meta name="dcterms.date" content="2025-12-29">
-<meta name="description" content="Reflections on 2025 - Achievements, Regrets, and Resolutions">
-<title>retrospective of 2025 – Chan’s Research Note</title>
+<meta name="description" content="2022년에 진행한 CS330 강의 중 Lecture 3. Transfer learning &amp; Fine-tuning에 대한 강의 요약">
+
+<title>Transfer Learing &amp; Fine-tuning – 생각많은 소심남의 연구노트</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,14 +24,49 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -45,90 +81,146 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
+
+<script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
+
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Chan’s Research Note</span>
+    <span class="navbar-title">생각많은 소심남의 연구노트</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-<li class="nav-item"><div class="dropdown" id="languages-links-parent">
-<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2025-12-29_retrospective_of_2025/post.html" id="language-link-ko">한국어</a></li></ul>
-</div></li>
-<li class="nav-item">
+  <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">소개</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../blog.html"> 
-<span class="menu-text">Blog</span></a>
+<span class="menu-text">블로그</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../publications.html"> 
-<span class="menu-text">Publications</span></a>
+<span class="menu-text">출간물</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../activities.html"> 
-<span class="menu-text">Activities</span></a>
+<span class="menu-text">활동</span></a>
   </li>  
 </ul>
-<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
-</div> <!-- /navcollapse -->
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+</ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">retrospective of 2025</h1>
+      <h1 class="title">Transfer Learing &amp; Fine-tuning</h1>
                   <div>
         <div class="description">
-          Reflections on 2025 - Achievements, Regrets, and Resolutions
+          2022년에 진행한 CS330 강의 중 Lecture 3. Transfer learning &amp; Fine-tuning에 대한 강의 요약
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Life</div>
+                <div class="quarto-category">Lecture</div>
               </div>
                   </div>
   </div>
     
   <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
     
       <div class="quarto-title-meta-contents">
       <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
@@ -146,16 +238,16 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 
         
       <div>
-      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-heading">공개</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 29, 2025</p>
+        <p class="date">2026년 1월 23일</p>
       </div>
     </div>
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">January 23, 2026</p>
+        <p class="date-modified">2026년 1월 23일</p>
       </div>
     </div>
       
@@ -164,127 +256,145 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#prologue" id="toc-prologue" class="nav-link active" data-scroll-target="#prologue">Prologue</a></li>
-  <li>
-<a href="#life-at-work" id="toc-life-at-work" class="nav-link" data-scroll-target="#life-at-work">Life at Work</a>
-  <ul class="collapse">
-<li><a href="#meta-reinforcement-learning" id="toc-meta-reinforcement-learning" class="nav-link" data-scroll-target="#meta-reinforcement-learning">Meta Reinforcement Learning</a></li>
-  <li><a href="#drying-motion-simulator-based-on-diffusion-model" id="toc-drying-motion-simulator-based-on-diffusion-model" class="nav-link" data-scroll-target="#drying-motion-simulator-based-on-diffusion-model">Drying Motion Simulator based on Diffusion Model</a></li>
+  <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#multi-task-learning-vs.-transfer-learning" id="toc-multi-task-learning-vs.-transfer-learning" class="nav-link" data-scroll-target="#multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs.&nbsp;Transfer Learning</a></li>
+  <li><a href="#transfer-learning-via-fine-tuning" id="toc-transfer-learning-via-fine-tuning" class="nav-link" data-scroll-target="#transfer-learning-via-fine-tuning">Transfer learning via fine-tuning</a></li>
+  <li><a href="#breaking-common-wisdom" id="toc-breaking-common-wisdom" class="nav-link" data-scroll-target="#breaking-common-wisdom">Breaking Common Wisdom</a></li>
   </ul>
-</li>
-  <li><a href="#off-duty" id="toc-off-duty" class="nav-link" data-scroll-target="#off-duty">Off-duty</a></li>
-  <li><a href="#epilogue" id="toc-epilogue" class="nav-link" data-scroll-target="#epilogue">Epilogue</a></li>
-  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="prologue" class="level2"><h2 class="anchored" data-anchor-id="prologue">Prologue</h2>
-<p>2025 was a truly busy year. At work, I took on the title of Project Leader for the first time and attempted to apply AI technology to home appliances. To achieve this, I collaborated with people from various fields, persuading and sometimes even engaging in disputes. Meanwhile, as generative AI began to enter the development environment in earnest, I tried to apply various approaches to see how I could incorporate the recent technological trend.</p>
-<p>Outside of work, I also reviewed technical books for readers before publication (usually express this as ‘beta-review’), striving to ensure they were more technically grounded and accessible. Personally, engaging in such activities allowed me to explore the latest technological trends early on, which was rewarding.</p>
-</section><section id="life-at-work" class="level2"><h2 class="anchored" data-anchor-id="life-at-work">Life at Work</h2>
-<p>Following last year, I continued working on applying AI technology to home appliances this year. However on this year, I also took on the role of leading the project. As a team member, its role primarily involved implementing the features and conducting experiments to achieve project goals. But, from a project management perspective, it required not only development work but also managing team schedules, understanding the underlying technologies, and ultimately persuading stakeholders based on the results achieved from lots of experiments. Still, participating in the development, organizing the results, and appealing to others about the importance of the related technology wasn’t a bad experience for me. Also, thanks to the team members who complemented each other well technically, I learned a lot and had a good experience. Of course, the project deliverables weren’t that satisfying…</p>
-<section id="meta-reinforcement-learning" class="level3"><h3 class="anchored" data-anchor-id="meta-reinforcement-learning">Meta Reinforcement Learning</h3>
-<p>As this year began, the technical keyword for the task I was assigned was <strong>Meta Reinforcement Learning</strong>. In fact, the keyword “meta-learning” itself has been around for quite some time, lots of paper introduced numerous methodologies aimed at achieving strong performance even on tasks not directly learned. Recently, it has become an actively researched domain, with findings suggesting that applying Meta RL techniques to train LLMs can further improve their performance.</p>
-<p>My initial research was driven by a fundamental question: Can Meta-Reinforcement Learning (Meta-RL) truly be effective in physical, real-world environments like home appliances? As often highlighted in the literature, the ultimate goal of Meta-RL—developing models that generalize to unseen environments—is incredibly compelling when applied to the real world. This curiosity led me to apply Meta-RL to dryer systems this year.</p>
-<p>Similar to the challenges I encountered with washing machine RL, dryers in real-home settings face a significant hurdle: infinite variability. A model must deliver optimal performance not just for lab-tested loads, but for the diverse laundry combinations of actual users. Whether it’s a small handful of items, a heavy quilt, or a mix of fabrics ranging from synthetic activewear to dense cottons, every household has unique lifestyle patterns. My goal was to develop a universal RL model capable of autonomously adapting to these diverse ‘tasks’ and tailoring the drying process to each individual user.</p>
-<p>Our primary focus was to determine whether the sensor data generated by the dryer carries enough high-fidelity information to distinguish between different types of laundry loads. If this hypothesis holds true, it means we can develop a <strong>Task Encoder</strong> capable of inferring the current state of the laundry directly from raw sensor inputs. By integrating the representations extracted from this encoder with Reinforcement Learning, we can successfully train the Meta-RL model mentioned earlier.</p>
-<div id="fig-dryer-dynamics" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-dryer-dynamics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<img src="./images/pic1.en.png" class="img-fluid figure-img">
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dryer-dynamics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 1: Dryer Dynamics (by Google Gemini)
-</figcaption></figure>
-</div>
-<p>To implement this, we defined what we call <strong>‘Dryer Load Dynamics’</strong>. As is often the case with real-world Reinforcement Learning (RL) lacking a simulator, we sought to estimate the internal dynamics of moving laundry by analyzing sensor responses to specific control perturbations. This dynamic information was then integrated as a conditioning factor within the RL model’s state representation.</p>
-<p>Furthermore, since our objective was to cluster similar load types rather than achieve pinpoint classification, we moved away from standard Cross-Entropy Loss. Instead, we employed <a href="https://arxiv.org/abs/2004.11362">Supervised Contrastive Loss</a> to encourage similar loads to group together, and further refined discriminative performance using <a href="https://arxiv.org/abs/1801.07698">ArcFace Loss</a>. As a result, the Task Encoder successfully mapped similar laundry types into tight clusters while maintaining clear separation between distinct categories.</p>
-<div id="fig-dryer-TSNE" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-dryer-TSNE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<img src="./images/tsne_visualization.png" class="img-fluid figure-img">
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dryer-TSNE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 2: T-SNE visualization of various laundry types
-</figcaption></figure>
-</div>
-<p>By integrating this task-specific information as auxiliary input during training, we established a Meta-RL architecture consisting of a Task Encoder and an Actor. Given that a dryer is a highly complex environment where physics, thermodynamics, and fluid dynamics are intricately intertwined, we didn’t quite reach our initial drying performance targets. However, we successfully demonstrated the system’s ability to generalize to unseen laundry loads—bringing us remarkably close to developing what could have been the world’s first (?) Meta-RL-powered dryer.</p>
-</section><section id="drying-motion-simulator-based-on-diffusion-model" class="level3"><h3 class="anchored" data-anchor-id="drying-motion-simulator-based-on-diffusion-model">Drying Motion Simulator based on Diffusion Model</h3>
-<p>As the project evolved, the absence of a high-fidelity simulator—as mentioned earlier—remained our primary bottleneck. This led me to explore a new possibility: could we build a motion simulator using our existing technology? Conveniently, while evaluating the Meta-RL model, we had compiled a dataset of video footage synchronized with sensor data, capturing diverse laundry motions within the drum. This sparked an idea—leveraging this dataset to generate synthetic video corresponding to any given set of sensor readings.</p>
-<p>Leveraging insights from the deeplearning.ai course <a href="https://www.deeplearning.ai/short-courses/how-diffusion-models-work/">“How Diffusion Models Work?”</a>, I confirmed the feasibility of creating a data-driven “dryer motion simulator” that generates video directly from sensor inputs.</p>
-<p>To implement this, I developed a Video Diffusion Model utilizing a U-Net architecture and DDPM, with development assistance from Gemini Code Assist. During training, I conducted regular validation checks by inputting real sensor data to assess how closely the generated video output matched actual physical motions.</p>
-<div id="fig-ddpm" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ddpm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ddpm" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-original" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-original-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/original.gif" class="img-fluid figure-img" data-ref-parent="fig-ddpm">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-original-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Original Training sample
-</figcaption></figure>
-</div>
-</div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ddpm" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-100epoch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-100epoch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/100epoch.gif" class="img-fluid figure-img" data-ref-parent="fig-ddpm">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-100epoch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) After 100 epoch
-</figcaption></figure>
-</div>
-</div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ddpm" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-500epoch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-500epoch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/500epoch.gif" class="img-fluid figure-img" data-ref-parent="fig-ddpm">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-500epoch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) After 500 epoch
-</figcaption></figure>
-</div>
-</div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ddpm" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-1000epoch" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-1000epoch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/1000epoch.gif" class="img-fluid figure-img" data-ref-parent="fig-ddpm">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-1000epoch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(d) After 1000 epoch
-</figcaption></figure>
-</div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ddpm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 3: Training Process of Video Diffusion Model
-</figcaption></figure>
-</div>
-<p>While the model didn’t capture the dryer’s motion with perfect precision, it was surprisingly successful at generating the tumbling patterns of laundry—especially considering this was a toy example trained on limited computational resources (GTX 1080 Ti) with a small sample size. I still need to address inconsistencies in camera viewpoints from the training data, but I believe that with further refinement, we could eventually infer internal laundry motion without needing an actual camera installed in the dryer.</p>
-<p>Beyond that, I aim to develop a simulator that translates abstract, continuous sensor streams—data that is otherwise difficult for humans to parse—into an intuitively understandable visual format. To push this even further, I am currently exploring physics engines like <a href="https://github.com/NVIDIA/warp">NVIDIA Warp</a> to see if I can implement a more realistic and physically grounded simulation environment.</p>
-</section></section><section id="off-duty" class="level2"><h2 class="anchored" data-anchor-id="off-duty">Off-duty</h2>
-<p>While leadership responsibilities limited my time for new research this year, I remained active in the tech community by serving as a technical reviewer for various publishers. My focus was on identifying technical flaws and improving readability.</p>
-<p>Despite occasional self-doubt about my own expertise, I dedicated myself to the task by personally verifying code examples to ensure technical accuracy. This year alone, I’ve contributed to the publication of 32 technical titles. You can check out the list of books I’ve reviewed at this <a href="https://kcsgoodboy.github.io/ko/activities.html#section">link</a>.</p>
-<p>One of the best parts of being a technical reviewer is getting an up-close look at new technologies I haven’t mastered yet. It pushes me to research things I don’t know, and it’s a great feeling to see my feedback help improve the final book.</p>
-<p>I see this as a ‘learning loop’ where I get to experiment with the latest AI tools—like GPT, Gemini, Claude, and Cursor—and then bring those skills back to my day job. Even though books don’t move quite as fast as the latest research papers, they are written for a broader audience, which means the explanations are often much clearer and easier to digest.</p>
-</section><section id="epilogue" class="level2"><h2 class="anchored" data-anchor-id="epilogue">Epilogue</h2>
-<p>2025 has been a long but rewarding year. I spent much of it stepping out of my comfort zone to integrate cutting-edge tech into both my professional and side projects. Things didn’t always go as smoothly as planned, but I’ve realized that growth often happens in the middle of those struggles. Looking ahead to next year, I want to live even more purposefully and turn my hard work into tangible results, both in the office and in my studies. (Top of my list for next year: Publishing a paper!)</p>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
-<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+
+
+<section id="강의-및-자료" class="level3">
+<h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://www.youtube.com/watch?v=bVjCjdq06R4&amp;list=PLoROMvodv4rNjRoawgt72BBNwL2V7doGI&amp;index=3"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs330.stanford.edu/materials/cs330_finetune_transfer_meta_learning_problem_setup_2023.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+<p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
+</section>
+<section id="multi-task-learning-vs.-transfer-learning" class="level2">
+<h2 class="anchored" data-anchor-id="multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs.&nbsp;Transfer Learning</h2>
+<p>이전 강의에서 다뤘던 <strong>Multi-Task Learning</strong>은 여러 개의 task(<span class="math inline">\(\mathcal{T}_1, \mathcal{T_2}, \dots, \mathcal{T}_T\)</span>)에 대해서 <strong>동시에</strong> 해결하는 것이 목표이다. 즉, 하나의 모델이 주어진 모든 task에 대해서 좋은 성능을 내도록 학습하는 것이다. 이에 따라 parameter update를 위한 objective function도 다음과 같이 정의된다.</p>
+<p><span class="math display">\[
+\min_{\theta} \sum_{i=1}^T \mathcal{L}_i ( \theta, \mathcal{D}_i)
+\]</span></p>
+<p>반면, <strong>Transfer Learning</strong>는 어떤 Source Task <span class="math inline">\(\mathcal{T}_a\)</span> 와 Target Task <span class="math inline">\(\mathcal{T}_b\)</span> 가 있다고 가정했을 때, <span class="math inline">\(\mathcal{T}_a\)</span> 의 문제를 해결하면서 쌓은 지식을 활용하여 새로운 task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 것이 목표이다. 그래서 <span class="math inline">\(\mathcal{T}_a\)</span> 에서의 성능보다는 <span class="math inline">\(\mathcal{T}_b\)</span> 에서의 성능을 높이는데 초점을 맞춘다. 이 학습의 기본적인 전제는 이렇게 지식이 활용되는 과정내에서 Source Task에서 쌓인 데이터셋 <span class="math inline">\(\mathcal{D}_a\)</span> 는 활용할 수 없다는 것이다. 즉, Source Task의 방대한 데이터를 재사용하는 것이 아니라, 그 데이터로부터 학습된 지식이 “압축된” 형태 (parameter) 만을 가져와서 활용하는 형태가 된다.</p>
+<p>사실 어떻게 보면 Transfer Learning이 이상적으로 학습된다면, Multi-task도 다룰 수 있는 방법론이 될텐데, 상식적으로 생각해도 <span class="math inline">\(\mathcal{T}_a\)</span> 에 대해 학습한 뒤, 해당 지식을 전이해서 <span class="math inline">\(\mathcal{T}_b\)</span> 에 적용하는 것도 결론적으로는 두가지 task <span class="math inline">\(\mathcal{T}_a\)</span> 와 <span class="math inline">\(\mathcal{T}_b\)</span> 에 대한 해결책을 갖는 것이 되기 때문이다. 하지만 기존에 학습했던 Task에 대한 데이터셋을 활용할 수 없다는 전제로 인해, Transfer Learning 문제를 Multi-task Learning으로 치환해서 풀 수 없다. 이전 강의 내용도 상기해보면, 기본 가정이 모든 task에 대한 데이터셋이 존재한 상태에서 multi-task learning이 이뤄졌다는 것을 알 수 있다.</p>
+<p>그러면 어떤 시점에 multi-task learning대신 transfer learning을 고려하고, 어떤 문제에 적용하기 좋을까에 대한 질문을 던질 수 있는데, 강의에서는 두가지 케이스에 대해서 소개했다. 먼저, source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 쌓은 데이터인 <span class="math inline">\(\mathcal{D}_a\)</span> 의 양이 너무 클 때의 경우이다. 예를 들어서 ImageNet과 같이 source의 데이터셋이 매우 크기 때문에 특정 모델에 대해서 처음부터 재학습을 하거나 모델을 유지하는 것이 어렵기 때문에, 일반적으로는 공개되어 있는 지식이 함축된 parameter를 가져와서 활용하는 편이다. 물론 <span class="math inline">\(\mathcal{D}_a\)</span> 자체가 없는 경우도 많이 있다. 두번째의 경우는 source task <span class="math inline">\(\mathcal{T}_a\)</span> 가 아닌, target task <span class="math inline">\(\mathcal{T}_b\)</span> 의 성능을 더 고려할 때이다. 이 부분은 사실 실제 인공지능 모델이 배포되는 시점에서 생각해볼만한 부분인데, 대부분의 개발자는 자신의 학습환경보다는 실제 모델이 배포되었을 때에서의 성능이 어느정도 보장되는 것이 우선시되기 때문에 이 경우는 transfer learning을 적용해보면 좋은 예시가 될 수 있다.</p>
+</section>
+<section id="transfer-learning-via-fine-tuning" class="level2">
+<h2 class="anchored" data-anchor-id="transfer-learning-via-fine-tuning">Transfer learning via fine-tuning</h2>
+<p>transfer learning 개념과 함께 다뤄지는 내용이 바로 <strong>fine-tuning(미세 설정)</strong>일 것이다. fine-tuning이란 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습된 가중치 <span class="math inline">\(\theta\)</span> 로 신경망을 초기화한 뒤, target task <span class="math inline">\(\mathcal{T}_b\)</span> 의 데이터셋 <span class="math inline">\(\mathcal{D}_b\)</span> 를 사용해서 gradient descent를 통해 parameter <span class="math inline">\(\phi\)</span> 를 업데이트하는 방법이다. 강의에서는 추가학습을 위한 데이터셋이란 의미로 <span class="math inline">\(\mathcal{D}^{tr}\)</span> 로 표기했고, 수식으로는 다음과 같이 소개하고 있다.</p>
+<p><span class="math display">\[
+\phi \leftarrow \theta - \alpha \nabla_\theta \mathcal{L}(\theta, \mathcal{D}^{tr})
+\]</span></p>
+<div id="fig-finetuning-result" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/6p_finetuning_result.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;1: ImageNet Dataset으로 사전학습한 모델의 PASCAL/SUN 에서의 성능
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-finetuning-result" class="quarto-xref">그림&nbsp;1</a> 는 <span class="citation" data-cites="huh2016makes">Huh, Agrawal, 와/과 Efros (<a href="#ref-huh2016makes" role="doc-biblioref">2016</a>)</span> 에 소개된 내용인데, ImageNet과 같이 대규모 데이터셋으로 사전학습한 모델을 다른 데이터셋인 PASCAL과 SUN 데이터셋에 적용해봤을 때의 성능을 보여주고 있다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+노트
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://docs.ultralytics.com/datasets/detect/voc/">PASCAL VOC</a> 데이터셋은 컴퓨터 비전에서 많이 활용되는 데이터셋 중 하나로, 분류목적으로 구성된 ImageNet과 더불어, Object detection, Object segmentation, Classification에 대한 성능 검증을 할 수 있다. <a href="https://groups.csail.mit.edu/vision/SUN/hierarchy.html">SUN</a> 데이터셋도 classification 뿐만 아니라 Scene Recognition과 Object Detection에 대한 성능 검증도 할 수 있는 데이터셋이다.</p>
+</div>
+</div>
+<p>앞에서 정의한 transfer learning의 형태를 가져오면, 해당 실험에서의 source task는 ImageNet이고, target task는 PASCAL과 SUN 데이터셋이 되겠다. 이 결과가 의미하는 것은 초기 학습시 임의로 초기화된 parameter를 사용하는 것보다 ImageNet에서 학습된 parameter를 초기값으로 사용하는 것이 훨씬 더 효과적임을 보여주고 있다. 이 밖에도 LLM이나 Foundation Model을 재학습시킬 때도 <a href="https://huggingface.co/">HuggingFace</a> 같은 플랫폼으로부터 parameter를 가져와 활용하는 편이다.</p>
+<p>그러면 fine-tuning을 하는 방법도 여러가지가 있을텐데, 강의에서 쉽게 fine-tuning을 위해서 취해볼 수 있는 방법론 몇가지를 소개했다.</p>
+<ul>
+<li>작은 learning rate <span class="math inline">\(\eta\)</span> 로 fine-tune 시도</li>
+<li>앞쪽 layer에 대해서 작은 learning rate로 fine-tune</li>
+<li>초기에는 앞쪽 layer를 freeze했다가, 점점 unfreeze하는 방식으로 fine-tune</li>
+<li>마지막 layer만 재초기화</li>
+<li>Cross Validation을 통해서 hyperparameter 재탐색</li>
+<li>다른 Architecture 고려</li>
+</ul>
+<p>특히 작은 learning rate로 설정하거나, layer를 freeze해서 fine-tuning한다는 내용이 많이 나오는데, 학습 데이터셋에 비해 상대적으로 작은 데이터셋으로 인한 급격한 변화 (Feature Distortion)를 막기 위한 방법이라고 보면 좋을 것 같다.</p>
+</section>
+<section id="breaking-common-wisdom" class="level2">
+<h2 class="anchored" data-anchor-id="breaking-common-wisdom">Breaking Common Wisdom</h2>
+<p>사실, 사전 모델 학습에 있어서 반드시 크고 방대한 데이터셋이 있어야만 이런 transfer learning이나 fine-tuning을 통한 성능 개선이 가능할 것 같지만, 이를 반증하는 내용도 제시되어 있다.</p>
+<div id="fig-diverse-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/7p_diverse_data.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;2: pre-training시 반드시 diverse한 데이터가 필요하지 않다는 반증
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-diverse-data" class="quarto-xref">그림&nbsp;2</a> 는 <span class="citation" data-cites="krishna2023downstream">Krishna 기타 (<a href="#ref-krishna2023downstream" role="doc-biblioref">2023</a>)</span> 에 소개된 내용인데, Pre-train과 fine-tuning시 사용하는 데이터셋의 차이를 두어 어떤 모델의 성능이 가장 좋은지를 비교하는 실험을 했다. 이 중 가운데에 있는 경우는 Wikipedia와 같이 방대한 데이터로 Pre-train을 하고, 사전에 정의된 finetuning용 데이터셋으로 학습시킨 경우이고, 일반적으로는 이렇게 했을때의 결과가 가장 좋을 거라고 생각할 수 있다. 하지만 결과가 보여주는 의미는 방대한 데이터가 아니더라도 Downstream task (앞에서 소개한 target task)에 해당하는 데이터만 가지고 unsupervied pre-training 을 해도 이와 비등한 결과를 얻을 수 있다는 점이다. 이를 통해서 사전 학습 데이터가 반드시 다양할 필요는 없으며, 타겟 데이터셋만으로도 충분히 유의미한 특징을 학습할 수 있음을 시사한다.</p>
+<p><span class="citation" data-cites="lee2022surgical">Lee 기타 (<a href="#ref-lee2022surgical" role="doc-biblioref">2022</a>)</span> 논문에서도 이런 비슷한 통념을 깬 내용을 소개하고 있다.</p>
+<div id="fig-surgical-fine-tuning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/8p_surgical_fine-tuning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;3: Surgical Fine-tuning
+</figcaption>
+</figure>
+</div>
+<p>일반적인 transfer learning에서는 모델의 마지막 layer(head)가 가장 task에 특화된 부분이기 때문에 마지막 layer를 재학습하는 것이 효과적이라고 알려져있었지만, 저자의 아이디어는 “만약 어떤 label을 예측하는 것이 아니라, 조금 low-level에서 발생하는 pixel corruption에 대응하려면 마지막 layer가 아닌 중간이나 앞단의 layer를 수정해야 되지 않을까?” 라는 것이었다. 그래서 실제 실험도 기존의 통념으로 진행한 부분 (CelebA 데이터셋으로 학습한 Output-Level Shift)와 함께, 조금더 low-level에서 바뀌는 Feature-level shift(Entity-30 데이터셋)와 Input-level shift(CIFAR-10-Corruption) task에서의 fine-tuning 효과를 확인하고자 했다. <a href="#fig-surgical-fine-tuning" class="quarto-xref">그림&nbsp;3</a> 의 결과로는 꼭 마지막 layer가 아니더라도 처음 layer나 심지어는 중간 layer를 fine-tuning해도 좋은 성능이 나온다는 것을 확인할 수 있다.</p>
+<p>그래서 교수가 언급한 아이디어는 <span class="citation" data-cites="kumar2022fine">Kumar 기타 (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span> 에서 소개된 Linear Probing then Full Fine-tuning (LP-FT) 이란 방식이다.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-huh2016makes" class="csl-entry" role="listitem">
+Huh, Minyoung, Pulkit Agrawal, 와/과 Alexei A Efros. 2016. <span>“What makes ImageNet good for transfer learning?”</span> <em>arXiv preprint arXiv:1608.08614</em>.
+</div>
+<div id="ref-krishna2023downstream" class="csl-entry" role="listitem">
+Krishna, Kundan, Saurabh Garg, Jeffrey P Bigham, 와/과 Zachary C Lipton. 2023. <span>“Downstream datasets make surprisingly good pretraining corpora”</span>. In <em>Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, 12207–22.
+</div>
+<div id="ref-kumar2022fine" class="csl-entry" role="listitem">
+Kumar, Ananya, Aditi Raghunathan, Robbie Jones, Tengyu Ma, 와/과 Percy Liang. 2022. <span>“Fine-tuning can distort pretrained features and underperform out-of-distribution”</span>. <em>arXiv preprint arXiv:2202.10054</em>.
+</div>
+<div id="ref-lee2022surgical" class="csl-entry" role="listitem">
+Lee, Yoonho, Annie S Chen, Fahim Tajwar, Ananya Kumar, Huaxiu Yao, Percy Liang, 와/과 Chelsea Finn. 2022. <span>“Surgical fine-tuning improves adaptation to distribution shifts”</span>. <em>arXiv preprint arXiv:2210.11466</em>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -471,12 +581,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -518,7 +628,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -844,7 +954,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
 function loadGiscusWhenReady() {
   // Function to get the theme based on body class
   const getTheme = () => {
@@ -892,9 +1005,40 @@ function loadGiscusWhenReady() {
 loadGiscusWhenReady();
 </script>
 </div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+  
 
 
 
 
-</body>
-</html>
+</body></html>
