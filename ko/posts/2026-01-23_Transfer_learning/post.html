@@ -262,6 +262,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
   <li><a href="#multi-task-learning-vs.-transfer-learning" id="toc-multi-task-learning-vs.-transfer-learning" class="nav-link" data-scroll-target="#multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs.&nbsp;Transfer Learning</a></li>
   <li><a href="#transfer-learning-via-fine-tuning" id="toc-transfer-learning-via-fine-tuning" class="nav-link" data-scroll-target="#transfer-learning-via-fine-tuning">Transfer learning via fine-tuning</a></li>
   <li><a href="#breaking-common-wisdom" id="toc-breaking-common-wisdom" class="nav-link" data-scroll-target="#breaking-common-wisdom">Breaking Common Wisdom</a></li>
@@ -301,6 +302,10 @@ window.Quarto = {
 </div>
 </div>
 <p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
+</section>
+<section id="lecture-summary-with-notebooklm" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/transfer_learning_overview.ko.png" class="img-fluid"></p>
 </section>
 <section id="multi-task-learning-vs.-transfer-learning" class="level2">
 <h2 class="anchored" data-anchor-id="multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs.&nbsp;Transfer Learning</h2>
@@ -525,7 +530,7 @@ window.Quarto = {
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>사실 강의에서는 학생들의 질문이 많아, 강의 자료에 내용을 많이 skip하고 넘어간 부분이 있어서 개인적으로 강의자료를 보고 정리해보았다. 전체 내용을 요약해보자면, 이전 강의에서 다뤘던 multi-task learning과는 다르게 transfer learning에서는 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습했던 지식 기반으로 target task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 것이 목적이며, 일반적으로 사전에 확보된 방대한 데이터로 학습하거나, 미리 학습된 가중치를 기반으로 fine-tuning하는 방식이 수행된다. 그래서 fine-tuning하는 방법에 대해서도 소개가 되었고, meta learning에서는 결과적으로 수많은 source task에 대한 transfer learning을 수행하는 형태가 된다. 일반적으로 meta learning에서는 task간의 공통된 특성을 찾는 것이 목적이 되므로, 적은 샘플 내에서 학습한 후, 새로운 target task에서 얼마나 빠르게, 정확하게, 안정적으로 대응할 수 있는지를 찾는 과정이라고 보면 될 것 같다.</p>
+<p>사실 강의에서는 학생들의 질문이 많아, 강의 자료에 있는 내용을 많이 skip하고 넘어간 부분이 있어서 개인적으로 강의자료를 보고 정리해보았다. 전체 내용을 요약해보자면, 이전 강의에서 다뤘던 multi-task learning과는 다르게 transfer learning에서는 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습했던 지식 기반으로 target task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 것이 목적이며, 일반적으로 사전에 확보된 방대한 데이터로 학습하거나, 미리 학습된 가중치를 기반으로 fine-tuning하는 방식이 수행된다. 그래서 fine-tuning하는 방법에 대해서도 소개가 되었고, meta learning에서는 결과적으로 수많은 source task에 대한 transfer learning을 수행하는 형태가 된다. 일반적으로 meta learning에서는 task간의 공통된 특성을 찾는 것이 목적이 되므로, 적은 샘플 내에서 학습한 후, 새로운 target task에서 얼마나 빠르게, 정확하게, 안정적으로 대응할 수 있는지를 찾는 과정이라고 보면 될 것 같다.</p>
 
 
 
