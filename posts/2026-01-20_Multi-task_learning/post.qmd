@@ -10,6 +10,7 @@ filters:
 lang: en
 categories:
   - Lecture
+  - CS330
 ---
 
 ### Resource

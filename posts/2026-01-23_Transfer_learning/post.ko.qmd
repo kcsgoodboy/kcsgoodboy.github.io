@@ -1,5 +1,5 @@
 ---
-title: Transfer Learing & Fine-tuning
+title: Transfer Learning & Fine-tuning
 description: 2022년에 진행한 CS330 강의 중 Lecture 3. Transfer learning & Fine-tuning에 대한 강의 요약
 date: '2026-01-23'
 date-modified: last-modified
@@ -10,6 +10,7 @@ filters:
 lang: ko
 categories:
   - Lecture
+  - CS330
 ---
 
 ### 강의 및 자료
@@ -42,7 +43,7 @@ $$
 
 ## Transfer learning via fine-tuning
 
-transfer learning 개념과 함께 다뤄지는 내용이 바로 **fine-tuning(미세 설정)**일 것이다. fine-tuning이란 source task $\mathcal{T}_a$ 에서 학습된 가중치 $\theta$ 로 신경망을 초기화한 뒤, target task $\mathcal{T}_b$ 의 데이터셋 $\mathcal{D}_b$ 를 사용해서 gradient descent를 통해 parameter $\phi$ 를 업데이트하는 방법이다. 강의에서는 추가학습을 위한 데이터셋이란 의미로 $\mathcal{D}^{tr}$ 로 표기했고, 수식으로는 다음과 같이 소개하고 있다.
+transfer learning 개념과 함께 다뤄지는 내용이 바로 **fine-tuning(미세 조정)**일 것이다. fine-tuning이란 source task $\mathcal{T}_a$ 에서 학습된 가중치 $\theta$ 로 신경망을 초기화한 뒤, target task $\mathcal{T}_b$ 의 데이터셋 $\mathcal{D}_b$ 를 사용해서 gradient descent를 통해 parameter $\phi$ 를 업데이트하는 방법이다. 강의에서는 추가학습을 위한 데이터셋이란 의미로 $\mathcal{D}^{tr}$ 로 표기했고, 수식으로는 다음과 같이 소개하고 있다.
 
 $$
 \phi \leftarrow \theta - \alpha \nabla_\theta \mathcal{L}(\theta, \mathcal{D}^{tr})
@@ -101,19 +102,19 @@ transfer learning에서의 통념 중 하나는 pre-training이 항상 유리하
 
 그러면 앞에서 다뤘던 Transfer Learning과 달리 Meta-Learning에서는 어떤 부분이 강조가 된 것일까? 우선 목적성은 동일하다. Transfer learning 에서도 target task에서의 성능을 개선하기 위해서 모델을 초기화하는 방법에 대해서 다루고 있었고, meta-learning도 동일한 지향점을 가지고 있는데, meta-learning에서 강조되는 목적 중 하나는 바로 앞에서 언급했던 것처럼 transferability를 어떻게 명시적으로 최적화할 수 있냐(explicitly optimize)는 것이다. 쉽게 예시로 들자면, 어떤 주어진 training task들이 주어졌을 때, 이 task들에 대해서 빠르게 학습하는 방법에 최적화할 수 있는지 여부를 확인하려고 한다. 만약 이게 가능하다면 training task가 아닌 새로운 task가 들어왔을때도 빠르게 학습할 수 있게 된다. 
 
-그러면 학습에 대한 objective function은 learning a task ( $\mathcal{D}_i^{tr} \rightarrow \theta $ )가 될 것이고, 작은 $\mathcal{D}_i^{tr}$ 로도 objective function을 최소화시킬 수 있는 방법을 찾는 것이 meta-learning에서의 근본적인 목표이다.
+그러면 학습에 대한 objective function은 learning a task ( $\mathcal{D}_i^{tr} \rightarrow \theta$ )가 될 것이고, 작은 $\mathcal{D}_i^{tr}$ 로도 objective function을 최소화시킬 수 있는 방법을 찾는 것이 meta-learning에서의 근본적인 목표이다.
 
 사실 meta-learning 자체가 지향하는 바는 이상적이지만, 실체에 대해서 실현 가능성 여부가 궁금할 수 있는데, 강의에서는 이 부분을 두가지로 나눠서 설명하고자 했다. 우선 meta-learning에서 어떻게 데이터셋을 처리하고, 새로운 task에 대해서 어떻게 학습할 것인가 하는 동작원리(Mechanistic View)의 관점에서 살펴보고, 두번째로는 왜 meta-learning이 적은 샘플로도 task에 대해서 학습이 가능한지를 bayesian statistics를 기반으로 살펴보는 확률론적 관점(Probabilistic View)에서 meta-learning의 가능성을 살펴보았다. 
 
-### Probabilstic View
+### Probabilistic View
 
 강의의 전체적인 내용은 Mechanistic View에 초점을 맞추지만, 해당 내용을 설명하기에 앞서 확률론적 관점에서 meta-learning이 어떻게 동작하는지에 대해서 간단하게 설명했다.
 
 ![Probabilistic Graphical Model](./images/14p_Probabilistic_Graphical_Model.png){#fig-probabilistic-graphical-model}
 
-@fig-probabilistic-graphical-model 은 **Probabilistic Graphical Model** 이란 컨셉으로 학습에 대한 과정을 일종의 확률 모델 형태로 도식화한 것이다. 여기에서 동그라미는 Random Variable이고, 각 변수간의 상관관계나 의존성은 화살표로 표기된다. 그리고 박스는 동일 구조가 반복적으로 수행되는 것을 명시한다. 먼저 박스 안쪽에 있는 내용은 전형적인 task의 학습 과정을 표현한다. 그래서 주어진 데이터 $x, y$ 를 잘 표현할 수 있는 parameter $ \phi $ 찾는 과정이 된다. 여기에서 바깥쪽에 있는 $ \theta $ 가 meta-learning을 위한 parameter가 되는데, 쉽게 설명하면 task간의 **공유되는 지식(shared structure)**가 된다. 그러면 meta-learning의 학습 구조는 가장 상위에 shared structure를 위한 $\theta$ 가 존재하고, 이 $\theta$ 가 각 Task별 parameter $\phi_i$ 에 영향을 미치며, 결국 이 $\phi_i$ 가 각 Task 별 데이터를 설명하는 parameter가 된다. 이렇게 되면 학습에 사용되는 모든 Task는 $\theta$ 라는 공통된 지식을 갖게 되는 것이다.
+@fig-probabilistic-graphical-model 은 **Probabilistic Graphical Model** 이란 컨셉으로 학습에 대한 과정을 일종의 확률 모델 형태로 도식화한 것이다. 여기에서 동그라미는 Random Variable이고, 각 변수간의 상관관계나 의존성은 화살표로 표기된다. 그리고 박스는 동일 구조가 반복적으로 수행되는 것을 명시한다. 먼저 박스 안쪽에 있는 내용은 전형적인 task의 학습 과정을 표현한다. 그래서 주어진 데이터 $x, y$ 를 잘 표현할 수 있는 parameter $\phi$ 찾는 과정이 된다. 여기에서 바깥쪽에 있는 $\theta$ 가 meta-learning을 위한 parameter가 되는데, 쉽게 설명하면 task간의 **공유되는 지식(shared structure)**가 된다. 그러면 meta-learning의 학습 구조는 가장 상위에 shared structure를 위한 $\theta$ 가 존재하고, 이 $\theta$ 가 각 Task별 parameter $\phi_i$ 에 영향을 미치며, 결국 이 $\phi_i$ 가 각 Task 별 데이터를 설명하는 parameter가 된다. 이렇게 되면 학습에 사용되는 모든 Task는 $\theta$ 라는 공통된 지식을 갖게 되는 것이다.
 
-만약 $\theta$ 가 없었다면 각 task의 parameter $\phi_1, \phi_2, \dots$ 는 서로 관련이 없어보이겠지만, 이제 $\theta$ 에 대해서 알고 활용한다면 각 task의 parameter 역시 해당 정보 기반으로 구분이 더 될 것이다. ( $\phi_1 \perp \!\!\! \perp \phi_2 \perp \!\!\! \perp \dots$ ) 이로 인해서 데이터에 대한 entropy 역시 어떤 $\theta$ 라는 공통 규칙을 알게 되면 개별 Task에 대한 parameter $\phi_i$ 에 대한 entropy도 줄어들고 ( $ \mathcal{H}(p(\phi_i \vert \theta)) \lt \mathcal{H}(p(\phi_i)) $), 결과적으로 데이터가 많이 필요하지 않아도 정답을 찾을 수 있게 된다.
+만약 $\theta$ 가 없었다면 각 task의 parameter $\phi_1, \phi_2, \dots$ 는 서로 관련이 없어보이겠지만, 이제 $\theta$ 에 대해서 알고 활용한다면 각 task의 parameter 역시 해당 정보 기반으로 구분이 더 될 것이다. ( $\phi_1 \perp \!\!\! \perp \phi_2 \perp \!\!\! \perp \dots$ ) 이로 인해서 데이터에 대한 entropy 역시 어떤 $\theta$ 라는 공통 규칙을 알게 되면 개별 Task에 대한 parameter $\phi_i$ 에 대한 entropy도 줄어들고 ( $\mathcal{H}(p(\phi_i \vert \theta)) \lt \mathcal{H}(p(\phi_i))$), 결과적으로 데이터가 많이 필요하지 않아도 정답을 찾을 수 있게 된다.
 
 이에 대한 쉬운 이해를 위해서 강의에서는 두가지 예시 (@fig-bayesian-meta-learning) 를 설명했다. 
 
