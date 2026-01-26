@@ -2,7 +2,7 @@
 title: Vibe Coding을 하면서 느꼈던 경험들
 description: ChatGPT와 Gemini Code Assist (Agent Mode) 사용 경험담
 date: '2025-07-31'
-date-modified: today
+date-modified: last-modified
 image: ./images/orin_case.jpeg
 lang: ko
 categories:

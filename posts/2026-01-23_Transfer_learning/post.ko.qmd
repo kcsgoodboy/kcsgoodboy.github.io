@@ -2,7 +2,7 @@
 title: Transfer Learing & Fine-tuning
 description: 2022년에 진행한 CS330 강의 중 Lecture 3. Transfer learning & Fine-tuning에 대한 강의 요약
 date: '2026-01-23'
-date-modified: today
+date-modified: last-modified
 bibliography: ../../contents/references.bib
 image: ./images/transfer_learning_overview.ko.png
 filters:

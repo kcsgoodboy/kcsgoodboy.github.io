@@ -2,7 +2,7 @@
 title: Experiences I had while doing Vibe Coding
 description: My experience using ChatGPT and Gemini Code Assist (Agent Mode)
 date: '2025-07-31'
-date-modified: today
+date-modified: last-modified
 image: ./images/orin_case.jpeg
 lang: en
 categories:

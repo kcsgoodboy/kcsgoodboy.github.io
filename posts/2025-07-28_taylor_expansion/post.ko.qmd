@@ -2,7 +2,7 @@
 title: Taylor Expansion
 description: 다양한 함수에 Taylor Expansion 적용
 date: '2025-07-28'
-date-modified: today
+date-modified: last-modified
 image: ./images/taylor_expansion.png
 lang: ko
 categories:
