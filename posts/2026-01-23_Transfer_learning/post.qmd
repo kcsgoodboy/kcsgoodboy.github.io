@@ -7,7 +7,7 @@ bibliography: ../../contents/references.bib
 image: ./images/transfer_learning_overview.en.png
 filters:
   - pseudocode
-lang: ko
+lang: en
 categories:
   - Lecture
   - CS330
