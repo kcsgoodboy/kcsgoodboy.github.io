@@ -4,7 +4,7 @@ description: 2025년에 진행한 CS224R 강의 중 Lecture 4. Actor-Critic Meth
 date: '2026-01-28'
 date-modified: last-modified
 bibliography: ../../contents/references.bib
-image: ./images/transfer_learning_overview.ko.png
+image: ./images/Actor_Critic_Methods_overview.ko.png
 filters:
   - pseudocode
 lang: ko
@@ -25,7 +25,7 @@ categories:
 
 ## Lecture Summary with NotebookLM
 
-![](./images/transfer_learning_overview.ko.png)
+![](./images/Actor_Critic_Methods_overview.ko.png)
 
 ## Value function & Q function
 
@@ -147,9 +147,108 @@ $$
 A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 $$
 
+### Monte Carlo Estimation {#sec-monte-carlo-estimation}
+
 그러면 value function을 어떻게 잘 추정할 수 있을까? 기존의 방식은 trajectory를 샘플링해서 이때의 reward 총합을 계산하고, 이를 value function으로 추정했다. 이런 방식을 Monte Carlo Estimation이라고 표현하는데, 원래 어떤 값을 추정할때도 여러개를 샘플링해서 이에 대한 평균을 내듯이 value function에 대한 추정치도 trajectory를 여러개 샘플링해서 동일 상태 $s_t$ 에서 여러번 반복한 결과를 가지고 계산해야 한다.(@fig-monte-carlo-return) 그런데 현실적으로는 정확하게 동일한 상태 $s_t$ 로 되돌려놓고 다시 실행시키는, 일종의 reset을 취하기가 어렵다. 그렇기 때문에 single trajectory를 가지고 value estimation이 이뤄지는데, 그래도 이 문제를 어느 정도 완화시키기 위해서 신경망을 사용하게 된다. 강의에서는 두가지 과정으로 나눠서 value function estimation을 수행하는 절차를 보여줬다.
 
 1. single sample estimate에 대한 데이터를 쭉 모으고, 이를 데이터셋으로 만든다. 이때 입력을 $s_{i, t}$, label을 $\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})$ 으로 하는 데이터셋이 된다. (Aggregate dataset) $\rightarrow \{(s_{i, t}, \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\}$
 2. 만든 데이터셋으로 value function을 추정할 수 있도록 신경망을 학습시킨다. (Supervised Learning) $\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2$
 
 이렇게 하면 결좌적으로 신경망은 비슷한 state에서 나온 여러 결과들을 종합하여 평균을 내는 효과를 갖게 되고, 이를 통해서 물리적으로는 불가능한 "Multi-Sample Averaging"을 수학적으로 근사하게 된다.
+
+### Bootstrapping
+
+@sec-monte-carlo-estimation 에서 신경망을 통해서 실제 얻었던 보상을 활용한 value function estimation을 수행했다면, 이번에 다룰 부분은 실제값이 아닌 추정값을 믿고 사용해서 학습시 발생할 수 있는 variance가 커지는 현상을 줄이는 것이다. Remind를 하자면 데이터셋을 aggregate를 하면서 학습시킬 데이터의 label로 다음과 같이 정의했다.
+
+$$
+\text{Monte Carlo target: }  y_{i, t} = \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})
+$$
+
+그런데 엄밀히 말하면 학습시 사용해야 할 데이터는 상태가 현재의 state $s_{i, t}$ 인 상태에서의 expected reward sum을 구하는 게 맞는데, 사실 이 값은 현재 받은 실제 reward와 transition이 발생하고 난 다음 State $s_{i, t+1}$ 에 받을 expected reward sum으로 쪼개서 살펴볼 수 있고, 더 나아가면, expected reward sum은 우리가 알고 있는 next state의 value function 이라는 평균값 $V^{\pi}(s_{i, t+1})$ 로 치환할 수 있다.
+
+$$
+\begin{aligned}
+\text{ideal target: } y_{i, t} &= \sum_{t'=t}^T E_{\pi_{\theta}} [r(s_{i, t'}, a_{i, t'}) \vert s_{i, t}] \\
+&\approx r(s_{i, t}, a_{i, t}) + \sum_{t'=t+1}^T E_{\pi_{\theta}} [r(s_{i, t'}, a_{i, t'}) \vert s_{i, t + 1}] \\
+&= r(s_{i, t}, a_{i, t}) + V^{\pi}(s_{i, t+1})
+\end{aligned}
+$$
+
+실질적으로는 여러 개의 trajectory의 reward를 모두 계산한 값을 써야 정확한 value function을 추정할 수 있지만, 현실적으로는 single trajectory만으로 평균값을 추정하기 때문에 이렇게 구한 최종식은 expected reward sum에 대한 single-sample approximation이 되겠다. 그리고 우리가 식에서 참고하고 있는 value function $V^{\pi} (s_{i, t+1})$ 역시 여러 개의 trajectory로 구한 정확한 값이 아닌, 앞에서 소개한 것처럼 신경망으로 추측한 값 $\hat{V}_{\phi}^{\pi}(s_{i, t+1})$ 을 사용하고, 결과적으로는 이렇게 구한 추론값을 바탕으로 재학습하는 형태가 된다. 강의에서는 이런 개념을 **부트스트래핑(Bootstrapping)**이라고 표현했다. 그래서 앞에서 소개한 data aggration에 bootstrapping까지 적용한 두 과정을 이렇게 나눠서 정의했다.
+
+1. single sample estimate에 대한 데이터를 쭉 모으고, 이를 활용하여 "bootstrapped"된 추정값을 구하기 위한 데이터셋으로 만든다. 그러면 앞에서 정의했던 label이 $\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})$ 이 아닌 $r(s_{i, t}, a_{i, t}) + \hat{V}_\phi^{\pi}(s_{i, t+1})$ 이 된다. (Bootstrapped dataset)
+2. 이렇게 형성된 데이터셋을 활용하여 value function을 추정할 수 있도록 신경망을 학습시킨다. (Supervised Learning) $\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2$
+
+
+::: {.callout-note}
+사실 위의 형태는 강화학습 이론에서 언급되는 **Temporal Difference (TD) Learning** 의 형태와 관련이 있는데, TD Learning에서도 TD error를 구하기 위해서 다음 state 에서의 estimated value function과 현재 state에서의 estimate value function을 구하는 과정이 있다.
+$$
+\text{TD error: } \delta_t = r(s_{i, t}, a_{i, t}) + V^{\pi}(s_{i, t+1}) - V^{\pi}(s_{i, t})
+$$
+
+여기에도 bootstrapping이 된 target으로 학습하는 방법론 자체가 TD Learning이 된다.
+:::
+
+
+### Monte Carlo Estimation vs. Bootstrapping
+
+앞의 두 섹션을 통해서 신경망으로 value function을 추정할 수 있도록 데이터셋을 만들때, label로 정의할 수 있는 두가지 방법에 대해서 소개했다.
+
+$$
+\begin{aligned}
+\text{Monte Carlo: } & y_{i, t} = \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'}) \\
+\text{Bootstrapping: } & y_{i, t} = r(s_{i, t}, a_{i, t}) + V^{\pi}(s_{i, t+1})
+\end{aligned}
+$$
+
+두 방법의 큰 차이라면 실제 trajectory를 통해 쌓은 reward를 쓰느냐, 아니면, value function이라는 평균값을 사용하느냐 이다. 강의에서는 예시 @fig-value-function-estimation 를 통해서 이 둘의 차이를 조금 더 쉽게 설명하고자 했다.
+
+![Example of MC vs. Bootstrapping](./images/19p_value-function-estimation.png){#fig-value-function-estimation}
+
+먼저 주어진 두 개의 trajectory가 있고, 중간에 파란색 상태로 표현된 공통된 지점이 있다고 가정해본다. 이때 첫번째 trajectory $\tau_1$ 는 핑크색 상태에서 시작해서 파란색 상태를 거친 후, reward를 -1로 받으면서 종료되었고, 두번째 trajectory $\tau_2$ 는 어떤 상태에서 시작했는지는 모르지만, 중간에 파란색 상태를 거치고, reward를 1을 받으면서 종료했다. 둘다 동일한 policy $\pi$ 로 수행되었다고 가정했을 때, 과연 파란색 상태의 value function $\hat{V}^{\pi}({\color{blue} s})$ 와 핑크색 상태에서의 value function $\hat{V}^{\pi}({\color{pink} s})$ 는 어떻게 추정할 수 있을까?
+
+먼저 Monte Carlo 방식으로 value function을 추정해보려고 한다면, 이 때는 trajectory가 종료될 때까지 기다린 후 실제로 받은 총 reward를 해당 상태의 value로 정의한다. 그러면 $\hat{V}^{\pi}({\color{blue} s})$ 는 reward가 -1인 경우와 1인 경우에 대한 평균을 구하므로 0이 된다. $\hat{V}^{\pi}({\color{pink} s})$ 에서는 실제 trajectory내에서 해당 state를 겪은 경우가 $\tau_1$ 뿐이므로, 해당 trajectory의 reward인 -1을 그대로 따라가게 된다. 이렇게 되면 핑크색 상태가 나빴던 상태인지는 모르는 상태에서 파란색 상태를 거쳤던 결과인 $\tau_2$ 의 reward를 반영하지 못한 채 value function이 정의되는 문제가 발생한다.
+
+반면, Bootstrapping 방식으로 value function을 추정해보려고 한다면, 기본적으로 다음 상태의 value function을 활용하게 된다. 이 때 $\hat{V}^{\pi}({\color{blue} s})$ 는 Monte Carlo 방식과 동일하게 0이란 값으로 정의되는데, 핑크색 상태의 value function을 계산할 때 차이가 발생한다. Bootstrapping에서는 최종 결과가 아닌, 다음 상태인 파란색 상태의 value function $\hat{V}^{\pi}({\color{blue} s})$ 을 활용하기 때문에 해당 값은 0이 된다. 결과적으로 핑크색 상태는 $\tau_1$ 에 속해서 -1 reward를 받았지만, bootstrapping을 통해서 $\tau_2$ 의 긍정적인 결과를 간접적으로 공유받아 조금 더 합리적인 추정값을 얻을 수 있게 된다. 
+
+예시를 통해서 설명하고자 했던 부분은, Monte Carlo Estimation과 Bootstrapping Estimation 간의 비교를 통해서 ML 문제에 대두되는 **Bias-Variance Tradeoff** 를 고민해봐야 된다는 것이었다. 쉽게 말하자면 Monte Carlo Estimation은 실제로 얻은 reward를 통해서 계산하기 때문에, 값 자체는 정확할 수 있겠지만 (unbiased), 그 안에서 얻은 정보의 stochasticity 가 기본적으로 내재되어 있기 때문에 high variance 문제가 발생한다. 특히, 앞에서 언급했던 것처럼 single sample을 통한 estimation을 하게 된다면 variance 문제가 더 커진다. 반면, Bootstrapping Estimation은 사전에 계산한 추정값을 기반으로 계산하기 때문에, 그만큼 variance 문제는 MC 방식에 비해서 적다. 하지만 뭔가 신경망으로 value function을 정의했다면, 학습되지 않은 상태에서의 value function $V_{\phi}$는 정확하지도 않을 뿐더러, 추가로 학습되는 value function 또한 부정확한 값을 가지고 계속 학습하는 형태가 된다. 여기에서 bias가 발생하는 샘이다. 강의에서는 bootstrapping 방식 자체가 variance를 획기적으로 줄여주는 방식이기 때문에, bias를 제어할 수 있는 방법이 동반된다면 MC 방식보다 학습을 훨씬 안정적으로 수행한다고 소개하고 있다.
+
+### N-step Returns
+
+그래서 다음으로 설명한 내용이 Monte Carlo 방식의 unbiased한 특성과 Bootstrapping 방식의 low variance 특성을 조합한, N-step returns를 사용해서 value function을 추정하는 것에 대해서 설명했다.
+
+![N-step returns](./images/20p_N-step-returns.png){#fig-n-step-returns}
+
+N-step returns는 이 두 방식을 보간(interpolation)하는 방식으로 이뤄진다. 조금 쉽게 설명하자면 MC처럼 끝까지 가보고 판단하기에는 너무 불안정하고, 그렇다고 다음 상태의 value function으로 추정하기에는 bias가 생기니, 다음 상태를 몇번 더 가보고 나서 값을 추정해보자는 것이다. 그래서 앞에서 다뤘던 추정 방식과 수식적으로 비교해보면 다음과 같다.
+
+$$
+\begin{aligned}
+\text{Monte Carlo: } & y_{i, t} = \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'}) \\
+\text{Bootstrapping: } & y_{i, t} = r(s_{i, t}, a_{i, t}) + \hat{V}_{\phi}^{\pi}(s_{i, t+1}) \\
+\text{N-step returns: } & y_{i, t} = \sum_{t'=t}^{t+n-1} r(s_{i, t'}, a_{i, t'}) + \hat{V}_{\phi}^{\pi}(s_{i, t+n})
+\end{aligned}
+$$
+
+@fig-n-step-returns 에서 보라색 부분으로 표기된 선을 보면 좋을텐데, trajectory내에서 얻은 보상내에서 $N$ 만큼 Monte Carlo Estimation을 하고, $t+N$ 부분은 추정된 value function으로 쓰겠다는 것이다. 이렇게 하면 기존 MC보다는 variance를 줄일 수 있고, Bootstrapping 에 비하면 bias로 인한 부정확함으로 줄일 수 있다는 장점이 있다. 여기에서 $N$ 을 얼마로 정의하느냐가 관건이 될 수 있는데, $N=1$ 이 되면, 앞에서 언급했던 bootstrapping 방식의 식과 동일하고, $N=\infty$ 가 되면 전형적인 Monte Carlo 방식의 식이 된다. 이렇게 $N$ 에 대한 값을 잘 조절하면, 만약 interaction 주기가 매우 짧은 환경에서는 그만큼 실제로 받은 reward를 $N$ 만큼 반영해서 현재의 value function을 정의할 수 있기 때문에 학습에 도움이 된다고 설명하고 있다.
+
+### Relation with discount factors
+
+강의에서는 N-step과 관련하여 **discount factor** 부분에서도 살펴볼만한 내용에 대해서 언급하고 있었다. 보통 $\gamma$ 로 표기되는 discount factor는 일반적으로는 미래에 얻을 수 있는 가치의 비중을 낮추는 수학적인 도구로 알고 있다. 만약 에피소드의 길이가 무한하거나 매우 길 때, 미래의 가치를 그대로 다 더하면 추정치가 무한대로 커질 수 있기 때문에 가까운 미래에 대한 가중치는 크게 주고, 먼 미래의 보상치는 가중치를 적게 주는 방식($r_t + \gamma t_1 + \gamma^2 t_2 \dots$)을 도입해서 합계가 수렴하도록 만든다. 
+
+![Probability of Death](./images/21p_probability-of-death.png){#fig-probability-of-death}
+
+여기에서 교수님은 Probability of Death라는 예제 (@fig-probability-of-death) 를 통해서 discount factor가 매 step마다 agent가 죽을 확률이라는 개념으로 설명했다. 예를 들어서 $\gamma$ 가 0.99일 경우, 게임은 99%의 확률로 계속 진행되고,agent는 $1 - \gamma$ 인 1%의 확률로 죽게 되므로, 결과적으로 아무런 보상을 받을 수 없는 death state에 도달하게 된다는 것이다. 그러면 $\gamma$ 의 바뀌면 결과적으로 agent가 죽을 확률도 변경되므로, 결과적으로는 MDP 자체가 바뀌는 효과로 나타난다는 설명이었다.
+
+## Summary
+
+해당 강의에서는 타이틀인 Actor-Critic Method의 내용 자체보다는 해당 알고리즘을 이해하는데 반드시 필요한 내용을 주로 다뤘다. 이전 강의 내용이었던 Policy Gradient 의 내용을 발전시켜서, 다양한 value function과 advantage function의 개념을 설명했고 결과적으로 다음과 같은 알고리즘을 정의했다.
+
+1. 현재의 policy $\pi_{\theta}$ 로부터 데이터를 batch {($s_{1, i}, a_{1, i}, r_{1, i}, \dots, s_{T, i}, a_{T, i}$, r_{T, i})} 단위로 샘플링한다. 
+2. 이렇게 얻은 데이터로부터 reward를 활용하여 value function $\hat{V}_{\phi}^{\pi}$ 를 추정하는 모델을 학습시킨다.
+3. Value function을 활용하여 Advantage function을 계산한다. ($\hat{A}^{\pi_{\theta}}(s_t, a_t) = r(s_{t, i}, a_{t, i}) + \gamma \hat{V}_{\phi}^{\pi_{\theta}}(s_{t+1, i}) - \hat{V}_{\phi}^{\pi_{\theta}}(s_{t, i})$)
+4. Advantage function을 활용하여 objective function의 gradient를 계산한다. ($\nabla_{\theta}J(\theta) \approx \sum_{t, i} \nabla_{\theta} \log_{\pi_{\theta}} (a_{t, i} \vert s_{t, i}) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})$)
+5. Gradient를 accent하는 방향으로 $\theta$ 를 업데이트한다. ($\theta \leftarrow \theta + \alpha \nabla_{\theta}J(\theta)$)
+
+그런데 잘 보면 큰 그림으로는 실질적으로 현재의 상태에 대한 가치를 추정, 혹은 평가를 하는 과정이고, 평가된 결과를 활용하여 실질적으로 모델을 업데이트하고, 업데이트된 모델의 policy를 활용하여 data를 sampling 하는 과정으로 나눠져있는 것을 알 수 있다. 이렇게 현재 상태를 추정하는 비평가(Critic)과 정책을 업데이트하고 수행하는 행위자(Actor)로 나눠서 수행되는 구조를 **Actor-Critic** Method라고 표현한다. 그래서 간단하게 설명하면, 어떤 것이 좋고 나쁜지를 추정하고, 더 좋은 행동을 할 수 있도록, 다시 말해서 policy gradient를 더 좋은 방향으로 취할 수 있는 방법이 Actor-Critic 방식이고, Deep RL에서는 이때 필요한 value function을 신경망을 사용해서 추정한다. 강의에서는 value function을 추정하는 방식으로 크게 3가지를 나눠서 설명했는데, 한 trajectory의 reward를 모두 활용하는 **Monte Carlo estimation**과, 현재 상태의 reward와 다음 상태의 value function을 활용한 **Bootstrapping estimation**, 그리고 두 방식에서 발생할 수 있는 Bias-Variance tradeoff를 해소하기 위한 hybrid 방법으로 **N-step Return**을 쓰는 방법까지 설명했다.
+
+
