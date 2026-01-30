@@ -80,7 +80,7 @@ $$
 
 위 수식에서 ${\color{blue} \sum_{i=1}^N}$ 부분이 현재의 policy에서 trajectory를 sampling 하는 부분이고, ${\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})}$ 는 현재 학습중인 policy $\pi_{\theta}$ 의 likelihood를 나타낸 것이다. 여기서 likelihood를 통해서 현재 취한 행동 $a_{i, t}$ 를 미래에 더 자주하게 할지, 아니면 덜 하게 만들지를 결정할 수 있다. 이에 대한 gradient를 계산함으로써, 해당 행동을 할 확률을 높이는 방향으로 학습이 이뤄지게 된다. 
 
-그런데 문제는 앞에서 언급한 것처럼, trajectory 단위로 수행되다보니 중간에 나온 action에 대해서는 전체적인 학습에 영향을 미치지 못하고 뭍히는 현상이 나온다는 것이다.
+그런데 문제는 앞에서 언급한 것처럼, trajectory 단위로 수행되다보니 중간에 나온 action에 대해서는 전체적인 학습에 영향을 미치지 못하고 묻히는 현상이 나온다는 것이다.
 
 ::: {#fig-robot-trajectory layout-ncol=2}
 
