@@ -49,25 +49,6 @@ $$ {#eq-supervised-learining}
 Comparison of Supervised Learning & Meta-Supervised Learning
 :::
 
-$$\begin{aligned}
-y &= g_{\phi}(x) \\
-\text{Input: } & x \\
-\text{Output: } & y \\
-\text{Data: } & \{(x, y)_i\} \\
-\end{aligned}
-$$ {#eq-supervised-learning}
-
-::: {#tbl-panel layout-ncol=2}
-|      | Supervised Learning | Meta-Supervised Learning |
-|------|------|------|
-|           | $y=g_{\phi}(x)$   | $y^{ts} = f_{\theta}(\mathcal{D}^{tr}, x^{ts})$ |
-| Inputs    | $x$    | $\mathcal{D}^{tr} (= \{(x, y)_{1:K}\}), x^{ts}$    |
-| Outputs    | $y$    | $y^{ts}$    |
-| Data    | $\{(x, y)_i\}$    | $\{\mathcal{D}_i\}$    |
-
-Comparison of Supervised Learning & Meta-Supervised Learning
-:::
-
 As shown in @tbl-panel, the distinction between **Supervised Learning** and **Meta-Supervised Learning** lies in the definition of inputs and outputs. In standard supervised learning, the input is a data point $x$, the output is a label $y$, and the objective is to learn a function $g$ such that $y=g_{\phi}(x)$.
 
 In contrast, in meta-supervised learning, the input is a combination of a **training dataset** ($\mathcal{D}^{tr}$) and a new test input $x^{ts}$. The corresponding output is the label $y^{ts}$ for the test input. The objective function becomes learning a function $f$ that takes the entire dataset ($\mathcal{D}^{tr}$) as input and produces a prediction for the new data ($x^{ts}$). Here, $\mathcal{D}^{tr}$ is referred to as the **support set**, and the problem is typically defined as a classification task over $K$ classes.

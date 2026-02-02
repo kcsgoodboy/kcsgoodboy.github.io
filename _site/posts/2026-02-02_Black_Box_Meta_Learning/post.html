@@ -312,59 +312,7 @@ Table 1: Comparison of Supervised Learning &amp; Meta-Supervised Learning
 </div>
 </figure>
 </div>
-<p><span id="eq-supervised-learning"><span class="math display">\[\begin{aligned}
-y &amp;= g_{\phi}(x) \\
-\text{Input: } &amp; x \\
-\text{Output: } &amp; y \\
-\text{Data: } &amp; \{(x, y)_i\} \\
-\end{aligned}
-\tag{2}\]</span></span></p>
-<div id="tbl-panel" class="quarto-layout-panel anchored">
-<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 2: Comparison of Supervised Learning &amp; Meta-Supervised Learning
-</figcaption><div aria-describedby="tbl-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead><tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: left;">Supervised Learning</th>
-<th style="text-align: left;">Meta-Supervised Learning</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><span class="math inline">\(y=g_{\phi}(x)\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(y^{ts} = f_{\theta}(\mathcal{D}^{tr}, x^{ts})\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Inputs</td>
-<td style="text-align: left;"><span class="math inline">\(x\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\mathcal{D}^{tr} (= \{(x, y)_{1:K}\}), x^{ts}\)</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Outputs</td>
-<td style="text-align: left;"><span class="math inline">\(y\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(y^{ts}\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Data</td>
-<td style="text-align: left;"><span class="math inline">\(\{(x, y)_i\}\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\{\mathcal{D}_i\}\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</figure>
-</div>
-<p>As shown in <a href="#tbl-panel" class="quarto-xref">Table 2</a>, the distinction between <strong>Supervised Learning</strong> and <strong>Meta-Supervised Learning</strong> lies in the definition of inputs and outputs. In standard supervised learning, the input is a data point <span class="math inline">\(x\)</span>, the output is a label <span class="math inline">\(y\)</span>, and the objective is to learn a function <span class="math inline">\(g\)</span> such that <span class="math inline">\(y=g_{\phi}(x)\)</span>.</p>
+<p>As shown in <a href="#tbl-panel" class="quarto-xref">Table 1</a>, the distinction between <strong>Supervised Learning</strong> and <strong>Meta-Supervised Learning</strong> lies in the definition of inputs and outputs. In standard supervised learning, the input is a data point <span class="math inline">\(x\)</span>, the output is a label <span class="math inline">\(y\)</span>, and the objective is to learn a function <span class="math inline">\(g\)</span> such that <span class="math inline">\(y=g_{\phi}(x)\)</span>.</p>
 <p>In contrast, in meta-supervised learning, the input is a combination of a <strong>training dataset</strong> (<span class="math inline">\(\mathcal{D}^{tr}\)</span>) and a new test input <span class="math inline">\(x^{ts}\)</span>. The corresponding output is the label <span class="math inline">\(y^{ts}\)</span> for the test input. The objective function becomes learning a function <span class="math inline">\(f\)</span> that takes the entire dataset (<span class="math inline">\(\mathcal{D}^{tr}\)</span>) as input and produces a prediction for the new data (<span class="math inline">\(x^{ts}\)</span>). Here, <span class="math inline">\(\mathcal{D}^{tr}\)</span> is referred to as the <strong>support set</strong>, and the problem is typically defined as a classification task over <span class="math inline">\(K\)</span> classes.</p>
 <p>The lecture used the term <strong>“Dataset of Datasets.”</strong> This highlights that the data required to train the function is not merely input-output pairs (<span class="math inline">\((x, y)\)</span>), but rather a collection of datasets, where each dataset corresponds to a specific task. Consequently, during the meta-training phase—where information from initial tasks is acquired—learning proceeds by sampling these tasks.</p>
 <p>The rationale for explaining this concept at the beginning of the lecture is to simplify the problem into the design and optimization of a given function <span class="math inline">\(f\)</span>, before examining highly complex algorithms. By viewing the problem through this lens, we can focus on examining neural network architectures capable of processing datasets (datasets combined with tasks). This premise suggests that we can solve the problem by designing and optimizing architectures such as RNNs or Transformers that can process inputs sequentially. This concept serves as the theoretical foundation for the Black-Box approach covered in this lecture.</p>
@@ -424,7 +372,7 @@ Figure 2: Version 1 vs. Version 2
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>Expressed in the form of an algorithm, it is as follows:</p>
-<div class="pseudocode-container quarto-float" data-no-end="false" data-indent-size="1.2em" data-pseudocode-number="1" data-line-number="true" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div class="pseudocode-container quarto-float" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>
