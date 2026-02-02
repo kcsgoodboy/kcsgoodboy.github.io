@@ -119,7 +119,7 @@ $$
 \begin{algorithmic}
 \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks)
 \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$
-\State Compute $\h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$
+\State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$
 \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$
 \State Iterate 1~4
 \end{algorithmic}
