@@ -346,7 +346,7 @@ y &amp;= g_{\phi}(x) \\
 <tr class="even">
 <td style="text-align: left;">Inputs</td>
 <td style="text-align: left;"><span class="math inline">\(x\)</span></td>
-<td style="text-align: left;"><span class="math inline">\(\mathcal{D}^{tr} (\eq \{(x, y)_{1:K}\}), x^{ts}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{D}^{tr} (= \{(x, y)_{1:K}\}), x^{ts}\)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Outputs</td>
@@ -366,7 +366,7 @@ y &amp;= g_{\phi}(x) \\
 </figure>
 </div>
 <p><a href="#tbl-panel" class="quarto-xref">표&nbsp;1</a> 에도 보여지다시피 <strong>Supervised Learning</strong>과 <strong>Meta Supervised Learning</strong> 과의 차이는 입력과 출력의 정의에서 차이가 있다. 일반 supervised learning 에서는 입력인 데이터 포인트 <span class="math inline">\(x\)</span> 이고, 출력이 label <span class="math inline">\(y\)</span> 이고, 이때의 objective <span class="math inline">\(y=g_{\phi}(x)\)</span> 인 함수 <span class="math inline">\(g\)</span> 를 학습하는 것이다. 반면, meta supervised learning 에서는 입력이 <strong>학습데이터셋</strong> (<span class="math inline">\(\mathcal{D}^{tr}\)</span>) 과 새로운 테스트 데이터 입력 <span class="math inline">\(x^{ts}\)</span> 의 조합이다. 이에 대한 출력은 테스트 입력에 대한 label <span class="math inline">\(y^{ts}\)</span> 이다. Objective function은 데이터셋 전체 (<span class="math inline">\(\mathcal{D}^{tr}\)</span>) 을 입력으로 받아, 새로운 데이터 (<span class="math inline">\(x^{ts}\)</span>)에 대한 예측을 내놓는 함수 <span class="math inline">\(f\)</span> 를 학습하는 것이 된다. 여기에서 <span class="math inline">\(\mathcal{D}^{tr}\)</span> 을 <strong>support set</strong>이라고 하며, 일반적으로는 <span class="math inline">\(K\)</span> 개의 class에 대해서 분류하는 문제로 정의된다.</p>
-<p>그래서 강의에서는 <strong>Dataset of Datasets</strong> 라는 표현을 사용했는데, 함수를 학습시키기 위해서 필요한 데이터가 일반적인 입력-출력의 쌍 (<span class="math inline">\((x, y)\)</span>) 이 아닌, 특정 task에 해당하느 데이터셋의 집합이 필요하다는 부분을 언급했다. 그래서 보통 Meta Learning이 진행되는 과정중에 초기의 task의 정보를 얻는 meta training과정이 있는데, 이때 task를 샘플링해서 학습이 이뤄진다.</p>
+<p>그래서 강의에서는 <strong>Dataset of Datasets</strong> 라는 표현을 사용했는데, 함수를 학습시키기 위해서 필요한 데이터가 일반적인 입력-출력의 쌍 (<span class="math inline">\((x, y)\)</span>) 이 아닌, 특정 task에 해당하는 데이터셋의 집합이 필요하다는 부분을 언급했다. 그래서 보통 Meta Learning이 진행되는 과정중에 초기의 task의 정보를 얻는 meta training과정이 있는데, 이때 task를 샘플링해서 학습이 이뤄진다.</p>
 <p>강의의 서두에서 이를 설명한 이유는 Meta Learning에 대한 방법론 자체가 어떤 고도화된 알고리즘을 살펴보기에 앞서, 먼저 처리되는 데이터셋을 처리할 수 있는 신경망 구조에 대해서 살펴봄으로써, 주어진 함수 <span class="math inline">\(f\)</span>의 설계와 최적화 문제로 단순화시킨다는 것이다. 그래서 위와 같이 task와 데이터의 조합으로 이뤄진 입력을 순차적으로 처리할 수 있는 RNN계열이나 Transformer 등의 구조를 먼저 설계하고 이를 최적화하면 문제를 해결할 수 있다는 가정을 전제로 두게 되는데, 이 내용이 해당 강의에서 다룰 Black-box 접근법의 이론적인 토대가 된다.</p>
 <p>이와 같이 Black-box 접근법을 통해 일반적으로 설계할 수 있는 방법론은 다음과 같이 요약할 수 있다.</p>
 <ol type="1">
@@ -387,7 +387,7 @@ y &amp;= g_{\phi}(x) \\
 </figcaption>
 </figure>
 </div>
-<p>Meta Learning의 학습 과정을 설명하기에 앞서서 Meta Learning에서 주로 활용되는 Benchmark에 대한 소개를 간단히 했다. <a href="#fig-omniglot" class="quarto-xref">그림&nbsp;1</a> 은 <span class="citation" data-cites="lake2015omniglot">Lake, Salakhutdinov, 와/과 Tenenbaum (<a href="#ref-lake2015omniglot" role="doc-biblioref">2015</a>)</span> 에서 소개된 Omniglot이란 데이터셋으로, 문자를 인식하는 관점에서는 많이 알려져있는 benchmark인 MNIST 데이터셋과 유사하나, (0~9)사이의 적은 수의 클래스에 대해 많은 데이터를 가진 MNIST와 다르게 Omniglot 데이터셋은 50개의 알파벳에 대해서 1623개의 문자를 가지고 있고, 각 클래스당 20개의 매우 적은 샘플을 가지는 데이터셋이다. 그래서 <strong>많은 클래스와 적은 샘플</strong> 을 가지는 특성을 활용하여 Meta Learning 문제를 정의하는데 많이 사용되며, MNIST와 유사한 인식 문제 특성으로 인해서 MNIST의 “traspose”라고 표현하기도 한다. 이 밖에도 few-shot sample을 가지고 이미지 인식을 하는 데이터셋으로는 <span class="citation" data-cites="ren2018meta">Ren 기타 (<a href="#ref-ren2018meta" role="doc-biblioref">2018</a>)</span> 에서 소개된 tieredImageNet 이나, Fewshot-CIFAR100 (or CIFAR-FS), CelebA, ORBIT, CUB 등의 다양한 Meta Learning용 benchmark들이 존재한다. 물론 인식 뿐만 아니라 다른 benchmark도 존재한다. <span class="citation" data-cites="nguyen2020meta">Nguyen, Kreatsoulas, 와/과 Branson (<a href="#ref-nguyen2020meta" role="doc-biblioref">2020</a>)</span> 에서는 Graph Neural Network 구조를 활용하여 분자 물성 예측 (Molecular Property Prediction) 문제를 Meta Learning 형태로 만들어 해결했는데, 해당 논문에서 활용된 데이터셋을 benchmark 형태로 공개하였다. 또한 <span class="citation" data-cites="yin2019meta">Yin 기타 (<a href="#ref-yin2019meta" role="doc-biblioref">2019</a>)</span> 와 <span class="citation" data-cites="li2021channel">Li 기타 (<a href="#ref-li2021channel" role="doc-biblioref">2021</a>)</span> 에서도 각각 object의 pose estimation과 통신시 활용되는 channel coding에서 meta learning을 적용한 사례와 관련 benchmark를 공유했다.</p>
+<p>Meta Learning의 학습 과정을 설명하기에 앞서서 Meta Learning에서 주로 활용되는 Benchmark에 대한 소개를 간단히 했다. <a href="#fig-omniglot" class="quarto-xref">그림&nbsp;1</a> 은 <span class="citation" data-cites="lake2015omniglot">Lake, Salakhutdinov, 와/과 Tenenbaum (<a href="#ref-lake2015omniglot" role="doc-biblioref">2015</a>)</span> 에서 소개된 Omniglot이란 데이터셋으로, 문자를 인식하는 관점에서는 많이 알려져있는 benchmark인 MNIST 데이터셋과 유사하나, (0~9)사이의 적은 수의 클래스에 대해 많은 데이터를 가진 MNIST와 다르게 Omniglot 데이터셋은 50개의 알파벳에 대해서 1623개의 문자를 가지고 있고, 각 클래스당 20개의 매우 적은 샘플을 가지는 데이터셋이다. 그래서 <strong>많은 클래스와 적은 샘플</strong> 을 가지는 특성을 활용하여 Meta Learning 문제를 정의하는데 많이 사용되며, MNIST와 유사한 인식 문제 특성으로 인해서 MNIST의 “transpose”라고 표현하기도 한다. 이 밖에도 few-shot sample을 가지고 이미지 인식을 하는 데이터셋으로는 <span class="citation" data-cites="ren2018meta">Ren 기타 (<a href="#ref-ren2018meta" role="doc-biblioref">2018</a>)</span> 에서 소개된 tieredImageNet 이나, Fewshot-CIFAR100 (or CIFAR-FS), CelebA, ORBIT, CUB 등의 다양한 Meta Learning용 benchmark들이 존재한다. 물론 인식 뿐만 아니라 다른 benchmark도 존재한다. <span class="citation" data-cites="nguyen2020meta">Nguyen, Kreatsoulas, 와/과 Branson (<a href="#ref-nguyen2020meta" role="doc-biblioref">2020</a>)</span> 에서는 Graph Neural Network 구조를 활용하여 분자 물성 예측 (Molecular Property Prediction) 문제를 Meta Learning 형태로 만들어 해결했는데, 해당 논문에서 활용된 데이터셋을 benchmark 형태로 공개하였다. 또한 <span class="citation" data-cites="yin2019meta">Yin 기타 (<a href="#ref-yin2019meta" role="doc-biblioref">2019</a>)</span> 와 <span class="citation" data-cites="li2021channel">Li 기타 (<a href="#ref-li2021channel" role="doc-biblioref">2021</a>)</span> 에서도 각각 object의 pose estimation과 통신시 활용되는 channel coding에서 meta learning을 적용한 사례와 관련 benchmark를 공유했다.</p>
 <p>강의에서는 위의 benchmark 중 Omniglot 데이터셋을 활용하여, 3-way 1-shot classification 문제(3개의 클래스를 구분하고, 학습시 클래스당 1개의 이미지만 주어지는 상황)시 meta-training이 이뤄지는 과정을 설명하고 했다.</p>
 <ul>
 <li><strong>Task Sampling</strong>: 우선 첫번째 과정에서는 Omniglot 데이터셋 중에서 하나의 Task, 즉 알파벳을 고르고, 그 중 <strong>3개의 문자</strong>를 무작위로 뽑았다. 예시에서는 영어 알파벳의 A, B, C를 뽑았다고 가정했다. 그러면 이 3개의 문자가 현재의 episode에서 풀어야 할 하나의 Task <span class="math inline">\(\mathcal{T}_i\)</span> 가 된다.</li>
@@ -424,16 +424,16 @@ y &amp;= g_{\phi}(x) \\
 <p>일반적인 학습이 데이터(<span class="math inline">\(x\)</span>)를 받아서 label <span class="math inline">\(y\)</span> 를 내보낸다면, <strong>Black-Box Meta Learning</strong>은 학습 데이터셋 (<span class="math inline">\(\mathcal{D}^{tr}\)</span>) 과 테스트 입력(<span class="math inline">\(x^{ts}\)</span>)을 통째로 입력을 받아 label을 예측하는 형태로 되어 있다. 쉽게 설명하자면 모델 내부에서 데이터셋을 처리하고 정보를 추출하는 과정이 일종의 “블랙박스”안에서 일어나는 학습과정과 같다는 의미가 되겠다.</p>
 <p>교수는 <strong>“learner”</strong> 라는 개념으로 표현했는데, Black-Box Adaptation의 과정은 첫번째로 주어진 task의 데이터셋을 표현할 수 있는 “learner” 신경망을 학습하고 (<span class="math inline">\(\phi_i =f_{\theta}(\mathcal{D}^{tr})\)</span>), “learner”의 output을 활용하여 주어진 테스트 샘플의 label을 예측하는 과정으로 이뤄져 있다. 사실 보면 알겠지만, 하나하나가 앞에서 소개한 supervised learning이고, objective function도 supervised learning이 조합된 형태이다.</p>
 <p><span class="math display">\[
-\min_{\theta} \sum_{\mathcal{T}_i} {\color{red} \sum_{(x, y) \sim \mathcal{D}_i^{ts}} -\log_{g_{\phi_i}}(y \vert x)}
+\min_{\theta} \sum_{\mathcal{T}_i} {\color{red} \sum_{(x, y) \sim \mathcal{D}_i^{ts}} -\log g_{\phi_i}(y \vert x)}
 \]</span></p>
 <p>로 되어 있는데, 위에서 소개한 learner의 식을 가져와 보면,</p>
 <p><span class="math display">\[
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>로 정리할 수 있다. 알고리즘 형태로 표현하면 다음과 같다.</p>
-<div class="pseudocode-container quarto-float" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number-punc=":" data-line-number="true" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm">
+<div class="pseudocode-container quarto-float" data-comment-delimiter="//" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-line-number-punc=":" data-line-number="true" data-indent-size="1.2em" data-no-end="false">
 <div class="pseudocode">
-\begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\phi_i \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>
 </div>
 </section>
