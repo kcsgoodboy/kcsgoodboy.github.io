@@ -137,3 +137,110 @@ pages = {229–256},
 numpages = {28},
 keywords = {mathematical analysis, gradient descent, connectionist networks, Reinforcement learning}
 }
+
+@phdthesis{Finn:EECS-2018-105,
+    Author= {Finn, Chelsea},
+    Title= {Learning to Learn with Gradients},
+    School= {EECS Department, University of California, Berkeley},
+    Year= {2018},
+    Month= {Aug},
+    Url= {http://www2.eecs.berkeley.edu/Pubs/TechRpts/2018/EECS-2018-105.html},
+    Number= {UCB/EECS-2018-105},
+    Abstract= {Humans have a remarkable ability to learn new concepts from only a few examples and quickly adapt to unforeseen circumstances. To do so, they build upon their prior experience and prepare for the ability to adapt, allowing the combination of previous observations with small amounts of new evidence for fast learning. In most machine learning systems, however, there are distinct train and test phases: training consists of updating the model using data, and at test time, the model is deployed as a rigid decision-making engine. In this thesis, we discuss gradient-based algorithms for learning to learn, or meta-learning, which aim to endow machines with flexibility akin to that of humans. Instead of deploying a fixed, non-adaptable system, these meta-learning techniques explicitly train for the ability to quickly adapt so that, at test time, they can learn quickly when faced with new scenarios.
+
+To study the problem of learning to learn, we first develop a clear and formal definition of the meta-learning problem, its terminology, and desirable properties of meta-learning algorithms. Building upon these foundations, we present a class of model-agnostic meta-learning methods that embed gradient-based optimization into the learner. Unlike prior approaches to learning to learn, this class of methods focus on acquiring a transferable representation rather than a good learning rule. As a result, these methods inherit a number of desirable properties from using a fixed optimization as the learning rule, while still maintaining full expressivity, since the learned representations can control the update rule.
+
+We show how these methods can be extended for applications in motor control by combining elements of meta-learning with techniques for deep model-based reinforcement learning, imitation learning, and inverse reinforcement learning. By doing so, we build simulated agents that can adapt in dynamic environments, enable real robots to learn to manipulate new objects by watching a video of a human, and allow humans to convey goals to robots with only a few images. Finally, we conclude by discussing open questions and future directions in meta-learning, aiming to identify the key shortcomings and limiting assumptions of our existing approaches.},
+}
+
+@article{
+lake2015omniglot,
+author = {Brenden M. Lake  and Ruslan Salakhutdinov  and Joshua B. Tenenbaum },
+title = {Human-level concept learning through probabilistic program induction},
+journal = {Science},
+volume = {350},
+number = {6266},
+pages = {1332-1338},
+year = {2015},
+doi = {10.1126/science.aab3050},
+URL = {https://www.science.org/doi/abs/10.1126/science.aab3050},
+eprint = {https://www.science.org/doi/pdf/10.1126/science.aab3050},
+abstract = {Not only do children learn effortlessly, they do so quickly and with a remarkable ability to use what they have learned as the raw material for creating new stuff. Lake et al. describe a computational model that learns in a similar fashion and does so better than current deep learning algorithms. The model classifies, parses, and recreates handwritten characters, and can generate new letters of the alphabet that look “right” as judged by Turing-like tests of the model's output in comparison to what real humans produce. Science, this issue p. 1332 Combining the capacity to handle noise with probabilistic learning yields humanlike performance in a computational model. People learning new concepts can often generalize successfully from just a single example, yet machine learning algorithms typically require tens or hundreds of examples to perform with similar accuracy. People can also use learned concepts in richer ways than conventional algorithms—for action, imagination, and explanation. We present a computational model that captures these human learning abilities for a large class of simple visual concepts: handwritten characters from the world’s alphabets. The model represents concepts as simple programs that best explain observed examples under a Bayesian criterion. On a challenging one-shot classification task, the model achieves human-level performance while outperforming recent deep learning approaches. We also present several “visual Turing tests” probing the model’s creative generalization abilities, which in many cases are indistinguishable from human behavior.}}
+
+@article{ren2018meta,
+  title={Meta-learning for semi-supervised few-shot classification},
+  author={Ren, Mengye and Triantafillou, Eleni and Ravi, Sachin and Snell, Jake and Swersky, Kevin and Tenenbaum, Joshua B and Larochelle, Hugo and Zemel, Richard S},
+  journal={arXiv preprint arXiv:1803.00676},
+  year={2018}
+}
+
+@article{nguyen2020meta,
+  title={Meta-learning GNN initializations for low-resource molecular property prediction},
+  author={Nguyen, Cuong Q and Kreatsoulas, Constantine and Branson, Kim M},
+  journal={arXiv preprint arXiv:2003.05996},
+  year={2020}
+}
+
+@article{yin2019meta,
+  title={Meta-learning without memorization},
+  author={Yin, Mingzhang and Tucker, George and Zhou, Mingyuan and Levine, Sergey and Finn, Chelsea},
+  journal={arXiv preprint arXiv:1912.03820},
+  year={2019}
+}
+
+@article{li2021channel,
+  title={A channel coding benchmark for meta-learning},
+  author={Li, Rui and Bohdal, Ondrej and Mishra, Rajesh and Kim, Hyeji and Li, Da and Lane, Nicholas and Hospedales, Timothy},
+  journal={arXiv preprint arXiv:2107.07579},
+  year={2021}
+}
+
+@inproceedings{santoro2016meta,
+  title={Meta-learning with memory-augmented neural networks},
+  author={Santoro, Adam and Bartunov, Sergey and Botvinick, Matthew and Wierstra, Daan and Lillicrap, Timothy},
+  booktitle={International conference on machine learning},
+  pages={1842--1850},
+  year={2016},
+  organization={PMLR}
+}
+
+@article{mishra2017simple,
+  title={A simple neural attentive meta-learner},
+  author={Mishra, Nikhil and Rohaninejad, Mostafa and Chen, Xi and Abbeel, Pieter},
+  journal={arXiv preprint arXiv:1707.03141},
+  year={2017}
+}
+
+@inproceedings{finn2017model,
+  title={Model-agnostic meta-learning for fast adaptation of deep networks},
+  author={Finn, Chelsea and Abbeel, Pieter and Levine, Sergey},
+  booktitle={International conference on machine learning},
+  pages={1126--1135},
+  year={2017},
+  organization={PMLR}
+}
+
+@article{duan2016rl,
+  title={Rl $\^{} 2$: Fast reinforcement learning via slow reinforcement learning},
+  author={Duan, Yan and Schulman, John and Chen, Xi and Bartlett, Peter L and Sutskever, Ilya and Abbeel, Pieter},
+  journal={arXiv preprint arXiv:1611.02779},
+  year={2016}
+}
+
+@article{brown2020language,
+  title={Language models are few-shot learners},
+  author={Brown, Tom and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared D and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and others},
+  journal={Advances in neural information processing systems},
+  volume={33},
+  pages={1877--1901},
+  year={2020}
+}
+
+@article{chan2022data,
+  title={Data distributional properties drive emergent in-context learning in transformers},
+  author={Chan, Stephanie and Santoro, Adam and Lampinen, Andrew and Wang, Jane and Singh, Aaditya and Richemond, Pierre and McClelland, James and Hill, Felix},
+  journal={Advances in neural information processing systems},
+  volume={35},
+  pages={18878--18891},
+  year={2022}
+}
