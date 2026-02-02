@@ -2,7 +2,6 @@
 title: Black-Box Meta-Learning & In-Context Learning
 description: Summary of lecture CS330 (2022) Lecture 4. Black-Box Meta-Learning & In-Context Learning
 date: '2026-02-02'
-date-modified: last-modified
 bibliography: ../../contents/references.bib
 image: ./images/black_box_meta_learning_overview.en.png
 filters:

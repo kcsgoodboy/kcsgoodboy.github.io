@@ -2,7 +2,6 @@
 title: Multi-task learning
 description: Summary of lecture CS330 (2022) Lecture 2. Multi-task learning
 date: '2026-01-20'
-date-modified: last-modified
 bibliography: ../../contents/references.bib
 image: ./images/11p_all_shared_training.png
 filters:

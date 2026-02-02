@@ -2,7 +2,6 @@
 title: Actor-Critic Methods
 description: Summary of lecture CS224R (2025) Lecture 4. Actor-Critic Methods
 date: '2026-01-30'
-date-modified: last-modified
 bibliography: ../../contents/references.bib
 image: ./images/Actor_Critic_Methods_overview.en.png
 filters:

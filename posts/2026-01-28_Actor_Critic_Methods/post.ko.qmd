@@ -2,7 +2,6 @@
 title: Actor-Critic Methods
 description: 2025년에 진행한 CS224R 강의 중 Lecture 4. Actor-Critic Methods에 대한 강의 요약
 date: '2026-01-28'
-date-modified: last-modified
 bibliography: ../../contents/references.bib
 image: ./images/Actor_Critic_Methods_overview.ko.png
 filters:

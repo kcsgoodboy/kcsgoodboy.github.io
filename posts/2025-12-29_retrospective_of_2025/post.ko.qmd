@@ -2,7 +2,6 @@
 title: 2025년 회고록
 description: 2025년을 보내면서 성취했던 일과 후회, 다짐 등...
 date: '2025-12-29'
-date-modified: last-modified
 image: ./images/tsne_visualization.png
 lang: ko
 categories:

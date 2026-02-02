@@ -2,7 +2,6 @@
 title: Taylor Expansion
 description: Applying Taylor Expansion in various functions.
 date: '2025-07-28'
-date-modified: last-modified
 image: ./images/taylor_expansion.png
 lang: en
 categories:

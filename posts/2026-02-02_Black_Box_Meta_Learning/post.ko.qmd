@@ -2,7 +2,6 @@
 title: Black-Box Meta-Learning & In-Context Learning
 description: 2022년에 진행한 CS330 강의 중 Lecture 4. Black-Box Meta-Learning & In-Context Learning에 대한 강의 요약
 date: '2026-02-02'
-date-modified: last-modified
 bibliography: ../../contents/references.bib
 image: ./images/black_box_meta_learning_overview.ko.png
 filters:

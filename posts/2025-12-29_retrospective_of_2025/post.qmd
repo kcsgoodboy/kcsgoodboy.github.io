@@ -2,7 +2,6 @@
 title: retrospective of 2025
 description: Reflections on 2025 - Achievements, Regrets, and Resolutions
 date: '2025-12-29'
-date-modified: last-modified
 image: ./images/tsne_visualization.png
 lang: en
 categories:

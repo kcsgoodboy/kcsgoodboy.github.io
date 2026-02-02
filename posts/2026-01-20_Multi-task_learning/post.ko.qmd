@@ -2,7 +2,6 @@
 title: Multi-task learning
 description: 2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약
 date: '2026-01-20'
-date-modified: last-modified
 bibliography: ../../contents/references.bib
 image: ./images/11p_all_shared_training.png
 filters:
