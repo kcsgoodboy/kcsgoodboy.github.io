@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
@@ -7,8 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chanseok Kang">
-<meta name="dcterms.date" content="2026-01-30">
-<meta name="description" content="Summary of lecture CS224R (2025) Lecture 4. Actor-Critic Methods">
+<meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 4. Actor-Critic Methods에 대한 강의 요약">
 
 <title>Actor-Critic Methods – Chan’s Research Note</title>
 <style>
@@ -80,17 +79,17 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
@@ -166,8 +165,8 @@ window.Quarto = {
     <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -175,7 +174,7 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -187,7 +186,7 @@ window.Quarto = {
       <h1 class="title">Actor-Critic Methods</h1>
                   <div>
         <div class="description">
-          Summary of lecture CS224R (2025) Lecture 4. Actor-Critic Methods
+          2025년에 진행한 CS224R 강의 중 Lecture 4. Actor-Critic Methods에 대한 강의 요약
         </div>
       </div>
                           <div class="quarto-categories">
@@ -198,8 +197,8 @@ window.Quarto = {
   </div>
     
   <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
     
       <div class="quarto-title-meta-contents">
       <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
@@ -217,9 +216,9 @@ window.Quarto = {
 
         
       <div>
-      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-heading">공개</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 30, 2026</p>
+        <p class="date">2026년 1월 28일</p>
       </div>
     </div>
     
@@ -234,7 +233,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
+  <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
   <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
   <li><a href="#value-function-q-function" id="toc-value-function-q-function" class="nav-link" data-scroll-target="#value-function-q-function">Value function &amp; Q function</a></li>
   <li><a href="#what-is-dissatisfying-about-policy-gradients" id="toc-what-is-dissatisfying-about-policy-gradients" class="nav-link" data-scroll-target="#what-is-dissatisfying-about-policy-gradients">What is dissatisfying about policy gradients?</a></li>
@@ -262,8 +261,8 @@ window.Quarto = {
 
 
 
-<section id="resource" class="level3">
-<h3 class="anchored" data-anchor-id="resource">Resource</h3>
+<section id="강의-및-자료" class="level3">
+<h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
 <div>
 
 </div>
@@ -277,63 +276,65 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
 </section>
 <section id="lecture-summary-with-notebooklm" class="level2">
 <h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Actor_Critic_Methods_overview.en.png" class="img-fluid"></p>
+<p><img src="./images/Actor_Critic_Methods_overview.ko.png" class="img-fluid"></p>
 </section>
 <section id="value-function-q-function" class="level2">
 <h2 class="anchored" data-anchor-id="value-function-q-function">Value function &amp; Q function</h2>
-<p>Before diving into Actor-Critic Methods, the first concept that must be established is how to define and measure “Value” within a given environment. Therefore, I would like to start by explaining three core concepts in Reinforcement Learning: the <strong>Value function</strong> (<span class="math inline">\(V\)</span>), the <strong>Q-function</strong> (<span class="math inline">\(Q\)</span>), and the <strong>Advantage function</strong> (<span class="math inline">\(A\)</span>).</p>
+<p>Actor-Critic Methods를 다루기에 앞서서 가장 먼저 정의되어야 할 개념은 과연 우리한테 주어져 있는 환경상에서의 가치(Value)를 어떻게 정의하고 측정할 수 있느냐 하는 점이다. 그래서 강화학습에서 다뤄지는 세가지 핵심 개념인 <strong>Value function</strong> <span class="math inline">\(V\)</span> 과 <strong>Q-function</strong> <span class="math inline">\(Q\)</span>, 그리고 <strong>Advantage function</strong> <span class="math inline">\(A\)</span> 에 대해서 먼저 설명해보고자 한다.</p>
 <div id="fig-VQ" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/6p_VQ.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Value function &amp; Q function
+그림&nbsp;1: Value function &amp; Q function
 </figcaption>
 </figure>
 </div>
-<p>First, the <strong>value function</strong> <span class="math inline">\(V^{\pi}(s)\)</span> represents how much reward can be expected in the future given a state <span class="math inline">\(s\)</span> while following the current policy <span class="math inline">\(\pi\)</span>. Since the goal of Reinforcement Learning is to take actions that maximize future value, <span class="math inline">\(V^{\pi}(s)\)</span> is used to calculate the average future value at the current state and utilize it for learning. Because it takes only <span class="math inline">\(s\)</span> as an argument, you can think of it as the expected score you would get by following your usual policy <span class="math inline">\(\pi\)</span>, without choosing a specific action to start with. As shown in the first part of <a href="#fig-VQ" class="quarto-xref">Figure&nbsp;1</a>, if you take actions according to <span class="math inline">\(\pi\)</span> from a specific state <span class="math inline">\(s\)</span> multiple times, a process—or a <strong>trajectory</strong>—is generated up to a certain point. Consequently, the expected value of the total rewards obtained across these trajectories becomes <span class="math inline">\(V^{\pi}(s)\)</span>.</p>
+<p>먼저 <strong>value function</strong> <span class="math inline">\(V^{\pi}(s)\)</span> 는 현재의 정책 <span class="math inline">\(\pi\)</span> 를 수행할 때, 주어진 상태 <span class="math inline">\(s\)</span> 에서 앞으로 얼마나 reward를 받을 수 있는지를 나타내는 함수이다. 강화학습의 특성상 미래에 얻을 수 있는 가치를 최대화할 수 있는 방향으로 행동을 취하기 때문에, 이렇게 <span class="math inline">\(V^{\pi}(s)\)</span> 를 통해서 현재 상태에서의 평균적인 미래 가치를 계산하고 학습에 활용한다. 인자가 <span class="math inline">\(s\)</span> 만 들어가기 때문에, 이 함수를 통해서는 특정 행동을 딱 정해서 취하지 않고, 평소의 <span class="math inline">\(\pi\)</span> 에 따라서 행동할 경우 미래에 얻을 수 있는 기대(expected) 점수라고 생각하면 이해가 쉬울 것 같다. <a href="#fig-VQ" class="quarto-xref">그림&nbsp;1</a> 의 첫번째 그림에서도 나타나듯이, 특정 state <span class="math inline">\(s\)</span> 에서 <span class="math inline">\(\pi\)</span> 에 따라 여러번 특정 시점까지의 action을 취하다보면, 그 시점까지의 과정, 일종의 경로(trajectory)가 생성될 것이다. 결과적으로 이 trajectory 들 간에 얻었던 총 reward의 기대값이 <span class="math inline">\(V^{\pi}(s)\)</span> 가 된다.</p>
 <p><span class="math display">\[
 V^{\pi}(s_t) = \mathbb{E}_{\pi} \Big[ \sum_{t'=t}^T r(s_{t'}, a_{t'}) \vert s_t \Big]
 \]</span></p>
-<p>The <strong>Q-function</strong> <span class="math inline">\(Q^{\pi}(s, a)\)</span> adds additional information to the Value function. It represents the future value obtainable when a specific action <span class="math inline">\(a\)</span> is taken in a given state <span class="math inline">\(s\)</span>. Looking at the second part of <a href="#fig-VQ" class="quarto-xref">Figure&nbsp;1</a>, there are multiple trajectories as explained before, but we focus on the cases where a specific action <span class="math inline">\(a\)</span> was taken at state <span class="math inline">\(s\)</span>. The expected value of the total rewards, strictly limited to these specific trajectories (the green lines in the figure), corresponds to <span class="math inline">\(Q^{\pi}(s, a)\)</span>.</p>
+<p><strong>Q-function</strong> <span class="math inline">\(Q^{\pi}(s, a)\)</span> 에서는 Value function에 부가적인 정보를 추가한 형태로, 주어진 상태 <span class="math inline">\(s\)</span> 에서 특정 행동 <span class="math inline">\(a\)</span> 를 취했을 경우 미래에 얻을 수 있는 가치를 나타낸 함수이다. 그래서 <a href="#fig-VQ" class="quarto-xref">그림&nbsp;1</a> 의 두번째 그림을 보면 앞에서 설명한 것처럼 여러 trajectory들이 있겠지만, 이 중에서도 특정 state <span class="math inline">\(s\)</span> 에서 특정 action <span class="math inline">\(a\)</span> 를 취했던 경우가 있을 것이다. 이 trajectory(그림에서의 초록색 선들)에 한정해서 이때 얻을 수 있는 총 reward의 기대값이 <span class="math inline">\(Q^{\pi}(s, a)\)</span> 일 것이다.</p>
 <p><span class="math display">\[
 Q^{\pi}(s_t, a_t) = \mathbb{E}_{\pi} \Big[ \sum_{t'=t}^T r(s_{t'}, a_{t'}) \vert s_t, a_t \Big]
 \]</span></p>
-<p>Since the Q-function is essentially a calculation limited to a specific subset of actions <span class="math inline">\(a\)</span> used in the value function calculation, the following relationship holds:</p>
+<p>그래서 사실 Q-function은 value function 계산시 활용되는 일부의 action <span class="math inline">\(a\)</span> 에 한정해서 계산한 값이 되기 때문에 다음과 같은 관계가 성립한다.</p>
 <p><span class="math display">\[
 V^{\pi}(s) = \mathbb{E}_{a \sim \pi(\cdot \vert s)} [Q^{\pi}(s, a)]
 \]</span></p>
-<p>By combining the value function and the Q-function, we can determine how much <strong>“better”</strong> taking a specific action <span class="math inline">\(a\)</span> in state <span class="math inline">\(s\)</span> is compared to the general value function under the current policy <span class="math inline">\(\pi\)</span>. This concept leads to the <strong>Advantage function</strong> <span class="math inline">\(A^{\pi}(s, a)\)</span>. Since the value function includes the expected rewards of taking other actions (not just <span class="math inline">\(a\)</span>), we can calculate the relative advantage of a specific action as follows:</p>
+<p>그러다보니 value function과 Q-function을 조합하면, 현재 수행하는 정책 <span class="math inline">\(\pi\)</span> 에 따라, 특정 state <span class="math inline">\(s\)</span> 에서 <span class="math inline">\(a\)</span> 를 취했을 때, 일반적인 value function보다 얼마나 잘했는지 여부를 알 수 있을 것이다. 이런 개념으로 등장한 내용이 <strong>advantage function</strong> <span class="math inline">\(A^{\pi}(s, a)\)</span> 이다. 아무래도 value function에는 <span class="math inline">\(a\)</span> 가 아닌, 다른 행동을 취했을 때의 기대 보상값이 모두 포함되어 있으므로, 행동에 대한 이점(advantage)도 이렇게 계산할 수 있다.</p>
 <p><span class="math display">\[
 A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 \]</span></p>
-<p>To make this easier to understand, let’s apply the above notation to an example of learning to play an instrument.</p>
+<p>이해를 쉽게 하기 위해서 악기를 연주하는 방법을 학습하는 과정에 대해서 앞의 notation을 적용하는 것을 예시로 제공했다.</p>
 <div id="fig-example" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/7p_example.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: example
+그림&nbsp;2: example
 </figcaption>
 </figure>
 </div>
-<p>First, let’s define the environment: it has a <strong>sparse reward</strong> structure where you get a reward of 1 if you can read sheet music and play music within a month, and 0 otherwise. The learner’s current policy follows a deterministic policy (<span class="math inline">\(\pi(a_1 \vert s) = 1\)</span>) where the action is always fixed to <span class="math inline">\(a_1\)</span> (lying on the beach). In this case, the value function <span class="math inline">\(V^{\pi}(s_t)\)</span> is 0 because if you only continue to lie on the beach, you won’t be able to play the instrument a month later.</p>
-<p>Now, let’s look at the available actions using the Q-function. We can consider case <span class="math inline">\(a_2\)</span> (watching TV—note that this is not watching music tutorials) and case <span class="math inline">\(a_3\)</span> (actually practicing the instrument). A crucial point to note is that the specific action <span class="math inline">\(a_t\)</span> is taken only at state <span class="math inline">\(s_t\)</span>. After the state transition occurs, the agent follows the original policy (taking <span class="math inline">\(a_1\)</span>). Simply put, <span class="math inline">\(Q^{\pi}(a_2 \vert s_t)\)</span> represents the scenario where you watch TV at <span class="math inline">\(s_t\)</span>, but then go back to relaxing on the beach afterwards. Naturally, this value will be 0. On the other hand, <span class="math inline">\(Q^{\pi}(a_3 \vert s_t)\)</span> represents practicing the drums once, which implies a potential change in outcome a month later, resulting in a value different from <span class="math inline">\(Q^{\pi}(a_1 \vert s_t)\)</span> or <span class="math inline">\(Q^{\pi}(a_2 \vert s_t)\)</span>.</p>
-<p>If we calculate the advantage function, we can again analyze it by the action taken at <span class="math inline">\(s_t\)</span>. The advantage of <span class="math inline">\(a_2\)</span> compared to the existing action <span class="math inline">\(a_1\)</span> is <span class="math inline">\(Q^{\pi}(a_2 \vert s_t) - V^{\pi}(s_t)\)</span>, which results in 0. However, the advantage of the other action <span class="math inline">\(a_3\)</span> can be calculated as <span class="math inline">\(Q^{\pi}(a_3 \vert s_t) - V^{\pi}(s_t)\)</span>, which will result in a non-zero value.</p>
-<p>The point of this example was to demonstrate that when assessing the value of a current state, assigning a relative meaning to an action (in this case, advantage) allows for a more meaningful evaluation of “good” actions. In the (vanilla) Policy Gradient covered in previous lectures, learning is based on sampled trajectories. Therefore, even if a good action was taken within a trajectory, if the final result is poor, value cannot be assigned to that specific action. However, by introducing the concept of <strong>Advantage</strong>, we can explicitly assign value to an action (<span class="math inline">\(Q\)</span>) that produced a better result than the <strong>average performance level</strong> (<span class="math inline">\(V\)</span>). This helps reduce the variance of learning and assists in learning the policy more efficiently.</p>
+<p>먼저 환경에 대해서 정의를 하자면, 한달안에 악보를 보고 음악을 연주할 수 있으면 reward를 1, 그렇지 않으면 0을 받는 sparse reward의 형태로 되어 있고, 학습자가 현재 취하고 있는 policy는 항상 action이 <span class="math inline">\(a_1\)</span>, 즉 해변에 누워있는 행동으로 고정되어 있는 deterministic policy ( <span class="math inline">\(\pi(a_1 \vert s) = 1\)</span> ) 을 따른다. 그러면 이때의 value function <span class="math inline">\(V^{\pi}(s_t)\)</span> 는 지금과 같이 해변에 누워있는 행동만 계속하게 되면 한달뒤에 악기를 연주할 수 없으므로 0이 된다.</p>
+<p>Q-function으로 살펴보면 이제 취할 수 있는 행동을 나눠서 볼 수 있는데, 우선 TV를 보는 <span class="math inline">\(a_2\)</span> 를 취했을 경우(참고로 TV에서 연주 관련 영상을 시청하는 것은 아니다.)와, 진짜 악기를 연주하는 <span class="math inline">\(a_3\)</span> 를 취했을 경우로 나누어 볼 수 있는데, 유의해야 할 부분은 <span class="math inline">\(s_t\)</span> 상태에서만 <span class="math inline">\(a_t\)</span> 를 취한 것이지, 이로 인해 상태 전이가 발생한 시점에는 기존의 policy대로 <span class="math inline">\(a_1\)</span> 를 취한다는 점이다. 쉽게 설명하면 <span class="math inline">\(Q^{\pi}(a_2 \vert s_t)\)</span> 는 <span class="math inline">\(s_t\)</span> 에서는 TV를 보고, 이후에는 해변에서 휴식을 취하는 행동을 했을 때 한달 뒤에 악기를 연주할 수 있는지 여부를 나타낸 함수가 된다. 이렇게 하면 값은 당연히 0이 될 것이다. 반면 <span class="math inline">\(Q^{\pi}(a_3 \vert s_t)\)</span> 는 드럼 연습을 한번 해보고 난 후, 한달 뒤에 연주할 수 있는 것을 나타낸 것이기 때문에 다른 action에 대한 Q-function인 <span class="math inline">\(Q^{\pi}(a_1 \vert s_t)\)</span> 나 <span class="math inline">\(Q^{\pi}(a_2 \vert s_t)\)</span> 와는 다른 값이 나올 것이다.</p>
+<p>이제 advantage function 도 구해보면, 이 역시 <span class="math inline">\(s_t\)</span> 상태에서의 취한 <span class="math inline">\(a_t\)</span> 에 나눠서 살펴볼 수 있다. 그러면 기존 action인 <span class="math inline">\(a_1\)</span> 에 대비해서 <span class="math inline">\(a_2\)</span> 가 가지는 advantage는 <span class="math inline">\(Q^{\pi}(a_2 \vert s_t) - V^{\pi}(s_t)\)</span> 가 되고, 이 값은 0이 될 것이다. 또다른 action인 <span class="math inline">\(a_3\)</span> 의 advantage도 동일하게 <span class="math inline">\(Q^{\pi}(a_3 \vert s_t) - V^{\pi}(s_t)\)</span> 로 구할 수 있을 텐데, 그러면 결과는 0이 아닌 값이 나오게 된다.</p>
+<p>해당 예제를 통해서 설명하고자 한 내용은 사실 현재 상태에 대한 가치를 매길 때, 뭔가 행동에 대한 상대적인 의미(여기에서는 advantage)를 부여하면, 잘한 행동에 대한 가치를 조금 더 유의미하게 평가할 수 있다는 것을 설명하고자 함이었다. 이전 강의에서 다뤘던 (vanila) Policy Gradient에서는 기본적으로 샘플링된 trajectory를 기반으로 학습이 이뤄지기 때문에, trajectory 내에서 아무리 좋은 action을 취했을지라도 결과가 안 좋게 나오면 해당 action에 대해서 가치를 부여할 수 없다. 하지만 advantage 라는 개념을 가져오면 <strong>평균적인 내 수준</strong> (<span class="math inline">\(V\)</span>) 보다 더 나은 결과를 만든 행동 (<span class="math inline">\(Q\)</span>) 에 대해서 따로 가치를 부여할 수 있기 때문에, 이를 통해서 학습의 variance를 줄이고 조금더 효율적으로 policy를 학습할 수 있게 도와준다.</p>
 </section>
 <section id="what-is-dissatisfying-about-policy-gradients" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-dissatisfying-about-policy-gradients">What is dissatisfying about policy gradients?</h2>
-<p>In the previous lecture on Policy Gradients, we covered the <strong>REINFORCE</strong> (<span class="citation" data-cites="williams1992reinforce">Williams (<a href="#ref-williams1992reinforce" role="doc-biblioref">1992</a>)</span>) algorithm, which trains a policy using trajectories sampled via a basic Monte Carlo method. Following this algorithm involves first collecting a certain amount of trajectories using the current policy, and then utilizing these collected trajectories to improve the policy—a process akin to repeating policy iteration. (Although REINFORCE does not follow the strict form of policy iteration that alternates between clear policy evaluation and improvement steps, I used the term “iteration” here because the sampling process can be viewed as a way of estimating the current state of the policy.) We also introduced equations that apply “reward-to-go” or a “baseline” to reduce the variance that occurs during training.</p>
+<p>이전 강의에서 다뤘던 내용인 policy gradient에서는 기본적인 형태인 Monte Carlo 방식을 통해서 샘플링된 trajectory를 policy를 학습시키는 <strong>REINFORCE</strong> (<span class="citation" data-cites="williams1992reinforce">Williams (<a href="#ref-williams1992reinforce" role="doc-biblioref">1992</a>)</span>) 라는 알고리즘을 다뤘다. 이 알고리즘을 따르게 되면 우선 현재의 policy를 통해서 일정양의 trajectory를 먼저 수집하고, 수집된 trajectory를 활용해서 policy를 개선시키는 일종의 policy iteration을 반복하게 된다. (물론 REINFORCE가 policy evaluation과 improvement를 반복하는 명확한 policy iteration의 형태는 아니지만, 샘플링을 통한 과정도 일종의 현재 policy의 상태를 추정하는 과정이라고 생각해서 iteration이라고 표현했다) 그리고 나서 부가적으로 학습시 발생하는 variance를 줄이기 위해 reward-to-go나 baseline을 적용한 형태의 식을 소개했다.</p>
 <p><span class="math display">\[
 \nabla_{\theta}J(\theta) \approx \frac{1}{N} {\color{blue} \sum_{i=1}^N} \sum_{t=1}^T \nabla_{\theta} {\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})}  \Big((\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})) - b\Big)
 \]</span></p>
-<p>In the equation above, the <span class="math inline">\({\color{blue} \sum_{i=1}^N}\)</span> term corresponds to sampling trajectories from the current policy, while <span class="math inline">\({\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})}\)</span> represents the likelihood of the policy <span class="math inline">\(\pi_{\theta}\)</span> currently being trained. Through this likelihood, the algorithm determines whether to increase or decrease the frequency of the taken action <span class="math inline">\(a_{i, t}\)</span> in the future. By calculating the gradient with respect to this, learning proceeds in a direction that increases the probability of taking that action.However, the issue, as mentioned earlier, is that because this process operates on a <strong>trajectory basis</strong>, specific actions taken in the middle may fail to significantly influence the overall learning and end up getting <strong>buried</strong> (or overshadowed) by the outcome of the entire trajectory.</p>
+<p>위 수식에서 <span class="math inline">\({\color{blue} \sum_{i=1}^N}\)</span> 부분이 현재의 policy에서 trajectory를 sampling 하는 부분이고, <span class="math inline">\({\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})}\)</span> 는 현재 학습중인 policy <span class="math inline">\(\pi_{\theta}\)</span> 의 likelihood를 나타낸 것이다. 여기서 likelihood를 통해서 현재 취한 행동 <span class="math inline">\(a_{i, t}\)</span> 를 미래에 더 자주하게 할지, 아니면 덜 하게 만들지를 결정할 수 있다. 이에 대한 gradient를 계산함으로써, 해당 행동을 할 확률을 높이는 방향으로 학습이 이뤄지게 된다.</p>
+<p>그런데 문제는 앞에서 언급한 것처럼, trajectory 단위로 수행되다보니 중간에 나온 action에 대해서는 전체적인 학습에 영향을 미치지 못하고 묻히는 현상이 나온다는 것이다.</p>
 <div id="fig-robot-trajectory" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-robot-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -365,15 +366,15 @@ Figure&nbsp;2: example
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-robot-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3
+그림&nbsp;3
 </figcaption>
 </figure>
 </div>
-<p>The lecture introduced two examples shown in <a href="#fig-robot-trajectory" class="quarto-xref">Figure&nbsp;3</a>. The example in <a href="#fig-robot-walking" class="quarto-xref">Figure&nbsp;3 (a)</a> demonstrates training a robot to walk forward in a simulator, while <a href="#fig-robot-folding" class="quarto-xref">Figure&nbsp;3 (b)</a> illustrates a real-world example of <a href="https://www.figure.ai/">Figure.AI</a>’s Helix robot folding laundry. For reference, the video is shown below:</p>
+<p>강의에서는 <a href="#fig-robot-trajectory" class="quarto-xref">그림&nbsp;3</a> 를 통해서 두가지 예시를 소개했다. <a href="#fig-robot-walking" class="quarto-xref">그림&nbsp;3 (a)</a> 에 나오는 예시는 시뮬레이터상에서 robot으로 하여금 앞으로 걷는 모션을 학습하게 하는 예시이고, <a href="#fig-robot-folding" class="quarto-xref">그림&nbsp;3 (b)</a> 은 실제 공개된 <a href="https://www.figure.ai/">Figure.AI</a>사의 Helix의 세탁물을 개는 것에 대한 예시 내용이다. 참고로 영상은 다음과 같다.</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Omhss4c4pAI?si=pRwHSeGIbXboEOj1&amp;t=150" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>As seen in the example of <a href="#fig-robot-walking" class="quarto-xref">Figure&nbsp;3 (a)</a>, teaching a humanoid robot to walk is inherently difficult. Because of this, in the early stages of training, the robot will likely fail to walk and mostly just fall over. However, occasionally, a trajectory might emerge where the robot manages to take a single step forward before falling. Intuitively, if taking that single step is learned repeatedly, it should ultimately lead to walking. The problem is, if the collected trajectory results in a fall and fails to receive a reward, the final return for that trajectory will be very low or negative. In this case, the Policy Gradient method introduced earlier would try to lower the probability of all actions included in this trajectory. In other words, even the “good” action of taking a step forward ends up having its likelihood reduced due to the overall negative outcome.</p>
-<p>The same applies to <a href="#fig-robot-folding" class="quarto-xref">Figure&nbsp;3 (b)</a>. When a robot folds laundry, it doesn’t just fold it immediately; it requires a sequence of processes, such as flattening and aligning the laundry first. It would be beneficial if actions that result in some progress (e.g., flattening the cloth or folding just a sleeve) could contribute to learning. However, if the environment has a <strong>sparse reward</strong> structure that only evaluates whether the laundry is fully folded, these progress-making actions cannot be utilized effectively.</p>
-<p>In short, the point of these examples is that while Policy Gradient will eventually work, it suffers from <strong>sample inefficiency</strong> because it requires a massive amount of data to achieve convergence. Furthermore, since the return from a single trajectory can vary significantly due to stochastic factors, it also suffers from <strong>high variance</strong> as the values fluctuate wildly. Therefore, the lecture mentions that while standard policy gradient methods work well in environments with simulators, they are not suitable for problems that need to be adapted to the real world without a simulator. Then, <strong>how can we learn the quality (good or bad) of a specific action?</strong></p>
+<p><a href="#fig-robot-walking" class="quarto-xref">그림&nbsp;3 (a)</a> 의 예시처럼 humanoid 로봇을 걷게 하는 것 자체는 학습이 어렵다. 이 때문에 초기 학습시에는 거의 걷지 못하고, 넘어지는 결과만 나올 것이다. 그러다 간혹 한 걸음 정도는 앞으로 갔다가 넘어지는 trajectory도 나오게 된다. 상식적으로 생각해보면 이렇게 한 걸음 나아가는 것이 반복적으로 학습되었을때 궁극적으로는 걷게하는 형태가 될텐데, 문제는 수집된 trajectory가 다 로봇이 넘어져서 reward를 못받는 경우라면, 이에 대한 최종 보상(return)은 매우 낮거나 음수가 될 것이다. 이 때, 앞에서 소개한 Policy Gradient의 경우라면 이 trajectory에 포함된 모든 action에 대한 확률을 낮추려고 할 것이다. 즉, 한 걸음 앞으로 나아간 좋은 action조차도, 전체 나쁜 결과로 인해서 likelihood가 낮아지는 결과가 나오는 것이다.</p>
+<p><a href="#fig-robot-folding" class="quarto-xref">그림&nbsp;3 (b)</a> 도 마찬가지이다. 만약 로봇이 세탁물을 개는 동작을 할 때도 처음부터 세탁물을 바로 개는 동작보다는 세탁물을 바르게 펴고 정렬하는 일련의 과정이 필요할 것이다. 이로 인해서 뭔가 progress가 발생한 action (예를 들어서 세탁물을 편다던가, 아니면 소매만 접는다던가 하는…)에 대해서도 학습에 기여할 수 있는 부분이 있으면 좋을텐데, 만약 환경 자체가 세탁물이 정상적으로 개어진 것이 대해서만 평가하는 sparse형태라면 progress가 발생한 action도 역시 활용할 수 없다.</p>
+<p>즉, 이 예시를 통해서 설명하고자 하는 바는 결과적으로 Policy Gradient를 적용하면 어떻게든 학습이 이뤄지긴 하겠지만, 이를 위해서 필요한 데이터의 양이 어마어마하기 때문에 Sample inefficiency 문제가 발생하게 된다. 또한 단일 trajectory에서 나온 return이 우연적인 요소(stochasticity)에 의해서 크게 달라질 수도 있기 때문에, 해당 값이 들쭉날쭉하게 나옴으로 인한 high variance 문제도 갖고 있다. 그래서 강의에서도 이런 policy gradient 방법이 시뮬레이터가 존재하는 환경에서는 잘 동작하지만, 시뮬레이터가 없고, 실제 환경에 적응시켜야 할 문제에서는 적합하지 않다는 것을 언급하고 있다. <strong>그러면 어떻게 특정 action에 대한 좋고 나쁜 정도를 학습할 수 있을까?</strong></p>
 </section>
 <section id="improving-policy-gradient" class="level2">
 <h2 class="anchored" data-anchor-id="improving-policy-gradient">Improving Policy Gradient</h2>
@@ -383,26 +384,24 @@ Figure&nbsp;3
 <img src="./images/9p_monte_carlo_return.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Monte Carlo Return
+그림&nbsp;4: Monte Carlo Return
 </figcaption>
 </figure>
 </div>
-<p>If we look back at the Policy Gradient formula introduced earlier, there is a term that calculates the sum of rewards from a sampled trajectory (<span class="math inline">\(\sum_{t'=t}^T(s_{i, t'}, a_{i, t'})\)</span>). However, due to the nature of Monte Carlo sampling, as shown in <a href="#fig-monte-carlo-return" class="quarto-xref">Figure&nbsp;4</a>, using the actual sum of obtained rewards (Monte Carlo Return) resulted in a <strong>high variance</strong> problem. To address this, we can mitigate the variance issue to some extent by using the <strong>Q-function</strong>, which represents the expected reward.</p>
-<p>Fundamentally, the purpose of calculating the sum of rewards is to answer the question: “How much reward can I obtain by taking action <span class="math inline">\(a_{i, t}\)</span> at the current state <span class="math inline">\(s_{i, t}\)</span>?” The Monte Carlo approach opted to answer this by using the actual, observed value from a single run. However, rather than relying on the exactness of a single realization, utilizing the statistical estimate—specifically the <strong>mean value</strong> (expectation)—can significantly reduce the impact of the stochasticity mentioned earlier. This can be expressed in the formula as follows:</p>
+<p>이전에 소개했던 policy gradient의 수식을 보면, sampling된 trajectory에서의 reward의 총합을 계산하는 term이 있다. (<span class="math inline">\(\sum_{t'=t}^T(s_{i, t'}, a_{i, t'})\)</span>) 그런데 Monte Carlo sampling의 특성상 <a href="#fig-monte-carlo-return" class="quarto-xref">그림&nbsp;4</a> 에서 보여지는 것처럼 실제 얻은 보상의 총합(Monte Carlo Return)을 사용했기 때문에 high variance의 문제가 발생했다. 이를 해소하기 위해 기대 보상값인 Q-function을 사용하면 이 variance 문제를 어느 정도 완화시킬 수 있다.</p>
+<p>사실 뒷부분의 reward의 총합을 계산하는 것의 의미는 과연 현재 state <span class="math inline">\(s_{i, t}\)</span> 에서 action <span class="math inline">\(a_{i, t}\)</span> 를 취했을 때 내가 얼마나 reward를 얻을 수 있느냐 인 것이고, Monte Carlo 방식을 하면 이 값을 실제 값으로 쓰겠다는 것이었다. 하지만 사실 계산시, 활용되는 값 자체가 정확하냐 부정확하냐 보다는 이 값이 추정하는 통계치, 즉 평균값을 활용하면 앞에서 언급한 stochasticity의 영향을 줄일 수 있을 것이다. 식으로 표현하면 다음과 같다.</p>
 <p><span class="math display">\[
 \sum_{t'=t}^T E_{\pi_{\theta}}[r(s_{t'}, a_{t'}) \vert s_t, a_t] = Q(s_t, a_t)
 \]</span></p>
-<p>Consequently, the standard policy gradient can be approximated using a formulation based on the <strong>Q-function</strong>, rather than the original expression based on rewards (<span class="math inline">\(r\)</span>).</p>
+<p>이에 따라서 기존의 policy gradient도 r에 대한 식이 아닌 Q function에 대한 식으로 근사할 수 있게 된다.</p>
 <p><span class="math display">\[
 \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log_{\pi_{\theta}} (a_{i, t} \vert s_{i, t}) Q(S_{i, t}, a_{i, t})
 \]</span></p>
-<p>Furthermore, we can find room for improvement in how we calculate the baseline. If we perform Policy Gradient using only the raw value function (or Q-function), issues related to the scale of the values may arise. To address this, we can resolve the scaling issue by shifting our objective to measure “how much better an action is compared to the <strong>average value</strong>” when calculating the magnitude of the gradient update.</p>
-<p>Previously, we calculated and subtracted a baseline <span class="math inline">\(b\)</span>, which corresponds to the average of Q-values: <span class="math inline">\(\frac{1}{N} \sum_{i} Q(s_{i, t}, a_{i, t})\)</span>. However, recall that the value function <span class="math inline">\(V(s_t)\)</span> is essentially the expected value (average) of the Q-function over all possible actions at a specific state <span class="math inline">\(s_t\)</span> (<span class="math inline">\(V(s_t) = \mathbb{E}_{a_t \sim \pi_{\theta}(\cdot \vert s_t)}[Q(s_t, a_t)]\)</span>). This implies that the baseline <span class="math inline">\(b\)</span> can be effectively replaced by <span class="math inline">\(V(s_t)\)</span>.</p>
-<p>Upon closer inspection, we can see that the resulting term <span class="math inline">\(Q(s_{i, t}, a_{i, t}) - V(s_t)\)</span> matches the definition of the <strong>Advantage function</strong> mentioned earlier. This means we can substitute this term directly with the Advantage function.</p>
+<p>또한 baseline을 계산할때도 개선점을 찾을 수 있다. 기존의 value function 만으로 policy gradient를 할 경우 value의 scale에 대한 문제가 발생할 수 있기 때문에, 약간 목적을 <strong>평균 가치</strong>보다 얼마나 좋나를 가지고 gradient 변화의 크기를 계산하면 scale의 문제를 해소할 수 있다. 이를 위한 요소로 <span class="math inline">\(b\)</span> 를 계산하고 이를 빼주었는데, 이는 <span class="math inline">\(\frac{1}{N} \sum_{i} Q(s_{i, t}, a_{i, t})\)</span> 이다. 그런데 앞에서 배웠던 value function <span class="math inline">\(V(s_t)\)</span> 도 사실 Q-function에서 특정 state <span class="math inline">\(s_t\)</span> 에서 취할 수 있는 모든 action에 대한 평균치 ( <span class="math inline">\(V(s_t) = E_{a_t \sim \pi_{\theta}(\cdot \vert s_t)}[Q(s_t, a_t)]\)</span> ) 이기 때문에 <span class="math inline">\(b\)</span> 도 <span class="math inline">\(V(s_t)\)</span> 로 대체할 수 있음을 알 수 있다. 그런데 가만히 생각해보면 $Q(s_{i, t}, a_{i, t}) - V(s_t) $ 의 형태가 앞에서 언급했던 advantage function임을 확인할 수 있고, 이 말은 해당 부분을 advantage function으로 대체할 수 있게 된다.</p>
 <p><span class="math display">\[
 \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log_{\pi_{\theta}} (a_{i, t} \vert s_{i, t}) A^{\pi}(s_{i, t}, a_{i, t})
 \]</span></p>
-<p>Consequently, we arrive at the conclusion that if we can estimate the Advantage function <span class="math inline">\(A^{\pi}\)</span> accurately, we can significantly reduce the variance of the gradients in Policy Gradient methods.</p>
+<p>결과적으로 advantage function <span class="math inline">\(A^{\pi}\)</span> 를 잘 추정하면 policy gradient시 필요한 gradient의 variance를 줄일 수 있다는 결론이 난다.</p>
 </section>
 <section id="how-to-estimate-the-value-of-a-policy" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-estimate-the-value-of-a-policy">How to estimate the value of a policy</h2>
@@ -412,7 +411,7 @@ Figure&nbsp;4: Monte Carlo Return
 <figcaption>Policy Gradient</figcaption>
 </figure>
 </div>
-<p>The conclusion drawn so far is that to perform Policy Gradient effectively, we need to accurately estimate the value functions (<span class="math inline">\(V^{\pi}, Q^{\pi}\)</span>) and the advantage function <span class="math inline">\(A^{\pi}\)</span>, and then use these calculated values to improve the policy. Strictly speaking, calculating the advantage function requires knowing both <span class="math inline">\(V^{\pi}\)</span> and <span class="math inline">\(Q^{\pi}\)</span>. However, upon further reflection, we can see that the Q-function can actually be expressed in terms of the value function.</p>
+<p>지금까지의 결론은 policy gradient를 위해서는 value function (<span class="math inline">\(V^{\pi}, Q^{\pi}\)</span>)과 advantage function <span class="math inline">\(A^{\pi}\)</span> 를 잘 추정하고, 이때 계산한 값을 기반으로 policy를 improve시켜야 한다는 것이었다. 사실 advantage function을 계산하기 위해서는 <span class="math inline">\(V^{\pi}\)</span> 와 <span class="math inline">\(Q^{\pi}\)</span> 를 알아야 한다. 그리고 더 고민해보면 Q-function도 value function으로 표현할 수 있다는 것을 확인할 수 있다.</p>
 <p><span class="math display">\[
 \begin{aligned}
 Q^{\pi}(s_t, a_t) &amp;= \sum_{t'=t}^T E_{\pi_{\theta}}[r(s_{t'}, a_{t'}) \vert s_t, a_t] \\
@@ -421,28 +420,26 @@ Q^{\pi}(s_t, a_t) &amp;= \sum_{t'=t}^T E_{\pi_{\theta}}[r(s_{t'}, a_{t'}) \vert 
 &amp;\approx r(s_t, a_t) + V^{\pi}(s_{t+1})
 \end{aligned}
 \]</span></p>
-<p>By rewriting it in this form, it becomes evident that the advantage function can be calculated knowing only the immediate reward obtained by taking a specific action <span class="math inline">\(a_t\)</span> at the current state <span class="math inline">\(s_t\)</span>, and the <strong>value function</strong> (of the next state).</p>
+<p>이렇게까지 바꿔보면 advantage function은 현재 state <span class="math inline">\(s_t\)</span>에서 특정 action <span class="math inline">\(a_t\)</span> 를 취했을 때의 reward와 value function만 알고 있으면 계산할 수 있다.</p>
 <p><span class="math display">\[
 A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 \]</span></p>
 <section id="sec-monte-carlo-estimation" class="level3">
 <h3 class="anchored" data-anchor-id="sec-monte-carlo-estimation">Monte Carlo Estimation</h3>
-<p>So, how can we accurately estimate the value function? The conventional method involved sampling a trajectory, calculating the sum of rewards obtained, and using this sum as an estimate for the value function. This approach is known as <strong>Monte Carlo Estimation</strong>. Just as we typically estimate a value by taking the average of multiple samples, estimating the value function ideally requires sampling multiple trajectories starting from the same state <span class="math inline">\(s_t\)</span> and averaging the results (see <a href="#fig-monte-carlo-return" class="quarto-xref">Figure&nbsp;4</a>).</p>
-<p>However, in reality, it is difficult to perfectly <strong>reset</strong> the environment to the exact same state <span class="math inline">\(s_t\)</span> and run the simulation again. Therefore, value estimation is often performed using a <strong>single trajectory</strong>. To mitigate the limitations of this approach, we utilize neural networks. The lecture outlined a two-step process for performing value function estimation:</p>
+<p>그러면 value function을 어떻게 잘 추정할 수 있을까? 기존의 방식은 trajectory를 샘플링해서 이때의 reward 총합을 계산하고, 이를 value function으로 추정했다. 이런 방식을 Monte Carlo Estimation이라고 표현하는데, 원래 어떤 값을 추정할때도 여러개를 샘플링해서 이에 대한 평균을 내듯이 value function에 대한 추정치도 trajectory를 여러개 샘플링해서 동일 상태 <span class="math inline">\(s_t\)</span> 에서 여러번 반복한 결과를 가지고 계산해야 한다.(<a href="#fig-monte-carlo-return" class="quarto-xref">그림&nbsp;4</a>) 그런데 현실적으로는 정확하게 동일한 상태 <span class="math inline">\(s_t\)</span> 로 되돌려놓고 다시 실행시키는, 일종의 reset을 취하기가 어렵다. 그렇기 때문에 single trajectory를 가지고 value estimation이 이뤄지는데, 그래도 이 문제를 어느 정도 완화시키기 위해서 신경망을 사용하게 된다. 강의에서는 두가지 과정으로 나눠서 value function estimation을 수행하는 절차를 보여줬다.</p>
 <ol type="1">
-<li><strong>Aggregate Dataset</strong>: Collect data from single sample estimates to create a dataset. Here, the input is <span class="math inline">\(s_{i, t}\)</span> and the label is the sum of rewards <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span>.<span class="math inline">\(\rightarrow \{(s_{i, t}, \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\}\)</span></li>
-<li><strong>Supervised Learning</strong>: Train a neural network to estimate the value function using the created dataset.<span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span></li>
+<li>single sample estimate에 대한 데이터를 쭉 모으고, 이를 데이터셋으로 만든다. 이때 입력을 <span class="math inline">\(s_{i, t}\)</span>, label을 <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span> 으로 하는 데이터셋이 된다. (Aggregate dataset) <span class="math inline">\(\rightarrow \{(s_{i, t}, \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\}\)</span></li>
+<li>만든 데이터셋으로 value function을 추정할 수 있도록 신경망을 학습시킨다. (Supervised Learning) <span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span></li>
 </ol>
-<p>By doing so, the neural network effectively aggregates various outcomes from similar states and averages them. This allows us to mathematically approximate <strong>“Multi-Sample Averaging”</strong>, which would otherwise be physically impossible (or impractical) to perform directly.</p>
+<p>이렇게 하면 결좌적으로 신경망은 비슷한 state에서 나온 여러 결과들을 종합하여 평균을 내는 효과를 갖게 되고, 이를 통해서 물리적으로는 불가능한 “Multi-Sample Averaging”을 수학적으로 근사하게 된다.</p>
 </section>
 <section id="bootstrapping" class="level3">
 <h3 class="anchored" data-anchor-id="bootstrapping">Bootstrapping</h3>
-<p>While <a href="#sec-monte-carlo-estimation" class="quarto-xref">Section&nbsp;5.1</a> discussed performing value function estimation using actual rewards via neural networks, this section focuses on reducing the high variance that can occur during training by relying on estimated values rather than raw empirical returns.</p>
-<p>As a reminder, when aggregating the dataset in the previous method, we defined the training label as follows:</p>
+<p><a href="#sec-monte-carlo-estimation" class="quarto-xref">섹션&nbsp;5.1</a> 에서 신경망을 통해서 실제 얻었던 보상을 활용한 value function estimation을 수행했다면, 이번에 다룰 부분은 실제값이 아닌 추정값을 믿고 사용해서 학습시 발생할 수 있는 variance가 커지는 현상을 줄이는 것이다. Remind를 하자면 데이터셋을 aggregate를 하면서 학습시킬 데이터의 label로 다음과 같이 정의했다.</p>
 <p><span class="math display">\[
 \text{Monte Carlo target: }  y_{i, t} = \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})
 \]</span></p>
-<p>Strictly speaking, however, the ideal target for training should be the <strong>expected reward sum</strong> starting from the current state <span class="math inline">\(s_{i, t}\)</span>. In fact, this value can be decomposed into the <strong>actual reward</strong> received immediately and the <strong>expected reward sum</strong> from the next state <span class="math inline">\(s_{i, t+1}\)</span> after the transition occurs. Going a step further, this expected future reward sum can be substituted with the <strong>Value Function</strong> of the next state, <span class="math inline">\(V^{\pi}(s_{i, t+1})\)</span>, which represents that average value.</p>
+<p>그런데 엄밀히 말하면 학습시 사용해야 할 데이터는 상태가 현재의 state <span class="math inline">\(s_{i, t}\)</span> 인 상태에서의 expected reward sum을 구하는 게 맞는데, 사실 이 값은 현재 받은 실제 reward와 transition이 발생하고 난 다음 State <span class="math inline">\(s_{i, t+1}\)</span> 에 받을 expected reward sum으로 쪼개서 살펴볼 수 있고, 더 나아가면, expected reward sum은 우리가 알고 있는 next state의 value function 이라는 평균값 <span class="math inline">\(V^{\pi}(s_{i, t+1})\)</span> 로 치환할 수 있다.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \text{ideal target: } y_{i, t} &amp;= \sum_{t'=t}^T E_{\pi_{\theta}} [r(s_{i, t'}, a_{i, t'}) \vert s_{i, t}] \\
@@ -450,12 +447,10 @@ A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 &amp;= r(s_{i, t}, a_{i, t}) + V^{\pi}(s_{i, t+1})
 \end{aligned}
 \]</span></p>
-<p>Ideally, to accurately estimate the value function, we should use the calculated rewards averaged over multiple trajectories. However, in practice, we estimate the mean using only a <strong>single trajectory</strong>, making the final formula a <strong>single-sample approximation</strong> of the expected reward sum.</p>
-<p>Furthermore, the value function <span class="math inline">\(V^{\pi} (s_{i, t+1})\)</span> referenced in our equation is not the exact value derived from multiple trajectories. Instead, as introduced earlier, we use the value <span class="math inline">\(\hat{V}_{\phi}^{\pi}(s_{i, t+1})\)</span> estimated by a neural network. Consequently, the process involves retraining based on these inferred values. The lecture referred to this concept as <strong>Bootstrapping</strong>.</p>
-<p>Therefore, the process, which now applies bootstrapping to the data aggregation method introduced earlier, can be defined in two steps:</p>
+<p>실질적으로는 여러 개의 trajectory의 reward를 모두 계산한 값을 써야 정확한 value function을 추정할 수 있지만, 현실적으로는 single trajectory만으로 평균값을 추정하기 때문에 이렇게 구한 최종식은 expected reward sum에 대한 single-sample approximation이 되겠다. 그리고 우리가 식에서 참고하고 있는 value function <span class="math inline">\(V^{\pi} (s_{i, t+1})\)</span> 역시 여러 개의 trajectory로 구한 정확한 값이 아닌, 앞에서 소개한 것처럼 신경망으로 추측한 값 <span class="math inline">\(\hat{V}_{\phi}^{\pi}(s_{i, t+1})\)</span> 을 사용하고, 결과적으로는 이렇게 구한 추론값을 바탕으로 재학습하는 형태가 된다. 강의에서는 이런 개념을 <strong>부트스트래핑(Bootstrapping)</strong>이라고 표현했다. 그래서 앞에서 소개한 data aggration에 bootstrapping까지 적용한 두 과정을 이렇게 나눠서 정의했다.</p>
 <ol type="1">
-<li><strong>Bootstrapped Dataset</strong>: Collect data based on single sample estimates and construct a dataset to derive “bootstrapped” estimates. Here, the label changes from the previously defined <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span> to: <span class="math inline">\(y_{i, t} = r(s_{i, t}, a_{i, t}) + \hat{V}_\phi^{\pi}(s_{i, t+1})\)</span></li>
-<li><strong>Supervised Learning</strong>: Train the neural network to estimate the value function using the dataset formed in this manner. <span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span></li>
+<li>single sample estimate에 대한 데이터를 쭉 모으고, 이를 활용하여 “bootstrapped”된 추정값을 구하기 위한 데이터셋으로 만든다. 그러면 앞에서 정의했던 label이 <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span> 이 아닌 <span class="math inline">\(r(s_{i, t}, a_{i, t}) + \hat{V}_\phi^{\pi}(s_{i, t+1})\)</span> 이 된다. (Bootstrapped dataset)</li>
+<li>이렇게 형성된 데이터셋을 활용하여 value function을 추정할 수 있도록 신경망을 학습시킨다. (Supervised Learning) <span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span></li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -463,64 +458,56 @@ A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+노트
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In fact, the form above is closely related to <strong>Temporal Difference (TD) Learning</strong> in Reinforcement Learning theory. In TD Learning, calculating the TD error involves obtaining the estimated value function for the next state and comparing it with the estimated value function for the current state.</p>
-<p><span class="math display">\[
+<p>사실 위의 형태는 강화학습 이론에서 언급되는 <strong>Temporal Difference (TD) Learning</strong> 의 형태와 관련이 있는데, TD Learning에서도 TD error를 구하기 위해서 다음 state 에서의 estimated value function과 현재 state에서의 estimate value function을 구하는 과정이 있다. <span class="math display">\[
 \text{TD error: } \delta_t = r(s_{i, t}, a_{i, t}) + V^{\pi}(s_{i, t+1}) - V^{\pi}(s_{i, t})
 \]</span></p>
-<p>The methodology of learning using a bootstrapped target essentially constitutes TD Learning.</p>
+<p>여기에도 bootstrapping이 된 target으로 학습하는 방법론 자체가 TD Learning이 된다.</p>
 </div>
 </div>
 </section>
 <section id="monte-carlo-estimation-vs.-bootstrapping" class="level3">
 <h3 class="anchored" data-anchor-id="monte-carlo-estimation-vs.-bootstrapping">Monte Carlo Estimation vs.&nbsp;Bootstrapping</h3>
-<p>In the previous two sections, we introduced two methods for defining labels when creating a dataset to estimate the value function using neural networks:</p>
+<p>앞의 두 섹션을 통해서 신경망으로 value function을 추정할 수 있도록 데이터셋을 만들때, label로 정의할 수 있는 두가지 방법에 대해서 소개했다.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \text{Monte Carlo: } &amp; y_{i, t} = \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'}) \\
 \text{Bootstrapping: } &amp; y_{i, t} = r(s_{i, t}, a_{i, t}) + V^{\pi}(s_{i, t+1})
 \end{aligned}
 \]</span></p>
-<p>The key difference between the two methods lies in whether we use the accumulated rewards obtained from an actual trajectory or utilize the <strong>value function</strong>, which represents an average value. The lecture illustrated this distinction using the example shown in <a href="#fig-value-function-estimation" class="quarto-xref">Figure&nbsp;5</a>.</p>
+<p>두 방법의 큰 차이라면 실제 trajectory를 통해 쌓은 reward를 쓰느냐, 아니면, value function이라는 평균값을 사용하느냐 이다. 강의에서는 예시 <a href="#fig-value-function-estimation" class="quarto-xref">그림&nbsp;5</a> 를 통해서 이 둘의 차이를 조금 더 쉽게 설명하고자 했다.</p>
 <div id="fig-value-function-estimation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/19p_value-function-estimation.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Example of MC vs.&nbsp;Bootstrapping
+그림&nbsp;5: Example of MC vs.&nbsp;Bootstrapping
 </figcaption>
 </figure>
 </div>
-<p>First, let’s assume we have two trajectories that share a common intermediate point, represented by the <strong>blue</strong> state. - Trajectory 1 (<span class="math inline">\(\tau_1\)</span>): Starts at the <strong>pink</strong> state, passes through the <strong>blue</strong> state, and ends with a reward of -1. - Trajectory 2 (<span class="math inline">\(\tau_2\)</span>): (Starting state unknown), passes through the <strong>blue</strong> state, and ends with a reward of 1.</p>
-<p>Assuming both trajectories were executed under the same policy <span class="math inline">\(\pi\)</span>, how should we estimate the value function for the blue state, <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span>, and the pink state, <span class="math inline">\(\hat{V}^{\pi}({\color{pink} s})\)</span>?</p>
-<p>If we first attempt to estimate the value function using the <strong>Monte Carlo</strong> method, we wait until the trajectory is completed and define the value of that state as the total reward actually received. In this case, <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span> becomes 0 because it averages the case where the reward is -1 and the case where it is 1. However, for <span class="math inline">\(\hat{V}^{\pi}({\color{pink} s})\)</span>, since only <span class="math inline">\(\tau_1\)</span> experienced this state within the observed trajectories, it simply follows the reward of that trajectory, which is -1. This leads to a problem where the value function is defined without reflecting the reward of <span class="math inline">\(\tau_2\)</span> (which effectively passed through the blue state), leaving us unaware of whether the pink state was inherently bad or if the negative outcome was just bad luck.</p>
-<p>On the other hand, if we attempt to estimate using the <strong>Bootstrapping</strong> method, we fundamentally utilize the value function of the next state. Here, <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span> is defined as 0, just like in the Monte Carlo method, but a difference arises when calculating the value for the pink state. In Bootstrapping, we use the value function of the subsequent state—the blue state, <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span>—rather than the final trajectory result. Therefore, the value becomes 0. Consequently, even though the pink state belongs to <span class="math inline">\(\tau_1\)</span> which received a reward of -1, it indirectly “shares” the positive outcome of <span class="math inline">\(\tau_2\)</span> via bootstrapping, allowing for a more reasonable estimate.</p>
-<p>The point of this example was to highlight that comparing Monte Carlo Estimation and Bootstrapping leads us to the <strong>Bias-Variance Tradeoff</strong>, a fundamental concept in Machine Learning.</p>
-<ul>
-<li><strong>Monte Carlo Estimation</strong>: Since it calculates values based on actually obtained rewards, the estimates are <strong>unbiased</strong>. However, because they rely on the inherent <strong>stochasticity</strong> of the sampled trajectories, they suffer from <strong>high variance</strong>. As mentioned earlier, this variance problem is exacerbated when estimating from a <strong>single sample</strong>.</li>
-<li><strong>Bootstrapping Estimation</strong>: Since it calculates based on previously estimated values, the variance is significantly lower compared to the MC method. However, if the value function is approximated by a neural network, the initial (untrained) <span class="math inline">\(V_{\phi}\)</span> is inaccurate. Because the model continues to learn based on these potentially inaccurate targets, <strong>bias</strong> is introduced.</li>
-</ul>
-<p>The lecture suggests that because bootstrapping dramatically reduces variance, it allows for much more stable learning than the MC method, provided that there are methods to control the bias.</p>
+<p>먼저 주어진 두 개의 trajectory가 있고, 중간에 파란색 상태로 표현된 공통된 지점이 있다고 가정해본다. 이때 첫번째 trajectory <span class="math inline">\(\tau_1\)</span> 는 핑크색 상태에서 시작해서 파란색 상태를 거친 후, reward를 -1로 받으면서 종료되었고, 두번째 trajectory <span class="math inline">\(\tau_2\)</span> 는 어떤 상태에서 시작했는지는 모르지만, 중간에 파란색 상태를 거치고, reward를 1을 받으면서 종료했다. 둘다 동일한 policy <span class="math inline">\(\pi\)</span> 로 수행되었다고 가정했을 때, 과연 파란색 상태의 value function <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span> 와 핑크색 상태에서의 value function <span class="math inline">\(\hat{V}^{\pi}({\color{pink} s})\)</span> 는 어떻게 추정할 수 있을까?</p>
+<p>먼저 Monte Carlo 방식으로 value function을 추정해보려고 한다면, 이 때는 trajectory가 종료될 때까지 기다린 후 실제로 받은 총 reward를 해당 상태의 value로 정의한다. 그러면 <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span> 는 reward가 -1인 경우와 1인 경우에 대한 평균을 구하므로 0이 된다. <span class="math inline">\(\hat{V}^{\pi}({\color{pink} s})\)</span> 에서는 실제 trajectory내에서 해당 state를 겪은 경우가 <span class="math inline">\(\tau_1\)</span> 뿐이므로, 해당 trajectory의 reward인 -1을 그대로 따라가게 된다. 이렇게 되면 핑크색 상태가 나빴던 상태인지는 모르는 상태에서 파란색 상태를 거쳤던 결과인 <span class="math inline">\(\tau_2\)</span> 의 reward를 반영하지 못한 채 value function이 정의되는 문제가 발생한다.</p>
+<p>반면, Bootstrapping 방식으로 value function을 추정해보려고 한다면, 기본적으로 다음 상태의 value function을 활용하게 된다. 이 때 <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span> 는 Monte Carlo 방식과 동일하게 0이란 값으로 정의되는데, 핑크색 상태의 value function을 계산할 때 차이가 발생한다. Bootstrapping에서는 최종 결과가 아닌, 다음 상태인 파란색 상태의 value function <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span> 을 활용하기 때문에 해당 값은 0이 된다. 결과적으로 핑크색 상태는 <span class="math inline">\(\tau_1\)</span> 에 속해서 -1 reward를 받았지만, bootstrapping을 통해서 <span class="math inline">\(\tau_2\)</span> 의 긍정적인 결과를 간접적으로 공유받아 조금 더 합리적인 추정값을 얻을 수 있게 된다.</p>
+<p>예시를 통해서 설명하고자 했던 부분은, Monte Carlo Estimation과 Bootstrapping Estimation 간의 비교를 통해서 ML 문제에 대두되는 <strong>Bias-Variance Tradeoff</strong> 를 고민해봐야 된다는 것이었다. 쉽게 말하자면 Monte Carlo Estimation은 실제로 얻은 reward를 통해서 계산하기 때문에, 값 자체는 정확할 수 있겠지만 (unbiased), 그 안에서 얻은 정보의 stochasticity 가 기본적으로 내재되어 있기 때문에 high variance 문제가 발생한다. 특히, 앞에서 언급했던 것처럼 single sample을 통한 estimation을 하게 된다면 variance 문제가 더 커진다. 반면, Bootstrapping Estimation은 사전에 계산한 추정값을 기반으로 계산하기 때문에, 그만큼 variance 문제는 MC 방식에 비해서 적다. 하지만 뭔가 신경망으로 value function을 정의했다면, 학습되지 않은 상태에서의 value function <span class="math inline">\(V_{\phi}\)</span>는 정확하지도 않을 뿐더러, 추가로 학습되는 value function 또한 부정확한 값을 가지고 계속 학습하는 형태가 된다. 여기에서 bias가 발생하는 샘이다. 강의에서는 bootstrapping 방식 자체가 variance를 획기적으로 줄여주는 방식이기 때문에, bias를 제어할 수 있는 방법이 동반된다면 MC 방식보다 학습을 훨씬 안정적으로 수행한다고 소개하고 있다.</p>
 </section>
 <section id="n-step-returns" class="level3">
 <h3 class="anchored" data-anchor-id="n-step-returns">N-step Returns</h3>
-<p>Consequently, the lecture introduced <strong>N-step returns</strong> as a method to estimate the value function by combining the unbiased nature of Monte Carlo with the low variance characteristic of Bootstrapping.</p>
+<p>그래서 다음으로 설명한 내용이 Monte Carlo 방식의 unbiased한 특성과 Bootstrapping 방식의 low variance 특성을 조합한, N-step returns를 사용해서 value function을 추정하는 것에 대해서 설명했다.</p>
 <div id="fig-n-step-returns" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/20p_N-step-returns.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: N-step returns
+그림&nbsp;6: N-step returns
 </figcaption>
 </figure>
 </div>
-<p>N-step returns work by <strong>interpolating</strong> between these two approaches. To put it simply, waiting until the very end of the episode (like MC) is too unstable (high variance), while estimating based immediately on the next state’s value (like standard bootstrapping) introduces too much bias. Therefore, the strategy is to proceed for a few more steps (<span class="math inline">\(N\)</span> steps) to accumulate actual rewards, and then estimate the remaining value.</p>
-<p>Comparing this mathematically with the estimation methods discussed earlier:</p>
+<p>N-step returns는 이 두 방식을 보간(interpolation)하는 방식으로 이뤄진다. 조금 쉽게 설명하자면 MC처럼 끝까지 가보고 판단하기에는 너무 불안정하고, 그렇다고 다음 상태의 value function으로 추정하기에는 bias가 생기니, 다음 상태를 몇번 더 가보고 나서 값을 추정해보자는 것이다. 그래서 앞에서 다뤘던 추정 방식과 수식적으로 비교해보면 다음과 같다.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \text{Monte Carlo: } &amp; y_{i, t} = \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'}) \\
@@ -528,48 +515,45 @@ Figure&nbsp;6: N-step returns
 \text{N-step returns: } &amp; y_{i, t} = \sum_{t'=t}^{t+n-1} r(s_{i, t'}, a_{i, t'}) + \hat{V}_{\phi}^{\pi}(s_{i, t+n})
 \end{aligned}
 \]</span></p>
-<p>It is helpful to focus on the purple line in <a href="#fig-n-step-returns" class="quarto-xref">Figure&nbsp;6</a>. The core idea is to perform Monte Carlo Estimation using the actual rewards obtained for <span class="math inline">\(N\)</span> steps within the trajectory, and then utilize the estimated value function for the remainder starting at <span class="math inline">\(t+N\)</span>. This approach offers the dual advantage of reducing variance compared to pure MC methods, while also mitigating the inaccuracy caused by bias found in pure Bootstrapping.</p>
-<p>Defining the value of <span class="math inline">\(N\)</span> is crucial here. If <span class="math inline">\(N=1\)</span>, the formula becomes identical to the Bootstrapping method mentioned earlier. If <span class="math inline">\(N=\infty\)</span>, it reverts to the standard Monte Carlo formula. The lecture explains that tuning <span class="math inline">\(N\)</span> appropriately is particularly beneficial in environments with very short interaction cycles; by reflecting the actual rewards received over <span class="math inline">\(N\)</span> steps, we can define the current value function more accurately, thereby aiding the learning process.</p>
+<p><a href="#fig-n-step-returns" class="quarto-xref">그림&nbsp;6</a> 에서 보라색 부분으로 표기된 선을 보면 좋을텐데, trajectory내에서 얻은 보상내에서 <span class="math inline">\(N\)</span> 만큼 Monte Carlo Estimation을 하고, <span class="math inline">\(t+N\)</span> 부분은 추정된 value function으로 쓰겠다는 것이다. 이렇게 하면 기존 MC보다는 variance를 줄일 수 있고, Bootstrapping 에 비하면 bias로 인한 부정확함으로 줄일 수 있다는 장점이 있다. 여기에서 <span class="math inline">\(N\)</span> 을 얼마로 정의하느냐가 관건이 될 수 있는데, <span class="math inline">\(N=1\)</span> 이 되면, 앞에서 언급했던 bootstrapping 방식의 식과 동일하고, <span class="math inline">\(N=\infty\)</span> 가 되면 전형적인 Monte Carlo 방식의 식이 된다. 이렇게 <span class="math inline">\(N\)</span> 에 대한 값을 잘 조절하면, 만약 interaction 주기가 매우 짧은 환경에서는 그만큼 실제로 받은 reward를 <span class="math inline">\(N\)</span> 만큼 반영해서 현재의 value function을 정의할 수 있기 때문에 학습에 도움이 된다고 설명하고 있다.</p>
 </section>
 <section id="relation-with-discount-factors" class="level3">
 <h3 class="anchored" data-anchor-id="relation-with-discount-factors">Relation with discount factors</h3>
-<p>The lecture also highlighted an interesting perspective on the discount factor in the context of N-step returns. The discount factor, typically denoted as <span class="math inline">\(\gamma\)</span>, is generally understood as a mathematical tool used to reduce the weight of future values. If an episode has an infinite or extremely long horizon, simply summing up all future values can cause the estimate to diverge to infinity. Therefore, we introduce this factor to assign higher weights to near-future rewards and lower weights to distant future rewards (<span class="math inline">\(r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} \dots\)</span>), ensuring that the total sum converges.</p>
+<p>강의에서는 N-step과 관련하여 <strong>discount factor</strong> 부분에서도 살펴볼만한 내용에 대해서 언급하고 있었다. 보통 <span class="math inline">\(\gamma\)</span> 로 표기되는 discount factor는 일반적으로는 미래에 얻을 수 있는 가치의 비중을 낮추는 수학적인 도구로 알고 있다. 만약 에피소드의 길이가 무한하거나 매우 길 때, 미래의 가치를 그대로 다 더하면 추정치가 무한대로 커질 수 있기 때문에 가까운 미래에 대한 가중치는 크게 주고, 먼 미래의 보상치는 가중치를 적게 주는 방식(<span class="math inline">\(r_t + \gamma t_1 + \gamma^2 t_2 \dots\)</span>)을 도입해서 합계가 수렴하도록 만든다.</p>
 <div id="fig-probability-of-death" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/21p_probability-of-death.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Probability of Death
+그림&nbsp;7: Probability of Death
 </figcaption>
 </figure>
 </div>
-<p>However, the professor offered a different interpretation using the “Probability of Death” example shown in <a href="#fig-probability-of-death" class="quarto-xref">Figure&nbsp;7</a>. He explained the discount factor as the probability of the agent “surviving” at each step.</p>
-<p>For instance, if <span class="math inline">\(\gamma\)</span> is 0.99, the game continues with a 99% probability. Conversely, the agent faces a 1% probability (<span class="math inline">\(1 - \gamma\)</span>) of “dying.” Upon death, the agent reaches a “death state” where no further rewards can be obtained. The key insight here is that changing <span class="math inline">\(\gamma\)</span> alters the probability of the agent’s death. Since the transition dynamics (specifically, the transition to the death state) depend on <span class="math inline">\(\gamma\)</span>, changing the discount factor effectively results in <strong>changing the MDP itself</strong>.</p>
+<p>여기에서 교수님은 Probability of Death라는 예제 (<a href="#fig-probability-of-death" class="quarto-xref">그림&nbsp;7</a>) 를 통해서 discount factor가 매 step마다 agent가 죽을 확률이라는 개념으로 설명했다. 예를 들어서 <span class="math inline">\(\gamma\)</span> 가 0.99일 경우, 게임은 99%의 확률로 계속 진행되고,agent는 <span class="math inline">\(1 - \gamma\)</span> 인 1%의 확률로 죽게 되므로, 결과적으로 아무런 보상을 받을 수 없는 death state에 도달하게 된다는 것이다. 그러면 <span class="math inline">\(\gamma\)</span> 의 바뀌면 결과적으로 agent가 죽을 확률도 변경되므로, 결과적으로는 MDP 자체가 바뀌는 효과로 나타난다는 설명이었다.</p>
 </section>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>This lecture focused primarily on the foundational concepts required to understand the algorithm, rather than just the <strong>Actor-Critic Method</strong> itself as suggested by the title. Building upon the Policy Gradient methods covered in the previous lecture, it explained the concepts of various value functions and advantage functions, ultimately defining the algorithm as follows:</p>
+<p>해당 강의에서는 타이틀인 Actor-Critic Method의 내용 자체보다는 해당 알고리즘을 이해하는데 반드시 필요한 내용을 주로 다뤘다. 이전 강의 내용이었던 Policy Gradient 의 내용을 발전시켜서, 다양한 value function과 advantage function의 개념을 설명했고 결과적으로 다음과 같은 알고리즘을 정의했다.</p>
 <ol type="1">
-<li>Sample a batch of data <span class="math inline">\(\{ (s_{1, i}, a_{1, i}, r_{1, i}, \dots, s_{T, i}, a_{T, i}, r_{T, i}) \}\)</span> from the current policy <span class="math inline">\(\pi_{\theta}\)</span>.</li>
-<li>Train a model to estimate the value function <span class="math inline">\(\hat{V}_{\phi}^{\pi}\)</span> using the rewards from the sampled data.</li>
-<li>Calculate the Advantage function using the estimated value function. (<span class="math inline">\(\hat{A}^{\pi_{\theta}}(s_t, a_t) = r(s_{t, i}, a_{t, i}) + \gamma \hat{V}_{\phi}^{\pi_{\theta}}(s_{t+1, i}) - \hat{V}_{\phi}^{\pi_{\theta}}(s_{t, i})\)</span>)</li>
-<li>Calculate the gradient of the objective function using the Advantage function. (<span class="math inline">\(\nabla_{\theta}J(\theta) \approx \sum_{t, i} \nabla_{\theta} \log_{\pi_{\theta}} (a_{t, i} \vert s_{t, i}) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})\)</span>)</li>
-<li>Update <span class="math inline">\(\theta\)</span> in the direction of the ascending gradient. (<span class="math inline">\(\theta \leftarrow \theta + \alpha \nabla_{\theta}J(\theta)\)</span>)</li>
+<li>현재의 policy <span class="math inline">\(\pi_{\theta}\)</span> 로부터 데이터를 batch {(<span class="math inline">\(s_{1, i}, a_{1, i}, r_{1, i}, \dots, s_{T, i}, a_{T, i}\)</span>, r_{T, i})} 단위로 샘플링한다.</li>
+<li>이렇게 얻은 데이터로부터 reward를 활용하여 value function <span class="math inline">\(\hat{V}_{\phi}^{\pi}\)</span> 를 추정하는 모델을 학습시킨다.</li>
+<li>Value function을 활용하여 Advantage function을 계산한다. (<span class="math inline">\(\hat{A}^{\pi_{\theta}}(s_t, a_t) = r(s_{t, i}, a_{t, i}) + \gamma \hat{V}_{\phi}^{\pi_{\theta}}(s_{t+1, i}) - \hat{V}_{\phi}^{\pi_{\theta}}(s_{t, i})\)</span>)</li>
+<li>Advantage function을 활용하여 objective function의 gradient를 계산한다. (<span class="math inline">\(\nabla_{\theta}J(\theta) \approx \sum_{t, i} \nabla_{\theta} \log_{\pi_{\theta}} (a_{t, i} \vert s_{t, i}) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})\)</span>)</li>
+<li>Gradient를 accent하는 방향으로 <span class="math inline">\(\theta\)</span> 를 업데이트한다. (<span class="math inline">\(\theta \leftarrow \theta + \alpha \nabla_{\theta}J(\theta)\)</span>)</li>
 </ol>
-<p>Looking at the big picture, we can see that the process is effectively divided into two parts: estimating (or evaluating) the value of the current state, and then using that evaluation to update the model and sample new data using the updated policy. This structure, where the process is split into a <strong>Critic</strong> that estimates the current state’s value and an <strong>Actor</strong> that performs actions and updates the policy, is referred to as the <strong>Actor-Critic Method</strong>.</p>
-<p>Simply put, the Actor-Critic method estimates what is good or bad to guide the agent toward better actions—essentially enabling the policy gradient to move in a more optimal direction. In Deep RL, the required value function is estimated using neural networks. The lecture categorized the methods for estimating the value function into three main approaches: <strong>Monte Carlo estimation</strong>, which utilizes all rewards in a trajectory; <strong>Bootstrapping estimation</strong>, which uses the current reward and the value function of the next state; and <strong>N-step Returns</strong>, a hybrid method used to address the <strong>Bias-Variance tradeoff</strong> inherent in the first two approaches.</p>
+<p>그런데 잘 보면 큰 그림으로는 실질적으로 현재의 상태에 대한 가치를 추정, 혹은 평가를 하는 과정이고, 평가된 결과를 활용하여 실질적으로 모델을 업데이트하고, 업데이트된 모델의 policy를 활용하여 data를 sampling 하는 과정으로 나눠져있는 것을 알 수 있다. 이렇게 현재 상태를 추정하는 비평가(Critic)과 정책을 업데이트하고 수행하는 행위자(Actor)로 나눠서 수행되는 구조를 <strong>Actor-Critic</strong> Method라고 표현한다. 그래서 간단하게 설명하면, 어떤 것이 좋고 나쁜지를 추정하고, 더 좋은 행동을 할 수 있도록, 다시 말해서 policy gradient를 더 좋은 방향으로 취할 수 있는 방법이 Actor-Critic 방식이고, Deep RL에서는 이때 필요한 value function을 신경망을 사용해서 추정한다. 강의에서는 value function을 추정하는 방식으로 크게 3가지를 나눠서 설명했는데, 한 trajectory의 reward를 모두 활용하는 <strong>Monte Carlo estimation</strong>과, 현재 상태의 reward와 다음 상태의 value function을 활용한 <strong>Bootstrapping estimation</strong>, 그리고 두 방식에서 발생할 수 있는 Bias-Variance tradeoff를 해소하기 위한 hybrid 방법으로 <strong>N-step Return</strong>을 쓰는 방법까지 설명했다.</p>
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-williams1992reinforce" class="csl-entry" role="listitem">
-Williams, Ronald J. 1992. <span>“Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning.”</span> <em>Mach. Learn.</em> 8 (3–4): 229–56. <a href="https://doi.org/10.1007/BF00992696">https://doi.org/10.1007/BF00992696</a>.
+Williams, Ronald J. 1992. <span>“Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning”</span>. <em>Mach. Learn.</em> 8 (3–4): 229–56. <a href="https://doi.org/10.1007/BF00992696">https://doi.org/10.1007/BF00992696</a>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -757,12 +741,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

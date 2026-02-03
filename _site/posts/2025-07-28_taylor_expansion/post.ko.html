@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
@@ -7,8 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chanseok Kang">
-<meta name="dcterms.date" content="2025-07-28">
-<meta name="description" content="Applying Taylor Expansion in various functions.">
+<meta name="description" content="다양한 함수에 Taylor Expansion 적용">
 
 <title>Taylor Expansion – Chan’s Research Note</title>
 <style>
@@ -92,17 +91,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
@@ -162,8 +161,8 @@ window.Quarto = {
     <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -171,7 +170,7 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -183,7 +182,7 @@ window.Quarto = {
       <h1 class="title">Taylor Expansion</h1>
                   <div>
         <div class="description">
-          Applying Taylor Expansion in various functions.
+          다양한 함수에 Taylor Expansion 적용
         </div>
       </div>
                           <div class="quarto-categories">
@@ -195,8 +194,8 @@ window.Quarto = {
   </div>
     
   <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
     
       <div class="quarto-title-meta-contents">
       <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
@@ -214,9 +213,9 @@ window.Quarto = {
 
         
       <div>
-      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-heading">공개</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 28, 2025</p>
+        <p class="date">2025년 7월 28일</p>
       </div>
     </div>
     
@@ -251,44 +250,45 @@ window.Quarto = {
 
 
 
-<section id="package-import" class="level2">
-<h2 class="anchored" data-anchor-id="package-import">Package Import</h2>
-<div id="cbc8eddd" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+노트
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This content is a summary of Börge Göbel’s <a href="https://www.udemy.com/course/computational-physics">“Computational Physics: Scientific Programming with Python”</a> on Udemy.</p>
+<p>해당 내용은 Udemy에 올려져있는 Börge Göbel의 <a href="https://www.udemy.com/course/computational-physics">“Computational Physics: Scientific Programming with Python”</a> 내용을 요약한 것입니다.</p>
 </div>
+</div>
+<section id="package-import" class="level2">
+<h2 class="anchored" data-anchor-id="package-import">Package Import</h2>
+<div id="ba3902ce" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="why-taylor-expansion" class="level2">
 <h2 class="anchored" data-anchor-id="why-taylor-expansion">Why Taylor Expansion?</h2>
-<p>The reason for using Taylor Expansion is to approximate complex functions into simple polynomial forms. When studying mathematics, various formulas appear, and the original forms of the equations we often encounter in theory are usually composed of trigonometric or exponential functions. Operations between these functions are too complex and computationally expensive to calculate directly, but using Taylor Expansion, these complex expressions can be easily represented. For example, if the derivative of a function can be calculated, an approximate value of the function for a specific point can be expressed using this derivative.</p>
+<p>테일러 전개(Taylor Expansion)을 사용하는 이유는 복잡한 함수를 간단한 다항식 형태로 근사(Approximation)하기 위해서다. 수학을 공부하다보면 다양한 수식들이 나오는데, 우리가 이론상에서 자주 접하는 식의 원본은 보통 삼각함수나 자연지수 함수로 이뤄져 있는게 많다. 이런 함수끼리의 연산은 실제로 계산하기에는 너무 복잡하고, 연산량도 크지만 Taylor Expansion을 사용하면 이런 복잡한 수식을 쉽게 표현할 수 있다.</p>
+<p>예를 들어서, 어떤 함수의 도함수(derivative)를 계산할 수 있다면, 그 함수의 특정 값에 대한 근사치를 이 도함수를 활용해서 표현할 수 있다.</p>
 <p><span class="math display">\[f(x)=\sum_{n=0}^\infty \frac{1}{n!}f^{(n)}(x_0)\,(x-x_0)^n\]</span></p>
-<p>Here, <span class="math inline">\(f^{(n)}\)</span> is the <span class="math inline">\(n\)</span>-th derivative of <span class="math inline">\(f(x)\)</span>, and <span class="math inline">\(x_0\)</span> represents the position of the value we want to calculate.</p>
+<p>여기에서 <span class="math inline">\(f^{(n)}\)</span> 는 <span class="math inline">\(f(x)\)</span>에 대한 <span class="math inline">\(n\)</span>차 도함수이고, <span class="math inline">\(x_0\)</span> 는 우리가 계산하고자 하는 값의 위치를 나타낸다.</p>
 </section>
 <section id="exponential-function" class="level2">
 <h2 class="anchored" data-anchor-id="exponential-function">1.1 Exponential Function</h2>
-<p>If the original form of the function we want to find is an exponential function, we can easily apply the Taylor Expansion.</p>
+<p>만약 우리가 구하고자 하는 함수의 원형이 자연지수 함수 (exponential function)이라면 쉽게 Taylor Expansion을 적용할 수 있다.</p>
 <p><span class="math display">\[f(x)=f'(x)=f''(x)=\dots=f^{(n)}(x)=\exp(x)\]</span></p>
-<p>This is because the derivative of the exponential function is the exponential function itself. The code and visualization for this can be expressed as follows.</p>
-<div id="39e7c33f" class="cell" data-execution_count="2">
+<p>자연지수의 도함수는 자연지수 자체이기 때문이다. 이에 대한 코드와 시각화결과는 아래와 같이 표현할 수 있다.</p>
+<div id="49d5000d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ExpTaylor(x, x0, nmax):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> t <span class="op">+</span> (np.exp(x0) <span class="op">*</span> (x <span class="op">-</span> x0) <span class="op">**</span> n) <span class="op">/</span> scipy.special.factorial(n)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -296,21 +296,21 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+노트
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In the original example, <code>np.math.factorial</code> was used for the factorial calculation, but the <code>math</code> sub-package was not originally provided by <code>numpy</code>. So, as the version was updated and <code>math</code> was removed, the example above was changed to calculate it through <code>scipy.special</code>. The result is the same as we think.</p>
+<p>원래 예제에서는 factorial 계산시 <code>np.math.factorial</code>을 사용했지만, <code>math</code> sub package는 원래 <code>numpy</code>에서 제공하는게 아니였다. 그래서 <code>math</code>가 없어진 형태로 버전업이 되면서, 위의 예시에선 <code>scipy.special</code>을 통해서 계산하도록 변경했다. 결과는 우리가 생각하는 것과 동일하다.</p>
 </div>
 </div>
-<div id="5fb0e2aa" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>np.exp(<span class="dv">1</span>), ExpTaylor(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="10dac87d" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>np.exp(<span class="dv">1</span>), ExpTaylor(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(np.float64(2.718281828459045), np.float64(2.7182818011463845))</code></pre>
 </div>
 </div>
-<p>So, if you compare the actual value of the natural function with the approximate value, you can see that they are quite similar.</p>
-<div id="be265166" class="cell" data-execution_count="4">
+<p>그래서 실제의 자연함수의 값과 근사값을 비교해보면 제법 비슷하다는 것을 확인할 수 있다.</p>
+<div id="01bfd311" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">5</span>, <span class="dv">100</span>])</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -323,32 +323,32 @@ Note
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, ExpTaylor(x_list, <span class="op">-</span><span class="dv">3</span>, nmax), c<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'$x_0$=-3'</span>)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, ExpTaylor(x_list, <span class="dv">2</span>, nmax), c<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'$x_0$=2'</span>)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="post_files/figure-html/cell-5-output-1.png" width="593" height="434" class="figure-img"></p>
+<p><img src="post.ko_files/figure-html/cell-5-output-1.png" width="593" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>In fact, it is an area of approximation to reduce the amount of computation, and the part that cannot accurately represent the function can be seen just by checking the result of changing the initial point. However, if an appropriate initial point is selected, an approximate value that is close to the original function we want to find can be obtained.</p>
+<p>사실 연산량을 줄이기 위한 근사의 영역이고, 해당 함수를 정확하게 표현하지 못하는 부분은 초기점을 바꾼 결과만 확인해도 알 수 있다. 하지만 적절한 초기점이 선택되면 원래 우리가 구하고자 하는 원래 함수와 근접하게 유사한 근사값을 구할 수 있다.</p>
 </section>
 <section id="sin-function-at-x_00" class="level2">
 <h2 class="anchored" data-anchor-id="sin-function-at-x_00">1.2 Sin function at <span class="math inline">\(x_0=0\)</span></h2>
-<p>The Taylor expansion of the sin function among trigonometric functions is expressed as follows.</p>
+<p>삼각함수중 sin function의 taylor expansion은 아래와 같이 표현된다.</p>
 <p><span class="math inline">\(f(0) = f''(0) = f^{(4)}(0) = \dots = 0\)</span></p>
 <p><span class="math inline">\(f'(0) = f^{(5)}(0) = f^{(9)}(0) = \dots = 1\)</span></p>
 <p><span class="math inline">\(f'''(0) = f^{(7)}(0) = f^{(11)}(0) = \dots = -1\)</span></p>
 <p><span class="math inline">\(\sin(x) = x - \frac{1}{3!}x^3 + \frac{1}{5!}x^5  - \frac{1}{7!}x^7 \pm \dots = \sum_{n=0}^\infty \frac{(-1)^n}{(2n+1)!}x^{2n+1}\)</span></p>
-<div id="f350373a" class="cell" data-execution_count="5">
+<div id="800b019c" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> SinTaylor(x, nmax):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> t <span class="op">+</span> ((<span class="op">-</span><span class="dv">1</span>) <span class="op">**</span> n <span class="op">/</span> scipy.special.factorial(<span class="dv">2</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span>)) <span class="op">*</span> (x <span class="op">**</span> (<span class="dv">2</span> <span class="op">*</span> n <span class="op">+</span> <span class="dv">1</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="5f1a95b6" class="cell" data-execution_count="6">
+<div id="8e2263a6" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">101</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>])</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -361,17 +361,17 @@ Note
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, SinTaylor(x_list, <span class="dv">10</span>), c<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'$x_0$=10'</span>)</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, SinTaylor(x_list, <span class="dv">20</span>), c<span class="op">=</span><span class="st">'black'</span>, label<span class="op">=</span><span class="st">'$x_0$=20'</span>)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="post_files/figure-html/cell-7-output-1.png" width="600" height="434" class="figure-img"></p>
+<p><img src="post.ko_files/figure-html/cell-7-output-1.png" width="600" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="a604cf1c" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>np.sin(<span class="fl">2.5</span>), SinTaylor(<span class="fl">2.5</span>, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="de282484" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>np.sin(<span class="fl">2.5</span>), SinTaylor(<span class="fl">2.5</span>, <span class="dv">10</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>(np.float64(0.5984721441039565), np.float64(0.598472144104011))</code></pre>
 </div>
@@ -379,54 +379,54 @@ Note
 </section>
 <section id="implementation-of-general-function" class="level2">
 <h2 class="anchored" data-anchor-id="implementation-of-general-function">1.3 Implementation of General Function</h2>
-<p>The previous example was shown assuming that the derivative for a simple function is known, and the formula for obtaining the actual derivative is as follows.</p>
+<p>앞에서는 간단한 함수에 대한 도함수를 안다고 가정하고 보여준 예시이고, 실제의 도함수를 구하는 식은 아래와 같다.</p>
 <p><span class="math display">\[f'(x) = \lim_{h\rightarrow 0} \frac{f(x+h)-f(x)}{h}\]</span></p>
-<div id="9b42a2d6" class="cell" data-execution_count="8">
+<div id="b045c7d9" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> derivative(f, x, h):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adding Small number to avoid ZeroDivision Error</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (f(x <span class="op">+</span> h) <span class="op">-</span> f(x)) <span class="op">/</span> (h <span class="op">+</span> <span class="fl">0.000001</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (f(x <span class="op">+</span> h) <span class="op">-</span> f(x)) <span class="op">/</span> (h <span class="op">+</span> <span class="fl">0.000001</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>However, the above formula was for obtaining the first derivative, and the <span class="math inline">\(n\)</span>-th derivative, which is differentiated <span class="math inline">\(n\)</span> times, is obtained by repeatedly performing the above formula, which is expressed a little more complicatedly as follows.</p>
+<p>그런데 위의 수식은 1차 도함수를 구하는 식이었고, <span class="math inline">\(n\)</span>번 미분한 <span class="math inline">\(n\)</span>차 도함수는 위의 수식을 반복해서 수행하는 것인데, 조금 복잡하게 아래와 같이 표현된다.</p>
 <p><span class="math display">\[f^{(n)}(x) = \lim_{h\rightarrow 0} \frac{1}{h^n}\sum_{k=0}^n(-1)^{k+n} \,\frac{n!}{k!(n-k)!} \,f(x+kh)\]</span></p>
-<div id="4394202d" class="cell" data-execution_count="9">
+<div id="5899f55f" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nDerivative(f, x, h, n):</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> t <span class="op">+</span> (<span class="op">-</span><span class="dv">1</span>) <span class="op">**</span>(k <span class="op">+</span> n) <span class="op">*</span> scipy.special.factorial(n) <span class="op">/</span> (scipy.special.factorial(k) <span class="op">*</span> scipy.special.factorial(n <span class="op">-</span> k)) <span class="op">*</span> f(x <span class="op">+</span> k <span class="op">*</span> h)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t <span class="op">/</span> (h <span class="op">**</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t <span class="op">/</span> (h <span class="op">**</span> n)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>let’s find the derivative for the following equation.</p>
-<p><span class="math display">\[f(x) = 2 * \sin^2(x) + x\]</span></p>
-<div id="4218d9a6" class="cell" data-execution_count="10">
+<p>그러면 다음과 같은 수식에 대한 도함수를 구해보자.</p>
+<p><span class="math inline">\(f(x) = 2 * \sin^2(x) + x\)</span></p>
+<div id="a84807b9" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> func(x):</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> np.sin(x) <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">2</span> <span class="op">*</span> np.sin(x) <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> x</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="60438b10" class="cell" data-execution_count="11">
+<div id="55d8cfc5" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="fl">10.5</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.1</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="4fd86fa6" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>func(x0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="3303acb7" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>func(x0)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>np.float64(12.04772926022427)</code></pre>
 </div>
 </div>
-<div id="97a09e52" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>derivative(func, x0, h)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="592a565e" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>derivative(func, x0, h)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>np.float64(2.5529714426967454)</code></pre>
 </div>
 </div>
-<div id="2ce06f7f" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nDerivative(func, x0, h, <span class="dv">0</span>), nDerivative(func, x0, h, <span class="dv">1</span>), nDerivative(func, x0, h, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="abf71264" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nDerivative(func, x0, h, <span class="dv">0</span>), nDerivative(func, x0, h, <span class="dv">1</span>), nDerivative(func, x0, h, <span class="dv">2</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>(np.float64(12.04772926022427),
  np.float64(2.5529969724111723),
  np.float64(-2.802754599797907))</code></pre>
 </div>
 </div>
-<div id="06064dfb" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nDerivative(func, x0, h, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b1c82bbd" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nDerivative(func, x0, h, <span class="dv">1</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>np.float64(2.5529969724111723)</code></pre>
 </div>
@@ -434,18 +434,18 @@ Note
 </section>
 <section id="taylor-expansion-of-general-function" class="level2">
 <h2 class="anchored" data-anchor-id="taylor-expansion-of-general-function">1.4 Taylor Expansion of General Function</h2>
-<p>Now, let’s bring back the Taylor Expansion formula introduced at the beginning:</p>
+<p>그러면 맨 처음에 소개한 Taylor Expansion의 식을 다시 가져와서 보면,</p>
 <p><span class="math display">\[f(x)=\sum_{n=0}^\infty \frac{1}{n!}f^{(n)}(x_0)\,(x-x_0)^n\]</span></p>
-<p>Ultimately, this formula allows for approximation only if the derivative of the function can be found. Now, let’s replace the derivative part with the function defined above.</p>
-<div id="debfe4fa" class="cell" data-execution_count="16">
+<p>결국 이 수식은 함수의 도함수를 구할 수 있어야 근사가 가능하다. 그러면 도함수 부분을 위에서 정의한 함수로 대체해보자</p>
+<div id="0a609a7c" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> taylor(f, x, x0, nmax, h):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(nmax <span class="op">+</span> <span class="dv">1</span>):</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        t <span class="op">=</span> t <span class="op">+</span> nDerivative(f, x0, h, n) <span class="op">*</span> (x <span class="op">-</span> x0) <span class="op">**</span> n <span class="op">/</span> scipy.special.factorial(n)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>First, if we approximate with 5 samples and set the derivative step to 0.1, it approximates well within a certain range, but if it goes out of range, the value jumps out.</p>
-<div id="bd7ad1a9" class="cell" data-execution_count="17">
+<p>우선 5개의 sample로 근사하고, 도함수의 step을 0.1로 하면 일정 범위내에서는 잘 근사하는데, 범위 밖으로 넘어가면 값이 확 튀는 현상이 나온다.</p>
+<div id="94aa06da" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>])</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -460,17 +460,17 @@ Note
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, taylor(func, x_list, <span class="dv">2</span>, nmax, h), c<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'$x_0$=2'</span>)</span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, taylor(func, x_list, <span class="op">-</span><span class="dv">3</span>, nmax, h), c<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'$x_0$=-3'</span>)</span>
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="post_files/figure-html/cell-18-output-1.png" width="608" height="434" class="figure-img"></p>
+<p><img src="post.ko_files/figure-html/cell-18-output-1.png" width="608" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>If nmax is increased by 10, the output gets more accurate result besides previous ones.</p>
-<div id="43181db2" class="cell" data-execution_count="18">
+<p>그런데 nmax를 10으로 늘리면 위의 함수보다는 조금 더 원래의 함수를 근사하는 형태를 띈다.</p>
+<div id="62ec9c1e" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>])</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -485,17 +485,17 @@ Note
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, taylor(func, x_list, <span class="dv">2</span>, nmax, h), c<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'$x_0$=2'</span>)</span>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, taylor(func, x_list, <span class="op">-</span><span class="dv">3</span>, nmax, h), c<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'$x_0$=-3'</span>)</span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="post_files/figure-html/cell-19-output-1.png" width="608" height="434" class="figure-img"></p>
+<p><img src="post.ko_files/figure-html/cell-19-output-1.png" width="608" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Additionally, we can get more accurate result if we decrease the step size that used to calculate the derivative.</p>
-<div id="ecd6ae63" class="cell" data-execution_count="19">
+<p>여기에서 도함수를 구하는 step을 조금더 적게 하면, 조금더 정확하게 원래 함수를 따라가는 형태를 띄게 된다.</p>
+<div id="01be597e" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">101</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>])</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -510,21 +510,21 @@ Note
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, taylor(func, x_list, <span class="dv">2</span>, nmax, h), c<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'$x_0$=2'</span>)</span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, taylor(func, x_list, <span class="op">-</span><span class="dv">3</span>, nmax, h), c<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'$x_0$=-3'</span>)</span>
 <span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="post_files/figure-html/cell-20-output-1.png" width="608" height="434" class="figure-img"></p>
+<p><img src="post.ko_files/figure-html/cell-20-output-1.png" width="608" height="434" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>In short, if a function is computationally expensive to evaluate, obtaining its derivative can help. Additionally, the more samples you have of the function, the better you can approximate its true value.</p>
+<p>결과적으로 어떤 함수를 계산하고자 하는데, 계산량이 많다 싶으면 그 함수의 도함수를 구할 수 있고, 또 함수에 대한 샘플이 많으면 많을수록 실제값과 유사하게 근사할 수 있다는 것을 나타내고 있다.</p>
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -712,12 +712,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
