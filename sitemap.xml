@@ -2,110 +2,114 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kcsgoodboy.github.io/ko/activities.html</loc>
-    <lastmod>2026-02-03T00:41:07.499Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.233Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/publications.html</loc>
-    <lastmod>2026-02-03T00:41:07.564Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.303Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2026-01-23_Transfer_learning/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.548Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.283Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2026-01-20_Multi-task_learning/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.542Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.277Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2025-08-14_Introduction_to_On_Device_AI/post.ko.html</loc>
-    <lastmod>2026-02-03T00:41:07.537Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.272Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2025-07-31_Vibe_Coding_Success_Fail/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.503Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/ko/index.html</loc>
-    <lastmod>2026-02-03T00:41:07.502Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kcsgoodboy.github.io/ko/blog.html</loc>
-    <lastmod>2026-02-03T00:41:07.499Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.237Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2026-01-28_Actor_Critic_Methods/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.555Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.289Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/ko/blog.html</loc>
+    <lastmod>2026-02-03T10:41:33.233Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/ko/index.html</loc>
+    <lastmod>2026-02-03T10:41:33.237Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kcsgoodboy.github.io/ko/posts/2026-02-03_Off_Policy_Actor_Critic_Methods/post.html</loc>
+    <lastmod>2026-02-03T10:41:33.303Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2026-02-02_Black_Box_Meta_Learning/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.564Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.298Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2025-07-28_taylor_expansion/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.502Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.237Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2025-08-07_Particle_Tachyon_Unboxing/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.509Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.243Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/posts/2025-12-29_retrospective_of_2025/post.html</loc>
-    <lastmod>2026-02-03T00:41:07.542Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.277Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/ko/about.html</loc>
-    <lastmod>2026-02-03T00:41:07.498Z</lastmod>
+    <lastmod>2026-02-03T10:41:33.233Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/activities.html</loc>
-    <lastmod>2026-02-03T00:40:31.876Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.716Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/publications.html</loc>
-    <lastmod>2026-02-03T00:40:31.941Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.784Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2026-01-23_Transfer_learning/post.html</loc>
-    <lastmod>2026-02-03T00:40:31.927Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.765Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2025-07-28_taylor_expansion/post.html</loc>
-    <lastmod>2026-02-03T00:40:31.880Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.719Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2026-02-02_Black_Box_Meta_Learning/post.html</loc>
-    <lastmod>2026-02-03T00:40:31.941Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.779Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2026-01-28_Actor_Critic_Methods/post.html</loc>
-    <lastmod>2026-02-03T00:40:31.932Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.770Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/blog.html</loc>
-    <lastmod>2026-02-03T00:40:31.876Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.716Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/index.html</loc>
-    <lastmod>2026-02-03T00:40:31.880Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.719Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2025-07-31_Vibe_Coding_Success_Fail/post.html</loc>
-    <lastmod>2026-02-03T00:40:31.880Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.720Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2025-08-14_Introduction_to_On_Device_AI/post.ko.html</loc>
-    <lastmod>2026-02-03T00:40:31.915Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.753Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2026-01-20_Multi-task_learning/post.html</loc>
-    <lastmod>2026-02-03T00:40:31.920Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.759Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/posts/2025-12-29_retrospective_of_2025/post.html</loc>
-    <lastmod>2026-02-03T00:40:31.920Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.758Z</lastmod>
   </url>
   <url>
     <loc>https://kcsgoodboy.github.io/about.html</loc>
-    <lastmod>2026-02-03T00:40:31.876Z</lastmod>
+    <lastmod>2026-02-03T10:40:57.716Z</lastmod>
   </url>
 </urlset>

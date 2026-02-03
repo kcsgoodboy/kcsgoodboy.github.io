@@ -358,7 +358,7 @@ Figure 2: Version 1 vs. Version 2
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>Expressed in the form of an algorithm, it is as follows:</p>
-<div class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-pseudocode-number="1">
+<div class="pseudocode-container quarto-float" data-indent-size="1.2em" data-pseudocode-number="1" data-no-end="false" data-caption-prefix="Algorithm" data-line-number-punc=":" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>
