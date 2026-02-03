@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
@@ -7,8 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chanseok Kang">
-<meta name="dcterms.date" content="2026-01-26">
-<meta name="description" content="Summary of lecture CS330 (2022) Lecture 3. Transfer learning &amp; Fine-tuning">
+<meta name="description" content="2022년에 진행한 CS330 강의 중 Lecture 3. Transfer learning &amp; Fine-tuning에 대한 강의 요약">
 
 <title>Transfer Learning &amp; Fine-tuning – Chan’s Research Note</title>
 <style>
@@ -80,17 +79,17 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
@@ -166,8 +165,8 @@ window.Quarto = {
     <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -175,7 +174,7 @@ window.Quarto = {
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -187,7 +186,7 @@ window.Quarto = {
       <h1 class="title">Transfer Learning &amp; Fine-tuning</h1>
                   <div>
         <div class="description">
-          Summary of lecture CS330 (2022) Lecture 3. Transfer learning &amp; Fine-tuning
+          2022년에 진행한 CS330 강의 중 Lecture 3. Transfer learning &amp; Fine-tuning에 대한 강의 요약
         </div>
       </div>
                           <div class="quarto-categories">
@@ -198,8 +197,8 @@ window.Quarto = {
   </div>
     
   <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
     
       <div class="quarto-title-meta-contents">
       <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
@@ -217,9 +216,9 @@ window.Quarto = {
 
         
       <div>
-      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-heading">공개</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">January 26, 2026</p>
+        <p class="date">2026년 1월 23일</p>
       </div>
     </div>
     
@@ -234,7 +233,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
+  <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
   <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
   <li><a href="#multi-task-learning-vs.-transfer-learning" id="toc-multi-task-learning-vs.-transfer-learning" class="nav-link" data-scroll-target="#multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs.&nbsp;Transfer Learning</a></li>
   <li><a href="#transfer-learning-via-fine-tuning" id="toc-transfer-learning-via-fine-tuning" class="nav-link" data-scroll-target="#transfer-learning-via-fine-tuning">Transfer learning via fine-tuning</a></li>
@@ -259,8 +258,8 @@ window.Quarto = {
 
 
 
-<section id="resource" class="level3">
-<h3 class="anchored" data-anchor-id="resource">Resource</h3>
+<section id="강의-및-자료" class="level3">
+<h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
 <div>
 
 </div>
@@ -274,26 +273,25 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
 </section>
 <section id="lecture-summary-with-notebooklm" class="level2">
 <h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/transfer_learning_overview.en.png" class="img-fluid"></p>
+<p><img src="./images/transfer_learning_overview.ko.png" class="img-fluid"></p>
 </section>
 <section id="multi-task-learning-vs.-transfer-learning" class="level2">
 <h2 class="anchored" data-anchor-id="multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs.&nbsp;Transfer Learning</h2>
-<p><strong>Multi-Task Learning</strong>, as discussed in the previous lecture, aims to solve multiple tasks (<span class="math inline">\(\mathcal{T}_1, \mathcal{T_2}, \dots, \mathcal{T}_T\)</span>) <strong>simultaneously</strong>. In other words, the goal is to train a single model that performs well across all given tasks. Accordingly, the objective function for parameter updates is defined as follows:</p>
+<p>이전 강의에서 다뤘던 <strong>Multi-Task Learning</strong>은 여러 개의 task(<span class="math inline">\(\mathcal{T}_1, \mathcal{T_2}, \dots, \mathcal{T}_T\)</span>)에 대해서 <strong>동시에</strong> 해결하는 것이 목표이다. 즉, 하나의 모델이 주어진 모든 task에 대해서 좋은 성능을 내도록 학습하는 것이다. 이에 따라 parameter update를 위한 objective function도 다음과 같이 정의된다.</p>
 <p><span class="math display">\[
 \min_{\theta} \sum_{i=1}^T \mathcal{L}_i ( \theta, \mathcal{D}_i)
 \]</span></p>
-<p>On the other hand, <strong>Transfer Learning</strong> assumes the existence of a Source Task <span class="math inline">\(\mathcal{T}_a\)</span> and a Target Task <span class="math inline">\(\mathcal{T}_b\)</span>. Its goal is to solve the new task <span class="math inline">\(\mathcal{T}_b\)</span> by leveraging the knowledge acquired while solving <span class="math inline">\(\mathcal{T}_a\)</span>. Therefore, the focus is on maximizing performance on <span class="math inline">\(\mathcal{T}_b\)</span> rather than <span class="math inline">\(\mathcal{T}_a\)</span>. A fundamental premise of this approach is that the dataset <span class="math inline">\(\mathcal{D}_a\)</span> accumulated from the Source Task is typically not available during the adaptation process. Instead of reusing the massive data from the Source Task directly, we utilize the “compressed” knowledge (parameters) learned from that data.</p>
-<p>Ideally, if Transfer Learning is performed perfectly, it could be seen as a method capable of handling Multi-task scenarios. Intuitively, learning <span class="math inline">\(\mathcal{T}_a\)</span> and then transferring that knowledge to <span class="math inline">\(\mathcal{T}_b\)</span> ultimately results in a solution for both tasks. However, due to the constraint that we cannot access the dataset of the previously learned task, Transfer Learning cannot simply be treated as a Multi-task Learning problem. Recalling the previous lecture, Multi-task Learning assumes that datasets for all tasks are simultaneously available.</p>
-<p>So, when should we consider Transfer Learning over Multi-task Learning? The lecture introduced two primary scenarios.</p>
-<p>First, when the amount of data <span class="math inline">\(\mathcal{D}_a\)</span> accumulated in the source task <span class="math inline">\(\mathcal{T}_a\)</span> is too large. For example, datasets like ImageNet are so massive that retaining the data or retraining a model from scratch is computationally prohibitive. In such cases, it is common to use publicly available parameters that encapsulate the learned knowledge. Of course, there are also frequent cases where <span class="math inline">\(\mathcal{D}_a\)</span> is simply unavailable.</p>
-<p>Second, when the performance of the <strong>target task</strong> <span class="math inline">\(\mathcal{T}_b\)</span> <strong>is the priority</strong>, rather than the source task. This is a practical consideration when deploying AI models. Since developers often prioritize performance in the deployment environment over the training environment, Transfer Learning serves as an excellent approach in this context.</p>
+<p>반면, <strong>Transfer Learning</strong>는 어떤 Source Task <span class="math inline">\(\mathcal{T}_a\)</span> 와 Target Task <span class="math inline">\(\mathcal{T}_b\)</span> 가 있다고 가정했을 때, <span class="math inline">\(\mathcal{T}_a\)</span> 의 문제를 해결하면서 쌓은 지식을 활용하여 새로운 task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 것이 목표이다. 그래서 <span class="math inline">\(\mathcal{T}_a\)</span> 에서의 성능보다는 <span class="math inline">\(\mathcal{T}_b\)</span> 에서의 성능을 높이는데 초점을 맞춘다. 이 학습의 기본적인 전제는 이렇게 지식이 활용되는 과정내에서 Source Task에서 쌓인 데이터셋 <span class="math inline">\(\mathcal{D}_a\)</span> 는 활용할 수 없다는 것이다. 즉, Source Task의 방대한 데이터를 재사용하는 것이 아니라, 그 데이터로부터 학습된 지식이 “압축된” 형태 (parameter) 만을 가져와서 활용하는 형태가 된다.</p>
+<p>사실 어떻게 보면 Transfer Learning이 이상적으로 학습된다면, Multi-task도 다룰 수 있는 방법론이 될텐데, 상식적으로 생각해도 <span class="math inline">\(\mathcal{T}_a\)</span> 에 대해 학습한 뒤, 해당 지식을 전이해서 <span class="math inline">\(\mathcal{T}_b\)</span> 에 적용하는 것도 결론적으로는 두가지 task <span class="math inline">\(\mathcal{T}_a\)</span> 와 <span class="math inline">\(\mathcal{T}_b\)</span> 에 대한 해결책을 갖는 것이 되기 때문이다. 하지만 기존에 학습했던 Task에 대한 데이터셋을 활용할 수 없다는 전제로 인해, Transfer Learning 문제를 Multi-task Learning으로 치환해서 풀 수 없다. 이전 강의 내용도 상기해보면, 기본 가정이 모든 task에 대한 데이터셋이 존재한 상태에서 multi-task learning이 이뤄졌다는 것을 알 수 있다.</p>
+<p>그러면 어떤 시점에 multi-task learning대신 transfer learning을 고려하고, 어떤 문제에 적용하기 좋을까에 대한 질문을 던질 수 있는데, 강의에서는 두가지 케이스에 대해서 소개했다. 먼저, source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 쌓은 데이터인 <span class="math inline">\(\mathcal{D}_a\)</span> 의 양이 너무 클 때의 경우이다. 예를 들어서 ImageNet과 같이 source의 데이터셋이 매우 크기 때문에 특정 모델에 대해서 처음부터 재학습을 하거나 모델을 유지하는 것이 어렵기 때문에, 일반적으로는 공개되어 있는 지식이 함축된 parameter를 가져와서 활용하는 편이다. 물론 <span class="math inline">\(\mathcal{D}_a\)</span> 자체가 없는 경우도 많이 있다. 두번째의 경우는 source task <span class="math inline">\(\mathcal{T}_a\)</span> 가 아닌, target task <span class="math inline">\(\mathcal{T}_b\)</span> 의 성능을 더 고려할 때이다. 이 부분은 사실 실제 인공지능 모델이 배포되는 시점에서 생각해볼만한 부분인데, 대부분의 개발자는 자신의 학습환경보다는 실제 모델이 배포되었을 때에서의 성능이 어느정도 보장되는 것이 우선시되기 때문에 이 경우는 transfer learning을 적용해보면 좋은 예시가 될 수 있다.</p>
 </section>
 <section id="transfer-learning-via-fine-tuning" class="level2">
 <h2 class="anchored" data-anchor-id="transfer-learning-via-fine-tuning">Transfer learning via fine-tuning</h2>
-<p>A concept closely related to Transfer Learning is <strong>Fine-tuning</strong>. Fine-tuning involves initializing a neural network with weights <span class="math inline">\(\theta\)</span> learned from a source task <span class="math inline">\(\mathcal{T}_a\)</span>, and then updating the parameters <span class="math inline">\(\phi\)</span> via gradient descent using the dataset <span class="math inline">\(\mathcal{D}_b\)</span> of the target task <span class="math inline">\(\mathcal{T}_b\)</span>. The lecture denotes the dataset for additional training as <span class="math inline">\(\mathcal{D}^{tr}\)</span>, and the update rule is described as follows:</p>
+<p>transfer learning 개념과 함께 다뤄지는 내용이 바로 <strong>fine-tuning(미세 조정)</strong>일 것이다. fine-tuning이란 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습된 가중치 <span class="math inline">\(\theta\)</span> 로 신경망을 초기화한 뒤, target task <span class="math inline">\(\mathcal{T}_b\)</span> 의 데이터셋 <span class="math inline">\(\mathcal{D}_b\)</span> 를 사용해서 gradient descent를 통해 parameter <span class="math inline">\(\phi\)</span> 를 업데이트하는 방법이다. 강의에서는 추가학습을 위한 데이터셋이란 의미로 <span class="math inline">\(\mathcal{D}^{tr}\)</span> 로 표기했고, 수식으로는 다음과 같이 소개하고 있다.</p>
 <p><span class="math display">\[
 \phi \leftarrow \theta - \alpha \nabla_\theta \mathcal{L}(\theta, \mathcal{D}^{tr})
 \]</span></p>
@@ -303,117 +301,109 @@ window.Quarto = {
 <img src="./images/6p_finetuning_result.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: PASCAL/SUN Resulf of Model pre-trained with ImageNet Dataset
+그림&nbsp;1: ImageNet Dataset으로 사전학습한 모델의 PASCAL/SUN 에서의 성능
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-finetuning-result" class="quarto-xref">Figure&nbsp;1</a> displays results from <span class="citation" data-cites="huh2016makes">Huh, Agrawal, and Efros (<a href="#ref-huh2016makes" role="doc-biblioref">2016</a>)</span>. It compares the performance when applying a model pre-trained on a large-scale dataset like ImageNet to different datasets such as PASCAL and SUN.</p>
+<p><a href="#fig-finetuning-result" class="quarto-xref">그림&nbsp;1</a> 는 <span class="citation" data-cites="huh2016makes">Huh, Agrawal, 와/과 Efros (<a href="#ref-huh2016makes" role="doc-biblioref">2016</a>)</span> 에 소개된 내용인데, ImageNet과 같이 대규모 데이터셋으로 사전학습한 모델을 다른 데이터셋인 PASCAL과 SUN 데이터셋에 적용해봤을 때의 성능을 보여주고 있다.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+노트
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <a href="https://docs.ultralytics.com/datasets/detect/voc/">PASCAL VOC</a> dataset is widely used in computer vision. Alongside ImageNet, which is primarily constructed for classification, PASCAL VOC allows for performance validation in Object Detection, Object Segmentation, and Classification. The <a href="https://groups.csail.mit.edu/vision/SUN/hierarchy.html">SUN</a> dataset also enables validation for Scene Recognition and Object Detection in addition to classification.</p>
+<p><a href="https://docs.ultralytics.com/datasets/detect/voc/">PASCAL VOC</a> 데이터셋은 컴퓨터 비전에서 많이 활용되는 데이터셋 중 하나로, 분류목적으로 구성된 ImageNet과 더불어, Object detection, Object segmentation, Classification에 대한 성능 검증을 할 수 있다. <a href="https://groups.csail.mit.edu/vision/SUN/hierarchy.html">SUN</a> 데이터셋도 classification 뿐만 아니라 Scene Recognition과 Object Detection에 대한 성능 검증도 할 수 있는 데이터셋이다.</p>
 </div>
 </div>
-<p>Applying the definition of transfer learning mentioned earlier, ImageNet serves as the source task in this experiment, while PASCAL and SUN represent the target tasks. These results indicate that using parameters learned from ImageNet as initialization is significantly more effective than using random initialization. This practice is also standard when retraining LLMs or Foundation Models, where parameters are often downloaded from platforms like <a href="https://huggingface.co/">HuggingFace</a> for use.</p>
-<p>There are various strategies for fine-tuning. The lecture highlighted several accessible methods:</p>
+<p>앞에서 정의한 transfer learning의 형태를 가져오면, 해당 실험에서의 source task는 ImageNet이고, target task는 PASCAL과 SUN 데이터셋이 되겠다. 이 결과가 의미하는 것은 초기 학습시 임의로 초기화된 parameter를 사용하는 것보다 ImageNet에서 학습된 parameter를 초기값으로 사용하는 것이 훨씬 더 효과적임을 보여주고 있다. 이 밖에도 LLM이나 Foundation Model을 재학습시킬 때도 <a href="https://huggingface.co/">HuggingFace</a> 같은 플랫폼으로부터 parameter를 가져와 활용하는 편이다.</p>
+<p>그러면 fine-tuning을 하는 방법도 여러가지가 있을텐데, 강의에서 쉽게 fine-tuning을 위해서 취해볼 수 있는 방법론 몇가지를 소개했다.</p>
 <ul>
-<li>Fine-tune with a smaller learning rate <span class="math inline">\(\eta\)</span>.</li>
-<li>Fine-tune earlier layers with a smaller learning rate.</li>
-<li>Freeze earlier layers initially, then gradually unfreeze them during fine-tuning.</li>
-<li>Re-initialize only the last layer.</li>
-<li>Search for new hyperparameters via Cross-Validation.</li>
-<li>Consider different architectures.</li>
+<li>작은 learning rate <span class="math inline">\(\eta\)</span> 로 fine-tune 시도</li>
+<li>앞쪽 layer에 대해서 작은 learning rate로 fine-tune</li>
+<li>초기에는 앞쪽 layer를 freeze했다가, 점점 unfreeze하는 방식으로 fine-tune</li>
+<li>마지막 layer만 재초기화</li>
+<li>Cross Validation을 통해서 hyperparameter 재탐색</li>
+<li>다른 Architecture 고려</li>
 </ul>
-<p>Techniques like using a small learning rate or freezing layers are frequently mentioned. These methods can be seen as strategies to prevent <strong>Feature Distortion</strong>—drastic changes in learned features caused by training on a relatively small dataset compared to the original training set.</p>
+<p>특히 작은 learning rate로 설정하거나, layer를 freeze해서 fine-tuning한다는 내용이 많이 나오는데, 학습 데이터셋에 비해 상대적으로 작은 데이터셋으로 인한 급격한 변화 (Feature Distortion)를 막기 위한 방법이라고 보면 좋을 것 같다.</p>
 </section>
 <section id="breaking-common-wisdom" class="level2">
 <h2 class="anchored" data-anchor-id="breaking-common-wisdom">Breaking Common Wisdom</h2>
-<p>While it is often assumed that massive datasets are strictly necessary for pre-training to achieve performance gains through transfer learning or fine-tuning, evidence suggests otherwise.</p>
+<p>사실, 사전 모델 학습에 있어서 반드시 크고 방대한 데이터셋이 있어야만 이런 transfer learning이나 fine-tuning을 통한 성능 개선이 가능할 것 같지만, 이를 반증하는 내용도 제시되어 있다.</p>
 <div id="fig-diverse-data" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/7p_diverse_data.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Proof of not requiring diverse data for pre-training
+그림&nbsp;2: pre-training시 반드시 diverse한 데이터가 필요하지 않다는 반증
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-diverse-data" class="quarto-xref">Figure&nbsp;2</a> illustrates findings from <span class="citation" data-cites="krishna2023downstream">Krishna et al. (<a href="#ref-krishna2023downstream" role="doc-biblioref">2023</a>)</span>. The authors conducted experiments comparing model performance based on the difference between datasets used for pre-training and fine-tuning. The middle case represents pre-training on massive data (like Wikipedia) followed by fine-tuning on a defined dataset. While one might generally expect this to yield the best results, the findings show that unsupervised pre-training using <strong>only</strong> the data relevant to the Downstream task (the target task mentioned earlier) produces comparable results. This implies that pre-training data does not necessarily need to be diverse; learning meaningful features is possible using only the target dataset.</p>
-<p><span class="citation" data-cites="lee2022surgical">Lee et al. (<a href="#ref-lee2022surgical" role="doc-biblioref">2022</a>)</span> also introduces content that challenges similar conventional wisdom.</p>
+<p><a href="#fig-diverse-data" class="quarto-xref">그림&nbsp;2</a> 는 <span class="citation" data-cites="krishna2023downstream">Krishna 기타 (<a href="#ref-krishna2023downstream" role="doc-biblioref">2023</a>)</span> 에 소개된 내용인데, Pre-train과 fine-tuning시 사용하는 데이터셋의 차이를 두어 어떤 모델의 성능이 가장 좋은지를 비교하는 실험을 했다. 이 중 가운데에 있는 경우는 Wikipedia와 같이 방대한 데이터로 Pre-train을 하고, 사전에 정의된 finetuning용 데이터셋으로 학습시킨 경우이고, 일반적으로는 이렇게 했을때의 결과가 가장 좋을 거라고 생각할 수 있다. 하지만 결과가 보여주는 의미는 방대한 데이터가 아니더라도 Downstream task (앞에서 소개한 target task)에 해당하는 데이터만 가지고 unsupervied pre-training 을 해도 이와 비등한 결과를 얻을 수 있다는 점이다. 이를 통해서 사전 학습 데이터가 반드시 다양할 필요는 없으며, 타겟 데이터셋만으로도 충분히 유의미한 특징을 학습할 수 있음을 시사한다.</p>
+<p><span class="citation" data-cites="lee2022surgical">Lee 기타 (<a href="#ref-lee2022surgical" role="doc-biblioref">2022</a>)</span> 논문에서도 이런 비슷한 통념을 깬 내용을 소개하고 있다.</p>
 <div id="fig-surgical-fine-tuning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/8p_surgical_fine-tuning.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Surgical Fine-tuning
+그림&nbsp;3: Surgical Fine-tuning
 </figcaption>
 </figure>
 </div>
-<p>In general transfer learning, it is known that retraining the last layer (head) is effective because it is the most task-specific part. However, the author’s idea was: “If the goal is not just label prediction but handling low-level pixel corruptions, shouldn’t we modify the intermediate or earlier layers?” Consequently, the experiment verified fine-tuning effects not only on Output-Level Shift (CelebA dataset), which aligns with conventional wisdom, but also on Feature-level shift (Entity-30 dataset) and Input-level shift (CIFAR-10-Corruption), which involve changes at lower levels. The results in <a href="#fig-surgical-fine-tuning" class="quarto-xref">Figure&nbsp;3</a> confirm that fine-tuning the first or even intermediate layers—rather than just the last layer—can yield excellent performance depending on the context.</p>
-<p>Thus, the idea mentioned by the professor is the <strong>Linear Probing then Full Fine-tuning (LP-FT)</strong> method introduced in <span class="citation" data-cites="kumar2022fine">Kumar et al. (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span>.</p>
+<p>일반적인 transfer learning에서는 모델의 마지막 layer(head)가 가장 task에 특화된 부분이기 때문에 마지막 layer를 재학습하는 것이 효과적이라고 알려져있었지만, 저자의 아이디어는 “만약 어떤 label을 예측하는 것이 아니라, 조금 low-level에서 발생하는 pixel corruption에 대응하려면 마지막 layer가 아닌 중간이나 앞단의 layer를 수정해야 되지 않을까?” 라는 것이었다. 그래서 실제 실험도 기존의 통념으로 진행한 부분 (CelebA 데이터셋으로 학습한 Output-Level Shift)와 함께, 조금더 low-level에서 바뀌는 Feature-level shift(Entity-30 데이터셋)와 Input-level shift(CIFAR-10-Corruption) task에서의 fine-tuning 효과를 확인하고자 했다. <a href="#fig-surgical-fine-tuning" class="quarto-xref">그림&nbsp;3</a> 의 결과로는 꼭 마지막 layer가 아니더라도 처음 layer나 심지어는 중간 layer를 fine-tuning해도 좋은 성능이 나온다는 것을 확인할 수 있다.</p>
+<p>그래서 교수가 언급한 아이디어는 <span class="citation" data-cites="kumar2022fine">Kumar 기타 (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span> 에서 소개된 Linear Probing then Full Fine-tuning (LP-FT) 이란 방식이다.</p>
 <div id="fig-LP-FT" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/9p_LP-FT.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Linear Probing then Full Fine-tuning
+그림&nbsp;4: Linear Probing then Full Fine-tuning
 </figcaption>
 </figure>
 </div>
-<p>Conventional fine-tuning methods typically involved either simply performing Full Fine-tuning or using Linear Probing (freezing the feature extractor and training only the head). However, these approaches often resulted in good performance only on fine-tuning distribution samples (in-distribution) or caused degradation in in-distribution performance even if Out-of-Distribution sample performance improved.</p>
-<p>Therefore, the method introduced in <span class="citation" data-cites="kumar2022fine">Kumar et al. (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span>, as shown in <a href="#fig-LP-FT" class="quarto-xref">Figure&nbsp;4</a>, utilizes both approaches. First, only the head is trained (Linear Probing). Once the validation loss converges to some extent, the entire network is unfrozen and fine-tuned. Generally, in transfer learning, the head is randomly initialized to match the target task. If the entire network is trained from this state, the “weird” gradients generated from the randomly initialized head can disrupt the parameters of the feature extractor that were painstakingly learned. This phenomenon is commonly referred to as Feature Distortion. The proposed LP-FT method offers advantages in terms of robustness by mitigating this distortion that can occur during fine-tuning.</p>
-<p>Another common belief in transfer learning is that pre-training is always advantageous.</p>
+<p>기존의 Fine-tuning 방식은 단순히 Full Fine-tuning 만 하거나, 혹은 Linear Probing, 즉 앞단의 feature extractor 부분은 freeze시키고 마지막 head 부분만 재학습하는 방식이었는데, 이렇게 하면 fine-tuning distribution sample(혹은 in-distribution)에서만 잘되거나, 혹은 Out-of-Distribution sample 성능이 개선되어도 오히려 in-distribution sample에서의 성능이 열화되는 현상이 나타난다. 그래서 <span class="citation" data-cites="kumar2022fine">Kumar 기타 (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span> 에서 소개한 방법은 <a href="#fig-LP-FT" class="quarto-xref">그림&nbsp;4</a> 에도 나와있는 것처럼 두가지 방법을 모두 활용하여, 먼저 마지막 head만 학습시키고 난 후에, 이때의 validation loss가 어느정도 수렴하면, 그 후에 전체 네트워크를 unfreeze한 후, fine-tuning하는 방식이다. 일반적으로 transfer learning을 하게 되면 target task에 맞춰서 head를 랜덤하게 초기화하는데, 이 상태에서 전체 네트워크를 학습시키면 랜덤하게 초기화된 head에서 발생하는 이상한 gradient로 인해서 앞단에 힘들게 학습시킨 feature extractor의 parameter가 틀어지는 현상이 나타난다. 보통 이런 현상을 <strong>Feature Distortion</strong> 이라고 하는데, 제안한 LP-FT 방식은 fine-tuning시 발생할 수 있는 이런 Feature Distortion을 완화시켜주는 Robustness 측면에서의 이점이 있다고 볼 수 있다.</p>
+<p>transfer learning에서의 통념 중 하나는 pre-training이 항상 유리하다는 점이다.</p>
 <div id="fig-ULMFiT" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/10p_ULMFiT.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Universal Language Model Fine-tuning
+그림&nbsp;5: Universal Language Model Fine-tuning
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-ULMFiT" class="quarto-xref">Figure&nbsp;5</a> shows experimental results from the <span class="citation" data-cites="howard2018universal">Howard and Ruder (<a href="#ref-howard2018universal" role="doc-biblioref">2018</a>)</span> paper. The first graph demonstrates that, regardless of the amount of training data, fine-tuning a pre-trained model consistently yields lower validation error compared to training from scratch. Even with the same amount of data, fine-tuning results (orange/green lines) are generally better than the from-scratch approach (blue line).</p>
-<p>However, the second graph compares performance in an environment where the amount of training data is extremely reduced. The key observation here is that with an extremely small number of training samples (around 100), the validation error does not show as significant an improvement as expected. Consequently, when the target task dataset is extremely small, pre-training may not be a viable solution.</p>
-<p>Therefore, the lecture explained the necessity of <strong>meta-learning</strong> techniques. These techniques can explicitly express transferability between tasks using objective functions, enabling models to adapt quickly even when data is extremely scarce.</p>
+<p><a href="#fig-ULMFiT" class="quarto-xref">그림&nbsp;5</a> 은 <span class="citation" data-cites="howard2018universal">Howard 와/과 Ruder (<a href="#ref-howard2018universal" role="doc-biblioref">2018</a>)</span> 논문에 소개된 실험 결과인데, 첫번째 그래프의 결과는 학습 데이터의 양과는 상관없이, From-scratch로 학습하는 것보다는 사전 학습된 모델을 fine-tuning하는 것이 항상 validation error가 낮음을 보여주고 있다. 특히 같은 데이터양의 관점으로 봤을때도, 파란색 선으로 표현된 from-scratch 방식보다 주황색/초랙색의 fine-tuning 결과가 전반적으로 좋게 나온다. 그리고 두번째의 그래프는 첫번째 그래프의 경우와는 다르게 학습 데이터의 양을 극도로 줄인 환경에서의 성능을 비교한 것인데, 여기에서 볼 부분은 training sample의 수가 극도로 적은 (즉, fine-tuning할 데이터의 양이 작은) 100개 정도의 샘플에서의 validation error는 생각보다 그렇게 큰 개선치를 보여주지 못한다. 결과적으로 target task의 데이터셋의 양이 극도로 적은 케이스에서는 pre-training도 좋은 설루션이 되지 않는다는 것이다.</p>
+<p>그래서 강의에서는 데이터가 너무 적은 경우에서도 모델이 빠르게 적응할 수 있도록, objective function 등으로 task 간의 전이가능성(transferability)을 명시적으로 표현할 수 있는 <strong>meta-learning</strong> 기법의 필요성에서 대해서 설명했다.</p>
 </section>
 <section id="from-transfer-learning-to-meta-learning" class="level2">
 <h2 class="anchored" data-anchor-id="from-transfer-learning-to-meta-learning">From Transfer Learning to Meta-Learning</h2>
-<p>So, what distinguishes Meta-Learning from the Transfer Learning discussed earlier?</p>
-<p>First, the fundamental goal is shared. Transfer Learning addresses methods for initializing models to improve performance on a target task, and Meta-Learning shares this objective. However, a key distinction in Meta-Learning is its focus on <strong>explicitly optimizing</strong> for <strong>transferability</strong>, as previously mentioned. To put it simply, given a set of training tasks, the goal is to optimize the learning process itself to adapt quickly to these tasks. If successful, this enables rapid adaptation even when presented with a new, unseen task.</p>
-<p>Consequently, the objective function revolves around “learning a task” (<span class="math inline">\(\mathcal{D}_i^{tr} \rightarrow \theta\)</span>), and the fundamental goal of Meta-Learning is to find a way to minimize this objective function even with a small dataset <span class="math inline">\(\mathcal{D}_i^{tr}\)</span>.</p>
-<p>While the aspirations of Meta-Learning are ideal, one might question its feasibility in practice. The lecture addressed this by breaking it down into two perspectives:</p>
-<ol type="1">
-<li>Mechanistic View: This perspective looks at the operational principles—how datasets are processed and how learning is executed for new tasks.</li>
-<li>Probabilistic View: Based on Bayesian statistics, this perspective explores why learning is possible even with few samples, examining the theoretical potential of Meta-Learning.</li>
-</ol>
+<p>그러면 앞에서 다뤘던 Transfer Learning과 달리 Meta-Learning에서는 어떤 부분이 강조가 된 것일까? 우선 목적성은 동일하다. Transfer learning 에서도 target task에서의 성능을 개선하기 위해서 모델을 초기화하는 방법에 대해서 다루고 있었고, meta-learning도 동일한 지향점을 가지고 있는데, meta-learning에서 강조되는 목적 중 하나는 바로 앞에서 언급했던 것처럼 transferability를 어떻게 명시적으로 최적화할 수 있냐(explicitly optimize)는 것이다. 쉽게 예시로 들자면, 어떤 주어진 training task들이 주어졌을 때, 이 task들에 대해서 빠르게 학습하는 방법에 최적화할 수 있는지 여부를 확인하려고 한다. 만약 이게 가능하다면 training task가 아닌 새로운 task가 들어왔을때도 빠르게 학습할 수 있게 된다.</p>
+<p>그러면 학습에 대한 objective function은 learning a task ( <span class="math inline">\(\mathcal{D}_i^{tr} \rightarrow \theta\)</span> )가 될 것이고, 작은 <span class="math inline">\(\mathcal{D}_i^{tr}\)</span> 로도 objective function을 최소화시킬 수 있는 방법을 찾는 것이 meta-learning에서의 근본적인 목표이다.</p>
+<p>사실 meta-learning 자체가 지향하는 바는 이상적이지만, 실체에 대해서 실현 가능성 여부가 궁금할 수 있는데, 강의에서는 이 부분을 두가지로 나눠서 설명하고자 했다. 우선 meta-learning에서 어떻게 데이터셋을 처리하고, 새로운 task에 대해서 어떻게 학습할 것인가 하는 동작원리(Mechanistic View)의 관점에서 살펴보고, 두번째로는 왜 meta-learning이 적은 샘플로도 task에 대해서 학습이 가능한지를 bayesian statistics를 기반으로 살펴보는 확률론적 관점(Probabilistic View)에서 meta-learning의 가능성을 살펴보았다.</p>
 <section id="probabilistic-view" class="level3">
 <h3 class="anchored" data-anchor-id="probabilistic-view">Probabilistic View</h3>
-<p>While the lecture primarily focuses on the Mechanistic View, it first briefly introduced how Meta-Learning operates from a probabilistic perspective.</p>
+<p>강의의 전체적인 내용은 Mechanistic View에 초점을 맞추지만, 해당 내용을 설명하기에 앞서 확률론적 관점에서 meta-learning이 어떻게 동작하는지에 대해서 간단하게 설명했다.</p>
 <div id="fig-probabilistic-graphical-model" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/14p_Probabilistic_Graphical_Model.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Probabilistic Graphical Model
+그림&nbsp;6: Probabilistic Graphical Model
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-probabilistic-graphical-model" class="quarto-xref">Figure&nbsp;6</a> visualizes the learning process as a probabilistic model, a concept known as a <strong>Probabilistic Graphical Model</strong>. Here, circles represent Random Variables, and arrows indicate correlations or dependencies between them. The box (plate notation) signifies that the same structure is executed repeatedly.</p>
-<p>First, the content inside the box represents the typical task learning process: finding the parameter <span class="math inline">\(\phi\)</span> that best explains the given data <span class="math inline">\(x, y\)</span>. The external variable <span class="math inline">\(\theta\)</span> serves as the parameter for Meta-Learning; simply put, it represents the <strong>shared structure</strong> or knowledge across tasks. In this Meta-Learning structure, <span class="math inline">\(\theta\)</span> (the shared structure) sits at the top and influences the task-specific parameters <span class="math inline">\(\phi_i\)</span>. In turn, <span class="math inline">\(\phi_i\)</span> becomes the parameter that explains the data for each specific task. Consequently, all tasks involved in the learning process share the common knowledge <span class="math inline">\(\theta\)</span>.</p>
-<p>Without <span class="math inline">\(\theta\)</span>, the parameters <span class="math inline">\(\phi_1, \phi_2, \dots\)</span> for each task would appear unrelated (independent). However, by knowing and utilizing <span class="math inline">\(\theta\)</span>, the parameters for each task become conditionally dependent on this shared information (<span class="math inline">\(\phi_1 \perp \!\!\! \perp \phi_2 \perp \!\!\! \perp \dots\)</span>). Knowing the common rule <span class="math inline">\(\theta\)</span> reduces the entropy of the task-specific parameters <span class="math inline">\(\phi_i\)</span> (<span class="math inline">\(\mathcal{H}(p(\phi_i \vert \theta)) \lt \mathcal{H}(p(\phi_i))\)</span>). Consequently, we can find the solution without requiring a large amount of data.</p>
-<p>To illustrate this, the lecture provided two examples (<a href="#fig-bayesian-meta-learning" class="quarto-xref">Figure&nbsp;7</a>).</p>
+<p><a href="#fig-probabilistic-graphical-model" class="quarto-xref">그림&nbsp;6</a> 은 <strong>Probabilistic Graphical Model</strong> 이란 컨셉으로 학습에 대한 과정을 일종의 확률 모델 형태로 도식화한 것이다. 여기에서 동그라미는 Random Variable이고, 각 변수간의 상관관계나 의존성은 화살표로 표기된다. 그리고 박스는 동일 구조가 반복적으로 수행되는 것을 명시한다. 먼저 박스 안쪽에 있는 내용은 전형적인 task의 학습 과정을 표현한다. 그래서 주어진 데이터 <span class="math inline">\(x, y\)</span> 를 잘 표현할 수 있는 parameter <span class="math inline">\(\phi\)</span> 찾는 과정이 된다. 여기에서 바깥쪽에 있는 <span class="math inline">\(\theta\)</span> 가 meta-learning을 위한 parameter가 되는데, 쉽게 설명하면 task간의 <strong>공유되는 지식(shared structure)</strong>가 된다. 그러면 meta-learning의 학습 구조는 가장 상위에 shared structure를 위한 <span class="math inline">\(\theta\)</span> 가 존재하고, 이 <span class="math inline">\(\theta\)</span> 가 각 Task별 parameter <span class="math inline">\(\phi_i\)</span> 에 영향을 미치며, 결국 이 <span class="math inline">\(\phi_i\)</span> 가 각 Task 별 데이터를 설명하는 parameter가 된다. 이렇게 되면 학습에 사용되는 모든 Task는 <span class="math inline">\(\theta\)</span> 라는 공통된 지식을 갖게 되는 것이다.</p>
+<p>만약 <span class="math inline">\(\theta\)</span> 가 없었다면 각 task의 parameter <span class="math inline">\(\phi_1, \phi_2, \dots\)</span> 는 서로 관련이 없어보이겠지만, 이제 <span class="math inline">\(\theta\)</span> 에 대해서 알고 활용한다면 각 task의 parameter 역시 해당 정보 기반으로 구분이 더 될 것이다. ( <span class="math inline">\(\phi_1 \perp \!\!\! \perp \phi_2 \perp \!\!\! \perp \dots\)</span> ) 이로 인해서 데이터에 대한 entropy 역시 어떤 <span class="math inline">\(\theta\)</span> 라는 공통 규칙을 알게 되면 개별 Task에 대한 parameter <span class="math inline">\(\phi_i\)</span> 에 대한 entropy도 줄어들고 ( <span class="math inline">\(\mathcal{H}(p(\phi_i \vert \theta)) \lt \mathcal{H}(p(\phi_i))\)</span>), 결과적으로 데이터가 많이 필요하지 않아도 정답을 찾을 수 있게 된다.</p>
+<p>이에 대한 쉬운 이해를 위해서 강의에서는 두가지 예시 (<a href="#fig-bayesian-meta-learning" class="quarto-xref">그림&nbsp;7</a>) 를 설명했다.</p>
 <div id="fig-bayesian-meta-learning" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bayesian-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -445,13 +435,12 @@ Figure&nbsp;6: Probabilistic Graphical Model
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bayesian-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7
+그림&nbsp;7
 </figcaption>
 </figure>
 </div>
-<p>First, <a href="#fig-multi-task-sinusoid" class="quarto-xref">Figure&nbsp;7 (a)</a> represents the problem of learning multiple sine waves. Applying the structure discussed above, <span class="math inline">\(\phi_i\)</span> corresponds to the amplitude and phase of each specific wave, while <span class="math inline">\(\theta\)</span> represents the general knowledge that “these are sinusoidal functions.” Without knowing that the underlying function is a sine wave, we would need significant data to estimate the curve. However, knowing <span class="math inline">\(\theta\)</span> allows us to estimate <span class="math inline">\(\phi_i\)</span> quickly with just a few data points.</p>
-<p>Similarly, in the Multi-language Machine Translation example shown in <a href="#fig-multi-language-machine-translation" class="quarto-xref">Figure&nbsp;7 (b)</a>, if universal grammatical structures or semantic systems are given as <span class="math inline">\(\theta\)</span> beforehand, the model can be trained much more efficiently than without them.</p>
-<p>In summary, from a Bayesian perspective, Meta-Learning is equivalent to the problem of discovering the shared knowledge <span class="math inline">\(\theta\)</span> inherent in the tasks. Although individual events (<span class="math inline">\(\phi_i\)</span>) may appear distinct, identifying the hidden common principle (<span class="math inline">\(\theta\)</span>) allows us to solve problems with minimal data, even when encountering new, unseen tasks. This concept provides the theoretical foundation for <strong>Few-shot Learning</strong> in Meta-Learning.</p>
+<p>먼저 <a href="#fig-multi-task-sinusoid" class="quarto-xref">그림&nbsp;7 (a)</a> 에서는 여러 개의 sine graph를 학습하는 task에 대한 문제인데, 앞의 구조를 가져오면 <span class="math inline">\(\phi_i\)</span> 는 각 그래프별 진폭(amplitude)와 위상(phase)가 될 것이고, <span class="math inline">\(\theta\)</span> 는 각 그래프가 sine graph 모양이다 라는 사실 자체가 된다. 만약 우리가 각 그래프가 sine graph 모양이라는 사실을 모른 상태에서 점을 추정하면 수많은 데이터가 필요하지만, <span class="math inline">\(\theta\)</span> 를 알면 점 몇 개만 찍어봐도 <span class="math inline">\(\phi_i\)</span> 를 금방 추정할 수 있다. <a href="#fig-multi-language-machine-translation" class="quarto-xref">그림&nbsp;7 (b)</a> 에서 소개하는 또다른 예시인 다국어 번역에서도 언어에 대한 보편적인 문법 구조나 의미론적 체계가 <span class="math inline">\(\theta\)</span> 로 사전에 주어진다면, 그렇지 않은 경우보다 조금 더 효율적으로 학습시킬 수 있다.</p>
+<p>정리하자면 bayesian 관점에서 meta-learning은 문제상에 내재되어 있는 공통적인 지식 <span class="math inline">\(\theta\)</span> 를 찾는 문제와 같다. 개별 사건 ( <span class="math inline">\(\phi_i\)</span> )들은 서로 달라 보이지만, 그 뒤에 숨어있는 공통된 원리( <span class="math inline">\(\theta\)</span> )를 파악하면, 기존에 학습되지 않은 새로운 task에 대응할 때도 적은 데이터만으로도 문제를 해결할 수 있게 된다. 이 개념이 meta-learning 에서 나오는 <strong>Few-shot Learning</strong>의 이론적인 근거가 되겠다.</p>
 </section>
 </section>
 <section id="an-example-of-meta-learning" class="level2">
@@ -489,58 +478,53 @@ Figure&nbsp;7
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8
+그림&nbsp;8
 </figcaption>
 </figure>
 </div>
-<p>As mentioned earlier, we now turn to the working principles of Meta-Learning from the <strong>Mechanistic View</strong>. <a href="#fig-meta-learning" class="quarto-xref">Figure&nbsp;8</a> illustrates <strong>meta-training</strong> and <strong>meta-testing</strong>, which are commonly cited as the core processes of Meta-Learning.</p>
-<p>First, let’s assume we have multiple tasks to solve (<span class="math inline">\(\mathcal{T}_1, \mathcal{T}_2, \dots, \mathcal{T}_i\)</span>), where each task involves classifying different objects. If we add a constraint that the amount of training data is very small, training from scratch in this environment would fail to achieve the desired performance.</p>
-<p>To address this, we first perform <strong>Meta-Training</strong>, as shown in <a href="#fig-meta-training" class="quarto-xref">Figure&nbsp;8 (a)</a>. This process is akin to a “mock exam,” where the model practices the problem of learning tasks with limited data. Here, we divide a massive dataset into detailed virtual tasks that mirror the structure of the problem we intend to solve. For instance, in <span class="math inline">\(\mathcal{T}_1\)</span>, the model might be asked to predict a label after viewing 5 photos; in <span class="math inline">\(\mathcal{T}_2\)</span>, it does the same with a different set of 5 photos. Through this process, the model trains not to memorize specific “labels,” but rather the <strong>ability to quickly grasp features and distinguish objects</strong> after seeing just a few examples.</p>
-<p>After this training, the <strong>Meta-Testing</strong> process follows, where we apply the model to the actual new problem we want to solve. As shown in <a href="#fig-meta-testing" class="quarto-xref">Figure&nbsp;8 (b)</a>, even when given new images (e.g., 1 shot per class) with labels not seen during training, the model can quickly adapt and classify the inputs. This is because it has already learned the method of distinguishing objects using very few images during the training process.</p>
-<p>A critical assumption must be defined to solve problems with Meta-Learning: the tasks used in meta-training and meta-testing must be sampled from the same task distribution and must be Independent and Identically Distributed (i.i.d.).Mathematically, if we have tasks <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_n\)</span> given during meta-training and <span class="math inline">\(\mathcal{T}_{test}\)</span> to be used during meta-testing, they must satisfy the following property:</p>
+<p>앞에서 언급한 바와 같이 이제 Mechanistic 관점에서의 meta learning의 동작원리를 살펴보고자 한다. <a href="#fig-meta-learning" class="quarto-xref">그림&nbsp;8</a> 은 흔히 meta-learning process로 소개되는 <strong>meta training</strong>과 <strong>meta testing</strong> 에 대한 예시이다. 먼저, 우리가 풀어야 할 문제가 여러 개 ( <span class="math inline">\(\mathcal{T}_1, \mathcal{T}_2, \dots, \mathcal{T}_i\)</span> ) 가 있고, 각 task마다 분류하고자 하는 것이 다르다고 가정해보자. 여기에 constraint를 걸어 학습하는 데이터의 양이 매우 적은 상황도 고려해보면, 이런 환경에서 From scratch로 학습한다면, 원하는 성능치를 얻지 못할 것이다. 이를 위해서 맨 먼저 수행하는 것이 <a href="#fig-meta-training" class="quarto-xref">그림&nbsp;8 (a)</a> 에서 보여주는 Meta Training 이다. 이 과정에서는 우리가 해결하고자 적은 데이터로 task를 학습하는 문제를 일종의 모의고사처럼 만들어 모델에게 연습시키는 과정이다. 이때 필요한 것은 학습시 필요한 방대한 데이터셋을 우리가 풀고자 하는 문제와 동일한 형태의 세부 가상 Task들로 나눈다. 예를 들어서 <span class="math inline">\(\mathcal{T}_1\)</span> 에서는 5장의 사진을 보고, 주어진 이미지에 대한 label을 맞추는 문제, <span class="math inline">\(\mathcal{T}_2\)</span> 에서는 또다른 5장의 사진을 보고, 새로 주어진 이미지의 label을 맞추는 문제, 이런 식으로 말이다. 이 과정을 통해서 모델은 “label” 자체를 외우는 것이 아니라, “사진 몇 장을 봤을 때, 그 특징을 빠르게 파악해서 구분하는 능력” 자체를 훈련하게 된다.</p>
+<p>이 훈련이 끝난 후, 실제로 우리가 풀고자 했던 새로운 문제에 적용하는 meta testing 과정이 이어진다. <a href="#fig-meta-testing" class="quarto-xref">그림&nbsp;8 (b)</a> 에서처럼 training시에는 주어지 않았던 새로운 이미지를 class별로 1장씩 주었을 때, 과연 학습되지 않았던 label을 가진 이미지라도 모델이 훈련과정을 통해서 적은 사진만 보고 구분하는 법을 학습했기 때문에 빠르게 해당 입력도 적응하여 분류할 수 있게 된다. Meta Learning으로 문제를 해결하기 위해 정의되어야 할 가정이 있는데, 반드시 meta training과 meta testing시 활용되는 task는 동일한 Task 분포에서 동일하면서 독립적인 분포를 형성하며 샘플링되어야 한다는 것이다. (Independent and Indentically Distributed, i.i.d) 수식으로 표현하자면 meta-training시 주어진 Task <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_n\)</span> 이 있고, meta testing시 사용할 <span class="math inline">\(\mathcal{T}_{test}\)</span> 가 있을때, 다음과 같은 성격을 띄어야 한다.</p>
 <p><span class="math display">\[
 \mathcal{T}_1, \dots, \mathcal{T}_n \sim p(\mathcal{T}), \mathcal{T}_{test} \sim p(\mathcal{T})
 \]</span></p>
-<p>To put it simply, transferring knowledge from quadruped robot walking to bipedal robot walking qualifies as a Meta-Learning problem. However, transferring walking skills to tasks like grasping or pushing does not, as they do not share the underlying task structure. In other words, the tasks must share the <strong>common structure</strong> <span class="math inline">\(\theta\)</span> mentioned earlier.</p>
-<p>For reference, when reading Meta-Learning papers, you will encounter several specific terms. Here is a brief summary:</p>
+<p>그러니까 쉽게 설명하면, 뭔가 4족 보행 로봇을 보행에 대한 학습을 기반으로 2족 보행 로봇의 보행으로 전이시키는 문제는 meta learning이지만, 보행이 아닌 grasping이나 push 같은 건 또 meta learning을 통해서 해결할 수 있는 문제가 아닌 것이다. 즉 task는 앞에서도 언급한 공통적인 구조 <span class="math inline">\(\theta\)</span> 를 가져야 한다.</p>
+<p>참고로 Meta Learning 관련 논문을 살펴보다 보면 몇가지 새로운 용어들이 나오게 되는데, 간단히 정리해보면 다음과 같다.</p>
 <ul>
-<li><strong>Support Set</strong>: The small amount of data (few-shot) provided for learning in each task. It serves the role of the training set in traditional machine learning.</li>
-<li><strong>Query Set</strong>: The “problem” data to be predicted based on what was learned. It serves the role of the test set in traditional machine learning.</li>
-<li><strong>N-way K-shot Learning</strong>: Terms defining the problem difficulty in Meta-Learning.
+<li><strong>Support Set</strong>: 각 task에서 학습용으로 주어지는 적은 양(few-shot) 데이터를 말한다. 기존의 머신러닝 개념에서는 training set 역할을 한다.</li>
+<li><strong>Query Set</strong>: 학습한 내용을 바탕으로 맞춰야 할 “문제” 데이터를 말한다. 기존의 머신러닝 개념에서는 test set 역할을 한다.</li>
+<li><strong>N-way K-shot Learning</strong>: Meta Learning에서의 문제 난이도를 정의하는 용어이다.
 <ul>
-<li><strong>N-way</strong>: The number of classes to classify.</li>
-<li><strong>K-shot</strong>: The number of examples (support) provided per class.</li>
+<li><strong>N-way</strong>: 분류해야 할 class의 갯수를 말한다</li>
+<li><strong>K-shot</strong>: 각 class당 주어지는 예제(support)의 갯수를 말한다.</li>
 </ul></li>
 </ul>
-<p>While the lecture used image classification as an example for clarity, the same Meta-Learning concepts can be defined and applied to <strong>Regression, Language Generation</strong>, and <strong>Robot Skill Learning</strong>.</p>
+<p>사실 강의의 예시는 쉬운 이해를 위해서 이미지 분류를 들었지만, 회귀(Regression), 언어 생성(Language Generation), 로봇 스킬 학습(Robot Skill Learning)에서도 동일한 Meta Learing 컨셉으로 문제를 정의하고 해결할 수 있다.</p>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>Due to the high volume of student questions during the lecture, several sections of the slide deck were skipped. I have personally organized and summarized the material based on the lecture slides to fill in these gaps.</p>
-<p>To summarize the overall content: unlike Multi-Task Learning, which was covered in previous sessions, <strong>Transfer Learning</strong> aims to solve a target task <span class="math inline">\(\mathcal{T}_b\)</span> based on knowledge acquired from a source task <span class="math inline">\(\mathcal{T}_a\)</span>. This is typically achieved by training on massive, pre-acquired datasets or by <strong>fine-tuning</strong> based on pre-trained weights. We also explored various methodologies for effective fine-tuning.</p>
-<p><strong>Meta-Learning</strong>, effectively, can be viewed as performing transfer learning across numerous source tasks. Since the primary goal of Meta-Learning is to identify common characteristics shared among tasks, it can be understood as a process of determining how <strong>quickly, accurately, and stably</strong> a model can adapt to a new target task after learning from just a few samples.</p>
+<p>사실 강의에서는 학생들의 질문이 많아, 강의 자료에 있는 내용을 많이 skip하고 넘어간 부분이 있어서 개인적으로 강의자료를 보고 정리해보았다. 전체 내용을 요약해보자면, 이전 강의에서 다뤘던 multi-task learning과는 다르게 transfer learning에서는 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습했던 지식 기반으로 target task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 것이 목적이며, 일반적으로 사전에 확보된 방대한 데이터로 학습하거나, 미리 학습된 가중치를 기반으로 fine-tuning하는 방식이 수행된다. 그래서 fine-tuning하는 방법에 대해서도 소개가 되었고, meta learning에서는 결과적으로 수많은 source task에 대한 transfer learning을 수행하는 형태가 된다. 일반적으로 meta learning에서는 task간의 공통된 특성을 찾는 것이 목적이 되므로, 적은 샘플 내에서 학습한 후, 새로운 target task에서 얼마나 빠르게, 정확하게, 안정적으로 대응할 수 있는지를 찾는 과정이라고 보면 될 것 같다.</p>
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-howard2018universal" class="csl-entry" role="listitem">
-Howard, Jeremy, and Sebastian Ruder. 2018. <span>“Universal Language Model Fine-Tuning for Text Classification.”</span> <em>arXiv Preprint arXiv:1801.06146</em>.
+Howard, Jeremy, 와/과 Sebastian Ruder. 2018. <span>“Universal language model fine-tuning for text classification”</span>. <em>arXiv preprint arXiv:1801.06146</em>.
 </div>
 <div id="ref-huh2016makes" class="csl-entry" role="listitem">
-Huh, Minyoung, Pulkit Agrawal, and Alexei A Efros. 2016. <span>“What Makes ImageNet Good for Transfer Learning?”</span> <em>arXiv Preprint arXiv:1608.08614</em>.
+Huh, Minyoung, Pulkit Agrawal, 와/과 Alexei A Efros. 2016. <span>“What makes ImageNet good for transfer learning?”</span> <em>arXiv preprint arXiv:1608.08614</em>.
 </div>
 <div id="ref-krishna2023downstream" class="csl-entry" role="listitem">
-Krishna, Kundan, Saurabh Garg, Jeffrey P Bigham, and Zachary C Lipton. 2023. <span>“Downstream Datasets Make Surprisingly Good Pretraining Corpora.”</span> In <em>Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, 12207–22.
+Krishna, Kundan, Saurabh Garg, Jeffrey P Bigham, 와/과 Zachary C Lipton. 2023. <span>“Downstream datasets make surprisingly good pretraining corpora”</span>. In <em>Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, 12207–22.
 </div>
 <div id="ref-kumar2022fine" class="csl-entry" role="listitem">
-Kumar, Ananya, Aditi Raghunathan, Robbie Jones, Tengyu Ma, and Percy Liang. 2022. <span>“Fine-Tuning Can Distort Pretrained Features and Underperform Out-of-Distribution.”</span> <em>arXiv Preprint arXiv:2202.10054</em>.
+Kumar, Ananya, Aditi Raghunathan, Robbie Jones, Tengyu Ma, 와/과 Percy Liang. 2022. <span>“Fine-tuning can distort pretrained features and underperform out-of-distribution”</span>. <em>arXiv preprint arXiv:2202.10054</em>.
 </div>
 <div id="ref-lee2022surgical" class="csl-entry" role="listitem">
-Lee, Yoonho, Annie S Chen, Fahim Tajwar, Ananya Kumar, Huaxiu Yao, Percy Liang, and Chelsea Finn. 2022. <span>“Surgical Fine-Tuning Improves Adaptation to Distribution Shifts.”</span> <em>arXiv Preprint arXiv:2210.11466</em>.
+Lee, Yoonho, Annie S Chen, Fahim Tajwar, Ananya Kumar, Huaxiu Yao, Percy Liang, 와/과 Chelsea Finn. 2022. <span>“Surgical fine-tuning improves adaptation to distribution shifts”</span>. <em>arXiv preprint arXiv:2210.11466</em>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -728,12 +712,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
