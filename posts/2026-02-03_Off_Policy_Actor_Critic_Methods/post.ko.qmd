@@ -213,10 +213,147 @@ Replay Buffer라는 것은 @lin1992self 에서 소개된 내용으로 "experienc
 \begin{algorithmic}
 \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
 \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
-\State Update $\hat{V}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')$ for each $s_i$
+\State Update $\hat{V}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')}$ for each $s_i$
 \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
-\State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)$
+\State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$
 \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$
 \end{algorithmic}
 \end{algorithm}
 ```
+
+그런데 강의에서는 @algo-Replay-Buffer 에서 단순하게 과거 데이터를 buffer에 넣고 학습시키면 왜 실패하는지에 대해서 두가지 측면에서 살펴보았다. 첫번째로는 빨간색으로 표기된 ${\color{red} y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')}$ 인데, 본래의 value function의 정의를 따르자면 **현재 policy $\pi_{\theta}$ 를 따를 때 기대되는 미래 보상의 합** 이다. 하지만 replay buffer에서 뽑은 데이터, 특히 target으로 활용되는 $r$ 과 $s'$ 는 현재 policy가 아니라 과거의 policy가 수행하면서 누적된 데이터이기에 value function이 제대로 학습되지 않는다. 강의에서는 **Mixture of past policies** 라는 표현으로 Value Function Mismatch가 발생하고 있음을 지적했다.
+
+또다른 문제는 파란색으로 표기된 ${\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ 에서 발생한다. Actor-Critic Method의 특성상 gradient update를 위해서는 현재 policy에서의 advantage function을 계산하거나 주어진 상황에서 action을 취할 확률 ($\pi_{\theta}(a_i \vert s_i)$)을 계산해야 되는데, 이 때 사용되는 action도 역시 과거의 policy가 수행한 action $a$ 이다. 만약 현재의 policy가 주어진 상태 $s$ 에 있다면 다른 action을 취할지도 모르는 일이다. 여기에서 Action Mismatch가 발생한다.
+
+결과적으로 주어진 state에 대한 value function $V(s)$ 만으로는 replay buffer에서 뽑은 데이터를 활용하여 학습할 수 없게 된다. 이때문에 제안된 아이디어는 $V(s)$ 대신 state action value function인 $Q(s, a)$ 를 활용하는 것이다. 어차피 replay buffer에는 $(s, a, r, s')$ 의 형태로 있기 때문에 action $a$ 를 따로 입력으로 활용하는 $Q(s, a)$ 를 사용하면, 과거에 했던 action $a$ 와 현재 취하고자 하는 action $a'$ 를 분리해서 평가할 수 있게 해준다. 그러면 현재 policy에 대한 Q-function도 다음과 같이 정의된다. 그리고 이 아이디어가 뒤에서 소개할 **Soft Actor-Critic(SAC)** 알고리즘의 시작점이다.
+
+$$
+Q^{\pi_{\theta}}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a), \bar{a'} \sim \pi_{\theta}(\cdot \vert s')} [Q^{\pi_{\theta}}(s', \bar{a'})]
+$$ {#eq-q-function-for-replay-buffer}
+
+엄밀하게 말하면, @eq-q-function-for-replay-buffer 에서 활용되는 다음 state에서 취할 다음 action ($a'$)도 현재의 policy $\pi_{\theta}$ 에서 얻는 것이 정확한 Q-function을 계산하는 것이겠지만, replay buffer에서 뽑는 action은 옛날 policy에서 뽑은 값이기 때문에, 이걸 활용해서 Q function을 구할 수 없다. 그렇기 때문에 현재의 policy $\pi_{\theta}$ 에 다음 state $s'$ 를 넣고 sampling한 $a'$ 를 사용해서 $Q^{\pi}(s, a)$ 를 근사하는 형태를 가진다. 그러면 전체적인 과정은
+
+1. replay buffer로부터 $(s_i, a_i, s_i')$ 을 sampling한다.
+2. 현재 policy $\pi_{\theta}$ 로부터 $\hat{a}_i' \sim \pi_{\theta}(\cdot, s_i')$ 을 sampling한다.
+
+을 거치면 아래와 같은 Q function을 구할 수 있게 된다.
+$$
+Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a_i')
+$$
+
+물론 초기의 신경망으로 Value function을 학습시키는 Deep RL에서 Q function을 추정하기 위해서 위의 식을 target으로 하는 신경망을 별도로 학습하는 과정이 필요하다. 그리고 이때 replay buffer에는 최대한 다양하고 풍부한 state, action trajectory가 있어야 정확한 모델을 학습시킬 수 있을 것이다.
+
+![Fit Q-function with Neural Network](./images/18p_Q-function-NN.png)
+
+$$
+\mathcal{L}(\phi) = \frac{1}{N} \sum_i \Vert \hat{Q}_{\phi}^{\pi}(s_i, a_i) - y_i \Vert^2
+$$
+
+첫번째 잘못된 부분을 보완할 수 있게 수정된 알고리즘은 다음과 같다.
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-Replay-Buffer
+
+\begin{algorithm}
+\caption{Version 2: Fixing the value function mismatch}
+\begin{algorithmic}
+\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
+\State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
+\State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ 
+\State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
+\State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$
+\State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$
+\end{algorithmic}
+\end{algorithm}
+```
+
+유의할 부분은 $a_i'$ 은 replay buffer $\mathcal{R}$ 에서 뽑은 것이 아니라 현재 policy $\pi_{\theta}$에서 sampling한 값이다.
+
+두번째 잘못된 부분이었던 ${\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ 에서도 수정할 수 있는 포인트가 존재한다. 우선 기존에 활용했던 advantage function $\hat{A}^{\pi}$ 를 구하기 위해서는 이전 정의처럼 Value function과 Q-function이 있어야 하는데, 앞에서 Value function을 Q-function으로 바꾼 이상, 해당 부분도 $\hat{Q}^{\pi}$ 으로 대체하는 것이 편하게 된다. 물론 이전에 advantage function을 사용했던 이유가 baseline을 적용해서 variance를 줄이려고 했던 것이기 때문에, Q-function을 쓰게 된다면 variance가 커지게 되겠지만, 이제 replay buffer에 있는 과거의 policy가 쌓은 방대한 데이터를 활용할 수 있기 때문에 조금 더 정확한 Q-function을 학습할 수 있게 된다.
+
+또다른 수정 포인트는 앞의 value function mismatch에서도 야기된 것처럼 replay buffer에서 sampling한 action을 사용하는 부분인데, 이 역시 replay buffer가 아닌 현재 policy에서 sampling한 action을 사용하면 해결된다. 이 부분까지 수정한 알고리즘은 @algo-action-mismatch 로 표현할 수 있다.
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-action-mismatch
+
+\begin{algorithm}
+\caption{Version 2: Fixing the action mismatch}
+\begin{algorithmic}
+\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
+\State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
+\State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ 
+\State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
+\State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})}$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$
+\State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$
+\end{algorithmic}
+\end{algorithm}
+```
+
+사실 내부에 사용되는 $s_i$ 역시 현재 policy가 경험하지 않은 state 일수도 있기 때문에 문제가 생길수도 있지만, 실제 해보지 않은 state에서 취할 수 있는 방법은 없고, 강의에서도 그냥 받아들여야 한다고 설명했다. 
+
+여기까지가 replay buffer에서 추출한 데이터를 기반으로 Q-function 모델을 학습하고, 이를 통해서 policy까지 update하는 (Fully) Off-Policy Actor-Critic Method 알고리즘이다. 여기에서 몇가지 구현상 세부적인 사항들이 반영되어 **Soft Actor-Critic (SAC)** 이란 알고리즘으로 소개되었다. (@haarnoja2018soft) 논문에서 소개된 세부적인 반영사항에 대해서 간단히 소개해보고자 한다.
+
+##  Soft Actor-Critic (SAC)
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-soft-actor-critic
+
+\begin{algorithm}
+\caption{Soft Actor-Critic}
+\begin{algorithmic}
+\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
+\State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
+\State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ for each $s_i, a_i$
+\State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
+\State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$
+\State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$
+\end{algorithmic}
+\end{algorithm}
+```
+
+먼저 @algo-action-mismatch 와 비교해보면 3번째 항에서 $for each s_i, a_i$ 란 항이 추가되었는데, 사실 Q-function이 주어진 state $s$ 와 action $a$ 를 입력으로 받아 value를 출력하는 신경망이다. 물론 신경망이기 때문에 target $y_i$ 를 정확하게 예측할 수 있도록, sampling된 batch내의 $s_i$ 와 $a_i$ 를 사용해서 학습시켜야 한다. 그래서 해당 표현을 통해서 **buffer에서 sampling한 batch의 모든 sample에 대해서, 과거의 state($s_i$)와 action($a_i$)을 입력으로 넣어 Q값을 예측하고, 이를 target과 비교해서 $\phi$ 를 업데이트하라**는 의미를 부여하게 되는 것이다.
+
+또한 논문에서 소개한 기법 중 하나는 **Reparameterization Trick** 이라는 것이다. 원래 $\pi_{\theta}$ 에서 출력으로 나오는 정보는 일종의 통계 정보이다. 만약 gaussian policy라고 가정하면 평균이 $\mu$ 이고, 분산이 $\sigma^2$ 인 gaussian policy에서 action $a$를 sampling하게 된다. 문제는 이렇게 sampling되는 과정이 위의 수식에 들어가게 되면 gradient 계산시 필요한 미분과정을 수행할 수 없다. Reparameterization Trick이라 함은 이렇게 통계 정보를 추출하는 과정과 sampling하는 과정을 분리해서 sampling 자체를 네트워크가 아닌 외부에서 처리하게끔 해주는 것이다. 쉽게 말해,
+
+$$
+a = \mu_{\theta}(s) + \sigma_{\theta}(s) \cdot \epsilon
+$$
+
+의 식처럼 $\mu_\theta$ 와 $\sigma_{\theta}$ 부분만 모델이 다루고, sampling에 적용되는 randomness인 $\epsilon$ 은 별도의 입력으로 부여하게 된다. 그러면 $\theta$ 가 바뀌었을 때의 $a$ 의 변화를 확인할 수 있으므로, 이를 통한 미분도 가능하게 해주는 것이다. 
+
+물론 SAC에서는 위의 기법 외에 exploration을 가미하기 위한 entropy term을 추가하는 등의 별도 contribution이 존재하지만, 강의에서는 딱 Off-policy Actor-Critic에 맞는 내용에 한정해서 설명이 이뤄졌다. 아무튼 이를 통해서 SAC는 replay buffer에 쌓인 과거 policy의 trajectory를 활용할 수 있기 때문에 이전에 소개했던 PPO보다 sample efficiency가 향상된 측면이 있었고, 실제로도 로봇이 처음부터 학습을 시작해서 2시간만에 걷게 하는 예시도 소개했다. (@haarnoja2018soft2) 이렇게 Fully Off-Policy 형태로 학습하게 되면 Real World와 같이 sample efficiency가 중요한 환경에서 적용해볼 수 있는 중요 요소가 된다고 언급했다.
+
+{{< video https://youtu.be/FmMPHL3TcrE?si=Ofts3OrZR5KZzihI >}}
+
+이 밖에도 @luo2025precise 에서도 SAC를 사용했을 때, 적은 학습시간을 통해서도 Behavior Cloning보다 더 빠르고 정확하게 복잡한 task를 수행한 결과에 대해서도 소개했다.
+
+{{< video https://youtu.be/GoJSW8e2qbI?si=0tcyobA120IodDGD >}}
+
+**Sim-to-Real**이란 용어를 통해, 시뮬레이터 환경에서 학습된 모델을 실제 환경으로 전이시키는 연구를 소개했던 @tan2018sim 에서는 조금더 효율성이 떨어지더라도 transfer시 안정성 측면을 고려해서 PPO를 사용했고, 역시 유의미한 결과가 도출되었다.
+
+{{< video https://youtu.be/lUZUr7jxoqM?si=_dGB1kJPcuCdeIBg >}}
+
+그리고 많이 알려져있는 예제 중에 OpenAI에서 만든 "Solving rubik's cube with a robot hand" 에서도 PPO를 사용해서 시뮬레이터에서 학습시킨 로봇손을 실제 손으로 transfer한 결과도 있다. (@akkaya2019solving)
+
+{{< video https://youtu.be/x4O8pojMF0w?si=oZgzfLVTHjUs8cxg >}}
