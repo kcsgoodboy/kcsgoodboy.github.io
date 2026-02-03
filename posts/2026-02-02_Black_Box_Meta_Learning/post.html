@@ -253,14 +253,6 @@ window.Quarto = {
 <p><img src="./images/black_box_meta_learning_overview.en.png" class="img-fluid"></p>
 </section><section id="one-view-on-the-meta-learning-problem" class="level2"><h2 class="anchored" data-anchor-id="one-view-on-the-meta-learning-problem">One View on the Meta-Learning Problem</h2>
 <p>Before diving into the main topic of this lecture, <strong>Black-Box Meta-Learning</strong>, the professor explained that meta-learning can be viewed as an extension of supervised learning, referencing definitions from her Ph.D. thesis (<span class="citation" data-cites="Finn:EECS-2018-105">Finn (<a href="#ref-Finn:EECS-2018-105" role="doc-biblioref">2018</a>)</span>).</p>
-<p><span id="eq-supervised-learining"><span class="math display">\[
-\begin{aligned}
-y &amp;= g_{\phi}(x) \\
-\text{Input: } &amp; x \\
-\text{Output: } &amp; y \\
-\text{Data: } &amp; \{(x, y)_i\} \\
-\end{aligned}
-\tag{1}\]</span></span></p>
 <div id="tbl-panel" class="quarto-layout-panel anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table 1: Comparison of Supervised Learning &amp; Meta-Supervised Learning
@@ -366,7 +358,7 @@ Figure 2: Version 1 vs. Version 2
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>Expressed in the form of an algorithm, it is as follows:</p>
-<div class="pseudocode-container quarto-float" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="1" data-indent-size="1.2em">
+<div class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>
