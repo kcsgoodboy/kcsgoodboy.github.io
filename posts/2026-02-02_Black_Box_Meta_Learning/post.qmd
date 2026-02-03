@@ -28,15 +28,6 @@ categories:
 
 Before diving into the main topic of this lecture, **Black-Box Meta-Learning**, the professor explained that meta-learning can be viewed as an extension of supervised learning, referencing definitions from her Ph.D. thesis (@Finn:EECS-2018-105).
 
-$$ 
-\begin{aligned}
-y &= g_{\phi}(x) \\
-\text{Input: } & x \\
-\text{Output: } & y \\
-\text{Data: } & \{(x, y)_i\} \\
-\end{aligned}
-$$ {#eq-supervised-learining}
-
 ::: {#tbl-panel layout-ncol=2}
 |      | Supervised Learning | Meta Supervised Learning |
 |------|------|------|

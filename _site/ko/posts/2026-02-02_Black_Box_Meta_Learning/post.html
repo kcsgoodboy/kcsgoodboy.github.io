@@ -253,14 +253,6 @@ window.Quarto = {
 <p><img src="./images/black_box_meta_learning_overview.ko.png" class="img-fluid"></p>
 </section><section id="one-view-on-the-meta-learning-problem" class="level2"><h2 class="anchored" data-anchor-id="one-view-on-the-meta-learning-problem">One View on the Meta-Learning Problem</h2>
 <p>우선 해당 강의에서 다루는 주요 주제인 Black-Box Meta Learning 을 다루기에 앞서서, 교수는 본인의 박사 학위논문 (<span class="citation" data-cites="Finn:EECS-2018-105">Finn (<a href="#ref-Finn:EECS-2018-105" role="doc-biblioref">2018</a>)</span>) 에 정의한 내용을 통해 메타러닝이 일종의 지도 학습을 확장한 형태라는 것에 대해서 설명했다.</p>
-<p><span id="eq-supervised-learining"><span class="math display">\[
-\begin{aligned}
-y &amp;= g_{\phi}(x) \\
-\text{Input: } &amp; x \\
-\text{Output: } &amp; y \\
-\text{Data: } &amp; \{(x, y)_i\} \\
-\end{aligned}
-\tag{1}\]</span></span></p>
 <div id="tbl-panel" class="quarto-layout-panel anchored">
 <figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 표 1: Comparison of Supervised Learning &amp; Meta-Supervised Learning
@@ -369,7 +361,7 @@ y &amp;= g_{\phi}(x) \\
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>로 정리할 수 있다. 알고리즘 형태로 표현하면 다음과 같다.</p>
-<div class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//">
+<div class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>

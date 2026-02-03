@@ -30,15 +30,6 @@ categories:
 
 우선 해당 강의에서 다루는 주요 주제인 Black-Box Meta Learning 을 다루기에 앞서서, 교수는 본인의 박사 학위논문 (@Finn:EECS-2018-105) 에 정의한 내용을 통해 메타러닝이 일종의 지도 학습을 확장한 형태라는 것에 대해서 설명했다.
 
-$$ 
-\begin{aligned}
-y &= g_{\phi}(x) \\
-\text{Input: } & x \\
-\text{Output: } & y \\
-\text{Data: } & \{(x, y)_i\} \\
-\end{aligned}
-$$ {#eq-supervised-learining}
-
 ::: {#tbl-panel layout-ncol=2}
 |      | Supervised Learning | Meta Supervised Learning |
 |------|------|------|
