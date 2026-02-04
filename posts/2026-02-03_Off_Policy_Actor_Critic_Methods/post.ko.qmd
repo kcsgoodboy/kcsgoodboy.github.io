@@ -357,3 +357,7 @@ $$
 그리고 많이 알려져있는 예제 중에 OpenAI에서 만든 "Solving rubik's cube with a robot hand" 에서도 PPO를 사용해서 시뮬레이터에서 학습시킨 로봇손을 실제 손으로 transfer한 결과도 있다. (@akkaya2019solving)
 
 {{< video https://youtu.be/x4O8pojMF0w?si=oZgzfLVTHjUs8cxg >}}
+
+## Summary
+
+이번 포스트에서는 이전 포스트에서 다뤘던 Actor-Critic Method에서 Sample Efficiency를 개선할 수 있도록 Off-Policy 형태로 수정하는 과정과 이 과정에서 도출된 알고리즘인 **Proximal Policy Optimization (PPO)**와 **Soft Actor-Critic (SAC)**에 대해서 소개했다. Off-Policy의 특성상 과거의 policy가 쌓았던 trajectory를 활용하기 위해 이전의 Off-Policy Policy Gradient에서 활용했던 Importance Weight를 동일하게 적용하고자 했으나, 샘플을 활용하고 반복적으로 Gradient Step을 밟으면서 의도와 다르게 학습이 되는 현상이 나타나게 된다. 이때문에 너무 과도하게 과거의 policy에서 벗어나지 않도록 constraint를 주면서 목표점으로 도달할 수 있게 도와주는 KL Constraint와 Clipping 방식에 대해서 소개했고, 이를 반영한 PPO의 기본적인 동작원리에 대해서 언급했다. 이와는 별도로 sample efficiency를 개선하기 위해 과거의 policy가 쌓았던 경험을 모은 replay buffer로부터 sampling한 데이터를 활용하고자 할 때 발생할 수 있는 value function mismatch나 action mismatch도 @haarnoja2018soft 에서 소개한 trick들을 통해 해결할 수 있고, 결과적으로 replay buffer를 활용한 Fully Off-Policy Actor-Critic인 SAC 알고리즘까지 도출되었다. 그리고 이어진 실사례를 통해서 Data efficiency 가 중요하게 고려되는 실환경에서는 SAC가 좋은 성능을 보여줬으며, Sim-to-Real과 같이 안정적인 policy 학습을 필요한 상황에서는 PPO가 좋은 적용 사례라는 것을 보여주었다.
