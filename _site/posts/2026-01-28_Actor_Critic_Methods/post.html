@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-01-28_Actor_Critic_Methods/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-01-28_Actor_Critic_Methods/post.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Chanseok Kang">
 <meta name="dcterms.date" content="2026-01-30">
 <meta name="description" content="Summary of lecture CS224R (2025) Lecture 4. Actor-Critic Methods">
-
 <title>Actor-Critic Methods – Chan’s Research Note</title>
 <style>
 code{white-space: pre-wrap;}
@@ -44,28 +44,14 @@ div.csl-right-inline {
 div.csl-indent {
   margin-left: 2em;
 }</style>
-
-
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
-<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -92,20 +78,15 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
-
-<script type="text/javascript">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
-</script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-    <style type="text/css">
+<style type="text/css">
     .ps-root .ps-algorithm {
       border-top: 2px solid;
       border-bottom: 2px solid;
@@ -114,18 +95,12 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
       text-align: left;
     }
     </style>
-  
-      <style type="text/css">
+<style type="text/css">
       .ps-algorithm > .ps-line {
         text-align: left;
       }
       </style>
-    
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -150,17 +125,12 @@ const typesetMath = (el) => {
 window.Quarto = {
   typesetMath
 };
-</script>
-
-<link rel="stylesheet" href="../../assets/css/styles.css">
+</script><link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Chan’s Research Note</span>
@@ -171,18 +141,38 @@ window.Quarto = {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2026-01-28_Actor_Critic_Methods/post.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Actor-Critic Methods</h1>
                   <div>
@@ -229,41 +219,31 @@ window.Quarto = {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
+<li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
   <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
   <li><a href="#value-function-q-function" id="toc-value-function-q-function" class="nav-link" data-scroll-target="#value-function-q-function">Value function &amp; Q function</a></li>
   <li><a href="#what-is-dissatisfying-about-policy-gradients" id="toc-what-is-dissatisfying-about-policy-gradients" class="nav-link" data-scroll-target="#what-is-dissatisfying-about-policy-gradients">What is dissatisfying about policy gradients?</a></li>
   <li><a href="#improving-policy-gradient" id="toc-improving-policy-gradient" class="nav-link" data-scroll-target="#improving-policy-gradient">Improving Policy Gradient</a></li>
-  <li><a href="#how-to-estimate-the-value-of-a-policy" id="toc-how-to-estimate-the-value-of-a-policy" class="nav-link" data-scroll-target="#how-to-estimate-the-value-of-a-policy">How to estimate the value of a policy</a>
+  <li>
+<a href="#how-to-estimate-the-value-of-a-policy" id="toc-how-to-estimate-the-value-of-a-policy" class="nav-link" data-scroll-target="#how-to-estimate-the-value-of-a-policy">How to estimate the value of a policy</a>
   <ul class="collapse">
-  <li><a href="#sec-monte-carlo-estimation" id="toc-sec-monte-carlo-estimation" class="nav-link" data-scroll-target="#sec-monte-carlo-estimation">Monte Carlo Estimation</a></li>
+<li><a href="#sec-monte-carlo-estimation" id="toc-sec-monte-carlo-estimation" class="nav-link" data-scroll-target="#sec-monte-carlo-estimation">Monte Carlo Estimation</a></li>
   <li><a href="#bootstrapping" id="toc-bootstrapping" class="nav-link" data-scroll-target="#bootstrapping">Bootstrapping</a></li>
-  <li><a href="#monte-carlo-estimation-vs.-bootstrapping" id="toc-monte-carlo-estimation-vs.-bootstrapping" class="nav-link" data-scroll-target="#monte-carlo-estimation-vs.-bootstrapping">Monte Carlo Estimation vs.&nbsp;Bootstrapping</a></li>
+  <li><a href="#monte-carlo-estimation-vs.-bootstrapping" id="toc-monte-carlo-estimation-vs.-bootstrapping" class="nav-link" data-scroll-target="#monte-carlo-estimation-vs.-bootstrapping">Monte Carlo Estimation vs. Bootstrapping</a></li>
   <li><a href="#n-step-returns" id="toc-n-step-returns" class="nav-link" data-scroll-target="#n-step-returns">N-step Returns</a></li>
   <li><a href="#relation-with-discount-factors" id="toc-relation-with-discount-factors" class="nav-link" data-scroll-target="#relation-with-discount-factors">Relation with discount factors</a></li>
-  </ul></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<section id="resource" class="level3">
-<h3 class="anchored" data-anchor-id="resource">Resource</h3>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="resource" class="level3"><h3 class="anchored" data-anchor-id="resource">Resource</h3>
 <div>
 
 </div>
@@ -277,29 +257,23 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section>
-<section id="lecture-summary-with-notebooklm" class="level2">
-<h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+</section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
 <p><img src="./images/Actor_Critic_Methods_overview.en.png" class="img-fluid"></p>
-</section>
-<section id="value-function-q-function" class="level2">
-<h2 class="anchored" data-anchor-id="value-function-q-function">Value function &amp; Q function</h2>
+</section><section id="value-function-q-function" class="level2"><h2 class="anchored" data-anchor-id="value-function-q-function">Value function &amp; Q function</h2>
 <p>Before diving into Actor-Critic Methods, the first concept that must be established is how to define and measure “Value” within a given environment. Therefore, I would like to start by explaining three core concepts in Reinforcement Learning: the <strong>Value function</strong> (<span class="math inline">\(V\)</span>), the <strong>Q-function</strong> (<span class="math inline">\(Q\)</span>), and the <strong>Advantage function</strong> (<span class="math inline">\(A\)</span>).</p>
 <div id="fig-VQ" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/6p_VQ.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Value function &amp; Q function
-</figcaption>
-</figure>
+Figure 1: Value function &amp; Q function
+</figcaption></figure>
 </div>
-<p>First, the <strong>value function</strong> <span class="math inline">\(V^{\pi}(s)\)</span> represents how much reward can be expected in the future given a state <span class="math inline">\(s\)</span> while following the current policy <span class="math inline">\(\pi\)</span>. Since the goal of Reinforcement Learning is to take actions that maximize future value, <span class="math inline">\(V^{\pi}(s)\)</span> is used to calculate the average future value at the current state and utilize it for learning. Because it takes only <span class="math inline">\(s\)</span> as an argument, you can think of it as the expected score you would get by following your usual policy <span class="math inline">\(\pi\)</span>, without choosing a specific action to start with. As shown in the first part of <a href="#fig-VQ" class="quarto-xref">Figure&nbsp;1</a>, if you take actions according to <span class="math inline">\(\pi\)</span> from a specific state <span class="math inline">\(s\)</span> multiple times, a process—or a <strong>trajectory</strong>—is generated up to a certain point. Consequently, the expected value of the total rewards obtained across these trajectories becomes <span class="math inline">\(V^{\pi}(s)\)</span>.</p>
+<p>First, the <strong>value function</strong> <span class="math inline">\(V^{\pi}(s)\)</span> represents how much reward can be expected in the future given a state <span class="math inline">\(s\)</span> while following the current policy <span class="math inline">\(\pi\)</span>. Since the goal of Reinforcement Learning is to take actions that maximize future value, <span class="math inline">\(V^{\pi}(s)\)</span> is used to calculate the average future value at the current state and utilize it for learning. Because it takes only <span class="math inline">\(s\)</span> as an argument, you can think of it as the expected score you would get by following your usual policy <span class="math inline">\(\pi\)</span>, without choosing a specific action to start with. As shown in the first part of <a href="#fig-VQ" class="quarto-xref">Figure 1</a>, if you take actions according to <span class="math inline">\(\pi\)</span> from a specific state <span class="math inline">\(s\)</span> multiple times, a process—or a <strong>trajectory</strong>—is generated up to a certain point. Consequently, the expected value of the total rewards obtained across these trajectories becomes <span class="math inline">\(V^{\pi}(s)\)</span>.</p>
 <p><span class="math display">\[
 V^{\pi}(s_t) = \mathbb{E}_{\pi} \Big[ \sum_{t'=t}^T r(s_{t'}, a_{t'}) \vert s_t \Big]
 \]</span></p>
-<p>The <strong>Q-function</strong> <span class="math inline">\(Q^{\pi}(s, a)\)</span> adds additional information to the Value function. It represents the future value obtainable when a specific action <span class="math inline">\(a\)</span> is taken in a given state <span class="math inline">\(s\)</span>. Looking at the second part of <a href="#fig-VQ" class="quarto-xref">Figure&nbsp;1</a>, there are multiple trajectories as explained before, but we focus on the cases where a specific action <span class="math inline">\(a\)</span> was taken at state <span class="math inline">\(s\)</span>. The expected value of the total rewards, strictly limited to these specific trajectories (the green lines in the figure), corresponds to <span class="math inline">\(Q^{\pi}(s, a)\)</span>.</p>
+<p>The <strong>Q-function</strong> <span class="math inline">\(Q^{\pi}(s, a)\)</span> adds additional information to the Value function. It represents the future value obtainable when a specific action <span class="math inline">\(a\)</span> is taken in a given state <span class="math inline">\(s\)</span>. Looking at the second part of <a href="#fig-VQ" class="quarto-xref">Figure 1</a>, there are multiple trajectories as explained before, but we focus on the cases where a specific action <span class="math inline">\(a\)</span> was taken at state <span class="math inline">\(s\)</span>. The expected value of the total rewards, strictly limited to these specific trajectories (the green lines in the figure), corresponds to <span class="math inline">\(Q^{\pi}(s, a)\)</span>.</p>
 <p><span class="math display">\[
 Q^{\pi}(s_t, a_t) = \mathbb{E}_{\pi} \Big[ \sum_{t'=t}^T r(s_{t'}, a_{t'}) \vert s_t, a_t \Big]
 \]</span></p>
@@ -313,81 +287,67 @@ A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 \]</span></p>
 <p>To make this easier to understand, let’s apply the above notation to an example of learning to play an instrument.</p>
 <div id="fig-example" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/7p_example.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: example
-</figcaption>
-</figure>
+Figure 2: example
+</figcaption></figure>
 </div>
 <p>First, let’s define the environment: it has a <strong>sparse reward</strong> structure where you get a reward of 1 if you can read sheet music and play music within a month, and 0 otherwise. The learner’s current policy follows a deterministic policy (<span class="math inline">\(\pi(a_1 \vert s) = 1\)</span>) where the action is always fixed to <span class="math inline">\(a_1\)</span> (lying on the beach). In this case, the value function <span class="math inline">\(V^{\pi}(s_t)\)</span> is 0 because if you only continue to lie on the beach, you won’t be able to play the instrument a month later.</p>
 <p>Now, let’s look at the available actions using the Q-function. We can consider case <span class="math inline">\(a_2\)</span> (watching TV—note that this is not watching music tutorials) and case <span class="math inline">\(a_3\)</span> (actually practicing the instrument). A crucial point to note is that the specific action <span class="math inline">\(a_t\)</span> is taken only at state <span class="math inline">\(s_t\)</span>. After the state transition occurs, the agent follows the original policy (taking <span class="math inline">\(a_1\)</span>). Simply put, <span class="math inline">\(Q^{\pi}(a_2 \vert s_t)\)</span> represents the scenario where you watch TV at <span class="math inline">\(s_t\)</span>, but then go back to relaxing on the beach afterwards. Naturally, this value will be 0. On the other hand, <span class="math inline">\(Q^{\pi}(a_3 \vert s_t)\)</span> represents practicing the drums once, which implies a potential change in outcome a month later, resulting in a value different from <span class="math inline">\(Q^{\pi}(a_1 \vert s_t)\)</span> or <span class="math inline">\(Q^{\pi}(a_2 \vert s_t)\)</span>.</p>
 <p>If we calculate the advantage function, we can again analyze it by the action taken at <span class="math inline">\(s_t\)</span>. The advantage of <span class="math inline">\(a_2\)</span> compared to the existing action <span class="math inline">\(a_1\)</span> is <span class="math inline">\(Q^{\pi}(a_2 \vert s_t) - V^{\pi}(s_t)\)</span>, which results in 0. However, the advantage of the other action <span class="math inline">\(a_3\)</span> can be calculated as <span class="math inline">\(Q^{\pi}(a_3 \vert s_t) - V^{\pi}(s_t)\)</span>, which will result in a non-zero value.</p>
 <p>The point of this example was to demonstrate that when assessing the value of a current state, assigning a relative meaning to an action (in this case, advantage) allows for a more meaningful evaluation of “good” actions. In the (vanilla) Policy Gradient covered in previous lectures, learning is based on sampled trajectories. Therefore, even if a good action was taken within a trajectory, if the final result is poor, value cannot be assigned to that specific action. However, by introducing the concept of <strong>Advantage</strong>, we can explicitly assign value to an action (<span class="math inline">\(Q\)</span>) that produced a better result than the <strong>average performance level</strong> (<span class="math inline">\(V\)</span>). This helps reduce the variance of learning and assists in learning the policy more efficiently.</p>
-</section>
-<section id="what-is-dissatisfying-about-policy-gradients" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-dissatisfying-about-policy-gradients">What is dissatisfying about policy gradients?</h2>
+</section><section id="what-is-dissatisfying-about-policy-gradients" class="level2"><h2 class="anchored" data-anchor-id="what-is-dissatisfying-about-policy-gradients">What is dissatisfying about policy gradients?</h2>
 <p>In the previous lecture on Policy Gradients, we covered the <strong>REINFORCE</strong> (<span class="citation" data-cites="williams1992reinforce">Williams (<a href="#ref-williams1992reinforce" role="doc-biblioref">1992</a>)</span>) algorithm, which trains a policy using trajectories sampled via a basic Monte Carlo method. Following this algorithm involves first collecting a certain amount of trajectories using the current policy, and then utilizing these collected trajectories to improve the policy—a process akin to repeating policy iteration. (Although REINFORCE does not follow the strict form of policy iteration that alternates between clear policy evaluation and improvement steps, I used the term “iteration” here because the sampling process can be viewed as a way of estimating the current state of the policy.) We also introduced equations that apply “reward-to-go” or a “baseline” to reduce the variance that occurs during training.</p>
 <p><span class="math display">\[
 \nabla_{\theta}J(\theta) \approx \frac{1}{N} {\color{blue} \sum_{i=1}^N} \sum_{t=1}^T \nabla_{\theta} {\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})}  \Big((\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})) - b\Big)
 \]</span></p>
 <p>In the equation above, the <span class="math inline">\({\color{blue} \sum_{i=1}^N}\)</span> term corresponds to sampling trajectories from the current policy, while <span class="math inline">\({\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})}\)</span> represents the likelihood of the policy <span class="math inline">\(\pi_{\theta}\)</span> currently being trained. Through this likelihood, the algorithm determines whether to increase or decrease the frequency of the taken action <span class="math inline">\(a_{i, t}\)</span> in the future. By calculating the gradient with respect to this, learning proceeds in a direction that increases the probability of taking that action.However, the issue, as mentioned earlier, is that because this process operates on a <strong>trajectory basis</strong>, specific actions taken in the middle may fail to significantly influence the overall learning and end up getting <strong>buried</strong> (or overshadowed) by the outcome of the entire trajectory.</p>
 <div id="fig-robot-trajectory" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-robot-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-robot-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-robot-trajectory" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-robot-walking" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-robot-walking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-robot-walking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/8p_robot-walking.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-robot-walking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Robot Walking Example
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-robot-trajectory" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-robot-folding" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-robot-folding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-robot-folding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/8p_robot_folding.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-robot-folding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Robot Folding Example
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-robot-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3
-</figcaption>
-</figure>
+Figure 3
+</figcaption></figure>
 </div>
-<p>The lecture introduced two examples shown in <a href="#fig-robot-trajectory" class="quarto-xref">Figure&nbsp;3</a>. The example in <a href="#fig-robot-walking" class="quarto-xref">Figure&nbsp;3 (a)</a> demonstrates training a robot to walk forward in a simulator, while <a href="#fig-robot-folding" class="quarto-xref">Figure&nbsp;3 (b)</a> illustrates a real-world example of <a href="https://www.figure.ai/">Figure.AI</a>’s Helix robot folding laundry. For reference, the video is shown below:</p>
+<p>The lecture introduced two examples shown in <a href="#fig-robot-trajectory" class="quarto-xref">Figure 3</a>. The example in <a href="#fig-robot-walking" class="quarto-xref">Figure 3 (a)</a> demonstrates training a robot to walk forward in a simulator, while <a href="#fig-robot-folding" class="quarto-xref">Figure 3 (b)</a> illustrates a real-world example of <a href="https://www.figure.ai/">Figure.AI</a>’s Helix robot folding laundry. For reference, the video is shown below:</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Omhss4c4pAI?si=pRwHSeGIbXboEOj1&amp;t=150" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>As seen in the example of <a href="#fig-robot-walking" class="quarto-xref">Figure&nbsp;3 (a)</a>, teaching a humanoid robot to walk is inherently difficult. Because of this, in the early stages of training, the robot will likely fail to walk and mostly just fall over. However, occasionally, a trajectory might emerge where the robot manages to take a single step forward before falling. Intuitively, if taking that single step is learned repeatedly, it should ultimately lead to walking. The problem is, if the collected trajectory results in a fall and fails to receive a reward, the final return for that trajectory will be very low or negative. In this case, the Policy Gradient method introduced earlier would try to lower the probability of all actions included in this trajectory. In other words, even the “good” action of taking a step forward ends up having its likelihood reduced due to the overall negative outcome.</p>
-<p>The same applies to <a href="#fig-robot-folding" class="quarto-xref">Figure&nbsp;3 (b)</a>. When a robot folds laundry, it doesn’t just fold it immediately; it requires a sequence of processes, such as flattening and aligning the laundry first. It would be beneficial if actions that result in some progress (e.g., flattening the cloth or folding just a sleeve) could contribute to learning. However, if the environment has a <strong>sparse reward</strong> structure that only evaluates whether the laundry is fully folded, these progress-making actions cannot be utilized effectively.</p>
+<p>As seen in the example of <a href="#fig-robot-walking" class="quarto-xref">Figure 3 (a)</a>, teaching a humanoid robot to walk is inherently difficult. Because of this, in the early stages of training, the robot will likely fail to walk and mostly just fall over. However, occasionally, a trajectory might emerge where the robot manages to take a single step forward before falling. Intuitively, if taking that single step is learned repeatedly, it should ultimately lead to walking. The problem is, if the collected trajectory results in a fall and fails to receive a reward, the final return for that trajectory will be very low or negative. In this case, the Policy Gradient method introduced earlier would try to lower the probability of all actions included in this trajectory. In other words, even the “good” action of taking a step forward ends up having its likelihood reduced due to the overall negative outcome.</p>
+<p>The same applies to <a href="#fig-robot-folding" class="quarto-xref">Figure 3 (b)</a>. When a robot folds laundry, it doesn’t just fold it immediately; it requires a sequence of processes, such as flattening and aligning the laundry first. It would be beneficial if actions that result in some progress (e.g., flattening the cloth or folding just a sleeve) could contribute to learning. However, if the environment has a <strong>sparse reward</strong> structure that only evaluates whether the laundry is fully folded, these progress-making actions cannot be utilized effectively.</p>
 <p>In short, the point of these examples is that while Policy Gradient will eventually work, it suffers from <strong>sample inefficiency</strong> because it requires a massive amount of data to achieve convergence. Furthermore, since the return from a single trajectory can vary significantly due to stochastic factors, it also suffers from <strong>high variance</strong> as the values fluctuate wildly. Therefore, the lecture mentions that while standard policy gradient methods work well in environments with simulators, they are not suitable for problems that need to be adapted to the real world without a simulator. Then, <strong>how can we learn the quality (good or bad) of a specific action?</strong></p>
-</section>
-<section id="improving-policy-gradient" class="level2">
-<h2 class="anchored" data-anchor-id="improving-policy-gradient">Improving Policy Gradient</h2>
+</section><section id="improving-policy-gradient" class="level2"><h2 class="anchored" data-anchor-id="improving-policy-gradient">Improving Policy Gradient</h2>
 <div id="fig-monte-carlo-return" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/9p_monte_carlo_return.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Monte Carlo Return
-</figcaption>
-</figure>
+Figure 4: Monte Carlo Return
+</figcaption></figure>
 </div>
-<p>If we look back at the Policy Gradient formula introduced earlier, there is a term that calculates the sum of rewards from a sampled trajectory (<span class="math inline">\(\sum_{t'=t}^T(s_{i, t'}, a_{i, t'})\)</span>). However, due to the nature of Monte Carlo sampling, as shown in <a href="#fig-monte-carlo-return" class="quarto-xref">Figure&nbsp;4</a>, using the actual sum of obtained rewards (Monte Carlo Return) resulted in a <strong>high variance</strong> problem. To address this, we can mitigate the variance issue to some extent by using the <strong>Q-function</strong>, which represents the expected reward.</p>
+<p>If we look back at the Policy Gradient formula introduced earlier, there is a term that calculates the sum of rewards from a sampled trajectory (<span class="math inline">\(\sum_{t'=t}^T(s_{i, t'}, a_{i, t'})\)</span>). However, due to the nature of Monte Carlo sampling, as shown in <a href="#fig-monte-carlo-return" class="quarto-xref">Figure 4</a>, using the actual sum of obtained rewards (Monte Carlo Return) resulted in a <strong>high variance</strong> problem. To address this, we can mitigate the variance issue to some extent by using the <strong>Q-function</strong>, which represents the expected reward.</p>
 <p>Fundamentally, the purpose of calculating the sum of rewards is to answer the question: “How much reward can I obtain by taking action <span class="math inline">\(a_{i, t}\)</span> at the current state <span class="math inline">\(s_{i, t}\)</span>?” The Monte Carlo approach opted to answer this by using the actual, observed value from a single run. However, rather than relying on the exactness of a single realization, utilizing the statistical estimate—specifically the <strong>mean value</strong> (expectation)—can significantly reduce the impact of the stochasticity mentioned earlier. This can be expressed in the formula as follows:</p>
 <p><span class="math display">\[
 \sum_{t'=t}^T E_{\pi_{\theta}}[r(s_{t'}, a_{t'}) \vert s_t, a_t] = Q(s_t, a_t)
@@ -403,14 +363,10 @@ Figure&nbsp;4: Monte Carlo Return
 \nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T \nabla_{\theta} \log_{\pi_{\theta}} (a_{i, t} \vert s_{i, t}) A^{\pi}(s_{i, t}, a_{i, t})
 \]</span></p>
 <p>Consequently, we arrive at the conclusion that if we can estimate the Advantage function <span class="math inline">\(A^{\pi}\)</span> accurately, we can significantly reduce the variance of the gradients in Policy Gradient methods.</p>
-</section>
-<section id="how-to-estimate-the-value-of-a-policy" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-estimate-the-value-of-a-policy">How to estimate the value of a policy</h2>
+</section><section id="how-to-estimate-the-value-of-a-policy" class="level2"><h2 class="anchored" data-anchor-id="how-to-estimate-the-value-of-a-policy">How to estimate the value of a policy</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/12p_policy_gradient.png" class="img-fluid figure-img"></p>
-<figcaption>Policy Gradient</figcaption>
-</figure>
+<figure class="figure"><p><img src="./images/12p_policy_gradient.png" class="img-fluid figure-img"></p>
+<figcaption>Policy Gradient</figcaption></figure>
 </div>
 <p>The conclusion drawn so far is that to perform Policy Gradient effectively, we need to accurately estimate the value functions (<span class="math inline">\(V^{\pi}, Q^{\pi}\)</span>) and the advantage function <span class="math inline">\(A^{\pi}\)</span>, and then use these calculated values to improve the policy. Strictly speaking, calculating the advantage function requires knowing both <span class="math inline">\(V^{\pi}\)</span> and <span class="math inline">\(Q^{\pi}\)</span>. However, upon further reflection, we can see that the Q-function can actually be expressed in terms of the value function.</p>
 <p><span class="math display">\[
@@ -425,19 +381,20 @@ Q^{\pi}(s_t, a_t) &amp;= \sum_{t'=t}^T E_{\pi_{\theta}}[r(s_{t'}, a_{t'}) \vert 
 <p><span class="math display">\[
 A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 \]</span></p>
-<section id="sec-monte-carlo-estimation" class="level3">
-<h3 class="anchored" data-anchor-id="sec-monte-carlo-estimation">Monte Carlo Estimation</h3>
-<p>So, how can we accurately estimate the value function? The conventional method involved sampling a trajectory, calculating the sum of rewards obtained, and using this sum as an estimate for the value function. This approach is known as <strong>Monte Carlo Estimation</strong>. Just as we typically estimate a value by taking the average of multiple samples, estimating the value function ideally requires sampling multiple trajectories starting from the same state <span class="math inline">\(s_t\)</span> and averaging the results (see <a href="#fig-monte-carlo-return" class="quarto-xref">Figure&nbsp;4</a>).</p>
+<section id="sec-monte-carlo-estimation" class="level3"><h3 class="anchored" data-anchor-id="sec-monte-carlo-estimation">Monte Carlo Estimation</h3>
+<p>So, how can we accurately estimate the value function? The conventional method involved sampling a trajectory, calculating the sum of rewards obtained, and using this sum as an estimate for the value function. This approach is known as <strong>Monte Carlo Estimation</strong>. Just as we typically estimate a value by taking the average of multiple samples, estimating the value function ideally requires sampling multiple trajectories starting from the same state <span class="math inline">\(s_t\)</span> and averaging the results (see <a href="#fig-monte-carlo-return" class="quarto-xref">Figure 4</a>).</p>
 <p>However, in reality, it is difficult to perfectly <strong>reset</strong> the environment to the exact same state <span class="math inline">\(s_t\)</span> and run the simulation again. Therefore, value estimation is often performed using a <strong>single trajectory</strong>. To mitigate the limitations of this approach, we utilize neural networks. The lecture outlined a two-step process for performing value function estimation:</p>
 <ol type="1">
-<li><strong>Aggregate Dataset</strong>: Collect data from single sample estimates to create a dataset. Here, the input is <span class="math inline">\(s_{i, t}\)</span> and the label is the sum of rewards <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span>.<span class="math inline">\(\rightarrow \{(s_{i, t}, \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\}\)</span></li>
-<li><strong>Supervised Learning</strong>: Train a neural network to estimate the value function using the created dataset.<span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span></li>
+<li>
+<strong>Aggregate Dataset</strong>: Collect data from single sample estimates to create a dataset. Here, the input is <span class="math inline">\(s_{i, t}\)</span> and the label is the sum of rewards <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span>.<span class="math inline">\(\rightarrow \{(s_{i, t}, \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\}\)</span>
+</li>
+<li>
+<strong>Supervised Learning</strong>: Train a neural network to estimate the value function using the created dataset.<span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span>
+</li>
 </ol>
 <p>By doing so, the neural network effectively aggregates various outcomes from similar states and averages them. This allows us to mathematically approximate <strong>“Multi-Sample Averaging”</strong>, which would otherwise be physically impossible (or impractical) to perform directly.</p>
-</section>
-<section id="bootstrapping" class="level3">
-<h3 class="anchored" data-anchor-id="bootstrapping">Bootstrapping</h3>
-<p>While <a href="#sec-monte-carlo-estimation" class="quarto-xref">Section&nbsp;5.1</a> discussed performing value function estimation using actual rewards via neural networks, this section focuses on reducing the high variance that can occur during training by relying on estimated values rather than raw empirical returns.</p>
+</section><section id="bootstrapping" class="level3"><h3 class="anchored" data-anchor-id="bootstrapping">Bootstrapping</h3>
+<p>While <a href="#sec-monte-carlo-estimation" class="quarto-xref">Section 5.1</a> discussed performing value function estimation using actual rewards via neural networks, this section focuses on reducing the high variance that can occur during training by relying on estimated values rather than raw empirical returns.</p>
 <p>As a reminder, when aggregating the dataset in the previous method, we defined the training label as follows:</p>
 <p><span class="math display">\[
 \text{Monte Carlo target: }  y_{i, t} = \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})
@@ -454,8 +411,12 @@ A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 <p>Furthermore, the value function <span class="math inline">\(V^{\pi} (s_{i, t+1})\)</span> referenced in our equation is not the exact value derived from multiple trajectories. Instead, as introduced earlier, we use the value <span class="math inline">\(\hat{V}_{\phi}^{\pi}(s_{i, t+1})\)</span> estimated by a neural network. Consequently, the process involves retraining based on these inferred values. The lecture referred to this concept as <strong>Bootstrapping</strong>.</p>
 <p>Therefore, the process, which now applies bootstrapping to the data aggregation method introduced earlier, can be defined in two steps:</p>
 <ol type="1">
-<li><strong>Bootstrapped Dataset</strong>: Collect data based on single sample estimates and construct a dataset to derive “bootstrapped” estimates. Here, the label changes from the previously defined <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span> to: <span class="math inline">\(y_{i, t} = r(s_{i, t}, a_{i, t}) + \hat{V}_\phi^{\pi}(s_{i, t+1})\)</span></li>
-<li><strong>Supervised Learning</strong>: Train the neural network to estimate the value function using the dataset formed in this manner. <span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span></li>
+<li>
+<strong>Bootstrapped Dataset</strong>: Collect data based on single sample estimates and construct a dataset to derive “bootstrapped” estimates. Here, the label changes from the previously defined <span class="math inline">\(\sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\)</span> to: <span class="math inline">\(y_{i, t} = r(s_{i, t}, a_{i, t}) + \hat{V}_\phi^{\pi}(s_{i, t+1})\)</span>
+</li>
+<li>
+<strong>Supervised Learning</strong>: Train the neural network to estimate the value function using the dataset formed in this manner. <span class="math inline">\(\mathcal{L}(\phi) = \frac{1}{2} \sum_i \Vert \hat{V}_{\phi}^{\pi}(s_i) - y_i \Vert^2\)</span>
+</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -474,9 +435,7 @@ Note
 <p>The methodology of learning using a bootstrapped target essentially constitutes TD Learning.</p>
 </div>
 </div>
-</section>
-<section id="monte-carlo-estimation-vs.-bootstrapping" class="level3">
-<h3 class="anchored" data-anchor-id="monte-carlo-estimation-vs.-bootstrapping">Monte Carlo Estimation vs.&nbsp;Bootstrapping</h3>
+</section><section id="monte-carlo-estimation-vs.-bootstrapping" class="level3"><h3 class="anchored" data-anchor-id="monte-carlo-estimation-vs.-bootstrapping">Monte Carlo Estimation vs. Bootstrapping</h3>
 <p>In the previous two sections, we introduced two methods for defining labels when creating a dataset to estimate the value function using neural networks:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -484,16 +443,14 @@ Note
 \text{Bootstrapping: } &amp; y_{i, t} = r(s_{i, t}, a_{i, t}) + V^{\pi}(s_{i, t+1})
 \end{aligned}
 \]</span></p>
-<p>The key difference between the two methods lies in whether we use the accumulated rewards obtained from an actual trajectory or utilize the <strong>value function</strong>, which represents an average value. The lecture illustrated this distinction using the example shown in <a href="#fig-value-function-estimation" class="quarto-xref">Figure&nbsp;5</a>.</p>
+<p>The key difference between the two methods lies in whether we use the accumulated rewards obtained from an actual trajectory or utilize the <strong>value function</strong>, which represents an average value. The lecture illustrated this distinction using the example shown in <a href="#fig-value-function-estimation" class="quarto-xref">Figure 5</a>.</p>
 <div id="fig-value-function-estimation" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/19p_value-function-estimation.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: Example of MC vs.&nbsp;Bootstrapping
-</figcaption>
-</figure>
+Figure 5: Example of MC vs. Bootstrapping
+</figcaption></figure>
 </div>
 <p>First, let’s assume we have two trajectories that share a common intermediate point, represented by the <strong>blue</strong> state. - Trajectory 1 (<span class="math inline">\(\tau_1\)</span>): Starts at the <strong>pink</strong> state, passes through the <strong>blue</strong> state, and ends with a reward of -1. - Trajectory 2 (<span class="math inline">\(\tau_2\)</span>): (Starting state unknown), passes through the <strong>blue</strong> state, and ends with a reward of 1.</p>
 <p>Assuming both trajectories were executed under the same policy <span class="math inline">\(\pi\)</span>, how should we estimate the value function for the blue state, <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span>, and the pink state, <span class="math inline">\(\hat{V}^{\pi}({\color{pink} s})\)</span>?</p>
@@ -501,23 +458,21 @@ Figure&nbsp;5: Example of MC vs.&nbsp;Bootstrapping
 <p>On the other hand, if we attempt to estimate using the <strong>Bootstrapping</strong> method, we fundamentally utilize the value function of the next state. Here, <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span> is defined as 0, just like in the Monte Carlo method, but a difference arises when calculating the value for the pink state. In Bootstrapping, we use the value function of the subsequent state—the blue state, <span class="math inline">\(\hat{V}^{\pi}({\color{blue} s})\)</span>—rather than the final trajectory result. Therefore, the value becomes 0. Consequently, even though the pink state belongs to <span class="math inline">\(\tau_1\)</span> which received a reward of -1, it indirectly “shares” the positive outcome of <span class="math inline">\(\tau_2\)</span> via bootstrapping, allowing for a more reasonable estimate.</p>
 <p>The point of this example was to highlight that comparing Monte Carlo Estimation and Bootstrapping leads us to the <strong>Bias-Variance Tradeoff</strong>, a fundamental concept in Machine Learning.</p>
 <ul>
-<li><strong>Monte Carlo Estimation</strong>: Since it calculates values based on actually obtained rewards, the estimates are <strong>unbiased</strong>. However, because they rely on the inherent <strong>stochasticity</strong> of the sampled trajectories, they suffer from <strong>high variance</strong>. As mentioned earlier, this variance problem is exacerbated when estimating from a <strong>single sample</strong>.</li>
-<li><strong>Bootstrapping Estimation</strong>: Since it calculates based on previously estimated values, the variance is significantly lower compared to the MC method. However, if the value function is approximated by a neural network, the initial (untrained) <span class="math inline">\(V_{\phi}\)</span> is inaccurate. Because the model continues to learn based on these potentially inaccurate targets, <strong>bias</strong> is introduced.</li>
+<li>
+<strong>Monte Carlo Estimation</strong>: Since it calculates values based on actually obtained rewards, the estimates are <strong>unbiased</strong>. However, because they rely on the inherent <strong>stochasticity</strong> of the sampled trajectories, they suffer from <strong>high variance</strong>. As mentioned earlier, this variance problem is exacerbated when estimating from a <strong>single sample</strong>.</li>
+<li>
+<strong>Bootstrapping Estimation</strong>: Since it calculates based on previously estimated values, the variance is significantly lower compared to the MC method. However, if the value function is approximated by a neural network, the initial (untrained) <span class="math inline">\(V_{\phi}\)</span> is inaccurate. Because the model continues to learn based on these potentially inaccurate targets, <strong>bias</strong> is introduced.</li>
 </ul>
 <p>The lecture suggests that because bootstrapping dramatically reduces variance, it allows for much more stable learning than the MC method, provided that there are methods to control the bias.</p>
-</section>
-<section id="n-step-returns" class="level3">
-<h3 class="anchored" data-anchor-id="n-step-returns">N-step Returns</h3>
+</section><section id="n-step-returns" class="level3"><h3 class="anchored" data-anchor-id="n-step-returns">N-step Returns</h3>
 <p>Consequently, the lecture introduced <strong>N-step returns</strong> as a method to estimate the value function by combining the unbiased nature of Monte Carlo with the low variance characteristic of Bootstrapping.</p>
 <div id="fig-n-step-returns" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/20p_N-step-returns.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: N-step returns
-</figcaption>
-</figure>
+Figure 6: N-step returns
+</figcaption></figure>
 </div>
 <p>N-step returns work by <strong>interpolating</strong> between these two approaches. To put it simply, waiting until the very end of the episode (like MC) is too unstable (high variance), while estimating based immediately on the next state’s value (like standard bootstrapping) introduces too much bias. Therefore, the strategy is to proceed for a few more steps (<span class="math inline">\(N\)</span> steps) to accumulate actual rewards, and then estimate the remaining value.</p>
 <p>Comparing this mathematically with the estimation methods discussed earlier:</p>
@@ -528,28 +483,21 @@ Figure&nbsp;6: N-step returns
 \text{N-step returns: } &amp; y_{i, t} = \sum_{t'=t}^{t+n-1} r(s_{i, t'}, a_{i, t'}) + \hat{V}_{\phi}^{\pi}(s_{i, t+n})
 \end{aligned}
 \]</span></p>
-<p>It is helpful to focus on the purple line in <a href="#fig-n-step-returns" class="quarto-xref">Figure&nbsp;6</a>. The core idea is to perform Monte Carlo Estimation using the actual rewards obtained for <span class="math inline">\(N\)</span> steps within the trajectory, and then utilize the estimated value function for the remainder starting at <span class="math inline">\(t+N\)</span>. This approach offers the dual advantage of reducing variance compared to pure MC methods, while also mitigating the inaccuracy caused by bias found in pure Bootstrapping.</p>
+<p>It is helpful to focus on the purple line in <a href="#fig-n-step-returns" class="quarto-xref">Figure 6</a>. The core idea is to perform Monte Carlo Estimation using the actual rewards obtained for <span class="math inline">\(N\)</span> steps within the trajectory, and then utilize the estimated value function for the remainder starting at <span class="math inline">\(t+N\)</span>. This approach offers the dual advantage of reducing variance compared to pure MC methods, while also mitigating the inaccuracy caused by bias found in pure Bootstrapping.</p>
 <p>Defining the value of <span class="math inline">\(N\)</span> is crucial here. If <span class="math inline">\(N=1\)</span>, the formula becomes identical to the Bootstrapping method mentioned earlier. If <span class="math inline">\(N=\infty\)</span>, it reverts to the standard Monte Carlo formula. The lecture explains that tuning <span class="math inline">\(N\)</span> appropriately is particularly beneficial in environments with very short interaction cycles; by reflecting the actual rewards received over <span class="math inline">\(N\)</span> steps, we can define the current value function more accurately, thereby aiding the learning process.</p>
-</section>
-<section id="relation-with-discount-factors" class="level3">
-<h3 class="anchored" data-anchor-id="relation-with-discount-factors">Relation with discount factors</h3>
+</section><section id="relation-with-discount-factors" class="level3"><h3 class="anchored" data-anchor-id="relation-with-discount-factors">Relation with discount factors</h3>
 <p>The lecture also highlighted an interesting perspective on the discount factor in the context of N-step returns. The discount factor, typically denoted as <span class="math inline">\(\gamma\)</span>, is generally understood as a mathematical tool used to reduce the weight of future values. If an episode has an infinite or extremely long horizon, simply summing up all future values can cause the estimate to diverge to infinity. Therefore, we introduce this factor to assign higher weights to near-future rewards and lower weights to distant future rewards (<span class="math inline">\(r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} \dots\)</span>), ensuring that the total sum converges.</p>
 <div id="fig-probability-of-death" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./images/21p_probability-of-death.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Probability of Death
-</figcaption>
-</figure>
+Figure 7: Probability of Death
+</figcaption></figure>
 </div>
-<p>However, the professor offered a different interpretation using the “Probability of Death” example shown in <a href="#fig-probability-of-death" class="quarto-xref">Figure&nbsp;7</a>. He explained the discount factor as the probability of the agent “surviving” at each step.</p>
+<p>However, the professor offered a different interpretation using the “Probability of Death” example shown in <a href="#fig-probability-of-death" class="quarto-xref">Figure 7</a>. He explained the discount factor as the probability of the agent “surviving” at each step.</p>
 <p>For instance, if <span class="math inline">\(\gamma\)</span> is 0.99, the game continues with a 99% probability. Conversely, the agent faces a 1% probability (<span class="math inline">\(1 - \gamma\)</span>) of “dying.” Upon death, the agent reaches a “death state” where no further rewards can be obtained. The key insight here is that changing <span class="math inline">\(\gamma\)</span> alters the probability of the agent’s death. Since the transition dynamics (specifically, the transition to the death state) depend on <span class="math inline">\(\gamma\)</span>, changing the discount factor effectively results in <strong>changing the MDP itself</strong>.</p>
-</section>
-</section>
-<section id="summary" class="level2">
-<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+</section></section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>This lecture focused primarily on the foundational concepts required to understand the algorithm, rather than just the <strong>Actor-Critic Method</strong> itself as suggested by the title. Building upon the Policy Gradient methods covered in the previous lecture, it explained the concepts of various value functions and advantage functions, ultimately defining the algorithm as follows:</p>
 <ol type="1">
 <li>Sample a batch of data <span class="math inline">\(\{ (s_{1, i}, a_{1, i}, r_{1, i}, \dots, s_{T, i}, a_{T, i}, r_{T, i}) \}\)</span> from the current policy <span class="math inline">\(\pi_{\theta}\)</span>.</li>
@@ -563,14 +511,15 @@ Figure&nbsp;7: Probability of Death
 
 
 
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+</section><div id="quarto-appendix" class="default">
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-williams1992reinforce" class="csl-entry" role="listitem">
 Williams, Ronald J. 1992. <span>“Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning.”</span> <em>Mach. Learn.</em> 8 (3–4): 229–56. <a href="https://doi.org/10.1007/BF00992696">https://doi.org/10.1007/BF00992696</a>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section>
+</div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1130,10 +1079,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<input type="hidden" id="giscus-base-theme" value="light">
-<input type="hidden" id="giscus-alt-theme" value="dark">
-<script>
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
 function loadGiscusWhenReady() {
   // Function to get the theme based on body class
   const getTheme = () => {
@@ -1212,9 +1158,5 @@ loadGiscusWhenReady();
       });
     })(document);
     </script>
-  
-
-
-
-
-</body></html>
+</body>
+</html>
