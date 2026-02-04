@@ -211,7 +211,7 @@ Replay Buffer라는 것은 @lin1992self 에서 소개된 내용으로 "experienc
 \begin{algorithm}
 \caption{Actor-Critic Methods with Replay Buffer}
 \begin{algorithmic}
-\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
+\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\& add to replay buffer)
 \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
 \State Update $\hat{V}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')}$ for each $s_i$
 \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
@@ -264,7 +264,7 @@ $$
 \begin{algorithm}
 \caption{Version 2: Fixing the value function mismatch}
 \begin{algorithmic}
-\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
+\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\& add to replay buffer)
 \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
 \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ 
 \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
@@ -293,7 +293,7 @@ $$
 \begin{algorithm}
 \caption{Version 2: Fixing the action mismatch}
 \begin{algorithmic}
-\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
+\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\& add to replay buffer)
 \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
 \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ 
 \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
@@ -322,7 +322,7 @@ $$
 \begin{algorithm}
 \caption{Soft Actor-Critic}
 \begin{algorithmic}
-\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (& add to replay buffer)
+\State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\& add to replay buffer)
 \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$
 \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ for each $s_i, a_i$
 \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$
