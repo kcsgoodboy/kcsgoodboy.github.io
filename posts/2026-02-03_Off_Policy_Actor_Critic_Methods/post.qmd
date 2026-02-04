@@ -28,10 +28,6 @@ categories:
 
 In our previous discussion, we covered the fundamentals of Policy Gradient and introduced Actor-Critic methods, which involve training a policy by leveraging a model that estimates the value function. To recap the Policy Gradient formulation:
 
-$$
-\nabla_{\theta}J(\theta) \approx \frac{1}{N} {\color{blue} \sum_{i=1}^N} \sum_{t=1}^T \nabla_{\theta} {\color{red} \log \pi_{\theta}(a_{o, t} \vert s_{i, t})} \Big( {\color{green} \Big( \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\Big)} {\color{cyan} - b}\Big)
-$$ {#eq-policy-gradient}
-
 $$\nabla_{\theta}J(\theta) \approx \frac{1}{N} {\color{blue} \sum_{i=1}^N} \sum_{t=1}^T \nabla_{\theta} {\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})} \Big( {\color{green} \Big( \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\Big)} {\color{cyan} - b}\Big)
 $$ {#eq-policy-gradient}
 
@@ -264,6 +260,7 @@ $$ {#eq-q-function-for-replay-buffer}
 To calculate the exact Q-function in @eq-q-function-for-replay-buffer, the next action ($a'$) in the next state must also be derived from the current policy $\pi_{\theta}$. Because the actions already present in the replay buffer come from old policies, we cannot use them to compute the current $Q^{\pi}$. Instead, we approximate $Q^{\pi}(s, a)$ by inputting the next state $s'$ into the current policy $\pi_{\theta}$ to sample a new action $a'$. 
 
 The overall process is as follows:
+
 1.  **Sample** $(s_i, a_i, s_i')$ from the replay buffer.
 2.  **Sample** a new action $\hat{a}_i' \sim \pi_{\theta}(\cdot, s_i')$ using the current policy $\pi_{\theta}$.
 
