@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2025-07-31_Vibe_Coding_Success_Fail/post.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Chanseok Kang">
 <meta name="dcterms.date" content="2025-07-31">
 <meta name="description" content="My experience using ChatGPT and Gemini Code Assist (Agent Mode)">
-
 <title>Experiences I had while doing Vibe Coding – Chan’s Research Note</title>
 <style>
 code{white-space: pre-wrap;}
@@ -24,26 +24,13 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 </style>
-
-
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,30 +57,20 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
-
-<script type="text/javascript">
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
-</script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-
-
 <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
-
 <body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Chan’s Research Note</span>
@@ -104,18 +81,38 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
       <h1 class="title">Experiences I had while doing Vibe Coding</h1>
                   <div>
@@ -162,52 +159,39 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">tl;dr</a></li>
+<li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">tl;dr</a></li>
   <li><a href="#intro" id="toc-intro" class="nav-link" data-scroll-target="#intro">Intro</a></li>
-  <li><a href="#useful-cases-using-genai" id="toc-useful-cases-using-genai" class="nav-link" data-scroll-target="#useful-cases-using-genai">Useful cases using GenAI</a>
+  <li>
+<a href="#useful-cases-using-genai" id="toc-useful-cases-using-genai" class="nav-link" data-scroll-target="#useful-cases-using-genai">Useful cases using GenAI</a>
   <ul class="collapse">
-  <li><a href="#problem-solving-through-chatgpt" id="toc-problem-solving-through-chatgpt" class="nav-link" data-scroll-target="#problem-solving-through-chatgpt">Problem solving through ChatGPT</a></li>
+<li><a href="#problem-solving-through-chatgpt" id="toc-problem-solving-through-chatgpt" class="nav-link" data-scroll-target="#problem-solving-through-chatgpt">Problem solving through ChatGPT</a></li>
   <li><a href="#retrospect-1" id="toc-retrospect-1" class="nav-link" data-scroll-target="#retrospect-1">Retrospect 1</a></li>
-  </ul></li>
-  <li><a href="#a-case-where-the-illusion-about-genai-was-shattered" id="toc-a-case-where-the-illusion-about-genai-was-shattered" class="nav-link" data-scroll-target="#a-case-where-the-illusion-about-genai-was-shattered">A case where the illusion about GenAI was shattered</a>
+  </ul>
+</li>
+  <li>
+<a href="#a-case-where-the-illusion-about-genai-was-shattered" id="toc-a-case-where-the-illusion-about-genai-was-shattered" class="nav-link" data-scroll-target="#a-case-where-the-illusion-about-genai-was-shattered">A case where the illusion about GenAI was shattered</a>
   <ul class="collapse">
-  <li><a href="#case-1" id="toc-case-1" class="nav-link" data-scroll-target="#case-1">Case 1</a></li>
+<li><a href="#case-1" id="toc-case-1" class="nav-link" data-scroll-target="#case-1">Case 1</a></li>
   <li><a href="#case-2" id="toc-case-2" class="nav-link" data-scroll-target="#case-2">Case 2</a></li>
   <li><a href="#retrospect-2" id="toc-retrospect-2" class="nav-link" data-scroll-target="#retrospect-2">Retrospect 2</a></li>
-  </ul></li>
-  <li><a href="#in-short" id="toc-in-short" class="nav-link" data-scroll-target="#in-short">In Short</a></li>
   </ul>
-</nav>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</li>
+  <li><a href="#in-short" id="toc-in-short" class="nav-link" data-scroll-target="#in-short">In Short</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-<section id="tldr" class="level2">
-<h2 class="anchored" data-anchor-id="tldr">tl;dr</h2>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">tl;dr</h2>
 <p>Domain knowledge and experience are still necessary for coding.</p>
-</section>
-<section id="intro" class="level2">
-<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+</section><section id="intro" class="level2"><h2 class="anchored" data-anchor-id="intro">Intro</h2>
 <p>I enjoy buying hardware and other things as a hobby and leaving them sitting in a corner. Then, when I get an idea, I take them out, assemble them, play around with them, do other things, and then dig deeper again. It’s a series of processes. In fact, “digging deeper” mostly means searching for solutions to problems I’ve tried but can’t seem to solve. Previously, I’d spend a lot of time searching, diligently reading and applying what others had written. But since I started using GenAI tools like ChatGPT and Gemini, that search time has been significantly shortened, and the resulting output is better than I expected. With that in mind, I sometimes struggle when asked to do complex tasks… I’d like to share some of that experience.</p>
-</section>
-<section id="useful-cases-using-genai" class="level2">
-<h2 class="anchored" data-anchor-id="useful-cases-using-genai">Useful cases using GenAI</h2>
+</section><section id="useful-cases-using-genai" class="level2"><h2 class="anchored" data-anchor-id="useful-cases-using-genai">Useful cases using GenAI</h2>
 <div id="fig-orin_case" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="./images/orin_case.jpeg" class="img-fluid figure-img"></p>
@@ -218,13 +202,11 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Orin with Yahboom case
-</figcaption>
-</figure>
+Figure 1: Orin with Yahboom case
+</figcaption></figure>
 </div>
 <p>My most recent hardware experience was installing my newly purchased Jetson Orin Nano Super Devkit into a <a href="https://www.yahboom.net/study/CUBE_NANO">CUBE NANO</a> I purchased from Amazon. The seller’s description states that the case can accommodate models ranging from the older TX2 NX to the latest Orin NX. The advantages of this case over other cases are that it comes with an LED strip, a small fan cooler, a Wi-Fi antenna, and an OLED screen to monitor the board’s CPU usage and network bandwidth. (It didn’t actually improve performance when using the Jetson board, though.) I assembled it solely for its aesthetic appeal. The problem was that even though I installed the necessary drivers and software packages as instructed in the guide, the LEDs wouldn’t work. I searched the web and couldn’t find any other cases that had installed this type of case on a Jetson Orin like mine. I left a Q&amp;A on the manufacturer’s website, but there was no answer, which was a bit frustrating. ChatGPT solved this problem.</p>
-<section id="problem-solving-through-chatgpt" class="level3">
-<h3 class="anchored" data-anchor-id="problem-solving-through-chatgpt">Problem solving through ChatGPT</h3>
+<section id="problem-solving-through-chatgpt" class="level3"><h3 class="anchored" data-anchor-id="problem-solving-through-chatgpt">Problem solving through ChatGPT</h3>
 <p>The model used was ChatGPT-o3, which allowed me to visually observe the thought processes required to arrive at a conclusion. When I actually observed the thought processes, I felt like I was thinking like someone with knowledge in the field. First, the prompt I gave was:</p>
 <ul>
 <li>Prompt : I’m using a CUBE NANO case and trying to attach a Jetson Orin Nano Super to it. However, the OLED display on the case isn’t working. (Sharing the case specifications and the source code for the SW package)</li>
@@ -246,27 +228,17 @@ Note
 </div>
 </div>
 <p>Thanks to this, I was able to confirm that the I2C port was properly connected. Strangely, it was connected to I2C bus 7, unlike the guide that said it was connected to bus 1. I also checked the SW provided by the manufacturer and confirmed that I2C was hardcoded to bus 1, and was able to correct it. Thanks to this, I can now see how hard the Jetson is working through the OLED.</p>
-</section>
-<section id="retrospect-1" class="level3">
-<h3 class="anchored" data-anchor-id="retrospect-1">Retrospect 1</h3>
+</section><section id="retrospect-1" class="level3"><h3 class="anchored" data-anchor-id="retrospect-1">Retrospect 1</h3>
 <p>I’d previously heard of someone who had no prior knowledge of circuit design building a board using ChatGPT and <a href="https://www.kicad.org/">kicad</a>. This time, I was impressed by the hardware specifics they also helped me with. While my basic knowledge of I2C made it easy to understand, GPT’s answers were so detailed that even a complete beginner could solve the problem. From then on, I began receiving a lot of help with questions that were difficult to find through searches.</p>
-</section>
-</section>
-<section id="a-case-where-the-illusion-about-genai-was-shattered" class="level2">
-<h2 class="anchored" data-anchor-id="a-case-where-the-illusion-about-genai-was-shattered">A case where the illusion about GenAI was shattered</h2>
-<section id="case-1" class="level3">
-<h3 class="anchored" data-anchor-id="case-1">Case 1</h3>
+</section></section><section id="a-case-where-the-illusion-about-genai-was-shattered" class="level2"><h2 class="anchored" data-anchor-id="a-case-where-the-illusion-about-genai-was-shattered">A case where the illusion about GenAI was shattered</h2>
+<section id="case-1" class="level3"><h3 class="anchored" data-anchor-id="case-1">Case 1</h3>
 <p>As I work on model training at work, I often need help setting up the environment for model training. In particular, the recently released Gemini Code Assist provides Agent mode, which, although only a preview, allows you to see it in action, and it even generates and debugs code on its own. (Debugging is limited due to permissions issues, of course.) While it doesn’t yet support document context like PDFs, it implements algorithms presented in papers, and it even provides a custom implementation. Perhaps because it’s still a preview, it often self-develops.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/fail_case1.png" class="img-fluid figure-img"></p>
-<figcaption>wtf?</figcaption>
-</figure>
+<figure class="figure"><p><img src="./images/fail_case1.png" class="img-fluid figure-img"></p>
+<figcaption>wtf?</figcaption></figure>
 </div>
 <p>This was a typical example. I left it alone because it seemed to be working hard, but upon closer inspection, I noticed that it sometimes claimed to have implemented code, only to have it sit idle without actually being implemented. Or it would modify existing implementations and then re-implement them in the next response. I’m not sure if this was the reason, but after a few iterations, a message would pop up saying my quota was exhausted. Ultimately, while Gemini did a great job of establishing the framework for the implementation, I felt like reviewing and reimplementing the final product was something I had to do manually. (I also had to conduct experiments in a real-world environment…)</p>
-</section>
-<section id="case-2" class="level3">
-<h3 class="anchored" data-anchor-id="case-2">Case 2</h3>
+</section><section id="case-2" class="level3"><h3 class="anchored" data-anchor-id="case-2">Case 2</h3>
 <p>In fact, when I created this blog using Quarto, ChatGPT and Gemini did their best, but looking back, it only resulted in delays. The initial goal I had for Quarto was as follows:</p>
 <ul>
 <li>Build a personal research portfolio</li>
@@ -274,21 +246,14 @@ Note
 <li>Output to PDF/Jupyter for each post</li>
 </ul>
 <p>Originally, quarto introduced a multi-profile feature starting with version 1.5, and I thought leveraging this feature would satisfy the second requirement. However, I personally failed to implement it due to a lack of understanding of YAML syntax and the principles of rendering in quarto. This was also the case with ChatGPT and Gemini. When I asked them to implement something in Python, they did it well, but even when I asked them to organize the YAML file to avoid errors, they only returned incorrect results. I personally explored the R package “babelquarto”, which supports multi-language rendering, and tried to use it to help with the implementation, but this issue remained unresolved. Furthermore, when executing GitHub actions, the layout would strangely break, and when I tried to relay warnings via workflow files and logs, they often failed to recognize the error, likely due to permissions issues. ChatGPT even responded that even though the YAML file, which recognizes syntax based on indentation, was correctly uploaded, it would be printed on a single line, breaking the layout. I even shared a screenshot with them to get their response corrected.</p>
-</section>
-<section id="retrospect-2" class="level3">
-<h3 class="anchored" data-anchor-id="retrospect-2">Retrospect 2</h3>
+</section><section id="retrospect-2" class="level3"><h3 class="anchored" data-anchor-id="retrospect-2">Retrospect 2</h3>
 <p>Recent examples show that even those with limited coding experience can easily implement their desired functionality using Vibe Coding, such as ChatGPT, Copilot, and Claude. However, from personal experience, I’ve noticed that there are still areas that require manual coding, such as those requiring specialized code or requiring access privileges. (Thanks to this, I was able to learn a bit about YAML inheritance structures and R syntax through my own research.)</p>
-</section>
-</section>
-<section id="in-short" class="level2">
-<h2 class="anchored" data-anchor-id="in-short">In Short</h2>
+</section></section><section id="in-short" class="level2"><h2 class="anchored" data-anchor-id="in-short">In Short</h2>
 <p>Although GenAI implements code, and it’s certainly easier than before, it’s difficult to blindly trust the output, and I think that related people still need the ability to review and modify it together. And above all, seeing cases where the model can’t properly identify problems due to access rights issues, I think that at least for the model to modify it as a person wants, it needs at least an eye to look at the computer screen or a robotic arm(?) that can control I/O. So, I think HuggingFace is trying to overcome these limitations with things like <a href="https://huggingface.co/lerobot">lerobot</a> or <a href="https://huggingface.co/blog/reachy-mini">Reachy Mini</a>. I’d like to buy one of these and try it out, but for now, I’d like to try something like the <a href="https://minipupperdocs.readthedocs.io/en/latest/">robot dog</a> that I have at home.</p>
 
 
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -848,10 +813,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<input type="hidden" id="giscus-base-theme" value="light">
-<input type="hidden" id="giscus-alt-theme" value="dark">
-<script>
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
 function loadGiscusWhenReady() {
   // Function to get the theme based on body class
   const getTheme = () => {
@@ -903,4 +865,5 @@ loadGiscusWhenReady();
 
 
 
-</body></html>
+</body>
+</html>
