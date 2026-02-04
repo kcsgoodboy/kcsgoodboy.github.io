@@ -125,7 +125,7 @@ KL Divergence is a statistical measure of how much two probability distributions
 Since the advantage function $\hat{A}$ in @eq-surrogate-objective-function was calculated based on the old policy $\pi_{old}$, it loses its validity if the current policy diverges too much from the old one. To prevent this, @schulman2015trust proposed keeping the update within a specific "trust region" by adding a penalty term to the surrogate objective:
 
 $$
-\tilde{J}{Con} \approx \tilde{J}^{surr}(\theta') - \beta \cdot KL(\pi{\theta_{old}}(\cdot \vert s) \Vert \pi_{\theta}(\cdot \vert s))
+\tilde{J}_{Con} \approx \tilde{J}^{surr}(\theta') - \beta \cdot KL(\pi{\theta_{old}}(\cdot \vert s) \Vert \pi_{\theta}(\cdot \vert s))
 $$
 
 With this definition, if the policy changes too much across multiple gradient steps—causing the $KL$ value to rise—the overall objective value decreases. During **Gradient Ascent**, the optimizer will naturally seek a point that maximizes rewards while keeping the KL Divergence low. 
@@ -252,9 +252,6 @@ Since the replay buffer stores data as $(s, a, r, s')$ tuples, $Q(s, a)$—which
 
 $$
 Q^{\pi_{\theta}}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a), \bar{a'} \sim \pi_{\theta}(\cdot \vert s')} [Q^{\pi_{\theta}}(s', \bar{a'})]
-$$ {#eq-q-function-for-replay-buffer}
-
-$$Q^{\pi_{\theta}}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a), \bar{a'} \sim \pi_{\theta}(\cdot \vert s')} [Q^{\pi_{\theta}}(s', \bar{a'})]
 $$ {#eq-q-function-for-replay-buffer}
 
 To calculate the exact Q-function in @eq-q-function-for-replay-buffer, the next action ($a'$) in the next state must also be derived from the current policy $\pi_{\theta}$. Because the actions already present in the replay buffer come from old policies, we cannot use them to compute the current $Q^{\pi}$. Instead, we approximate $Q^{\pi}(s, a)$ by inputting the next state $s'$ into the current policy $\pi_{\theta}$ to sample a new action $a'$. 
