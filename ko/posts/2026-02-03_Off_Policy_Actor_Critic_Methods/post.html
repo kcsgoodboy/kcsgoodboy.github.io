@@ -266,6 +266,7 @@ window.Quarto = {
   <li><a href="#using-replay-buffer" id="toc-using-replay-buffer" class="nav-link" data-scroll-target="#using-replay-buffer">Using Replay Buffer</a></li>
   </ul></li>
   <li><a href="#soft-actor-critic-sac" id="toc-soft-actor-critic-sac" class="nav-link" data-scroll-target="#soft-actor-critic-sac">Soft Actor-Critic (SAC)</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
 </nav>
 </nav>
@@ -344,7 +345,7 @@ r_t(\theta) = \frac{\pi_{\theta}(a_t \vert s_t)}{\pi_{\theta_{old}}(a_t \vert s_
 <section id="multiple-gradient-step" class="level3">
 <h3 class="anchored" data-anchor-id="multiple-gradient-step">Multiple Gradient Step</h3>
 <p>강의에서 소개한 첫번째 버전인 Multiple Gradient Step 부분은 바로 Gradient를 구해서 parameter를 update하는 과정을 반복해보자는 것이다.</p>
-<div id="algo-Multiple-Gradient-Step" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="1" data-line-number-punc=":" data-no-end="false">
+<div id="algo-Multiple-Gradient-Step" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Version 1. Multiple Gradient Step} \begin{algorithmic} \State Sample batch of data $\{(s_{1, i}, a_{1, i}, \dots s_{T,i}, a_{T, i})\}$ from $\pi_{\theta}$ \State Fit $\hat{V}_{\phi}^{\pi_{\theta}}$ to summed rewards in data \State Evaluate $\hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i}) = r(s_{t, i}, a_{t, i}) + \gamma \hat{V}_{\phi}^{\pi_{\theta}}(s_{t+1, i}) - \hat{V}_{\phi}^{\pi_{\theta}}(s_{t, i})$, $\forall t, i$ \State Evaluate $\nabla_{\theta'} J(\theta') = \sum_{t, i} \frac{\pi_{\theta'} (a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})} \nabla_{\theta'} \log \pi_{\theta'} (a_{t, i} \vert s_{t, i}) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})$ \State Update $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \State Take Multiple Step in 4, 5 \end{algorithmic} \end{algorithm}
 </div>
@@ -402,7 +403,7 @@ p_{\theta}(\tau) \nabla_{\theta} \log p_{\theta}(\tau) = \nabla_{\theta} p_{\the
 \]</span></p>
 <p>역시 <span class="math inline">\(\lambda\)</span> 를 설정하는 문제가 남아있긴 하지만, GAE를 통해서 가까운 미래의 정보는 많이 반영하고, 너무 먼 미래의 정보는 적게 반영하여 적절한 bias와 variance 간의 균형을 유지할 수 있게 해준다.</p>
 <p>이를 통해서 최종적으로 Clipped Surrogate objective와 Generalized Advantage Estimation이 적용된 PPO-clip의 최종 알고리즘은 아래와 같다.</p>
-<div id="algo-PPO" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="2" data-line-number-punc=":" data-no-end="false">
+<div id="algo-PPO" class="pseudocode-container quarto-float" data-pseudocode-number="2" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Proximal Policy Optimization (PPO)} \begin{algorithmic} \State Sample batch of data $\{(s_{1, i}, a_{1, i}, \dots s_{T,i}, a_{T, i})\}$ from $\pi_{\theta}$ \State Fit $\hat{V}_{\phi}^{\pi_{\theta}}$ to summed rewards in data \State Evaluate $\hat{A}_{GAE}^{\pi}(s_t, a_t) = \sum_{n=1}^{\infty} w_n ( \sum_{t'=t}^{t+n} \gamma^{t'-t} r(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi}(s_t) + \gamma^n \hat{V}_{\phi}^{\pi}(s_{t+n}))$ \State Update policy with $M$ gradient steps on surrogate objective: $\tilde(J)(\theta') \approx \sum_{t, i} \min \Big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}\hat{A}_{GAE}^{\pi}(s_{t, i}, a_{t,i}), \text{clip} \big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}, 1 - \epsilon, 1 + \epsilon \big) \hat{A}_{GAE}^{\pi}(s_{t, i}, a_{t,i})\Big)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -424,7 +425,7 @@ p_{\theta}(\tau) \nabla_{\theta} \log p_{\theta}(\tau) = \nabla_{\theta} p_{\the
 </figure>
 </div>
 <p><a href="#fig-replay-buffer" class="quarto-xref">그림&nbsp;1</a> 는 실질적으로 replay buffer와 연계되서 parameter를 update하는 과정이 도식화된 것인데, replay buffer에 넣을때는 현재 State <span class="math inline">\(s\)</span>, 현재 취한 행동 <span class="math inline">\(a\)</span>, 이때 받은 reward <span class="math inline">\(r\)</span>, 그리고 전이된 다음 state <span class="math inline">\(s'\)</span> 형태로 넣고, 데이터를 샘플링할 때도 <span class="math inline">\((s, a, r, s')\)</span> 형태로 뽑아서 <span class="math inline">\(\theta\)</span> 를 학습하는 형태로 진행된다. 이를 통해서 알고리즘도 다음과 같이 replay buffer가 적용된 형태로 써볼 수 있다.</p>
-<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="3" data-line-number-punc=":" data-no-end="false">
+<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-pseudocode-number="3" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Actor-Critic Methods with Replay Buffer} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{V}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')}$ for each $s_i$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -454,7 +455,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a
 \mathcal{L}(\phi) = \frac{1}{N} \sum_i \Vert \hat{Q}_{\phi}^{\pi}(s_i, a_i) - y_i \Vert^2
 \]</span></p>
 <p>첫번째 잘못된 부분을 보완할 수 있게 수정된 알고리즘은 다음과 같다.</p>
-<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="4" data-line-number-punc=":" data-no-end="false">
+<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-pseudocode-number="4" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Version 2: Fixing the value function mismatch} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -462,7 +463,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a
 <p>유의할 부분은 <span class="math inline">\(a_i'\)</span> 은 replay buffer <span class="math inline">\(\mathcal{R}\)</span> 에서 뽑은 것이 아니라 현재 policy <span class="math inline">\(\pi_{\theta}\)</span>에서 sampling한 값이다.</p>
 <p>두번째 잘못된 부분이었던 <span class="math inline">\({\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}\)</span> 에서도 수정할 수 있는 포인트가 존재한다. 우선 기존에 활용했던 advantage function <span class="math inline">\(\hat{A}^{\pi}\)</span> 를 구하기 위해서는 이전 정의처럼 Value function과 Q-function이 있어야 하는데, 앞에서 Value function을 Q-function으로 바꾼 이상, 해당 부분도 <span class="math inline">\(\hat{Q}^{\pi}\)</span> 으로 대체하는 것이 편하게 된다. 물론 이전에 advantage function을 사용했던 이유가 baseline을 적용해서 variance를 줄이려고 했던 것이기 때문에, Q-function을 쓰게 된다면 variance가 커지게 되겠지만, 이제 replay buffer에 있는 과거의 policy가 쌓은 방대한 데이터를 활용할 수 있기 때문에 조금 더 정확한 Q-function을 학습할 수 있게 된다.</p>
 <p>또다른 수정 포인트는 앞의 value function mismatch에서도 야기된 것처럼 replay buffer에서 sampling한 action을 사용하는 부분인데, 이 역시 replay buffer가 아닌 현재 policy에서 sampling한 action을 사용하면 해결된다. 이 부분까지 수정한 알고리즘은 <a href="#algo-action-mismatch" class="quarto-xref">Algorithm 5</a> 로 표현할 수 있다.</p>
-<div id="algo-action-mismatch" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="5" data-line-number-punc=":" data-no-end="false">
+<div id="algo-action-mismatch" class="pseudocode-container quarto-float" data-pseudocode-number="5" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Version 2: Fixing the action mismatch} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})}$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -473,7 +474,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a
 </section>
 <section id="soft-actor-critic-sac" class="level2">
 <h2 class="anchored" data-anchor-id="soft-actor-critic-sac">Soft Actor-Critic (SAC)</h2>
-<div id="algo-soft-actor-critic" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="6" data-line-number-punc=":" data-no-end="false">
+<div id="algo-soft-actor-critic" class="pseudocode-container quarto-float" data-pseudocode-number="6" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Soft Actor-Critic} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ for each $s_i, a_i$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -492,6 +493,10 @@ a = \mu_{\theta}(s) + \sigma_{\theta}(s) \cdot \epsilon
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/lUZUr7jxoqM?si=_dGB1kJPcuCdeIBg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>그리고 많이 알려져있는 예제 중에 OpenAI에서 만든 “Solving rubik’s cube with a robot hand” 에서도 PPO를 사용해서 시뮬레이터에서 학습시킨 로봇손을 실제 손으로 transfer한 결과도 있다. (<span class="citation" data-cites="akkaya2019solving">Akkaya 기타 (<a href="#ref-akkaya2019solving" role="doc-biblioref">2019</a>)</span>)</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/x4O8pojMF0w?si=oZgzfLVTHjUs8cxg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>이번 포스트에서는 이전 포스트에서 다뤘던 Actor-Critic Method에서 Sample Efficiency를 개선할 수 있도록 Off-Policy 형태로 수정하는 과정과 이 과정에서 도출된 알고리즘인 <strong>Proximal Policy Optimization (PPO)</strong>와 <strong>Soft Actor-Critic (SAC)</strong>에 대해서 소개했다. Off-Policy의 특성상 과거의 policy가 쌓았던 trajectory를 활용하기 위해 이전의 Off-Policy Policy Gradient에서 활용했던 Importance Weight를 동일하게 적용하고자 했으나, 샘플을 활용하고 반복적으로 Gradient Step을 밟으면서 의도와 다르게 학습이 되는 현상이 나타나게 된다. 이때문에 너무 과도하게 과거의 policy에서 벗어나지 않도록 constraint를 주면서 목표점으로 도달할 수 있게 도와주는 KL Constraint와 Clipping 방식에 대해서 소개했고, 이를 반영한 PPO의 기본적인 동작원리에 대해서 언급했다. 이와는 별도로 sample efficiency를 개선하기 위해 과거의 policy가 쌓았던 경험을 모은 replay buffer로부터 sampling한 데이터를 활용하고자 할 때 발생할 수 있는 value function mismatch나 action mismatch도 <span class="citation" data-cites="haarnoja2018soft">Haarnoja, Zhou, Abbeel, 기타 (<a href="#ref-haarnoja2018soft" role="doc-biblioref">2018</a>)</span> 에서 소개한 trick들을 통해 해결할 수 있고, 결과적으로 replay buffer를 활용한 Fully Off-Policy Actor-Critic인 SAC 알고리즘까지 도출되었다. 그리고 이어진 실사례를 통해서 Data efficiency 가 중요하게 고려되는 실환경에서는 SAC가 좋은 성능을 보여줬으며, Sim-to-Real과 같이 안정적인 policy 학습을 필요한 상황에서는 PPO가 좋은 적용 사례라는 것을 보여주었다.</p>
 
 
 
