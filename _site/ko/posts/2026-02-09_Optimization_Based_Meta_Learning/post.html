@@ -268,7 +268,7 @@ window.Quarto = {
   <li><a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a>
   <ul class="collapse">
   <li><a href="#instability" id="toc-instability" class="nav-link" data-scroll-target="#instability">Instability</a></li>
-  <li><a href="#computation-memory-intesive-cost" id="toc-computation-memory-intesive-cost" class="nav-link" data-scroll-target="#computation-memory-intesive-cost">Computation &amp; Memory-intesive cost</a></li>
+  <li><a href="#computation-memory-intensive-cost" id="toc-computation-memory-intensive-cost" class="nav-link" data-scroll-target="#computation-memory-intensive-cost">Computation &amp; Memory-intensive cost</a></li>
   </ul></li>
   <li><a href="#case-study---meta-learning-for-few-shot-land-cover-classification" id="toc-case-study---meta-learning-for-few-shot-land-cover-classification" class="nav-link" data-scroll-target="#case-study---meta-learning-for-few-shot-land-cover-classification">Case Study - Meta-Learning for Few-Shot Land Cover Classification</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
@@ -309,7 +309,7 @@ window.Quarto = {
 </section>
 <section id="problem-settings-recap" class="level2">
 <h2 class="anchored" data-anchor-id="problem-settings-recap">Problem Settings Recap</h2>
-<p>이전 강의부터 쭉 다루고 있는 내용은 여러 개의 task <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_T\)</span> 에 대해서 한번에 푸는 <strong>Multi-task Learning</strong> 부터 시작해서, 어떤 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습한 지식을 전이하는 방식으로 target task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 <strong>Transfer Learning</strong>, 결과적으로 Transfer Learning의 source task를 여러개로 확장시켜, 새로운 task <span class="math inline">\(\mathcal{T}_test\)</span> 를 조금 더 빠르고, 정확하고, 안정적으로 해결하는 <strong>Meta Learning</strong> 방법론에 대해서 다뤘다.</p>
+<p>이전 강의부터 쭉 다루고 있는 내용은 여러 개의 task <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_T\)</span> 에 대해서 한번에 푸는 <strong>Multi-task Learning</strong> 부터 시작해서, 어떤 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습한 지식을 전이하는 방식으로 target task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 <strong>Transfer Learning</strong>, 결과적으로 Transfer Learning의 source task를 여러개로 확장시켜, 새로운 task <span class="math inline">\(\mathcal{T}_{test}\)</span> 를 조금 더 빠르고, 정확하고, 안정적으로 해결하는 <strong>Meta Learning</strong> 방법론에 대해서 다뤘다.</p>
 <div id="fig-example-meta-learning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-example-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -343,7 +343,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <section id="fine-tuning" class="level2">
 <h2 class="anchored" data-anchor-id="fine-tuning">Fine-tuning</h2>
 <p><span id="eq-fine-tuning-meta-training"><span class="math display">\[
-\phi \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^tr)
+\phi \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr})
 \tag{1}\]</span></span></p>
 <p><strong>fine-tuning</strong> 은 앞에서 다뤘던 것처럼 기존에 학습했던 모델의 parameter <span class="math inline">\(\theta\)</span> 가 주어진 상태에서 새로운 데이터가 주어졌을 때, 주어진 데이터셋에서의 반복적인 gradient update를 통해서 parameter <span class="math inline">\(\phi\)</span> 를 다시 찾는 과정이다. Meta Learning에서는 <a href="#eq-fine-tuning-meta-training" class="quarto-xref">방정식&nbsp;1</a> 식처럼 학습 데이터셋 (Support Set)에 있는 구체적인 예시들을 보면서, 해당 task에 맞는 parameter <span class="math inline">\(\phi\)</span>로 adaptation하는 과정을 수행하게 된다.</p>
 <div id="fig-ULMFit" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -370,7 +370,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 \]</span></p>
 <p>outer-loop에서는 실질적으로 앞에서 도출한 parameter와 주어진 test 데이터셋 (query set)이 있을 때, 이에 대한 loss가 최소화되는 <span class="math inline">\(\theta\)</span> 를 찾는 objective function을 가지게 될 것이며, 역시 이 값을 찾기 위한 gradient descent를 수행하게 될 것이다.</p>
 <p><span id="eq-outer-loop-meta-learning"><span class="math display">\[
-\theta \leftarrow \theta - \beta \sum_{\text{task } i} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)
+\theta \leftarrow \theta - \beta \nabla_{\theta} \sum_{\text{task } i} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)
 \tag{2}\]</span></span></p>
 <p>이제 <a href="#eq-outer-loop-meta-learning" class="quarto-xref">방정식&nbsp;2</a> 의 의미는 앞에서 구한 <span class="math inline">\(\phi_i\)</span> 를 바탕으로, 학습되지 않은 데이터 <span class="math inline">\(\mathcal{D}^{ts}_i\)</span> 를 맞춰봤을 때의 loss를 활용하여 궁극적인 모델 parameter를 업데이트하게 된다. 핵심 아이디어는 주어진 여러 개의 task에 대해서 fine-tuning을 통해서 transfer했을 때, 성능이 좋은 meta parameter <span class="math inline">\(\theta\)</span> 를 찾는 것이다. 교수는 이런 아이디어를 <strong>Model-Agnostic Meta-Learning(MAML)</strong> 이란 알고리즘으로 소개했다.</p>
 <div id="fig-MAML" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -387,7 +387,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p>이 알고리즘의 이름에 대해서 설명했는데, <strong>Model-Agnostic</strong> 이란 현재의 강의에서 다뤄지는 부분 중에서 RNN이나 Transformer같이 모델의 구조에 대해서 설명한 부분없이, 온전히 모델의 gradient를 통해서 update를 진행하고 있다는 점에서 나온 것이다. 즉, 모델의 구조와는 상관없이 해당 강의에서 설명하는 opimization 과정에만 초점이 맞춰져 있는 것이다.</p>
 <p>부연적으로 MAML에 최적화된 모델 구조를 탐색하는 과정에 대한 논문 (<span class="citation" data-cites="kim2018auto">Kim 기타 (<a href="#ref-kim2018auto" role="doc-biblioref">2018</a>)</span>) 도 소개했는데, 해당 논문에서는 fast adaptation할 수 있는 초기 parameter를 찾는 MAML에 최적화된 구조를 찾을 수 있도록 Neural Architecture Search(NAS)이라는 AutoML 기반의 방식을 적용한 결과를 공유했다. MiniImageNet을 대상으로 기본적인 모델 구조에서의 MAML의 결과와 대비하여 NAS를 적용하여 찾은 최적화된 모델에서의 MAML을 수행하면 정확도가 대략 11%정도 상승하였는데, 흥미로운 부분은 일반적으로 딥러닝이 잘된다고 알려져있는 모델의 폭이 넓은 구조가 아니라, NAS를 통해서 찾은 모델은 폭이 좁고 깊은 (deep &amp; narrow) 모델이 Meta Learning에 최적화된 모델이라는 것이다. 다시 말하면, 기존의 통념과는 다르지만, 강의에서 다루는 Meta Learning task에서는 상식과는 다른 구조가 오히려 adaptation에 유리하다는 점을 시사한 것이다.</p>
 <p>지금까지 다룬 Optimization-Based Adaptation을 알고리즘으로 풀어쓰면 다음과 같다.</p>
-<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-line-number-punc=":" data-line-number="true" data-pseudocode-number="1">
+<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Optimization-Based Adaptation} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}^{tr}_i, \mathcal{D}^{ts}_i$ from $\mathcal{D}_i$ \State Optimize $\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)$ \State Update $\theta$ using $\nabla_{\theta} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -422,7 +422,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p><span class="math display">\[
 \nabla_{\theta} J(\theta) = \underbrace{\nabla_{\phi_i} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)}_\textrm{test set gradient} \times \underbrace{I - \alpha \nabla^2_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)}_\textrm{with Hessian Matrix}
 \]</span></p>
-<p>이때 앞의 test set gradient는 row vector <span class="math inline">\(v\)</span> 로 나오기 때문에 결과적으로 <span class="math inline">\(Hv\)</span> 라는 형태로 나오게 된 것이다.</p>
+<p>Hessian matrix <span class="math inline">\(H\)</span> 는 대칭 행렬이고, <span class="math inline">\(v\)</span> 는 row vector이므로 <span class="math inline">\(vH\)</span> 형태가 되지만, row vector를 column vector로도 볼수 있기 때문에 <span class="math inline">\(Hv\)</span> 라고 표현할 수 있다. 결과적으로 Gradient <span class="math inline">\(v\)</span> 와의 곱 연산인 <strong>Hessian-Vector Product (HVP)</strong> 형태로 귀결된다.</p>
 </div>
 </div>
 <p>우선 어떤 gradient function <span class="math inline">\(g\)</span> 가 있을 때, <span class="math inline">\(x\)</span> 에서 아주 작은 값 <span class="math inline">\(\Delta x\)</span> 만큼 <span class="math inline">\(v\)</span> 방향으로 이동한 지점의 값은 결과적으로 magnitude <span class="math inline">\(r\)</span> 과 방향 vector <span class="math inline">\(v\)</span> 의 곱으로 표현할 수 있으니까,</p>
@@ -487,8 +487,8 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 <p>마지막에 소개된 방법은 별도의 Context Variable을 입력으로 받도록 하여 표현력을 개선하는 측면에서 진행된 연구였다. 이전에 소개했던 Multi-task Learning에서 소개된 Task Descriptor <span class="math inline">\(z_i\)</span> 개념이 적용된 아이디어인데, MAML도 학습되지 않은 새로운 Task가 주어졌을때, 주어진 parameter를 모두 update 하면서 발생하는 불안정성 문제를 해결하기 위해서 기존의 parameter <span class="math inline">\(\theta\)</span> 외에 task의 정보를 담을 수 있는 추가적인 context vector를 추가한 것이다. 그래서 내부 inner-loop에서 이 변수를 update하도록 하여, 모델이 task에 맞게 bias를 조정할 수 있도록 도와주는 역할을 한다. 조금전에 소개한 CAVIA ( <span class="citation" data-cites="zintgraf2019fast">Zintgraf 기타 (<a href="#ref-zintgraf2019fast" role="doc-biblioref">2019</a>)</span>) 란 방법에서도 비슷하게 context variable을 활용한 케이스인데, 잠깐 언급했던 특정 조건에 해당하는 부분이 바로 이 context parameter 라는 것이었다. 그래서 inner-loop수행시 전체 모델의 parameter가 아닌, context parameter만 따로 떼서 학습시키는 방식이 되겠다. 이렇게 하면 inner-loop에서 학습시킬 parameter 의 수는 확 줄어들면서, 전체 모델을 업데이트하지 않기 때문에 조금더 안정적으로 학습을 수행할 수 있다.</p>
 <p>결과적으로 앞에서 소개한 방법들 모두 Optimization을 여러번 하는데 있어서 발생할 수 있는 불안정성을 몇가지 trick을 통해서 해소하는게 핵심적인 요소라고 할 수 있겠다.</p>
 </section>
-<section id="computation-memory-intesive-cost" class="level3">
-<h3 class="anchored" data-anchor-id="computation-memory-intesive-cost">Computation &amp; Memory-intesive cost</h3>
+<section id="computation-memory-intensive-cost" class="level3">
+<h3 class="anchored" data-anchor-id="computation-memory-intensive-cost">Computation &amp; Memory-intensive cost</h3>
 <p>MAML에서는 inner-loop의 최적화 경로에 따라 backpropagation을 수행하기 때문에, step이 많아질수록 memory 사용량이나 computation cost가 급증한다. 이를 해소하기 위한 방법에 대한 논문도 소개했다.</p>
 <p>첫번째 아이디어는 앞에서 소개한 Hessian Matrix를 구하는 단계를 근사화하는 것이다. 사실 이부분에 대해서 교수의 일화에 대해서도 공유를 해줬는데, 그당시 교수가 MAML 구조를 구현할 때 사용했던 tensorflow에서 bug가 존재하여, 원래 계산되어야 했던 <span class="math inline">\(\frac{d \phi_i}{d \theta}\)</span> 가 identity matrix <span class="math inline">\(I\)</span> 로 근사화가 되는 현상이 있었다.</p>
 <div class="callout callout-style-default callout-note callout-titled">
