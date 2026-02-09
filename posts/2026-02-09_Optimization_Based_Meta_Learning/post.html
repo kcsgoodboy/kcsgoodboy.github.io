@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-02-09_Optimization_Based_Meta_Learning/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-02-09_Optimization_Based_Meta_Learning/post.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Chanseok Kang">
+<meta name="dcterms.date" content="2026-02-10">
+<meta name="description" content="Summary of lecture CS330 (2022) Lecture 5. Optimization-Based Meta-Learning">
+<title>Optimization-Based Meta-Learning – Chan’s Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+<style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2026-02-09_Optimization_Based_Meta_Learning/post.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Optimization-Based Meta-Learning</h1>
+                  <div>
+        <div class="description">
+          Summary of lecture CS330 (2022) Lecture 5. Optimization-Based Meta-Learning
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS330</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 10, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
+  <li><a href="#problem-settings-recap" id="toc-problem-settings-recap" class="nav-link" data-scroll-target="#problem-settings-recap">Problem Settings Recap</a></li>
+  <li><a href="#fine-tuning" id="toc-fine-tuning" class="nav-link" data-scroll-target="#fine-tuning">Fine-tuning</a></li>
+  <li>
+<a href="#optimization-based-adaptation" id="toc-optimization-based-adaptation" class="nav-link" data-scroll-target="#optimization-based-adaptation">Optimization-Based Adaptation</a>
+  <ul class="collapse">
+<li><a href="#using-hessian-matrix-or-approximation" id="toc-using-hessian-matrix-or-approximation" class="nav-link" data-scroll-target="#using-hessian-matrix-or-approximation">Using Hessian Matrix (or Approximation)</a></li>
+  </ul>
+</li>
+  <li><a href="#optimization-vs.-black-box-adaptation" id="toc-optimization-vs.-black-box-adaptation" class="nav-link" data-scroll-target="#optimization-vs.-black-box-adaptation">Optimization vs. Black-Box Adaptation</a></li>
+  <li>
+<a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a>
+  <ul class="collapse">
+<li><a href="#instability" id="toc-instability" class="nav-link" data-scroll-target="#instability">Instability</a></li>
+  <li><a href="#computation-memory-intensive-cost" id="toc-computation-memory-intensive-cost" class="nav-link" data-scroll-target="#computation-memory-intensive-cost">Computation &amp; Memory-intensive cost</a></li>
+  </ul>
+</li>
+  <li><a href="#case-study---meta-learning-for-few-shot-land-cover-classification" id="toc-case-study---meta-learning-for-few-shot-land-cover-classification" class="nav-link" data-scroll-target="#case-study---meta-learning-for-few-shot-land-cover-classification">Case Study - Meta-Learning for Few-Shot Land Cover Classification</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="resource" class="level3"><h3 class="anchored" data-anchor-id="resource">Resource</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://www.youtube.com/watch?v=Gj5SEpFIv8I&amp;list=PLoROMvodv4rNjRoawgt72BBNwL2V7doGI&amp;index=5"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs330.stanford.edu/materials/cs330_optbased_metalearning_2023.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+</section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/optimization_based_meta_learning_overview.en.png" class="img-fluid"></p>
+</section><section id="problem-settings-recap" class="level2"><h2 class="anchored" data-anchor-id="problem-settings-recap">Problem Settings Recap</h2>
+<p>In previous lectures, we have covered a progression of methodologies: starting with <strong>Multi-task Learning</strong>, which solves multiple tasks <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_T\)</span> simultaneously; moving to <strong>Transfer Learning</strong>, where knowledge learned from a source task <span class="math inline">\(\mathcal{T}_a\)</span> is transferred to solve a target task <span class="math inline">\(\mathcal{T}_b\)</span>; and finally arriving at <strong>Meta Learning</strong>, which extends the source tasks to multiple instances to solve a new task <span class="math inline">\(\mathcal{T}_{test}\)</span> more quickly, accurately, and stably.</p>
+<div id="fig-example-meta-learning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-example-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/5p_example_meta_learning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-example-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 1: Example of Meta Learning Problem
+</figcaption></figure>
+</div>
+<p>We also introduced a classic example in Meta Learning: the image classification problem (<a href="#fig-example-meta-learning" class="quarto-xref">Figure 1</a>). This example involved solving a 5-way, 1-shot image classification problem using the MiniImageNet dataset, where we classify 5 classes using only 1 image per class. To address this, we introduced the internal processes of <strong>meta-training</strong> and <strong>meta-test</strong>. The goal is to train the model during the meta-training phase using the same problem format (5-way, 1-shot) that it will encounter in the meta-test phase. This ensures the model learns how to classify images quickly, rather than just learning the specific images themselves.</p>
+<p>In the previous lecture, we discussed <strong>Black-box Adaptation</strong>, a Meta Learning technique where the process of learning a task is embedded into a black-box neural network (<span class="math inline">\(\phi_i\)</span>). This approach involves either extracting meaningful context from the meta-training dataset <span class="math inline">\(\mathcal{D}_i^{tr}\)</span> or feeding the dataset directly into the model. Once processed, the model infers the label for a new query image (<span class="math inline">\(x^{ts}\)</span>). The general problem formulation is defined as follows:</p>
+<p><span class="math display">\[
+y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
+\]</span></p>
+<p>This allows the black-box neural network to infer the task identity and make decisions solely based on the dataset information without requiring separate mechanisms, enabling a more expressive response tailored to the structure of the dataset. However, performance can degrade significantly when encountering Out-of-Distribution (OOD) tasks due to the heavy reliance on data. Additionally, challenges remain regarding optimization, such as selecting appropriate optimization techniques or hyperparameters depending on the specific problem. This leads us to the question: <strong>“Can we explicitly incorporate the optimization process into Meta-learning?”</strong> This is the core concept of <strong>Optimization-based Meta Learning</strong>, which we will cover in this post.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./images/16p_optimization_based_meta_learning.png" class="img-fluid figure-img"></p>
+<figcaption>Optimization-Based Adaptation</figcaption></figure>
+</div>
+<p>The major difference from the previously introduced black-box approach is that while we still learn from the dataset <span class="math inline">\(\mathcal{D}^{tr}\)</span> during meta-training, the goal is now to find an ideal set of initial meta-parameters <span class="math inline">\(\theta\)</span> by performing iterative gradient updates. Once these initial meta-parameters are established, we can fine-tune the model using new data <span class="math inline">\(x^{ts}\)</span> to achieve an optimal model. We have previously discussed the related concept of <strong>fine-tuning</strong>.</p>
+</section><section id="fine-tuning" class="level2"><h2 class="anchored" data-anchor-id="fine-tuning">Fine-tuning</h2>
+<p><span id="eq-fine-tuning-meta-training"><span class="math display">\[
+\phi \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr})
+\tag{1}\]</span></span></p>
+<p><strong>Fine-tuning</strong> is a process we have previously discussed, where we find a new parameter <span class="math inline">\(\phi\)</span> through repeated gradient updates on a given dataset, starting from a pre-trained model parameter <span class="math inline">\(\theta\)</span>. In Meta Learning, this process involves adapting to the specific task using the parameter <span class="math inline">\(\phi\)</span>, as shown in <a href="#eq-fine-tuning-meta-training" class="quarto-xref">Equation 1</a>, by learning from the examples in the training dataset (Support Set).</p>
+<div id="fig-ULMFit" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ULMFit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/17p_ULMFiT.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ULMFit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 2: Universal Language Model Fine-Tuning
+</figcaption></figure>
+</div>
+<p><a href="#fig-ULMFit" class="quarto-xref">Figure 2</a>, introduced in the previous Transfer Learning lecture, shows an experiment proposed by <span class="citation" data-cites="howard2018universal">Howard and Ruder (<a href="#ref-howard2018universal" role="doc-biblioref">2018</a>)</span>. It demonstrates that the error rate for fine-tuning with a given dataset (green, orange) is significantly lower compared to training from scratch (blue). The Universal Language Model also showed that pre-training on a large dataset and then fine-tuning on a specific task’s data can improve performance. However, the professor also highlighted the limitations related to the amount of data. As seen in the graph, both training from scratch and fine-tuning exhibit high error rates in the region with very little data (towards the left of the x-axis). This illustrates that simply retraining from pre-trained parameters is not sufficient to achieve optimal performance in extremely data-scarce (Few-shot) scenarios. Ultimately, this suggests that limitations still exist in the Few-shot environments targeted by Meta Learning.</p>
+</section><section id="optimization-based-adaptation" class="level2"><h2 class="anchored" data-anchor-id="optimization-based-adaptation">Optimization-Based Adaptation</h2>
+<p>Consequently, the professor introduced a method to utilize fine-tuning within Meta Learning frameworks through her paper, <span class="citation" data-cites="finn2017model">Finn, Abbeel, and Levine (<a href="#ref-finn2017model" role="doc-biblioref">2017</a>)</span>. The process is broadly divided into two stages: an <strong>inner-loop</strong> that performs fine-tuning, and an outer-loop that executes Meta Learning. First, given an initial parameter <span class="math inline">\(\theta\)</span>, the inner-loop acts as a simulation step to determine how <span class="math inline">\(\theta\)</span> changes when trained on a specific Task <span class="math inline">\(\mathcal{T}_i\)</span>.</p>
+<p><span class="math display">\[
+\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)
+\]</span></p>
+<p>The resulting value <span class="math inline">\(\phi_i\)</span> obtained here is not the final model parameter, but rather a temporary parameter representing <strong>“how the parameter would change if trained on this task”</strong>. The actual step of updating the final parameter using this value takes place in the subsequent stage, the <strong>outer-loop</strong>.</p>
+<p><span class="math display">\[
+\min_{\theta} \sum_{\text{task } i} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)
+\]</span></p>
+<p>In the outer-loop, the objective function aims to find <span class="math inline">\(\theta\)</span> that minimizes the loss given the previously derived parameters and the test dataset (query set). Consequently, gradient descent is performed to find this optimal value.</p>
+<p><span id="eq-outer-loop-meta-learning"><span class="math display">\[
+\theta \leftarrow \theta - \beta \nabla_{\theta} \sum_{\text{task } i} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)
+\tag{2}\]</span></span></p>
+<p>The implication of <a href="#eq-outer-loop-meta-learning" class="quarto-xref">Equation 2</a> is that the ultimate model parameters are updated using the loss calculated from the unseen data <span class="math inline">\(\mathcal{D}^{ts}_i\)</span>, based on the <span class="math inline">\(\phi_i\)</span> derived earlier. The core idea is to find a meta-parameter <span class="math inline">\(\theta\)</span> that yields high performance when transferred via fine-tuning across multiple given tasks. The professor introduced this concept as the <strong>Model-Agnostic Meta-Learning (MAML)</strong> algorithm.</p>
+<div id="fig-MAML" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-MAML-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/19p_MAML.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-MAML-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 3: Model-Agnostic Meta-Learning(MAML)
+</figcaption></figure>
+</div>
+<p>Referring to <a href="#fig-MAML" class="quarto-xref">Figure 3</a>, which is also presented in the paper, helps clarify the concept. Here, <span class="math inline">\(\theta\)</span> represents the model’s initial parameters, and the thick solid line illustrates the Meta Learning process. Assuming there are three tasks, each with its own loss function (<span class="math inline">\(\mathcal{L}_1, \mathcal{L}_2, \mathcal{L}_3\)</span>), the gradients for these losses (<span class="math inline">\(\nabla \mathcal{L}_1, \nabla \mathcal{L}_2, \nabla \mathcal{L}_3\)</span>) will differ, as depicted. The ultimate goal of MAML is not to find the individual optimal parameters <span class="math inline">\(\phi_1^*, \phi_2^*, \phi_3^*\)</span> for each of the three tasks, but rather to find a <span class="math inline">\(\theta^*\)</span> that can rapidly reach each of these optimal parameters within a few optimization steps. In essence, it illustrates the process of finding a starting point that enables <strong>fast-adaptation</strong>. The professor further clarified the diagram’s definition, explaining that finding <span class="math inline">\(\theta^*\)</span> is not about locating a single optimal point for a specific task, but rather identifying a parameter space capable of rapid adaptation across diverse tasks. She also noted that while the diagram might suggest updates based on the average gradient of tasks, in reality, parameters are updated using various strategies.</p>
+<p>Regarding the algorithm’s name, <strong>Model-Agnostic</strong> stems from the fact that the update process relies entirely on the model’s gradients, without being tied to specific model architectures like RNNs or Transformers, which were not the focus of this lecture section. In other words, the focus is placed solely on the optimization process described in the lecture, independent of the model architecture.</p>
+<p>Additionally, she introduced a paper (<span class="citation" data-cites="kim2018auto">Kim et al. (<a href="#ref-kim2018auto" role="doc-biblioref">2018</a>)</span>) that explores searching for model architectures optimized for MAML. This research shared results from applying Neural Architecture Search (NAS), an AutoML-based method, to find structures optimized for MAML that facilitate fast adaptation. When comparing MAML results on MiniImageNet using basic model structures versus those optimized via NAS, accuracy improved by approximately 11%. An interesting finding was that, contrary to the general belief in deep learning that wide model structures perform better, the models identified by NAS as optimized for Meta Learning were <strong>deep &amp; narrow</strong>. In other words, this suggests that for the Meta Learning tasks discussed in the lecture, structures that differ from conventional wisdom may actually be more advantageous for adaptation.</p>
+<p>The Optimization-Based Adaptation discussed so far can be formalized as an algorithm as follows.</p>
+<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-line-number="true" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false">
+<div class="pseudocode">
+\begin{algorithm} \caption{Optimization-Based Adaptation} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}^{tr}_i, \mathcal{D}^{ts}_i$ from $\mathcal{D}_i$ \State Optimize $\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)$ \State Update $\theta$ using $\nabla_{\theta} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<section id="using-hessian-matrix-or-approximation" class="level3"><h3 class="anchored" data-anchor-id="using-hessian-matrix-or-approximation">Using Hessian Matrix (or Approximation)</h3>
+<p>As shown in <a href="#algo-Optimization-Based-Adaptation" class="quarto-xref">Algorithm 1</a>, step 3 calculates the gradient with respect to <span class="math inline">\(\theta\)</span>, and step 4 performs another gradient operation for the update. This implies that Optimization-Based Adaptation requires the <strong>second-order derivative</strong> with respect to <span class="math inline">\(\theta\)</span>. To obtain the second-order derivative for matrix-form parameters, we essentially need to compute the <strong>Hessian Matrix</strong> <span class="math inline">\(H\)</span>. Although computing the Hessian Matrix has high complexity, popular deep learning frameworks like PyTorch and JAX allow for efficient calculation via functions such as <code>torch.autograd.functional.hessian</code> or <code>jax.hessian</code>.</p>
+<p>While one could simply compute the Hessian matrix for all parameters, the lecture introduced a more efficient calculation method called <strong>Hessian-Vector Product (HVP)</strong>. As mentioned earlier, calculating the gradient in the outer-loop based on <span class="math inline">\(\phi_i\)</span> (computed in the inner-loop) requires second-order derivatives, leading to the Hessian Matrix. However, the algorithm ultimately only requires the product of the Hessian <span class="math inline">\(H\)</span> and a specific vector <span class="math inline">\(v\)</span>, denoted as <span class="math inline">\(Hv\)</span>, rather than the full second-order derivatives for all parameters. It was explained that by using finite difference approximation, such as Taylor expansion, we can obtain an approximate <span class="math inline">\(Hv\)</span> value without explicitly computing the full second-order derivative.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While the lecture immediately derived this using Taylor expansion for approximation, I will briefly explain why computing only <span class="math inline">\(Hv\)</span> is sufficient and summarize the relevant equations. First, the meta-gradient we aim to compute is:</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) = \nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)
+\]</span></p>
+<p>Since <span class="math inline">\(\phi_i\)</span> is a variable dependent on <span class="math inline">\(\theta\)</span>, we must apply the chain rule to obtain its derivative:</p>
+<p><span class="math display">\[
+\frac{d \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)}{d \theta} = \underbrace{\nabla_{\phi_i} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)}_\textrm{(A) Outer Gradient} \times \underbrace{\frac{d \phi_i}{d \theta}}_\textrm{(B) Jacobian}
+\]</span></p>
+<p>However, recall that <span class="math inline">\(\phi_i = \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)\)</span> was obtained from training with the support set <span class="math inline">\(\mathcal{D}^{tr}_i\)</span>. Substituting this into the equation above gives:</p>
+<p><span class="math display">\[
+\frac{d \phi_i}{d \theta} = I - \alpha \nabla^2_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)
+\]</span></p>
+<p>Finally, substituting this back into the initial equation yields:</p>
+<p><span class="math display">\[
+\nabla_{\theta} J(\theta) = \underbrace{\nabla_{\phi_i} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)}_\textrm{test set gradient} \times \underbrace{I - \alpha \nabla^2_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)}_\textrm{with Hessian Matrix}
+\]</span></p>
+<p>Since the Hessian matrix <span class="math inline">\(H\)</span> is symmetric and <span class="math inline">\(v\)</span> acts as a row vector here, the term formally appears as <span class="math inline">\(vH\)</span>. However, treating the vector as a column vector allows us to express it as <span class="math inline">\(Hv\)</span>. Consequently, this reduces to a <strong>Hessian-Vector Product (HVP)</strong>, which is simply a multiplication operation involving the gradient <span class="math inline">\(v\)</span>.</p>
+</div>
+</div>
+<p>First, given a gradient function <span class="math inline">\(g\)</span>, the value at a point displaced by a very small amount <span class="math inline">\(\Delta x\)</span> from <span class="math inline">\(x\)</span> in the direction of <span class="math inline">\(v\)</span> can be expressed as the product of a magnitude <span class="math inline">\(r\)</span> and the direction vector <span class="math inline">\(v\)</span>. Therefore:</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(x + \Delta x) &amp;\approxeq g(x) + H(x) \Delta x \\
+g(x + rv) &amp;\approxeq g(x) + r H(x) v \\
+\end{aligned}
+\]</span></p>
+<p>And the term <span class="math inline">\(Hv\)</span> we want to compute becomes:</p>
+<p><span class="math display">\[
+Hv \approx \frac{g(x + rv) - g(x)}{r}
+\]</span></p>
+<p>As a result, even without explicitly calculating the second-order derivatives, we can approximate <span class="math inline">\(Hv\)</span> using just two evaluations of the gradient function. The professor noted that empirically, few-shot learning does not require many gradient steps. While some more advanced meta-learning algorithms utilize hundreds of gradient steps, performing too many gradient steps in the inner-loop was generally found to be detrimental. Since modern frameworks like PyTorch and TensorFlow allow for the calculation of exact HVP rather than approximations, she mentioned that understanding the principles behind this approximation method is sufficient.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This approach of omitting the Hessian Matrix calculation and utilizing only the first-order derivatives (gradients) is called <strong>First-Order MAML (FOMAML)</strong>, which was proposed in the professor’s MAML paper (<span class="citation" data-cites="finn2017model">Finn, Abbeel, and Levine (<a href="#ref-finn2017model" role="doc-biblioref">2017</a>)</span>). Later, <span class="citation" data-cites="nichol2018first">Nichol, Achiam, and Schulman (<a href="#ref-nichol2018first" role="doc-biblioref">2018</a>)</span> introduced <strong>Reptile</strong>, a simplified algorithm based on a similar concept, which moves the initial parameters slightly in the direction obtained after performing the inner loop.</p>
+</div>
+</div>
+</section></section><section id="optimization-vs.-black-box-adaptation" class="level2"><h2 class="anchored" data-anchor-id="optimization-vs.-black-box-adaptation">Optimization vs. Black-Box Adaptation</h2>
+<p>While both Black-Box Adaptation and Optimization-Based Adaptation, as explained in the previous lecture, share the same input and output formats, they differ in their <strong>internal mechanisms for processing training data</strong>.</p>
+<ul>
+<li>
+<strong>Black-Box Adaptation</strong> (<span class="math inline">\(y^{ts} = f_{black-box}(\mathcal{D}^{tr}_i, x^{ts})\)</span>): The training data <span class="math inline">\(\mathcal{D}^{tr}\)</span> and the test input <span class="math inline">\(x^{ts}\)</span> are fed entirely into a large neural network, such as an RNN or Transformer. The process involves identifying patterns in <span class="math inline">\(\mathcal{D}^{tr}\)</span> through internal operations within the black-box neural network and outputting the result.</li>
+<li>
+<strong>Optimization-Based Adaptation - MAML</strong> (<span class="math inline">\(y^{ts} = f_{MAML}(\mathcal{D}^{tr}_i, x^{ts}) = f_{\phi_i}(x^{ts})\)</span>): The parameters are fine-tuned using the training data <span class="math inline">\(\mathcal{D}^{tr}\)</span>, and the result is output using these updated parameters. In MAML, as introduced in the lecture, the operator for calculating gradients is explicitly represented within the computation graph.</li>
+</ul>
+<p>In fact, while we explicitly distinguished between the two forms, the lecture also introduced the possibility of conceiving new algorithms that leverage the characteristics of both (Mix &amp; Match) when viewed from the perspective of a computation graph. For instance, instead of simply using Gradient Descent, a method involves inserting a neural network that decides how to update parameters, thereby learning the update rule itself (<span class="math inline">\(\phi_i = \theta - \alpha f(\theta, \mathcal{D}^{tr}_i, \nabla_{\theta}\mathcal{L})\)</span>), which appeared in a follow-up paper to MAML (<span class="citation" data-cites="ravi2017optimization">Ravi and Larochelle (<a href="#ref-ravi2017optimization" role="doc-biblioref">2017</a>)</span>). It was noted that this perspective of viewing through a computation graph would be covered in detail in future lectures.</p>
+<div id="fig-omniglot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/25p_omniglot_image_classification.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 4: Omniglot Image Classification
+</figcaption></figure>
+</div>
+<p><a href="#fig-omniglot" class="quarto-xref">Figure 4</a> shows an experiment conducted in <span class="citation" data-cites="Finn:EECS-2018-105">Finn (<a href="#ref-Finn:EECS-2018-105" role="doc-biblioref">2018</a>)</span>, comparing the performance when solving the classification problem on the previously introduced Omniglot Dataset using MAML and Black-Box methods such as <strong>SNAIL</strong> (<span class="citation" data-cites="mishra2017simple">Mishra et al. (<a href="#ref-mishra2017simple" role="doc-biblioref">2017</a>)</span>) and <strong>MetaNetworks</strong> (<span class="citation" data-cites="pmlr-v70-munkhdalai17a">Munkhdalai and Yu (<a href="#ref-pmlr-v70-munkhdalai17a" role="doc-biblioref">2017</a>)</span>). The basic model training process involved performing Meta-training with the given dataset as usual, but during Meta-test, warped test images were used as input to evaluate how well the model adapts. The x-axis of the graph represents the degree of distortion applied to the test image; the center corresponds to the original image, while the edges represent data that is significantly sheared sideways. Therefore, the tasks were categorized into measuring image classification accuracy based on the degree of shearing, and another task measuring accuracy based on image scale.</p>
+<p>First, for data distributed in the center (i.e., non-transformed images), both MAML and other Black-Box methods showed high accuracy. However, for transformed images at the edges—in other words, distributions not seen during training—it was observed that MAML demonstrated slightly more robust performance compared to Black-Box Adaptation. This trend was similarly observed in the second task involving scale differences. Based on these results, the lecture explained that there is a difference between the two approaches in terms of <strong>Extrapolation</strong> performance.</p>
+<p>In the case of <strong>Black-Box Adaptation</strong>, while the model learns the rules for processing data through the black-box neural network, it is dependent on the distribution of the training data. If it encounters unseen data (Out-of-Distribution), it fails to perform extrapolation properly. However, since <strong>MAML</strong> performs fine-tuning via gradient descent even at test time, it adjusts parameters according to the gradient calculated from the Support Set, even if the data is distorted. This demonstrates that MAML operates much more robustly in situations where Distribution Shift occurs. (Of course, the professor mentioned that there is room for Black-box methods to improve performance similar to MAML.)</p>
+<p>As the final topic of comparison, the pros and cons based on structure were introduced. Here, <strong>structure</strong> refers to whether the target model for Meta Learning includes an optimization process internally. Models used in Black-Box Adaptation, such as the previously mentioned RNNs or Transformers, do not include an optimization process within their internal structure, so they possess high expressivity regardless of the learning algorithm or model type used. On the other hand, the MAML structure has a constraint (Inductive Bias) that gradient descent is absolutely necessary, as implied by its fundamental equation. This may raise questions regarding the inability to use non-gradient descent algorithms or whether it fails to fully capture the expressivity inherent in the data itself.</p>
+<p>The professor explored these questions in <span class="citation" data-cites="finn2017meta">Finn and Levine (<a href="#ref-finn2017meta" role="doc-biblioref">2017</a>)</span>, which she co-authored. The paper discusses that under certain conditions (such as having a non-zero meta learning rate <span class="math inline">\(\alpha\)</span>, not losing label information during gradient calculation for the loss function, and each datapoint in the training dataset <span class="math inline">\(\mathcal{D}^{tr}_i\)</span> being unique), it can approximate any function of <span class="math inline">\(\mathcal{D}^{tr}_i\)</span> and <span class="math inline">\(x^{ts}\)</span>. This highlighted that even aspects appearing as constraints hold strength in terms of generalization.</p>
+</section><section id="challenges" class="level2"><h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
+<p>As with other approaches, Optimization-Based Adaptation faces challenges during application, and many solutions are being researched to overcome them. These challenges are broadly categorized into two types: the first is the <strong>instability</strong> of learning encountered while <strong>performing the optimization process twice (Bi-level optimization)</strong>, and the second, as mentioned earlier, relates to the computational costs incurred by taking multiple gradient steps.</p>
+<section id="instability" class="level3"><h3 class="anchored" data-anchor-id="instability">Instability</h3>
+<p>It is a frequently discussed topic, but the bi-level optimization structure, where one optimization process is nested within another, can cause instability during training. To overcome this, research such as <strong>Meta-SGD</strong> introduced in <span class="citation" data-cites="li2017meta">Li et al. (<a href="#ref-li2017meta" role="doc-biblioref">2017</a>)</span> and <strong>AlphaMAML</strong> introduced in <span class="citation" data-cites="behl2019alpha">Behl, Baydin, and Torr (<a href="#ref-behl2019alpha" role="doc-biblioref">2019</a>)</span> proposed the concept of learning the (meta) learning rate <span class="math inline">\(\alpha\)</span> itself, which is used in the inner loop, via Meta Learning. The idea is that by having multiple parameters and training them with different <span class="math inline">\(\alpha\)</span> values, the optimization during the outer loop can be performed more stably.</p>
+<p>In <span class="citation" data-cites="zhou2018deep">Zhou, Wu, and Li (<a href="#ref-zhou2018deep" role="doc-biblioref">2018</a>)</span> and <span class="citation" data-cites="zintgraf2019fast">Zintgraf et al. (<a href="#ref-zintgraf2019fast" role="doc-biblioref">2019</a>)</span>, the approach taken was to train only the parameters that meet certain conditions among the parameters handled in actual meta-learning. This was mentioned as a way to lower the difficulty of optimization. Here, the “conditions” refer to methods such as selecting only the parameters of the last layer, similar to general transfer learning, or selecting only a specific subset of parameters for training.</p>
+<p>A method introduced as <strong>MAML++</strong> (<span class="citation" data-cites="antoniou2018train">Antoniou, Edwards, and Storkey (<a href="#ref-antoniou2018train" role="doc-biblioref">2018</a>)</span>) applied a decoupling method to allow separate batch normalization statistics for each step of the inner loop, addressing the difficulty of handling statistics like mean and variance for Batch Normalization performed internally during the inner loop in the original MAML. This effort aimed to mitigate the instability caused by mixing statistics between steps. Additionally, instead of a fixed learning rate, it applied meta-learning to allow separate learning rates per layer or different learning rates per parameter, enabling detailed application according to the learning stage.</p>
+<p>The last method introduced was research conducted to improve expressivity by receiving a separate <strong>Context Variable</strong> as input. This idea applies the concept of the Task Descriptor <span class="math inline">\(z_i\)</span> introduced in previous Multi-task Learning discussions. To solve the instability problem that arises when updating all given parameters given a new, untrained task in MAML, an additional context vector capable of containing task information was added besides the existing parameter <span class="math inline">\(\theta\)</span>. Thus, by updating this variable in the internal inner loop, it helps the model adjust the bias according to the task. The method called <strong>CAVIA</strong> (<span class="citation" data-cites="zintgraf2019fast">Zintgraf et al. (<a href="#ref-zintgraf2019fast" role="doc-biblioref">2019</a>)</span>), introduced just a moment ago, is also a case of utilizing context variables similarly; the “specific condition” mentioned briefly referred to these context parameters. Therefore, the method involves separating and training only the context parameters, not the entire model’s parameters, during the inner loop execution. This significantly reduces the number of parameters to be trained in the inner loop and allows for more stable learning because the entire model is not updated.</p>
+<p>Consequently, the core element of all the methods introduced above can be seen as resolving the instability that can occur when performing optimization multiple times through several tricks.</p>
+</section><section id="computation-memory-intensive-cost" class="level3"><h3 class="anchored" data-anchor-id="computation-memory-intensive-cost">Computation &amp; Memory-intensive cost</h3>
+<p>In MAML, since backpropagation is performed along the optimization path of the inner-loop, memory usage and computational cost increase dramatically as the number of steps increases. Several papers introducing methods to alleviate this issue were also discussed.</p>
+<p>The first idea involves approximating the Hessian Matrix calculation step mentioned earlier. The professor actually shared an anecdote regarding this: at the time she was implementing the MAML architecture, a bug in TensorFlow caused the term <span class="math inline">\(\frac{d \phi_i}{d \theta}\)</span>, which should have been explicitly calculated, to be approximated as the identity matrix <span class="math inline">\(I\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Looking at the <a href="https://github.com/cbfinn/maml/blob/a7f45f1bcd7457fe97b227a21e89b8a82cc5fa49/special_grads.py#L6">code</a>, it appears that separate ops were defined to calculate the Hessian matrix, which was not implemented in TensorFlow at the time.</p>
+</div>
+</div>
+<p>Surprisingly, it was confirmed that using the Hessian matrix approximated by first-order derivatives works well for simple few-shot learning problems. As mentioned earlier, this was referred to as <strong>First-Order MAML</strong> in <span class="citation" data-cites="finn2017model">Finn, Abbeel, and Levine (<a href="#ref-finn2017model" role="doc-biblioref">2017</a>)</span>. While it did not perform well on complex tasks, this concept evolved into <strong>Reptile</strong> (<span class="citation" data-cites="nichol2018first">Nichol, Achiam, and Schulman (<a href="#ref-nichol2018first" role="doc-biblioref">2018</a>)</span>). This algorithm moves the initial parameters in the direction of the vector difference between the starting point <span class="math inline">\(\theta\)</span> and the endpoint <span class="math inline">\(\phi\)</span> obtained after performing the inner-loop multiple times, demonstrating generalization performance.</p>
+<p>The approach of optimizing only the parameters of the last layer (Head), previously introduced as a method to resolve training instability, can also be viewed from the perspective of reducing computational cost. In the method called <strong>R2-D2</strong>, introduced in <span class="citation" data-cites="bertinetto2018meta">Bertinetto et al. (<a href="#ref-bertinetto2018meta" role="doc-biblioref">2018</a>)</span>, the feature extraction mechanism is pre-learned via the outer-loop. When a new task arrives, these features are utilized for rapid adaptation. The unique aspect of this paper is that it replaces the process of finding optimal values via iterative gradient descent with a method that obtains a <strong>closed-form solution</strong>, such as Ridge Regression. This allows for the calculation of task-appropriate parameters <span class="math inline">\(\phi_i^*\)</span> via a single matrix operation, eliminating the need for multiple steps through iterative loops.</p>
+<p>Similarly, the <strong>MetaOptNet</strong> method introduced in <span class="citation" data-cites="lee2019meta">Lee et al. (<a href="#ref-lee2019meta" role="doc-biblioref">2019</a>)</span> also updates parameters only for the last layer. However, this paper utilized <strong>Support Vector Machine (SVM)</strong> as the method for finding optimal values. Since SVM is fundamentally an algorithm that finds a Global Optimum through Convex Optimization, utilizing optimization algorithms (like a QP Solver) allows for finding values in a form similar to a closed-form solution, much like Ridge Regression. Both <strong>R2-D2</strong> and <strong>MetaOptNet</strong> can be viewed as hybrid approaches that combine the expressiveness of deep learning with the efficiency of traditional machine learning.</p>
+<p>Finally, the introduced <strong>Implicit MAML (iMAML)</strong> method (<span class="citation" data-cites="rajeswaran2019meta">Rajeswaran et al. (<a href="#ref-rajeswaran2019meta" role="doc-biblioref">2019</a>)</span>) adopted a mathematically precise approach to calculating the meta-gradient for initial parameters by utilizing the mathematical theorem known as the <a href="https://en.wikipedia.org/wiki/Implicit_function_theorem"><strong>Implicit Function Theorem</strong></a> to reduce computational costs. This allows memory usage, which typically spikes during the inner-loop, to be kept constant, thereby enabling the extension of calculations to hundreds of gradient steps.</p>
+</section></section><section id="case-study---meta-learning-for-few-shot-land-cover-classification" class="level2"><h2 class="anchored" data-anchor-id="case-study---meta-learning-for-few-shot-land-cover-classification">Case Study - Meta-Learning for Few-Shot Land Cover Classification</h2>
+<p>In the final section on Case Studies, the lecture introduced an application of Meta Learning for Few-shot Land Cover Classification, presented at the <a href="https://www.grss-ieee.org/wp-content/uploads/earthvision2020/">EarthVision Workshop</a> during CVPR 2020 (<span class="citation" data-cites="Russwurm_2020_CVPR_Workshops">Russwurm et al. (<a href="#ref-Russwurm_2020_CVPR_Workshops" role="doc-biblioref">2020</a>)</span>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./images/33p_land_cover_classification.png" class="img-fluid figure-img"></p>
+<figcaption>Land Cover Classification</figcaption></figure>
+</div>
+<p>The problem addressed in this paper was to classify satellite imagery into categories such as Urban or Agriculture using public datasets like SEN12MS (<span class="citation" data-cites="schmitt2019sen12ms">Schmitt et al. (<a href="#ref-schmitt2019sen12ms" role="doc-biblioref">2019</a>)</span>) and DeepGlobe (<span class="citation" data-cites="demir2018deepglobe">Demir et al. (<a href="#ref-demir2018deepglobe" role="doc-biblioref">2018</a>)</span>). However, utilizing these datasets in practice presents realistic challenges. Since satellite images are used directly, the process of labeling each pixel to indicate land type is both costly and time-consuming. Furthermore, the appearance of land varies across different regions of the world, leading to statistical <strong>Distribution Shift</strong>.</p>
+<p>To address this, the authors proposed redefining the problem as a Few-shot Learning problem and solving it using meta-learning. Here, the task is to classify images taken from various regions. The goal was to train a model capable of quick adaptation, allowing it to classify new regional data according to local characteristics by observing only a few examples (Few-shot) from that new region, leveraging diverse regional data and images during training.</p>
+<div id="fig-datasets" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-datasets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-SEN12MS" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/35p_sen12ms.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SEN12MS
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-DeepGlobe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/36p_deepglobe.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) DeepGlobe
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-datasets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 5
+</figcaption></figure>
+</div>
+<p>As shown in <a href="#fig-SEN12MS" class="quarto-xref">Figure 5 (a)</a>, the SEN12MS dataset contains metadata with geographical information, allowing for clear distinction between regions. This enabled the formulation of a 2-way 2-shot classification task—classifying two classes based on just two images—as an example. On the other hand, the DeepGlobe dataset shown in <a href="#fig-DeepGlobe" class="quarto-xref">Figure 5 (b)</a> lacks metadata. Therefore, clustering was used to arbitrarily distinguish regions to verify how well segmentation on given images could be performed.</p>
+<p>Consequently, the Meta Learning framework was constructed as follows, and performance was evaluated against other baselines.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Meta-training data: } &amp; \{\mathcal{D}_1, \dots, \mathcal{D}_T \} \\
+\text{Meta-test time: } &amp; \mathcal{D}^{tr}_j \text{(small amount of data from new region)} \\
+&amp; \text{(meta-test training set / meta-test support set)}
+\end{aligned}
+\]</span></p>
+<p>The baselines for comparison were set as follows:</p>
+<ul>
+<li>
+<strong>Random Initialization</strong> - Training from scratch using the new region data <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> without any pre-training.</li>
+<li>
+<strong>Pre-train</strong> - Pre-training on <span class="math inline">\(\mathcal{D}_1 \cup \dots \cup \mathcal{D}_T\)</span>, followed by fine-tuning with <span class="math inline">\(\mathcal{D}^{tr}_j\)</span>.</li>
+<li>
+<strong>MAML</strong> - Performing meta-training on <span class="math inline">\(\{\mathcal{D}_1, \dots, \mathcal{D}_T \}\)</span> using MAML, followed by adaptation with <span class="math inline">\(\mathcal{D}^{tr}_j\)</span>.</li>
+</ul>
+<p>The results are shown in <a href="#fig-results" class="quarto-xref">Figure 6</a>.</p>
+<div id="fig-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/37p_result_meta_learning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 6: result of meta learning
+</figcaption></figure>
+</div>
+<p>For SEN12MS, where geographical information is explicitly provided in the dataset, MAML clearly demonstrated superior performance compared to other methods, confirming that it is optimized to adapt quickly to new environments. Of course, in the zero-shot scenario—where unseen data is introduced without any gradient updates—the Pre-train model outperformed MAML. This is because the Pre-train model learned the average features of the regions. However, starting from the 1-shot case where a small amount of data becomes available, MAML’s accuracy increased rapidly. Regarding this, it was noted that since MAML provides an initialization optimized for adaptation, its performance might be lower than that of a standard pre-trained model in the absence of additional training (adaptation).</p>
+<p>Similarly, for the DeepGlobe dataset used to evaluate segmentation accuracy, it was confirmed that MAML outperformed other methodologies even when arbitrary information was assigned via clustering.</p>
+</section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In this post, we covered the lecture focusing on the major topic of <strong>Optimization-based Meta Learning</strong>. While <strong>Black-Box Adaptation</strong>, discussed in the previous chapter, involves a Black-Box neural network learning an algorithm directly from training data, <strong>Optimization-based Adaptation</strong> is structured as a type of <strong>Bi-level optimization</strong>. It seeks initial parameters capable of fast adaptation to various tasks through inner and outer loops. Notably, the term <strong>Model-Agnostic</strong> is used because optimization is performed via gradient descent regardless of the model’s architecture. The former approach has high expressivity but suffers from a sharp decline in performance in Out-of-Distribution (OOD) cases where the test data distribution differs from the training data. In contrast, the latter is characterized by its ability to perform well in extrapolation through its internal fine-tuning process, even when OOD data is introduced.</p>
+<p>We introduced <strong>Model-Agnostic Meta-Learning (MAML)</strong>, a representative algorithm for Optimization-Based Meta Learning. Due to nested gradient descent steps, it requires the computationally intensive calculation of the Hessian Matrix. To address this efficiently, we demonstrated the derivation of the <strong>Hessian-Vector Product (HVP)</strong> calculation method.</p>
+<p>While MAML demonstrates good performance in problems like Few-shot Learning, it has inherent limitations regarding training instability and high computational costs. Therefore, the lecture also introduced various research efforts attempting to overcome these issues, such as <strong>AutoMeta</strong>, <strong>Reptile</strong>, and <strong>R2-D2</strong>.</p>
+<p>Finally, through a case study applying MAML to Few-shot image classification, we confirmed that Meta Learning demonstrates strong generalization capabilities, enabling fast adaptation even in realistic, real-world problems.</p>
+
+
+
+</section><div id="quarto-appendix" class="default">
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-antoniou2018train" class="csl-entry" role="listitem">
+Antoniou, Antreas, Harrison Edwards, and Amos Storkey. 2018. <span>“How to Train Your MAML.”</span> <em>arXiv Preprint arXiv:1810.09502</em>.
+</div>
+<div id="ref-behl2019alpha" class="csl-entry" role="listitem">
+Behl, Harkirat Singh, Atılım Güneş Baydin, and Philip HS Torr. 2019. <span>“Alpha Maml: Adaptive Model-Agnostic Meta-Learning.”</span> <em>arXiv Preprint arXiv:1905.07435</em>.
+</div>
+<div id="ref-bertinetto2018meta" class="csl-entry" role="listitem">
+Bertinetto, Luca, Joao F Henriques, Philip HS Torr, and Andrea Vedaldi. 2018. <span>“Meta-Learning with Differentiable Closed-Form Solvers.”</span> <em>arXiv Preprint arXiv:1805.08136</em>.
+</div>
+<div id="ref-demir2018deepglobe" class="csl-entry" role="listitem">
+Demir, Ilke, Krzysztof Koperski, David Lindenbaum, Guan Pang, Jing Huang, Saikat Basu, Forest Hughes, Devis Tuia, and Ramesh Raskar. 2018. <span>“Deepglobe 2018: A Challenge to Parse the Earth Through Satellite Images.”</span> In <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition Workshops</em>, 172–81.
+</div>
+<div id="ref-Finn:EECS-2018-105" class="csl-entry" role="listitem">
+Finn, Chelsea. 2018. <span>“Learning to Learn with Gradients.”</span> PhD thesis, EECS Department, University of California, Berkeley. <a href="http://www2.eecs.berkeley.edu/Pubs/TechRpts/2018/EECS-2018-105.html">http://www2.eecs.berkeley.edu/Pubs/TechRpts/2018/EECS-2018-105.html</a>.
+</div>
+<div id="ref-finn2017model" class="csl-entry" role="listitem">
+Finn, Chelsea, Pieter Abbeel, and Sergey Levine. 2017. <span>“Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks.”</span> In <em>International Conference on Machine Learning</em>, 1126–35. PMLR.
+</div>
+<div id="ref-finn2017meta" class="csl-entry" role="listitem">
+Finn, Chelsea, and Sergey Levine. 2017. <span>“Meta-Learning and Universality: Deep Representations and Gradient Descent Can Approximate Any Learning Algorithm.”</span> <em>arXiv Preprint arXiv:1710.11622</em>.
+</div>
+<div id="ref-howard2018universal" class="csl-entry" role="listitem">
+Howard, Jeremy, and Sebastian Ruder. 2018. <span>“Universal Language Model Fine-Tuning for Text Classification.”</span> <em>arXiv Preprint arXiv:1801.06146</em>.
+</div>
+<div id="ref-kim2018auto" class="csl-entry" role="listitem">
+Kim, Jaehong, Sangyeul Lee, Sungwan Kim, Moonsu Cha, Jung Kwon Lee, Youngduck Choi, Yongseok Choi, Dong-Yeon Cho, and Jiwon Kim. 2018. <span>“Auto-Meta: Automated Gradient Based Meta Learner Search.”</span> <em>arXiv Preprint arXiv:1806.06927</em>.
+</div>
+<div id="ref-lee2019meta" class="csl-entry" role="listitem">
+Lee, Kwonjoon, Subhransu Maji, Avinash Ravichandran, and Stefano Soatto. 2019. <span>“Meta-Learning with Differentiable Convex Optimization.”</span> In <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</em>, 10657–65.
+</div>
+<div id="ref-li2017meta" class="csl-entry" role="listitem">
+Li, Zhenguo, Fengwei Zhou, Fei Chen, and Hang Li. 2017. <span>“Meta-Sgd: Learning to Learn Quickly for Few-Shot Learning.”</span> <em>arXiv Preprint arXiv:1707.09835</em>.
+</div>
+<div id="ref-mishra2017simple" class="csl-entry" role="listitem">
+Mishra, Nikhil, Mostafa Rohaninejad, Xi Chen, and Pieter Abbeel. 2017. <span>“A Simple Neural Attentive Meta-Learner.”</span> <em>arXiv Preprint arXiv:1707.03141</em>.
+</div>
+<div id="ref-pmlr-v70-munkhdalai17a" class="csl-entry" role="listitem">
+Munkhdalai, Tsendsuren, and Hong Yu. 2017. <span>“Meta Networks.”</span> In <em>Proceedings of the 34th International Conference on Machine Learning</em>, edited by Doina Precup and Yee Whye Teh, 70:2554–63. Proceedings of Machine Learning Research. PMLR. <a href="https://proceedings.mlr.press/v70/munkhdalai17a.html">https://proceedings.mlr.press/v70/munkhdalai17a.html</a>.
+</div>
+<div id="ref-nichol2018first" class="csl-entry" role="listitem">
+Nichol, Alex, Joshua Achiam, and John Schulman. 2018. <span>“On First-Order Meta-Learning Algorithms.”</span> <em>arXiv Preprint arXiv:1803.02999</em>.
+</div>
+<div id="ref-rajeswaran2019meta" class="csl-entry" role="listitem">
+Rajeswaran, Aravind, Chelsea Finn, Sham M Kakade, and Sergey Levine. 2019. <span>“Meta-Learning with Implicit Gradients.”</span> <em>Advances in Neural Information Processing Systems</em> 32.
+</div>
+<div id="ref-ravi2017optimization" class="csl-entry" role="listitem">
+Ravi, Sachin, and Hugo Larochelle. 2017. <span>“Optimization as a Model for Few-Shot Learning.”</span> In <em>International Conference on Learning Representations</em>. <a href="https://openreview.net/forum?id=rJY0-Kcll">https://openreview.net/forum?id=rJY0-Kcll</a>.
+</div>
+<div id="ref-Russwurm_2020_CVPR_Workshops" class="csl-entry" role="listitem">
+Russwurm, Marc, Sherrie Wang, Marco Korner, and David Lobell. 2020. <span>“Meta-Learning for Few-Shot Land Cover Classification.”</span> In <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops</em>.
+</div>
+<div id="ref-schmitt2019sen12ms" class="csl-entry" role="listitem">
+Schmitt, Michael, Lloyd Haydn Hughes, Chunping Qiu, and Xiao Xiang Zhu. 2019. <span>“SEN12MS–a Curated Dataset of Georeferenced Multi-Spectral Sentinel-1/2 Imagery for Deep Learning and Data Fusion.”</span> <em>arXiv Preprint arXiv:1906.07789</em>.
+</div>
+<div id="ref-zhou2018deep" class="csl-entry" role="listitem">
+Zhou, Fengwei, Bin Wu, and Zhenguo Li. 2018. <span>“Deep Meta-Learning: Learning to Learn in the Concept Space.”</span> <em>arXiv Preprint arXiv:1802.03596</em>.
+</div>
+<div id="ref-zintgraf2019fast" class="csl-entry" role="listitem">
+Zintgraf, Luisa, Kyriacos Shiarli, Vitaly Kurin, Katja Hofmann, and Shimon Whiteson. 2019. <span>“Fast Context Adaptation via Meta-Learning.”</span> In <em>International Conference on Machine Learning</em>, 7693–7702. PMLR.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section>
+</div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+</body>
+</html>
