@@ -388,7 +388,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p>이 알고리즘의 이름에 대해서 설명했는데, <strong>Model-Agnostic</strong> 이란 현재의 강의에서 다뤄지는 부분 중에서 RNN이나 Transformer같이 모델의 구조에 대해서 설명한 부분없이, 온전히 모델의 gradient를 통해서 update를 진행하고 있다는 점에서 나온 것이다. 즉, 모델의 구조와는 상관없이 해당 강의에서 설명하는 opimization 과정에만 초점이 맞춰져 있는 것이다.</p>
 <p>부연적으로 MAML에 최적화된 모델 구조를 탐색하는 과정에 대한 논문 (<span class="citation" data-cites="kim2018auto">Kim 기타 (<a href="#ref-kim2018auto" role="doc-biblioref">2018</a>)</span>) 도 소개했는데, 해당 논문에서는 fast adaptation할 수 있는 초기 parameter를 찾는 MAML에 최적화된 구조를 찾을 수 있도록 Neural Architecture Search(NAS)이라는 AutoML 기반의 방식을 적용한 결과를 공유했다. MiniImageNet을 대상으로 기본적인 모델 구조에서의 MAML의 결과와 대비하여 NAS를 적용하여 찾은 최적화된 모델에서의 MAML을 수행하면 정확도가 대략 11%정도 상승하였는데, 흥미로운 부분은 일반적으로 딥러닝이 잘된다고 알려져있는 모델의 폭이 넓은 구조가 아니라, NAS를 통해서 찾은 모델은 폭이 좁고 깊은 (deep &amp; narrow) 모델이 Meta Learning에 최적화된 모델이라는 것이다. 다시 말하면, 기존의 통념과는 다르지만, 강의에서 다루는 Meta Learning task에서는 상식과는 다른 구조가 오히려 adaptation에 유리하다는 점을 시사한 것이다.</p>
 <p>지금까지 다룬 Optimization-Based Adaptation을 알고리즘으로 풀어쓰면 다음과 같다.</p>
-<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-no-end="false" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-line-number="true" data-line-number-punc=":">
+<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Optimization-Based Adaptation} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}^{tr}_i, \mathcal{D}^{ts}_i$ from $\mathcal{D}_i$ \State Optimize $\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)$ \State Update $\theta$ using $\nabla_{\theta} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -517,7 +517,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./images/33p_land_cover_classification.png" class="img-fluid figure-img"></p>
-<figcaption>Land Cover Clasification</figcaption>
+<figcaption>Land Cover Classification</figcaption>
 </figure>
 </div>
 <p>해당 논문에서 풀고자 했던 문제는 공개되어 있는 위성에서 찍은 땅 이미지가 도심지역(Urban)인지, 농장지대(Agriculture)인지 등을 구분해내는 문제였고, 이때 공개되어 있는 데이터셋인 SEN12MS (<span class="citation" data-cites="schmitt2019sen12ms">Schmitt 기타 (<a href="#ref-schmitt2019sen12ms" role="doc-biblioref">2019</a>)</span>) 와 DeepGlobe (<span class="citation" data-cites="demir2018deepglobe">Demir 기타 (<a href="#ref-demir2018deepglobe" role="doc-biblioref">2018</a>)</span>) 를 사용했다. 그런데 실제 해당 데이터셋을 사용하고 활용할 때, 현실적인 문제를 겪는데, 인공위성 이미지를 직접적으로 활용하다 보니 이미지의 각 픽셀이 어떤 땅인지 표시하는 작업 자체가 비용과 시간이 많이 든다. 또한 전 세계의 지역마다 땅의 생김새가 다른 문제, 통계학적으로 보면 Distribution Shift가 발생하게 된다.</p>
@@ -563,7 +563,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-SEN12MS" class="quarto-xref">그림&nbsp;5 (a)</a> 에는 지리적 정보를 담은 metadata가 있어서, 명확하게 지역을 구분지을수 있었고, 이를 통해서 2-way 2-shot classification task, 즉 2개의 이미지만 보고 2개의 class를 구분하는 task를 수행하는 예시도 같이 공유했다. 반면 <a href="#fig-DeepGlobe" class="quarto-xref">그림&nbsp;5 (b)</a> 에서 소개된 DeepGlobe에는 metadaata가 없어서, Clustering을 사용해서 임의의 지역을 구분해서 주어진 image에 대한 segmentation이 잘 수행되는지를 확인했다.</p>
+<p><a href="#fig-SEN12MS" class="quarto-xref">그림&nbsp;5 (a)</a> 에는 지리적 정보를 담은 metadata가 있어서, 명확하게 지역을 구분지을수 있었고, 이를 통해서 2-way 2-shot classification task, 즉 2개의 이미지만 보고 2개의 class를 구분하는 task를 수행하는 예시도 같이 공유했다. 반면 <a href="#fig-DeepGlobe" class="quarto-xref">그림&nbsp;5 (b)</a> 에서 소개된 DeepGlobe에는 metadata가 없어서, Clustering을 사용해서 임의의 지역을 구분해서 주어진 image에 대한 segmentation이 잘 수행되는지를 확인했다.</p>
 <p>그래서 결과적으로 다음과 같이 Meta Learning 프레임워크를 구성하고 다른 비교군과의 성능 평가를 진행했다.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -574,7 +574,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 \]</span></p>
 <p>이 때 비교군으로는</p>
 <ul>
-<li><strong>Random Initialization</strong> - 새로운 지역 데이터 <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> 로 처음부터 학습하는 방식</li>
+<li><strong>Random Initialization</strong> - 사전 학습 없이 새로운 지역 데이터 <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> 로 처음부터 학습하는 방식</li>
 <li><strong>Pre-train</strong> - <span class="math inline">\(\mathcal{D}_1 \cup \dots \cup \mathcal{D}_T\)</span> 으로 미리 학습시킨 뒤, <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> 로 fine-tuning한 것</li>
 <li><strong>MAML</strong> - MAML을 활용하여 <span class="math inline">\(\{\mathcal{D}_1, \dots, \mathcal{D}_T \}\)</span> 를 meta-training한 후, <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> 로 adaptation시킨 것</li>
 </ul>
@@ -589,7 +589,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 </figcaption>
 </figure>
 </div>
-<p>확실히 지리적 정보가 데이터셋에서 제공되는 SEN12MS에서는 MAML방식이 다른 방식들에 비해서 좋은 성능을 보여주며, 새로운 환경에 빠르게 적응하도록 최적화되었음 확인할 수 있었다. 물론 전혀 학습되지 않은 데이터가 들어온 케이스인 zero-shot 경우에는 MAML보다 Pre-train 모델이 성능이 좋았지만, 이는 지역의 평균적인 특징이 pre-train을 통해서 학습된 케이스였고, 데이터가 조금씩 들어오는 1-shot 케이스부터는 MAML의 정확도가 급격히 올라갔다. Segmentation 정확도를 확인하는 DeepGlobe 데이터셋에 대해서도 clustering을 통한 임의의 정보가 부여될 경우, MAML 의 성능이 다른 방법론보다 좋게 나온 것을 확인할 수 있다.</p>
+<p>확실히 지리적 정보가 데이터셋에서 제공되는 SEN12MS에서는 MAML방식이 다른 방식들에 비해서 좋은 성능을 보여주며, 새로운 환경에 빠르게 적응하도록 최적화되었음 확인할 수 있었다. 물론 전혀 학습되지 않은 데이터가 들어온 케이스인 zero-shot 경우에는 MAML보다 Pre-train 모델이 성능이 좋았지만, 이는 지역의 평균적인 특징이 pre-train을 통해서 학습된 케이스였고, 데이터가 조금씩 들어오는 1-shot 케이스부터는 MAML의 정확도가 급격히 올라갔다. 이 부분에서 MAML은 Adaptation을 위해 최적화된 초기값이므로, 추가 학습(Adaptation) 없이는 일반적인 Pre-training 모델보다 성능이 낮을 수 있음을 언급했다. Segmentation 정확도를 확인하는 DeepGlobe 데이터셋에 대해서도 clustering을 통한 임의의 정보가 부여될 경우, MAML 의 성능이 다른 방법론보다 좋게 나온 것을 확인할 수 있다.</p>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
