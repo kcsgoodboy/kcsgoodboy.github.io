@@ -63,8 +63,8 @@ div.csl-indent {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
 <link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -104,6 +104,7 @@ gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
     <style type="text/css">
     .ps-root .ps-algorithm {
@@ -387,7 +388,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p>이 알고리즘의 이름에 대해서 설명했는데, <strong>Model-Agnostic</strong> 이란 현재의 강의에서 다뤄지는 부분 중에서 RNN이나 Transformer같이 모델의 구조에 대해서 설명한 부분없이, 온전히 모델의 gradient를 통해서 update를 진행하고 있다는 점에서 나온 것이다. 즉, 모델의 구조와는 상관없이 해당 강의에서 설명하는 opimization 과정에만 초점이 맞춰져 있는 것이다.</p>
 <p>부연적으로 MAML에 최적화된 모델 구조를 탐색하는 과정에 대한 논문 (<span class="citation" data-cites="kim2018auto">Kim 기타 (<a href="#ref-kim2018auto" role="doc-biblioref">2018</a>)</span>) 도 소개했는데, 해당 논문에서는 fast adaptation할 수 있는 초기 parameter를 찾는 MAML에 최적화된 구조를 찾을 수 있도록 Neural Architecture Search(NAS)이라는 AutoML 기반의 방식을 적용한 결과를 공유했다. MiniImageNet을 대상으로 기본적인 모델 구조에서의 MAML의 결과와 대비하여 NAS를 적용하여 찾은 최적화된 모델에서의 MAML을 수행하면 정확도가 대략 11%정도 상승하였는데, 흥미로운 부분은 일반적으로 딥러닝이 잘된다고 알려져있는 모델의 폭이 넓은 구조가 아니라, NAS를 통해서 찾은 모델은 폭이 좁고 깊은 (deep &amp; narrow) 모델이 Meta Learning에 최적화된 모델이라는 것이다. 다시 말하면, 기존의 통념과는 다르지만, 강의에서 다루는 Meta Learning task에서는 상식과는 다른 구조가 오히려 adaptation에 유리하다는 점을 시사한 것이다.</p>
 <p>지금까지 다룬 Optimization-Based Adaptation을 알고리즘으로 풀어쓰면 다음과 같다.</p>
-<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number="true" data-comment-delimiter="//">
+<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-no-end="false" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Optimization-Based Adaptation} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}^{tr}_i, \mathcal{D}^{ts}_i$ from $\mathcal{D}_i$ \State Optimize $\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)$ \State Update $\theta$ using $\nabla_{\theta} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -512,11 +513,90 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 </section>
 <section id="case-study---meta-learning-for-few-shot-land-cover-classification" class="level2">
 <h2 class="anchored" data-anchor-id="case-study---meta-learning-for-few-shot-land-cover-classification">Case Study - Meta-Learning for Few-Shot Land Cover Classification</h2>
-<p>TBD</p>
+<p>마지막 내용인 Case Study에서는 CVPR 2020에서 진행되었던 <a href="https://www.grss-ieee.org/wp-content/uploads/earthvision2020/">EarthVision Workshop</a>에서 Meta Learning을 활용해 Few-shot Land Cover Classification을 한 것에 대해 소개했다. (<span class="citation" data-cites="Russwurm_2020_CVPR_Workshops">Russwurm 기타 (<a href="#ref-Russwurm_2020_CVPR_Workshops" role="doc-biblioref">2020</a>)</span>)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/33p_land_cover_classification.png" class="img-fluid figure-img"></p>
+<figcaption>Land Cover Clasification</figcaption>
+</figure>
+</div>
+<p>해당 논문에서 풀고자 했던 문제는 공개되어 있는 위성에서 찍은 땅 이미지가 도심지역(Urban)인지, 농장지대(Agriculture)인지 등을 구분해내는 문제였고, 이때 공개되어 있는 데이터셋인 SEN12MS (<span class="citation" data-cites="schmitt2019sen12ms">Schmitt 기타 (<a href="#ref-schmitt2019sen12ms" role="doc-biblioref">2019</a>)</span>) 와 DeepGlobe (<span class="citation" data-cites="demir2018deepglobe">Demir 기타 (<a href="#ref-demir2018deepglobe" role="doc-biblioref">2018</a>)</span>) 를 사용했다. 그런데 실제 해당 데이터셋을 사용하고 활용할 때, 현실적인 문제를 겪는데, 인공위성 이미지를 직접적으로 활용하다 보니 이미지의 각 픽셀이 어떤 땅인지 표시하는 작업 자체가 비용과 시간이 많이 든다. 또한 전 세계의 지역마다 땅의 생김새가 다른 문제, 통계학적으로 보면 Distribution Shift가 발생하게 된다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/34p_Framing_meta_Learning.png" class="img-fluid figure-img"></p>
+<figcaption>Framing as a meta-learning problem</figcaption>
+</figure>
+</div>
+<p>그래서 저자들이 생각한 방법은 해당 문제를 일종의 Few-shot Learning 문제로 재정의하고, 이를 meta learning을 활용해 해결하고자 한 것이다. 여기에서 Task는 각 지역에서 찍은 이미지를 분류하는 것이고, 다양한 지역 데이터와 이미지를 통해 새로운 지역의 데이터를 아주 조금(Few-shot)만 봐도, 그 지역의 특성에 맞게 빠르게 적응해서 분류를 할수 있는 모델을 학습시키고자 했다.</p>
+<div id="fig-datasets" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-datasets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-SEN12MS" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/35p_sen12ms.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) SEN12MS
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-DeepGlobe" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/36p_deepglobe.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) DeepGlobe
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-datasets-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;5
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-SEN12MS" class="quarto-xref">그림&nbsp;5 (a)</a> 에는 지리적 정보를 담은 metadata가 있어서, 명확하게 지역을 구분지을수 있었고, 이를 통해서 2-way 2-shot classification task, 즉 2개의 이미지만 보고 2개의 class를 구분하는 task를 수행하는 예시도 같이 공유했다. 반면 <a href="#fig-DeepGlobe" class="quarto-xref">그림&nbsp;5 (b)</a> 에서 소개된 DeepGlobe에는 metadaata가 없어서, Clustering을 사용해서 임의의 지역을 구분해서 주어진 image에 대한 segmentation이 잘 수행되는지를 확인했다.</p>
+<p>그래서 결과적으로 다음과 같이 Meta Learning 프레임워크를 구성하고 다른 비교군과의 성능 평가를 진행했다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Meta-training data: } &amp; \{\mathcal{D}_1, \dots, \mathcal{D}_T \} \\
+\text{Meta-test time: } &amp; \mathcal{D}^{tr}_j \text{(small amount of data from new region)} \\
+&amp; \text{(meta-test training set / meta-test support set)}
+\end{aligned}
+\]</span></p>
+<p>이 때 비교군으로는</p>
+<ul>
+<li><strong>Random Initialization</strong> - 새로운 지역 데이터 <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> 로 처음부터 학습하는 방식</li>
+<li><strong>Pre-train</strong> - <span class="math inline">\(\mathcal{D}_1 \cup \dots \cup \mathcal{D}_T\)</span> 으로 미리 학습시킨 뒤, <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> 로 fine-tuning한 것</li>
+<li><strong>MAML</strong> - MAML을 활용하여 <span class="math inline">\(\{\mathcal{D}_1, \dots, \mathcal{D}_T \}\)</span> 를 meta-training한 후, <span class="math inline">\(\mathcal{D}^{tr}_j\)</span> 로 adaptation시킨 것</li>
+</ul>
+<p>을 두었고, 이에 대한 결과는 <a href="#fig-results" class="quarto-xref">그림&nbsp;6</a> 와 같다.</p>
+<div id="fig-results" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/37p_result_meta_learning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;6: result of meta learning
+</figcaption>
+</figure>
+</div>
+<p>확실히 지리적 정보가 데이터셋에서 제공되는 SEN12MS에서는 MAML방식이 다른 방식들에 비해서 좋은 성능을 보여주며, 새로운 환경에 빠르게 적응하도록 최적화되었음 확인할 수 있었다. 물론 전혀 학습되지 않은 데이터가 들어온 케이스인 zero-shot 경우에는 MAML보다 Pre-train 모델이 성능이 좋았지만, 이는 지역의 평균적인 특징이 pre-train을 통해서 학습된 케이스였고, 데이터가 조금씩 들어오는 1-shot 케이스부터는 MAML의 정확도가 급격히 올라갔다. Segmentation 정확도를 확인하는 DeepGlobe 데이터셋에 대해서도 clustering을 통한 임의의 정보가 부여될 경우, MAML 의 성능이 다른 방법론보다 좋게 나온 것을 확인할 수 있다.</p>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>TBD</p>
+<p>이번 포스트에서 다룬 강의에서는 큰 주제였던 <strong>Optimization-based Meta Learning</strong>에 대해서 설명했단,. 이전 장에서 설명했던 <strong>Black-Box Adaptation</strong>이 Black-Box 신경망이 학습 데이터로부터 알고리즘을 학습하는 방식이라면, <strong>Optimization-based Adaptation</strong>은 inner-loop와 outer-loop를 통해서 다양한 task에 빠르게 adaptation할 수 있는 초기 parameter를 찾는 일종의 <strong>Bi-level optimization</strong> 구조로 되어 있다. 특히 모델의 구조와 상관없이 gradient descent를 통해서 최적화가 이뤄지기 때문에 <strong>Model-Agnostic</strong>이라는 표현이 같이 소개된다. 전자의 경우는 표현력이 좋지만, 테스트 데이터의 분포가 학습 데이터의 분포와 다른 Out-of-Distribution 케이스에서는 성능이 급격이 떨어지는 단점이 있으며, 후자의 경우에는 OoD 데이터가 들어와도 내부의 Fine-tuning 과정을 통해서 Extrapolation이 잘 이뤄진다는 특징을 가진다.</p>
+<p>Optimization-Based Meta Learning의 대표적인 알고리즘인 <strong>Model Agnostic Meta Learning (MAML)</strong> 에 대해서 소개했으며, gradient descent가 중첩되면서 연산량이 많이 필요한 Hessian Matrix의 계산이 필요했고, 이를 쉽게 계산하기 위해서 <strong>Hessian-Vector Product (HVP)</strong> 의 계산방법에 대해서 증명했다.</p>
+<p>MAML은 Few-shot Learning과 같은 문제에서 좋은 성능을 보여주기는 하지만, 학습의 불안정성과 computation cost가 크다는 한계가 내재되어 있어서, 강의를 통해서 해당 부분을 극복하기 위해 시도된 <strong>AutoMeta</strong>나 <strong>Reptile</strong>, <strong>R2-D2</strong>같은 다양한 연구에 대해서 소개하기도 했다.</p>
+<p>마지막으로 실제로 Few-shot image classification에서 MAML이 적용된 case study를 통해서 Meta Learning이 실제 현실적인 문제에서도 빠르게 적응할 수 있는 강력한 일반화 성능을 보여주는 것을 확인할 수 있었다.</p>
 
 
 
@@ -531,6 +611,9 @@ Behl, Harkirat Singh, Atılım Güneş Baydin, 와/과 Philip HS Torr. 2019. <sp
 </div>
 <div id="ref-bertinetto2018meta" class="csl-entry" role="listitem">
 Bertinetto, Luca, Joao F Henriques, Philip HS Torr, 와/과 Andrea Vedaldi. 2018. <span>“Meta-learning with differentiable closed-form solvers”</span>. <em>arXiv preprint arXiv:1805.08136</em>.
+</div>
+<div id="ref-demir2018deepglobe" class="csl-entry" role="listitem">
+Demir, Ilke, Krzysztof Koperski, David Lindenbaum, Guan Pang, Jing Huang, Saikat Basu, Forest Hughes, Devis Tuia, 와/과 Ramesh Raskar. 2018. <span>“Deepglobe 2018: A challenge to parse the earth through satellite images”</span>. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition workshops</em>, 172–81.
 </div>
 <div id="ref-Finn:EECS-2018-105" class="csl-entry" role="listitem">
 Finn, Chelsea. 2018. <span>“Learning to Learn with Gradients”</span>. Phdthesis, EECS Department, University of California, Berkeley. <a href="http://www2.eecs.berkeley.edu/Pubs/TechRpts/2018/EECS-2018-105.html">http://www2.eecs.berkeley.edu/Pubs/TechRpts/2018/EECS-2018-105.html</a>.
@@ -567,6 +650,12 @@ Rajeswaran, Aravind, Chelsea Finn, Sham M Kakade, 와/과 Sergey Levine. 2019. <
 </div>
 <div id="ref-ravi2017optimization" class="csl-entry" role="listitem">
 Ravi, Sachin, 와/과 Hugo Larochelle. 2017. <span>“Optimization as a Model for Few-Shot Learning”</span>. In <em>International Conference on Learning Representations</em>. <a href="https://openreview.net/forum?id=rJY0-Kcll">https://openreview.net/forum?id=rJY0-Kcll</a>.
+</div>
+<div id="ref-Russwurm_2020_CVPR_Workshops" class="csl-entry" role="listitem">
+Russwurm, Marc, Sherrie Wang, Marco Korner, 와/과 David Lobell. 2020. <span>“Meta-Learning for Few-Shot Land Cover Classification”</span>. In <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops</em>.
+</div>
+<div id="ref-schmitt2019sen12ms" class="csl-entry" role="listitem">
+Schmitt, Michael, Lloyd Haydn Hughes, Chunping Qiu, 와/과 Xiao Xiang Zhu. 2019. <span>“SEN12MS–A curated dataset of georeferenced multi-spectral sentinel-1/2 imagery for deep learning and data fusion”</span>. <em>arXiv preprint arXiv:1906.07789</em>.
 </div>
 <div id="ref-zhou2018deep" class="csl-entry" role="listitem">
 Zhou, Fengwei, Bin Wu, 와/과 Zhenguo Li. 2018. <span>“Deep meta-learning: Learning to learn in the concept space”</span>. <em>arXiv preprint arXiv:1802.03596</em>.
