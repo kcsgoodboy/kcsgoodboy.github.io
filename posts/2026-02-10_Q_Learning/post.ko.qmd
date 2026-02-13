@@ -190,7 +190,7 @@ $$
 
 ::: {.callout-note title="Why Q, not V?"}
 
-강의에 나온 질문중에 "왜 Value function ($V$) 가 아닌 Q-function ($Q$) 를 사용했는가?"에 대한 내용이 나오고 교수도 이에 대한 설명을 했다. 사실 $V$ function이나 $Q$ function 모두 미래의 기대 보상을 나타낸다는 점에서는 비슷하지만, **"함수로부터 action을 결정하는 과정"*에서 차이가 있다고 언급하고 있다.
+강의에 나온 질문중에 "왜 Value function ($V$) 가 아닌 Q-function ($Q$) 를 사용했는가?"에 대한 내용이 나오고 교수도 이에 대한 설명을 했다. 사실 $V$ function이나 $Q$ function 모두 미래의 기대 보상을 나타낸다는 점에서는 비슷하지만, **"함수로부터 action을 결정하는 과정"**에서 차이가 있다고 언급하고 있다.
 
 만약 현재 State와 action에 대한 value function을 알 수 있다면, 앞에서 소개한 @eq-greedy-policy 를 통해서, 별도의 복잡한 계산없이 최적의 action을 찾을 수 있다. 즉 $Q$ Function을 통해서 어떤 action이 좋은지에 대한 정보를 이미 갖고 있는 셈이다. 이렇게 action을 결정하는 모델없이 value function을 통해서 action을 결정하는 방식을 **model-free**라고 표현한다.
 
@@ -200,7 +200,7 @@ $$
 
 ## What kind of data should we collect?
 
-Q-Learning의 장점이라고 할 수 있는 부분은 **Off-Policy** 라는 것이다. 앞의 Off-Policy Actor-Critic 부분에서 Soft Actor-Critic (SAC) 를 다룰때도 설명했던 내용이지만, 이 말은 현재의 policy가 쌓은 경험 ($(s, a, r, s')$) 이 아니더라도, 다른 policy가 쌓은 경험을 토대로 value function을 update하고 이에 기반한 $\pi^*$ 를 찾을 수 있다는 것이다. 물론 이 때 다른 policy는 보편적으로 학습된 policy가 아니라, 뭔가 다양한 state와 action에 대한 value를 표현할 수 있는, 쉽게 말해 이를 근사할 신경망에게 넣을 다양한 학습 데이터를 만들 exploration policy가 필요할 것이다. 가장 쉽게 생각해볼 수 있는 아이디어는 일정한 확률 ($\epsilon$) 로 임의의 action을 취하게 하는 것을 적용해볼 수 있는데, 이를 **Epsilon-Greedy** Exploration이라고 표현한다.
+Q-Learning의 장점이라고 할 수 있는 부분은 **Off-Policy** 라는 것이다. 앞의 Off-Policy Actor-Critic 부분에서 Soft Actor-Critic (SAC) 를 다룰때도 설명했던 내용이지만, 이 말은 현재의 policy가 쌓은 경험 ($(s, a, r, s')$) 뿐만 아니라, 과거의 모든 경험을 저장해 둔 Replay Buffer에서 무작위로 데이터를 샘플링하여 value function을 update하고 이에 기반한 $\pi^*$ 를 찾을 수 있다는 것이다. 이를 통해서 데이터 효율성을 극대화할 뿐만 아니라, 샘플간의 상관관계를 끊어주어 학습을 안정화하는데도 기여한다. 물론 이 때 과거의 경험을 수집한 다른 policy는 보편적으로 학습된 policy가 아니라, 뭔가 다양한 state와 action에 대한 value를 표현할 수 있는, 쉽게 말해 이를 근사할 신경망에게 넣을 다양한 학습 데이터를 만들 exploration policy가 필요할 것이다. 가장 쉽게 생각해볼 수 있는 아이디어는 일정한 확률 ($\epsilon$) 로 임의의 action을 취하게 하는 것을 적용해볼 수 있는데, 이를 **Epsilon-Greedy Exploration**이라고 표현한다.
 
 $$
 \pi(a_t \vert s_t) = 
@@ -210,6 +210,75 @@ $$
 \end{cases}
 $$
 
-그래서 처음에는 높은 $\epsilon$ 으로 정의해서 탐색을 하다가, 학습이 진행되는 시점에서는 Q function 에 따라 action을 취하게끔 $\epsilon$ 을 감가시키는 방법으로 많이 사용된다. 혹은 
+그래서 처음에는 높은 $\epsilon$ 으로 정의해서 탐색을 하다가, 학습이 진행되는 시점에서는 Q function 에 따라 action을 취하게끔 $\epsilon$ 을 감가시키는 방법으로 많이 사용된다. 
 
+다음으로 많이 활용되는 탐색 아이디어에는 Softmax Eploration이라고 표현하는 **Boltzmann Explortion** 이란 전략이 있다. 앞에서 소개한 Epsilon Greedy 방식은 탐색을 수행할 때, 모든 비-최적(Non-greedy) 행동을 동등하게 취하는 경향이 있다. 즉, "좋고 나쁜 정도"를 구분하지 않고 똑같이 취급한다는 단점이 있는데, Boltzmann 방식은 아래의 수식 @eq-bolzmann-exploration 에 따라 action을 결정한다.
 
+$$
+\pi(a \vert s) \approx \frac{\text{exp}(Q(s, a))}{\sum_{a'} \text{exp}(Q(s, a'))}
+$${#eq-bolzmann-exploration}
+
+그런데 어디에서 많이 본 수식처럼 보이겠지만, 사실 현재 Q function에 대한 Softmax function이다. 이렇게 일종의 정규화 과정을 거치게 되면 현재 주어진 Q value 중 어떤 값이 크고 낮은지를 확률값으로 표현할 수 있게 된다. 결과적으로 Q-function을 확률분포로 만든 후, 이에 따라 action을 선택하기 때문에, Epsilon Greedy처럼 완전히 무작위로 action을 취하는게 아니라 "가망이 있어 보이는" action 위주로 탐색을 수행하기 때문에 조금 더 효율적으로 학습을 수행할 수 있다. 대신 한가지 구현상의 어려운 부분도 있는데, softmax function을 확률 분포로 표현하기 위해서는 각각의 값들이 명확히 정의되어야 하고, 그 말은 즉 discrete하게 action이 정의되어 있는 환경에서는 구현하기가 쉽겠지만, continuous action space를 가지는 환경에서는 위와 같은 확률 계산, 특히 모든 행동에 대한 분모를 계산하기가 어렵다. 이 경우 보통 gaussian noise를 action에 대해주는 방식을 사용하거나, 별도의 샘플링 기반 최적화기법을 사용하기도 한다.
+
+지금까지 언급한 내용을 모두 반영하여 Replay Buffer에서 샘플링한 trajectory를 기반으로 학습하는 최종적인 Q-Learning은 다음과 같이 정의된다.
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-full-Q-Learning
+
+\begin{algorithm}
+\caption{Full Q-Learning with Replay Buffer}
+\begin{algorithmic}
+\State collect data $\{(s_i, a_i, r_i, s_i')\}$ using some policy, add it to $\mathcal{R}$
+\Forall{K}
+  \State sample a batch $(s_i, a_i, r_i, s_i')$ from $\mathcal{R}$
+  \State $\phi \leftarrow - \alpha \sum_i \frac{d Q_{\phi}}{d \phi} (s_i, a_i) (Q_{\phi}(s_i, a_i) - [r(s_i, a_i) + \gamma \max_{a'}Q_{\phi}(s_i', a_i')])$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+```
+
+위의 @algo-full-Q-Learning 을 요약하자면, 먼저 replay buffer $\mathcal{R}$ 에서 데이터 배치를 무작위로 샘플링한 후, 샘플링한 데이터를 기반으로 정답지 역할을 할 target value $y_i$ 를 계산한다. 이때 앞에서 설명한 Bellman Optimality Equation에 정의한대로, next state $s'$ 에서 가장 높은 Q ($\max$) 를 얻을 수 있는 action을 선택하면서, 미래의 기대보상값을 추정하게 된다. 그리고 value function을 추정하는 신경망의 parameter를 gradient descent를 통해서 update하는 과정을 $K$ 번 수행하는 형태로 되어 있다. 일반적으로는 $K=1$ 로 사용하지만 데이터의 효율성을 높이기 위해서 gradient Step를 여러 번 수행하는 것도 생각해볼 수 있다. 이렇게 하면 최종적으로 잘 학습된 Q function $Q_{\phi}$ 가 나오게 되고, 이후에는 앞에서 정의한 @eq-greedy-policy 에 따라 제일 높은 Q 를 얻을 수 있는  action을 취하는 policy를 따라가면 된다.
+
+![Policy Iteration](./images/15p_Q_Learning.png){#fig-q-learning}
+
+물론 현재 환경에 대한 Q function이 update되어야 하므로, 앞에서 설명한 Exploration이 동반된 Policy Iteration이 수행되어야 이상적인 Q-Learning 기반의 모델을 학습시킬 수 있다. 이전 강의에서 설명한 Actor-Critic과의 차이라면 Actor-Critic방식에서는 다음 state $s'$ 에서 취할 action $a'$ 을 별도의 actor(policy network)에서 취했지만, Q-Learning에서는 actor없이 $Q$ 값이 가장 높은 action을 바로 선택해서 target value를 계산한다는 점이 다르다.
+
+## How to make Q-Learning stable?
+
+@algo-full-Q-Learning 까지가 Q function을 신경망으로 대체한 Deep RL의 기본 아이디어였고, 실제로 이를 다양한 환경에서 실험해서 좋은 성능을 보여준 @mnih2013playing 에서는 기본 아이디어에서 학습의 안정성측면에서 몇가지 trick을 반영하여 **Deep Q-Network(DQN)** 이라고 소개했다. 
+
+### Target Network
+
+사실 @algo-full-Q-Learning 의 2번(replay buffer에서 데이터를 샘플링하는 과정)과 3번(target value를 계산해 parameter를 업데이트하는 과정)이 반복적으로 수행되는데, 문제는 3번에서 높은 Q를 얻을 수 있는 다음 action $a'$ 를 구할 때, 구하는 기준 Q function이 현재 학습중인 신경망에서 계산하게 된다는 점이다. 물론 Q function이 안정적으로 수렴하고, 상태에 따라서 별 변화가 없다면 괜찮겠지만, 신경망의 parameter의 초기값 등의 영향을 크게 받게 되고 결과적으로 target 값이 이에 따라 움직이는 **Moving target** 현상이 발생한다. 쉽게 말해서 정답지가 학습이 진행되는 도중에 계속 바뀌게 되는 것이다. 이에 해결하기 위해서 생각한 아이디어가 이렇게 target value를 계산할때는 고정시켜놓고, 학습이 이뤄지고 난후에 주기적으로 신경망을 update하는 것이었다. 이를 통해 target Q value가 천천히 바뀌면서 학습도 조금 더 안정적으로 수행된다. 이를 위해서 현재 학습하는 신경망과 구조적으로 동일한 신경망, 논문의 표현대로 가져오자면 target value를 계산하기 위한 **target network**를 별도로 두고, 이를 gradient update가 끝나기 전까지는 frozen 상태로 유지했다가, 주기적으로 copy해는 기법을 취했다. 
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-full-Q-Learning-target-network
+
+\begin{algorithm}
+\caption{Q-Learning with Replay Buffer and target network}
+\begin{algorithmic}
+\State save target netowkr parameters: ${\color{red}\phi'} \leftarrow \phi$
+\Forall{N}
+\State collect data $\{(s_i, a_i, r_i, s_i')\}$ using some policy, add it to $\mathcal{R}$
+  \Forall{K}
+    \State sample a batch $(s_i, a_i, r_i, s_i')$ from $\mathcal{R}$
+    \State $\phi \leftarrow - \alpha \sum_i \frac{d Q_{\phi}}{d \phi} (s_i, a_i) (Q_{\phi}(s_i, a_i) - [r(s_i, a_i) + \gamma \max_{a'}{\color{red}Q_{\phi'}(s_i', a_i')}])$
+  \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+```
