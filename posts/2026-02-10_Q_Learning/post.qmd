@@ -146,7 +146,8 @@ $$
 
 In the Actor-Critic method, we used the expected return of the next state to estimate the Q-value of the current policy; this relationship is defined by the Bellman Equation. However, the goal of Q-Learning is not to evaluate the current policy, but to directly learn $Q^*(s, a)$, which is the Q-value of the optimal policy $\pi^*$. As explained earlier, because the optimal policy $\pi^*$ inherently selects the action that maximizes the Q-value, we can replace the expectation operator ($\mathbb{E}$) over actions in the equation above with a maximization operator ($\max$).
 
-$$Q^{\pi^*}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a)} [\max_{a'}Q^{\pi^*}(s', a')] \quad \text{for all} (s, a)
+$$
+Q^{\pi^*}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a)} [\max_{a'}Q^{\pi^*}(s', a')] \quad \text{for all} (s, a)
 $${#eq-bellman-optimality}
 
 Consequently, the next action $a'$ to be taken in the next state $s'$ is precisely the action that maximizes the Q-function, allowing us to compute it directly through the function itself. This redefined equation, assuming an optimal policy, is known as the **Bellman Optimality Equation**. All of this is possible precisely because the Q-function alone is sufficient for decision-making.
@@ -176,7 +177,7 @@ Based on this concept, we can refine the previously defined Q-Learning algorithm
 \end{algorithm}
 ```
 
-The lecture also addressed a critical question: Are the $Q^{\pi^}$ obtained this way and the resulting policy $\pi^*$ truly optimal?* In simple environments like the 2D GridWorld mentioned above, where the values for all states and actions can be explicitly stored in a table (a tabular setting), we can indeed find the exact $\pi^*$ as defined in @algo-improved-Q-Learning. Furthermore, the professor explained that an optimal $Q$ can be found when the state and action spaces are discrete, provided that the agent engages in sufficient exploration.
+The lecture also addressed a critical question: Are the $Q^{\pi^*}$ obtained this way and the resulting policy $\pi^*$ truly optimal?* In simple environments like the 2D GridWorld mentioned above, where the values for all states and actions can be explicitly stored in a table (a tabular setting), we can indeed find the exact $\pi^*$ as defined in @algo-improved-Q-Learning. Furthermore, the professor explained that an optimal $Q$ can be found when the state and action spaces are discrete, provided that the agent engages in sufficient exploration.
 
 However, in Deep RL—the primary focus of this lecture—we fundamentally rely on Value Function Approximation using neural networks. The lecture clarified that in such cases, strict convergence to the optimal policy is not always mathematically guaranteed. Instead, by employing tricks to stabilize the training process, as demonstrated in @mnih2013playing, these algorithms can approximate the optimal policy well enough to achieve superhuman performance in complex domains like gaming and robot control.
 
