@@ -427,9 +427,9 @@ Policy Iteration
 <p>강의중 나온 질문 중에, 결과적으로 goal까지 도달할 수 있는 value function을 다시 계산하고, 해당 value를 기반으로 policy를 업데이트해야 이상적인 경로를 찾을 수 있지 않냐는 내용이 있었다. 사실 위의 예시에서도 알 수 있다시피, 이런 2D GridWorld같은 문제에서 이상적인 경로를 찾기 위한 policy를 정의하는 단계로 크게 두가지로 나눠서 볼 수 있다.</p>
 <ul>
 <li><strong>Policy Evaluation</strong>: 현재 policy <span class="math inline">\(\pi\)</span> 로 데이터를 수집하고, 이를 이용해 <span class="math inline">\(Q^{\pi}(s, a)\)</span> 를 학습한다.</li>
-<li><strong>Policy Improvement</strong>: 학습된 Q-fuction을 활용해 다음 state에서 가장 높은 Q를 얻을 수 있는 action을 선택할 수 있도록 policy를 update한다. (<span class="math inline">\(\pi \leftarrow \arg \max_a Q(s, a)\)</span>)</li>
+<li><strong>Policy Improvement</strong>: 학습된 Q-function을 활용해 다음 state에서 가장 높은 Q를 얻을 수 있는 action을 선택할 수 있도록 policy를 update한다. (<span class="math inline">\(\pi \leftarrow \arg \max_a Q(s, a)\)</span>)</li>
 </ul>
-<p>이렇게 Polciy Evaluation과 Policy Improvement가 반복적으로 수행되는 과정 자체를 <strong>Policy Iteration</strong> 이라고 표현을 한다. 교수는 해당 과정에 대해서 잠깐 설명하긴 했지만, 뒤에서 소개할 Q-Learning의 알고리즘을 보면, 이런 Policy Iteration 과정이 내부에 녹아져있다.</p>
+<p>이렇게 Policy Evaluation과 Policy Improvement가 반복적으로 수행되는 과정 자체를 <strong>Policy Iteration</strong> 이라고 표현을 한다. 교수는 해당 과정에 대해서 잠깐 설명하긴 했지만, 뒤에서 소개할 Q-Learning의 알고리즘을 보면, 이런 Policy Iteration 과정이 내부에 녹아져있다.</p>
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
@@ -443,9 +443,9 @@ Policy Iteration
 <section id="from-actor-critic-to-critic-only" class="level2">
 <h2 class="anchored" data-anchor-id="from-actor-critic-to-critic-only">From Actor-Critic to Critic only</h2>
 <p>앞에서 말한 내용을 다시 정의해보면, 현재 state <span class="math inline">\(s\)</span> 에서 어떤 action <span class="math inline">\(a\)</span> 를 취했을 때의 value function <span class="math inline">\(Q(s, a)\)</span> 만 정확하게 추정할 수 있으면 이상적인 policy를 찾을 수 있고, 이렇게 Q function 기반으로 policy를 학습하는 방식을 <strong>Q-Learning</strong> 이라고 설명하고 있다. (<a href="#algo-Q-Learning" class="quarto-xref">Algorithm 1</a>)</p>
-<div id="algo-Q-Learning" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="1" data-line-number="true" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//">
+<div id="algo-Q-Learning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number-punc=":" data-no-end="false" data-line-number="true">
 <div class="pseudocode">
-\begin{algorithm} \caption{Q-Learning with Replay Buffer} \begin{algorithmic} \State take action $a \sim \pi(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State sample a batch $\{s_i, a_i, r_i, s_i'\}$ from buffer $\mathcal{R}$ \State $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ from $a_i' \sim \pi(\cdot \vert s_i')$ \State define new policy $\pi(a_t \vert s_t) = \begin{cases} 1 &amp; \text{if } a_t = \arg \max_{a} \hat{Q}_{\phi}(s_t, a) \\ 0 &amp; \text{otherwise} \end{cases}$ \State Iterate from step 1 to 4 until finding optimal policy \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Q-Learning with Replay Buffer / (SARSA-style) TD target} \begin{algorithmic} \State take action $a \sim \pi(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State sample a batch $\{s_i, a_i, r_i, s_i'\}$ from buffer $\mathcal{R}$ \State $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ from $a_i' \sim \pi(\cdot \vert s_i')$ \State define new policy $\pi(a_t \vert s_t) = \begin{cases} 1 &amp; \text{if } a_t = \arg \max_{a} \hat{Q}_{\phi}(s_t, a) \\ 0 &amp; \text{otherwise} \end{cases}$ \State Iterate from step 1 to 4 until finding optimal policy \end{algorithmic} \end{algorithm}
 </div>
 </div>
 <p><a href="#algo-Q-Learning" class="quarto-xref">Algorithm 1</a> 에서도 앞에서 소개한 것처럼 현재의 value function을 계산하는 <strong>Policy Evaluation</strong>과 계산된 Value function을 활용해서 policy를 update하는 <strong>Policy Improvement</strong>가 반복적으로 수행되는 <strong>Policy Iteration</strong>이 들어있다. 이 과정을 무한히 반복하면, 이론적으로 optimal policy를 찾게 되지만, 사실 강의의 topic이기도 한 Deep RL에서는 이렇게 매번 policy evaluation과 improvement를 반복적으로 수행하는 것이 비효율적인 측면이 있다. 이때문에 Q function을 update하는 과정에서도 개선할 부분을 생각해볼 수 있다.</p>
@@ -455,13 +455,13 @@ Q^{\pi}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a), a' \si
 \]</span></p>
 <p>Actor-Critic에서는 현재 policy Q value를 추정하기 위해서 next state의 기대 보상값을 활용했는데, 이를 Bellman Equation이라고 한다. 그런데 Q-Learning의 목표는 현재의 policy가 아니라 optimal policy <span class="math inline">\(\pi^*\)</span> 에서의 Q value 인 <span class="math inline">\(Q^*(s, a)\)</span> 를 직접 학습하는 것이다. 그런데 앞에서 설명한 바와 같이 <span class="math inline">\(\pi^{*}\)</span> 는 항상 Q value가 최대가 되는 Action을 선택하는 특징을 가지고 있으므로, 위에서도 기대값 (<span class="math inline">\(\mathbb{E}\)</span>) 이 아닌, 최대값 (<span class="math inline">\(\max\)</span>) 로 대체할 수 있다.</p>
 <p><span id="eq-bellman-optimality"><span class="math display">\[
-Q^{\pi^*} = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a)} [\max_{a'}Q^{\pi^*}(s', a')] \quad \text{for all} (s, a)
+Q^{\pi^*}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a)} [\max_{a'}Q^{\pi^*}(s', a')] \quad \text{for all} (s, a)
 \tag{4}\]</span></span></p>
 <p>결과적으로 우리가 Q function이 주어진 next state <span class="math inline">\(s'\)</span> 에서 취할 수 있는 next action <span class="math inline">\(a'\)</span> 은 Q를 최대화시킬 수 있는 action이므로 이를 함수를 통해서 직접 구하는 형태로 변경된 것이다. 이렇게 optimal한 policy임을 가정하고 다시 정의한 bellman equation을 <strong>Bellman Optimality Equation</strong> 라고 한다. 이 모든 내용이 Q function을 활용해서 의사 결정을 할 수 있기 때문에 설명되는 것이다.</p>
 <p>해당 내용을 바탕으로 앞에서 정의한 Q-Learning을 개선하면 다음과 같다.</p>
-<div id="algo-improved-Q-Learning" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="2" data-line-number="true" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//">
+<div id="algo-improved-Q-Learning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="2" data-line-number-punc=":" data-no-end="false" data-line-number="true">
 <div class="pseudocode">
-\begin{algorithm} \caption{Imrpoved Q-Learning with Replay Buffer} \begin{algorithmic} \State take action $a \sim \pi(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State sample a batch $\{s_i, a_i, r_i, s_i'\}$ from buffer $\mathcal{R}$ \State $\hat{Q}_{\phi}$ using targets ${\color{red} y_i = r_i + \gamma \max_{a'} \hat{Q}_{\phi}(s_i', a')}$ \State define new policy $\pi(a_t \vert s_t) = \begin{cases} 1 &amp; \text{if } a_t = \arg \max_{a} \hat{Q}_{\phi}(s_t, a) \\ 0 &amp; \text{otherwise} \end{cases}$ \State Iterate from step 1 to 4 until finding optimal policy \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Improved Q-Learning with Replay Buffer} \begin{algorithmic} \State take action $a \sim \pi(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State sample a batch $\{s_i, a_i, r_i, s_i'\}$ from buffer $\mathcal{R}$ \State $\hat{Q}_{\phi}$ using targets ${\color{red} y_i = r_i + \gamma \max_{a'} \hat{Q}_{\phi}(s_i', a')}$ \State define new policy $\pi(a_t \vert s_t) = \begin{cases} 1 &amp; \text{if } a_t = \arg \max_{a} \hat{Q}_{\phi}(s_t, a) \\ 0 &amp; \text{otherwise} \end{cases}$ \State Iterate from step 1 to 4 until finding optimal policy \end{algorithmic} \end{algorithm}
 </div>
 </div>
 <p>이렇게 구한 <span class="math inline">\(Q^{\pi^*}\)</span> 와 이를 기반으로 도출한 policy <span class="math inline">\(\pi^*\)</span> 가 과연 optimal한가에 대해서도 강의에서 설명했는데, 위에서 제시한 2D GridWorld와 같이 모든 State와 Action에 대한 value 가 table 형태로 저장할 수 있는(tabular) 간단한 환경이라면 <a href="#algo-improved-Q-Learning" class="quarto-xref">Algorithm 2</a> 에서 정의한 방식대로 <span class="math inline">\(\pi^*\)</span> 를 찾을 수 있다. 또한 State와 Action의 형태가 Discrete하고, 충분한 탐색(Exploration)과정이 동반되었을 때도 Optimal <span class="math inline">\(Q\)</span> 를 찾을 수 있다고 설명하고 있다. 하지만 강의에서 다루는 Deep RL에서는 기본적으로 신경망을 통한 Value Function Approximation이 동반되는데, 이 경우는 항상 수렴을 보장하지 않는다고 부연으로 설명했다. 대신 <span class="citation" data-cites="mnih2013playing">Mnih 기타 (<a href="#ref-mnih2013playing" role="doc-biblioref">2013</a>)</span> 에서처럼 학습을 안정화시켜 게임이나 로봇 제어 등에서 인간을 뛰어넘는 성능을 내기도 한다.</p>
@@ -505,13 +505,13 @@ Why Q, not V?
 \end{cases}
 \]</span></p>
 <p>그래서 처음에는 높은 <span class="math inline">\(\epsilon\)</span> 으로 정의해서 탐색을 하다가, 학습이 진행되는 시점에서는 Q function 에 따라 action을 취하게끔 <span class="math inline">\(\epsilon\)</span> 을 감가시키는 방법으로 많이 사용된다.</p>
-<p>다음으로 많이 활용되는 탐색 아이디어에는 Softmax Eploration이라고 표현하는 <strong>Boltzmann Explortion</strong> 이란 전략이 있다. 앞에서 소개한 Epsilon Greedy 방식은 탐색을 수행할 때, 모든 비-최적(Non-greedy) 행동을 동등하게 취하는 경향이 있다. 즉, “좋고 나쁜 정도”를 구분하지 않고 똑같이 취급한다는 단점이 있는데, Boltzmann 방식은 아래의 수식 <a href="#eq-bolzmann-exploration" class="quarto-xref">방정식&nbsp;5</a> 에 따라 action을 결정한다.</p>
+<p>다음으로 많이 활용되는 탐색 아이디어에는 Softmax Exploration이라고 표현하는 <strong>Boltzmann Explortion</strong> 이란 전략이 있다. 앞에서 소개한 Epsilon Greedy 방식은 탐색을 수행할 때, 모든 비-최적(Non-greedy) 행동을 동등하게 취하는 경향이 있다. 즉, “좋고 나쁜 정도”를 구분하지 않고 똑같이 취급한다는 단점이 있는데, Boltzmann 방식은 아래의 수식 <a href="#eq-bolzmann-exploration" class="quarto-xref">방정식&nbsp;5</a> 에 따라 action을 결정한다.</p>
 <p><span id="eq-bolzmann-exploration"><span class="math display">\[
 \pi(a \vert s) \approx \frac{\text{exp}(Q(s, a))}{\sum_{a'} \text{exp}(Q(s, a'))}
 \tag{5}\]</span></span></p>
-<p>그런데 어디에서 많이 본 수식처럼 보이겠지만, 사실 현재 Q function에 대한 Softmax function이다. 이렇게 일종의 정규화 과정을 거치게 되면 현재 주어진 Q value 중 어떤 값이 크고 낮은지를 확률값으로 표현할 수 있게 된다. 결과적으로 Q-function을 확률분포로 만든 후, 이에 따라 action을 선택하기 때문에, Epsilon Greedy처럼 완전히 무작위로 action을 취하는게 아니라 “가망이 있어 보이는” action 위주로 탐색을 수행하기 때문에 조금 더 효율적으로 학습을 수행할 수 있다. 대신 한가지 구현상의 어려운 부분도 있는데, softmax function을 확률 분포로 표현하기 위해서는 각각의 값들이 명확히 정의되어야 하고, 그 말은 즉 discrete하게 action이 정의되어 있는 환경에서는 구현하기가 쉽겠지만, continuous action space를 가지는 환경에서는 위와 같은 확률 계산, 특히 모든 행동에 대한 분모를 계산하기가 어렵다. 이 경우 보통 gaussian noise를 action에 대해주는 방식을 사용하거나, 별도의 샘플링 기반 최적화기법을 사용하기도 한다.</p>
+<p>그런데 어디에서 많이 본 수식처럼 보이겠지만, 사실 현재 Q function에 대한 Softmax function이다. 이렇게 일종의 정규화 과정을 거치게 되면 현재 주어진 Q value 중 어떤 값이 크고 낮은지를 확률값으로 표현할 수 있게 된다. 결과적으로 Q-function을 확률분포로 만든 후, 이에 따라 action을 선택하기 때문에, Epsilon Greedy처럼 완전히 무작위로 action을 취하는게 아니라 “가망이 있어 보이는” action 위주로 탐색을 수행하기 때문에 조금 더 효율적으로 학습을 수행할 수 있다. 대신 한가지 구현상의 어려운 부분도 있는데, softmax function을 확률 분포로 표현하기 위해서는 각각의 값들이 명확히 정의되어야 하고, 그 말은 즉 discrete하게 action이 정의되어 있는 환경에서는 구현하기가 쉽겠지만, continuous action space를 가지는 환경에서는 위와 같은 확률 계산, 특히 모든 행동에 대한 <span class="math inline">\(\max\)</span> 를 계산하기가 어렵다. 특히 <span class="math inline">\(\arg \max_a Q(s, a)\)</span> 부분이 closed-form으로 나오지 않는 문제가 있는데, 이 경우 보통 gaussian noise를 action에 대해주는 방식을 사용하거나, 별도의 샘플링 기반 최적화기법을 사용하기도 한다.</p>
 <p>지금까지 언급한 내용을 모두 반영하여 Replay Buffer에서 샘플링한 trajectory를 기반으로 학습하는 최종적인 Q-Learning은 다음과 같이 정의된다.</p>
-<div id="algo-full-Q-Learning" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="3" data-line-number="true" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//">
+<div id="algo-full-Q-Learning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="3" data-line-number-punc=":" data-no-end="false" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Full Q-Learning with Replay Buffer} \begin{algorithmic} \State collect data $\{(s_i, a_i, r_i, s_i')\}$ using some policy, add it to $\mathcal{R}$ \Forall{K} \State sample a batch $(s_i, a_i, r_i, s_i')$ from $\mathcal{R}$ \State $\phi \leftarrow - \alpha \sum_i \frac{d Q_{\phi}}{d \phi} (s_i, a_i) (Q_{\phi}(s_i, a_i) - [r(s_i, a_i) + \gamma \max_{a'}Q_{\phi}(s_i', a_i')])$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -534,8 +534,8 @@ Why Q, not V?
 <p><a href="#algo-full-Q-Learning" class="quarto-xref">Algorithm 3</a> 까지가 Q function을 신경망으로 대체한 Deep RL의 기본 아이디어였고, 실제로 이를 다양한 환경에서 실험해서 좋은 성능을 보여준 <span class="citation" data-cites="mnih2013playing">Mnih 기타 (<a href="#ref-mnih2013playing" role="doc-biblioref">2013</a>)</span> 에서는 기본 아이디어에서 학습의 안정성측면에서 몇가지 trick을 반영하여 <strong>Deep Q-Network(DQN)</strong> 이라고 소개했다.</p>
 <section id="target-network" class="level3">
 <h3 class="anchored" data-anchor-id="target-network">Target Network</h3>
-<p>사실 <a href="#algo-full-Q-Learning" class="quarto-xref">Algorithm 3</a> 의 2번(replay buffer에서 데이터를 샘플링하는 과정)과 3번(target value를 계산해 parameter를 업데이트하는 과정)이 반복적으로 수행되는데, 문제는 3번에서 높은 Q를 얻을 수 있는 다음 action <span class="math inline">\(a'\)</span> 를 구할 때, 구하는 기준 Q function이 현재 학습중인 신경망에서 계산하게 된다는 점이다. 물론 Q function이 안정적으로 수렴하고, 상태에 따라서 별 변화가 없다면 괜찮겠지만, 신경망의 parameter의 초기값 등의 영향을 크게 받게 되고 결과적으로 target 값이 이에 따라 움직이는 <strong>Moving target</strong> 현상이 발생한다. 쉽게 말해서 정답지가 학습이 진행되는 도중에 계속 바뀌게 되는 것이다. 이에 해결하기 위해서 생각한 아이디어가 이렇게 target value를 계산할때는 고정시켜놓고, 학습이 이뤄지고 난후에 주기적으로 신경망을 update하는 것이었다. 이를 통해 target Q value가 천천히 바뀌면서 학습도 조금 더 안정적으로 수행된다. 이를 위해서 현재 학습하는 신경망과 구조적으로 동일한 신경망, 논문의 표현대로 가져오자면 target value를 계산하기 위한 <strong>target network</strong>를 별도로 두고, 이를 gradient update가 끝나기 전까지는 frozen 상태로 유지했다가, 주기적으로 copy해는 기법을 취했다.</p>
-<div id="algo-full-Q-Learning-target-network" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="4" data-line-number="true" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//">
+<p>사실 <a href="#algo-full-Q-Learning" class="quarto-xref">Algorithm 3</a> 의 2번(replay buffer에서 데이터를 샘플링하는 과정)과 3번(target value를 계산해 parameter를 업데이트하는 과정)이 반복적으로 수행되는데, 문제는 3번에서 높은 Q를 얻을 수 있는 다음 action <span class="math inline">\(a'\)</span> 를 구할 때, 구하는 기준 Q function이 현재 학습중인 신경망에서 계산하게 된다는 점이다. 물론 Q function이 안정적으로 수렴하고, 상태에 따라서 별 변화가 없다면 괜찮겠지만, 신경망의 parameter의 초기값 등의 영향을 크게 받게 되고 결과적으로 target 값이 이에 따라 움직이는 <strong>Moving target</strong> 현상이 발생한다. 쉽게 말해서 정답지가 학습이 진행되는 도중에 계속 바뀌게 되는 것이다. 이에 해결하기 위해서 생각한 아이디어가 이렇게 target value를 계산할때는 고정시켜놓고, 학습이 이뤄지고 난후에 주기적으로 신경망을 update하는 것이었다. 이를 통해 target Q value가 천천히 바뀌면서 학습도 조금 더 안정적으로 수행된다. 이를 위해서 현재 학습하는 신경망과 구조적으로 동일한 신경망, 논문의 표현대로 가져오자면 target value를 계산하기 위한 <strong>target network</strong>를 별도로 두고, 이를 gradient update가 끝나기 전까지는 frozen 상태로 유지했다가, 주기적으로 copyg하는 기법을 취했다.</p>
+<div id="algo-full-Q-Learning-target-network" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="4" data-line-number-punc=":" data-no-end="false" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Q-Learning with Replay Buffer and target network} \begin{algorithmic} \State save target network parameters: ${\color{red}\phi'} \leftarrow \phi$ \Forall{N} \State collect data $\{(s_i, a_i, r_i, s_i')\}$ using some policy, add it to $\mathcal{R}$ \Forall{K} \State sample a batch $(s_i, a_i, r_i, s_i')$ from $\mathcal{R}$ \State $\phi \leftarrow \phi - \alpha \sum_i \nabla_{\phi} Q_{\phi}(s_i, a_i) \left( Q_{\phi}(s_i, a_i) - [r(s_i, a_i) + \gamma \max_{a'} {\color{red}Q_{\phi'}(s_i', a_i')}] \right)$ \EndFor \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -569,9 +569,9 @@ Why Q, not V?
 <p><a href="#fig-true-vs-estimate" class="quarto-xref">그림&nbsp;5</a> 는 <span class="citation" data-cites="van2016deep">Van Hasselt, Guez, 와/과 Silver (<a href="#ref-van2016deep" role="doc-biblioref">2016</a>)</span> 에서 진행한 실험으로 또다른 atari 게임인 Alien과 Space Invaders 등에서 모델이 추정한 Q 값과 실제 모델이 게임을 하면서 얻은 보상의 총합을 비교한 결과이다. 쉬운 비교를 위해서는 동일한 색상의 곡선과 직선을 비교하면 되는데, 확인해보면 추정한 Q값이 실제로 얻은 보상값에 비해서 매우 큰 경향을 보인다는 것을 알 수 있다. 즉, 모델은 “미래에 큰 보상을 얻을거야!”라고 예측했지만, 실제로 그만큼의 점수를 얻지 못하는 현상이 발생하는 것이다. 이런 현상을 <strong>과대평가(Overestimation)</strong> 이라고 한다.</p>
 <p>사실 이런 과대평가 현상이 나타나는 이유는 앞에서 살펴보았던 Bellman Optimality Equation (<a href="#eq-bellman-optimality" class="quarto-xref">방정식&nbsp;4</a>) 에 있는 <span class="math inline">\(\max\)</span> 연산 때문이다. 신경망 자체가 학습 중간에는 완벽하지 않아서 추론시 약간의 오차가 발생하는데, 이 <span class="math inline">\(\max\)</span> 연산으로 인해서 그런 오차가 반영된 상태에서도 오차가 긍정적인 결과로 반영된 방향으로 action을 선택할 확률이 커지는 것이다.</p>
 <p><span class="math display">\[
-\max_{a'} Q_{\phi'}(s', a') = Q_{\phi'}(s', \arg \max_{a'}(s', a'))
+\max_{a'} Q_{\phi'}(s', a') = Q_{\phi'}(s', \arg \max_{a'}Q_{\phi'}(s', a'))
 \]</span></p>
-<p>그리고 위의 수식에서도 확인할 수 있는 것처럼 동일한 신경망 (<span class="math inline">\(\phi'\)</span>) 에서 action도 결정하고, 이를 기반으로 Q value 를 계산하면서 이런 오차가 누적되면서 Q 값도 계속 켜지는 현상이 나타나게 된다.</p>
+<p>그리고 위의 수식에서도 확인할 수 있는 것처럼 동일한 신경망 (<span class="math inline">\(\phi'\)</span>) 에서 action도 결정하고, 이를 기반으로 Q value 를 계산하면서 이런 오차가 누적되면서 Q 값도 계속 커지는 현상이 나타나게 된다.</p>
 </section>
 <section id="double-dqn" class="level3">
 <h3 class="anchored" data-anchor-id="double-dqn">Double DQN</h3>
@@ -595,7 +595,7 @@ Q_{\phi_B}(s, a) &amp;\leftarrow r + \gamma Q_{\phi_A}(s', \arg \max_{a'}Q_{\phi
 \end{aligned}
 \]</span></p>
 <p>위의 식과 같이 실제 얻은 보상을 N step에 걸쳐서 계산하고 이를 기반으로 target value를 계산함으로써, Q value가 부정확하더라도, bias가 상대적으로 낮은 값을 가지게 되고, 이를 통해 학습 효율성도 조금 개선되는 효과도 가져온다. 대신 문제는 위의 식이 성립되기 위해서는 실제 target value를 사용할 때의 실제 reward가 현재 Policy가 수집한 값, 즉 on-policy 일때만 가능하다는 것이다. 앞에서 replay buffer를 사용한 데이터 샘플도 multi-step target을 계산하기 위해서는 실제로 수행하고 난 데이터를 활용해야 이론적으로 가능하다는 의미이다.</p>
-<p>그래서 교수는 일반적으로 이런 문제를 안고 그냥 무시하거나, 그냥 <span class="math inline">\(N=1\)</span> 로 정의하고 계산한다는 사례를 공유했다. 혹은 Policy의 차이에 따라 weight를 조절하는 Importance Sampling Weight을 활용하거나, 현재 policy를 수행했을 때의 데이터만 따로 모아 N-step을 수행하는 방안에 대해서도 언급했다.</p>
+<p>그래서 교수는 일반적으로 이런 문제를 안고 그냥 무시하거나, 그냥 <span class="math inline">\(N=1\)</span> 로 정의하고 계산한다는 사례를 공유했다. 혹은 Policy의 차이에 따라 weight를 조절하는 Importance Sampling Weight을 활용하는 등의 엄밀하게는 off-policy 보정이 필요하지만, 실무/논문 구현에서는 근사적으로 N-step DQN이나 Rainbow 알고리즘에서 소개한 것처럼 n-step을 섞어 성능을 얻기도 한다</p>
 </section>
 </section>
 <section id="q-learning-in-practice" class="level2">
