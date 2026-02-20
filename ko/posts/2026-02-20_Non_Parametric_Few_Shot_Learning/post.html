@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
-<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2025-08-07_Particle_Tachyon_Unboxing/post.html" />
-<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2025-08-07_Particle_Tachyon_Unboxing/post.ko.html" />
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.ko.html" />
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chanseok Kang">
-<meta name="description" content="Kickstarter를 통해 투자한 Particle Tachyon 수령 및 환경 구성">
+<meta name="description" content="2022년에 진행한 CS330 강의 중 Lecture 6. Non Parametric Few-Shot Learning에 대한 강의 요약">
 
-<title>Particle Tachyon 개봉 – 생각많은 소심남의 연구노트</title>
+<title>Non Parametric Few-Shot Learning – 생각많은 소심남의 연구노트</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -45,6 +65,8 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -83,7 +105,52 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../assets/css/styles.css">
 </head>
@@ -139,16 +206,15 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Particle Tachyon 개봉</h1>
+      <h1 class="title">Non Parametric Few-Shot Learning</h1>
                   <div>
         <div class="description">
-          Kickstarter를 통해 투자한 Particle Tachyon 수령 및 환경 구성
+          2022년에 진행한 CS330 강의 중 Lecture 6. Non Parametric Few-Shot Learning에 대한 강의 요약
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Life</div>
-                <div class="quarto-category">Kickstarter</div>
-                <div class="quarto-category">EdgeAI</div>
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS330</div>
               </div>
                   </div>
   </div>
@@ -175,7 +241,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">공개</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2025년 8월 7일</p>
+        <p class="date">2026년 2월 20일</p>
       </div>
     </div>
     
@@ -190,12 +256,13 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#tldr" id="toc-tldr" class="nav-link active" data-scroll-target="#tldr">tl;dr</a></li>
-  <li><a href="#서두" id="toc-서두" class="nav-link" data-scroll-target="#서두">서두</a></li>
-  <li><a href="#particle-tachyon" id="toc-particle-tachyon" class="nav-link" data-scroll-target="#particle-tachyon">Particle Tachyon</a></li>
-  <li><a href="#환경-구성" id="toc-환경-구성" class="nav-link" data-scroll-target="#환경-구성">환경 구성</a></li>
-  <li><a href="#문제" id="toc-문제" class="nav-link" data-scroll-target="#문제">문제</a></li>
-  <li><a href="#결론-및-계획" id="toc-결론-및-계획" class="nav-link" data-scroll-target="#결론-및-계획">결론 및 계획</a></li>
+  <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  <li><a href="#non-parametric-methods" id="toc-non-parametric-methods" class="nav-link" data-scroll-target="#non-parametric-methods">Non-Parametric Methods</a></li>
+  <li><a href="#siamese-network-for-non-parametric-model" id="toc-siamese-network-for-non-parametric-model" class="nav-link" data-scroll-target="#siamese-network-for-non-parametric-model">Siamese Network for Non-Parametric Model</a></li>
+  <li><a href="#matching-networks-for-non-parametric-model" id="toc-matching-networks-for-non-parametric-model" class="nav-link" data-scroll-target="#matching-networks-for-non-parametric-model">Matching Networks for Non-Parametric Model</a></li>
+  <li><a href="#prototypical-networks-for-non-parametric-model" id="toc-prototypical-networks-for-non-parametric-model" class="nav-link" data-scroll-target="#prototypical-networks-for-non-parametric-model">Prototypical Networks for Non-Parametric Model</a></li>
   </ul>
 </nav>
 </nav>
@@ -210,38 +277,164 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 
 
 
-<section id="tldr" class="level2">
-<h2 class="anchored" data-anchor-id="tldr">tl;dr</h2>
-<p>Particle Tachyon은 USB alt 모드를 지원하는데, c-to-c display가 안되더라</p>
-</section>
-<section id="서두" class="level2">
-<h2 class="anchored" data-anchor-id="서두">서두</h2>
-<p>이전에 언급했던 것처럼 Mini pupper 2라는 로봇개를 조립하고 있다. 그런데 제조사 사이트를 참고하면 Raspberry PI CM4가 있어야 보드에 직결해서 사용이 가능하다고 한다. 직접 물어본 바로는 일반 Raspberry PI 4로도 연결이 가능하긴 한데, 선 연결이 필요하다고 설명을 해주는데, 부연으로 7월 정도에 퀄컴칩을 쓴 좋은 모듈이 나와서 살 생각이 없냐고 물어본다. 처음에는 그걸 써야 다른 거랑 연동해서 실시간 제어가 가능하겠다 싶었는데… 생각해보니까 내가 이전에 Kickstarter를 통해서 펀딩을 해놓은 게(?) 있었다는게 떠올라서 기다리고, 얼마전에 수령했다.</p>
-</section>
-<section id="particle-tachyon" class="level2">
-<h2 class="anchored" data-anchor-id="particle-tachyon">Particle Tachyon</h2>
-<div id="fig-orin_case" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<section id="강의-및-자료" class="level3">
+<h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="./images/particle.jpg" class="img-fluid figure-img"></p>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://www.youtube.com/watch?v=SUJCgisKW1Y&amp;list=PLoROMvodv4rNjRoawgt72BBNwL2V7doGI&amp;index=6"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="./images/front.jpg" class="img-fluid figure-img"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="./images/backplate.jpg" class="img-fluid figure-img"></p>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs330.stanford.edu/materials/cs330_nonparametric_2023.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;1: Particle Tachyon
+<p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
+</section>
+<section id="lecture-summary-with-notebooklm" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/Non_Parametric_Few_Shot_Learning_overview.ko.png" class="img-fluid"></p>
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<p>앞에서 다룬 Meta Learning 방법론 중 Black-Box Meta Learning과 Optimization-based Meta Learning에 대해서 다뤘다.</p>
+<div id="fig-parametric-approach" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-parametric-approach-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-parametric-approach" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-black-box" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-black-box-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/4p_black_box_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-black-box-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Black Box Meta Learning
 </figcaption>
 </figure>
 </div>
-<p>내가 Kickstarter를 통해서 펀딩한 제품은 <a href="https://www.particle.io/">Particle</a>이란 회사에서 구입한 <a href="https://www.particle.io/tachyon/">Tachyon</a>이란 Single Computer Board (SBC)이다. 사실 Raspberry PI가 이미 대중화가 되어버린 시점에서 Raspberry PI의 GPIO 핀배열과 호환되는 SBC들이 많이 출시되고 있고, 단순하게 보면 Tachyon도 그런 SBC 중 하나라고 볼수 있지만, 이 보드는 퀄컴의 dragonwing QCM6490을 달고 나온 최초의 SBC이다. 다른 SBC랑 비교한다면 퀄컴칩을 달고 있기 때문에, 칩에서 5G 및 WIFI 6E가 지원되어 다른 플랫폼보다는 Connectivity 측면에서 좋고, 자체적으로 NPU가 내장되어 있어 AI 연산시 도움을 받을 수 있다. (소개 페이지상에서는 12 TOPS 정도의 성능이 나온다고 한다.) 상세한 스펙은 아래 그림을 참고하면 좋을거 같다.</p>
-<p><img src="./images/spec.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-parametric-approach" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-optimization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/5p_optimization_based_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Optimization-Based Meta Learning
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-parametric-approach-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;1
+</figcaption>
+</figure>
+</div>
+<p>가장 먼저 언급했던 <strong>Black-Box Meta Learning</strong> (<a href="#fig-black-box" class="quarto-xref">그림&nbsp;1 (a)</a>) 은 훈련 데이터 <span class="math inline">\(\mathcal{D}_{i}^{tr}\)</span> 를 거대한 신경망에 통과시켜서 학습 과정 자체를 파라미터화(Parametrize) 하는 방식이다. 내부의 신경망의 동작에 대한 정의없이 마치 일종의 블랙박스와 같은 학습 형태로 되어 있고, 학습 데이터에 따라 모델의 출력도 제어할 수 있기 때문에 다양한 학습 절차를 표현할 수 있는 높은 표현력(Expressive)을 갖는 장점이 있지만, 어떤 hyperparameter를 가지고 있느냐에 따라 성능에 대한 차이도 크며, 이로 인해서 hyperparameter에 대한 최적화 과정이 매우 까다롭다. <strong>Optimization-Based Meta Learning</strong> (<a href="#fig-optimization" class="quarto-xref">그림&nbsp;1 (b)</a>) 은 앞의 Black-Box Adaptation과는 다르게 학습 과정 중 inner-loop내에서 발생하는 Gradient Descent 같은 최적화 과정을 내재화하여, 일종의 Bi-level optimization 형태로 문제를 해결하는 접근 방법이다. 그림에도 그 과정이 소개되어 있다시피 학습 데이터 내에서 주어진 task에서의 정보를 학습할 수 있는 positive inductive bias를 outer-loop에서 활용할 수 있기 때문에, 학습 초기 단계에서 조금 더 빠르게 학습되며, bi-level optimization 과정을 통해서 외부의 새로운 데이터가 들어와도 이에 대한 extrapolation 성능도 이전 방법에 비해 좋은 편이다. 무엇보다도 최적화 과정에 초점이 맞춰져 있어서, 모델 구조와 무관하게(Model-agnostic) 해당 방법을 적용할 수 있고, 일반적으로 네트워크가 커지면 커질수록 expressive 성능도 개선된다. 다만 bi-level optimization을 해야 되기 때문에, 이로 인한 계산량과 메모리 소모가 큰 편이고, 학습 과정이 불안정하기 때문에 이를 극복하기 위한 다양한 연구에 대해서 지난 강의에서 소개했었다.</p>
+<p>앞에서 소개한 두가지 방법 모두 meta-test 단계에서 학습되지 않은 새로운 task가 들어왔을 때, 이를 해결하기 위한 Task 고유의 parameter (<span class="math inline">\(\phi_i\)</span>)가 학습과정 내에서 정의된다. Black-Box 방식에서는 거대한 신경망을 통해서 학습 과정 자체가 파라미터화되며, Optimization-Based 방식에서도 inner-loop에서 Gradient Descent를 통해서 parameter가 업데이트된다. 이렇게 parameter가 정의되고 이를 기반으로 학습이 진행되는 방식을 <strong>Parametric Learning</strong>이라고 한다. 그런데 이렇게 파라미터화에서 학습을 수행하게 되면, 앞에서 언급된 단점들처럼 연산량과 메모리 소모량이 많아지고, 일반적인 성능 확보를 위해서는 다량의 데이터가 필요하게 된다. 특히 Optimization-based 방법에서는 bi-level optimization이 수행되면서 이런 단점이 더 부각된다. 그러면 <strong>이런 parameter를 일일히 연산하지 않고도 이런 학습 과정을 모델에 투영시키거나 반영할 수 있을까?</strong></p>
+</section>
+<section id="non-parametric-methods" class="level2">
+<h2 class="anchored" data-anchor-id="non-parametric-methods">Non-Parametric Methods</h2>
+<p>앞에서 언급된 Parametric Model는 기본적으로 데이터에 대한 가정이 정의되어 있는 상태(예를 들어서 어떤 확률분포를 가진다? 같은…) 상태에서 입력 데이터와 출력 데이터간의 관계를 일종의 수학적으로 정의한 모델이고, 이런 데이터에 대한 가정없이 (결과적으로는 수학적으로 관계가 정의되지 않고), 데이터로부터 그 의미를 추출하는 방식을 <strong>Non-Parametric Model</strong>이라고 한다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/10p_KNN.png" class="img-fluid figure-img"></p>
+<figcaption>Example of Non-Parametric Model</figcaption>
+</figure>
+</div>
+<p>사실 이 개념은 신경망이 등장하기 전에도 나왔던 개념으로 흔히 알고있는 Decision Tree나 K-Nearest Neighborhood(KNN), Support Vector Machine(SVM) 등이 이 부류에 속한다. 각 알고리즘의 동작원리를 상기해보면 알겠지만, 대부분의 알고리즘이 데이터의 많고 적음을 떠나서 현재 상태에서의 데이터간의 관계를 도출해낼 수 있다. 특히 데이터가 매우 적은 상황(Low data regime) 에서도 Parametric 방식에 비해 구현도 쉬울 뿐더러 잘 동작하는 것을 확인할 수 있다. 그런데 이 low data regime의 상황을 meta learning에 투영해보면, meta-test 에서도 이와 유사하게 발생한다. 특히 meta test에서 수행하는 Few-Shot Learning 과 같은 경우는 학습되지 않은 task에 대한 sample (<span class="math inline">\(x^{ts}\)</span>)이 얼마없는 상황에서도 이에 맞는 label(<span class="math inline">\(y^{ts}\)</span>)을 추정해야 되는데, 앞의 Parametric model은 바로 이 과정에서 task parameter <span class="math inline">\(\phi_i\)</span> 를 추론하면서 단점이 야기된다는 것이다.</p>
+<p>그러면 한가지 고려해볼 수 있는 부분이, 실제로 다양한 task에 대한 representation 방법을 학습하는 meta-train단계에서는 이전에 소개했던 parametric model을 활용하되, Few-Shot Learning이 발생하는 meta-test단계에서는 앞단계에서 뽑은 정보를 활용하는 non-parametric model을 사용하는 일종의 하이브리드 방식이 이 있을 것이다.</p>
+<div id="fig-non-parametric" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-non-parametric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/11p_non_parametric_learner.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-non-parametric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;2: Non Parametric Learning
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-non-parametric" class="quarto-xref">그림&nbsp;2</a> 은 앞에서도 많이 소개되었던 Few-shot classification 예시이며, 이 그림에서 소개하는 근본적인 방법은 meta-test 단계에서 주어진 test 데이터(<span class="math inline">\(x^{ts}\)</span>)가 있을때, 이 데이터를 실제 meta-train단계에서 학습할때 활용했던 데이터와 비교하는 것이다. 비교 방법이 어떠하던지 간에, 기존 학습 데이터와 가장 유사한 데이터가 있으면 학습 데이터에서의 label을 따르게 하면 된다. 그러면 이제 관건은 “어떤 기준으로 학습 데이터와 테스트 데이터가 유사하다고 할까?”이다. 흔히 유사성을 측정하는 metric으로는 <strong>Euclidian Distance</strong>라고 <span class="math inline">\(\ell_2\)</span> Distance같은 것도 있고, cosine similarity 같은 것도 있다. 우선은 이렇게 주어진 이미지들간의 <span class="math inline">\(\ell_2\)</span> Distance로 유사성을 판단한다고 가정해보자.</p>
+<div id="fig-unreasonable" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unreasonable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/12p_unreasonable.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unreasonable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;3: <span class="math inline">\(\ell_2\)</span> Distance in meta-test
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-unreasonable" class="quarto-xref">그림&nbsp;3</a> 는 <span class="citation" data-cites="zhang2018unreasonable">Zhang 기타 (<a href="#ref-zhang2018unreasonable" role="doc-biblioref">2018</a>)</span> 논문에 소개된 실험 결과 중 하나로, 가장 오른쪽에 있는 Reference 이미지와 유사한 이미지를 왼쪽의 두개 이미지 중에서 찾는 것이다. 사람의 눈으로 봤을 때는 두개의 이미지 중 오른쪽의 이미지가 더 유사하다고 생각할 수 있겠지만, 앞에서 언급한 <span class="math inline">\(\ell_2\)</span> Distance나 동일하게 유사도를 측정하는 metric인 Peak Signal-to-Noise Ratio(PSNR) 이나, Structural Similarity Index (SSIM), Feature-based Similarity Index (FSIM) 를 활용했을 때는, 오히려 왼쪽의 이미지가 더 유사하다고 나온다. 이처럼 이미지가 입력으로 들어오는 문제에서 유사도 기반의 metric으로 수행한 Non-parametric Learning은 의도와 다르게 동작할 가능성이 크다. 무엇보다도 이렇게 distance function을 어떤 것으로 정의하느냐도 다른 관점에서는 Parametric Learning이라고 볼 수 있는 여지가 생긴다. 그래서 강의에서 제안하는 방식은 이렇게 <strong>metric 자체를 측정하는 방법 자체를 meta-training data를 활용하여 학습하자는 것(Learn to Compare)</strong>이다.</p>
+</section>
+<section id="siamese-network-for-non-parametric-model" class="level2">
+<h2 class="anchored" data-anchor-id="siamese-network-for-non-parametric-model">Siamese Network for Non-Parametric Model</h2>
+<div id="fig-siamese-network" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-siamese-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/14p_siamese_neg.png" class="img-fluid figure-img"></p>
+<figcaption>Negative Case</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/15p_siamese_pos.png" class="img-fluid figure-img"></p>
+<figcaption>Positive Case</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-siamese-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;4
+</figcaption>
+</figure>
+</div>
+<p><strong>Siamese Network</strong>는 <span class="citation" data-cites="Bromley1993SignatureVU">Bromley 기타 (<a href="#ref-Bromley1993SignatureVU" role="doc-biblioref">1993</a>)</span> 에서 처음 소개된 간단한 신경망이 쌍둥이 형태로 되어 있는 구조로, 두개의 입력을 각각 받을 수 있는 신경망이 동일한 형태로 구성되어 완전히 동일한 parameter를 공유하는 방식으로 되어 있다. 원 논문에서는 Siamese Network을 활용하여 서명을 확인하는 예시로 소개되었다가, <span class="citation" data-cites="Koch2015SiameseNN">Koch (<a href="#ref-Koch2015SiameseNN" role="doc-biblioref">2015</a>)</span> 에서 해당 구조를 활용하여 One-shot learning에 적용한 사례로 발전되었다. 해당 논문에서 제안했던 부분은 앞에서 소개했던 Similarity Metric을 정의하지 말고, meta-train단계에서 training data와 test data 간의 <strong>Binary Classification</strong>을 수행하는 것이다. 이 때 학습이 잘되면 <a href="#fig-siamese-network" class="quarto-xref">그림&nbsp;4</a> 에 나와있는 것처럼 유사한 이미지끼리는 <span class="math inline">\(1\)</span>, 서로 다른 이미지끼리는 <span class="math inline">\(0\)</span> 이 나오는 형태로 Siamese Network이 학습이 될 것이고, 이 모델을 meta-test단계에서 일종의 <strong>유사도 측정기</strong>로 활용하게 된다. 그래서 test data가 주어지면, test data와 기존 support set에 있는 이미지를 하나씩 짝지어서 비교하는(Pairwise comparison) 과정이 진행되고, 이때, <span class="math inline">\(K\)</span> 개의 test data가 주어지면, Siamese Network에서는 총 <span class="math inline">\(N \times K\)</span> 만큼의 forward pass가 이뤄지고, 각 class별 비교 확률값이 나오게 된다. 이때 확률값이 가장 큰 class가 test data의 최종 label로 출력되는 방식으로 동작하는 것이다.</p>
+<p>그런데 이 구조의 문제는 Binary Classification의 특성상 training data의 샘플과 test data간의 유사한지 여부만 파악할 수 있다는 점이다. 주어진 이미지 중에 어떤 이미지가 “더” 유사한지를 판별하는 로직이 학습시에는 반영되지 않기 때문에 이에 따른 성능의 한계가 발생한다. 이렇게 meta-train에서 수행하는 학습 목적(정답과 일치여부)과 meta-test단계에서 추구하는 가장 큰 확률을 가지는 label을 찾는 목적 자체가 다르기 때문에 이를 <strong>불일치(Mismatch)</strong>라고 표현하는 것 같다. 예를 들어서 학습할때는 정답과 유사한지 여부만 확인하다가, 테스트 단계에서 정답에 가장 가까운 데이터를 찾으라고 하는 셈이다.</p>
+<p>그리고 meta-test 단계에서 추론되는 label은</p>
+<p><span class="math display">\[
+\hat{y}_{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} \mathbb{1}(f_{\theta}(X_{ts}, x_k) &gt; P_{pos}) y_k
+\]</span></p>
+<p>와 같이 정의되는데, 위 식에서 표현되는 indicator function <span class="math inline">\(\mathbb{1}\)</span> 은 일종의 step function이라서 auto differentiation을 수행할 수 없다. 그래서 뒤에서 이어서 설명한 <strong>Matching Network</strong> 이란 알고리즘에서 이런 제약사항을 보완하는 방법에 대해서 소개했다.</p>
+</section>
+<section id="matching-networks-for-non-parametric-model" class="level2">
+<h2 class="anchored" data-anchor-id="matching-networks-for-non-parametric-model">Matching Networks for Non-Parametric Model</h2>
+<p><strong>Matching Networks</strong>은 <span class="citation" data-cites="vinyals2016matching">Vinyals 기타 (<a href="#ref-vinyals2016matching" role="doc-biblioref">2016</a>)</span> 에서 소개된 방식으로, 앞에서 언급된 Siamese Network을 활용한 One-shot Learning에서 도출된 한계를 극복하기 위해서 제안되었다. 근본적으로는 “학습환경과 테스트환경간의 불일치” 문제를 해소하기 위해 몇가지 trick을 적용했다.</p>
+<div id="fig-matching-network" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-matching-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/18p_matching_network.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matching-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;5: Matching Network
+</figcaption>
+</figure>
+</div>
+<p>우선 불일치 문제를 해소하기 위해서 데이터 자체가 아닌, 데이터내에 잠재된 context를 활용하여 일치점을 찾으려 했고, 이를 위해 학습 데이터와 test 데이터에서 context를 뽑아낼 별도의 encoder network를 달았다. 학습 데이터와 test 데이터가 임베딩 공간에 매핑되면, 둘 사이의 dot product 등을 통해서 유사도를 계산한후, 계산된 유사도값에 softmax 함수를 취해서 모든 훈련데이터에 대한 가중치(확률값)을 구하게 된다. 이렇게 구한 값과 실제 학습 데이터의 정답 label을 곱한, 일종의 weighted sum으로 최종 label을 추론하게 되는데,</p>
+<p><span class="math display">\[
+\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta}(x^{ts}, x_k) y_k
+\]</span></p>
+<p>기존의 indicator function이 이렇게 softmax function으로 대체되면서 미분도 가능해지고, 오차를 통한 backpropagation도 가능해지면서 parameter를 end-to-end로 직접 최적화할 수 있게 된다. 추가로 주어진 test 데이터가 여러 개인 상황(<span class="math inline">\(K&gt;1\)</span>) 에서도, Matching Networks는 기존의 수식을 활용하면서 일종의 투표방식(Voting)으로 동작하게 되는데, Support Set에서의 데이터와 test 데이터 간의 유사도를 기반으로 선택된 label에 투표가 많이 누적된 것으로 추론하는 방식으로 이뤄진다. 이 전체 과정을 알고리즘으로 표현하면 다음과 같다.</p>
+<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number="true">
+<div class="pseudocode">
+\begin{algorithm} \caption{General Algorithm of Matching Networks} \begin{algorithmic} \State Sample task $\mathcal{T}_i \quad$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta} (x^{ts}, x_k) y_k$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\hat{y}^{ts}, y^{ts})$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>이렇게 하면 이전 강의에서 다뤘던 Parametric Model <span class="math inline">\(\phi\)</span> 가 없어진 Non-Parametric Model의 형태로 동작되는 것을 확인할 수 있다.</p>
+<p>사실 Matching을 하기 위한 목적으로 내부에서 별도의 유사도를 계산하고 이에 기반한 가중치를 계산하는데, 문제는 각각의 test 데이터를 <strong>“독립적으로”</strong> 비교하다보니 어느 잘못된 데이터로 인해서 편향이 발생할 수 있다. 만약 특정 데이터 하나가 잘못된 label을 가지거나 outlier인데, 우연히 test 데이터와의 유사도가 높게 나온다면, 이 잘못된 결과로 인해서 다른 정상적인 결과들이 묻혀버리는(Overpower) 현상이 나타날 수 있다. 이로 인해서 개별 예제가 아닌, class별 평균 정보를 모아서(Aggregate) 기준값을 만드는 <strong>Prototypical Networks</strong> 방식이 이어서 설명된다.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -252,45 +445,31 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>참고로 8년전에 공부한다고 <a href="https://www.qualcomm.com/products/technology/processors/application-processors/dragonboard-410c">Dragonboard 410c</a>란 보드도 가지고 windows 10 IoT도 올리고 이것저것 해봤었는데, 어느 시점에선가 개발지원이 끊겼다.</p>
+<p>실제 논문을 보면 Support Set에서 사용된 context encoder는 Bi-directional LSTM <span class="math inline">\(g_{\theta}\)</span> 를 사용했고, Query Set에서 사용된 encoder는 Convolutional Encoder <span class="math inline">\(h_{\theta}\)</span> 로 되어 있는데, 이 부분은 저자들이 선택한 구조이다. 논문에도 특정 데이터 하나만 독립적으로 보는 것이 아니라, 데이터셋 내의 다른 task간의 관계를 함께 고려하기 위해서 LSTM 구조를 썼다고 언급되어 있다. 강의내 질문에서도 동일한 내용으로 질문이 나왔는데, 교수는 이 부분에 대해서 동일한 encoder를 사용해도 무방하다고 소개했으며, 후술될 <strong>Prototypical Networks</strong>에서는 실제로 동일한 encoder를 쓰는 형태로 개선된 것을 확인할 수 있다.</p>
 </div>
 </div>
 </section>
-<section id="환경-구성" class="level2">
-<h2 class="anchored" data-anchor-id="환경-구성">환경 구성</h2>
-<p>일반적으로 사용되는 SBC라면 SD카드를 통해서 OS를 설치하거나, 별도의 SSD를 설치하여 Jetson처럼 Host PC에서 보드에 OS를 직접 설치하는 방식이 있는데, Tachyon은 후자방법으로 진행하며, Particle CLI 라는 것을 통해서 Firmware 및 OS flash가 이뤄진다.</p>
-<div id="fig-orin_case" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="./images/particle_console.png" class="img-fluid figure-img"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="./images/installation.jpg" class="img-fluid figure-img"></p>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-orin_case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;2: Tachyon 설정 과정
-</figcaption>
-</figure>
-</div>
-<p>특이하게 개발문서상에서는 외장배터리를 연결한 상태에서 진행하게 되어있고, 이를 위해서 동봉된 배터리를 연결한 상태에서 Windows host PC에서 필요한 프로그램을 설치했다.</p>
-</section>
-<section id="문제" class="level2">
-<h2 class="anchored" data-anchor-id="문제">문제</h2>
-<p>이 보드가 앞에서 설명한 특징을 가지고 있는데, 한가지 다루는데 있어서 불편한 부분은 외부와 연결할 수 있는 I/O 인터페이스가 USB-c 2개만 나와있다는 것이다. 그래서 이 보드를 사용하기 위해서는 USB-c 허브가 필요하며, 특히 headless가 아닌 GUI를 위한 display가 필요하다면 별도의 HDMI 포트가 달린 허브를 준비해야 한다. 애초에 난 USB-c용 display가 있어서 c-to-c display가 될 줄 알고 연결했는데 출력이 나오지 않았다. 알고보니 <a href="https://community.particle.io/t/tachyon-wont-output-video/69612/6">제조사</a>에서 언급하기론 usb-c가 alt mode를 지원하는데, usb c-to-c 연결을 위해서는 충분한 전원 공급(대략 5A?)가 필요하다고 한다. 덕분에 hdmi 포트가 달린 허브를 구매해서 환경 설정을 마무리했다.</p>
-</section>
-<section id="결론-및-계획" class="level2">
-<h2 class="anchored" data-anchor-id="결론-및-계획">결론 및 계획</h2>
-<p><img src="./images/setup.jpg" class="img-fluid"></p>
-<p>결과적으로 이렇게 케이블을 둘러둘러 연결하면서 화면출력도 확인했고, 기타 기능 검증도 해봤다. 사실 퀄컴에서 홍보하는 것처럼 이 보드의 장점인 NPU를 활용해봐야 제대로된 사용이 될 거 같다. 다행히도 퀄컴에서도 자체 <a href="https://aihub.qualcomm.com/models">AI hub</a>를 통해서 다양한 모델들을 지원하고 있는것으로 보이며, 특히 Computer vision 분야에는 6490을 위한 몇가지 모델이 올라와있다. 다만 QCM6490이 시중에 나와있는 Elite 모델에 비해 성능이 부족하기 때문에, 원래 모델이 아니라 w8a8와 같이 quantization이 적용된 모델을 돌릴 수 있는거 같다. 그래서 Quantization 관련 강의도 좀 보면서 모델도 직접 올려보고 해보고 싶다. 뭐 이게 잘되면 원래 계획했던 것처럼 Mini Pupper의 제어보드가 될지도..</p>
+<section id="prototypical-networks-for-non-parametric-model" class="level2">
+
+
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Prototypical Networks for Non-Parametric Model</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Bromley1993SignatureVU" class="csl-entry" role="listitem">
+Bromley, Jane, James W. Bentz, Léon Bottou, Isabelle M Guyon, Yann LeCun, Cliff Moore, Eduard Säckinger, 와/과 Roopak Shah. 1993. <span>“Signature Verification Using A "Siamese" Time Delay Neural Network”</span>. <em>Int. J. Pattern Recognit. Artif. Intell.</em> 7: 669–88. <a href="https://api.semanticscholar.org/CorpusID:16394033">https://api.semanticscholar.org/CorpusID:16394033</a>.
+</div>
+<div id="ref-Koch2015SiameseNN" class="csl-entry" role="listitem">
+Koch, Gregory R. 2015. <span>“Siamese Neural Networks for One-Shot Image Recognition”</span>. In. <a href="https://api.semanticscholar.org/CorpusID:13874643">https://api.semanticscholar.org/CorpusID:13874643</a>.
+</div>
+<div id="ref-vinyals2016matching" class="csl-entry" role="listitem">
+Vinyals, Oriol, Charles Blundell, Timothy Lillicrap, Daan Wierstra, 기타. 2016. <span>“Matching networks for one shot learning”</span>. <em>Advances in neural information processing systems</em> 29.
+</div>
+<div id="ref-zhang2018unreasonable" class="csl-entry" role="listitem">
+Zhang, Richard, Phillip Isola, Alexei A Efros, Eli Shechtman, 와/과 Oliver Wang. 2018. <span>“The unreasonable effectiveness of deep features as a perceptual metric”</span>. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em>, 586–95.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -902,6 +1081,38 @@ function loadGiscusWhenReady() {
 loadGiscusWhenReady();
 </script>
 </div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+  
 
 
 
