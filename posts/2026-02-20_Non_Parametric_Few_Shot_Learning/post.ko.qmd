@@ -88,13 +88,13 @@ $$
 
 ![Matching Network](./images/18p_matching_network.png){#fig-matching-network}
 
-우선 불일치 문제를 해소하기 위해서 데이터 자체가 아닌, 데이터내에 잠재된 context를 활용하여 일치점을 찾으려 했고, 이를 위해 학습 데이터와 test 데이터에서 context를 뽑아낼 별도의 encoder network를 달았다. 학습 데이터와 test 데이터가 임베딩 공간에 매핑되면, 둘 사이의 dot product 등을 통해서 유사도를 계산한후, 계산된 유사도값에 softmax 함수를 취해서 모든 훈련데이터에 대한 가중치(확률값)을 구하게 된다. 이렇게 구한 값과 실제 학습 데이터의 정답 label을 곱한, 일종의 weighted sum으로 최종 label을 추론하게 되는데, 
+우선 불일치 문제를 해소하기 위해서 데이터 자체가 아닌, 데이터내에 잠재된 context를 활용하여 일치점을 찾으려 했고, 이를 위해 학습 데이터와 test 데이터에서 context를 뽑아낼 별도의 encoder network를 달았다. 학습 데이터와 test 데이터가 임베딩 공간에 매핑되면, 둘 사이의 dot product 등을 통해서 유사도를 계산한후, 계산된 유사도값에 softmax 함수($a(x^{ts}, x_k) = \frac{\exp(\text{cos}(f(x^{ts}), g(x_k)))}{\sum_{x_j} \exp(\text{cos}(f(x^{ts}), g(x_j)))}$) 를 취해서 모든 훈련데이터에 대한 가중치(확률값)을 구하게 된다. 이렇게 구한 값과 실제 학습 데이터의 정답 label을 곱한, 일종의 weighted sum으로 최종 label을 추론하게 되는데, 
 
 $$
 \hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta}(x^{ts}, x_k) y_k
 $$
 
-기존의 indicator function이 이렇게 softmax function으로 대체되면서 미분도 가능해지고, 오차를 통한 backpropagation도 가능해지면서 parameter를 end-to-end로 직접 최적화할 수 있게 된다. 추가로 주어진 test 데이터가 여러 개인 상황($K>1$) 에서도, Matching Networks는 기존의 수식을 활용하면서 일종의 투표방식(Voting)으로 동작하게 되는데, Support Set에서의 데이터와 test 데이터 간의 유사도를 기반으로 선택된 label에 투표가 많이 누적된 것으로 추론하는 방식으로 이뤄진다. 이 전체 과정을 알고리즘으로 표현하면 다음과 같다.
+기존의 indicator function이 이렇게 softmax function으로 대체되면서 미분도 가능해지고, 오차를 통한 backpropagation도 가능해지면서 parameter를 **end-to-end**로 직접 최적화할 수 있게 된다. 추가로 주어진 test 데이터가 여러 개인 상황($K>1$) 에서도, Matching Networks는 기존의 수식을 활용하면서 일종의 투표방식(Voting)으로 동작하게 되는데, Support Set에서의 데이터와 test 데이터 간의 유사도를 기반으로 선택된 label에 투표가 많이 누적된 것으로 추론하는 방식으로 이뤄진다. 이 전체 과정을 알고리즘으로 표현하면 다음과 같다.
 
 ```pseudocode
 #| html-indent-size: "1.2em"
@@ -107,7 +107,7 @@ $$
 #| label: algo-Matching-Networks
 
 \begin{algorithm}
-\caption{General Algorithm of Matching Networks}
+\caption{General Algorithm of Non-parametric approach}
 \begin{algorithmic}
 \State Sample task $\mathcal{T}_i \quad$ (or mini batch of tasks)
 \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$
@@ -119,10 +119,29 @@ $$
 
 이렇게 하면 이전 강의에서 다뤘던 Parametric Model $\phi$ 가 없어진 Non-Parametric Model의 형태로 동작되는 것을 확인할 수 있다. 
 
-사실 Matching을 하기 위한 목적으로 내부에서 별도의 유사도를 계산하고 이에 기반한 가중치를 계산하는데, 문제는 각각의 test 데이터를 **"독립적으로"** 비교하다보니 어느 잘못된 데이터로 인해서 편향이 발생할 수 있다. 만약 특정 데이터 하나가 잘못된 label을 가지거나 outlier인데, 우연히 test 데이터와의 유사도가 높게 나온다면, 이 잘못된 결과로 인해서 다른 정상적인 결과들이 묻혀버리는(Overpower) 현상이 나타날 수 있다. 이로 인해서 개별 예제가 아닌, class별 평균 정보를 모아서(Aggregate) 기준값을 만드는 **Prototypical Networks** 방식이 이어서 설명된다.
+사실 Matching을 하기 위한 목적으로 내부에서 별도의 유사도를 계산하고 이에 기반한 가중치를 계산하는데, 문제는 각각의 test 데이터를 **"독립적으로"** 비교하다보니 어느 잘못된 데이터로 인해서 편향이 발생할 수 있다. 만약 특정 데이터 하나가 잘못된 label을 가지거나 outlier인데, 우연히 test 데이터와의 유사도가 높게 나온다면, 이 잘못된 결과로 인해서 다른 정상적인 결과들이 묻혀버리는(Overpower) 현상이 나타날 수 있다. 이로 인해서 개별 예제가 아닌, class별 평균 정보를 모아서 일종의 **prototype**을 만드는 **Prototypical Networks** 방식이 이어서 설명된다.
 
 :::{.callout-note}
-실제 논문을 보면 Support Set에서 사용된 context encoder는 Bi-directional LSTM $g_{\theta}$ 를 사용했고, Query Set에서 사용된 encoder는 Convolutional Encoder $h_{\theta}$ 로 되어 있는데, 이 부분은 저자들이 선택한 구조이다. 논문에도 특정 데이터 하나만 독립적으로 보는 것이 아니라, 데이터셋 내의 다른 task간의 관계를 함께 고려하기 위해서 LSTM 구조를 썼다고 언급되어 있다. 강의내 질문에서도 동일한 내용으로 질문이 나왔는데, 교수는 이 부분에 대해서 동일한 encoder를 사용해도 무방하다고 소개했으며, 후술될 **Prototypical Networks**에서는 실제로 동일한 encoder를 쓰는 형태로 개선된 것을 확인할 수 있다.
+실제 논문을 보면 Support Set에서 사용된 context encoder는 Bi-directional LSTM $g_{\theta}$ 를 사용했고, Query Set에서 사용된 encoder는 Support Set의 임베딩결과에 영향을 받는(Conditioned) Attention 기반의 LSTM $h_{\theta}$ 로 되어 있는데, 이 부분은 저자들이 선택한 구조라고 강의에서 소개하고 있다. 논문에도 특정 데이터 하나만 독립적으로 보는 것이 아니라, 데이터셋 내의 다른 task간의 관계를 함께 고려하기 위해서 LSTM 구조를 썼다고 언급되어 있다. 강의내 질문에서도 동일한 내용으로 질문이 나왔는데, 교수는 이 부분에 대해서 동일한 encoder를 사용해도 무방하다고 소개했으며, 원논문에서는 복잡한 LSTM기반의 앙상블 구조를 사용했지만, 후술될 **Prototypical Networks**과 더불어 이어지는 연구들에서는 동일한 encoder를 쓰는 형태로 일반화된 것을 확인할 수 있다.
 :::
 
 ## Prototypical Networks for Non-Parametric Model
+
+앞에서 언급한 바와 같이 각각의 test 데이터에 독립적으로 판단하면서 정상적인 결과가 묻혀버리는 Matching Networks의 한계를 극복하기 위해서 제안된 아이디어는 이렇게 개별 훈련 데이터를 일일이 distance를 비교하는 대신, 각 class별로 데이터들의 정보를 모아(aggregate) 하나의 대표값(prototypical embedding)을 만드는 것이었다. 그리고 만약 새로운 테스트 데이터가 들어오면, 개별 데이터가 아닌 이 대표값들과의 distance만 비교하는 형태(Nearest Neighbors to the prototypes)로 분류가 진행된다면, 앞에서 발생한 한계를 극복할 수 있을텐데 이 방법이 바로 **Prototypical Networks**란 이름으로 @snell2017prototypical 의 논문에 소개되었다.
+
+![Prototypical Networks](./images/20p_Prototypical_networks.png){#fig-prototypical-networks}
+
+@fig-prototypical-networks 는 앞에서 소개한 방식을 그림으로 표현한 것으로, 만약 $x$ 라는 흰점의 class를 알고자 할 경우, 각 class별 Prototype은 다음과 같이 계산한다. 앞에서 언급한 Nearest Neighbor방식으로 구한 결과의 평균을 구하는 과정이다.
+
+$$
+c_n = \frac{1}{K} \sum_{(x_k, y_k) \in \mathcal{D}_i^{tr}} \mathbb{1}(y == n) f_{\theta}(x_k)
+$$
+
+이후에 주어진 test 데이터와 prototype ($c_n$)간의 distance를 $d(c_n, x_k^{ts})$ 라고 정의할 경우, $y=n$ 이 될 확률은 @eq-prototype-softmax 과 같이 softmax 함수을 적용해서 계산할 수 있다. 참고로 distance 함수는 작을수록 유사하다는 의미를 가지므로, 수식에는 각각 음수의 형태 ($-d$)로 들어가게 된다.
+
+$$
+p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(-d(f_{\theta}(x), c_{n'}))}
+$${#eq-prototype-softmax}
+
+참고로 교수는 이 부분에서 $d$ 함수에 대해서 부연설명을 했는데, @snell2017prototypical 에서는 euclidian distance나 consine distance를 사용하긴 했지만, Matching Networks에서 언급했던 방법과 유사하게 이 distance를 구하는 방법 자체를 신경망으로 학습시킬 수 있다고 설명했다. 물론 이 경우 embedding 신경망에 대한 parameter $\theta_f$ 와 distance 를 구하는 신경망에 대한 parameter $\theta_d$ 를 최적화할 수 있도록 모델이 학습되는 형태 $\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)$ 가 될 것이다.
+
