@@ -264,6 +264,7 @@ window.Quarto = {
   <li><a href="#siamese-network-for-non-parametric-model" id="toc-siamese-network-for-non-parametric-model" class="nav-link" data-scroll-target="#siamese-network-for-non-parametric-model">Siamese Network for Non-Parametric Model</a></li>
   <li><a href="#matching-networks-for-non-parametric-model" id="toc-matching-networks-for-non-parametric-model" class="nav-link" data-scroll-target="#matching-networks-for-non-parametric-model">Matching Networks for Non-Parametric Model</a></li>
   <li><a href="#prototypical-networks-for-non-parametric-model" id="toc-prototypical-networks-for-non-parametric-model" class="nav-link" data-scroll-target="#prototypical-networks-for-non-parametric-model">Prototypical Networks for Non-Parametric Model</a></li>
+  <li><a href="#challenges-and-ideas" id="toc-challenges-and-ideas" class="nav-link" data-scroll-target="#challenges-and-ideas">Challenges and Ideas</a></li>
   </ul>
 </nav>
 </nav>
@@ -429,7 +430,7 @@ window.Quarto = {
 \hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta}(x^{ts}, x_k) y_k
 \]</span></p>
 <p>기존의 indicator function이 이렇게 softmax function으로 대체되면서 미분도 가능해지고, 오차를 통한 backpropagation도 가능해지면서 parameter를 <strong>end-to-end</strong>로 직접 최적화할 수 있게 된다. 추가로 주어진 test 데이터가 여러 개인 상황(<span class="math inline">\(K&gt;1\)</span>) 에서도, Matching Networks는 기존의 수식을 활용하면서 일종의 투표방식(Voting)으로 동작하게 되는데, Support Set에서의 데이터와 test 데이터 간의 유사도를 기반으로 선택된 label에 투표가 많이 누적된 것으로 추론하는 방식으로 이뤄진다. 이 전체 과정을 알고리즘으로 표현하면 다음과 같다.</p>
-<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number="true" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-caption-prefix="Algorithm">
+<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-comment-delimiter="//" data-pseudocode-number="1" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{General Algorithm of Non-parametric approach} \begin{algorithmic} \State Sample task $\mathcal{T}_i \quad$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta} (x^{ts}, x_k) y_k$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\hat{y}^{ts}, y^{ts})$ \end{algorithmic} \end{algorithm}
 </div>
@@ -471,13 +472,42 @@ c_n = \frac{1}{K} \sum_{(x_k, y_k) \in \mathcal{D}_i^{tr}} \mathbb{1}(y == n) f_
 <p><span id="eq-prototype-softmax"><span class="math display">\[
 p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(-d(f_{\theta}(x), c_{n'}))}
 \tag{1}\]</span></span></p>
-<p>참고로 교수는 이 부분에서 <span class="math inline">\(d\)</span> 함수에 대해서 부연설명을 했는데, <span class="citation" data-cites="snell2017prototypical">Snell, Swersky, 와/과 Zemel (<a href="#ref-snell2017prototypical" role="doc-biblioref">2017</a>)</span> 에서는 euclidian distance나 consine distance를 사용하긴 했지만, Matching Networks에서 언급했던 방법과 유사하게 이 distance를 구하는 방법 자체를 신경망으로 학습시킬 수 있다고 설명했다. 물론 이 경우 embedding 신경망에 대한 parameter <span class="math inline">\(\theta_f\)</span> 와 distance 를 구하는 신경망에 대한 parameter <span class="math inline">\(\theta_d\)</span> 를 최적화할 수 있도록 모델이 학습되는 형태 <span class="math inline">\(\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)\)</span> 가 될 것이다.</p>
+<p>참고로 교수는 이 부분에서 <span class="math inline">\(d\)</span> 함수에 대해서 부연설명을 했는데, <span class="citation" data-cites="snell2017prototypical">Snell, Swersky, 와/과 Zemel (<a href="#ref-snell2017prototypical" role="doc-biblioref">2017</a>)</span> 에서는 euclidian distance나 consine similarity를 사용하긴 했지만, Matching Networks에서 언급했던 방법과 유사하게 이 distance를 구하는 방법 자체를 신경망으로 학습시킬 수 있다고 설명했다. 물론 이 경우 embedding 신경망에 대한 parameter <span class="math inline">\(\theta_f\)</span> 와 distance 를 구하는 신경망에 대한 parameter <span class="math inline">\(\theta_d\)</span> 를 최적화할 수 있도록 모델이 학습되는 형태 <span class="math inline">\(\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)\)</span> 가 될 것이다.</p>
+</section>
+<section id="challenges-and-ideas" class="level2">
+<h2 class="anchored" data-anchor-id="challenges-and-ideas">Challenges and Ideas</h2>
+<p>앞에서 소개한 것처럼 주어진 데이터에 대한 embedding space를 구하고, Nearest Neighbor 방식을 통해 test 데이터의 label을 추정하는 방법은 Non-parametric 기법에서 생각해볼 수 있는 가장 보편적인 방법이지만, 이런 방식에도 앞에서 언급한 바와 같이 한계점이 존재한다. 개별 데이터에 대해서 독립적으로 구한다던가, 단순한 distance 측정을 통해서 찾는 유사성보다도 데이터들간에 내재되어 있는 복잡한 관계에 대해서도 어떻게 대응할 수 있을지 생각해볼 필요가 있다.</p>
+<div id="fig-relation-networks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-relation-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_relation_networks.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relation-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;7: Relation Networks
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-relation-networks" class="quarto-xref">그림&nbsp;7</a> 는 <span class="citation" data-cites="sung2018learning">Sung 기타 (<a href="#ref-sung2018learning" role="doc-biblioref">2018</a>)</span> 논문에서 소개된 <strong>Relation Networks</strong> 라는 구조로, 앞에서 잠깐 언급했던 distanace를 구하는 과정 자체를 신경망으로 학습시키는 방식이다. 기존 방식은 embedding 후 <span class="math inline">\(\ell_2\)</span> Distance나 Cosine Similarity 같은 사전에 정의된 distance function을 활용했었는데, 이 경우 복잡한 관계를 가진 데이터들간에 대해서는 명확하게 계산하기가 어려웠다. 이를 해결하기 위해서 해당 논문에서는 우선 test 데이터와 training 데이터의 Feature map을 embedding module (<span class="math inline">\(f_\phi\)</span>)을 통해서 추출한 후, 각 feature map들을 하나로 이어붙였다.(Concatenation) 그 후 이에 대한 출력값을 뒤에 있는 relation module (<span class="math inline">\(g_\phi\)</span>) 에 넣음으로써 나오는 Relation Score를 통해 test 데이터가 어떤 label을 가지는지를 추정할 수 있도록 설계되었다.</p>
+<div id="fig-imp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-imp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_infinite_mixture_Prototypes.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-imp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;8: Infinite Mixture Prototypes
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-imp" class="quarto-xref">그림&nbsp;8</a> 도 데이터간의 복잡한 관계를 추출하기 위한 방법으로 소개된 <strong>Infinite Mixture Prototypes (IMP)</strong> 라는 구조에 대한 내용이다. 해당 구조는 <span class="citation" data-cites="pmlr-v97-allen19b">Allen 기타 (<a href="#ref-pmlr-v97-allen19b" role="doc-biblioref">2019</a>)</span> 논문에서 제안된 방식인데, 앞에서 언급된 Prototypical Networks 방식은 군집화가 이뤄진 데이터들의 대표값(Prototype)을 통해서 유사성을 계산하는 방식을 개선하고자 했다. 교수는 이 방식의 필요성에 대해서 예시를 들어 잠깐 설명했는데, 예를 들어 고양이란 class내에서도</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-pmlr-v97-allen19b" class="csl-entry" role="listitem">
+Allen, Kelsey, Evan Shelhamer, Hanul Shin, 와/과 Joshua Tenenbaum. 2019. <span>“Infinite Mixture Prototypes for Few-shot Learning”</span>. In <em>Proceedings of the 36th International Conference on Machine Learning</em>, 편집자： Kamalika Chaudhuri 와/과 Ruslan Salakhutdinov, 97:232–41. Proceedings of Machine Learning Research. PMLR. <a href="https://proceedings.mlr.press/v97/allen19b.html">https://proceedings.mlr.press/v97/allen19b.html</a>.
+</div>
 <div id="ref-Bromley1993SignatureVU" class="csl-entry" role="listitem">
 Bromley, Jane, James W. Bentz, Léon Bottou, Isabelle M Guyon, Yann LeCun, Cliff Moore, Eduard Säckinger, 와/과 Roopak Shah. 1993. <span>“Signature Verification Using A "Siamese" Time Delay Neural Network”</span>. <em>Int. J. Pattern Recognit. Artif. Intell.</em> 7: 669–88. <a href="https://api.semanticscholar.org/CorpusID:16394033">https://api.semanticscholar.org/CorpusID:16394033</a>.
 </div>
@@ -486,6 +516,9 @@ Koch, Gregory R. 2015. <span>“Siamese Neural Networks for One-Shot Image Recog
 </div>
 <div id="ref-snell2017prototypical" class="csl-entry" role="listitem">
 Snell, Jake, Kevin Swersky, 와/과 Richard Zemel. 2017. <span>“Prototypical networks for few-shot learning”</span>. <em>Advances in neural information processing systems</em> 30.
+</div>
+<div id="ref-sung2018learning" class="csl-entry" role="listitem">
+Sung, Flood, Yongxin Yang, Li Zhang, Tao Xiang, Philip HS Torr, 와/과 Timothy M Hospedales. 2018. <span>“Learning to compare: Relation network for few-shot learning”</span>. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em>, 1199–1208.
 </div>
 <div id="ref-vinyals2016matching" class="csl-entry" role="listitem">
 Vinyals, Oriol, Charles Blundell, Timothy Lillicrap, Daan Wierstra, 기타. 2016. <span>“Matching networks for one shot learning”</span>. <em>Advances in neural information processing systems</em> 29.

@@ -143,5 +143,16 @@ $$
 p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(-d(f_{\theta}(x), c_{n'}))}
 $${#eq-prototype-softmax}
 
-참고로 교수는 이 부분에서 $d$ 함수에 대해서 부연설명을 했는데, @snell2017prototypical 에서는 euclidian distance나 consine distance를 사용하긴 했지만, Matching Networks에서 언급했던 방법과 유사하게 이 distance를 구하는 방법 자체를 신경망으로 학습시킬 수 있다고 설명했다. 물론 이 경우 embedding 신경망에 대한 parameter $\theta_f$ 와 distance 를 구하는 신경망에 대한 parameter $\theta_d$ 를 최적화할 수 있도록 모델이 학습되는 형태 $\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)$ 가 될 것이다.
+참고로 교수는 이 부분에서 $d$ 함수에 대해서 부연설명을 했는데, @snell2017prototypical 에서는 euclidian distance나 consine similarity를 사용하긴 했지만, Matching Networks에서 언급했던 방법과 유사하게 이 distance를 구하는 방법 자체를 신경망으로 학습시킬 수 있다고 설명했다. 물론 이 경우 embedding 신경망에 대한 parameter $\theta_f$ 와 distance 를 구하는 신경망에 대한 parameter $\theta_d$ 를 최적화할 수 있도록 모델이 학습되는 형태 $\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)$ 가 될 것이다.
 
+## Challenges and Ideas
+
+앞에서 소개한 것처럼 주어진 데이터에 대한 embedding space를 구하고, Nearest Neighbor 방식을 통해 test 데이터의 label을 추정하는 방법은 Non-parametric 기법에서 생각해볼 수 있는 가장 보편적인 방법이지만, 이런 방식에도 앞에서 언급한 바와 같이 한계점이 존재한다. 개별 데이터에 대해서 독립적으로 구한다던가, 단순한 distance 측정을 통해서 찾는 유사성보다도 데이터들간에 내재되어 있는 복잡한 관계에 대해서도 어떻게 대응할 수 있을지 생각해볼 필요가 있다. 
+
+![Relation Networks](./images/21p_relation_networks.png){#fig-relation-networks}
+
+@fig-relation-networks 는 @sung2018learning 논문에서 소개된 **Relation Networks** 라는 구조로, 앞에서 잠깐 언급했던 distanace를 구하는 과정 자체를 신경망으로 학습시키는 방식이다. 기존 방식은 embedding 후 $\ell_2$ Distance나 Cosine Similarity 같은 사전에 정의된 distance function을 활용했었는데, 이 경우 복잡한 관계를 가진 데이터들간에 대해서는 명확하게 계산하기가 어려웠다. 이를 해결하기 위해서 해당 논문에서는 우선 test 데이터와 training 데이터의 Feature map을 embedding module ($f_\phi$)을 통해서 추출한 후, 각 feature map들을 하나로 이어붙였다.(Concatenation) 그 후 이에 대한 출력값을 뒤에 있는 relation module ($g_\phi$) 에 넣음으로써 나오는 Relation Score를 통해 test 데이터가 어떤 label을 가지는지를 추정할 수 있도록 설계되었다.
+
+![Infinite Mixture Prototypes](./images/21p_infinite_mixture_Prototypes.png){#fig-imp}
+
+@fig-imp 도 데이터간의 복잡한 관계를 추출하기 위한 방법으로 소개된 **Infinite Mixture Prototypes (IMP)** 라는 구조에 대한 내용이다. 해당 구조는 @pmlr-v97-allen19b 논문에서 제안된 방식인데, 앞에서 언급된 Prototypical Networks 방식은 군집화가 이뤄진 데이터들의 대표값(Prototype)을 통해서 유사성을 계산하는 방식을 개선하고자 했다. 교수는 이 방식의 필요성에 대해서 예시를 들어 잠깐 설명했는데, 예를 들어 고양이란 class내에서도 
