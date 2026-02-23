@@ -11,7 +11,7 @@
 <meta name="author" content="Chanseok Kang">
 <meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 7. Offline RL에 대한 강의 요약">
 
-<title>Q-Learning – 생각많은 소심남의 연구노트</title>
+<title>Offline RL – 생각많은 소심남의 연구노트</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -157,7 +157,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Q-Learning</h1>
+      <h1 class="title">Offline RL</h1>
                   <div>
         <div class="description">
           2025년에 진행한 CS224R 강의 중 Lecture 7. Offline RL에 대한 강의 요약
@@ -248,7 +248,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <section id="recap" class="level2">
 <h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>이전 강의를 통해서 강화학습의 대표적인 알고리즘 형태인 Policy Gradient와 Actor-Critic Methods, Q-Learning에 대해서 다뤘다. 강화학습의 궁극적인 목표는 모델이 수집한 데이터를 바탕으로, 결과에 도달했을 때 받을 수 있는 총 보상합의 기대치가 최대치가 되는 policy를 학습하는 것이었다. 이를 위해서 전체 trajectory를 모아놓고, 평균보다 좋은 보상을 받은 trajectory를 이끈 행동에 대해서는 더 하게끔 하고, 안좋은 보상을 받은 trajectory를 유발한 행동에 대해서는 덜 하게 하는 <strong>Policy Gradient</strong> 방식이 있었고, 현재 State에 대한 가치를 추정해(Critic), 이에 기반하여 총 보상합의 기대치를 높이는 action을 취하는(Actor) <strong>Actor-Critic</strong> 방식도 있었다. 그리고 Actor에 대한 별도의 학습없이 현재 state에 대한 가치의 추정값이 최대화가 되는 action을 취하게끔 사전에 정책을 정의한 <strong>Q-Learning</strong> 같은 방법도 있었다. 그 중 이번 강의에서 다룰 <strong>Offline RL</strong> 과 크게 연관되어 있는 Off-Policy Actor-Critic Method의 알고리즘을 다시 살펴보자.</p>
-<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="1">
+<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-no-end="false" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Full Off-policy Actor-Critic Method} \begin{algorithmic} \State take action $a \sim \pi_{\theta}(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}^{\pi}_{\phi}(s_i', a_i')$ where $a_i' \sim \pi_{\theta}(\cdot \vert s_i')$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_{\theta}(a \vert s_t)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \State Repeat 1 to 5 until convergence \end{algorithmic} \end{algorithm}
 </div>
