@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.html",
       "/posts/2026-02-10_Q_Learning/post.html",
       "/posts/2026-02-09_Optimization_Based_Meta_Learning/post.html",
       "/posts/2026-02-03_Off_Policy_Actor_Critic_Methods/post.html",
