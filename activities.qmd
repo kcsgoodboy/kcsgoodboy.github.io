@@ -1,7 +1,7 @@
 ---
 title: "Activities"
 lang: en
-date: today
+date: '2026-02-11'
 output: distill::distill_article
 editor_options: 
   chunk_output_type: console
