@@ -1,5 +1,5 @@
 ---
-title: Q-Learning
+title: Offline RL
 description: 2025년에 진행한 CS224R 강의 중 Lecture 7. Offline RL에 대한 강의 요약
 date: '2026-02-23'
 bibliography: ../../contents/references.bib
