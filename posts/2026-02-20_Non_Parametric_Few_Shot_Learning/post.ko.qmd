@@ -143,7 +143,9 @@ $$
 p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(-d(f_{\theta}(x), c_{n'}))}
 $${#eq-prototype-softmax}
 
-참고로 교수는 이 부분에서 $d$ 함수에 대해서 부연설명을 했는데, @snell2017prototypical 에서는 euclidian distance나 consine similarity를 사용하긴 했지만, Matching Networks에서 언급했던 방법과 유사하게 이 distance를 구하는 방법 자체를 신경망으로 학습시킬 수 있다고 설명했다. 물론 이 경우 embedding 신경망에 대한 parameter $\theta_f$ 와 distance 를 구하는 신경망에 대한 parameter $\theta_d$ 를 최적화할 수 있도록 모델이 학습되는 형태 $\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)$ 가 될 것이다.
+참고로 강의에서 교수는 이 $d$ 함수에 대해 부연 설명을 덧붙였는데, @snell2017prototypical 논문을 비롯한 여러 연구에서는 유사도를 측정하기 위해 Euclidean distance나 Cosine similarity 같은 고정된 함수를 사용했다는 점이다. (특히 Prototypical Networks 논문은 이 Distance function으로 Euclidean distance를 선택하는 것이 성능에 어떤 중요한 기여를 하는지 수학적으로 증명하기도 했다.) 
+
+여기서 한 걸음 더 나아가, 이 **Distance를 구하는 방법 자체도 신경망으로 학습시킬 수 있다**고 설명했다. 이 아이디어를 적용한다면, 모델은 단순히 데이터를 임베딩하는 신경망의 파라미터 $\theta_f$ 뿐만 아니라, 거리를 구하는 신경망의 파라미터 $\theta_d$ 까지 함께 최적화하는 형태, 즉 $\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)$ 로 학습이 진행될 것이다.
 
 ## Challenges and Ideas
 
