@@ -263,6 +263,7 @@ window.Quarto = {
   <li><a href="#can-we-just-use-off-policy-algorithms" id="toc-can-we-just-use-off-policy-algorithms" class="nav-link" data-scroll-target="#can-we-just-use-off-policy-algorithms">Can we just use off-policy algorithms?</a></li>
   <li><a href="#how-to-mitigate-overestimation-in-offline-rl" id="toc-how-to-mitigate-overestimation-in-offline-rl" class="nav-link" data-scroll-target="#how-to-mitigate-overestimation-in-offline-rl">How to mitigate overestimation in Offline RL?</a></li>
   <li><a href="#advantage-weighted-regression" id="toc-advantage-weighted-regression" class="nav-link" data-scroll-target="#advantage-weighted-regression">Advantage-Weighted Regression</a></li>
+  <li><a href="#advantage-weighted-actor-critic" id="toc-advantage-weighted-actor-critic" class="nav-link" data-scroll-target="#advantage-weighted-actor-critic">Advantage-Weighted Actor-Critic</a></li>
   </ul>
 </nav>
 </nav>
@@ -300,7 +301,7 @@ window.Quarto = {
 <section id="recap" class="level2">
 <h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>이전 강의를 통해서 강화학습의 대표적인 알고리즘 형태인 Policy Gradient와 Actor-Critic Methods, Q-Learning에 대해서 다뤘다. 강화학습의 궁극적인 목표는 모델이 수집한 데이터를 바탕으로, 결과에 도달했을 때 받을 수 있는 총 보상합의 기대치가 최대치가 되는 policy를 학습하는 것이었다. 이를 위해서 전체 trajectory를 모아놓고, 평균보다 좋은 보상을 받은 trajectory를 이끈 행동에 대해서는 더 하게끔 하고, 안좋은 보상을 받은 trajectory를 유발한 행동에 대해서는 덜 하게 하는 <strong>Policy Gradient</strong> 방식이 있었고, 현재 State에 대한 가치를 추정해(Critic), 이에 기반하여 총 보상합의 기대치를 높이는 action을 취하는(Actor) <strong>Actor-Critic</strong> 방식도 있었다. 그리고 Actor에 대한 별도의 학습없이 현재 state에 대한 가치의 추정값이 최대화가 되는 action을 취하게끔 사전에 정책을 정의한 <strong>Q-Learning</strong> 같은 방법도 있었다. 그 중 이번 강의에서 다룰 <strong>Offline RL</strong> 과 크게 연관되어 있는 Off-Policy Actor-Critic Method의 알고리즘을 다시 살펴보자.</p>
-<div id="algo-Off-Policy-Actor-Critic" class="pseudocode-container quarto-float" data-line-number="true" data-comment-delimiter="//" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm">
+<div id="algo-Off-Policy-Actor-Critic" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number-punc=":" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-caption-prefix="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Full Off-policy Actor-Critic Method (SAC)} \begin{algorithmic} \State take action $a \sim \pi_{\theta}(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}^{\pi}_{\phi}(s_i', a_i')$ where $a_i' \sim \pi_{\theta}(\cdot \vert s_i')$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_{\theta}(a \vert s_t)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \State Repeat 1 to 5 until convergence \end{algorithmic} \end{algorithm}
 </div>
@@ -357,7 +358,7 @@ window.Quarto = {
 </div>
 <p>Offline RL이 Imitation Learning에 비해서 강점을 얻을 수 있는 부분은 <a href="#fig-stitching" class="quarto-xref">그림&nbsp;2</a> 에서 소개하는 <strong>Trajectory Stitching</strong> 이란 것이다. 그림과 같이 offline 데이터셋내에 두개의 trajectory(<span class="math inline">\(s_1 \rightarrow s_6, s_1 \rightarrow s_9\)</span>) 가 존재하고, <span class="math inline">\(s_3\)</span> 와 <span class="math inline">\(s_7\)</span> 어느정도 근접한 State라고 가정할때, 단순히 Imitation Learning을 수행한다면, 완전히 동일한 State에서 시작하지 않는다면 목표지점인 <span class="math inline">\(s_9\)</span> 까지 도달하지 못하지만, Offline RL에서는 내부의 정보를 활용하여, <span class="math inline">\(s_1 \rightarrow s_3\)</span>, <span class="math inline">\(s_7 \rightarrow s_9\)</span> 가 부분적으로 좋은 trajectory라는 것을 판단하여 결과적으로 <span class="math inline">\(s_1 \rightarrow s_9\)</span> 라는 최적의 trajectory를 찾을 수 있게끔 학습시킬 수 있다.</p>
 <p>이를 해소하기 위해서 Imitation Learning을 개선시킬 수 있는 포인트는 데이터셋 중에서도 보상이 높은 trajectory 몇개만 선택해서 모방하는 일종의 <strong>Filtered Behavior Cloning</strong> 방식이다. 이 경우 앞에서 언급한 stitching 같은 능력은 없지만, 구현이 매우 간단하고 초기 데이터셋만으로 개선된 모델을 학습시킬 수 있는 좋은 baseline으로 활용할 수 있다.</p>
-<div id="algo-Filtered-Behavior-Cloning" class="pseudocode-container quarto-float" data-line-number="true" data-comment-delimiter="//" data-pseudocode-number="2" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm">
+<div id="algo-Filtered-Behavior-Cloning" class="pseudocode-container quarto-float" data-pseudocode-number="2" data-indent-size="1.2em" data-line-number-punc=":" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-caption-prefix="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Filtered Behavior Cloning} \begin{algorithmic} \State Rank trajectories by return $r(\tau) = \sum_{(s_t, a_t) \in \tau}r(s_t, a_t)$ \State Filter dataset to include top $k\%$ of data: $\tilde{\mathcal{D}} = \{\tau \vert r(\tau) \gt \eta \}$ \State Imitate filtered dataset: $\max_{\theta} \sum_{(s, a) \in \tilde{\mathcal{D}}} \log \pi_{\theta}(a \vert s)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -399,18 +400,36 @@ Implicit Policy Constraint
 <p><span class="math display">\[
 A^{\pi_{\beta}}(s_t, a_t) = r(s_t, a_t) + V^{\pi_{\beta}}(s_{t+1}) - V^{\pi_{\beta}}(s_t)
 \]</span></p>
-<p>그런데 이렇게 Temporal Difference 형태로 Advantage를 계산하기 위해서는 Value function이 매우 정확하게 학습되어야 하지만, 데이터셋에 의존해서 학습하는 특성상 학습초기에는 힘들수도 있다. 그래서 이렇게 구하는 대신 실제 데이터셋 내에 존재하는 보상의 총합(Empirical return)에서 추정된 Value Function를 빼는 Monte Carlo Estimation 방식을 취한다. 이렇게 정의하면 TD 연산을 하지 않아도 되기 때문에 구현도 매우 단순해지고, 데이터셋에 없는 행동에 대해서 평가할 위험도 없다. 대신 이전에 언급했던 Monte Carlo Estimation의 단점과 동일하게 Variance가 크다는 문제가 남아있고(물론 데이터셋을 활용한다는 측면에서 양만 충분하다면 Variance는 덜 신경써도 될 부분이긴 하다.), 여전히 Imitation Learning처럼 <span class="math inline">\(\pi_{\beta}\)</span> 보다 좋은 성능을 기대하기가 힘든 부분도 있다. 이렇게 데이터셋 내에서 Advantage function을 추정하여 모델을 학습하는 알고리즘을 <strong>Advantage-Weighted Regression (AWR)</strong> 이란 이름으로 <span class="citation" data-cites="peng2019advantage">Peng 기타 (<a href="#ref-peng2019advantage" role="doc-biblioref">2019</a>)</span> 논문을 통해 소개했다. AWR의 간단한 식 전개는 아래와 같다.</p>
-<div id="algo-Advantage-weighted-Regression" class="pseudocode-container quarto-float" data-line-number="true" data-comment-delimiter="//" data-pseudocode-number="3" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm">
+<p>그런데 이렇게 Temporal Difference 형태로 Advantage를 계산하기 위해서는 Value function이 매우 정확하게 학습되어야 하지만, 데이터셋에 의존해서 학습하는 특성상 학습초기에는 힘들수도 있다. 그래서 이렇게 구하는 대신 실제 데이터셋 내에 존재하는 보상의 총합(Empirical return)에서 추정된 Value Function를 빼는 Monte Carlo Estimation 방식을 취한다. 이렇게 정의하면 TD 연산을 하지 않아도 되기 때문에 구현도 매우 단순해지고, 데이터셋에 없는 행동에 대해서 평가할 위험도 없다. 대신 이전에 언급했던 Monte Carlo Estimation의 단점과 동일하게 Variance가 크다는 문제가 남아있고, Monte Carlo Estimation을 사용하면서 실제 에피소드의 empirical return에만 의존하기 때문에 앞에서 언급했던 trajectory stitching 기능이 크게 제한된다. 이렇게 데이터셋 내에서 Advantage function을 추정하여 모델을 학습하는 알고리즘을 <strong>Advantage-Weighted Regression (AWR)</strong> 이란 이름으로 <span class="citation" data-cites="peng2019advantage">Peng 기타 (<a href="#ref-peng2019advantage" role="doc-biblioref">2019</a>)</span> 논문을 통해 소개했다. AWR의 간단한 식 전개는 아래와 같다.</p>
+<div id="algo-Advantage-weighted-Regression" class="pseudocode-container quarto-float" data-pseudocode-number="3" data-indent-size="1.2em" data-line-number-punc=":" data-comment-delimiter="//" data-line-number="true" data-no-end="false" data-caption-prefix="Algorithm">
 <div class="pseudocode">
-\begin{algorithm} \caption{Advantage Weighted Regression} \begin{algorithmic} \State Fit value function: $\min_{\phi} \sum_{s_t \sim \mathcal{D}} \Vert \hat{V}_{\phi^{\pi_{\beta}}}(s_t) - \sum_{t'=t}^Tr(s_t', a_t') \Vert^2$ \State Train Policy: $\max_{\theta} \mathbb{E}_{(s_t, a_t) \sim \mathcal{D}}\Big[ \log \pi_{\theta}(a_t \vert s_t) \exp \Big( \frac{1}{\alpha} \Big( \sum_{t'=t}^T(s_t', a_t') - \hat{V}_{\phi}^{\pi_{\beta}}(s_t) \Big) \Big) \Big]$ \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Advantage Weighted Regression} \begin{algorithmic} \State Fit value function: $\min_{\phi} \sum_{s_t \sim \mathcal{D}} \Vert \hat{V}_{\phi^{\pi_{\beta}}}(s_t) - \sum_{t'=t}^Tr(s_{t'}, a_{t'}) \Vert^2$ \State Train Policy: $\max_{\theta} \mathbb{E}_{(s_t, a_t) \sim \mathcal{D}}\Big[ \log \pi_{\theta}(a_t \vert s_t) \exp \Big( \frac{1}{\alpha} \Big( \sum_{t'=t}^T(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi_{\beta}}(s_t) \Big) \Big) \Big]$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
+</section>
+<section id="advantage-weighted-actor-critic" class="level2">
+<h2 class="anchored" data-anchor-id="advantage-weighted-actor-critic">Advantage-Weighted Actor-Critic</h2>
+<p>AWR은 Monte Carlo Estimation을 사용하여 Out-of-Distribution action을 사용한 Q value 계산을 하지는 않지만, 추정된 값의 variance와 noise가 크다는 단점이 있었다. 이전의 Value function 관련 내용을 다룰 때 언급했던 내용처럼 Monte Carlo Estimation의 높은 Variance를 완화시키기 위해서 Q-function을 활용한 Bootstrapping Estimation을 활용해볼 수 있다. 그런데 기존의 Off-policy 알고리즘내의 TD update 부분을 살펴보면,</p>
+<p><span class="math display">\[
+\min_{\psi} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \Big[ \big( \hat{Q}_{\psi}^{\pi}(s, a) - (r + \gamma \mathbb{E}_{a' \sim \pi(\cdot \vert s)}[\hat{Q}_{\psi}^{\pi}(s', a')]) \big) \Big]
+\]</span></p>
+<p>와 같이 표현되는데, 이때 다음 state <span class="math inline">\(s'\)</span> 에서 취하는 action <span class="math inline">\(a'\)</span> 을 현재 학습중인 policy <span class="math inline">\(\pi_{\theta}\)</span> 로부터 샘플링하기 때문에, 이 방법을 그대로 Offline RL에서 적용하면 Out-of-Distribution Action을 취하여 Overestimation을 유발하는 문제가 발생한다. 그래서 <strong>Advantage-Weighted Actor-Critic (AWAC)</strong> (<span class="citation" data-cites="nair2020awac">Nair 기타 (<a href="#ref-nair2020awac" role="doc-biblioref">2020</a>)</span>) 이란 방식에서는 이때 문제가 되는 <span class="math inline">\(a'\)</span>을 데이터셋에서 샘플링해서 target Q를 계산하도록 변경했다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Estimated Q-function: } &amp; \min_{\psi} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \Big[ \big( \hat{Q}_{\psi}^{\pi}(s, a) - (r + \gamma \mathbb{E}_{\color{red} a' \sim \mathcal{D}}[\hat{Q}_{\psi}^{\pi}(s', a')]) \big) \Big] \\
+\text{AWAC Update: } &amp; \hat{Q}^{\pi_{\beta}} \leftarrow \arg \min_Q \mathbb{E}_{ (s, a, s', {\color{red}a'}) \sim \mathcal{D}} \Big[ \big( Q(s, a) - (r + \gamma Q(s', a')) \big)^2 \Big]
+\end{aligned}
+\]</span></p>
+<p>간단하게 해당 부분만 수정하면서 데이터셋 내의 action만 보게 되므로 Overestimation 위험을 줄이면서 Bootstrapping 방식을 사용해서 Variance를 낮출 수 있었다. 하지만 역시 과거 <span class="math inline">\(\pi_{\beta}\)</span> 로부터 수집된 데이터 기반으로 value를 추정하는 방식이기 때문에 성능 개선폭이 제한된다는 한계는 여전히 남아있다.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-nair2020awac" class="csl-entry" role="listitem">
+Nair, Ashvin, Abhishek Gupta, Murtaza Dalal, 와/과 Sergey Levine. 2020. <span>“Awac: Accelerating online reinforcement learning with offline datasets”</span>. <em>arXiv preprint arXiv:2006.09359</em>.
+</div>
 <div id="ref-peng2019advantage" class="csl-entry" role="listitem">
 Peng, Xue Bin, Aviral Kumar, Grace Zhang, 와/과 Sergey Levine. 2019. <span>“Advantage-weighted regression: Simple and scalable off-policy reinforcement learning”</span>. <em>arXiv preprint arXiv:1910.00177</em>.
 </div>
