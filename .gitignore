@@ -1,5 +1,6 @@
 /.quarto/
 /.claude/
+/_site/
 **/.venv/**
 
 **/*.quarto_ipynb
