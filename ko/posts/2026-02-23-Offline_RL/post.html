@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-02-23-Offline_RL/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-02-23-Offline_RL/post.ko.html" />
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chanseok Kang">
+<meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 7. Offline RL에 대한 강의 요약">
+
+<title>Offline RL – 생각많은 소심남의 연구노트</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">소개</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">블로그</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">출간물</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">활동</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Offline RL</h1>
+                  <div>
+        <div class="description">
+          2025년에 진행한 CS224R 강의 중 Lecture 7. Offline RL에 대한 강의 요약
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS224R</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 2월 23일</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  <li><a href="#why-offline-rl" id="toc-why-offline-rl" class="nav-link" data-scroll-target="#why-offline-rl">Why Offline RL?</a></li>
+  <li><a href="#can-we-just-use-off-policy-algorithms" id="toc-can-we-just-use-off-policy-algorithms" class="nav-link" data-scroll-target="#can-we-just-use-off-policy-algorithms">Can we just use off-policy algorithms?</a></li>
+  <li><a href="#how-to-mitigate-overestimation-in-offline-rl" id="toc-how-to-mitigate-overestimation-in-offline-rl" class="nav-link" data-scroll-target="#how-to-mitigate-overestimation-in-offline-rl">How to mitigate overestimation in Offline RL?</a></li>
+  <li><a href="#advantage-weighted-regression" id="toc-advantage-weighted-regression" class="nav-link" data-scroll-target="#advantage-weighted-regression">Advantage-Weighted Regression</a></li>
+  <li><a href="#advantage-weighted-actor-critic" id="toc-advantage-weighted-actor-critic" class="nav-link" data-scroll-target="#advantage-weighted-actor-critic">Advantage-Weighted Actor-Critic</a></li>
+  <li><a href="#implicit-q-learning" id="toc-implicit-q-learning" class="nav-link" data-scroll-target="#implicit-q-learning">Implicit Q-Learning</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="강의-및-자료" class="level3">
+<h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://www.youtube.com/watch?v=lRDaXnPIzks&amp;list=PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL&amp;index=7"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs224r.stanford.edu/slides/07_cs224r_offline_rl_2025.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+</section>
+<section id="lecture-summary-with-notebooklm" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/Offline_RL_overview.ko.png" class="img-fluid"></p>
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<p>이전 강의를 통해서 강화학습의 대표적인 알고리즘 형태인 Policy Gradient와 Actor-Critic Methods, Q-Learning에 대해서 다뤘다. 강화학습의 궁극적인 목표는 모델이 수집한 데이터를 바탕으로, 결과에 도달했을 때 받을 수 있는 총 보상합의 기대치가 최대치가 되는 policy를 학습하는 것이었다. 이를 위해서 전체 trajectory를 모아놓고, 평균보다 좋은 보상을 받은 trajectory를 이끈 행동에 대해서는 더 하게끔 하고, 안좋은 보상을 받은 trajectory를 유발한 행동에 대해서는 덜 하게 하는 <strong>Policy Gradient</strong> 방식이 있었고, 현재 State에 대한 가치를 추정해(Critic), 이에 기반하여 총 보상합의 기대치를 높이는 action을 취하는(Actor) <strong>Actor-Critic</strong> 방식도 있었다. 그리고 Actor에 대한 별도의 학습없이 현재 state에 대한 가치의 추정값이 최대화가 되는 action을 취하게끔 사전에 정책을 정의한 <strong>Q-Learning</strong> 같은 방법도 있었다. 그 중 이번 강의에서 다룰 <strong>Offline RL</strong> 과 크게 연관되어 있는 Off-Policy Actor-Critic Method의 알고리즘을 다시 살펴보자.</p>
+<div id="algo-Off-Policy-Actor-Critic" class="pseudocode-container quarto-float" data-no-end="false" data-line-number="true" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="1">
+<div class="pseudocode">
+\begin{algorithm} \caption{Full Off-policy Actor-Critic Method (SAC-style)} \begin{algorithmic} \State take action $a \sim \pi_{\theta}(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}^{\pi}_{\phi}(s_i', a_i')$ where $a_i' \sim \pi_{\theta}(\cdot \vert s_i')$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_{\theta}(a \vert s_t)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \State Repeat 1 to 5 until convergence \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>해당 강의에서도 언급된 내용이지만, Off-policy 방법은 현재 학습중인 policy가 아닌 과거의 policy들이 수집한 경험 trajectory를 일종의 <strong>replay buffer</strong>에 저장해두고, 이 buffer로부터 trajectory를 샘플링해서 Value function과 Policy를 반복적으로 업데이트하는 방식이다. 이는 현재 학습중인 policy로 경험을 쌓고, 학습을 반복하는 On-policy의 Sample Efficiency가 낮은 단점을 보완할 수 있지만, 수집된 데이터를 통해서 Value function을 추정하는 과정이 포함되기 때문에 데이터가 전체 환경의 다양성을 대변할만큼 충분한 커버리지를 가지고 있어야 한다.</p>
+<p>사실 이렇게 과거의 정책들이 수집한 trajectory를 샘플링해서 학습을 수행하긴 하지만, 정작 value function을 추정하기 위해 취하는 action은 현재 학습중인 policy에서 도출되어야 하기 때문에, 여전히 환경과의 interaction이 이뤄져야 한다. 다시 말해, 지금까지 언급된 알고리즘 모두 환경과의 interaction이 학습중에 이뤄져야 하는 <strong>Online</strong> 설정이 기본적으로 전제되어야 한다. 그러면 여기에서 한가지 던질수 있는 질문은 <strong>“과연 환경과의 interaction없이 static한 데이터셋만으로도 모델을 학습시킬 수 있을까?”</strong>이다. 이 질문에 대한 답변이 이번 강의에서 다뤘던 Offline RL에서 추구하고자 하는 목적이기도 하다.</p>
+</section>
+<section id="why-offline-rl" class="level2">
+<h2 class="anchored" data-anchor-id="why-offline-rl">Why Offline RL?</h2>
+<p><strong>Online RL</strong>을 하기 위해서는 On-Policy던, Off-Policy간에 환경과의 interaction이 전제되어야 한다. 즉, 데이터를 수집하고, 이를 기반으로 policy를 학습하되, 현재 policy가 수집한 최신 데이터로 학습할 것이냐(On-Policy), 과거의 여러 policy가 수집한 이전 데이터로 학습할 것이냐(Off-Policy)의 차이인 것이다. 반면 <strong>Offline RL</strong>에서는 이런 전제없이, static 데이터셋만으로 policy를 학습한다. 이때의 데이터는 동일한 MDP 환경에서 수행한 어떠한 데이터셋도 상관이 없다. 사람이 수집해도 상관이 없고, 잘 학습된 모델이나 그렇지 않은 모델이 환경을 탐색하면서 수집한 데이터도 모두 Offline RL에서 활용할 수 있다. 무엇보다도 타 방법론에 비해서 Sample Efficiency가 크게 떨어지는 강화학습에서 데이터를 효율적으로 재사용할 수 있다는 장점이 크다. 일반적으로 Offline RL을 적용할 수 있는 사례는 실제로 Online RL을 통해서 데이터를 수집하기 어렵거나, 또는 데이터 수집을 위한 탐색 과정이 위험한 경우에 많이 활용된다. 대표적으로 강화학습을 통해서 자율주행 모델 학습이나 의료 모델을 학습시킨 내용이 실제 환경에 적용된 대표적인 예시가 되지 않을까 생각한다. 참고로 <strong>Offline-to-Online (O2O) RL</strong> 과 같은 Offline RL과 Online RL이 적절하게 조합된 주제도 존재한다.</p>
+<p>그래서 Offline RL에서 활용되는 Notation을 정리해보면 다음과 같다.</p>
+<ul>
+<li>Offline Dataset (<span class="math inline">\(\mathcal{D} : \{(s, a, s', r)\}\)</span>) : 정의되지 않은 policy <span class="math inline">\(\pi_{\beta}\)</span> 로부터 샘플링된 데이터. 이전 Off-Policy RL에서는 <span class="math inline">\(\pi_{\beta}\)</span> 를 <strong>Behavior Policy</strong>라고 표현했으며, 정의되지 않았기 때문에 다양한 policy들의 조합으로도 볼 수 있다.</li>
+<li>State (<span class="math inline">\(s \sim p_{\pi_{\beta}}(\cdot)\)</span>) : Behavior Policy <span class="math inline">\(\pi_{\beta}\)</span> 가 겪었던 State</li>
+<li>Action (<span class="math inline">\(a \sim \pi_{\beta}(\cdot \vert s)\)</span>) : Behavior Policy <span class="math inline">\(\pi_{\beta}\)</span> 가 State <span class="math inline">\(s\)</span> 에서 취했던 Action</li>
+<li>Next State (<span class="math inline">\(s' \sim p(\cdot \vert s, a)\)</span>) : Behavior Policy <span class="math inline">\(\pi_{\beta}\)</span> 가 State <span class="math inline">\(s\)</span> 에서 action <span class="math inline">\(a\)</span>를 취했을 때의 State Transition</li>
+<li>Reward (<span class="math inline">\(r = r(s, a)\)</span>) : 해당 환경에서 정의된 Reward function</li>
+</ul>
+<p>교수는 이에 대한 예시로 자율주행 차량을 Offline RL로 학습시키는 과정을 들어 설명했는데, 실제로 차량마다 동일한 목적지를 가더라도 다양한 경로를 가기도 하고, 혹은 차량을 운전하는 운전자에 따라서도 수집된 데이터가 다 다를 것이고, 이에 따라서 궁극적으로 학습된 policy도 이런 다양한 behavior policy들의 weighted average 형태가 될 것임을 언급했다. Offline RL의 Objective도 Online 과 유사하게 미래에 얻을 총 보상합의 기대값을 최대화하는 것(<span class="math inline">\(\max_{\theta} \mathbb{E}_{p_{\theta}(\tau)}[\sum_{t} r(s_t, a_t)]\)</span>)인데, 유념해야 할 부분은 이 때 보상을 최대화하기 위해 수행될 policy는 앞에서 언급한 behavior policy <span class="math inline">\(\pi_{\beta}\)</span> 가 아닌, 학습될 policy <span class="math inline">\(\pi_{\theta}\)</span> 라는 것이다. 일반적인 지도학습이나 강화학습 알고리즘은 학습에 사용하는 데이터와 실제 테스트시 경험할 데이터가 동일한 분포에서 샘플링된다는 i.i.d 가정을 전제로 두지만, 위와 같이 행하는 policy에서 차이가 발생하면(보통 이런 현상을 <strong>Distribution Shift</strong>라고 표현한다.), 해당 가정이 깨지면서 실제 환경에서 수행시 데이터셋에 존재하지 않는 action(<strong>Out-of-Distribution action</strong>)에 대해서는 잘못된 가치 평가를 하게될 가능성이 크다. 이 부분에 대한 내용은 뒤에서 Overestimation이란 내용으로 이어서 언급된다.</p>
+</section>
+<section id="can-we-just-use-off-policy-algorithms" class="level2">
+<h2 class="anchored" data-anchor-id="can-we-just-use-off-policy-algorithms">Can we just use off-policy algorithms?</h2>
+<p>사실 과거의 정책들이 쌓은 경험을 바탕을 학습한다는 측면에서 바라보면 이전에 다뤘던 Off-policy 방법론과 유사하다. 먼저 Soft Actor-Critic(SAC)에서의 학습 과정을 다시 살펴보자.</p>
+<ul>
+<li><strong>Q-function Update</strong>: <span class="math inline">\(\min_{\phi} \sum_{(s, a, s') \sim \mathcal{D}} \Vert \hat{Q}_{\phi}^{\pi_{\theta}}(s, a) - \Big(r(s, a) + \gamma \mathbb{E}_{\color{red} {a' \sim \pi_{\theta}(\cdot \vert s')}}[\hat{Q}^{\pi_{\theta}}_{\phi}(s', {\color{red} a'})] \Big) \Vert^2\)</span></li>
+<li><strong>Policy Update</strong>: <span class="math inline">\(\nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta}\log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}_{\phi}^{\pi_{\theta}}(s_i, a_{i}^{\pi})\)</span> where <span class="math inline">\(a_i^{\pi} \sim \pi_{\theta}(a \vert s)\)</span></li>
+</ul>
+<p>기존 Off-policy를 학습할 때, 모델은 현재 학습중인 policy를 update하기 위해서는 다음 state <span class="math inline">\(s'\)</span> 에서 취할 다음 action <span class="math inline">\(a'\)</span> 에 대한 Q-value를 계산해야 한다. 하지만 이는 현재 학습중인 policy <span class="math inline">\(\pi_{\theta}\)</span> 에서 뽑히는 action이지, 이전의 behavior policy <span class="math inline">\(\pi_{\beta}\)</span> 가 쌓은 데이터 내에는 없을 가능성이 존재한다. Online RL이라면 탐색하면서 해당 action에 대한 Q-value를 바로 update하면 되지만, Offline RL에서는 Static 데이터셋을 사용하기 때문에 해당 action이 없으면, 이에 대한 Q-function 역시 부정확할 수밖에 없다. 앞에서 들었던 자율주행 모델 학습시에도 가령 고속도로에서 U턴을 한다던가 데이터셋에 없는 위험한 행동을 탐색할 수도 있게 된다.</p>
+<div id="fig-ood-action" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ood-action-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/11p_ood_action.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ood-action-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;1: Out-of-Distribution Action
+</figcaption>
+</figure>
+</div>
+<p>강의에서도 <a href="#fig-ood-action" class="quarto-xref">그림&nbsp;1</a> 과 같은 예시를 설명했는데, 실제 데이터셋에 포함되어 있는 action은 초록색으로 표기된 부분이고, 데이터셋만 가지고는 해당 영역에 대한 Q-function만 알 수 있게 된다. 하지만 policy는 기본적으로 Q function을 최대화하는 방향으로 action을 취하게 될 것이고, 그러다보면 데이터셋에서 보지 못했던 action에 대해서도 초기에 랜덤하게 초기화된 Q-function를 가지고, Q-value가 최대화될 거란 기대를 가지면서(Exploitation) 계속 action을 취하게 된다. 이전 Q-learning 강의에서도 이렇게 미래에 얻을 기대치를 과도하게 평가하는 현상으로 <strong>과도평가(Overestimation)</strong>이란 표현을 썼었다. Offline RL에서도 랜덤하게 초기화된 Q function내에서 Out-of-Distribution Action에 대한 과대평가가 발생하면서 학습이 망가지게 된다.</p>
+<p>그러면 어떻게 보면 실제 학습된 policy가 Out-of-Distribution Action을 취하지 않게끔 하면 되지 않을까 하는 생각을 해볼 수 있겠지만, 실제 해당 policy가 주어진 state에서 action을 취하지 전까지는 해당 action이 기존의 분포와 유사한지(In-Distribution), 혹은 분포외(Out-of-Distribution)인지는 알수가 없다. 그래서 대부분의 Offline RL 알고리즘이 보편적으로 취하는 방법은 과거의 policy들의 분포에서 너무 떨어지지 않게끔 안전장치를 걸거나, 조금 보수적으로 action으로 취하게끔 하는 것이다.</p>
+</section>
+<section id="how-to-mitigate-overestimation-in-offline-rl" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-mitigate-overestimation-in-offline-rl">How to mitigate overestimation in Offline RL?</h2>
+<p>Overestimation을 완화시킬 수 있는 가장 쉬운 방법은 데이터셋에 이미 존재한 action들만으로 <strong>Imitation Learning</strong> 하는 것이다. Imitation Learning은 일종의 Supervised Learning으로, 학습되는 모델로 하여금 데이터셋에 있는 action만 수행하도록 학습시키는 방법인데, 이 경우 데이터셋에 없는 action은 시도하지도, 평가하지도 않기 때문에 Overestimation이 발생할 여지가 없다. 다만 일반적인 강화학습과는 다르게 주어진 행동에 대해서만 수행하기 때문에 단순하게 모방만 하는 방식(Vanilla Imitation Learning)으로 학습이 이뤄질 경우 보상 정보를 활용하지 않고 결과적으로 데이터셋을 쌓을 때의 policy가 얻은 성능을 뛰어넘을 수는 없다. 만약 데이터셋이 RL의 탐색과정동안 수집되었거나, 덜 학습된 policy에 의해서 모아졌다면 더 좋은 성능을 얻을 수 없는 것이다. 또한 상태간의 연계도 고려되지 않기 때문에 뭔가 여러 데이터의 trajectory 내에서 좋은 구간만 선별하여 더 좋은 trajectory를 찾을 가능성도 없다.</p>
+<div id="fig-stitching" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stitching-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/14p_stitching.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stitching-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;2: Stitching
+</figcaption>
+</figure>
+</div>
+<p>Offline RL이 Imitation Learning에 비해서 강점을 얻을 수 있는 부분은 <a href="#fig-stitching" class="quarto-xref">그림&nbsp;2</a> 에서 소개하는 <strong>Trajectory Stitching</strong> 이란 것이다. 그림과 같이 offline 데이터셋내에 두개의 trajectory(<span class="math inline">\(s_1 \rightarrow s_6, s_1 \rightarrow s_9\)</span>) 가 존재하고, <span class="math inline">\(s_3\)</span> 와 <span class="math inline">\(s_7\)</span> 어느정도 근접한 State라고 가정할때, 단순히 Imitation Learning을 수행한다면, 완전히 동일한 State에서 시작하지 않는다면 목표지점인 <span class="math inline">\(s_9\)</span> 까지 도달하지 못하지만, Offline RL에서는 내부의 정보를 활용하여, <span class="math inline">\(s_1 \rightarrow s_3\)</span>, <span class="math inline">\(s_7 \rightarrow s_9\)</span> 가 부분적으로 좋은 trajectory라는 것을 판단하여 결과적으로 <span class="math inline">\(s_1 \rightarrow s_9\)</span> 라는 최적의 trajectory를 찾을 수 있게끔 학습시킬 수 있다.</p>
+<p>이를 해소하기 위해서 Imitation Learning을 개선시킬 수 있는 포인트는 데이터셋 중에서도 보상이 높은 trajectory 몇개만 선택해서 모방하는 일종의 <strong>Filtered Behavior Cloning</strong> 방식이다. 이 경우 앞에서 언급한 stitching 같은 능력은 없지만, 구현이 매우 간단하고 초기 데이터셋만으로 개선된 모델을 학습시킬 수 있는 좋은 baseline으로 활용할 수 있다.</p>
+<div id="algo-Filtered-Behavior-Cloning" class="pseudocode-container quarto-float" data-no-end="false" data-line-number="true" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="2">
+<div class="pseudocode">
+\begin{algorithm} \caption{Filtered Behavior Cloning} \begin{algorithmic} \State Rank trajectories by return $r(\tau) = \sum_{(s_t, a_t) \in \tau}r(s_t, a_t)$ \State Filter dataset to include top $k\%$ of data: $\tilde{\mathcal{D}} = \{\tau \vert r(\tau) \gt \eta \}$ \State Imitate filtered dataset: $\max_{\theta} \sum_{(s, a) \in \tilde{\mathcal{D}}} \log \pi_{\theta}(a \vert s)$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>앞의 방식도 좋은 trajectory들을 선정해서 학습시킨 것처럼, 데이터셋에 본 action 중에서도 좋고 나쁜 것에 따라서 가중치를 줄 수 있지 않을까 하는 아이디어도 적용해볼 수 있다. 사실 이미 다뤘던 <strong>Advantage</strong> function에서 이런 것을 계산한 바 있다.</p>
+<p><span class="math display">\[
+A(s_t, a_t) = Q(s_t, a_t) - V(s_t)
+\]</span></p>
+<p>Advantage function에서는 어떤 State <span class="math inline">\(s_t\)</span> 에서 취한 action <span class="math inline">\(a_t\)</span> 가 평균적인 state value <span class="math inline">\(V(s_t)\)</span> 보다 얼마나 더 나은지를 수치화한 것인데, 이를 기존의 Imitation Learning 식에 일종의 weight로 추가한 형태가 된다.</p>
+<p><span id="eq-advantage-weighted"><span class="math display">\[
+\theta \leftarrow \arg \max_{\theta} \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \log \pi_{\theta}(a \vert s) \exp (A(s, a))]
+\tag{1}\]</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Implicit Policy Constraint">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Implicit Policy Constraint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#eq-advantage-weighted" class="quarto-xref">방정식&nbsp;1</a> 식을 보면 단순히 Advantage function을 사용한게 아니라 Exponentiated Advantage 의 형태로 가중치가 사용된 것을 확인할 수 있는데, 이는 암시적으로 학습되는 policy에 대한 제약을 거는 용도때문이다. 이 부분은 Sergey Levine 교수의 강의 중 <strong>Implicit Policy Constraint</strong> 란 내용으로 설명되어 있다. 현재 다루고 있는 Offline RL 알고리즘의 궁극적인 방향은 새로운 policy <span class="math inline">\(\pi_{\theta}\)</span> 가 기존 데이터를 수집한 behavior policy <span class="math inline">\(\pi_{\beta}\)</span> 에서 너무 크게 벗어나지 않도록 제약을 두면서, 동시에 Q-value를 극대화하는 쪽으로 모델을 학습을 시키는 것이다. 그래서 두 개의 분포간의 유사도를 측정하는 KL Divergence가 일정 threshold 이상으로 벗어나지 않게끔 제약으로 정의한 KL Constraint(<span class="math inline">\(D_{KL}(\pi_{\theta} \vert \pi_{\beta}) \lt \epsilon\)</span>) 을 가정한다. 그래서 해당 constraint가 가정된 상태에서 모델 학습은 <span class="math inline">\(\pi_{\theta} \leftarrow \arg\max_{\theta} \mathbb{E}_{a \sim \pi_{\theta}(\cdot \vert s)} Q(s, a)\)</span> 와 같이 KL-contrained objective를 가지게 된다.</p>
+<p>그런데 문제는 이렇게 제약이 걸린 환경에서의 최적화 문제(Constrained Optimization)은 풀기가 매우 어렵다. 이전에 잠깐 언급했던 Trust Region Policy Optimization (TRPO)도 내부 식 도출시 Conjugate Gradient 라는 것을 구하기 위해서 별도의 정보치인 Fisher Information Matrix(FIM)을 계산해야 하는 등 복잡함으로 인해서 실제 적용된 사례가 드물었다. 하지만 <span class="citation" data-cites="Peters_Mulling_Altun_2010">Peters, Mulling, 와/과 Altun (<a href="#ref-Peters_Mulling_Altun_2010" role="doc-biblioref">2010</a>)</span> 에서 소개된 <strong>Relative Entropy Policy Search (REPS)</strong> 와 <span class="citation" data-cites="Rawlik-RSS-12">Vijayakumar (<a href="#ref-Rawlik-RSS-12" role="doc-biblioref">2012</a>)</span> 에서 소개된 <span class="math inline">\(\psi\)</span><strong>-learning</strong> 은 위와 같은 Constrained objective를 바로 앞에서 다룬 지수형태의 Advantage-weighted objective로 근사할 수 있다는 것을 수학적으로 증명했다. 이로 인해서 복잡한 Constrained Optimization을 가중치가 부여된 Supervised Learning으로 바꿔서 우리가 잘 아는 방식으로도 학습시킬 수 있게 되었다. 또한 KL-constraint를 위해서 behavior policy <span class="math inline">\(\pi_{\beta}\)</span> 에 대한 확률 밀도 함수를 구하지 않더라도, 데이터셋에서 샘플링된 trajectory를 활용함으로써 암시적으로 policy에 constraint를 준 효과를 주게 된다.</p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/17p_advantage_weighted.png" class="img-fluid figure-img"></p>
+<figcaption>Advantage weights</figcaption>
+</figure>
+</div>
+<p>그러면 앞의 Stitching 예시에서도 실제로 두 trajectory간에 유사한 state에서도 좋은 action에 대한 가치를 Advantage weight를 통해 파악함으로써, 학습에 도움이 되는 trajectory를 만들어낼 수 있다. 참고로 강의 중간에 꼭 이 사례처럼 데이터셋 내에 trajectory간에 동일한 State가 있어야 가능한지에 대한 질문이 나왔는데, 교수는 신경망의 representation 특성에 따라 꼭 동일한 State가 아니더라도 유사한 State에 대한 Advantage를 활용할 수 있다고 언급했다. 또한 위 식에서는 Exponentiated Advantage 형태로 표기되어 있긴 하지만, 실제로는 해당 값이 너무 커지는 것을 방지하기 위해서 임의의 hyperparameter를 추가한 형태(<span class="math inline">\(\exp(\frac{1}{\alpha}A(s, a))\)</span>) 를 사용한다고 첨언했다.</p>
+<p>지금까지 Advantage를 Weight로 주어, 데이터셋 내에서 유용한 trajectory를 선별하는 과정을 거쳤다. 결과적으로 데이터셋 내의 trajectory를 활용하여 advantage를 계산했으니 <span class="math inline">\(A^{\pi_{\beta}}\)</span> 가 될텐데, 이제 생각해볼 일은 과연 “이 Advantage를 어떻게 추정할수 있을까?”이다</p>
+</section>
+<section id="advantage-weighted-regression" class="level2">
+<h2 class="anchored" data-anchor-id="advantage-weighted-regression">Advantage-Weighted Regression</h2>
+<p>가장 쉽게 생각해볼 수 있는 방법은 주어진 데이터셋을 활용하여 Advantage function을 Regression해보는 것이다. 먼저 Behavior Policy <span class="math inline">\(\pi_{\beta}\)</span> 의 Advantage function은 아래 식과 같이 1-step Temporal Difference 형태로 정의할 수 있다.</p>
+<p><span class="math display">\[
+A^{\pi_{\beta}}(s_t, a_t) = r(s_t, a_t) + \gamma V^{\pi_{\beta}}(s_{t+1}) - V^{\pi_{\beta}}(s_t)
+\]</span></p>
+<p>그런데 이렇게 Temporal Difference 형태로 Advantage를 계산하기 위해서는 Value function이 매우 정확하게 학습되어야 하지만, 데이터셋에 의존해서 학습하는 특성상 학습초기에는 힘들수도 있다. 그래서 이렇게 구하는 대신 실제 데이터셋 내에 존재하는 보상의 총합(Empirical return)에서 추정된 Value Function를 빼는 Monte Carlo Estimation 방식을 취한다. 이렇게 정의하면 TD 연산을 하지 않아도 되기 때문에 구현도 매우 단순해지고, 데이터셋에 없는 행동에 대해서 평가할 위험도 없다. 대신 이전에 언급했던 Monte Carlo Estimation의 단점과 동일하게 Variance가 크다는 문제가 남아있고, Monte Carlo Estimation을 사용하면서 실제 에피소드의 empirical return에만 의존하기 때문에 앞에서 언급했던 trajectory stitching 기능이 크게 제한된다. 이렇게 데이터셋 내에서 Advantage function을 추정하여 모델을 학습하는 알고리즘을 <strong>Advantage-Weighted Regression (AWR)</strong> 이란 이름으로 <span class="citation" data-cites="peng2019advantage">Peng 기타 (<a href="#ref-peng2019advantage" role="doc-biblioref">2019</a>)</span> 논문을 통해 소개했다. AWR의 간단한 식 전개는 아래와 같다.</p>
+<div id="algo-Advantage-weighted-Regression" class="pseudocode-container quarto-float" data-no-end="false" data-line-number="true" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="3">
+<div class="pseudocode">
+\begin{algorithm} \caption{Advantage Weighted Regression (AWR)} \begin{algorithmic} \State Fit value function: $\min_{\phi} \sum_{s_t \sim \mathcal{D}} \Vert \hat{V}_{\phi^{\pi_{\beta}}}(s_t) - \sum_{t'=t}^Tr(s_{t'}, a_{t'}) \Vert^2$ \State Train Policy: $\max_{\theta} \mathbb{E}_{(s_t, a_t) \sim \mathcal{D}}\Big[ \log \pi_{\theta}(a_t \vert s_t) \exp \Big( \frac{1}{\alpha} \Big( \sum_{t'=t}^Tr(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi_{\beta}}(s_t) \Big) \Big) \Big]$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+</section>
+<section id="advantage-weighted-actor-critic" class="level2">
+<h2 class="anchored" data-anchor-id="advantage-weighted-actor-critic">Advantage-Weighted Actor-Critic</h2>
+<p>AWR은 Monte Carlo Estimation을 사용하여 Out-of-Distribution action을 사용한 Q value 계산을 하지는 않지만, 추정된 값의 variance와 noise가 크다는 단점이 있었다. 이전의 Value function 관련 내용을 다룰 때 언급했던 내용처럼 Monte Carlo Estimation의 높은 Variance를 완화시키기 위해서 Q-function을 활용한 Bootstrapping Estimation을 활용해볼 수 있다. 그런데 기존의 Off-policy 알고리즘내의 TD update 부분을 살펴보면, 아래와 같이 표현된다. (참고로 설명의 용이성을 위해서 discount factor <span class="math inline">\(\gamma\)</span> 는 생략되어 있다.)</p>
+<p><span class="math display">\[
+\min_{\psi} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \Big[ \big( \hat{Q}_{\psi}^{\pi}(s, a) - (r + \gamma \mathbb{E}_{a' \sim \pi(\cdot \vert s)}[\hat{Q}_{\psi}^{\pi}(s', a')]) \big) \Big]
+\]</span></p>
+<p>이때 다음 state <span class="math inline">\(s'\)</span> 에서 취하는 action <span class="math inline">\(a'\)</span> 을 현재 학습중인 policy <span class="math inline">\(\pi_{\theta}\)</span> 로부터 샘플링하기 때문에, 이 방법을 그대로 Offline RL에서 적용하면 Out-of-Distribution Action을 취하여 Overestimation을 유발하는 문제가 발생한다. 그래서 <strong>Advantage-Weighted Actor-Critic (AWAC)</strong> (<span class="citation" data-cites="nair2020awac">Nair 기타 (<a href="#ref-nair2020awac" role="doc-biblioref">2020</a>)</span>) 이란 방식에서는 이때 문제가 되는 <span class="math inline">\(a'\)</span>을 데이터셋에서 샘플링해서 target Q를 계산하도록 변경했다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Estimated Q-function: } &amp; \min_{\psi} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \Big[ \big( \hat{Q}_{\psi}^{\pi}(s, a) - (r + \gamma \mathbb{E}_{\color{red} a' \sim \mathcal{D}}[\hat{Q}_{\psi}^{\pi}(s', a')]) \big) \Big] \\
+\text{AWAC Update: } &amp; \hat{Q}^{\pi_{\beta}} \leftarrow \arg \min_Q \mathbb{E}_{ (s, a, s', {\color{red}a'}) \sim \mathcal{D}} \Big[ \big( Q(s, a) - (r + \gamma Q(s', a')) \big)^2 \Big]
+\end{aligned}
+\]</span></p>
+<p>간단하게 해당 부분만 수정하면서 데이터셋 내의 action만 보게 되므로 Overestimation 위험을 줄이면서 Bootstrapping 방식을 사용해서 Variance를 낮출 수 있었다. 하지만 역시 과거 <span class="math inline">\(\pi_{\beta}\)</span> 로부터 수집된 데이터 기반으로 value를 추정하는 방식이기 때문에 성능 개선폭이 제한된다는 한계는 여전히 남아있다.</p>
+</section>
+<section id="implicit-q-learning" class="level2">
+<h2 class="anchored" data-anchor-id="implicit-q-learning">Implicit Q-Learning</h2>
+<p>앞에서 언급된 AWAC 방식은 결과적으로 데이터를 활용하여 advantage를 추정하는 하되, Monte Carlo Estimation이 아닌 TD update를 사용하여 Variance를 줄이고자 했다. 하지만 그런데 Advantage function을 추정할 때의 TD update 수식을 잠깐 살펴보면,</p>
+<p><span class="math display">\[
+A(s, a) = Q(s, a) - (r + \underbrace{\gamma Q(s', a')}_{\text{a sample of } V^{\pi_{\beta}(s')}})
+\]</span></p>
+<p>같이 정의되는데, 원래의 정의대로 살펴보면 해당식은 내가 현재 state <span class="math inline">\(s\)</span> 에서 취한 action <span class="math inline">\(a\)</span> 의 가치가 평균적인 가치보다 얼마나 높은지를 알려주는 것이다. 다시 말하자면 <span class="math inline">\(s\)</span> 에서 behavior policy <span class="math inline">\(\pi_{\beta}\)</span> 의 Value function인 <span class="math inline">\(V^{\pi_{\beta}}(s')\)</span> 를 기준으로 좋은지를 판단하게 되는데, 사실 이렇게 되면, 주어진 state에서 좋은 Q-value를 가진 state, action 쌍이 있어도 안좋은 Q-value에 묻혀서 더 좋은 action을 찾을 여지를 주지 못하게 된다. 이어 <span class="math inline">\(\ell_2\)</span> loss를 사용하여 target Q를 맞추도록 학습하게 되면, 예측값이 크든 작든간에 error에 대해서 동일하게(혹은 대칭적으로) penalty를 주기 때문에 학습된 value function은 단순한 평균값을 가리키게 된다. 그러면 이렇게 평균값 대신 뭔가 상위 기준을 둬서 Advantage를 추정할 수 없을까? 만약 평균값 대신 통계에서 다뤄지는 백분위수(Percentile)같은 것을 적용해볼 수 있지 않을까? 이 아이디어가 바로 <strong>Implicit Q-Learning (IQL)</strong> (<span class="citation" data-cites="kostrikov2021offline">Kostrikov, Nair, 와/과 Levine (<a href="#ref-kostrikov2021offline" role="doc-biblioref">2021</a>)</span>) 알고리즘의 전개 방향이다.</p>
+<div id="fig-percentile" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-percentile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_percentile.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-percentile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;3: Percentile of Value function
+</figcaption>
+</figure>
+</div>
+<p>강의에서는 <a href="#fig-percentile" class="quarto-xref">그림&nbsp;3</a> 의 예시를 통해서 이에 대한 설명을 진행했는데, 앞에서 설명했던 것처럼 <span class="math inline">\(\pi_{\beta}\)</span> 를 사용하여 수집한 데이터를 통해 <span class="math inline">\(V(s)\)</span> 를 추정하는 모델을 <span class="math inline">\(\ell_2\)</span> loss를 사용하여 학습시킨다면, <span class="math inline">\(\mathbb{E}_{a \sim \pi_{\beta}(\cdot \vert s)}[Q(s, a)]\)</span> 에 해당하는 중간 지점을 추정하게끔 학습하게 된다. 그래서 <span class="citation" data-cites="kostrikov2021offline">Kostrikov, Nair, 와/과 Levine (<a href="#ref-kostrikov2021offline" role="doc-biblioref">2021</a>)</span> 논문에서 제안한 것은 <span class="math inline">\(\ell_2\)</span> loss가 아닌 Asymmetric loss, 즉 error의 방향에 따라서 penalty를 다르게 주는 loss function을 사용하는 것이었다. 이를 통해서 평균이 아닌 상위 70%, 90%(Upper Expectile)의 value function을 추정할 수 있다면, 그만큼 기존 방식보다 조금더 좋은 action을 찾을 여지도 커질 것이다. 물론 데이터셋 내에서만 action을 query하므로 Out-of-Distribution Action으로 인한 Overestimation 문제도 없게 된다.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Expectile Regression">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expectile Regression
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div id="fig-asymmetric" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-asymmetric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_asymmetric_loss.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-asymmetric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;4: Asymmetric Loss
+</figcaption>
+</figure>
+</div>
+<p>IQL에서 활용된 <strong>Expectile Regression</strong>은 <a href="#fig-asymmetric" class="quarto-xref">그림&nbsp;4</a> 에서도 보여지는 것처럼 error의 방향(양수인지 음수인지)에 따라 penalty를 다르게 부여하는 asymmetric loss function을 활용하여 기대치(Expectile)을 추정하는 방법이다. 비대칭적인 특성답게, <span class="math inline">\(\ell_2\)</span> loss와는 다르게 양의 영역에서는 loss의 증가폭이 상대적으로 적은 것을 확인할 수 있다. 실제 논문에서는</p>
+<p><span class="math display">\[
+\ell_2^{\lambda}(x) = \begin{cases}
+(1 - \lambda) x^2 &amp;\text{if } x &lt; 0 \\
+\lambda x^2 &amp;\text{otherwise}
+\end{cases}
+\]</span></p>
+<p>의 형태로 활용했고, 이때 <span class="math inline">\(\lambda\)</span> 를 조절하면서 Overestimation 으로 인한 Penalty값을 조정하고자 했다.</p>
+<div id="fig-expectile-regression" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-expectile-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-expectile-regression" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-expectile" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-expectile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/22p_expectile_regression_loss.png" class="img-fluid figure-img" data-ref-parent="fig-expectile-regression">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-expectile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Expectile Regression Loss
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-expectile-regression" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-expectile-example" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-expectile-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/22p_example_expectile.png" class="img-fluid figure-img" data-ref-parent="fig-expectile-regression">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-expectile-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Example with a 2D random variable
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-expectile-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;5
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-expectile-regression" class="quarto-xref">그림&nbsp;5</a> 은 논문에서도 표현된 <span class="math inline">\(\lambda\)</span> 에 따른 loss의 변화정도(<a href="#fig-expectile" class="quarto-xref">그림&nbsp;5 (a)</a>) 와 실제로 이를 활용하여 2D random variable을 추정하는 것에 대한 예시(<a href="#fig-expectile-example" class="quarto-xref">그림&nbsp;5 (b)</a>) 에 대한 내용이다. 특히 <a href="#fig-expectile-example" class="quarto-xref">그림&nbsp;5 (b)</a> 을 통해서 <span class="math inline">\(\lambda\)</span> 가 낮아질수록 그만큼 높은 추정값을 보여주는 경향을 확인할 수 있다.</p>
+</div>
+</div>
+<p>이와 함께 앞에서 설명된 AWR 방식의 Exponentiated Weight가 부여된 Advantage를 활용하여 policy를 학습하는 것이 IQL의 동작 방식이다. 강의자료에 설명된 알고리즘은 다음과 같다.</p>
+<div id="algo-Implicit-Q-Learning" class="pseudocode-container quarto-float" data-no-end="false" data-line-number="true" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="4">
+<div class="pseudocode">
+\begin{algorithm} \caption{Implicit Q Learning (IQL)} \begin{algorithmic} \State Fit $V$ with expectile loss: $\hat{V}(s) \leftarrow \arg \min_V \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \ell_2^{\lambda}(\hat{Q}(s, a) - V(s))]$ using large $\lambda \gt 0.5$ \State Update $Q$ with typical MSE loss: $\hat{Q}(s, a) \leftarrow \arg \min_Q \mathbb{E}_{(s, a, s') \sim \mathcal{D}} [(Q(s, a) - (r + \gamma \hat{V}(s')))^2]$ \State Repeat 1, 2 until convergence \State Extract policy with AWR: $\hat{\pi} \leftarrow \arg \max_{\pi} \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \log \pi(a \vert s) \exp (\frac{1}{\alpha} (\hat{Q}(s, a) - \hat{V}(s)))]$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+노트
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>참고로 IQL의 표기는 강의자료와 논문이 다르게 보일 수 있다. <span class="citation" data-cites="kostrikov2021offline">Kostrikov, Nair, 와/과 Levine (<a href="#ref-kostrikov2021offline" role="doc-biblioref">2021</a>)</span> 논문에서는 residual을 <span class="math inline">\(\hat{Q}(s, a) - V(s)\)</span> 로 두고, upper expectile을 위해서 <span class="math inline">\(\tau (= \lambda) \gt 0.5\)</span> 을 사용했다. 하지만 강의자료에는 residual을 <span class="math inline">\(V(s) - \hat{Q}(s, a)\)</span> 로 뒤집어 표기해서 동일한 upper expectile을 위해 small <span class="math inline">\(\lambda \lt 0.5\)</span> 로 표현했다. 한마디로 앞의 <span class="math inline">\(\lambda\)</span> 표기가 complement로 위 알고리즘에서 표현이 되었던 것이다. 혹시나 내용이해에 오해가 있을수도 있어 원 논문의 표기를 그대로 가져왔다.</p>
+</div>
+</div>
+<p>이렇게 되면 AWR에서 추구하던 Out-of-Distribution action을 query하지 않아서 overestimation도 발생하지 않고, AWAC에서처럼 Actor와 Critic으로 분리시키면서 TD Learning을 수행해 Variance를 줄이면서 구조가 단순하고 연산도 빠르며, asymmetric loss을 활용한 Expectile Regression을 통해서 데이터 내의 좋은 부분을 엮어 새로운 최적 경로를 만들어내는데 탁월한 성능을 얻을 수 있었다. 실제로 논문에서는 <a href="https://github.com/Farama-Foundation/D4RL">D4RL</a>에 포함되어 있는 다양한 MuJoCo task와 Ant Maze, Adroit, Kitichen robotics manipulation에 대해서 다양한 비교 알고리즘 (BC, DT, CQL 등)보다 좋은 성능을 보여주었다. 강의에서는 설명되지 않았지만, 해당 논문에서는 IQL을 앞에서도 잠깐 언급한 Offline-to-Online(O2O) RL로 확장하는 실험까지 시도했는데, 이 역시 비교군이 AWAC이나 CQL(Conservative Q-Learning)보다도 fine-tuning 후 더 좋은 결과를 선보였다. 참고로 <a href="#algo-Implicit-Q-Learning" class="quarto-xref">Algorithm 4</a> 에선 여타 강화학습 알고리즘에서 보여지는 Policy Improvement(Update)가 데이터셋으로부터 policy가 extract되는 형태와 같이 <strong>암시적(Implicit)</strong>으로 나타나있기 때문에 Implicit Q-Learning 이란 이름이 붙여졌다.</p>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>지금까지의 강의를 통해서 이전에 다뤘던 Online RL과 다르게 과거의 다양한 원천으로부터 수집된 데이터(static dataset)을 통해서 모델을 학습시키는 방법인 Offline RL에 대해서 강의가 이뤄졌다. 실시간으로 환경과의 interaction 기본적으로 전제되는 Online RL의 Sample efficiency 측면에서의 한계를 Offline RL에서는 offline data를 재사용할 수 있다는 점은 data 생성 비용이 많이 들거나, 실제 환경에서의 exploration이 제한적인 환경에서는 큰 장점으로 작용한다. 다만 다양한 behavior policy <span class="math inline">\(\pi_{\beta}\)</span> 로부터 수집된 데이터를 활용하다보니 실제로 학습되는 policy <span class="math inline">\(\pi_{\theta}\)</span> 간에 발생하는 distribution shift로 인해서 Q value가 <strong>overestimation</strong>되는 문제를 가지고 있기 때문에, 데이터상에 존재하지 않는 Out-of-Distribution Action이 query되어 Q value가 추정되지 않도록 방향으로 알고리즘이 개선되어왔다. 처음으로 제안된 접근 방법은 단순히 데이터셋에 있는 trajectory에 대해서만 따라는 방식의 <strong>Imitation Learning</strong>과 같은 baseline이었고, 실제 취할 action에 대해서 평균보다 얼마나 더 좋은지를 판단하는 Advantage function을 추정해 이를 기반으로 더 나은 value를 얻을 수 있는 action을 찾을 수 있는 <strong>Advantage-Weighted Regression (AWR)</strong> 같은 방법론도 제안되었다. 여기에서 평균보다 더 좋은 방향으로 학습될 수 있도록 Asymmetric loss function이 적용된 Expectile Regression 기법을 활용해 조금 더 성능을 개선시킬 수 있는 방식이었던 <strong>Implicit Q-Learning (IQL)</strong> 에 대한 내용까지 살펴보았다. (강의자료에는 Conservative objective를 적용한 Conservative Q-Learing (CQL)에 대한 내용도 다뤄져 있지만, 강의에서는 시간관계상 생략된 것 같다.)물론 강의가 4년여전에 진행되었기 때문에, 최근에도 Offline RL과 관련한 선행연구와 알고리즘들이 계속 진행되고 있다. 교수는 마지막으로 다양한 알고리즘들이 제안되었긴 하지만, 성능 개선 측면에서나 앞에서 설명했던 Offline-to-Online RL같은 방향까지 고려한다면 IQL을 사용해봄직하다고 언급했다. 또한 Behavior Cloning 계열 중 하나인 Diffusion Policy를 IQL에 적용한 <strong>Implicit Diffusion Q-Learning (IDQL)</strong> (<span class="citation" data-cites="hansen2023idql">Hansen-Estruch 기타 (<a href="#ref-hansen2023idql" role="doc-biblioref">2023</a>)</span>) 도 살펴볼 것을 추천했다.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-hansen2023idql" class="csl-entry" role="listitem">
+Hansen-Estruch, Philippe, Ilya Kostrikov, Michael Janner, Jakub Grudzien Kuba, 와/과 Sergey Levine. 2023. <span>“Idql: Implicit q-learning as an actor-critic method with diffusion policies”</span>. <em>arXiv preprint arXiv:2304.10573</em>.
+</div>
+<div id="ref-kostrikov2021offline" class="csl-entry" role="listitem">
+Kostrikov, Ilya, Ashvin Nair, 와/과 Sergey Levine. 2021. <span>“Offline reinforcement learning with implicit q-learning”</span>. <em>arXiv preprint arXiv:2110.06169</em>.
+</div>
+<div id="ref-nair2020awac" class="csl-entry" role="listitem">
+Nair, Ashvin, Abhishek Gupta, Murtaza Dalal, 와/과 Sergey Levine. 2020. <span>“Awac: Accelerating online reinforcement learning with offline datasets”</span>. <em>arXiv preprint arXiv:2006.09359</em>.
+</div>
+<div id="ref-peng2019advantage" class="csl-entry" role="listitem">
+Peng, Xue Bin, Aviral Kumar, Grace Zhang, 와/과 Sergey Levine. 2019. <span>“Advantage-weighted regression: Simple and scalable off-policy reinforcement learning”</span>. <em>arXiv preprint arXiv:1910.00177</em>.
+</div>
+<div id="ref-Peters_Mulling_Altun_2010" class="csl-entry" role="listitem">
+Peters, Jan, Katharina Mulling, 와/과 Yasemin Altun. 2010. <span>“Relative Entropy Policy Search”</span>. <em>Proceedings of the AAAI Conference on Artificial Intelligence</em> 24 (1): 1607–12. <a href="https://doi.org/10.1609/aaai.v24i1.7727">https://doi.org/10.1609/aaai.v24i1.7727</a>.
+</div>
+<div id="ref-Rawlik-RSS-12" class="csl-entry" role="listitem">
+Vijayakumar, Konrad Rawlik AND Marc Toussaint AND Sethu. 2012. <span>“On Stochastic Optimal Control and Reinforcement Learning by Approximate Inference”</span>. In <em>Proceedings of Robotics: Science and Systems</em>. Sydney, Australia. <a href="https://doi.org/10.15607/RSS.2012.VIII.045">https://doi.org/10.15607/RSS.2012.VIII.045</a>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+  
+
+
+
+
+</body></html>

@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2025-08-14_Introduction_to_On_Device_AI/post.ko.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2025-08-14_Introduction_to_On_Device_AI/post.ko.ko.html" />
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chanseok Kang">
+<meta name="description" content="DeepLearning.AI의 “Introduction to on-device AI” 강의 요약 및 개인 의견 정리">
+
+<title>On-Device AI 개론 – Chan’s Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+
+
+<link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">On-Device AI 개론</h1>
+                  <div>
+        <div class="description">
+          DeepLearning.AI의 “Introduction to on-device AI” 강의 요약 및 개인 의견 정리
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">EdgeAI</div>
+                <div class="quarto-category">Lecture</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2025년 8월 14일</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">2026년 2월 25일</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#why-on-device" id="toc-why-on-device" class="nav-link" data-scroll-target="#why-on-device">Why on-device?</a></li>
+  <li><a href="#segmentation-model을-on-device상에-배포하기" id="toc-segmentation-model을-on-device상에-배포하기" class="nav-link" data-scroll-target="#segmentation-model을-on-device상에-배포하기">Segmentation Model을 On-Device상에 배포하기</a></li>
+  <li><a href="#device-in-the-loop를-위한-ai-hub-설정-및-데모-구동" id="toc-device-in-the-loop를-위한-ai-hub-설정-및-데모-구동" class="nav-link" data-scroll-target="#device-in-the-loop를-위한-ai-hub-설정-및-데모-구동">Device-In-The-Loop를 위한 AI hub 설정 및 데모 구동</a>
+  <ul class="collapse">
+  <li><a href="#ffnet-40s-구동" id="toc-ffnet-40s-구동" class="nav-link" data-scroll-target="#ffnet-40s-구동">FFNet-40s 구동</a></li>
+  <li><a href="#ffnet-40s-양자화-모델-w8a8-구동" id="toc-ffnet-40s-양자화-모델-w8a8-구동" class="nav-link" data-scroll-target="#ffnet-40s-양자화-모델-w8a8-구동">FFNet-40s 양자화 모델 (w8a8) 구동</a></li>
+  <li><a href="#ffnet-78s-구동" id="toc-ffnet-78s-구동" class="nav-link" data-scroll-target="#ffnet-78s-구동">FFNet-78s 구동</a></li>
+  <li><a href="#로컬-이미지로의-segmentation-결과" id="toc-로컬-이미지로의-segmentation-결과" class="nav-link" data-scroll-target="#로컬-이미지로의-segmentation-결과">로컬 이미지로의 segmentation 결과</a></li>
+  </ul></li>
+  <li><a href="#실제-스마트폰으로의-배포" id="toc-실제-스마트폰으로의-배포" class="nav-link" data-scroll-target="#실제-스마트폰으로의-배포">실제 스마트폰으로의 배포</a></li>
+  <li><a href="#결론" id="toc-결론" class="nav-link" data-scroll-target="#결론">결론</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p><a href="https://www.deeplearning.ai/">DeepLearning.ai</a>에는 다양한 인공지능 관련 강의가 무료로 공개되어 있다. 그 중에서 최근에 듣고 있는 강의인 “Introduction to on-device AI” 강의에 대해서 조금 정리를 해보고자 한다.</p>
+<p>다양한 AI 모델의 등장과 더불어서 스마트폰이나 드론과 같은 휴대용 장치에도 그런 모델들을 올려서 구동시키는 사례가 늘어가고 있다. 하지만 일반적인 학습 환경과 다르게 휴대용 장치에 AI 모델을 올리기 위해서는 휴대용 장치만이 가지는 컴퓨팅 리소스나 통신과 같은 한계를 고려해야 한다. 무엇보다도 가장 크게 고려되는 부분은 저장장치에 대한 한계로, 학습시에는 성능을 위해서 만든 신경망을 적은 저장장치에 올리기 위해서는 모델 변환(model coversion)과 같은 작업이 필요하며, 이에 대한 성능 저하도 어느정도 감수해야 한다. 흔히 모델 변환이라고 하는 것은 사전에 PyTorch나 Tensorflow과 같은 딥러닝 프레임워크로 학습시켜놓은 모델이 있다고 가정했을때, 이를 on-device runtime 환경에 맞게 호환되는 포멧으로 변환시키는 작업을 말한다. 이 과정에서 모델은 보통 frozen (흔히 얼린다고 표현하는데, 모델의 weight나 bias, 그리고 연결등을 고정해놓은 상태를 말한다)이란 단계를 통해서, 학습시 정의된 neural network graph 를 device에서 실행가능한 executable 상태로 변환된다. 이때 같이 고려되는 단계가 양자화(quantization)인데, 모델이 표현되는 데이터의 자료형을 단순화시켜서 모델 크기도 줄이면서 추론속도도 높일 수 있는 장점이 있다.</p>
+<p>그래서 해당 강의에서는 On-Device AI에서 필요한 단계를 직접 수행하고, 하드웨어에까지 적용해보는 과정을 진행하게 된다.</p>
+</section>
+<section id="why-on-device" class="level2">
+<h2 class="anchored" data-anchor-id="why-on-device">Why on-device?</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/why_on_device.png" class="img-fluid figure-img"></p>
+<figcaption>강의 슬라이드에서 발췌</figcaption>
+</figure>
+</div>
+<p>우선 앞에서 소개한 내용처럼 다양한 AI 모델이 만들어졌지만, 이를 왜 휴대용 장치에서 직접 구동시키는 형태가 필요한 것인지에 대한 정의가 필요하다. 강의에서는 크게 4가지로 구분해서 그 필요성에 대해 설명하고 있다.</p>
+<ul>
+<li>Cost Effective: 휴대용 장치의 성능적인 한계로 인해서 추론을 클라우드 환경에서 수행하여 그 결과만으로 구동하게 하는 방법도 있지만, 이 경우, 항상 클라우드와 온라인으로 연결되어 있어야 한다는 조건이 발생하며 이로 인한 의존성이 발생한다. 만약 On-Device AI를 할 수 있다면, 클라우드 컴퓨팅 자원에 대한 의존성을 줄일 수 있어 결과적으로 비용을 줄일 수 있다는 장점을 가지게 된다.</li>
+<li>Efficient: 결과적으로 첫번째 장점과 비슷한 부분이겠지만, 클라우드 컴퓨팅 자원을 활용하여 연산하고 그 결과를 휴대용 장치에서 처리하는데 발생하는 통신비용을 줄일 수 있기 때문에 전력효율이나 처리속도 측면에서 이점을 가져올 수 있다.</li>
+<li>Private: 또한 온라인을 통해서 개인적인 정보를 클라우드에 전달하는 단계를 생략함으로써 보안 측면에서도 도움이 된다.</li>
+<li>Personalization: 마지막으로 추가적인 데이터가 생성되었을때도 해당 데이터를 활용하여 개인에 특화된 서비스나 모델 성능 개선에 활용할 수 있다는 특징을 가진다.</li>
+</ul>
+<p>보통 On-Device AI를 수행하기 위해서는 Device-In-The-Loop (DILT) (혹은 Hardware-In-The-Loop라는 표현을 쓰기도 한다) deployment 과정을 수행한다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/device_in_the_loop.png" class="img-fluid figure-img"></p>
+<figcaption>강의 슬라이드에서 발췌</figcaption>
+</figure>
+</div>
+<p>일반적인 AI 모델 학습과 다르게, 휴대용 장치에서의 모델 적용은 장비(device)가 연계된 상태에서의 성능 검증 및 최적화 작업이 필요하다. 또한 휴대용 장치의 스펙이 목적에 따라서 다 다르기 때문에, 기기에 따라 접근 방법이 조금씩 다르다. 예를 들어서 NPU가 달린 하드웨어에서 모델을 구동시키기 위해서는 NPU에서 가속을 지원하는 기능을 활용할 수 있도록 컴파일 옵션을 부여한다던가, 혹은 Floating Point를 지원하지 않는 CPU를 가진 하드웨어라면, Floating Point를 지원한 상태에서 학습된 모델도 수행할 수 있도록 변환시 양자화 처리를 해준다던가 하는 방법의 차이를 말한다. 사실 궁극적인 On-Device AI라면 실제 하드웨어에서의 학습, 즉 On-Device Training까지 포함된 형태를 말하는 것이겠지만, 현실적으로 이게 불가능한 부분이기 때문에 학습된 모델을 모델에 올려서 추론한 결과로 개선이 이뤄지는 범위까지만 한정지은 것 같다.</p>
+</section>
+<section id="segmentation-model을-on-device상에-배포하기" class="level2">
+<h2 class="anchored" data-anchor-id="segmentation-model을-on-device상에-배포하기">Segmentation Model을 On-Device상에 배포하기</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+노트
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>강의에서는 <a href="https://aihub.qualcomm.com/">Qualcomm AI Hub</a>에서 배포하는 모델을 활용한 방법을 소개한다. 나 역시, 이전에 소개한 Particle Tachyon에 모델을 올려보는 연습을 하고 있어, 강의에 있는 내용을 그대로 수행해보고자 한다. 로컬 환경에 필요한 환경 설정은 <a href="https://aihub.qualcomm.com/get-started">링크</a>에 소개되어 있다. 포스트에서는 강의에 필요한 패키지가 설치되어 있다는 가정하에 실습을 진행해보고 있다.</p>
+</div>
+</div>
+<p>우선 강의에서 사용한 모델은 Qualcomm AI Research에서 제안한 <a href="https://aihub.qualcomm.com/models/ffnet_40s">FFNet-40s</a>(<a href="https://arxiv.org/abs/2206.08236">논문</a>)이라는 Real-time Image Segmentation에 최적의 성능을 내는 경령화 모델이다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/ffnet.png" class="img-fluid figure-img"></p>
+<figcaption>FFNet 구조 (논문에서 발췌)</figcaption>
+</figure>
+</div>
+<p><strong>Fuss-Free Network (FFNet)</strong>은 간단한 ResNet 형태의 backboane과 작은 multi-scale task head로 구성되어 있다. Encoder-Decoder 구조로 되어 있으며, 이전의 Segmentation model로 제안된 HRNet, FANet, DDRNet에 비해서 성능이 좋은 것으로 소개되어 있다. 무엇보다도 연산 측면에서 효율성이 있어, 강의의 목적인 device deployment를 실습하는데 적당한 모델이라고 할 수 있다. 또한 decoder부분이 task head처럼 구성되어 있어, 개발자에 맞게 head의 수를 조절할 수 있다는 특징을 가지고 있다.</p>
+<p>우선 모델의 정보와 필요 연산을 확인해보고자 한다. 이때 필요 연산은 network 내 포함된 multiplication 연산과 add 연산의 총합으로 계산해본다.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+경고
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>참고로 qualcomm ai hub에서 배포한 model은 확인해본 바로는 cpu내에서 모든 연산을 수행했기 때문에, 만약 torch cuda가 켜진상태에서 summary를 뽑아보면 오류가 날 것이다. 그렇기 때문에 summary를 하기전에는 cpu로 모델 변환을 해줘야 한다.</p>
+</div>
+</div>
+<div id="29c05da6" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qai_hub_models.models.ffnet_40s <span class="im">import</span> Model</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torchinfo <span class="im">import</span> summary</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="40a46d28" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model.from_pretrained()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>model_cpu <span class="op">=</span> model.to(<span class="st">"cpu"</span>).<span class="bu">eval</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet40S/ffnet40S_dBBB_cityscapes_state_dict_quarts.pth
+Initializing ffnnet40S_dBBB_mobile weights</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/chanseok/.qaihm/models/cityscapes_segmentation/v2/Qualcomm-AI-research_FFNet_git/models/ffnet_blocks.py:599: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_dict = torch.load(</code></pre>
+</div>
+</div>
+<div id="9fbe77de" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model_cpu</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>FFNet40S(
+  (model): FFNet(
+    (backbone_model): ResNetS(
+      (conv0): Conv2d(3, 32, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn0): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu0): ReLU(inplace=True)
+      (conv1): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu1): ReLU(inplace=True)
+      (layer1): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(2, 2), bias=False)
+            (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): BasicBlock(
+          (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (3): BasicBlock(
+          (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (layer2): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+            (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): BasicBlock(
+          (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (3): BasicBlock(
+          (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (4): BasicBlock(
+          (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (layer3): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2d(128, 192, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(128, 192, kernel_size=(1, 1), stride=(2, 2), bias=False)
+            (1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): BasicBlock(
+          (conv1): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (3): BasicBlock(
+          (conv1): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (4): BasicBlock(
+          (conv1): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (5): BasicBlock(
+          (conv1): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(192, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (layer4): Sequential(
+        (0): BasicBlock(
+          (conv1): Conv2d(192, 320, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(192, 320, kernel_size=(1, 1), stride=(2, 2), bias=False)
+            (1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          )
+        )
+        (1): BasicBlock(
+          (conv1): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (2): BasicBlock(
+          (conv1): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (3): BasicBlock(
+          (conv1): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn1): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (conv2): Conv2d(320, 320, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): BatchNorm2d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+    )
+    (head): FFNetUpHead(
+      (layers): Sequential(
+        (0): AdapterConv(
+          (adapter_conv): ModuleList(
+            (0): ConvBNReLU(
+              (layers): Sequential(
+                (0): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+              )
+            )
+            (1): ConvBNReLU(
+              (layers): Sequential(
+                (0): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+              )
+            )
+            (2): ConvBNReLU(
+              (layers): Sequential(
+                (0): Conv2d(192, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+              )
+            )
+            (3): ConvBNReLU(
+              (layers): Sequential(
+                (0): Conv2d(320, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+                (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU(inplace=True)
+              )
+            )
+          )
+        )
+        (1): UpBranch(
+          (fam_32_sm): ConvBNReLU(
+            (layers): Sequential(
+              (0): Conv2d(256, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+          (fam_32_up): ConvBNReLU(
+            (layers): Sequential(
+              (0): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+          (fam_16_sm): ConvBNReLU(
+            (layers): Sequential(
+              (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+          (fam_16_up): ConvBNReLU(
+            (layers): Sequential(
+              (0): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+          (fam_8_sm): ConvBNReLU(
+            (layers): Sequential(
+              (0): Conv2d(128, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+          (fam_8_up): ConvBNReLU(
+            (layers): Sequential(
+              (0): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+          (fam_4): ConvBNReLU(
+            (layers): Sequential(
+              (0): Conv2d(64, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (1): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (2): ReLU(inplace=True)
+            )
+          )
+        )
+        (2): UpsampleCat()
+        (3): SegmentationHead_NoSigmoid_3x3(
+          (last_layer): Sequential(
+            (0): Conv2d(288, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+            (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            (2): ReLU(inplace=True)
+            (3): Conv2d(256, 19, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          )
+        )
+      )
+    )
+  )
+)</code></pre>
+</div>
+</div>
+<p>그리고 모델 정의 페이지를 보면 알겠지만, 기본 동작이 RGB 환경에서의 1024x2048 해상도에서 돈다고 했으니까, 이에 맞춰서 input_shape도 지정해준다. 이에 대한 summary output은 다음과 같이 나온다.</p>
+<div id="91928214" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>input_shape <span class="op">=</span> (<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">1024</span>, <span class="dv">2048</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> summary(model_cpu, input_size<span class="op">=</span>input_shape, device<span class="op">=</span><span class="st">'cpu'</span>, col_names<span class="op">=</span>[<span class="st">'num_params'</span>, <span class="st">'mult_adds'</span>])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stats)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>==============================================================================================================
+Layer (type:depth-idx)                                       Param #                   Mult-Adds
+==============================================================================================================
+FFNet40S                                                     --                        --
+├─FFNet: 1-1                                                 --                        --
+│    └─ResNetS: 2-1                                          --                        --
+│    │    └─Conv2d: 3-1                                      864                       452,984,832
+│    │    └─BatchNorm2d: 3-2                                 64                        64
+│    │    └─ReLU: 3-3                                        --                        --
+│    │    └─Conv2d: 3-4                                      18,432                    2,415,919,104
+│    │    └─BatchNorm2d: 3-5                                 128                       128
+│    │    └─ReLU: 3-6                                        --                        --
+│    │    └─Sequential: 3-7                                  300,160                   9,797,895,296
+│    │    └─Sequential: 3-8                                  1,411,840                 11,542,727,424
+│    │    └─Sequential: 3-9                                  3,900,288                 7,977,571,200
+│    │    └─Sequential: 3-10                                 7,071,360                 3,617,592,960
+│    └─FFNetUpHead: 2-2                                      --                        --
+│    │    └─Sequential: 3-11                                 1,208,147                 26,571,541,312
+==============================================================================================================
+Total params: 13,911,283
+Trainable params: 13,911,283
+Non-trainable params: 0
+Total mult-adds (Units.GIGABYTES): 62.38
+==============================================================================================================
+Input size (MB): 25.17
+Forward/backward pass size (MB): 1269.30
+Params size (MB): 55.65
+Estimated Total Size (MB): 1350.11
+==============================================================================================================</code></pre>
+</div>
+</div>
+<p>이렇게 보면 모델 사이즈는 forward/backward pass size는 대략 1.2GB, parameter size는 55MB 정도 나오는 것을 확인할 수 있다. 그러면 실제 모델이 deploy될때는 어느정도의 용량이 필요할까? 이때는 parameter size를 보면 된다. 실제로 AI hub로부터 땡겨온 모델 사이즈는 대략 53.1MB 정도이고, forward/backward pass size는 실제 내부 추론시 사용되는 memory size로 보면 좋을거 같다. 다르게 표현하면 추론시 발생하는 peak memory size 정도일듯?</p>
+<p>사실 지금 사용한 모델은 FFNet-40s, 즉 BasicBlock의 수가 40개인, FFNet의 기본적인 모델이고, 조금더 BasicBlock의 수를 늘린 54s, 78s 같은 variation도 존재한다. (물론 사이즈도 조금 더 크다) 더불어 기본 모델(S)보다 stage를 3개로 늘린 형태의 (N+S) 구조도 같이 공개되어 있다. 참고로 더 큰 사이즈의 모델 parameter도 확인해보면 아래와 같다.</p>
+<div id="2436ca60" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qai_hub_models.models.ffnet_78s <span class="im">import</span> Model</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>model_large_cpu <span class="op">=</span> Model.from_pretrained().to(<span class="st">"cpu"</span>).<span class="bu">eval</span>()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>stats <span class="op">=</span> summary(model_large_cpu, input_size<span class="op">=</span>input_shape, device<span class="op">=</span><span class="st">'cpu'</span>, col_names<span class="op">=</span>[<span class="st">'num_params'</span>, <span class="st">'mult_adds'</span>])</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(stats)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet78S/ffnet78S_dBBB_cityscapes_state_dict_quarts.pth
+Initializing ffnnet78S_dBBB_mobile weights
+==============================================================================================================
+Layer (type:depth-idx)                                       Param #                   Mult-Adds
+==============================================================================================================
+FFNet78S                                                     --                        --
+├─FFNet: 1-1                                                 --                        --
+│    └─ResNetS: 2-1                                          --                        --
+│    │    └─Conv2d: 3-1                                      864                       452,984,832
+│    │    └─BatchNorm2d: 3-2                                 64                        64
+│    │    └─ReLU: 3-3                                        --                        --
+│    │    └─Conv2d: 3-4                                      18,432                    2,415,919,104
+│    │    └─BatchNorm2d: 3-5                                 128                       128
+│    │    └─ReLU: 3-6                                        --                        --
+│    │    └─Sequential: 3-7                                  448,128                   14,629,734,016
+│    │    └─Sequential: 3-8                                  3,479,808                 28,454,164,736
+│    │    └─Sequential: 3-9                                  7,886,208                 16,131,302,784
+│    │    └─Sequential: 3-10                                 14,449,280                7,392,471,680
+│    └─FFNetUpHead: 2-2                                      --                        --
+│    │    └─Sequential: 3-11                                 1,208,147                 26,571,541,312
+==============================================================================================================
+Total params: 27,491,059
+Trainable params: 27,491,059
+Non-trainable params: 0
+Total mult-adds (Units.GIGABYTES): 96.05
+==============================================================================================================
+Input size (MB): 25.17
+Forward/backward pass size (MB): 1734.87
+Params size (MB): 109.96
+Estimated Total Size (MB): 1870.00
+==============================================================================================================</code></pre>
+</div>
+</div>
+</section>
+<section id="device-in-the-loop를-위한-ai-hub-설정-및-데모-구동" class="level2">
+<h2 class="anchored" data-anchor-id="device-in-the-loop를-위한-ai-hub-설정-및-데모-구동">Device-In-The-Loop를 위한 AI hub 설정 및 데모 구동</h2>
+<p>참고로 Qualcomm AI Hub를 사용하기 위해서는 이전에 설치한 qai_hub의 configure를 통해서 사전에 받은 API를 등록해줘야 한다. API 키는 <a href="https://app.aihub.qualcomm.com/account">여기</a>에서 받을 수 있고, 자세한 설정은 <a href="https://aihub.qualcomm.com/get-started">여기</a>를 참고하면 된다.</p>
+<p>그러면 이제 다운로드받은 모델로 로컬에서 데모를 돌려볼 수 있다. 참고로 양자화 모델이 지원되는 모델도 해당 옵션을 주면 관련 설정으로도 돌릴 수 있다.</p>
+<section id="ffnet-40s-구동" class="level3">
+<h3 class="anchored" data-anchor-id="ffnet-40s-구동">FFNet-40s 구동</h3>
+<div id="f53b4c24" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>run <span class="op">-</span>m qai_hub_models.models.ffnet_40s.demo</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/data/git/kcsgoodboy.github.io/.venv/lib/python3.12/site-packages/qai_hub_models/utils/quantization_aimet_onnx.py:30: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
+  from tqdm.autonotebook import tqdm
+/data/git/kcsgoodboy.github.io/.venv/lib/python3.12/site-packages/qai_hub_models/utils/onnx_torch_wrapper.py:22: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools&lt;81.
+  import pkg_resources</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet40S/ffnet40S_dBBB_cityscapes_state_dict_quarts.pth
+Initializing ffnnet40S_dBBB_mobile weights</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/chanseok/.qaihm/models/cityscapes_segmentation/v2/Qualcomm-AI-research_FFNet_git/models/ffnet_blocks.py:599: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_dict = torch.load(</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running Inference on 0 samples</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="post.ko_files/figure-html/cell-7-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ffnet-40s-양자화-모델-w8a8-구동" class="level3">
+<h3 class="anchored" data-anchor-id="ffnet-40s-양자화-모델-w8a8-구동">FFNet-40s 양자화 모델 (w8a8) 구동</h3>
+<div id="f6ff5a16" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>run <span class="op">-</span>m qai_hub_models.models.ffnet_40s.demo <span class="op">--</span> <span class="op">--</span>quantize <span class="st">"w8a8"</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet40S/ffnet40S_dBBB_cityscapes_state_dict_quarts.pth
+Initializing ffnnet40S_dBBB_mobile weights
+Running Inference on 0 samples</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="post.ko_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ffnet-78s-구동" class="level3">
+<h3 class="anchored" data-anchor-id="ffnet-78s-구동">FFNet-78s 구동</h3>
+<div id="a664c3e3" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>run <span class="op">-</span>m qai_hub_models.models.ffnet_78s.demo</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet78S/ffnet78S_dBBB_cityscapes_state_dict_quarts.pth
+Initializing ffnnet78S_dBBB_mobile weights
+Running Inference on 0 samples</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="post.ko_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="로컬-이미지로의-segmentation-결과" class="level3">
+<h3 class="anchored" data-anchor-id="로컬-이미지로의-segmentation-결과">로컬 이미지로의 segmentation 결과</h3>
+<p>혹시나 해서 이전에 찍은 사진에 대한 segmentation도 수행해보았다. (이미지는 <a href="https://www.freepik.com/free-photos-vectors/car-on-road">FreePik</a>에서 가져왔다.)</p>
+<div id="4debc962" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>run <span class="op">-</span>m qai_hub_models.models.ffnet_40s.demo <span class="op">--</span> <span class="op">--</span>image .<span class="op">/</span>images<span class="op">/</span>red<span class="op">-</span>car<span class="op">-</span>vehicle<span class="op">-</span>highway<span class="op">-</span>sunset<span class="op">-</span>drive.jpg</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet40S/ffnet40S_dBBB_cityscapes_state_dict_quarts.pth
+Initializing ffnnet40S_dBBB_mobile weights
+Running Inference on 0 samples</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="post.ko_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="실제-스마트폰으로의-배포" class="level2">
+<h2 class="anchored" data-anchor-id="실제-스마트폰으로의-배포">실제 스마트폰으로의 배포</h2>
+<p>이제 실제 기기로의 deploy가 가능한지를 확인해볼 차례다. 사실 이 과정을 위해서는 <a href="https://aihub.qualcomm.com/mobile/models">AI hub</a>와 병행 검증이 필요하다. 사이트에서 내가 원하는 모델을 찾고, 그 모델이 내가 탑재하려는 하드웨어에 지원되는지를 확인해봐야 한다. 참고로 포스트에서 사용된 FFNet-40S 계열은 원 모델(float32)이나 양자화된 모델(w8a8) 모두 Snapdragon 8 elite/Gen 3/Gen 2 계열에서만 지원된다. 참고로 AI hub에서 지원되는 기기 list는 다음과 같은 명령으로 확인해볼 수 있다. 여기에서 원하는 디바이스를 찾아서 뒤쪽의 CLI 옵션을 선택해주면 된다. 내 경우는 Particle Tachyon이 QCM6490이므로 아래의 device에서는 “RB3 Gen 2 (Proxy)”로 선택하면 될 듯 하다.</p>
+<div id="3e1eaaba" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>qai<span class="op">-</span>hub <span class="bu">list</span><span class="op">-</span>devices</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+-------------------------------+------------+----------+---------+---------------------------------------------------+---------------------------------------------------------+
+|             Device            |     OS     |  Vendor  |   Type  |                      Chipset                      |                      CLI Invocation                     |
++-------------------------------+------------+----------+---------+---------------------------------------------------+---------------------------------------------------------+
+|    Google Pixel 3 (Family)    | Android 10 |  Google  |  Phone  |          qualcomm-snapdragon-845, sdm845          |    --device "Google Pixel 3 (Family)" --device-os 10    |
+|         Google Pixel 3        | Android 10 |  Google  |  Phone  |          qualcomm-snapdragon-845, sdm845          |         --device "Google Pixel 3" --device-os 10        |
+|        Google Pixel 3a        | Android 10 |  Google  |  Phone  |          qualcomm-snapdragon-670, sdm670          |        --device "Google Pixel 3a" --device-os 10        |
+|       Google Pixel 3 XL       | Android 10 |  Google  |  Phone  |          qualcomm-snapdragon-845, sdm845          |       --device "Google Pixel 3 XL" --device-os 10       |
+|         Google Pixel 4        | Android 10 |  Google  |  Phone  |          qualcomm-snapdragon-855, sm8150          |         --device "Google Pixel 4" --device-os 10        |
+|         Google Pixel 4        | Android 11 |  Google  |  Phone  |          qualcomm-snapdragon-855, sm8150          |         --device "Google Pixel 4" --device-os 11        |
+|        Google Pixel 4a        | Android 11 |  Google  |  Phone  |        qualcomm-snapdragon-730g, sm7150-ab        |        --device "Google Pixel 4a" --device-os 11        |
+|         Google Pixel 5        | Android 11 |  Google  |  Phone  |          qualcomm-snapdragon-765g, sm7250         |         --device "Google Pixel 5" --device-os 11        |
+|     Samsung Galaxy Tab S7     | Android 11 | Samsung  |  Tablet |        qualcomm-snapdragon-865+, sm8250-ab        |     --device "Samsung Galaxy Tab S7" --device-os 11     |
+|  Samsung Galaxy Tab A8 (2021) | Android 11 | Samsung  |  Tablet |          qualcomm-snapdragon-429, sdm429          |  --device "Samsung Galaxy Tab A8 (2021)" --device-os 11 |
+| Samsung Galaxy Note 20 (Intl) | Android 11 | Samsung  |  Phone  |                 samsung-exynos-990                | --device "Samsung Galaxy Note 20 (Intl)" --device-os 11 |
+|  Samsung Galaxy S21 (Family)  | Android 11 | Samsung  |  Phone  |          qualcomm-snapdragon-888, sm8350          |  --device "Samsung Galaxy S21 (Family)" --device-os 11  |
+|       Samsung Galaxy S21      | Android 11 | Samsung  |  Phone  |          qualcomm-snapdragon-888, sm8350          |       --device "Samsung Galaxy S21" --device-os 11      |
+|      Samsung Galaxy S21+      | Android 11 | Samsung  |  Phone  |          qualcomm-snapdragon-888, sm8350          |      --device "Samsung Galaxy S21+" --device-os 11      |
+|    Samsung Galaxy S21 Ultra   | Android 11 | Samsung  |  Phone  |          qualcomm-snapdragon-888, sm8350          |    --device "Samsung Galaxy S21 Ultra" --device-os 11   |
+|    Xiaomi Redmi Note 10 5G    | Android 11 | Oneplus  |  Phone  |         qualcomm-snapdragon-678, sm6150-ac        |    --device "Xiaomi Redmi Note 10 5G" --device-os 11    |
+|       Google Pixel 3a XL      | Android 12 |  Google  |  Phone  |          qualcomm-snapdragon-670, sdm670          |       --device "Google Pixel 3a XL" --device-os 12      |
+|        Google Pixel 4a        | Android 12 |  Google  |  Phone  |        qualcomm-snapdragon-730g, sm7150-ab        |        --device "Google Pixel 4a" --device-os 12        |
+|    Google Pixel 5 (Family)    | Android 12 |  Google  |  Phone  |          qualcomm-snapdragon-765g, sm7250         |    --device "Google Pixel 5 (Family)" --device-os 12    |
+|         Google Pixel 5        | Android 12 |  Google  |  Phone  |          qualcomm-snapdragon-765g, sm7250         |         --device "Google Pixel 5" --device-os 12        |
+|       Google Pixel 5a 5G      | Android 12 |  Google  |  Phone  |          qualcomm-snapdragon-765g, sm7250         |       --device "Google Pixel 5a 5G" --device-os 12      |
+|         Google Pixel 6        | Android 12 |  Google  |  Phone  |                   google-tensor                   |         --device "Google Pixel 6" --device-os 12        |
+|     Samsung Galaxy A53 5G     | Android 12 | Samsung  |  Phone  |                samsung-exynos-1280                |     --device "Samsung Galaxy A53 5G" --device-os 12     |
+|     Samsung Galaxy A73 5G     | Android 12 | Samsung  |  Phone  |          qualcomm-snapdragon-778g, sm7325         |     --device "Samsung Galaxy A73 5G" --device-os 12     |
+|       RB3 Gen 2 (Proxy)       | Android 12 | Qualcomm |   Iot   |               qualcomm-qcs6490-proxy              |       --device "RB3 Gen 2 (Proxy)" --device-os 12       |
+|        QCS6490 (Proxy)        | Android 12 | Qualcomm |   Iot   |               qualcomm-qcs6490-proxy              |        --device "QCS6490 (Proxy)" --device-os 12        |
+|          RB5 (Proxy)          | Android 12 | Qualcomm |   Iot   |               qualcomm-qcs8250-proxy              |          --device "RB5 (Proxy)" --device-os 12          |
+|        QCS8250 (Proxy)        | Android 12 | Qualcomm |   Iot   |               qualcomm-qcs8250-proxy              |        --device "QCS8250 (Proxy)" --device-os 12        |
+|        QCS8550 (Proxy)        | Android 12 | Qualcomm |   Iot   |               qualcomm-qcs8550-proxy              |        --device "QCS8550 (Proxy)" --device-os 12        |
+|  Samsung Galaxy S21 (Family)  | Android 12 | Samsung  |  Phone  |          qualcomm-snapdragon-888, sm8350          |  --device "Samsung Galaxy S21 (Family)" --device-os 12  |
+|       Samsung Galaxy S21      | Android 12 | Samsung  |  Phone  |          qualcomm-snapdragon-888, sm8350          |       --device "Samsung Galaxy S21" --device-os 12      |
+|    Samsung Galaxy S21 Ultra   | Android 12 | Samsung  |  Phone  |          qualcomm-snapdragon-888, sm8350          |    --device "Samsung Galaxy S21 Ultra" --device-os 12   |
+|  Samsung Galaxy S22 (Family)  | Android 12 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |  --device "Samsung Galaxy S22 (Family)" --device-os 12  |
+|  Samsung Galaxy S22 Ultra 5G  | Android 12 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |  --device "Samsung Galaxy S22 Ultra 5G" --device-os 12  |
+|     Samsung Galaxy S22 5G     | Android 12 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |     --device "Samsung Galaxy S22 5G" --device-os 12     |
+|     Samsung Galaxy S22+ 5G    | Android 12 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |     --device "Samsung Galaxy S22+ 5G" --device-os 12    |
+|     Samsung Galaxy Tab S8     | Android 12 | Samsung  |  Tablet |         qualcomm-snapdragon-8gen1, sm8450         |     --device "Samsung Galaxy Tab S8" --device-os 12     |
+|       Xiaomi 12 (Family)      | Android 12 |  Xiaomi  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |       --device "Xiaomi 12 (Family)" --device-os 12      |
+|           Xiaomi 12           | Android 12 |  Xiaomi  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |           --device "Xiaomi 12" --device-os 12           |
+|         Xiaomi 12 Pro         | Android 12 |  Xiaomi  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |         --device "Xiaomi 12 Pro" --device-os 12         |
+|    Google Pixel 6 (Family)    | Android 13 |  Google  |  Phone  |                   google-tensor                   |    --device "Google Pixel 6 (Family)" --device-os 13    |
+|         Google Pixel 6        | Android 13 |  Google  |  Phone  |                   google-tensor                   |         --device "Google Pixel 6" --device-os 13        |
+|        Google Pixel 6a        | Android 13 |  Google  |  Phone  |                   google-tensor                   |        --device "Google Pixel 6a" --device-os 13        |
+|    Google Pixel 7 (Family)    | Android 13 |  Google  |  Phone  |                  google-tensor-g2                 |    --device "Google Pixel 7 (Family)" --device-os 13    |
+|         Google Pixel 7        | Android 13 |  Google  |  Phone  |                  google-tensor-g2                 |         --device "Google Pixel 7" --device-os 13        |
+|       Google Pixel 7 Pro      | Android 13 |  Google  |  Phone  |                  google-tensor-g2                 |       --device "Google Pixel 7 Pro" --device-os 13      |
+|     Samsung Galaxy A14 5G     | Android 13 | Samsung  |  Phone  |                samsung-exynos-1330                |     --device "Samsung Galaxy A14 5G" --device-os 13     |
+|     Samsung Galaxy S22 5G     | Android 13 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen1, sm8450         |     --device "Samsung Galaxy S22 5G" --device-os 13     |
+|        QCS8450 (Proxy)        | Android 13 | Qualcomm |    Xr   |               qualcomm-qcs8450-proxy              |        --device "QCS8450 (Proxy)" --device-os 13        |
+|       XR2 Gen 2 (Proxy)       | Android 13 | Qualcomm |    Xr   |               qualcomm-qcs8450-proxy              |       --device "XR2 Gen 2 (Proxy)" --device-os 13       |
+|  Samsung Galaxy S23 (Family)  | Android 13 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen2, sm8550         |  --device "Samsung Galaxy S23 (Family)" --device-os 13  |
+|         SA8650 (Proxy)        | Android 13 | Qualcomm |   Auto  |               qualcomm-sa8650p-proxy              |         --device "SA8650 (Proxy)" --device-os 13        |
+|         SA8775 (Proxy)        | Android 13 | Qualcomm |   Auto  |               qualcomm-sa8775p-proxy              |         --device "SA8775 (Proxy)" --device-os 13        |
+|         SA8255 (Proxy)        | Android 13 | Qualcomm |   Auto  |               qualcomm-sa8255p-proxy              |         --device "SA8255 (Proxy)" --device-os 13        |
+|       Samsung Galaxy S23      | Android 13 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen2, sm8550         |       --device "Samsung Galaxy S23" --device-os 13      |
+|      Samsung Galaxy S23+      | Android 13 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen2, sm8550         |      --device "Samsung Galaxy S23+" --device-os 13      |
+|    Samsung Galaxy S23 Ultra   | Android 13 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen2, sm8550         |    --device "Samsung Galaxy S23 Ultra" --device-os 13   |
+|         Google Pixel 7        | Android 14 |  Google  |  Phone  |                  google-tensor-g2                 |         --device "Google Pixel 7" --device-os 14        |
+|    Google Pixel 8 (Family)    | Android 14 |  Google  |  Phone  |                  google-tensor-g3                 |    --device "Google Pixel 8 (Family)" --device-os 14    |
+|         Google Pixel 8        | Android 14 |  Google  |  Phone  |                  google-tensor-g3                 |         --device "Google Pixel 8" --device-os 14        |
+|       Google Pixel 8 Pro      | Android 14 |  Google  |  Phone  |                  google-tensor-g3                 |       --device "Google Pixel 8 Pro" --device-os 14      |
+|  Samsung Galaxy S24 (Family)  | Android 14 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen3, sm8650         |  --device "Samsung Galaxy S24 (Family)" --device-os 14  |
+|       Samsung Galaxy S24      | Android 14 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen3, sm8650         |       --device "Samsung Galaxy S24" --device-os 14      |
+|    Samsung Galaxy S24 Ultra   | Android 14 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen3, sm8650         |    --device "Samsung Galaxy S24 Ultra" --device-os 14   |
+|      Samsung Galaxy S24+      | Android 14 | Samsung  |  Phone  |         qualcomm-snapdragon-8gen3, sm8650         |      --device "Samsung Galaxy S24+" --device-os 14      |
+|    Google Pixel 9 (Family)    | Android 15 |  Google  |  Phone  |                  google-tensor-g4                 |    --device "Google Pixel 9 (Family)" --device-os 15    |
+|         Google Pixel 9        | Android 15 |  Google  |  Phone  |                  google-tensor-g4                 |         --device "Google Pixel 9" --device-os 15        |
+|       Google Pixel 9 Pro      | Android 15 |  Google  |  Phone  |                  google-tensor-g4                 |       --device "Google Pixel 9 Pro" --device-os 15      |
+|     Google Pixel 9 Pro XL     | Android 15 |  Google  |  Phone  |                  google-tensor-g4                 |     --device "Google Pixel 9 Pro XL" --device-os 15     |
+|       Samsung Galaxy S25      | Android 15 | Samsung  |  Phone  | qualcomm-snapdragon-8-elite-for-galaxy, sm8750-ac |       --device "Samsung Galaxy S25" --device-os 15      |
+|    Samsung Galaxy S25 Ultra   | Android 15 | Samsung  |  Phone  | qualcomm-snapdragon-8-elite-for-galaxy, sm8750-ac |    --device "Samsung Galaxy S25 Ultra" --device-os 15   |
+|      Samsung Galaxy S25+      | Android 15 | Samsung  |  Phone  | qualcomm-snapdragon-8-elite-for-galaxy, sm8750-ac |      --device "Samsung Galaxy S25+" --device-os 15      |
+|  Samsung Galaxy S25 (Family)  | Android 15 | Samsung  |  Phone  | qualcomm-snapdragon-8-elite-for-galaxy, sm8750-ac |  --device "Samsung Galaxy S25 (Family)" --device-os 15  |
+|    Snapdragon 8cx Gen 3 CRD   | Windows 11 | Qualcomm | Compute |        qualcomm-snapdragon-8cxgen3, sc8280x       |    --device "Snapdragon 8cx Gen 3 CRD" --device-os 11   |
+|     Snapdragon X Elite CRD    | Windows 11 | Qualcomm | Compute |       qualcomm-snapdragon-x-elite, sc8380xp       |     --device "Snapdragon X Elite CRD" --device-os 11    |
+|  Snapdragon X Plus 8-Core CRD | Windows 11 | Qualcomm | Compute |    qualcomm-snapdragon-x-plus-8-core, sc8340xp    |  --device "Snapdragon X Plus 8-Core CRD" --device-os 11 |
+|     Snapdragon 8 Elite QRD    | Android 15 | Qualcomm |  Phone  |        qualcomm-snapdragon-8-elite, sm8750        |     --device "Snapdragon 8 Elite QRD" --device-os 15    |
+|          SA8295P ADP          | Android 14 | Qualcomm |   Auto  |                  qualcomm-sa8295p                 |          --device "SA8295P ADP" --device-os 14          |
+|          SA8775P ADP          | Android 14 | Qualcomm |   Auto  |                  qualcomm-sa8775p                 |          --device "SA8775P ADP" --device-os 14          |
+|          SA7255P ADP          | Android 14 | Qualcomm |   Auto  |                  qualcomm-sa7255p                 |          --device "SA7255P ADP" --device-os 14          |
+|        QCS9075 (Proxy)        | Android 14 | Qualcomm |   Iot   |               qualcomm-qcs9075-proxy              |        --device "QCS9075 (Proxy)" --device-os 14        |
+|        QCS8275 (Proxy)        | Android 14 | Qualcomm |   Iot   |               qualcomm-qcs8275-proxy              |        --device "QCS8275 (Proxy)" --device-os 14        |
++-------------------------------+------------+----------+---------+---------------------------------------------------+---------------------------------------------------------+</code></pre>
+</div>
+</div>
+<p>찾아보니까 <a href="https://aihub.qualcomm.com/models/ffnet_122ns_lowres?chipsets=qualcomm-qcs6490-proxy"><strong>FFNet-122NS-LowRes (w8a8)</strong></a> 모델이 RB3 Gen 2 (Proxy)를 지원해서 해당 모델을 export 하는 과정을 수행해본다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+노트
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>참고로 export시 앞의 deployment process를 보면 알겠지만, performance를 측정하는 단계가 포함되어 있고, 이 과정에서 segmentation task에 많이 사용되는 <a href="https://www.cityscapes-dataset.com/">cityscapes dataset</a>가 활용된다. 문제는 해당 dataset의 license가 연구용으로만 open되어 있기 때문에 성능 검증시에는 해당 dataset를 로컬로 다운받고 설정을 해줘야 한다.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ValueError:</span> Cityscapes does not have a publicly downloadable URL, so users need to manually download it by following these steps: </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> Go to https://www.cityscapes-dataset.com/ and make an account</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> Go to https://www.cityscapes-dataset.com/downloads/ and download <span class="kw">`</span><span class="ex">leftImg8bit_trainvaltest.zip</span><span class="kw">`</span> and <span class="kw">`</span><span class="ex">gtFine_trainvaltest.zip</span><span class="kw">`</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> Run <span class="kw">`</span><span class="ex">python</span> <span class="at">-m</span> qai_hub_models.datasets.configure_dataset <span class="at">--dataset</span> cityscapes <span class="at">--files</span> /path/to/leftImg8bit_trainvaltest.zip /path/to/gtFine_trainvaltest.zip<span class="kw">`</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="4f9d703b" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>run <span class="op">-</span>m qai_hub_models.models.ffnet_122ns_lowres.demo <span class="op">--</span> <span class="op">--</span>device <span class="st">"RB3 Gen 2 (Proxy)"</span> <span class="op">--</span>quantize w8a8</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet122NS/ffnet122NS_CCC_cityscapes_state_dict_quarts.pth
+Initializing ffnnet122NS_CCC_mobile_pre_down weights
+Running Inference on 0 samples</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="post.ko_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="6a41e959" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>run <span class="op">-</span>m qai_hub_models.models.ffnet_122ns_lowres.export <span class="op">--</span> <span class="op">--</span>device <span class="st">"RB3 Gen 2 (Proxy)"</span> <span class="op">--</span>quantize w8a8</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading pretrained model state dict from /home/chanseok/.qaihm/models/ffnet/v1/ffnet122NS/ffnet122NS_CCC_cityscapes_state_dict_quarts.pth
+Initializing ffnnet122NS_CCC_mobile_pre_down weights
+Quantizing model ffnet_122ns_lowres.
+Uploading tmpnyinoyhh.pt</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>100%|██████████| 124M/124M [00:20&lt;00:00, 6.32MB/s] </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Scheduled compile job (jgdqzxlr5) successfully. To see the status and results:
+    https://app.aihub.qualcomm.com/jobs/jgdqzxlr5/
+
+Loading 100 calibration samples.
+Waiting for compile job (jgdqzxlr5) completion. Type Ctrl+C to stop waiting at any time.
+    ✅ SUCCESS                          </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Uploading dataset: 129MB [00:21, 6.39MB/s]                           6.52MB/s] </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Scheduled quantize job (jpr2nvj05) successfully. To see the status and results:
+    https://app.aihub.qualcomm.com/jobs/jpr2nvj05/
+
+Waiting for quantize job (jpr2nvj05) completion. Type Ctrl+C to stop waiting at any time.
+    ✅ SUCCESS                          
+Optimizing model ffnet_122ns_lowres to run on-device
+Scheduled compile job (jgl21vrjp) successfully. To see the status and results:
+    https://app.aihub.qualcomm.com/jobs/jgl21vrjp/
+
+Profiling model ffnet_122ns_lowres on a hosted device.
+Waiting for compile job (jgl21vrjp) completion. Type Ctrl+C to stop waiting at any time.
+    ✅ SUCCESS                          
+Scheduled profile job (jpvr9qkk5) successfully. To see the status and results:
+    https://app.aihub.qualcomm.com/jobs/jpvr9qkk5/
+
+Running inference for ffnet_122ns_lowres on a hosted device with example inputs.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Uploading dataset: 1.95MB [00:01, 1.48MB/s]                            5.88MB/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Scheduled inference job (jgj2wdnv5) successfully. To see the status and results:
+    https://app.aihub.qualcomm.com/jobs/jgj2wdnv5/
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ffnet_122ns_lowres.tflite: 100%|██████████| 31.3M/31.3M [00:02&lt;00:00, 12.9MB/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Downloaded model to /data/git/kcsgoodboy.github.io/posts/2025-08-14_Introduction_to_On_Device_AI/build/ffnet_122ns_lowres/ffnet_122ns_lowres.tflite
+Waiting for profile job (jpvr9qkk5) completion. Type Ctrl+C to stop waiting at any time.
+    ✅ SUCCESS                          
+
+------------------------------------------------------------
+Performance results on-device for Ffnet_122Ns_Lowres.
+------------------------------------------------------------
+Device                          : RB3 Gen 2 (Proxy) (ANDROID 12)       
+Runtime                         : TFLITE                               
+Estimated inference time (ms)   : 9.7                                  
+Estimated peak memory usage (MB): [0, 69]                              
+Total # Ops                     : 220                                  
+Compute Unit(s)                 : npu (220 ops) gpu (0 ops) cpu (0 ops)
+------------------------------------------------------------
+More details: https://app.aihub.qualcomm.com/jobs/jpvr9qkk5/
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>tmpdzjpevtn.h5: 100%|██████████| 204k/204k [00:00&lt;00:00, 1.32MB/s]</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Comparing on-device vs. local-cpu inference for Ffnet_122Ns_Lowres.
++---------------+------------------+--------+
+| output_name   | shape            |   psnr |
++===============+==================+========+
+| mask          | (1, 64, 128, 19) |  39.46 |
++---------------+------------------+--------+
+
+- psnr: Peak Signal-to-Noise Ratio (PSNR). &gt;30 dB is typically considered good.
+
+More details: https://app.aihub.qualcomm.com/jobs/jgj2wdnv5/
+
+Run compiled model on a hosted device on sample data using:
+python /data/git/kcsgoodboy.github.io/.venv/lib/python3.12/site-packages/qai_hub_models/models/ffnet_122ns_lowres/demo.py --eval-mode on-device --hub-model-id mnl9v1wen --device "RB3 Gen 2 (Proxy)"
+</code></pre>
+</div>
+</div>
+<p>그러면 hub에도 현재 export수행한 모델의 진행 현황과 정보를 확인해볼 수 있는 사이트가 등록되고, 해당 창을 통해서 모델 다운로드 및 시각화 결과를 볼 수 있다.</p>
+<p><img src="images/export_output.png" class="img-fluid"></p>
+</section>
+<section id="결론" class="level2">
+<h2 class="anchored" data-anchor-id="결론">결론</h2>
+<p>최종적으로 On-Device AI가 수행되는 일반적인 프로세스, 그리고 Qualcomm 칩 기반의 On-Device AI가 수행되는 과정을 직접 다뤄보았다. 사실 개인적으로 느낀 부분은 모델 deploy하는 입장에서 큰 회사에서는 model zoo 같은 것을 운영하면서 칩에 최적화된 모델을 배포하는 것을 활용할 수 있다는 부분이 좋았던 것 같다. 내가 어떤 task에 모델을 쓸건지와 타겟 하드웨어만 정해지면, 모델을 처음부터 학습할 필요도 없고, 원하는 입맛에 맞게 수정도 가능하다는 것이다. 다만, 디바이스에 맞게 export하는 과정에서 처리되는 profiling이나 quantization 관련 부분은 실제 온라인으로 연결되어야 가능하다는 점, 결과적으로 그 부분은 개발자 입장에서 black box로 남아있는 부분은 조금 아쉽긴 하다. (그냥 로컬에서 quantization도 지원하면 조금더 개발 측면에서 확장 범위가 늘어날거 같은데…)</p>
+<p>아무튼 이전 목표처럼 Tachyon 보드에서 탑재할 모델까지 만드는 것을 해보았고, 이어진 포스트를 통해서 실제 deploy하는 과정과 모델을 양자화하는 과정, 그리고 관련하여 기기에서의 필요한 작업을 조금더 다뤄볼 예정이다. 아마 여기까지 해야 Mini-pupper에서의 제어보드에 모델을 탑재하는 작업을 해볼 수 있지 않을까 싶다.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

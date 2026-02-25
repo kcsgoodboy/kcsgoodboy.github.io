@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-01-20_Multi-task_learning/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-01-20_Multi-task_learning/post.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Chanseok Kang">
+<meta name="description" content="2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약">
+<title>Multi-task learning – 생각많은 소심남의 연구노트</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+<style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/posts/2026-01-20_Multi-task_learning/post.html" id="language-link-en">English</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">소개</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">블로그</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">출간물</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">활동</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Multi-task learning</h1>
+                  <div>
+        <div class="description">
+          2022년에 진행한 CS330 강의 중 Lecture 2. Multi-task learning에 대한 강의 요약
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS330</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 1월 20일</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#%EA%B0%95%EC%9D%98-%EB%B0%8F-%EC%9E%90%EB%A3%8C" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#definition-of-task" id="toc-definition-of-task" class="nav-link" data-scroll-target="#definition-of-task">Definition of Task</a></li>
+  <li><a href="#single-task-vs.-multi-task" id="toc-single-task-vs.-multi-task" class="nav-link" data-scroll-target="#single-task-vs.-multi-task">Single-task vs. Multi-task</a></li>
+  <li><a href="#conditioning-on-the-task" id="toc-conditioning-on-the-task" class="nav-link" data-scroll-target="#conditioning-on-the-task">Conditioning on the task</a></li>
+  <li><a href="#objective-function" id="toc-objective-function" class="nav-link" data-scroll-target="#objective-function">Objective function</a></li>
+  <li><a href="#optimizing-the-objective" id="toc-optimizing-the-objective" class="nav-link" data-scroll-target="#optimizing-the-objective">Optimizing the objective</a></li>
+  <li>
+<a href="#challenges" id="toc-challenges" class="nav-link" data-scroll-target="#challenges">Challenges</a>
+  <ul class="collapse">
+<li><a href="#negative-trasfer-overfitting" id="toc-negative-trasfer-overfitting" class="nav-link" data-scroll-target="#negative-trasfer-overfitting">Negative Trasfer &amp; Overfitting</a></li>
+  <li><a href="#a-lot-of-tasks" id="toc-a-lot-of-tasks" class="nav-link" data-scroll-target="#a-lot-of-tasks">A Lot of Tasks</a></li>
+  </ul>
+</li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="강의-및-자료" class="level3"><h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://youtu.be/vI46tzt4O7Y?si=lhD3KJkDHqIYaiyd"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs330.stanford.edu/materials/cs330_multitask_transfer_2023.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+<p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
+</section><section id="definition-of-task" class="level2"><h2 class="anchored" data-anchor-id="definition-of-task">Definition of Task</h2>
+<p>강의에서 소개하고 있는 task의 정의는 다음과 같다.</p>
+<p><span id="eq-task-definition"><span class="math display">\[
+\mathcal{T}_i \triangleq \{p_i(x), p_i(y \vert x), \mathcal{L}_i\}
+\tag{1}\]</span></span></p>
+<p>이 수식은 특정 task <span class="math inline">\(\mathcal{T}_i\)</span>가 지금까지 많이 다뤄졌던 single-task learning과 같이 단순한 데이터 덩어리가 아니라, 각 세가지의 핵심 요소의 집합으로 정의된다는 것을 의미한다. 우선 <span class="math inline">\(p_i(x)\)</span> 는 주어진 task에서 나오는 문제의 형태 (Input Distribution)가 된다. 엄밀히 말하면 <span class="math inline">\(p\)</span> 자체가 데이터의 분포가 될텐데, 이미지나 텍스트같은 모델에 입력되는 데이터 <span class="math inline">\(x\)</span>가 어떤 특성을 가지고 생성되는지를 나타낸다. 예를 들어서 여러 언어의 필기체를 인식하는 문제가 주어져 있을 때, 영어 문장을 구성하는 이미지의 생김새와 한글 문장을 인식하는 이미지가 생김새가 완전히 다르기 때문에, (즉, <span class="math inline">\(x\)</span>가 다르기 때문에) 이 경우는 <span class="math inline">\(p(x)\)</span>가 서로 다른 케이스가 될 것이다.</p>
+<p>두번째 요소인 <span class="math inline">\(p_i(y \vert x)\)</span>는 주어진 문제에 대한 정답은 무엇인가 (Label Distribution)를 정의한다. 앞에서 정의한 것처럼 주어진 문제를 표현하는 <span class="math inline">\(x\)</span>에 대해서 정답 레이블인 <span class="math inline">\(y\)</span>에 대한 확률 분포를 표현한 것이고, 쉽게 말하면 입력을 보고 정답을 매기는 “규칙”이 되겠다.</p>
+<p>마지막 요소인 <span class="math inline">\(\mathcal{L}_i\)</span>은 흔히 통용되는 표현인 손실함수인데, 어떤 모델을 학습시킬 때는 해당 모델에게 잘했는지 못했는지에 대한 점수를 정의한 것이다. 결과적으로 모델이 주어진 입력에 대한 예측값을 구했을 때, 이를 실제값간의 차이를 토대로 얼마나 잘했는지 여부를 결정하게 된다. 물론 이 부분은 task마다 계산하는 방식이 다르게 될 것이다. 예를 들어서 어떤 task는 분류 문제를 해결해야 하고, 다른 task에서는 회귀 문제를 풀어야 한다면 각 task마다 정의되어야 할 손실함수는 다를 것이다.</p>
+<p>그래서 이 수식이 설명하는 것은 앞에서 설명했던 것처럼 task를 어떤 단순한 데이터셋으로 정의하지 말고, 하나의 분포(Distribution)으로 봐야 한다는 부분이다. 그래서 모델이 단순히 데이터셋 자체를 암기하는 것을 넘어서 task의 근본적인 분포를 배워 새로운 데이터에서도 잘 적응(Generalization)할 수 있는지를 평가하는 것이 중요하다.</p>
+</section><section id="single-task-vs.-multi-task" class="level2"><h2 class="anchored" data-anchor-id="single-task-vs.-multi-task">Single-task vs. Multi-task</h2>
+<div id="fig-tasks" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-tasks" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-single-task" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-single-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/single_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-single-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Single-task model
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-tasks" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-multi-task" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/multi_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Multi-task model
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tasks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 1: task의 형태에 대응되는 모델 구조
+</figcaption></figure>
+</div>
+<p>Single-task를 다루는 모델과 multi-task를 다루는 모델간의 근본적인 차이는 해결해야 할 task를 어떻게 정의하고 입력으로 받느냐에 따른 것이다. <a href="#fig-single-task" class="quarto-xref">그림 1 (a)</a> 에서 보듯이, Single-task를 다루는 모델의 경우는 단일 데이터셋에 대한 손실함수를 최소화하는 parameter <span class="math inline">\(\theta\)</span>를 찾는 것이 목적이다. 이 경우 모델은 입력 데이터 <span class="math inline">\(x\)</span>만 보고 <span class="math inline">\(y\)</span>를 추론하는 <span class="math inline">\(f_{\theta}(y \vert x)\)</span>의 형태를 가진다. 참고로 여기에는 하나의 가정이 포함되어 있는데, 훈련 데이터와 테스트 데이터가 동일한 분포에서 추출되었다는 가정이 녹아져 있다. 이때는 task에 대한 정보를 따로 넣어주지 않기 때문에 다른 표현으로는 <strong>task-agnostic</strong>이란 이름으로 정의하기도 한다.</p>
+<p>반면, Multi-task를 다루는 모델의 경우 여러 개의 task <span class="math inline">\(\mathcal{T}_i\)</span> 집합을 동시에 학습한다. 여기서 각 task는 앞에서 소개한 <a href="#eq-task-definition" class="quarto-xref">방정식 1</a> 에 정의되어 있는 세가지 요소로 구성된다. 여기서 이전의 single-task와 구분되는 큰 특징 중 하나는 바로 task descriptor <span class="math inline">\(z_i\)</span>, 쉽게 말해서 현재 수행해야 할 task가 어떤 것인지에 대한 정보를 부가적으로 입력해준다는 것이다. 그래서 모델의 형태도 <span class="math inline">\(f_{\theta}(y \vert x, z_i)\)</span> 로 정의되어, 다중 task에 대한 손실함수를 최소화하는 parameter <span class="math inline">\(\theta\)</span>를 찾는 것이 목적이 된다. 강의 자료에서는 아래와 같이 표현했다.</p>
+<p><span class="math display">\[
+\min_{\theta} \sum_{i=1}^T \mathcal{L}_i (\theta, \mathcal{D}_i)
+\]</span></p>
+<p>그러면 task descriptor <span class="math inline">\(z_i\)</span>는 어떻게 졍의하나가 multi-task의 관건이 될텐데, 사실 학습하기 나름이다. 뭔가 task에 대한 정보를 숫자로 표현해서 다르다는 것을 표기하려면 그냥 정수 형태로 구분지어도 되고, 혹은 one-hot vector의 형태로 부여할 수 있다. 아니면 사람이 정의하는 것처럼 언어 형태로도 정의할 수 있고, 뭔가 task에 대한 specification을 담은 정보를 줄 수도 있다. 이를 정의하는 문제도 역시 Multi-task 학습의 효율성 측면에서 고민해볼 부분이 되겠다.</p>
+<p>여기까지 오면 이제 multi-task를 다루는 모델을 학습하기 위해서는 몇가지 정의할 부분이 생긴다. 크게</p>
+<ul>
+<li>
+<span class="math inline">\(z_i\)</span>를 어떻게 정의하고, 조건을 구분할 수 있을까?</li>
+<li>각각의 task의 학습을 위한 objective function은 어떻게 정의할 수 있을까?</li>
+<li>여러 개의 objective function을 어떻게 최적화할 수 있을까?</li>
+</ul>
+<p>로 나눌 수 있는데, 각 부분에 대해서 강의에서 소개하고 있다.</p>
+</section><section id="conditioning-on-the-task" class="level2"><h2 class="anchored" data-anchor-id="conditioning-on-the-task">Conditioning on the task</h2>
+<p>먼저, task descriptor를 어떻게 정의하고, 모델 학습시 개별적으로 학습할 수 있을지에 대한 부분이다. 우선, 쉬운 이해를 위해서 task decriptor를 one-hot vector로 정의한다고 가정해보자. 그러면 모델을 만드는 입장에서 고민해볼 수 있는 부분은 과연 어떻게 하면 multi-task에 대응할 수 있는 모델을 task에 conditioning해서 학습시킬 수 있을까 하는 것이다.</p>
+<div id="fig-independent-training" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-independent-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/independent_training.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-independent-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 2: independent-training
+</figcaption></figure>
+</div>
+<p>가장 쉽게 생각해볼 수 있는 부분은 개별 Task에 해당하는 모델을 각각 학습시키고 출력단에서 conditioning하는 것이다. <a href="#fig-independent-training" class="quarto-xref">그림 2</a> 에서 보여지는 것처럼 쉽게 말해 multiplicative gating, 즉 task descriptor가 해당 Task일때만 해당 task로 학습시킨 network의 출력을 사용하는 방법이다. 물론 이 경우는 내부의 network 간의 parameter sharing은 발생하지 않고, 외부에서 바라봤을 때는 하나의 큰 network처럼 보이게 된다. 어떻게 보면 가장 간단하게 생각해볼 수 있는 multi-task 대응 방법이겠지만, 네트워크의 연산 효율성 측면이나 크기 측면에서는 고려되지 않는다.</p>
+<div id="fig-all-shared-training" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-all-shared-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/11p_all_shared_training.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-shared-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 3: all-shared-training
+</figcaption></figure>
+</div>
+<p>그러면 또다른 극단적인 케이스으로는 task간 학습시 모든 parameter를 공유하는 구조도 생각해볼 수 있다. 단 <a href="#fig-all-shared-training" class="quarto-xref">그림 3</a> 의 구조처럼 parameter는 공유하되, 출력이 나오는 FC Layer나 activation 쪽에서 task descriptor <span class="math inline">\(z_i\)</span>를 concatenate하는 방식이 될 것이다. 이 경우, task내에 공통적인 요소, 앞에서 설명한 표현을 가져오자면 여러 개의 문제 중 정답에 대한 내면적인 규칙을 공유하는 형태가 되므로, 연산 효율성이나 크기 측면에서는 조금 더 고려해볼 여지가 생긴다.</p>
+<p>그러면 이제 이렇게 parameter는 공유하는 구조로 잡는다면 모델 parameter <span class="math inline">\(\theta\)</span> 도 공유 parameter <span class="math inline">\(\theta^{sh}\)</span>와 task별로 구분되는 task-specific parameter <span class="math inline">\(\theta^{i}\)</span>로 나눠서 표현할 수 있고, 이에 따라서 해당 모델의 objective function도 다음과 같이 바꿔서 표현할 수 있다.</p>
+<p><span class="math display">\[
+\min_{\theta^{sh}, \theta^1, \dots, \theta^T} \sum_{i=1}^T \mathcal{L}_i ( {\theta^{sh}, \theta^i}, \mathcal{D}_i)
+\]</span></p>
+<p>사실 지금까지 multi-task를 대응하는 형태에 대해서 어떤 사전적인 배경지식없이 상식적으로 생각해볼만한 부분에 대해서 설명이 이뤄졌다. 여기까지의 결론으로는 뭔가 모델을 학습하는데 있어서 task descriptor라는 것이 필요하고, 과연 이 정보를 어떻게 conditioning해서 넣느냐에 따라서 parameter를 어떻게, 어떤 layer에서 공유하게 될지 결정하는 문제에 고민해봐야 된다는 부분이다. 그래서 다음 그림을 통해서 conditioning 방식을 통해 모델을 구성할 때의 구조에 대해서 공유해본다.</p>
+<div id="fig-conditioning" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-concatenation-based-conditioning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-concatenation-based-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/13p_concatenation_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-concatenation-based-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) concatenation-based conditioning
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-additive-conditioning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-additive-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/13p_additive_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-additive-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) additive conditioning
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-multi-head" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/14p_multi-head.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) multi-head architecture
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-multiplicative-conditioning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multiplicative-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/14p_multiplicative_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multiplicative-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) multiplicative conditioning
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 4: Conditioning에 따른 몇가지 common choice (출처: <a href="https://distill.pub/2018/feature-wise-transformations/">feature-wise transformation</a>)
+</figcaption></figure>
+</div>
+<p><a href="#fig-concatenation-based-conditioning" class="quarto-xref">그림 4 (a)</a> 와 <a href="#fig-additive-conditioning" class="quarto-xref">그림 4 (b)</a> 은 앞에서 소개한 구조이다. 전자는 input data가 들어갈때 task descriptor가 concatenate되는 방식이고, 후자의 경우는 layer를 거쳐서 나온 결과에 가산(additive)하는 방식이다. 굳이 의미를 부여하자면 Concatenation 방식은 입력단에서 정보를 합친 후, 모든 레이어의 파라미터를 공유하여 Task 정보를 처리한다. 단, 입력층의 Weight Matrix에서 Task Descriptor <span class="math inline">\(z\)</span>와 연산되는 부분은 해당 Task 고유의 편향(Bias)으로 작용하게 된다. 그리고 additive 방식은 linear layer로부터 나온 bias vector에 task descriptor가 더해지기 때문에, task에 대한 representation 별로 다른 편향을 부여하고 구분지어줄 수 있다는 특성이 있다.</p>
+<p>강의에서 언급한 내용 중 기억할 부분은 <a href="#fig-concatenation-based-conditioning" class="quarto-xref">그림 4 (a)</a> 나 <a href="#fig-additive-conditioning" class="quarto-xref">그림 4 (b)</a> 구조가 외형적으로는 다르게 보이나, 사실 수학적으로 살펴보면 완전히 동일하다는 점이다. 예를 들어서, concatenation 방식으로 정해서 어떤 입력 데이터 <span class="math inline">\(x\)</span>와 task descriptor <span class="math inline">\(z\)</span> 가 결합된 벡터인 <span class="math inline">\([x; z]\)</span>가 있다고 가정했을 때, 이를 weight <span class="math inline">\(W_1, W_2\)</span>에 곱해서 나온 결과는 <span class="math inline">\(W = W \dot [x; z] = W_1 x + W_2 z\)</span> 의 형태가 되므로 결과적으로 additive 한 결과로 나온다. 물론 중간에 ReLU같은 nonlinearity가 가해진다면 표현력 측면에서는 차이가 발생할 수는 있으나, 수학적으로 계산되는 부분은 동일하다는 것을 확인할 수 있다.</p>
+<p>이 밖에도 <a href="#fig-multi-head" class="quarto-xref">그림 4 (c)</a> 에서 보이는 것처럼 가장 간단하게 task에 specific하게 layer를 두어 일종의 switch 방식처럼 모델의 활성화 영역을 제어하는 multi-head 구조 (<span class="citation" data-cites="ruder2017overview">Ruder (<a href="#ref-ruder2017overview" role="doc-biblioref">2017</a>)</span>) 도 있고, 이전의 additive 대신 multiplicative 방식으로 conditioning (<a href="#fig-multiplicative-conditioning" class="quarto-xref">그림 4 (d)</a>) 해서 조금 더 task별로 layer의 표현력을 주어 generalization 측면에서 조금 이점을 가져오는 구조도 존재한다.</p>
+<p>이 밖에도 multi-task를 대응하기 위한 모델 구조에 대한 연구는 현재도 활발하게 진행되고 있고, 강의에서도 일부 구조를 소개하고 있다.</p>
+<div id="fig-architecture" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-cross-switch-network" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-cross-switch-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/15p_cross-switch-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cross-switch-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Cross-switch Network
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-multi-task-attention-network" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-task-attention-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/15p_multi-task-attention-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-attention-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Multi-task Attention Network
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-deep-relation-network" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-deep-relation-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/15p_deep-relation-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-deep-relation-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Deep Relation Network
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-perceiver-io" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-perceiver-io-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/15p_perceiver-io.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-perceiver-io-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Perceiver IO
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-architecture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 5: 다양한 multi-task architecture (<a href="@misra2016cross">a (Misra et al)</a>, <a href="@liu2019end">b (Liu et al)</a>, <a href="@long2017learning">c (Long et al)</a>, <a href="@jaegle2021perceiver">d (Jaegle et al)</a>)
+</figcaption></figure>
+</div>
+<p>사실 multi-task를 대응하는 모델 구조에 있어서 rule of thumb은 없다. task의 형태에 따라 잘 동작하는 구조도 있는가하면, 경우에 따라서는 오히려 single task 모델보다 성능이 열화되는 경우도 발생한다. 이는 우리가 해결하고자 하는 문제, 즉 task의 유형에 따라 달라지며, 어쩌면 intuition이나 domain knowledge가 필요할 수도 있다.</p>
+</section><section id="objective-function" class="level2"><h2 class="anchored" data-anchor-id="objective-function">Objective function</h2>
+<p>이전의 Task의 정의 부분에서도 가장 간단하게 정의할 수 있는 multi-task의 objective function에 대해서 설명한 바 있다.</p>
+<p><span class="math display">\[
+\min_{\theta} \sum_{i=1}^T \mathcal{L}_i ( \theta, \mathcal{D}_i)
+\]</span></p>
+<p>그런데 만약 해결하고자 하는 task의 유형중에도 어떤 task는 어렵고, 어떤 task는 쉽다던지 하는 난이도의 차이가 존재할 것이다. 물론 이와 같은 경우를 대응하기 위해서는 어려운 task에 대해서는 조금더 학습을 많이하고, 쉬운 task에 대해서는 적게 학습하는 형태의 가중치를 적용할 수 있을 것이다.</p>
+<p><span class="math display">\[
+\min_{\theta} \sum_{i=1}^T w_i \mathcal{L}_i ( \theta, \mathcal{D}_i)
+\]</span></p>
+<p>그러면 task에 대한 가중치 <span class="math inline">\(w_i\)</span>는 어떻게 부여할 수 있을까? 가장 쉬운 방법은 앞의 예시처럼 난이도에 따라서 importance나 priority를 부여하는 것이다. 여기는 당연히 계산하는 기준이 있을 것이다. 아니면 training 도중에 보여지는 학습 경향에 따라서 dynamic하게 <span class="math inline">\(w_i\)</span>를 조절하는 방법도 생각해볼 수 있다. 강의에서는 두가지 주제에 대해서 소개하고 있는데, 우선은 <span class="citation" data-cites="chen2018gradnorm">Chen 기타 (<a href="#ref-chen2018gradnorm" role="doc-biblioref">2018</a>)</span> 에서 제안하는 gradnorm이란 기법을 사용하는 것이다. 만약 task별로 gradient를 계산했을 때, 유사한 magnitude를 가진 gradient들이 있을 경우 해당 방향으로 gradient descent를 통해 값을 계산하는 방식이다. 아니면 여러개의 Task에 대한 loss를 최소화하는 문제를 일종의 min-max 문제로 정의하여 최적화를 수행하는 것이다. <span class="math inline">\(\min_\theta \max_i \mathcal{L}_i (\theta, \mathcal{D}_i)\)</span> 식을 풀어쓰자면, 가장 성능이 나쁜 task의 loss에 대해서 최적화하는 방법이 될 것이다. 해당 내용은 <span class="citation" data-cites="kuhn2025distributionally">Kuhn, Shafiee, 와/과 Wiesemann (<a href="#ref-kuhn2025distributionally" role="doc-biblioref">2025</a>)</span> 에서 <strong>Distributionally Robust Optimization (DRO)</strong> 라는 내용으로 소개되어 있다. 이 밖에도 task의 robustness나 fairness 관점에서도 objective function을 정의할 수도 있다.</p>
+</section><section id="optimizing-the-objective" class="level2"><h2 class="anchored" data-anchor-id="optimizing-the-objective">Optimizing the objective</h2>
+<p>우선 앞에서 언급한 task별 가중치를 고려하지 않은 기본적인 objective function을 최적화하기 위한 과정은 다음과 같다.</p>
+<div class="pseudocode-container quarto-float" data-line-number-punc=":" data-line-number="true" data-indent-size="1.2em" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-comment-delimiter="//">
+<div class="pseudocode">
+\begin{algorithm} \caption{Basic Version} \begin{algorithmic} \State Sample mini-batch of tasks $\mathcal{B} \sim {\mathcal{T}_i}$ \State Sample mini-batch of datapoints for each task $\mathcal{D}_i^b \sim \mathcal{D}_i$ \State Compute loss on the mini-batch: $\hat{\mathcal{L}}(\theta, \mathcal{B}) = \sum_{\mathcal{T}_k \in \mathcal{B}} \mathcal{L}_k (\theta, \mathcal{D}_k^b)$ \State Backpropagate loss to compute gradient $\nabla_{\theta} \hat{\mathcal{L}}$ \State Apply gradient with your favorite neural net optimizer (e.g. Adam) \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>일반적인 딥러닝 학습은 데이터셋에서 배치를 무작위로 추출하지만, multi-task learning에서는 두 단계의 샘플링 프로세스로 나눠서 진행한다. 먼저, task의 종류에 대한 미니배치를 샘플링한다. 이 단계에서는 전체 task의 집합 <span class="math inline">\(\mathcal{T}\)</span> 중에서 학습에 사용할 task 들을 먼저 무작위로 뽑는다. 해결해야할 task의 범주가 작다면 전체를 다 사용해도 좋지만, 그 종류가 많다면 일부만 선택하게 된다. 다음으로는 샘플링된 task에 해당하는 데이터셋을 미니배치 샘플링하는 단계이다. 이렇게 두 단계로 나눠서 샘플링을 진행하는 이유는 샘플링 과정에서 발생할 수 있는 Data Imbalance 문제를 완화시키기 위해서다. 만약 task의 구분없이 모든 task에 대한 데이터셋을 무작위로 추출한다면, task 내에서도 방대한 양을 가진 task의 데이터셋은 그렇지 않은 task의 데이터셋보다 뽑일 확률이 상대적으로 높다. 이로 인해 task에 대한 bias가 발생할 수 있기 때문에, 이를 완화하는 방법으로 먼저 task에 대해 균등하게 샘플링함으로써, 데이터가 적은 task도 동일한 빈도로 학습 기회를 부여할 수 있다. 물론, 이전에 설명했던 가중치같은게 고려된다면 이런 샘플링 확률도 task별로 조절할 수 있다.</p>
+<p>이후의 손실을 계산하고 최적화하는 단계는 일반적인 딥러닝 학습과정과 동일하다. 대신 한가지 고려해야 할 부분은 label에 대한 scale이다. 예를 들어서 어떤 Task는 -5 에서 5 사이의 값이 나오고, 다른 Task에서는 -100에서 100 사이의 값이 나온다면, 스케일이 작은 task는 거의 학습이 되지 않을 수도 있다. 특히 회귀(Regression) 문제나 강화학습의 보상(Reward)을 다룰 때에는 label에 대해서도 normalization을 취해 전체 task에 대한 loss의 scale이 어느 정도의 일관성을 가지도록 조절하는 것이 중요하다. 그래서 전체적인 과정을 요약하자면, 먼저 task를 샘플링하고, 그 다음 task에서 데이터를 샘플링한 후, 그 다음 label에 대한 normalization을 수행하는 것이 일반적인 관행이라고 강의에서 소개하고 있다.</p>
+</section><section id="challenges" class="level2"><h2 class="anchored" data-anchor-id="challenges">Challenges</h2>
+<p>Single task와는 다르게 multi-task를 다루는 입장에서 기존과는 다른 문제점들이 존재한다. 강의에서는 Negative Transfer와 Overfitting, 그리고 task의 수에 대해서 언급했다.</p>
+<section id="negative-trasfer-overfitting" class="level3"><h3 class="anchored" data-anchor-id="negative-trasfer-overfitting">Negative Trasfer &amp; Overfitting</h3>
+<div id="fig-negative-transfer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-negative-transfer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/22p_negative-transfer.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-negative-transfer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 6: Negative Transfer
+</figcaption></figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+노트
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://github.com/minhbtnguyen/multitask_learning_vit/blob/main/multitask-learning-cnn-cifar10.ipynb">Multi-task CIFAR-10/100</a>란 별도로 공식적으로 지정된 데이터셋이 아닌, 알려져있는 CIFAR-10/100 데이터셋을 Multi-task 형태로 변형한 형태이다. 일반적으로는 계층적으로 Task가 구분되며, 크게 Multi-class Classification과 Super-class Classification으로 나눠서 평가하는 형태로 되어 있다.</p>
+</div>
+</div>
+<p>앞에서도 sharing에 대한 내용을 언급하긴 했지만, 항상 연산 효율성을 위해서 parameter를 sharing하는 것이 좋은 것은 아니다. <span class="citation" data-cites="yu2020gradient">Yu 기타 (<a href="#ref-yu2020gradient" role="doc-biblioref">2020</a>)</span> 논문에서도 Multi-task CIFAR-100 을 대상으로 한 실험에서 오히려 single task를 대상으로 한 independent network의 성능이 제일 좋았음을 보여주고 있다. (<a href="#fig-negative-transfer" class="quarto-xref">그림 6</a>) 본래의 의도라면 task내의 정의하는 문제의 공통적인 요소를 찾기 위한 과정으로 sharing을 활용한 것이지만, 오히려 task 간의 특징을 잘 구분짓지 못하는 특성으로 인해 negative transfer가 발생하는 것이다. 이처럼 task간에 발생하는 cross-task inference나 모델이 개별 task별로 학습되는 경향의 차이로 인해 optimization 관점에서의 어려움이 발생한다. 또한 이로 인해서 Task에 대한 representation을 활용하기 위해서는 일반적으로 single task에 비해 모델 사이즈도 커지게 된다.</p>
+<p>그래서 강의에서 소개한 개념은 <strong>soft parameter sharing</strong> 이란 방법이다.</p>
+<p><span class="math display">\[
+\min_{\theta^{sh}, \theta^1, \dots, \theta^T} \sum_{i=1}^T \mathcal{L}_i({\theta^{sh}, \theta^i}, \mathcal{D}_i) + \lambda \sum_{i'=1}^T \Vert \theta^i - \theta^{i'} \Vert
+\]</span></p>
+<p>앞에서 소개한 concatenation이나 multiplicative 방식처럼 parameter를 전부 공유하는 hard parameter sharing과 다르게, soft parameter sharing에서는 task <span class="math inline">\(i\)</span>와 task <span class="math inline">\(i'\)</span>간의 값 차이 (여기에서는 L2 Distance를 사용했다)를 계산해서 각 task가 자신만의 parameter를 갖되, 다른 task의 parameter와는 너무 떨어지지않게끔 Regularization term을 추가한 것이다. 이렇게 하면 만약 task간에 유사한 task가 존재한다면, parameter가 비슷할수록 loss가 줄어드므로, 자연스럽게 parameter가 공유되고, 반례로 서로 상충되는 task가 있을 경우는 regularization loss를 감안하면서 loss를 최소화하는 방향으로 학습이 이뤄질 것이다. 이렇게 하면 task간의 parameter를 유동적으로 변경할 수 있다는 장점을 가지게 되는데, 한편으로는 각 task별로 별도의 parameter를 가지고 있음으로 인한 memory 사용량이 증가하고, 또한 regularization term에 대한 tuning도 별도로 이뤄져야 한다는 점도 염두해두어야 한다. 반대의 상황도 마찬가지이다. negative transfer가 아니고 오히려 task에 대한 overfitting이 발생한다면, parameter sharing을 적극적으로 고려할 필요가 있다.</p>
+<p>보다시피 이렇게 multi-task에 대한 대응과 일반화 관점에서 고려하려 서로 상충되는 요소들이 있고, 여기에 대한 최적의 방법이나 closed-form solution은 없기 때문에 multi-task에 대한 구조에 대해서 고민은 많이 필요하다.</p>
+</section><section id="a-lot-of-tasks" class="level3"><h3 class="anchored" data-anchor-id="a-lot-of-tasks">A Lot of Tasks</h3>
+<p>multi-task를 다루게 되면 task의 종류가 많은 경우가 발생한다. 그러면 학습 효율성 관점에서 봤을때, 모든 task에 대해서 다 학습하면 좋을지, 아니면 비슷한 task끼리 묶어서 학습시켜야 좋을지에 결정하는 것이 문제로 작용한다. 앞에서 언급한 negative transfer나 positive transfer 처럼 task간의 유사함을 사전에 알거나 수치적으로 판단할 수 있는 방법은 존재하지 않는다. task similarity는 단순히 task의 내용 뿐만 아니라 데이터셋의 특성, 적용해야 될 모델의 구조, optimizer, 학습의 진행 단계같은 것이 달리지기 때문이다. 대신 task의 유사성을 어느정도 approximation 하는 방법에 대한 연구가 이뤄지고 있다.</p>
+<div id="fig-similarity" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-similarity" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-task-affinity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-task-affinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/25p_TAG.png" class="img-fluid figure-img" data-ref-parent="fig-similarity">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-task-affinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Task Affinity Grouping (Fifty et al)
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-similarity" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-DoReMi" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-DoReMi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/25p_DoReMi.png" class="img-fluid figure-img" data-ref-parent="fig-similarity">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-DoReMi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) DoReMi
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 7: Task Grouping에 대한 연구
+</figcaption></figure>
+</div>
+<p>기본적인 개념은 전체 task를 포함해서 단일 모델을 한번 학습시키면서, 이때의 최적화 과정이나 gradient를 보고 어떤 task의 gradient가 유사한 방향으로 가는지를 파악하여 grouping을 하는 것이다. 강의에서는 두가지 논문을 소개했는데, <span class="citation" data-cites="fifty2021efficiently">Fifty 기타 (<a href="#ref-fifty2021efficiently" role="doc-biblioref">2021</a>)</span> 에서는 Task Affinity Grouping (TAG) 라는 Framework를 통해서 task간의 친화도 (inter-task affinities)를 계산하고 이에 따라 네트워크를 선택하는 방식을 언급했고, <span class="citation" data-cites="xie2023doremi">Xie 기타 (<a href="#ref-xie2023doremi" role="doc-biblioref">2023</a>)</span> 논문에서는 Language Model을 사전학습시키는데 있어 사용되는 task별 데이터의 혼합비율을 최적화하는 방법을 소개했다.</p>
+</section></section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>해당 강의에서는 multi-task learning의 이해에 필요한 task의 정의와 multi-task learning을 대응할 수 있는 기본적인 모델 구조, objective function, 그리고 이를 최적화할 수 있는 방법에 대해서 소개했다. 가장 핵심은 single task와 다르게 task descriptor라는 것을 활용하여 모델을 학습하되, task간의 상관관계를 고려해야 학습 효율성을 가져올 수 있다는 점에 대해서 정리했다.</p>
+
+
+
+</section><div id="quarto-appendix" class="default">
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-chen2018gradnorm" class="csl-entry" role="listitem">
+Chen, Zhao, Vijay Badrinarayanan, Chen-Yu Lee, 와/과 Andrew Rabinovich. 2018. <span>“Gradnorm: Gradient normalization for adaptive loss balancing in deep multitask networks”</span>. In <em>International conference on machine learning</em>, 794–803. PMLR.
+</div>
+<div id="ref-fifty2021efficiently" class="csl-entry" role="listitem">
+Fifty, Chris, Ehsan Amid, Zhe Zhao, Tianhe Yu, Rohan Anil, 와/과 Chelsea Finn. 2021. <span>“Efficiently identifying task groupings for multi-task learning”</span>. <em>Advances in Neural Information Processing Systems</em> 34: 27503–16.
+</div>
+<div id="ref-kuhn2025distributionally" class="csl-entry" role="listitem">
+Kuhn, Daniel, Soroosh Shafiee, 와/과 Wolfram Wiesemann. 2025. <span>“Distributionally robust optimization”</span>. <em>Acta Numerica</em> 34: 579–804.
+</div>
+<div id="ref-ruder2017overview" class="csl-entry" role="listitem">
+Ruder, Sebastian. 2017. <span>“An overview of multi-task learning in deep neural networks”</span>. <em>arXiv preprint arXiv:1706.05098</em>.
+</div>
+<div id="ref-xie2023doremi" class="csl-entry" role="listitem">
+Xie, Sang Michael, Hieu Pham, Xuanyi Dong, Nan Du, Hanxiao Liu, Yifeng Lu, Percy S Liang, Quoc V Le, Tengyu Ma, 와/과 Adams Wei Yu. 2023. <span>“Doremi: Optimizing data mixtures speeds up language model pretraining”</span>. <em>Advances in Neural Information Processing Systems</em> 36: 69798–818.
+</div>
+<div id="ref-yu2020gradient" class="csl-entry" role="listitem">
+Yu, Tianhe, Saurabh Kumar, Abhishek Gupta, Sergey Levine, Karol Hausman, 와/과 Chelsea Finn. 2020. <span>“Gradient surgery for multi-task learning”</span>. <em>Advances in neural information processing systems</em> 33: 5824–36.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section>
+</div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+</body>
+</html>

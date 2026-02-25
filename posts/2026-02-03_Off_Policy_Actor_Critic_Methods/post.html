@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-02-03_Off_Policy_Actor_Critic_Methods/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-02-03_Off_Policy_Actor_Critic_Methods/post.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Chanseok Kang">
+<meta name="dcterms.date" content="2026-02-04">
+<meta name="description" content="Summary of lecture CS224R (2025) Lecture 5. Off-Policy Actor-Critic Methods">
+<title>Off-Policy Actor-Critic Methods – Chan’s Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+<style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2026-02-03_Off_Policy_Actor_Critic_Methods/post.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Off-Policy Actor-Critic Methods</h1>
+                  <div>
+        <div class="description">
+          Summary of lecture CS224R (2025) Lecture 5. Off-Policy Actor-Critic Methods
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS224R</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 4, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
+  <li><a href="#recap-for-on-policy-actor-critic-methods" id="toc-recap-for-on-policy-actor-critic-methods" class="nav-link" data-scroll-target="#recap-for-on-policy-actor-critic-methods">Recap for (On-Policy) Actor Critic Methods</a></li>
+  <li>
+<a href="#off-policy-actor-critic-methods" id="toc-off-policy-actor-critic-methods" class="nav-link" data-scroll-target="#off-policy-actor-critic-methods">Off-Policy Actor-Critic Methods</a>
+  <ul class="collapse">
+<li><a href="#multiple-gradient-step" id="toc-multiple-gradient-step" class="nav-link" data-scroll-target="#multiple-gradient-step">Multiple Gradient Step</a></li>
+  <li><a href="#kl-divergence-as-a-constraint" id="toc-kl-divergence-as-a-constraint" class="nav-link" data-scroll-target="#kl-divergence-as-a-constraint">KL Divergence as a Constraint</a></li>
+  <li><a href="#proximal-policy-optimization-ppo" id="toc-proximal-policy-optimization-ppo" class="nav-link" data-scroll-target="#proximal-policy-optimization-ppo">Proximal Policy Optimization (PPO)</a></li>
+  <li><a href="#using-replay-buffer" id="toc-using-replay-buffer" class="nav-link" data-scroll-target="#using-replay-buffer">Using Replay Buffer</a></li>
+  </ul>
+</li>
+  <li><a href="#soft-actor-critic-sac" id="toc-soft-actor-critic-sac" class="nav-link" data-scroll-target="#soft-actor-critic-sac">Soft Actor-Critic (SAC)</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="resource" class="level3"><h3 class="anchored" data-anchor-id="resource">Resource</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://youtu.be/cRGKc-nAWho?si=udpcpFHWkk9JXe-B"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs224r.stanford.edu/slides/05_cs224r_offpolicy_actor_critic_2025.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+</section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/Off_Policy_Actor_Critic_Methods_Overview.en.png" class="img-fluid"></p>
+</section><section id="recap-for-on-policy-actor-critic-methods" class="level2"><h2 class="anchored" data-anchor-id="recap-for-on-policy-actor-critic-methods">Recap for (On-Policy) Actor Critic Methods</h2>
+<p>In our previous discussion, we covered the fundamentals of Policy Gradient and introduced Actor-Critic methods, which involve training a policy by leveraging a model that estimates the value function. To recap the Policy Gradient formulation:</p>
+<p><span id="eq-policy-gradient"><span class="math display">\[\nabla_{\theta}J(\theta) \approx \frac{1}{N} {\color{blue} \sum_{i=1}^N} \sum_{t=1}^T \nabla_{\theta} {\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})} \Big( {\color{green} \Big( \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\Big)} {\color{cyan} - b}\Big)
+\tag{1}\]</span></span></p>
+<p>In <a href="#eq-policy-gradient" class="quarto-xref">Equation 1</a>, the <span class="math inline">\({\color{blue} \sum_{i=1}^N}\)</span> term represents sampling from the policy. The <span class="math inline">\({\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})}\)</span> term follows the <strong>policy likelihood</strong>, increasing the probability of actions that lead to good trajectories while decreasing it for poor ones. To focus on future rewards, we used the concept of <strong>reward-to-go</strong> denoted by <span class="math inline">\({\color{green} \Big( \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\Big)}\)</span>. Furthermore, we applied a <strong>baseline</strong> <span class="math inline">\({\color{cyan} b}\)</span> to establish a criterion for “good” or “bad” outcomes. This defined a policy gradient algorithm that reinforces trajectories performing better than the baseline and suppresses those that perform worse.</p>
+<p>To improve <strong>sample efficiency</strong>, we also explored <strong>Off-policy</strong> Policy Gradient, which utilizes data collected from a different policy. Since the data is sampled from a behavioral policy (<span class="math inline">\(\pi_{\theta}\)</span>) different from the target policy (<span class="math inline">\(\pi_{\theta'}\)</span>), we introduced <strong>Importance Weighting</strong> to account for the distribution mismatch. The final expression for Off-policy Policy Gradient is as follows:</p>
+<p><span class="math display">\[
+\nabla_{\theta}J(\theta) \approx \frac{1}{N} \sum_{i=1}^N \sum_{t=1}^T {\color{yellow} \frac{\pi_{\theta'}(a_{i, t} \vert s_{i, t})}{\pi_{\theta}(a_{i, t} \vert s_{i, t})}} \nabla_{\theta} \log \pi_{\theta'}(a_{i, t} \vert s_{i, t}) \Big( \Big( \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\Big) - b \Big)
+\]</span></p>
+<p>Advancing from trajectory-level learning, we previously discussed <strong>Actor-Critic methods</strong>, where a neural network-based value function model estimates the expected return to assist in policy learning. The gradient for this method is defined as:</p>
+<p><span id="eq-actor-critic"><span class="math display">\[
+\nabla_{\theta}J(\theta) \approx \frac{1}{N} {\color{blue} \sum_{i=1}^N} \sum_{t=1}^T \nabla_{\theta} \log_{\pi_{\theta}} (a_{i, t} \vert s_{i, t}) {\color{cyan} A^{\pi}(s_{i, t}, a_{i, t})}
+\tag{2}\]</span></span></p>
+<p>As shown in <a href="#eq-actor-critic" class="quarto-xref">Equation 2</a>, the structure involves collecting data (<span class="math inline">\({\color{blue} \sum_{i=1}^N}\)</span>) and using an <strong>Advantage function</strong> (<span class="math inline">\({\color{cyan} A^{\pi}(s_{i, t}, a_{i, t})}\)</span>) to determine how much better an action is compared to the average value. This setup functions as a <strong>Critic</strong> (evaluating actions) and an <strong>Actor</strong> (improving the policy). Regarding value function estimation, we touched upon <strong>Monte Carlo Estimation</strong>, which uses actual rewards, and <strong>Bootstrapping Estimation</strong>, which uses the current reward and the estimated value of the next state. We also noted that methods like <strong>N-step Return</strong> exist to mitigate the <strong>Bias-Variance Tradeoff</strong> inherent in these two approaches. Ultimately, the Advantage function can be expressed in terms of the Value function:</p>
+<p><span class="math display">\[
+A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
+\]</span></p>
+<p>However, in the Actor-Critic methods described above, all terms refer to the same policy (<span class="math inline">\(\pi_{\theta}\)</span>). This post will dive into <strong>Off-Policy Actor-Critic Methods</strong>, which, similar to <strong>Off-policy Policy Gradient</strong>, utilize data collected from a different policy <span class="math inline">\(\pi_{\theta'}\)</span>.</p>
+</section><section id="off-policy-actor-critic-methods" class="level2"><h2 class="anchored" data-anchor-id="off-policy-actor-critic-methods">Off-Policy Actor-Critic Methods</h2>
+<p>The fundamental premise of off-policy learning remains the same: we sample data using the current policy, train the value function model on that data, and then apply <strong>Importance Weights</strong> when computing the gradients.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Importance Weight">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importance Weight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In traditional Policy Gradient methods, data had to be discarded after a single update. This is because as soon as the policy <span class="math inline">\(\pi\)</span> is updated, the data distribution changes, and the existing data no longer represents the behavior of the new policy.</p>
+<p>To overcome <strong>sample inefficiency</strong>—a significant challenge in reinforcement learning—we introduce the concept of Importance Weights. The idea is straightforward: we compensate for the distribution mismatch by calculating the <strong>probability ratio</strong> between the current policy (<span class="math inline">\(\pi\)</span>) and the old policy (<span class="math inline">\(\pi_{old}\)</span>) that originally collected the data.</p>
+<p><span class="math display">\[
+r_t(\theta) = \frac{\pi_{\theta}(a_t \vert s_t)}{\pi_{\theta_{old}}(a_t \vert s_t)}
+\]</span></p>
+<p>This ratio acts as a weight for each sample. If the value is greater than 1, it means the current policy prefers that specific action more than the old policy did, so we amplify its influence on the learning process. Conversely, if the value is less than 1, it indicates the current policy is less likely to take that action, so we reduce its weight. By multiplying by this probability ratio, we can theoretically reuse past data multiple times instead of discarding it, thereby significantly increasing learning efficiency.</p>
+</div>
+</div>
+<section id="multiple-gradient-step" class="level3"><h3 class="anchored" data-anchor-id="multiple-gradient-step">Multiple Gradient Step</h3>
+<p>The first approach introduced in the lecture, <strong>Multiple Gradient Step</strong>, focuses on repeating the process of computing gradients and updating parameters multiple times on the same batch of data.</p>
+<div id="algo-Multiple-Gradient-Step" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number-punc=":" data-line-number="true">
+<div class="pseudocode">
+\begin{algorithm} \caption{Version 1. Multiple Gradient Step} \begin{algorithmic} \State Sample batch of data $\{(s_{1, i}, a_{1, i}, \dots s_{T,i}, a_{T, i})\}$ from $\pi_{\theta}$ \State Fit $\hat{V}_{\phi}^{\pi_{\theta}}$ to summed rewards in data \State Evaluate $\hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i}) = r(s_{t, i}, a_{t, i}) + \gamma \hat{V}_{\phi}^{\pi_{\theta}}(s_{t+1, i}) - \hat{V}_{\phi}^{\pi_{\theta}}(s_{t, i})$, $\forall t, i$ \State Evaluate $\nabla_{\theta'} J(\theta') = \sum_{t, i} \frac{\pi_{\theta'} (a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})} \nabla_{\theta'} \log \pi_{\theta'} (a_{t, i} \vert s_{t, i}) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})$ \State Update $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \State Repeat steps 4 and 5 for multiple iterations \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>In practice, implementation using auto-differentiation frameworks like <strong>PyTorch, TensorFlow</strong>, or <strong>JAX</strong> requires a scalar objective function to differentiate. To derive the importance-weighted gradient shown in the algorithm, we define a <strong>Surrogate Objective Function</strong>. To understand how this works, we must first look at a common mathematical tool known as the <strong>Log-Derivative Trick</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Log-Derivative Trick">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Log-Derivative Trick
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+p_{\theta}(\tau) \nabla_{\theta} \log p_{\theta}(\tau) = \nabla_{\theta} p_{\theta}(\tau)
+\]</span></p>
+</div>
+</div>
+<p>The function we ultimately want to obtain through differentiation is <span class="math inline">\(\frac{\pi_{\theta'}}{\pi_{\theta_{old}}} \nabla \log \pi_{\theta'} A\)</span>. By setting aside variables unrelated to the update target <span class="math inline">\(\theta'\)</span>, we are left with the core term <span class="math inline">\(\pi_{\theta'} \nabla \log \pi_{\theta'}\)</span>. Applying the <strong>Log-Derivative trick</strong>, this part simplifies to <span class="math inline">\(\nabla \pi_{\theta'}\)</span>. Consequently, we can define the surrogate objective function as follows:</p>
+<p><span id="eq-surrogate-objective-function"><span class="math display">\[\tilde{J}(\theta') \approx \sum_{t, i} \frac{\pi_{\theta'}(a_{t, i} \vert s_{i, t})}{\pi_{\theta} (a_{t, i} \vert s_{i, t})} \hat{A}^{\pi_{\theta}}(s_{i, t}, a_{i, t})
+\tag{3}\]</span></span></p>
+<p>While this is not the “true” objective function, it is termed a “surrogate” because using auto-differentiation frameworks like <strong>PyTorch</strong> or <strong>JAX</strong> on this function allows us to update the parameters in the desired direction.</p>
+<p>However, a closer look at <a href="#eq-surrogate-objective-function" class="quarto-xref">Equation 3</a> reveals a potential issue. As seen in <a href="#algo-Multiple-Gradient-Step" class="quarto-xref">Algorithm 1</a>, repeatedly calculating the gradient and updating parameters using the importance weight can lead to a problematic incentive. Instead of steadily improving the policy, the optimization might simply maximize the difference between the new and old policies. This often results in training instability or the phenomenon known as <strong>policy collapse</strong>.</p>
+<p>To address this, two primary ideas were presented in the lecture. The first is to use <strong>Kullback-Leibler (KL) Divergence</strong> as a constraint during policy training. The second is to impose a boundary on the importance weights. Both methods act as “safety rails” to prevent the policy from changing too drastically during iterative updates.</p>
+</section><section id="kl-divergence-as-a-constraint" class="level3"><h3 class="anchored" data-anchor-id="kl-divergence-as-a-constraint">KL Divergence as a Constraint</h3>
+<p>KL Divergence is a statistical measure of how much two probability distributions differ. In the context of reinforcement learning, it quantifies the change in behavior between the old policy (<span class="math inline">\(\pi_{old}\)</span>) and the current policy being trained (<span class="math inline">\(\pi_{\theta}\)</span>).</p>
+<p>Since the advantage function <span class="math inline">\(\hat{A}\)</span> in <a href="#eq-surrogate-objective-function" class="quarto-xref">Equation 3</a> was calculated based on the old policy <span class="math inline">\(\pi_{old}\)</span>, it loses its validity if the current policy diverges too much from the old one. To prevent this, <span class="citation" data-cites="schulman2015trust">Schulman et al. (<a href="#ref-schulman2015trust" role="doc-biblioref">2015</a>)</span> proposed keeping the update within a specific “trust region” by adding a penalty term to the surrogate objective:</p>
+<p><span class="math display">\[
+\tilde{J}_{Con} \approx \tilde{J}^{surr}(\theta') - \beta \cdot KL(\pi{\theta_{old}}(\cdot \vert s) \Vert \pi_{\theta}(\cdot \vert s))
+\]</span></p>
+<p>With this definition, if the policy changes too much across multiple gradient steps—causing the <span class="math inline">\(KL\)</span> value to rise—the overall objective value decreases. During <strong>Gradient Ascent</strong>, the optimizer will naturally seek a point that maximizes rewards while keeping the KL Divergence low.</p>
+<p>While <span class="math inline">\(\beta\)</span> is a hyperparameter that controls the strength of this penalty, finding an ideal fixed value can be difficult. Consequently, <span class="citation" data-cites="schulman2017proximal">Schulman et al. (<a href="#ref-schulman2017proximal" role="doc-biblioref">2017</a>)</span> introduced the concept of an <strong>Adaptive KL Penalty</strong>, which dynamically adjusts <span class="math inline">\(\beta\)</span> based on a target KL threshold. Interestingly, this approach of using KL constraints is currently a standard practice in <strong>RLHF (Reinforcement Learning from Human Feedback)</strong> to optimize LLM preferences.</p>
+<p>The second idea is to set a boundary directly on the Importance Weight itself. This concept is a cornerstone of <strong>Proximal Policy Optimization (PPO)</strong>, as introduced in <span class="citation" data-cites="schulman2017proximal">Schulman et al. (<a href="#ref-schulman2017proximal" role="doc-biblioref">2017</a>)</span>.</p>
+</section><section id="proximal-policy-optimization-ppo" class="level3"><h3 class="anchored" data-anchor-id="proximal-policy-optimization-ppo">Proximal Policy Optimization (PPO)</h3>
+<p>The lecture highlights three specific “tricks” (or safeguards) introduced in <span class="citation" data-cites="schulman2017proximal">Schulman et al. (<a href="#ref-schulman2017proximal" role="doc-biblioref">2017</a>)</span> to refine the surrogate objective defined in <a href="#eq-surrogate-objective-function" class="quarto-xref">Equation 3</a>.</p>
+<p>The first trick, as briefly mentioned earlier, is to impose a boundary on the importance weight:</p>
+<p><span class="math display">\[
+\tilde{J}(\theta') \approx \sum_{t, i} \text{clip} \big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}, 1 - \epsilon, 1 + \epsilon \big) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})
+\]</span></p>
+<p>By <strong>clipping</strong> the ratio when it moves outside a specific range (typically <span class="math inline">\([1-\epsilon, 1+\epsilon]\)</span>), the algorithm removes the incentive for the policy to change drastically due to extreme importance weights during iterative updates. PPO using this clipped surrogate objective is formally known as <strong>PPO-clip</strong>, while the version using the adaptive KL penalty is called <strong>PPO-KL</strong>.</p>
+<p>The second trick involves taking the minimum of the clipped objective and the unclipped objective:</p>
+<p><span class="math display">\[
+\tilde{J}(\theta') \approx \sum_{t, i} \min \Big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}\hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i}), \text{clip} \big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}, 1 - \epsilon, 1 + \epsilon \big) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})\Big)
+\]</span></p>
+<p>This is often referred to as <strong>Pessimistic Estimation</strong>. It serves as an additional safety rail to prevent the overestimation of rewards, even with clipping in place. The professor noted that while this is a critical theoretical safeguard, the specific conditions it addresses are often “rare events” in actual practice.</p>
+<p>Finally, the paper proposes <strong>Generalized Advantage Estimation (GAE)</strong> as a method to compute more stable advantage values.</p>
+<p>In standard Actor-Critic setups, we train a separate model <span class="math inline">\(\hat{V}^{\pi}\)</span> to estimate the value function, typically using either Monte Carlo Estimation or Bootstrapping. We previously discussed the <strong>Bias-Variance Tradeoff</strong> that arises between these two approaches. GAE, as described in <span class="citation" data-cites="schulman2017proximal">Schulman et al. (<a href="#ref-schulman2017proximal" role="doc-biblioref">2017</a>)</span>, calculates advantage estimates across various horizons and takes a <strong>weighted average</strong> of these values to find the optimal balance between bias and variance.</p>
+<p>First, the <strong>1-step TD-error</strong> with the discount factor <span class="math inline">\(\gamma\)</span> is defined as follows:</p>
+<p><span class="math display">\[
+\delta_t = r_t + \gamma \hat{V}_{\phi}^{\pi}(s_{t+1}) - \hat{V}_{\phi}^{\pi}(s_t)
+\]</span></p>
+<p>By introducing a hyperparameter <span class="math inline">\(\lambda\)</span>, we estimate the advantage function by exponentially decaying the error terms as we look further into the future. This results in the following formulation:</p>
+<p><span class="math display">\[
+\hat{A}_{GAE}^{\pi} = \sum_{n=1}^{\infty} (\gamma \lambda)^{n-1} \delta_{t+n-1}
+\]</span></p>
+<p>While tuning <span class="math inline">\(\lambda\)</span> remains a challenge, GAE allows us to place more weight on information from the immediate future and less on the distant future. This effectively maintains a proper balance between bias and variance.</p>
+<p>By combining the <strong>Clipped Surrogate Objective</strong> and <strong>Generalized Advantage Estimation</strong>, the final <strong>PPO-clip</strong> algorithm is summarized below:</p>
+<div id="algo-PPO" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="2" data-line-number-punc=":" data-line-number="true">
+<div class="pseudocode">
+\begin{algorithm} \caption{Proximal Policy Optimization (PPO)} \begin{algorithmic} \State Sample batch of data $\{(s_{1, i}, a_{1, i}, \dots s_{T,i}, a_{T, i})\}$ from $\pi_{\theta}$ \State Fit $\hat{V}_{\phi}^{\pi_{\theta}}$ to summed rewards in data \State Evaluate $\hat{A}_{GAE}^{\pi}(s_t, a_t) = \sum_{n=1}^{\infty} w_n ( \sum_{t'=t}^{t+n} \gamma^{t'-t} r(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi}(s_t) + \gamma^n \hat{V}_{\phi}^{\pi}(s_{t+n}))$ \State Update policy with $M$ gradient steps on surrogate objective: $\tilde(J)(\theta') \approx \sum_{t, i} \min \Big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}\hat{A}_{GAE}^{\pi}(s_{t, i}, a_{t,i}), \text{clip} \big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}, 1 - \epsilon, 1 + \epsilon \big) \hat{A}_{GAE}^{\pi}(s_{t, i}, a_{t,i})\Big)$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>Although the formulation is somewhat complex, PPO is much simpler to implement than TRPO (<span class="citation" data-cites="schulman2015trust">Schulman et al. (<a href="#ref-schulman2015trust" role="doc-biblioref">2015</a>)</span>). In practice, PPO has consistently demonstrated superior performance over both REINFORCE and TRPO, often achieving better results with significantly fewer iterations.</p>
+</section><section id="using-replay-buffer" class="level3"><h3 class="anchored" data-anchor-id="using-replay-buffer">Using Replay Buffer</h3>
+<p>To summarize the Actor-Critic methods we have explored so far, we first looked at <strong>On-Policy Actor-Critic</strong>, where data is sampled from the current policy and used for a single gradient update. We then moved on to <strong>Off-Policy Actor-Critic</strong>, which improves sample efficiency by performing multiple gradient updates on the same data.</p>
+<p>Strictly speaking, however, the “Multiple Gradient Step” approach is only “partially” off-policy, as the distribution mismatch only occurs between the policy at the start of the update and the evolving policy during the steps. While <strong>Importance Sampling</strong> allows for more efficient data usage, we can further extend this efficiency by leveraging data collected not just by the current policy, but by various previous policies during their exploration. To achieve this, the lecture introduced the idea of integrating a <strong>“replay buffer”</strong> (a concept from reinforcement learning theory) into Actor-Critic methods and removing the on-policy assumptions to enable a fully off-policy formulation.</p>
+<p>The Replay Buffer, also known as <strong>“experience replay”</strong> as introduced in <span class="citation" data-cites="lin1992self">Lin (<a href="#ref-lin1992self" role="doc-biblioref">1992</a>)</span>, is a storage space for trajectories experienced by different policies during exploration. In an Off-Policy Actor-Critic framework, the core process involves training the value function and evaluating the advantage function using samples drawn from this buffer.</p>
+<div id="fig-replay-buffer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-replay-buffer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/15p_replay-buffer.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-replay-buffer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 1: Replay Buffer
+</figcaption></figure>
+</div>
+<p><a href="#fig-replay-buffer" class="quarto-xref">Figure 1</a> illustrates the parameter update process in conjunction with a replay buffer. When storing experience, we save it in the form of a tuple containing the current state <span class="math inline">\(s\)</span>, the action taken <span class="math inline">\(a\)</span>, the received reward <span class="math inline">\(r\)</span>, and the transitioned next state <span class="math inline">\(s'\)</span>. During training, we sample these <span class="math inline">\((s, a, r, s')\)</span> tuples to update <span class="math inline">\(\theta\)</span>. This allows us to formulate the algorithm with an integrated replay buffer as follows:</p>
+<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="3" data-line-number-punc=":" data-line-number="true">
+<div class="pseudocode">
+\begin{algorithm} \caption{Actor-Critic Methods with Replay Buffer} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{V}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')}$ for each $s_i$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \frac{\pi_{\theta'} (a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})} {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Adding Importance Weights">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Adding Importance Weights
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As you may notice in the original lecture slides, the importance weight—which accounts for the probability ratio between policies—is omitted from the algorithm when using data sampled from the replay buffer. One might assume this can be resolved simply by applying importance weighting as we did in Off-Policy Policy Gradient. It is likely that the lecture omitted this detail to focus on the conceptual pitfalls of naive implementation. However, to ensure technical accuracy and clarity within the context of this post, I have included the importance weights in the formulation below, departing slightly from the original lecture slides.</p>
+</div>
+</div>
+<p>However, the lecture explores why simply storing past data in a buffer and training with it—as shown in Algorithm 3—leads to failure. This failure is examined from two critical perspectives.</p>
+<p>The first issue lies in the target term highlighted in red: <span class="math inline">\({\color{red} y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')}\)</span>. By definition, the value function represents the <strong>expected sum of future rewards when following the current policy</strong> <span class="math inline">\(\pi_{\theta}\)</span>.</p>
+<p>However, the data drawn from the replay buffer—specifically the rewards <span class="math inline">\(r\)</span> and next states <span class="math inline">\(s'\)</span>—were accumulated by past policies, not the current one. As a result, the value function fails to train correctly. The lecture identifies this as a <strong>Value Function Mismatch</strong>, describing the buffer data as a <strong>“mixture of past policies”</strong>.</p>
+<p>The second problem occurs in the gradient update term highlighted in blue: <span class="math inline">\({\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}\)</span>. Due to the nature of Actor-Critic methods, calculating the gradient requires either the advantage function for the current policy or the probability of taking a specific action (<span class="math inline">\(\pi_{\theta}(a_i \vert s_i)\)</span>) under the current parameters.</p>
+<p>The action <span class="math inline">\(a\)</span> used in this calculation is one that was performed by a past policy. If the current policy were in state <span class="math inline">\(s\)</span>, it might choose an entirely different action. This discrepancy is known as an <strong>Action Mismatch</strong>.</p>
+<p>Consequently, the state value function <span class="math inline">\(V(s)\)</span> alone is insufficient for learning from replay buffer data. To address this, the proposed solution is to utilize the <strong>state-action value function</strong> <span class="math inline">\(Q(s, a)\)</span> instead of <span class="math inline">\(V(s)\)</span>.</p>
+<p>Since the replay buffer stores data as <span class="math inline">\((s, a, r, s')\)</span> tuples, <span class="math inline">\(Q(s, a)\)</span>—which takes the action <span class="math inline">\(a\)</span> as an explicit input—allows the model to evaluate the past action <span class="math inline">\(a\)</span> independently of the current policy’s preferences. This leads to the definition of the Q-function for the current policy, which serves as the foundation for the <strong>Soft Actor-Critic (SAC)</strong> algorithm.</p>
+<p><span id="eq-q-function-for-replay-buffer"><span class="math display">\[
+Q^{\pi_{\theta}}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a), \bar{a'} \sim \pi_{\theta}(\cdot \vert s')} [Q^{\pi_{\theta}}(s', \bar{a'})]
+\tag{4}\]</span></span></p>
+<p>To calculate the exact Q-function in <a href="#eq-q-function-for-replay-buffer" class="quarto-xref">Equation 4</a>, the next action (<span class="math inline">\(a'\)</span>) in the next state must also be derived from the current policy <span class="math inline">\(\pi_{\theta}\)</span>. Because the actions already present in the replay buffer come from old policies, we cannot use them to compute the current <span class="math inline">\(Q^{\pi}\)</span>. Instead, we approximate <span class="math inline">\(Q^{\pi}(s, a)\)</span> by inputting the next state <span class="math inline">\(s'\)</span> into the current policy <span class="math inline">\(\pi_{\theta}\)</span> to sample a new action <span class="math inline">\(a'\)</span>.</p>
+<p>The overall process is as follows:</p>
+<ol type="1">
+<li>
+<strong>Sample</strong> <span class="math inline">\((s_i, a_i, s_i')\)</span> from the replay buffer.</li>
+<li>
+<strong>Sample</strong> a new action <span class="math inline">\(\hat{a}_i' \sim \pi_{\theta}(\cdot, s_i')\)</span> using the current policy <span class="math inline">\(\pi_{\theta}\)</span>.</li>
+</ol>
+<p>By following these steps, we can compute the Q-function effectively using off-policy data.</p>
+<p><span class="math display">\[
+Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a_i')
+\]</span></p>
+<p>Naturally, in Deep Reinforcement Learning (Deep RL)—where neural networks are used to approximate value functions—a separate training process is required to estimate the Q-function, using the equation mentioned above as the target. To train an accurate model, it is crucial that the replay buffer contains a diverse and rich set of state and action trajectories.</p>
+<p><span class="math display">\[
+\mathcal{L}(\phi) = \frac{1}{N} \sum_i \Vert \hat{Q}_{\phi}^{\pi}(s_i, a_i) - y_i \Vert^2
+\]</span></p>
+<p>The following is the revised algorithm designed to address the value function mismatch discussed earlier:</p>
+<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="4" data-line-number-punc=":" data-line-number="true">
+<div class="pseudocode">
+\begin{algorithm} \caption{Version 2: Fixing the value function mismatch} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>It is crucial to note that <span class="math inline">\(a_i'\)</span> is sampled from the current policy <span class="math inline">\(\pi_{\theta}\)</span>, not drawn from the replay buffer <span class="math inline">\(\mathcal{R}\)</span>.</p>
+<p>Regarding the second issue found in the term <span class="math inline">\({\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}\)</span>, there are specific points of refinement to consider. Traditionally, calculating the advantage function <span class="math inline">\(\hat{A}^{\pi}\)</span> requires both the value function and the Q-function. However, since we have already transitioned from <span class="math inline">\(V(s)\)</span> to <span class="math inline">\(Q(s, a)\)</span> to fix the value mismatch, it is much more practical to replace the advantage term directly with <span class="math inline">\(\hat{Q}^{\pi}\)</span>.</p>
+<p>While using the Q-function directly may increase variance—as we are essentially removing the baseline—the ability to leverage the vast, diverse data collected by past policies in the replay buffer allows us to train a significantly more accurate Q-function.</p>
+<p>Another key modification addresses the <strong>Action Mismatch</strong> caused by using actions sampled directly from the replay buffer for the policy update. This is resolved by instead using actions sampled from the current policy. The final refined algorithm incorporating these changes is represented in <a href="#algo-action-mismatch" class="quarto-xref">Algorithm 5</a>.</p>
+<div id="algo-action-mismatch" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="5" data-line-number-punc=":" data-line-number="true">
+<div class="pseudocode">
+\begin{algorithm} \caption{Version 2: Fixing the action mismatch} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})}$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>It is true that <span class="math inline">\(s_i\)</span> itself might be a state that the current policy has never experienced, which can still lead to potential issues. However, there is no practical way to handle states that haven’t been visited yet, and the lecture explained that we simply have to accept this as an inherent part of the method.</p>
+<p>This concludes the <strong>(Fully) Off-Policy Actor-Critic Method</strong>, an algorithm that trains a Q-function model based on data extracted from a replay buffer and uses it to update the policy. By incorporating several additional implementation details, this approach was formally introduced as the <strong>Soft Actor-Critic (SAC)</strong> algorithm (<span class="citation" data-cites="haarnoja2018soft">Haarnoja, Zhou, Abbeel, et al. (<a href="#ref-haarnoja2018soft" role="doc-biblioref">2018</a>)</span>). The following section will briefly touch upon the specific implementation details introduced in that paper.</p>
+</section></section><section id="soft-actor-critic-sac" class="level2"><h2 class="anchored" data-anchor-id="soft-actor-critic-sac">Soft Actor-Critic (SAC)</h2>
+<div id="algo-soft-actor-critic" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="6" data-line-number-punc=":" data-line-number="true">
+<div class="pseudocode">
+\begin{algorithm} \caption{Soft Actor-Critic} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ for each $s_i, a_i$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>First, comparing this to <a href="#algo-action-mismatch" class="quarto-xref">Algorithm 5</a>, a term such as “for each <span class="math inline">\(s_i, a_i\)</span>” is emphasized. Since the Q-function is a neural network that takes a state <span class="math inline">\(s\)</span> and an action <span class="math inline">\(a\)</span> as inputs to output a value, we must train it using the <span class="math inline">\(s_i\)</span> and <span class="math inline">\(a_i\)</span> from the sampled batch to ensure it accurately predicts the target <span class="math inline">\(y_i\)</span>. This phrasing underscores the requirement to <strong>use every sample in the batch from the buffer—using the past state (<span class="math inline">\(s_i\)</span>) and action (<span class="math inline">\(a_i\)</span>) as inputs—to predict the Q-value and update <span class="math inline">\(\phi\)</span> by comparing it with the target</strong>.</p>
+<p>Another critical technique introduced in the paper is the <strong>Reparameterization Trick</strong>. Normally, the output of a policy <span class="math inline">\(\pi_{\theta}\)</span> consists of statistical parameters. For instance, if we assume a Gaussian policy, we sample an action <span class="math inline">\(a\)</span> from a distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. The problem is that this stochastic sampling process is non-differentiable, making it impossible to compute the gradients needed for backpropagation.</p>
+<p>The Reparameterization Trick solves this by decoupling the deterministic parameters from the stochastic sampling process, effectively moving the randomness outside of the network. In simple terms:</p>
+<p><span class="math display">\[
+a = \mu_{\theta}(s) + \sigma_{\theta}(s) \cdot \epsilon
+\]</span></p>
+<p>As shown in the equation, the model only handles the <span class="math inline">\(\mu_\theta\)</span> and <span class="math inline">\(\sigma_{\theta}\)</span> components, while the randomness <span class="math inline">\(\epsilon\)</span> is provided as a separate input. This allows us to observe how <span class="math inline">\(a\)</span> changes as <span class="math inline">\(\theta\)</span> changes, thereby making the entire process differentiable.</p>
+<p>While SAC includes additional contributions, such as an entropy term to encourage exploration, the lecture focused specifically on the elements relevant to Off-policy Actor-Critic methods. Because SAC can leverage the vast trajectories accumulated by past policies in a replay buffer, it offers significantly better sample efficiency than PPO. A striking example mentioned in the lecture demonstrated a robot learning to walk from scratch in just two hours (<span class="citation" data-cites="haarnoja2018soft2">Haarnoja, Zhou, Hartikainen, et al. (<a href="#ref-haarnoja2018soft2" role="doc-biblioref">2018</a>)</span>). As noted, this <strong>Fully Off-Policy</strong> approach is a vital factor when applying reinforcement learning to real-world environments where sample efficiency is paramount.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/FmMPHL3TcrE?si=Ofts3OrZR5KZzihI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Additionally, <span class="citation" data-cites="luo2025precise">Luo et al. (<a href="#ref-luo2025precise" role="doc-biblioref">2025</a>)</span> demonstrated that using SAC achieved complex tasks faster and more accurately than Behavior Cloning (BC), even with limited training time.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/GoJSW8e2qbI?si=0tcyobA120IodDGD" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>In the study <span class="citation" data-cites="tan2018sim">Tan et al. (<a href="#ref-tan2018sim" role="doc-biblioref">2018</a>)</span>, which introduced the concept of <strong>Sim-to-Real</strong>—transferring models trained in simulation to physical environments—PPO was utilized for its stability during the transfer process, despite being slightly less efficient, and it yielded significant results.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/lUZUr7jxoqM?si=_dGB1kJPcuCdeIBg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Furthermore, a well-known example is OpenAI’s “Solving Rubik’s Cube with a robot hand,” which also used PPO to successfully transfer a robot hand trained in simulation to a real physical environment (<span class="citation" data-cites="akkaya2019solving">Akkaya et al. (<a href="#ref-akkaya2019solving" role="doc-biblioref">2019</a>)</span>).</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/x4O8pojMF0w?si=oZgzfLVTHjUs8cxg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In this post, we explored the process of modifying the Actor-Critic Method into an off-policy framework to improve sample efficiency, focusing on the resulting algorithms: <strong>Proximal Policy Optimization (PPO)</strong> and <strong>Soft Actor-Critic (SAC)</strong>. Due to the nature of off-policy learning, we initially attempted to apply the same Importance Weights used in Off-Policy Policy Gradient to leverage trajectories from past policies. However, we observed that repeated gradient steps could lead to unintended learning behaviors. To address this, we discussed KL constraints and clipping methods that guide the policy toward the goal without deviating too far from the previous policy—the fundamental principles of PPO.</p>
+<p>Separately, we examined how the techniques introduced in <span class="citation" data-cites="haarnoja2018soft">Haarnoja, Zhou, Abbeel, et al. (<a href="#ref-haarnoja2018soft" role="doc-biblioref">2018</a>)</span> can resolve the value function and action mismatches that occur when using data sampled from a replay buffer. This led to the derivation of SAC, a fully off-policy Actor-Critic algorithm using a replay buffer. Real-world examples demonstrated that SAC performs exceptionally well in environments where data efficiency is critical, while PPO remains a robust choice for scenarios requiring stable policy learning, such as Sim-to-Real transfer.</p>
+
+
+
+</section><div id="quarto-appendix" class="default">
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-akkaya2019solving" class="csl-entry" role="listitem">
+Akkaya, Ilge, Marcin Andrychowicz, Maciek Chociej, Mateusz Litwin, Bob McGrew, Arthur Petron, Alex Paino, et al. 2019. <span>“Solving Rubik’s Cube with a Robot Hand.”</span> <em>arXiv Preprint arXiv:1910.07113</em>.
+</div>
+<div id="ref-haarnoja2018soft" class="csl-entry" role="listitem">
+Haarnoja, Tuomas, Aurick Zhou, Pieter Abbeel, and Sergey Levine. 2018. <span>“Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor.”</span> In <em>International Conference on Machine Learning</em>, 1861–70. Pmlr.
+</div>
+<div id="ref-haarnoja2018soft2" class="csl-entry" role="listitem">
+Haarnoja, Tuomas, Aurick Zhou, Kristian Hartikainen, George Tucker, Sehoon Ha, Jie Tan, Vikash Kumar, et al. 2018. <span>“Soft Actor-Critic Algorithms and Applications.”</span> <em>arXiv Preprint arXiv:1812.05905</em>.
+</div>
+<div id="ref-lin1992self" class="csl-entry" role="listitem">
+Lin, Long-Ji. 1992. <span>“Self-Improving Reactive Agents Based on Reinforcement Learning, Planning and Teaching.”</span> <em>Machine Learning</em> 8 (3): 293–321.
+</div>
+<div id="ref-luo2025precise" class="csl-entry" role="listitem">
+Luo, Jianlan, Charles Xu, Jeffrey Wu, and Sergey Levine. 2025. <span>“Precise and Dexterous Robotic Manipulation via Human-in-the-Loop Reinforcement Learning.”</span> <em>Science Robotics</em> 10 (105): eads5033.
+</div>
+<div id="ref-schulman2015trust" class="csl-entry" role="listitem">
+Schulman, John, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. 2015. <span>“Trust Region Policy Optimization.”</span> In <em>International Conference on Machine Learning</em>, 1889–97. PMLR.
+</div>
+<div id="ref-schulman2017proximal" class="csl-entry" role="listitem">
+Schulman, John, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. 2017. <span>“Proximal Policy Optimization Algorithms.”</span> <em>arXiv Preprint arXiv:1707.06347</em>.
+</div>
+<div id="ref-tan2018sim" class="csl-entry" role="listitem">
+Tan, Jie, Tingnan Zhang, Erwin Coumans, Atil Iscen, Yunfei Bai, Danijar Hafner, Steven Bohez, and Vincent Vanhoucke. 2018. <span>“Sim-to-Real: Learning Agile Locomotion for Quadruped Robots.”</span> <em>arXiv Preprint arXiv:1804.10332</em>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section>
+</div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+</body>
+</html>
