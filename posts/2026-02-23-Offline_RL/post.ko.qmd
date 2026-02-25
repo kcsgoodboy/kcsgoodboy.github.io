@@ -159,7 +159,7 @@ $$
 #| label: algo-Advantage-weighted-Regression
 
 \begin{algorithm}
-\caption{Advantage Weighted Regression}
+\caption{Advantage Weighted Regression (AWR)}
 \begin{algorithmic}
 \State Fit value function: $\min_{\phi} \sum_{s_t \sim \mathcal{D}} \Vert \hat{V}_{\phi^{\pi_{\beta}}}(s_t) - \sum_{t'=t}^Tr(s_{t'}, a_{t'}) \Vert^2$
 \State Train Policy: $\max_{\theta} \mathbb{E}_{(s_t, a_t) \sim \mathcal{D}}\Big[ \log \pi_{\theta}(a_t \vert s_t) \exp \Big( \frac{1}{\alpha} \Big( \sum_{t'=t}^T(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi_{\beta}}(s_t) \Big) \Big) \Big]$
@@ -186,3 +186,70 @@ $$
 
 간단하게 해당 부분만 수정하면서 데이터셋 내의 action만 보게 되므로 Overestimation 위험을 줄이면서 Bootstrapping 방식을 사용해서 Variance를 낮출 수 있었다. 하지만 역시 과거 $\pi_{\beta}$ 로부터 수집된 데이터 기반으로 value를 추정하는 방식이기 때문에 성능 개선폭이 제한된다는 한계는 여전히 남아있다.
 
+## Implicit Q-Learning
+
+앞에서 언급된 AWAC 방식은 결과적으로 데이터를 활용하여 advantage를 추정하는 하되, Monte Carlo Estimation이 아닌 TD update를 사용하여 Variance를 줄이고자 했다. 하지만 그런데 Advantage function을 추정할 때의 TD update 수식을 잠깐 살펴보면,
+
+$$
+A(s, a) = Q(s, a) - (r + \underbrace{\gamma Q(s', a')}_{\text{a sample of } V^{\pi_{\beta}(s')}})
+$$
+
+같이 정의되는데, 원래의 정의대로 살펴보면 해당식은 내가 현재 state $s$ 에서 취한 action $a$ 의 가치가 평균적인 가치보다 얼마나 높은지를 알려주는 것이다. 다시 말하자면 $s$ 에서 behavior policy $\pi_{\beta}$ 의 Value function인 $V^{\pi_{\beta}}(s')$ 를 기준으로 좋은지를 판단하게 되는데, 사실 이렇게 되면, 주어진 state에서 좋은 Q-value를 가진 state, action 쌍이 있어도 안좋은 Q-value에 묻혀서 더 좋은 action을 찾을 여지를 주지 못하게 된다. 이어 $\ell_2$ loss를 사용하여 target Q를 맞추도록 학습하게 되면, 예측값이 크든 작든간에 error에 대해서 동일하게(혹은 대칭적으로) penalty를 주기 때문에 학습된 value function은 단순한 평균값을 가리키게 된다. 그러면 이렇게 평균값 대신 뭔가 상위 기준을 둬서 Advantage를 추정할 수 없을까? 만약 평균값 대신 통계에서 다뤄지는 백분위수(Percentile)같은 것을 적용해볼 수 있지 않을까? 이 아이디어가 바로 **Implicit Q-Learning (IQL)** (@kostrikov2021offline) 알고리즘의 전개 방향이다. 
+
+![Percentile of Value function](./images/21p_percentile.png){#fig-percentile}
+
+강의에서는 @fig-percentile 의 예시를 통해서 이에 대한 설명을 진행했는데, 앞에서 설명했던 것처럼 $\pi_{\beta}$ 를 사용하여 수집한 데이터를 통해 $V(s)$ 를 추정하는 모델을 $\ell_2$ loss를 사용하여 학습시킨다면, $\mathbb{E}_{a \sim \pi_{\beta}(\cdot \vert s)}[Q(s, a)]$ 에 해당하는 중간 지점을 추정하게끔 학습하게 된다. 그래서 @kostrikov2021offline 논문에서 제안한 것은 $\ell_2$ loss가 아닌 Asymmetric loss, 즉 error의 방향에 따라서 penalty를 다르게 주는 loss function을 사용하는 것이었다. 이를 통해서 평균이 아닌 상위 70%, 90%(Upper Expectile)의 value function을 추정할 수 있다면, 그만큼 기존 방식보다 조금더 좋은 action을 찾을 여지도 커질 것이다. 물론 데이터셋 내에서만 action을 query하므로 Out-of-Distribution Action으로 인한 Overestimation 문제도 없게 된다.
+
+:::{.callout-note title="Expectile Regression"}
+![Asymmetric Loss](./images/21p_asymmetric_loss.png){#fig-asymmetric}
+
+IQL에서 활용된 **Expectile Regression**은 @fig-asymmetric 에서도 보여지는 것처럼 error의 방향(양수인지 음수인지)에 따라 penalty를 다르게 부여하는 asymmetric loss function을 활용하여 기대치(Expectile)을 추정하는 방법이다. 비대칭적인 특성답게, $\ell_2$ loss와는 다르게 양의 영역에서는 loss의 증가폭이 상대적으로 적은 것을 확인할 수 있다. 실제 논문에서는 
+
+$$
+\ell_2^{\lambda}(x) = \begin{cases}
+(1 - \lambda) x^2 &\text{if } x < 0 \\
+\lambda x^2 &\text{otherwise}
+\end{cases}
+$$
+
+의 형태로 활용했고, 이때 $\lambda$ 를 조절하면서 Overestimation 으로 인한 Penalty값을 조정하고자 했다.
+
+::: {#fig-expectile-regression layout-ncol=2}
+
+![Expectile Regression Loss](./images/22p_expectile_regression_loss.png){#fig-expectile}
+
+![Example with a 2D random variable](./images/22p_example_expectile.png){#fig-expectile-example}
+
+:::
+
+@fig-expectile-regression 은 논문에서도 표현된 $\lambda$ 에 따른 loss의 변화정도(@fig-expectile) 와 실제로 이를 활용하여 2D random variable을 추정하는 것에 대한 예시(@fig-expectile-example) 에 대한 내용이다. 특히 @fig-expectile-example 을 통해서 $\lambda$ 가 점점 커질수록 그만큼 높은 추정값을 보여주는 경향을 확인할 수 있다. 
+:::
+
+이와 함께 앞에서 설명된 AWR 방식의 Exponentiated Weight가 부여된 Advantage를 활용하여 policy를 학습하는 것이 IQL의 동작 방식이다. 강의자료에 설명된 알고리즘은 다음과 같다.
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-Implicit-Q-Learning
+
+\begin{algorithm}
+\caption{Implicit Q Learning (IQL)}
+\begin{algorithmic}
+\State Fit $V$ with expectile loss: $\hat{V}(s) \leftarrow \arg \min_V \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \ell_2^{\lambda}(V(s) - \hat{Q}(s, a))]$ using small $\lambda \lt 0.5$
+\State Update $Q$ with typical MSE loss: $\hat{Q}(s, a) \leftarrow \arg \min_Q \mathbb{E}_{(s, a, s') \sim \mathcal{D}} [(Q(s, a) - (r + \gamma \hat{V}(s')))^2]$
+\State Repeat 1, 2 until convergence
+\State Extract policy with AWR: $\hat{\pi} \leftarrow \arg \max_{\pi} \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \log \pi(a \vert s) \exp (\frac{1}{\alpha} (\hat{Q}(s, a) - \hat{V}(s)))]$
+\end{algorithmic}
+\end{algorithm}
+```
+
+이렇게 되면 AWR에서 추구하던 Out-of-Distribution action을 query하지 않아서 overestimation도 발생하지 않고, AWAC에서처럼 Actor와 Critic으로 분리시키면서 TD Learning을 수행해 Variance를 줄이면서 구조가 단순하고 연산도 빠르며, asymmetric loss을 활용한 Expectile Regression을 통해서 데이터 내의 좋은 부분을 엮어 새로운 최적 경로를 만들어내는데 탁월한 성능을 얻을 수 있었다. 실제로 논문에서는 [D4RL](https://github.com/Farama-Foundation/D4RL)에 포함되어 있는 다양한 MuJoCo task와 Ant Maze, Adroit, Kitichen robotics manipulation에 대해서 다양한 비교 알고리즘 (BC, DT, CQL 등)보다 좋은 성능을 보여주었다. 강의에서는 설명되지 않았지만, 해당 논문에서는 IQL을 앞에서도 잠깐 언급한 Offline-to-Online(O2O) RL로 확장하는 실험까지 시도했는데, 이 역시 비교군이 AWAC이나 CQL(Conservative Q-Learning)보다도 fine-tuning 후 더 좋은 결과를 선보였다. 참고로 @algo-Implicit-Q-Learning 에선 여타 강화학습 알고리즘에서 보여지는 Policy Improvement(Update)가 데이터셋으로부터 policy가 extract되는 형태와 같이 **암시적(Implicit)**으로 나타나있기 때문에 Implicit Q-Learning 이란 이름이 붙여졌다.
+
+## Summary
+
+지금까지의 강의를 통해서 이전에 다뤘던 Online RL과 다르게 과거의 다양한 원천으로부터 수집된 데이터(static dataset)을 통해서 모델을 학습시키는 방법인 Offline RL에 대해서 강의가 이뤄졌다. 실시간으로 환경과의 interaction 기본적으로 전제되는 Online RL의 Sample efficiency 측면에서의 한계를 Offline RL에서는 offline data를 재사용할 수 있다는 점은 data 생성 비용이 많이 들거나, 실제 환경에서의 exploration이 제한적인 환경에서는 큰 장점으로 작용한다. 다만 다양한 behavior policy $\pi_{\beta}$ 로부터 수집된 데이터를 활용하다보니 실제로 학습되는 policy $\pi_{\theta}$ 간에 발생하는 distribution shift로 인해서 Q value가 **overestimation**되는 문제를 가지고 있기 때문에, 데이터상에 존재하지 않는 Out-of-Distribution Action이 query되어 Q value가 추정되지 않도록 방향으로 알고리즘이 개선되어왔다. 처음으로 제안된 접근 방법은 단순히 데이터셋에 있는 trajectory에 대해서만 따라는 방식의 **Imitation Learning**과 같은 baseline이었고, 실제 취할 action에 대해서 평균보다 얼마나 더 좋은지를 판단하는 Advantage function을 추정해 이를 기반으로 더 나은 value를 얻을 수 있는 action을 찾을 수 있는 Advantage-Weighted Regression (AWR) 같은 방법론도 제안되었다. 여기에서 평균보다 더 좋은 방향으로 학습될 수 있도록 Asymmetric loss function이 적용된 Expectile Regression 기법을 활용해 조금 더 성능을 개선시킬 수 있는 방식이었던 **Implicit Q-Learning (IQL)** 에 대한 내용까지 살펴보았다. (강의자료에는 Conservative objective를 적용한 Conservative Q-Learing (CQL)에 대한 내용도 다뤄져 있지만, 강의에서는 시간관계상 생략된 것 같다.)물론 강의가 4년여전에 진행되었기 때문에, 최근에도 Offline RL과 관련한 선행연구와 알고리즘들이 계속 진행되고 있다. 교수는 마지막으로 다양한 알고리즘들이 제안되었긴 하지만, 성능 개선 측면에서나 앞에서 설명했던 Offline-to-Online RL같은 방향까지 고려한다면 IQL을 사용해봄직하다고 언급했다. 또한 Behavior Cloning 계열 중 하나인 Diffusion Policy를 IQL에 적용한 **Implicit Diffusion Q-Learning (IDQL)** (@hansen2023idql) 도 살펴볼 것을 추천했다.
