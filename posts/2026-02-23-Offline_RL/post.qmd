@@ -1,7 +1,7 @@
 ---
 title: Offline RL
 description: Summary of lecture CS224R (2025) Lecture 7. Offline RL
-date: '2026-02-13'
+date: '2026-02-25'
 bibliography: ../../contents/references.bib
 image: ./images/Offline_RL_overview.en.png
 filters:
@@ -141,3 +141,127 @@ Then, even in the previous Stitching example, by identifying the value of a good
 Up until now, we have gone through the process of selecting useful trajectories from the dataset by applying the Advantage as a weight. As a result, since we calculated the advantage utilizing the trajectories in the dataset, it will be $A^{\pi_{\beta}}$. The next thing to consider is, "How can we estimate this Advantage?"
 
 ## Advantage-Weighted Regression
+
+The easiest approach we can think of is to perform regression on the Advantage function using the given dataset. First, the Advantage function of the Behavior Policy $\pi_{\beta}$ can be defined in the form of a 1-step Temporal Difference, as shown in the equation below.
+
+$$
+A^{\pi_{\beta}}(s_t, a_t) = r(s_t, a_t) + \gamma V^{\pi_{\beta}}(s_{t+1}) - V^{\pi_{\beta}}(s_t)
+$$
+
+However, to calculate the Advantage in this Temporal Difference form, the Value function must be trained very accurately. Due to the nature of learning relying purely on a dataset, this might be difficult in the early stages of training. Therefore, instead of calculating it this way, a Monte Carlo Estimation approach is taken, which subtracts the estimated Value Function from the sum of actual rewards (Empirical return) present in the dataset.  By defining it this way, implementation becomes very simple since TD computation is not required, and there is no risk of evaluating actions that are not in the dataset. On the downside, the problem of high variance remains, which is the exact same disadvantage of Monte Carlo Estimation mentioned previously. Additionally, because using Monte Carlo Estimation relies solely on the empirical returns of actual episodes, the aforementioned trajectory stitching capability is severely limited. The algorithm that trains a model by estimating the Advantage function within the dataset in this manner was introduced in the paper @peng2019advantage under the name **Advantage-Weighted Regression (AWR)**. A brief equation expansion for AWR is as follows.
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-Advantage-weighted-Regression
+
+\begin{algorithm}
+\caption{Advantage Weighted Regression (AWR)}
+\begin{algorithmic}
+\State Fit value function: $\min_{\phi} \sum_{s_t \sim \mathcal{D}} \Vert \hat{V}_{\phi^{\pi_{\beta}}}(s_t) - \sum_{t'=t}^Tr(s_{t'}, a_{t'}) \Vert^2$
+\State Train Policy: $\max_{\theta} \mathbb{E}_{(s_t, a_t) \sim \mathcal{D}}\Big[ \log \pi_{\theta}(a_t \vert s_t) \exp \Big( \frac{1}{\alpha} \Big( \sum_{t'=t}^Tr(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi_{\beta}}(s_t) \Big) \Big) \Big]$
+\end{algorithmic}
+\end{algorithm}
+```
+
+## Advantage-Weighted Actor-Critic
+
+While AWR avoids calculating Q-values using Out-of-Distribution actions by utilizing Monte Carlo Estimation, it suffers from the drawback of high variance and noise in the estimated values. As discussed previously when covering value functions, Bootstrapping Estimation utilizing a Q-function can be employed to mitigate the high variance of Monte Carlo Estimation. However, looking at the TD update section within standard Off-policy algorithms, it is expressed as follows. (Note that for ease of explanation, the discount factor $\gamma$ is sometimes omitted.)
+
+$$
+\min_{\psi} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \Big[ \big( \hat{Q}_{\psi}^{\pi}(s, a) - (r + \gamma \mathbb{E}_{a' \sim \pi(\cdot \vert s)}[\hat{Q}_{\psi}^{\pi}(s', a')]) \big) \Big]
+$$
+
+At this point, because the action $a'$ taken in the next state $s'$ is sampled from the policy currently being trained ($\pi_{\theta}$), applying this method directly to Offline RL causes the problem of inducing Overestimation by taking Out-of-Distribution Actions. Therefore, an approach called **Advantage-Weighted Actor-Critic (AWAC)** (@nair2020awac) modified this by sampling the problematic action $a'$ directly from the dataset to calculate the target Q-value.
+
+$$
+\begin{aligned}
+\text{Estimated Q-function: } & \min_{\psi} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \Big[ \big( \hat{Q}_{\psi}^{\pi}(s, a) - (r + \gamma \mathbb{E}_{\color{red} a' \sim \mathcal{D}}[\hat{Q}_{\psi}^{\pi}(s', a')]) \big) \Big] \\
+\text{AWAC Update: } & \hat{Q}^{\pi_{\beta}} \leftarrow \arg \min_Q \mathbb{E}_{ (s, a, s', {\color{red}a'}) \sim \mathcal{D}} \Big[ \big( Q(s, a) - (r + \gamma Q(s', a')) \big)^2 \Big]
+\end{aligned}
+$$
+
+By simply modifying this specific part, the model only looks at actions within the dataset. Consequently, it reduces the risk of Overestimation while simultaneously lowering the variance by utilizing the Bootstrapping method. However, since this method still estimates the value based on data collected from the past behavior policy $\pi_{\beta}$, the limitation remains that the potential for performance improvement is somewhat restricted.
+
+## Implicit Q-Learning
+
+The aforementioned AWAC method ultimately estimates the advantage utilizing data, but it aimed to reduce variance by using TD update instead of Monte Carlo Estimation. However, if we briefly look at the TD update equation when estimating the Advantage function,
+
+$$
+A(s, a) = Q(s, a) - (r + \underbrace{\gamma Q(s', a')}_{\text{a sample of } V^{\pi_{\beta}(s')}})
+$$
+
+it is defined like this. Looking at it according to the original definition, this equation tells us how much higher the value of the action $a$ taken in the current state $s$ is compared to the average value. In other words, it judges whether it is good based on $V^{\pi_{\beta}}(s')$, which is the Value function of the behavior policy $\pi_{\beta}$ at $s$. In fact, when this happens, even if there is a state-action pair with a good Q-value in a given state, it gets buried by bad Q-values, leaving no room to find a better action. Subsequently, if it is trained to match the target Q using an $\ell_2$ loss, it penalizes the error equally (or symmetrically) regardless of whether the predicted value is large or small. Therefore, the learned value function simply points to the average value. Then, couldn't we estimate the Advantage by setting some upper standard instead of this average value? What if we could apply something like percentiles used in statistics instead of the average? This idea is exactly the developmental direction of the **Implicit Q-Learning (IQL)** (@kostrikov2021offline) algorithm.
+
+![Percentile of Value function](./images/21p_percentile.png){#fig-percentile}
+
+The lecture explained this through the example of @fig-percentile. As explained earlier, if a model estimating $V(s)$ through data collected using $\pi_{\beta}$ is trained using an $\ell_2$ loss, it learns to estimate the midpoint corresponding to $\mathbb{E}_{a \sim \pi_{\beta}(\cdot \vert s)}[Q(s, a)]$. Therefore, what the @kostrikov2021offline paper proposed was to use an Asymmetric loss instead of an $\ell_2$ loss—that is, a loss function that gives different penalties depending on the direction of the error. Through this, if we can estimate the value function of the top 70% or 90% (Upper Expectile) rather than the average, the room to find slightly better actions than the existing method will increase accordingly. Of course, since it only queries actions within the dataset, there is no Overestimation problem caused by Out-of-Distribution Actions.
+
+:::{.callout-note title="Expectile Regression"}
+![Asymmetric Loss](./images/21p_asymmetric_loss.png){#fig-asymmetric}
+
+**Expectile Regression**, utilized in IQL, is a method of estimating the expectile using an asymmetric loss function that assigns different penalties depending on the direction of the error (whether it is positive or negative), as shown in @fig-asymmetric. True to its asymmetric nature, unlike the $\ell_2$ loss, it can be seen that the increase in loss is relatively smaller in the positive region. In the actual paper, it was utilized in the following form:
+
+$$
+\ell_2^{\lambda}(x) = \begin{cases}
+(1 - \lambda) x^2 &\text{if } x < 0 \\
+\lambda x^2 &\text{otherwise}
+\end{cases}
+$$
+
+Here, by adjusting $\lambda$, they intended to control the penalty value caused by Overestimation.
+
+::: {#fig-expectile-regression layout-ncol=2}
+
+![Expectile Regression Loss](./images/22p_expectile_regression_loss.png){#fig-expectile}
+
+![Example with a 2D random variable](./images/22p_example_expectile.png){#fig-expectile-example}
+
+:::
+
+@fig-expectile-regression illustrates the degree of change in loss according to $\lambda$ as presented in the paper (@fig-expectile), along with an example of practically estimating a 2D random variable using this (@fig-expectile-example). In particular, through @fig-expectile-example, it can be observed that there is a tendency to show a higher estimated value as $\lambda$ decreases.
+:::
+
+Along with this, the operational mechanism of IQL involves training the policy by utilizing the Advantage assigned with the Exponentiated Weight from the previously explained AWR method. The algorithm described in the lecture materials is as follows.
+
+```pseudocode
+#| html-indent-size: "1.2em"
+#| html-comment-delimiter: "//"
+#| html-line-number: true
+#| html-line-number-punc: ":"
+#| html-no-end: false
+#| pdf-placement: "htb!"
+#| pdf-line-number: true
+#| label: algo-Implicit-Q-Learning
+
+\begin{algorithm}
+\caption{Implicit Q Learning (IQL)}
+\begin{algorithmic}
+\State Fit $V$ with expectile loss: $\hat{V}(s) \leftarrow \arg \min_V \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \ell_2^{\lambda}(\hat{Q}(s, a) - V(s))]$ using large $\lambda \gt 0.5$
+\State Update $Q$ with typical MSE loss: $\hat{Q}(s, a) \leftarrow \arg \min_Q \mathbb{E}_{(s, a, s') \sim \mathcal{D}} [(Q(s, a) - (r + \gamma \hat{V}(s')))^2]$
+\State Repeat 1, 2 until convergence
+\State Extract policy with AWR: $\hat{\pi} \leftarrow \arg \max_{\pi} \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \log \pi(a \vert s) \exp (\frac{1}{\alpha} (\hat{Q}(s, a) - \hat{V}(s)))]$
+\end{algorithmic}
+\end{algorithm}
+```
+
+:::{.callout-note}
+
+For reference, the notation of IQL might look different between the lecture materials and the paper. In the @kostrikov2021offline paper, the residual is set as $\hat{Q}(s, a) - V(s)$, and $\tau (= \lambda) \gt 0.5$ is used for the upper expectile. However, in the lecture materials, the residual is inverted and written as $V(s) - \hat{Q}(s, a)$, so a small $\lambda \lt 0.5$ is used to express the same upper expectile. In short, the previous $\lambda$ notation was expressed as a complement in the algorithm above. To prevent any potential misunderstandings in comprehending the content, the notation from the original paper has been brought over exactly as it is.
+
+:::
+
+By doing this, it doesn't query Out-of-Distribution actions—which AWR sought to avoid—so overestimation does not occur. Also, similar to AWAC, by separating into an Actor and a Critic and performing TD Learning, it reduces variance while maintaining a simple structure and fast computation. Through Expectile Regression utilizing an asymmetric loss, it achieves excellent performance in stitching together good segments within the data to forge new optimal paths. In fact, the paper demonstrated better performance than various baseline algorithms (BC, DT, CQL, etc.) on diverse MuJoCo tasks, Ant Maze, Adroit, and Kitchen robotics manipulation included in [D4RL](https://github.com/Farama-Foundation/D4RL).  Although not covered in the lecture, the paper even attempted an experiment extending IQL to Offline-to-Online (O2O) RL, which was briefly mentioned earlier. This, too, showed better results after fine-tuning compared to baselines like AWAC or CQL (Conservative Q-Learning). For reference, the name "Implicit Q-Learning" was given because the Policy Improvement (Update) seen in other reinforcement learning algorithms appears **implicitly** in @algo-Implicit-Q-Learning, taking the form of extracting a policy from the dataset.
+
+## Summary
+
+Through the lectures so far, unlike the previously covered Online RL, we explored Offline RL, a method of training a model using a static dataset collected from various past sources. The ability of Offline RL to reuse offline data serves as a major advantage in environments where data generation is costly or exploration in the real world is limited, overcoming the sample efficiency limitations of Online RL, which fundamentally presupposes real-time interaction with the environment. However, because it utilizes data collected from various behavior policies $\pi_{\beta}$, it suffers from the problem of Q-value **overestimation** due to the distribution shift that occurs between these policies and the actually learned policy $\pi_{\theta}$. Consequently, algorithms have been improved in a direction that prevents Q-values from being estimated by querying Out-of-Distribution Actions that do not exist in the data.
+
+The initially proposed approach was a baseline like **Imitation Learning**, which simply follows the trajectories present in the dataset. Methodologies like **Advantage-Weighted Regression (AWR)** were also proposed, which estimate an Advantage function to determine how much better a taken action is compared to the average, and based on this, find actions capable of yielding better values. Building upon this, we even examined **Implicit Q-Learning (IQL)**, a method that could further improve performance by utilizing an Expectile Regression technique paired with an Asymmetric loss function to train the model towards values better than the average. (Although the lecture materials also cover **Conservative Q-Learning (CQL)** using a conservative objective, it seems to have been omitted in the actual video lecture due to time constraints.)
+
+Of course, since the lecture took place about four years ago, research and new algorithms related to Offline RL have continued to emerge. The professor concluded by mentioning that while various algorithms have been proposed, considering both performance improvement and future directions like the previously explained Offline-to-Online RL, IQL is highly recommended as a starting point. He also suggested looking into **Implicit Diffusion Q-Learning (IDQL)** (@hansen2023idql), which applies a Diffusion Policy—a lineage of Behavior Cloning—to IQL.

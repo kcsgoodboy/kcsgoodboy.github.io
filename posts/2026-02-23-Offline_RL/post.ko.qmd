@@ -222,7 +222,7 @@ $$
 
 :::
 
-@fig-expectile-regression 은 논문에서도 표현된 $\lambda$ 에 따른 loss의 변화정도(@fig-expectile) 와 실제로 이를 활용하여 2D random variable을 추정하는 것에 대한 예시(@fig-expectile-example) 에 대한 내용이다. 특히 @fig-expectile-example 을 통해서 $\lambda$ 가 낮아질수록  그만큼 높은 추정값을 보여주는 경향을 확인할 수 있다. 
+@fig-expectile-regression 은 논문에서도 표현된 $\lambda$ 에 따른 loss의 변화정도(@fig-expectile) 와 실제로 이를 활용하여 2D random variable을 추정하는 것에 대한 예시(@fig-expectile-example) 에 대한 내용이다. 특히 @fig-expectile-example 을 통해서 $\lambda$ 가 낮아질수록, 그만큼 높은 추정값을 보여주는 경향을 확인할 수 있다. 
 :::
 
 이와 함께 앞에서 설명된 AWR 방식의 Exponentiated Weight가 부여된 Advantage를 활용하여 policy를 학습하는 것이 IQL의 동작 방식이다. 강의자료에 설명된 알고리즘은 다음과 같다.
@@ -254,9 +254,12 @@ $$
 
 :::
 
-
 이렇게 되면 AWR에서 추구하던 Out-of-Distribution action을 query하지 않아서 overestimation도 발생하지 않고, AWAC에서처럼 Actor와 Critic으로 분리시키면서 TD Learning을 수행해 Variance를 줄이면서 구조가 단순하고 연산도 빠르며, asymmetric loss을 활용한 Expectile Regression을 통해서 데이터 내의 좋은 부분을 엮어 새로운 최적 경로를 만들어내는데 탁월한 성능을 얻을 수 있었다. 실제로 논문에서는 [D4RL](https://github.com/Farama-Foundation/D4RL)에 포함되어 있는 다양한 MuJoCo task와 Ant Maze, Adroit, Kitichen robotics manipulation에 대해서 다양한 비교 알고리즘 (BC, DT, CQL 등)보다 좋은 성능을 보여주었다. 강의에서는 설명되지 않았지만, 해당 논문에서는 IQL을 앞에서도 잠깐 언급한 Offline-to-Online(O2O) RL로 확장하는 실험까지 시도했는데, 이 역시 비교군이 AWAC이나 CQL(Conservative Q-Learning)보다도 fine-tuning 후 더 좋은 결과를 선보였다. 참고로 @algo-Implicit-Q-Learning 에선 여타 강화학습 알고리즘에서 보여지는 Policy Improvement(Update)가 데이터셋으로부터 policy가 extract되는 형태와 같이 **암시적(Implicit)**으로 나타나있기 때문에 Implicit Q-Learning 이란 이름이 붙여졌다.
 
 ## Summary
 
-지금까지의 강의를 통해서 이전에 다뤘던 Online RL과 다르게 과거의 다양한 원천으로부터 수집된 데이터(static dataset)을 통해서 모델을 학습시키는 방법인 Offline RL에 대해서 강의가 이뤄졌다. 실시간으로 환경과의 interaction 기본적으로 전제되는 Online RL의 Sample efficiency 측면에서의 한계를 Offline RL에서는 offline data를 재사용할 수 있다는 점은 data 생성 비용이 많이 들거나, 실제 환경에서의 exploration이 제한적인 환경에서는 큰 장점으로 작용한다. 다만 다양한 behavior policy $\pi_{\beta}$ 로부터 수집된 데이터를 활용하다보니 실제로 학습되는 policy $\pi_{\theta}$ 간에 발생하는 distribution shift로 인해서 Q value가 **overestimation**되는 문제를 가지고 있기 때문에, 데이터상에 존재하지 않는 Out-of-Distribution Action이 query되어 Q value가 추정되지 않도록 방향으로 알고리즘이 개선되어왔다. 처음으로 제안된 접근 방법은 단순히 데이터셋에 있는 trajectory에 대해서만 따라는 방식의 **Imitation Learning**과 같은 baseline이었고, 실제 취할 action에 대해서 평균보다 얼마나 더 좋은지를 판단하는 Advantage function을 추정해 이를 기반으로 더 나은 value를 얻을 수 있는 action을 찾을 수 있는 **Advantage-Weighted Regression (AWR)** 같은 방법론도 제안되었다. 여기에서 평균보다 더 좋은 방향으로 학습될 수 있도록 Asymmetric loss function이 적용된 Expectile Regression 기법을 활용해 조금 더 성능을 개선시킬 수 있는 방식이었던 **Implicit Q-Learning (IQL)** 에 대한 내용까지 살펴보았다. (강의자료에는 Conservative objective를 적용한 Conservative Q-Learing (CQL)에 대한 내용도 다뤄져 있지만, 강의에서는 시간관계상 생략된 것 같다.)물론 강의가 4년여전에 진행되었기 때문에, 최근에도 Offline RL과 관련한 선행연구와 알고리즘들이 계속 진행되고 있다. 교수는 마지막으로 다양한 알고리즘들이 제안되었긴 하지만, 성능 개선 측면에서나 앞에서 설명했던 Offline-to-Online RL같은 방향까지 고려한다면 IQL을 사용해봄직하다고 언급했다. 또한 Behavior Cloning 계열 중 하나인 Diffusion Policy를 IQL에 적용한 **Implicit Diffusion Q-Learning (IDQL)** (@hansen2023idql) 도 살펴볼 것을 추천했다.
+지금까지의 강의를 통해서 이전에 다뤘던 Online RL과 다르게 과거의 다양한 원천으로부터 수집된 데이터(static dataset)을 통해서 모델을 학습시키는 방법인 Offline RL에 대해서 강의가 이뤄졌다. 실시간으로 환경과의 interaction 기본적으로 전제되는 Online RL의 Sample efficiency 측면에서의 한계를 Offline RL에서는 offline data를 재사용할 수 있다는 점은 data 생성 비용이 많이 들거나, 실제 환경에서의 exploration이 제한적인 환경에서는 큰 장점으로 작용한다. 다만 다양한 behavior policy $\pi_{\beta}$ 로부터 수집된 데이터를 활용하다보니 실제로 학습되는 policy $\pi_{\theta}$ 간에 발생하는 distribution shift로 인해서 Q value가 **overestimation**되는 문제를 가지고 있기 때문에, 데이터상에 존재하지 않는 Out-of-Distribution Action이 query되어 Q value가 추정되지 않도록 방향으로 알고리즘이 개선되어왔다. 
+
+처음으로 제안된 접근 방법은 단순히 데이터셋에 있는 trajectory에 대해서만 따라는 방식의 **Imitation Learning**과 같은 baseline이었고, 실제 취할 action에 대해서 평균보다 얼마나 더 좋은지를 판단하는 Advantage function을 추정해 이를 기반으로 더 나은 value를 얻을 수 있는 action을 찾을 수 있는 **Advantage-Weighted Regression (AWR)** 같은 방법론도 제안되었다. 여기에서 평균보다 더 좋은 방향으로 학습될 수 있도록 Asymmetric loss function이 적용된 Expectile Regression 기법을 활용해 조금 더 성능을 개선시킬 수 있는 방식이었던 **Implicit Q-Learning (IQL)** 에 대한 내용까지 살펴보았다. (강의자료에는 Conservative objective를 적용한 Conservative Q-Learing (CQL)에 대한 내용도 다뤄져 있지만, 강의에서는 시간관계상 생략된 것 같다.)
+
+물론 강의가 4년여전에 진행되었기 때문에, 최근에도 Offline RL과 관련한 선행연구와 알고리즘들이 계속 진행되고 있다. 교수는 마지막으로 다양한 알고리즘들이 제안되었긴 하지만, 성능 개선 측면에서나 앞에서 설명했던 Offline-to-Online RL같은 방향까지 고려한다면 IQL을 사용해봄직하다고 언급했다. 또한 Behavior Cloning 계열 중 하나인 Diffusion Policy를 IQL에 적용한 **Implicit Diffusion Q-Learning (IDQL)** (@hansen2023idql) 도 살펴볼 것을 추천했다.
