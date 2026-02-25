@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-01-23_Transfer_learning/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-01-23_Transfer_learning/post.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Chanseok Kang">
+<meta name="dcterms.date" content="2026-01-26">
+<meta name="description" content="Summary of lecture CS330 (2022) Lecture 3. Transfer learning &amp; Fine-tuning">
+<title>Transfer Learning &amp; Fine-tuning – Chan’s Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+<style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2026-01-23_Transfer_learning/post.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Transfer Learning &amp; Fine-tuning</h1>
+                  <div>
+        <div class="description">
+          Summary of lecture CS330 (2022) Lecture 3. Transfer learning &amp; Fine-tuning
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS330</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 26, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
+  <li><a href="#multi-task-learning-vs.-transfer-learning" id="toc-multi-task-learning-vs.-transfer-learning" class="nav-link" data-scroll-target="#multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs. Transfer Learning</a></li>
+  <li><a href="#transfer-learning-via-fine-tuning" id="toc-transfer-learning-via-fine-tuning" class="nav-link" data-scroll-target="#transfer-learning-via-fine-tuning">Transfer learning via fine-tuning</a></li>
+  <li><a href="#breaking-common-wisdom" id="toc-breaking-common-wisdom" class="nav-link" data-scroll-target="#breaking-common-wisdom">Breaking Common Wisdom</a></li>
+  <li>
+<a href="#from-transfer-learning-to-meta-learning" id="toc-from-transfer-learning-to-meta-learning" class="nav-link" data-scroll-target="#from-transfer-learning-to-meta-learning">From Transfer Learning to Meta-Learning</a>
+  <ul class="collapse">
+<li><a href="#probabilistic-view" id="toc-probabilistic-view" class="nav-link" data-scroll-target="#probabilistic-view">Probabilistic View</a></li>
+  </ul>
+</li>
+  <li><a href="#an-example-of-meta-learning" id="toc-an-example-of-meta-learning" class="nav-link" data-scroll-target="#an-example-of-meta-learning">An Example of Meta-Learning</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="resource" class="level3"><h3 class="anchored" data-anchor-id="resource">Resource</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://www.youtube.com/watch?v=bVjCjdq06R4&amp;list=PLoROMvodv4rNjRoawgt72BBNwL2V7doGI&amp;index=3"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs330.stanford.edu/materials/cs330_finetune_transfer_meta_learning_problem_setup_2023.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+</section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/transfer_learning_overview.en.png" class="img-fluid"></p>
+</section><section id="multi-task-learning-vs.-transfer-learning" class="level2"><h2 class="anchored" data-anchor-id="multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs. Transfer Learning</h2>
+<p><strong>Multi-Task Learning</strong>, as discussed in the previous lecture, aims to solve multiple tasks (<span class="math inline">\(\mathcal{T}_1, \mathcal{T_2}, \dots, \mathcal{T}_T\)</span>) <strong>simultaneously</strong>. In other words, the goal is to train a single model that performs well across all given tasks. Accordingly, the objective function for parameter updates is defined as follows:</p>
+<p><span class="math display">\[
+\min_{\theta} \sum_{i=1}^T \mathcal{L}_i ( \theta, \mathcal{D}_i)
+\]</span></p>
+<p>On the other hand, <strong>Transfer Learning</strong> assumes the existence of a Source Task <span class="math inline">\(\mathcal{T}_a\)</span> and a Target Task <span class="math inline">\(\mathcal{T}_b\)</span>. Its goal is to solve the new task <span class="math inline">\(\mathcal{T}_b\)</span> by leveraging the knowledge acquired while solving <span class="math inline">\(\mathcal{T}_a\)</span>. Therefore, the focus is on maximizing performance on <span class="math inline">\(\mathcal{T}_b\)</span> rather than <span class="math inline">\(\mathcal{T}_a\)</span>. A fundamental premise of this approach is that the dataset <span class="math inline">\(\mathcal{D}_a\)</span> accumulated from the Source Task is typically not available during the adaptation process. Instead of reusing the massive data from the Source Task directly, we utilize the “compressed” knowledge (parameters) learned from that data.</p>
+<p>Ideally, if Transfer Learning is performed perfectly, it could be seen as a method capable of handling Multi-task scenarios. Intuitively, learning <span class="math inline">\(\mathcal{T}_a\)</span> and then transferring that knowledge to <span class="math inline">\(\mathcal{T}_b\)</span> ultimately results in a solution for both tasks. However, due to the constraint that we cannot access the dataset of the previously learned task, Transfer Learning cannot simply be treated as a Multi-task Learning problem. Recalling the previous lecture, Multi-task Learning assumes that datasets for all tasks are simultaneously available.</p>
+<p>So, when should we consider Transfer Learning over Multi-task Learning? The lecture introduced two primary scenarios.</p>
+<p>First, when the amount of data <span class="math inline">\(\mathcal{D}_a\)</span> accumulated in the source task <span class="math inline">\(\mathcal{T}_a\)</span> is too large. For example, datasets like ImageNet are so massive that retaining the data or retraining a model from scratch is computationally prohibitive. In such cases, it is common to use publicly available parameters that encapsulate the learned knowledge. Of course, there are also frequent cases where <span class="math inline">\(\mathcal{D}_a\)</span> is simply unavailable.</p>
+<p>Second, when the performance of the <strong>target task</strong> <span class="math inline">\(\mathcal{T}_b\)</span> <strong>is the priority</strong>, rather than the source task. This is a practical consideration when deploying AI models. Since developers often prioritize performance in the deployment environment over the training environment, Transfer Learning serves as an excellent approach in this context.</p>
+</section><section id="transfer-learning-via-fine-tuning" class="level2"><h2 class="anchored" data-anchor-id="transfer-learning-via-fine-tuning">Transfer learning via fine-tuning</h2>
+<p>A concept closely related to Transfer Learning is <strong>Fine-tuning</strong>. Fine-tuning involves initializing a neural network with weights <span class="math inline">\(\theta\)</span> learned from a source task <span class="math inline">\(\mathcal{T}_a\)</span>, and then updating the parameters <span class="math inline">\(\phi\)</span> via gradient descent using the dataset <span class="math inline">\(\mathcal{D}_b\)</span> of the target task <span class="math inline">\(\mathcal{T}_b\)</span>. The lecture denotes the dataset for additional training as <span class="math inline">\(\mathcal{D}^{tr}\)</span>, and the update rule is described as follows:</p>
+<p><span class="math display">\[
+\phi \leftarrow \theta - \alpha \nabla_\theta \mathcal{L}(\theta, \mathcal{D}^{tr})
+\]</span></p>
+<div id="fig-finetuning-result" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/6p_finetuning_result.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 1: PASCAL/SUN Resulf of Model pre-trained with ImageNet Dataset
+</figcaption></figure>
+</div>
+<p><a href="#fig-finetuning-result" class="quarto-xref">Figure 1</a> displays results from <span class="citation" data-cites="huh2016makes">Huh, Agrawal, and Efros (<a href="#ref-huh2016makes" role="doc-biblioref">2016</a>)</span>. It compares the performance when applying a model pre-trained on a large-scale dataset like ImageNet to different datasets such as PASCAL and SUN.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://docs.ultralytics.com/datasets/detect/voc/">PASCAL VOC</a> dataset is widely used in computer vision. Alongside ImageNet, which is primarily constructed for classification, PASCAL VOC allows for performance validation in Object Detection, Object Segmentation, and Classification. The <a href="https://groups.csail.mit.edu/vision/SUN/hierarchy.html">SUN</a> dataset also enables validation for Scene Recognition and Object Detection in addition to classification.</p>
+</div>
+</div>
+<p>Applying the definition of transfer learning mentioned earlier, ImageNet serves as the source task in this experiment, while PASCAL and SUN represent the target tasks. These results indicate that using parameters learned from ImageNet as initialization is significantly more effective than using random initialization. This practice is also standard when retraining LLMs or Foundation Models, where parameters are often downloaded from platforms like <a href="https://huggingface.co/">HuggingFace</a> for use.</p>
+<p>There are various strategies for fine-tuning. The lecture highlighted several accessible methods:</p>
+<ul>
+<li>Fine-tune with a smaller learning rate <span class="math inline">\(\eta\)</span>.</li>
+<li>Fine-tune earlier layers with a smaller learning rate.</li>
+<li>Freeze earlier layers initially, then gradually unfreeze them during fine-tuning.</li>
+<li>Re-initialize only the last layer.</li>
+<li>Search for new hyperparameters via Cross-Validation.</li>
+<li>Consider different architectures.</li>
+</ul>
+<p>Techniques like using a small learning rate or freezing layers are frequently mentioned. These methods can be seen as strategies to prevent <strong>Feature Distortion</strong>—drastic changes in learned features caused by training on a relatively small dataset compared to the original training set.</p>
+</section><section id="breaking-common-wisdom" class="level2"><h2 class="anchored" data-anchor-id="breaking-common-wisdom">Breaking Common Wisdom</h2>
+<p>While it is often assumed that massive datasets are strictly necessary for pre-training to achieve performance gains through transfer learning or fine-tuning, evidence suggests otherwise.</p>
+<div id="fig-diverse-data" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/7p_diverse_data.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 2: Proof of not requiring diverse data for pre-training
+</figcaption></figure>
+</div>
+<p><a href="#fig-diverse-data" class="quarto-xref">Figure 2</a> illustrates findings from <span class="citation" data-cites="krishna2023downstream">Krishna et al. (<a href="#ref-krishna2023downstream" role="doc-biblioref">2023</a>)</span>. The authors conducted experiments comparing model performance based on the difference between datasets used for pre-training and fine-tuning. The middle case represents pre-training on massive data (like Wikipedia) followed by fine-tuning on a defined dataset. While one might generally expect this to yield the best results, the findings show that unsupervised pre-training using <strong>only</strong> the data relevant to the Downstream task (the target task mentioned earlier) produces comparable results. This implies that pre-training data does not necessarily need to be diverse; learning meaningful features is possible using only the target dataset.</p>
+<p><span class="citation" data-cites="lee2022surgical">Lee et al. (<a href="#ref-lee2022surgical" role="doc-biblioref">2022</a>)</span> also introduces content that challenges similar conventional wisdom.</p>
+<div id="fig-surgical-fine-tuning" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/8p_surgical_fine-tuning.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 3: Surgical Fine-tuning
+</figcaption></figure>
+</div>
+<p>In general transfer learning, it is known that retraining the last layer (head) is effective because it is the most task-specific part. However, the author’s idea was: “If the goal is not just label prediction but handling low-level pixel corruptions, shouldn’t we modify the intermediate or earlier layers?” Consequently, the experiment verified fine-tuning effects not only on Output-Level Shift (CelebA dataset), which aligns with conventional wisdom, but also on Feature-level shift (Entity-30 dataset) and Input-level shift (CIFAR-10-Corruption), which involve changes at lower levels. The results in <a href="#fig-surgical-fine-tuning" class="quarto-xref">Figure 3</a> confirm that fine-tuning the first or even intermediate layers—rather than just the last layer—can yield excellent performance depending on the context.</p>
+<p>Thus, the idea mentioned by the professor is the <strong>Linear Probing then Full Fine-tuning (LP-FT)</strong> method introduced in <span class="citation" data-cites="kumar2022fine">Kumar et al. (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span>.</p>
+<div id="fig-LP-FT" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/9p_LP-FT.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 4: Linear Probing then Full Fine-tuning
+</figcaption></figure>
+</div>
+<p>Conventional fine-tuning methods typically involved either simply performing Full Fine-tuning or using Linear Probing (freezing the feature extractor and training only the head). However, these approaches often resulted in good performance only on fine-tuning distribution samples (in-distribution) or caused degradation in in-distribution performance even if Out-of-Distribution sample performance improved.</p>
+<p>Therefore, the method introduced in <span class="citation" data-cites="kumar2022fine">Kumar et al. (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span>, as shown in <a href="#fig-LP-FT" class="quarto-xref">Figure 4</a>, utilizes both approaches. First, only the head is trained (Linear Probing). Once the validation loss converges to some extent, the entire network is unfrozen and fine-tuned. Generally, in transfer learning, the head is randomly initialized to match the target task. If the entire network is trained from this state, the “weird” gradients generated from the randomly initialized head can disrupt the parameters of the feature extractor that were painstakingly learned. This phenomenon is commonly referred to as Feature Distortion. The proposed LP-FT method offers advantages in terms of robustness by mitigating this distortion that can occur during fine-tuning.</p>
+<p>Another common belief in transfer learning is that pre-training is always advantageous.</p>
+<div id="fig-ULMFiT" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/10p_ULMFiT.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 5: Universal Language Model Fine-tuning
+</figcaption></figure>
+</div>
+<p><a href="#fig-ULMFiT" class="quarto-xref">Figure 5</a> shows experimental results from the <span class="citation" data-cites="howard2018universal">Howard and Ruder (<a href="#ref-howard2018universal" role="doc-biblioref">2018</a>)</span> paper. The first graph demonstrates that, regardless of the amount of training data, fine-tuning a pre-trained model consistently yields lower validation error compared to training from scratch. Even with the same amount of data, fine-tuning results (orange/green lines) are generally better than the from-scratch approach (blue line).</p>
+<p>However, the second graph compares performance in an environment where the amount of training data is extremely reduced. The key observation here is that with an extremely small number of training samples (around 100), the validation error does not show as significant an improvement as expected. Consequently, when the target task dataset is extremely small, pre-training may not be a viable solution.</p>
+<p>Therefore, the lecture explained the necessity of <strong>meta-learning</strong> techniques. These techniques can explicitly express transferability between tasks using objective functions, enabling models to adapt quickly even when data is extremely scarce.</p>
+</section><section id="from-transfer-learning-to-meta-learning" class="level2"><h2 class="anchored" data-anchor-id="from-transfer-learning-to-meta-learning">From Transfer Learning to Meta-Learning</h2>
+<p>So, what distinguishes Meta-Learning from the Transfer Learning discussed earlier?</p>
+<p>First, the fundamental goal is shared. Transfer Learning addresses methods for initializing models to improve performance on a target task, and Meta-Learning shares this objective. However, a key distinction in Meta-Learning is its focus on <strong>explicitly optimizing</strong> for <strong>transferability</strong>, as previously mentioned. To put it simply, given a set of training tasks, the goal is to optimize the learning process itself to adapt quickly to these tasks. If successful, this enables rapid adaptation even when presented with a new, unseen task.</p>
+<p>Consequently, the objective function revolves around “learning a task” (<span class="math inline">\(\mathcal{D}_i^{tr} \rightarrow \theta\)</span>), and the fundamental goal of Meta-Learning is to find a way to minimize this objective function even with a small dataset <span class="math inline">\(\mathcal{D}_i^{tr}\)</span>.</p>
+<p>While the aspirations of Meta-Learning are ideal, one might question its feasibility in practice. The lecture addressed this by breaking it down into two perspectives:</p>
+<ol type="1">
+<li>Mechanistic View: This perspective looks at the operational principles—how datasets are processed and how learning is executed for new tasks.</li>
+<li>Probabilistic View: Based on Bayesian statistics, this perspective explores why learning is possible even with few samples, examining the theoretical potential of Meta-Learning.</li>
+</ol>
+<section id="probabilistic-view" class="level3"><h3 class="anchored" data-anchor-id="probabilistic-view">Probabilistic View</h3>
+<p>While the lecture primarily focuses on the Mechanistic View, it first briefly introduced how Meta-Learning operates from a probabilistic perspective.</p>
+<div id="fig-probabilistic-graphical-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/14p_Probabilistic_Graphical_Model.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 6: Probabilistic Graphical Model
+</figcaption></figure>
+</div>
+<p><a href="#fig-probabilistic-graphical-model" class="quarto-xref">Figure 6</a> visualizes the learning process as a probabilistic model, a concept known as a <strong>Probabilistic Graphical Model</strong>. Here, circles represent Random Variables, and arrows indicate correlations or dependencies between them. The box (plate notation) signifies that the same structure is executed repeatedly.</p>
+<p>First, the content inside the box represents the typical task learning process: finding the parameter <span class="math inline">\(\phi\)</span> that best explains the given data <span class="math inline">\(x, y\)</span>. The external variable <span class="math inline">\(\theta\)</span> serves as the parameter for Meta-Learning; simply put, it represents the <strong>shared structure</strong> or knowledge across tasks. In this Meta-Learning structure, <span class="math inline">\(\theta\)</span> (the shared structure) sits at the top and influences the task-specific parameters <span class="math inline">\(\phi_i\)</span>. In turn, <span class="math inline">\(\phi_i\)</span> becomes the parameter that explains the data for each specific task. Consequently, all tasks involved in the learning process share the common knowledge <span class="math inline">\(\theta\)</span>.</p>
+<p>Without <span class="math inline">\(\theta\)</span>, the parameters <span class="math inline">\(\phi_1, \phi_2, \dots\)</span> for each task would appear unrelated (independent). However, by knowing and utilizing <span class="math inline">\(\theta\)</span>, the parameters for each task become conditionally dependent on this shared information (<span class="math inline">\(\phi_1 \perp \!\!\! \perp \phi_2 \perp \!\!\! \perp \dots\)</span>). Knowing the common rule <span class="math inline">\(\theta\)</span> reduces the entropy of the task-specific parameters <span class="math inline">\(\phi_i\)</span> (<span class="math inline">\(\mathcal{H}(p(\phi_i \vert \theta)) \lt \mathcal{H}(p(\phi_i))\)</span>). Consequently, we can find the solution without requiring a large amount of data.</p>
+<p>To illustrate this, the lecture provided two examples (<a href="#fig-bayesian-meta-learning" class="quarto-xref">Figure 7</a>).</p>
+<div id="fig-bayesian-meta-learning" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-bayesian-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bayesian-meta-learning" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-multi-task-sinusoid" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-task-sinusoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/15p_sinusoid.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-sinusoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Multi-task Sinusoid Problem
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bayesian-meta-learning" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-multi-language-machine-translation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-language-machine-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/15p_language_translation.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-language-machine-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Multi-language Machine Translation
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-bayesian-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 7
+</figcaption></figure>
+</div>
+<p>First, <a href="#fig-multi-task-sinusoid" class="quarto-xref">Figure 7 (a)</a> represents the problem of learning multiple sine waves. Applying the structure discussed above, <span class="math inline">\(\phi_i\)</span> corresponds to the amplitude and phase of each specific wave, while <span class="math inline">\(\theta\)</span> represents the general knowledge that “these are sinusoidal functions.” Without knowing that the underlying function is a sine wave, we would need significant data to estimate the curve. However, knowing <span class="math inline">\(\theta\)</span> allows us to estimate <span class="math inline">\(\phi_i\)</span> quickly with just a few data points.</p>
+<p>Similarly, in the Multi-language Machine Translation example shown in <a href="#fig-multi-language-machine-translation" class="quarto-xref">Figure 7 (b)</a>, if universal grammatical structures or semantic systems are given as <span class="math inline">\(\theta\)</span> beforehand, the model can be trained much more efficiently than without them.</p>
+<p>In summary, from a Bayesian perspective, Meta-Learning is equivalent to the problem of discovering the shared knowledge <span class="math inline">\(\theta\)</span> inherent in the tasks. Although individual events (<span class="math inline">\(\phi_i\)</span>) may appear distinct, identifying the hidden common principle (<span class="math inline">\(\theta\)</span>) allows us to solve problems with minimal data, even when encountering new, unseen tasks. This concept provides the theoretical foundation for <strong>Few-shot Learning</strong> in Meta-Learning.</p>
+</section></section><section id="an-example-of-meta-learning" class="level2"><h2 class="anchored" data-anchor-id="an-example-of-meta-learning">An Example of Meta-Learning</h2>
+<div id="fig-meta-learning" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-meta-learning" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-meta-training" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-meta-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/18p_meta-training.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-meta-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Meta Training
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-meta-learning" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-meta-testing" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-meta-testing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/18p_meta-testing.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-meta-testing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Meta Testing
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 8
+</figcaption></figure>
+</div>
+<p>As mentioned earlier, we now turn to the working principles of Meta-Learning from the <strong>Mechanistic View</strong>. <a href="#fig-meta-learning" class="quarto-xref">Figure 8</a> illustrates <strong>meta-training</strong> and <strong>meta-testing</strong>, which are commonly cited as the core processes of Meta-Learning.</p>
+<p>First, let’s assume we have multiple tasks to solve (<span class="math inline">\(\mathcal{T}_1, \mathcal{T}_2, \dots, \mathcal{T}_i\)</span>), where each task involves classifying different objects. If we add a constraint that the amount of training data is very small, training from scratch in this environment would fail to achieve the desired performance.</p>
+<p>To address this, we first perform <strong>Meta-Training</strong>, as shown in <a href="#fig-meta-training" class="quarto-xref">Figure 8 (a)</a>. This process is akin to a “mock exam,” where the model practices the problem of learning tasks with limited data. Here, we divide a massive dataset into detailed virtual tasks that mirror the structure of the problem we intend to solve. For instance, in <span class="math inline">\(\mathcal{T}_1\)</span>, the model might be asked to predict a label after viewing 5 photos; in <span class="math inline">\(\mathcal{T}_2\)</span>, it does the same with a different set of 5 photos. Through this process, the model trains not to memorize specific “labels,” but rather the <strong>ability to quickly grasp features and distinguish objects</strong> after seeing just a few examples.</p>
+<p>After this training, the <strong>Meta-Testing</strong> process follows, where we apply the model to the actual new problem we want to solve. As shown in <a href="#fig-meta-testing" class="quarto-xref">Figure 8 (b)</a>, even when given new images (e.g., 1 shot per class) with labels not seen during training, the model can quickly adapt and classify the inputs. This is because it has already learned the method of distinguishing objects using very few images during the training process.</p>
+<p>A critical assumption must be defined to solve problems with Meta-Learning: the tasks used in meta-training and meta-testing must be sampled from the same task distribution and must be Independent and Identically Distributed (i.i.d.).Mathematically, if we have tasks <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_n\)</span> given during meta-training and <span class="math inline">\(\mathcal{T}_{test}\)</span> to be used during meta-testing, they must satisfy the following property:</p>
+<p><span class="math display">\[
+\mathcal{T}_1, \dots, \mathcal{T}_n \sim p(\mathcal{T}), \mathcal{T}_{test} \sim p(\mathcal{T})
+\]</span></p>
+<p>To put it simply, transferring knowledge from quadruped robot walking to bipedal robot walking qualifies as a Meta-Learning problem. However, transferring walking skills to tasks like grasping or pushing does not, as they do not share the underlying task structure. In other words, the tasks must share the <strong>common structure</strong> <span class="math inline">\(\theta\)</span> mentioned earlier.</p>
+<p>For reference, when reading Meta-Learning papers, you will encounter several specific terms. Here is a brief summary:</p>
+<ul>
+<li>
+<strong>Support Set</strong>: The small amount of data (few-shot) provided for learning in each task. It serves the role of the training set in traditional machine learning.</li>
+<li>
+<strong>Query Set</strong>: The “problem” data to be predicted based on what was learned. It serves the role of the test set in traditional machine learning.</li>
+<li>
+<strong>N-way K-shot Learning</strong>: Terms defining the problem difficulty in Meta-Learning.
+<ul>
+<li>
+<strong>N-way</strong>: The number of classes to classify.</li>
+<li>
+<strong>K-shot</strong>: The number of examples (support) provided per class.</li>
+</ul>
+</li>
+</ul>
+<p>While the lecture used image classification as an example for clarity, the same Meta-Learning concepts can be defined and applied to <strong>Regression, Language Generation</strong>, and <strong>Robot Skill Learning</strong>.</p>
+</section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Due to the high volume of student questions during the lecture, several sections of the slide deck were skipped. I have personally organized and summarized the material based on the lecture slides to fill in these gaps.</p>
+<p>To summarize the overall content: unlike Multi-Task Learning, which was covered in previous sessions, <strong>Transfer Learning</strong> aims to solve a target task <span class="math inline">\(\mathcal{T}_b\)</span> based on knowledge acquired from a source task <span class="math inline">\(\mathcal{T}_a\)</span>. This is typically achieved by training on massive, pre-acquired datasets or by <strong>fine-tuning</strong> based on pre-trained weights. We also explored various methodologies for effective fine-tuning.</p>
+<p><strong>Meta-Learning</strong>, effectively, can be viewed as performing transfer learning across numerous source tasks. Since the primary goal of Meta-Learning is to identify common characteristics shared among tasks, it can be understood as a process of determining how <strong>quickly, accurately, and stably</strong> a model can adapt to a new target task after learning from just a few samples.</p>
+
+
+
+</section><div id="quarto-appendix" class="default">
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-howard2018universal" class="csl-entry" role="listitem">
+Howard, Jeremy, and Sebastian Ruder. 2018. <span>“Universal Language Model Fine-Tuning for Text Classification.”</span> <em>arXiv Preprint arXiv:1801.06146</em>.
+</div>
+<div id="ref-huh2016makes" class="csl-entry" role="listitem">
+Huh, Minyoung, Pulkit Agrawal, and Alexei A Efros. 2016. <span>“What Makes ImageNet Good for Transfer Learning?”</span> <em>arXiv Preprint arXiv:1608.08614</em>.
+</div>
+<div id="ref-krishna2023downstream" class="csl-entry" role="listitem">
+Krishna, Kundan, Saurabh Garg, Jeffrey P Bigham, and Zachary C Lipton. 2023. <span>“Downstream Datasets Make Surprisingly Good Pretraining Corpora.”</span> In <em>Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, 12207–22.
+</div>
+<div id="ref-kumar2022fine" class="csl-entry" role="listitem">
+Kumar, Ananya, Aditi Raghunathan, Robbie Jones, Tengyu Ma, and Percy Liang. 2022. <span>“Fine-Tuning Can Distort Pretrained Features and Underperform Out-of-Distribution.”</span> <em>arXiv Preprint arXiv:2202.10054</em>.
+</div>
+<div id="ref-lee2022surgical" class="csl-entry" role="listitem">
+Lee, Yoonho, Annie S Chen, Fahim Tajwar, Ananya Kumar, Huaxiu Yao, Percy Liang, and Chelsea Finn. 2022. <span>“Surgical Fine-Tuning Improves Adaptation to Distribution Shifts.”</span> <em>arXiv Preprint arXiv:2210.11466</em>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section>
+</div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+</body>
+</html>

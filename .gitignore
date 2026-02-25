@@ -1,6 +1,14 @@
 /.quarto/
 /.claude/
-/_site/
 **/.venv/**
 
 **/*.quarto_ipynb
+
+# renv
+renv/library/
+renv/staging/
+renv/python/
+
+.Rhistory
+.RData
+.Ruserdata

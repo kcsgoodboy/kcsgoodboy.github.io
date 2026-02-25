@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Chanseok Kang">
+<meta name="description" content="2022년에 진행한 CS330 강의 중 Lecture 6. Non Parametric Few-Shot Learning에 대한 강의 요약">
+<title>Non Parametric Few-Shot Learning – 생각많은 소심남의 연구노트</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+<style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.html" id="language-link-en">English</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">소개</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">블로그</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">출간물</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">활동</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Non Parametric Few-Shot Learning</h1>
+                  <div>
+        <div class="description">
+          2022년에 진행한 CS330 강의 중 Lecture 6. Non Parametric Few-Shot Learning에 대한 강의 요약
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS330</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 2월 20일</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#%EA%B0%95%EC%9D%98-%EB%B0%8F-%EC%9E%90%EB%A3%8C" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  <li><a href="#non-parametric-methods" id="toc-non-parametric-methods" class="nav-link" data-scroll-target="#non-parametric-methods">Non-Parametric Methods</a></li>
+  <li><a href="#siamese-network-for-non-parametric-model" id="toc-siamese-network-for-non-parametric-model" class="nav-link" data-scroll-target="#siamese-network-for-non-parametric-model">Siamese Network for Non-Parametric Model</a></li>
+  <li><a href="#matching-networks-for-non-parametric-model" id="toc-matching-networks-for-non-parametric-model" class="nav-link" data-scroll-target="#matching-networks-for-non-parametric-model">Matching Networks for Non-Parametric Model</a></li>
+  <li><a href="#prototypical-networks-for-non-parametric-model" id="toc-prototypical-networks-for-non-parametric-model" class="nav-link" data-scroll-target="#prototypical-networks-for-non-parametric-model">Prototypical Networks for Non-Parametric Model</a></li>
+  <li><a href="#challenges-and-ideas" id="toc-challenges-and-ideas" class="nav-link" data-scroll-target="#challenges-and-ideas">Challenges and Ideas</a></li>
+  <li><a href="#case-study" id="toc-case-study" class="nav-link" data-scroll-target="#case-study">Case Study</a></li>
+  <li>
+<a href="#properties-of-meta-learning-algorithms" id="toc-properties-of-meta-learning-algorithms" class="nav-link" data-scroll-target="#properties-of-meta-learning-algorithms">Properties of Meta-Learning Algorithms</a>
+  <ul class="collapse">
+<li><a href="#computation-graph-perspective" id="toc-computation-graph-perspective" class="nav-link" data-scroll-target="#computation-graph-perspective">Computation Graph perspective</a></li>
+  <li><a href="#algorithmic-properties-perspective" id="toc-algorithmic-properties-perspective" class="nav-link" data-scroll-target="#algorithmic-properties-perspective">Algorithmic properties perspective</a></li>
+  </ul>
+</li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  </ul></nav></nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="강의-및-자료" class="level3"><h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://www.youtube.com/watch?v=SUJCgisKW1Y&amp;list=PLoROMvodv4rNjRoawgt72BBNwL2V7doGI&amp;index=6"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs330.stanford.edu/materials/cs330_nonparametric_2023.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+<p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
+</section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/Non_Parametric_Few_Shot_Learning_overview.ko.png" class="img-fluid"></p>
+</section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<p>앞에서 다룬 Meta Learning 방법론 중 Black-Box Meta Learning과 Optimization-based Meta Learning에 대해서 다뤘다.</p>
+<div id="fig-parametric-approach" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-parametric-approach-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-parametric-approach" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-black-box" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-black-box-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/4p_black_box_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-black-box-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Black Box Meta Learning
+</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-parametric-approach" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-optimization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/5p_optimization_based_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Optimization-Based Meta Learning
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-parametric-approach-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 1
+</figcaption></figure>
+</div>
+<p>가장 먼저 언급했던 <strong>Black-Box Meta Learning</strong> (<a href="#fig-black-box" class="quarto-xref">그림 1 (a)</a>) 은 훈련 데이터 <span class="math inline">\(\mathcal{D}_{i}^{tr}\)</span> 를 거대한 신경망에 통과시켜서 학습 과정 자체를 파라미터화(Parametrize) 하는 방식이다. 내부의 신경망의 동작에 대한 정의없이 마치 일종의 블랙박스와 같은 학습 형태로 되어 있고, 학습 데이터에 따라 모델의 출력도 제어할 수 있기 때문에 다양한 학습 절차를 표현할 수 있는 높은 표현력(Expressive)을 갖는 장점이 있지만, 어떤 hyperparameter를 가지고 있느냐에 따라 성능에 대한 차이도 크며, 이로 인해서 hyperparameter에 대한 최적화 과정이 매우 까다롭다. <strong>Optimization-Based Meta Learning</strong> (<a href="#fig-optimization" class="quarto-xref">그림 1 (b)</a>) 은 앞의 Black-Box Adaptation과는 다르게 학습 과정 중 inner-loop내에서 발생하는 Gradient Descent 같은 최적화 과정을 내재화하여, 일종의 Bi-level optimization 형태로 문제를 해결하는 접근 방법이다. 그림에도 그 과정이 소개되어 있다시피 학습 데이터 내에서 주어진 task에서의 정보를 학습할 수 있는 positive inductive bias를 outer-loop에서 활용할 수 있기 때문에, 학습 초기 단계에서 조금 더 빠르게 학습되며, bi-level optimization 과정을 통해서 외부의 새로운 데이터가 들어와도 이에 대한 extrapolation 성능도 이전 방법에 비해 좋은 편이다. 무엇보다도 최적화 과정에 초점이 맞춰져 있어서, 모델 구조와 무관하게(Model-agnostic) 해당 방법을 적용할 수 있고, 일반적으로 네트워크가 커지면 커질수록 expressive 성능도 개선된다. 다만 bi-level optimization을 해야 되기 때문에, 이로 인한 계산량과 메모리 소모가 큰 편이고, 학습 과정이 불안정하기 때문에 이를 극복하기 위한 다양한 연구에 대해서 지난 강의에서 소개했었다.</p>
+<p>앞에서 소개한 두가지 방법 모두 meta-test 단계에서 학습되지 않은 새로운 task가 들어왔을 때, 이를 해결하기 위한 Task 고유의 parameter (<span class="math inline">\(\phi_i\)</span>)가 학습과정 내에서 정의된다. Black-Box 방식에서는 거대한 신경망을 통해서 학습 과정 자체가 파라미터화되며, Optimization-Based 방식에서도 inner-loop에서 Gradient Descent를 통해서 parameter가 업데이트된다. 이렇게 parameter가 정의되고 이를 기반으로 학습이 진행되는 방식을 <strong>Parametric Learning</strong>이라고 한다. 그런데 이렇게 파라미터화에서 학습을 수행하게 되면, 앞에서 언급된 단점들처럼 연산량과 메모리 소모량이 많아지고, 일반적인 성능 확보를 위해서는 다량의 데이터가 필요하게 된다. 특히 Optimization-based 방법에서는 bi-level optimization이 수행되면서 이런 단점이 더 부각된다. 그러면 <strong>이런 parameter를 일일히 연산하지 않고도 이런 학습 과정을 모델에 투영시키거나 반영할 수 있을까?</strong></p>
+</section><section id="non-parametric-methods" class="level2"><h2 class="anchored" data-anchor-id="non-parametric-methods">Non-Parametric Methods</h2>
+<p>앞에서 언급된 Parametric Model는 기본적으로 데이터에 대한 가정이 정의되어 있는 상태(예를 들어서 어떤 확률분포를 가진다? 같은…) 상태에서 입력 데이터와 출력 데이터간의 관계를 일종의 수학적으로 정의한 모델이고, 이런 데이터에 대한 가정없이 (결과적으로는 수학적으로 관계가 정의되지 않고), 데이터로부터 그 의미를 추출하는 방식을 <strong>Non-Parametric Model</strong>이라고 한다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./images/10p_KNN.png" class="img-fluid figure-img"></p>
+<figcaption>Example of Non-Parametric Model</figcaption></figure>
+</div>
+<p>사실 이 개념은 신경망이 등장하기 전에도 나왔던 개념으로 흔히 알고있는 Decision Tree나 K-Nearest Neighborhood(KNN), Support Vector Machine(SVM) 등이 이 부류에 속한다. 각 알고리즘의 동작원리를 상기해보면 알겠지만, 대부분의 알고리즘이 데이터의 많고 적음을 떠나서 현재 상태에서의 데이터간의 관계를 도출해낼 수 있다. 특히 데이터가 매우 적은 상황(Low data regime) 에서도 Parametric 방식에 비해 구현도 쉬울 뿐더러 잘 동작하는 것을 확인할 수 있다. 그런데 이 low data regime의 상황을 meta learning에 투영해보면, meta-test 에서도 이와 유사하게 발생한다. 특히 meta test에서 수행하는 Few-Shot Learning 과 같은 경우는 학습되지 않은 task에 대한 sample (<span class="math inline">\(x^{ts}\)</span>)이 얼마없는 상황에서도 이에 맞는 label(<span class="math inline">\(y^{ts}\)</span>)을 추정해야 되는데, 앞의 Parametric model은 바로 이 과정에서 task parameter <span class="math inline">\(\phi_i\)</span> 를 추론하면서 단점이 야기된다는 것이다.</p>
+<p>그러면 한가지 고려해볼 수 있는 부분이, 실제로 다양한 task에 대한 representation 방법을 학습하는 meta-train단계에서는 이전에 소개했던 parametric model을 활용하되, Few-Shot Learning이 발생하는 meta-test단계에서는 앞단계에서 뽑은 정보를 활용하는 non-parametric model을 사용하는 일종의 하이브리드 방식이 이 있을 것이다.</p>
+<div id="fig-non-parametric" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-non-parametric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/11p_non_parametric_learner.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-non-parametric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 2: Non Parametric Learning
+</figcaption></figure>
+</div>
+<p><a href="#fig-non-parametric" class="quarto-xref">그림 2</a> 은 앞에서도 많이 소개되었던 Few-shot classification 예시이며, 이 그림에서 소개하는 근본적인 방법은 meta-test 단계에서 주어진 test 데이터(<span class="math inline">\(x^{ts}\)</span>)가 있을때, 이 데이터를 실제 meta-train단계에서 학습할때 활용했던 데이터와 비교하는 것이다. 비교 방법이 어떠하던지 간에, 기존 학습 데이터와 가장 유사한 데이터가 있으면 학습 데이터에서의 label을 따르게 하면 된다. 그러면 이제 관건은 “어떤 기준으로 학습 데이터와 테스트 데이터가 유사하다고 할까?”이다. 흔히 유사성을 측정하는 metric으로는 <strong>Euclidian Distance</strong>라고 <span class="math inline">\(\ell_2\)</span> Distance같은 것도 있고, cosine similarity 같은 것도 있다. 우선은 이렇게 주어진 이미지들간의 <span class="math inline">\(\ell_2\)</span> Distance로 유사성을 판단한다고 가정해보자.</p>
+<div id="fig-unreasonable" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-unreasonable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/12p_unreasonable.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unreasonable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 3: <span class="math inline">\(\ell_2\)</span> Distance in meta-test
+</figcaption></figure>
+</div>
+<p><a href="#fig-unreasonable" class="quarto-xref">그림 3</a> 는 <span class="citation" data-cites="zhang2018unreasonable">Zhang 기타 (<a href="#ref-zhang2018unreasonable" role="doc-biblioref">2018</a>)</span> 논문에 소개된 실험 결과 중 하나로, 가장 오른쪽에 있는 Reference 이미지와 유사한 이미지를 왼쪽의 두개 이미지 중에서 찾는 것이다. 사람의 눈으로 봤을 때는 두개의 이미지 중 오른쪽의 이미지가 더 유사하다고 생각할 수 있겠지만, 앞에서 언급한 <span class="math inline">\(\ell_2\)</span> Distance나 동일하게 유사도를 측정하는 metric인 Peak Signal-to-Noise Ratio(PSNR) 이나, Structural Similarity Index (SSIM), Feature-based Similarity Index (FSIM) 를 활용했을 때는, 오히려 왼쪽의 이미지가 더 유사하다고 나온다. 이처럼 이미지가 입력으로 들어오는 문제에서 유사도 기반의 metric으로 수행한 Non-parametric Learning은 의도와 다르게 동작할 가능성이 크다. 무엇보다도 이렇게 distance function을 어떤 것으로 정의하느냐도 다른 관점에서는 Parametric Learning이라고 볼 수 있는 여지가 생긴다. 그래서 강의에서 제안하는 방식은 이렇게 <strong>metric 자체를 측정하는 방법 자체를 meta-training data를 활용하여 학습하자는 것(Learn to Compare)</strong>이다.</p>
+</section><section id="siamese-network-for-non-parametric-model" class="level2"><h2 class="anchored" data-anchor-id="siamese-network-for-non-parametric-model">Siamese Network for Non-Parametric Model</h2>
+<div id="fig-siamese-network" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-siamese-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./images/14p_siamese_neg.png" class="img-fluid figure-img"></p>
+<figcaption>Negative Case</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./images/15p_siamese_pos.png" class="img-fluid figure-img"></p>
+<figcaption>Positive Case</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-siamese-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 4
+</figcaption></figure>
+</div>
+<p><strong>Siamese Network</strong>는 <span class="citation" data-cites="Bromley1993SignatureVU">Bromley 기타 (<a href="#ref-Bromley1993SignatureVU" role="doc-biblioref">1993</a>)</span> 에서 처음 소개된 간단한 신경망이 쌍둥이 형태로 되어 있는 구조로, 두개의 입력을 각각 받을 수 있는 신경망이 동일한 형태로 구성되어 완전히 동일한 parameter를 공유하는 방식으로 되어 있다. 원 논문에서는 Siamese Network을 활용하여 서명을 확인하는 예시로 소개되었다가, <span class="citation" data-cites="Koch2015SiameseNN">Koch (<a href="#ref-Koch2015SiameseNN" role="doc-biblioref">2015</a>)</span> 에서 해당 구조를 활용하여 One-shot learning에 적용한 사례로 발전되었다. 해당 논문에서 제안했던 부분은 앞에서 소개했던 Similarity Metric을 정의하지 말고, meta-train단계에서 training data와 test data 간의 <strong>Binary Classification</strong>을 수행하는 것이다. 이 때 학습이 잘되면 <a href="#fig-siamese-network" class="quarto-xref">그림 4</a> 에 나와있는 것처럼 유사한 이미지끼리는 <span class="math inline">\(1\)</span>, 서로 다른 이미지끼리는 <span class="math inline">\(0\)</span> 이 나오는 형태로 Siamese Network이 학습이 될 것이고, 이 모델을 meta-test단계에서 일종의 <strong>유사도 측정기</strong>로 활용하게 된다. 그래서 test data가 주어지면, test data와 기존 support set에 있는 이미지를 하나씩 짝지어서 비교하는(Pairwise comparison) 과정이 진행되고, 이때, <span class="math inline">\(K\)</span> 개의 test data가 주어지면, Siamese Network에서는 총 <span class="math inline">\(N \times K\)</span> 만큼의 forward pass가 이뤄지고, 각 class별 비교 확률값이 나오게 된다. 이때 확률값이 가장 큰 class가 test data의 최종 label로 출력되는 방식으로 동작하는 것이다.</p>
+<p>그런데 이 구조의 문제는 Binary Classification의 특성상 training data의 샘플과 test data간의 유사한지 여부만 파악할 수 있다는 점이다. 주어진 이미지 중에 어떤 이미지가 “더” 유사한지를 판별하는 로직이 학습시에는 반영되지 않기 때문에 이에 따른 성능의 한계가 발생한다. 이렇게 meta-train에서 수행하는 학습 목적(정답과 일치여부)과 meta-test단계에서 추구하는 가장 큰 확률을 가지는 label을 찾는 목적 자체가 다르기 때문에 이를 <strong>불일치(Mismatch)</strong>라고 표현하는 것 같다. 예를 들어서 학습할때는 정답과 유사한지 여부만 확인하다가, 테스트 단계에서 정답에 가장 가까운 데이터를 찾으라고 하는 셈이다.</p>
+<p>그리고 meta-test 단계에서 추론되는 label은</p>
+<p><span class="math display">\[
+\hat{y}_{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} \mathbb{1}(f_{\theta}(X_{ts}, x_k) &gt; P_{pos}) y_k
+\]</span></p>
+<p>와 같이 정의되는데, 위 식에서 표현되는 indicator function <span class="math inline">\(\mathbb{1}\)</span> 은 일종의 step function이라서 auto differentiation을 수행할 수 없다. 그래서 뒤에서 이어서 설명한 <strong>Matching Network</strong> 이란 알고리즘에서 이런 제약사항을 보완하는 방법에 대해서 소개했다.</p>
+</section><section id="matching-networks-for-non-parametric-model" class="level2"><h2 class="anchored" data-anchor-id="matching-networks-for-non-parametric-model">Matching Networks for Non-Parametric Model</h2>
+<p><strong>Matching Networks</strong>은 <span class="citation" data-cites="vinyals2016matching">Vinyals 기타 (<a href="#ref-vinyals2016matching" role="doc-biblioref">2016</a>)</span> 에서 소개된 방식으로, 앞에서 언급된 Siamese Network을 활용한 One-shot Learning에서 도출된 한계를 극복하기 위해서 제안되었다. 근본적으로는 “학습환경과 테스트환경간의 불일치” 문제를 해소하기 위해 몇가지 trick을 적용했다.</p>
+<div id="fig-matching-network" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-matching-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/18p_matching_network.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matching-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 5: Matching Network
+</figcaption></figure>
+</div>
+<p>우선 불일치 문제를 해소하기 위해서 데이터 자체가 아닌, 데이터내에 잠재된 context를 활용하여 일치점을 찾으려 했고, 이를 위해 학습 데이터와 test 데이터에서 context를 뽑아낼 별도의 encoder network를 달았다. 학습 데이터와 test 데이터가 임베딩 공간에 매핑되면, 둘 사이의 dot product 등을 통해서 유사도를 계산한후, 계산된 유사도값에 softmax 함수(<span class="math inline">\(a(x^{ts}, x_k) = \frac{\exp(\text{cos}(f(x^{ts}), g(x_k)))}{\sum_{x_j} \exp(\text{cos}(f(x^{ts}), g(x_j)))}\)</span>) 를 취해서 모든 훈련데이터에 대한 가중치(확률값)을 구하게 된다. 이렇게 구한 값과 실제 학습 데이터의 정답 label을 곱한, 일종의 weighted sum으로 최종 label을 추론하게 되는데,</p>
+<p><span class="math display">\[
+\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta}(x^{ts}, x_k) y_k
+\]</span></p>
+<p>기존의 indicator function이 이렇게 softmax function으로 대체되면서 미분도 가능해지고, 오차를 통한 backpropagation도 가능해지면서 parameter를 <strong>end-to-end</strong>로 직접 최적화할 수 있게 된다. 추가로 주어진 test 데이터가 여러 개인 상황(<span class="math inline">\(K&gt;1\)</span>) 에서도, Matching Networks는 기존의 수식을 활용하면서 일종의 투표방식(Voting)으로 동작하게 되는데, Support Set에서의 데이터와 test 데이터 간의 유사도를 기반으로 선택된 label에 투표가 많이 누적된 것으로 추론하는 방식으로 이뤄진다. 이 전체 과정을 알고리즘으로 표현하면 다음과 같다.</p>
+<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-line-number="true" data-line-number-punc=":" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-comment-delimiter="//">
+<div class="pseudocode">
+\begin{algorithm} \caption{General Algorithm of Non-parametric approach} \begin{algorithmic} \State Sample task $\mathcal{T}_i \quad$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta} (x^{ts}, x_k) y_k$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\hat{y}^{ts}, y^{ts})$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>이렇게 하면 이전 강의에서 다뤘던 Parametric Model <span class="math inline">\(\phi\)</span> 가 없어진 Non-Parametric Model의 형태로 동작되는 것을 확인할 수 있다.</p>
+<p>사실 Matching을 하기 위한 목적으로 내부에서 별도의 유사도를 계산하고 이에 기반한 가중치를 계산하는데, 문제는 각각의 test 데이터를 <strong>“독립적으로”</strong> 비교하다보니 어느 잘못된 데이터로 인해서 편향이 발생할 수 있다. 만약 특정 데이터 하나가 잘못된 label을 가지거나 outlier인데, 우연히 test 데이터와의 유사도가 높게 나온다면, 이 잘못된 결과로 인해서 다른 정상적인 결과들이 묻혀버리는(Overpower) 현상이 나타날 수 있다. 이로 인해서 개별 예제가 아닌, class별 평균 정보를 모아서 일종의 <strong>prototype</strong>을 만드는 <strong>Prototypical Networks</strong> 방식이 이어서 설명된다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+노트
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>실제 논문을 보면 Support Set에서 사용된 context encoder는 Bi-directional LSTM <span class="math inline">\(g_{\theta}\)</span> 를 사용했고, Query Set에서 사용된 encoder는 Support Set의 임베딩결과에 영향을 받는(Conditioned) Attention 기반의 LSTM <span class="math inline">\(h_{\theta}\)</span> 로 되어 있는데, 이 부분은 저자들이 선택한 구조라고 강의에서 소개하고 있다. 논문에도 특정 데이터 하나만 독립적으로 보는 것이 아니라, 데이터셋 내의 다른 task간의 관계를 함께 고려하기 위해서 LSTM 구조를 썼다고 언급되어 있다. 강의내 질문에서도 동일한 내용으로 질문이 나왔는데, 교수는 이 부분에 대해서 동일한 encoder를 사용해도 무방하다고 소개했으며, 원논문에서는 복잡한 LSTM기반의 앙상블 구조를 사용했지만, 후술될 <strong>Prototypical Networks</strong>과 더불어 이어지는 연구들에서는 동일한 encoder를 쓰는 형태로 일반화된 것을 확인할 수 있다.</p>
+</div>
+</div>
+</section><section id="prototypical-networks-for-non-parametric-model" class="level2"><h2 class="anchored" data-anchor-id="prototypical-networks-for-non-parametric-model">Prototypical Networks for Non-Parametric Model</h2>
+<p>앞에서 언급한 바와 같이 각각의 test 데이터에 독립적으로 판단하면서 정상적인 결과가 묻혀버리는 Matching Networks의 한계를 극복하기 위해서 제안된 아이디어는 이렇게 개별 훈련 데이터를 일일이 distance를 비교하는 대신, 각 class별로 데이터들의 정보를 모아(aggregate) 하나의 대표값(prototypical embedding)을 만드는 것이었다. 그리고 만약 새로운 테스트 데이터가 들어오면, 개별 데이터가 아닌 이 대표값들과의 distance만 비교하는 형태(Nearest Neighbors to the prototypes)로 분류가 진행된다면, 앞에서 발생한 한계를 극복할 수 있을텐데 이 방법이 바로 <strong>Prototypical Networks</strong>란 이름으로 <span class="citation" data-cites="snell2017prototypical">Snell, Swersky, 와/과 Zemel (<a href="#ref-snell2017prototypical" role="doc-biblioref">2017</a>)</span> 의 논문에 소개되었다.</p>
+<div id="fig-prototypical-networks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-prototypical-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/20p_Prototypical_networks.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prototypical-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 6: Prototypical Networks
+</figcaption></figure>
+</div>
+<p><a href="#fig-prototypical-networks" class="quarto-xref">그림 6</a> 는 앞에서 소개한 방식을 그림으로 표현한 것으로, 만약 <span class="math inline">\(x\)</span> 라는 흰점의 class를 알고자 할 경우, 각 class별 Prototype은 다음과 같이 계산한다. 앞에서 언급한 Nearest Neighbor방식으로 구한 결과의 평균을 구하는 과정이다.</p>
+<p><span class="math display">\[
+c_n = \frac{1}{K} \sum_{(x_k, y_k) \in \mathcal{D}_i^{tr}} \mathbb{1}(y == n) f_{\theta}(x_k)
+\]</span></p>
+<p>이후에 주어진 test 데이터와 prototype (<span class="math inline">\(c_n\)</span>)간의 distance를 <span class="math inline">\(d(c_n, x_k^{ts})\)</span> 라고 정의할 경우, <span class="math inline">\(y=n\)</span> 이 될 확률은 <a href="#eq-prototype-softmax" class="quarto-xref">방정식 1</a> 과 같이 softmax 함수을 적용해서 계산할 수 있다. 참고로 distance 함수는 작을수록 유사하다는 의미를 가지므로, 수식에는 각각 음수의 형태 (<span class="math inline">\(-d\)</span>)로 들어가게 된다.</p>
+<p><span id="eq-prototype-softmax"><span class="math display">\[
+p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(-d(f_{\theta}(x), c_{n'}))}
+\tag{1}\]</span></span></p>
+<p>참고로 강의에서 교수는 이 <span class="math inline">\(d\)</span> 함수에 대해 부연 설명을 덧붙였는데, <span class="citation" data-cites="snell2017prototypical">Snell, Swersky, 와/과 Zemel (<a href="#ref-snell2017prototypical" role="doc-biblioref">2017</a>)</span> 논문을 비롯한 여러 연구에서는 유사도를 측정하기 위해 Euclidean distance나 Cosine similarity 같은 고정된 함수를 사용했다는 점이다. (특히 Prototypical Networks 논문은 이 Distance function으로 Euclidean distance를 선택하는 것이 성능에 어떤 중요한 기여를 하는지 수학적으로 증명하기도 했다.)</p>
+<p>여기서 한 걸음 더 나아가, 이 <strong>Distance를 구하는 방법 자체도 신경망으로 학습시킬 수 있다</strong>고 설명했다. 이 아이디어를 적용한다면, 모델은 단순히 데이터를 임베딩하는 신경망의 파라미터 <span class="math inline">\(\theta_f\)</span> 뿐만 아니라, 거리를 구하는 신경망의 파라미터 <span class="math inline">\(\theta_d\)</span> 까지 함께 최적화하는 형태, 즉 <span class="math inline">\(\min_{\theta_f, \theta_d} \mathcal{L}(\hat{y}, y)\)</span> 로 학습이 진행될 것이다.</p>
+</section><section id="challenges-and-ideas" class="level2"><h2 class="anchored" data-anchor-id="challenges-and-ideas">Challenges and Ideas</h2>
+<p>앞에서 소개한 것처럼 주어진 데이터에 대한 embedding space를 구하고, Nearest Neighbor 방식을 통해 test 데이터의 label을 추정하는 방법은 Non-parametric 기법에서 생각해볼 수 있는 가장 보편적인 방법이지만, 이런 방식에도 앞에서 언급한 바와 같이 한계점이 존재한다. 개별 데이터에 대해서 독립적으로 구한다던가, 단순한 distance 측정을 통해서 찾는 유사성보다도 데이터들간에 내재되어 있는 복잡한 관계에 대해서도 어떻게 대응할 수 있을지 생각해볼 필요가 있다.</p>
+<div id="fig-relation-networks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-relation-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_relation_networks.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relation-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 7: Relation Networks
+</figcaption></figure>
+</div>
+<p><a href="#fig-relation-networks" class="quarto-xref">그림 7</a> 는 <span class="citation" data-cites="sung2018learning">Sung 기타 (<a href="#ref-sung2018learning" role="doc-biblioref">2018</a>)</span> 논문에서 소개된 <strong>Relation Networks</strong> 라는 구조로, 앞에서 잠깐 언급했던 distanace를 구하는 과정 자체를 신경망으로 학습시키는 방식이다. 기존 방식은 embedding 후 <span class="math inline">\(\ell_2\)</span> Distance나 Cosine Similarity 같은 사전에 정의된 distance function을 활용했었는데, 이 경우 복잡한 관계를 가진 데이터들간에 대해서는 명확하게 계산하기가 어려웠다. 이를 해결하기 위해서 해당 논문에서는 우선 test 데이터와 training 데이터의 Feature map을 embedding module (<span class="math inline">\(f_\phi\)</span>)을 통해서 추출한 후, 각 feature map들을 하나로 이어붙였다.(Concatenation) 그 후 이에 대한 출력값을 뒤에 있는 relation module (<span class="math inline">\(g_\phi\)</span>) 에 넣음으로써 나오는 Relation Score를 통해 test 데이터가 어떤 label을 가지는지를 추정할 수 있도록 설계되었다.</p>
+<div id="fig-imp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-imp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_infinite_mixture_Prototypes.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-imp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 8: Infinite Mixture Prototypes
+</figcaption></figure>
+</div>
+<p><a href="#fig-imp" class="quarto-xref">그림 8</a> 도 데이터간의 복잡한 관계를 추출하기 위한 방법으로 소개된 <strong>Infinite Mixture Prototypes (IMP)</strong> 라는 구조에 대한 내용이다. 해당 구조는 <span class="citation" data-cites="pmlr-v97-allen19b">Allen 기타 (<a href="#ref-pmlr-v97-allen19b" role="doc-biblioref">2019</a>)</span> 논문에서 제안된 방식인데, 앞에서 언급된 Prototypical Networks 방식은 군집화가 이뤄진 데이터들의 대표값(Prototype)을 통해서 유사성을 계산하는 방식을 개선하고자 했다. 교수는 이 방식의 필요성에 대해서 예시를 들어 잠깐 설명했는데, 예를 들어 고양이란 class내에서도 개와 비슷하게 생긴 특이한 품종이 있을수도 있을텐데, 이런 경우를 강제로 Prototype화 시키면 오히려 성능이 떨어지게 된다. 그래서 논문에서 제안한 아이디어는 class별로 무조건 한개의 prototype을 갖게 하지 말고, 실제로 데이터의 분포 형태를 보고 adaptive하게 여러개의 prototype을 생성하게 하는 방식이다. 이에 따라 cluster의 갯수도 유연하게 조절할 수 있어, 데이터 간의 복잡한 관계성에 대응할 수 있게 해준다.</p>
+<div id="fig-gnn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gnn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_gnn.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gnn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 9: Graph Neural Network for Few-shot Learning
+</figcaption></figure>
+</div>
+<p><span class="citation" data-cites="garcia2017few">Garcia 와/과 Bruna (<a href="#ref-garcia2017few" role="doc-biblioref">2017</a>)</span> 에서는 <a href="#fig-gnn" class="quarto-xref">그림 9</a> 에 나온 <strong>Graph Neural Network (GNN)</strong> 이란 구조를 Few-shot Learning에 활용하는 방법에 대해서 소개했다. 교수도 해당 구조나 논문에서 소개된 Message Passing 에 대한 내용은 강의의 범주를 넘어서기 때문에 자세하게 설명하지 않았지만, 핵심적인 아이디어에 대해선 간략하게 언급했다. 우선 앞에서 언급한 데이터간의 복잡한 관계성을 해소하기 위해, 개별 training 데이터와 test 데이터를 독립적으로 보지 않고, 하나의 큰 Graph의 Node로 보았다. 그 후 Graph Convolutional Layer를 통해서 Embedding 데이터를 추출하는데, 이때 Node 들간에 반복적인 Message Passing (Iterative Message Passing), 즉 서로의 Node 간의 정보를 계속 주고 받는 작업을 수행한다. 이렇게 업데이트된 Node들의 정보를 바탕으로 새로운 test 데이터가 어떤 class에 속할지 확률값을 추론하게 되는게 전체적인 동작 원리였다. 이에 대한 심층적인 이해를 위해서는 Stefano Ermon 교수의 <a href="https://deepgenerativemodels.github.io/">CS236.Deep Generative Models</a> 강의에서 다뤄지는 Message Passing 기법이나 Undirected Graphical Model 부분을 참조할 것을 언급했다.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Graph Neural Network">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Graph Neural Network
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Graph Neural Network은 <span class="citation" data-cites="gori2005new">Gori, Monfardini, 와/과 Scarselli (<a href="#ref-gori2005new" role="doc-biblioref">2005</a>)</span> 논문에서 처음 Graph라는 데이터 구조를 직접 처리할 수 있는 신경망에 대한 아이디어가 처음 제시된 후, <span class="citation" data-cites="Scarselli2029GraphNN">Scarselli 기타 (<a href="#ref-Scarselli2029GraphNN" role="doc-biblioref">2009</a>)</span> 논문에서 본격적으로 이에 대한 수학적 기반이 정의된 신경망 구조이다. 기존의 MLP나 CNN, RNN이 이미지같은 정형화된 데이터나 시계열같은 순차적인 데이터를 받는데 특화된 구조라면(보통 이런 데이터를 Euclidian Space에 놓여있다고 표현하는것 같다), GNN은 데이터의 크기나 형태가 불규칙적인 Node와 Edge로 구성되어 있다고 가정(Non-Euclidian Space)하고 학습하는 형태로 되어 있다. 그래서 전자에서는 데이터들이 기본적으로 독립적인 분포에서 샘플링되었다는 i.i.d 가정이 전제되어 있는 반면, 후자에서는 데이터 간에 명시적인 관계가 존재한다고 가정해서 입력 순서가 바뀌어도 동일한 결과를 가져오는게 특징이다. 특히 <span class="citation" data-cites="kipf2016semi">Kipf 와/과 Welling (<a href="#ref-kipf2016semi" role="doc-biblioref">2016</a>)</span> 에서는 해당 구조를 활용하여 <strong>Graph Convolution Network (GCN)</strong> 라는, CNN처럼 Layer를 층층이 쌓아 학습시키는 개선된 구조를 소개하였다.</p>
+</div>
+</div>
+</section><section id="case-study" class="level2"><h2 class="anchored" data-anchor-id="case-study">Case Study</h2>
+<p>강의 자료에서는 각 Meta Learning 알고리즘의 차이점에 대한 내용이 이어졌지만, 실제 강의에서는 Non-Parametric Few-shot Learning의 실사례에 대해서 먼저 소개했다.</p>
+<div id="fig-prototypical-clustering" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-prototypical-clustering-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/34p_prototypical_clustering.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prototypical-clustering-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 10: Prototypical Clustering Networks
+</figcaption></figure>
+</div>
+<p>이전 해에 진행되었던 강의에서 소개된 Case Study는 Machine Learning for Healthcare Conference (ML4HC) 에서 소개된 Dermatological Image Classification (<span class="citation" data-cites="prabhu2018prototypical">Prabhu 기타 (<a href="#ref-prabhu2018prototypical" role="doc-biblioref">2018</a>)</span>) 연구이다. 해당 논문에서 풀고자 했던 문제는 다양한 사람들의 피부 이미지를 바탕으로 수많은 종류의 피부 질환과 상태를 정확하게 분류하는 것이었다. 일반적으로 피부 질환은 그 종류가 매우 다양하고, 특히 희귀 질환의 경우 데이터의 수가 매우 적기 때문에 Few-shot Learning이 유용하게 활용될 수 있는 문제로 정의되었다. 이때 앞에서 소개한 Prototypical Networks를 사용했는데, 약간은 IMP와 비슷하게 여러 개의 Prototype을 두는 방식으로 활용하여, 하나의 질환에 대해서 여러개의 prototype이 생성되도록 변형하였고, 이를 통해서 좋은 결과를 얻을 수 있었다.</p>
+<p>이번 강의에서 새로 소개된 Case Study는 Stanford에서 진행된 무료 공개 강좌인 <a href="https://codeinplace.stanford.edu/">“Code in Place”</a>에서 학생들의 피드백을 생성하는데 Meta-Learning을 적용한 사례였다.(<span class="citation" data-cites="wu2021prototransformer">Wu 기타 (<a href="#ref-wu2021prototransformer" role="doc-biblioref">2021</a>)</span> - <a href="https://arxiv.org/abs/2107.14035">논문</a>, <a href="https://ai.stanford.edu/blog/prototransformer/">블로그</a>)</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Code in Place">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Code in Place
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Stanford에서 진행되는 강좌인 CS106A <strong>Code In Place</strong> 강의는 컴퓨터과학 분야에서 다뤄지는 주제들을 가르치는 기초 강의로, 무료로 공개되어 있고 전세계 150여개 국가에서 12000여명의 학생들과 1120여명의 학습봉사자들이 지원해서 운영되고 있다.</p>
+</div>
+</div>
+<p>해당 내용에서 해결하고자 했던 부분은 전세계 학생들이 과제수행후 제출하는 코드에 대해서 디테일한 피드백을 주는 것이었다. 학생마다 제출하는 코드의 형태도 다를 것이고, 이에 대해서 사람이 일일이 눈으로 보고 피드백을 하기에 위해서는 대략적으로 8개월정도 소모되는 방대한 작업량이었다. 이를 해소하기 위해서 정해진 문제에 대한 채점 기준표(Rubric)을 활용하여, 사용자의 입력에 따라 이에 할당된 피드백을 줄수 있는 모델을 만들고자 했다. 하지만 일반적인 Supervised Learning으로는 적용하기 어려웠던 부분이 제출물을 평가하는 것 자체가 전문성이 필요하고, 이에 대한 인위적인 labeling을 하는데 있어서도 시간이 많이 소모되어 결과적으로 데이터의 양이 매우 적다는 점이었다. 또한 학생들의 제출물 자체가 매우 다양한 형태로 구성되어 있어 분포 자체도 매우 다양하게 형성되는 분포(Long tailed Distribution)를 띄면서, 과제의 내용이 강의자에 따라서 달라질 수 있다는 부분이 단순하게 ML 기법을 통해서 해결하기는 어려운 문제였다.</p>
+<p>그래서 이 문제를 앞에서 언급한 Rubric의 개별 평가 항목을 서로 다른 few-shot task로 표현해서 Meta-Learning으로 해결하고자 했다. 이때 Rubric은 여러 개의 아이템으로 구성되어 있고, 각 아이템별로 세부 항목들이 선택될 수 있다는 것을 전제로 했다. 이를 학습하기 위한 데이터로는 CS106 강의에서 진행된 4개의 중간고사와 4개의 기말고사로부터 뽑은 63개의 문항과 이에 대한 24800여명의 학생들의 제출 답안이 있었다.</p>
+<p>먼저 시도했던 방법은 앞에서 소개했던 <span class="citation" data-cites="snell2017prototypical">Snell, Swersky, 와/과 Zemel (<a href="#ref-snell2017prototypical" role="doc-biblioref">2017</a>)</span> 의 Prototypical Networks(<a href="#eq-prototype-softmax" class="quarto-xref">방정식 1</a>) 기반으로, 이 때 embedding space를 뽑기 위한 방법으로 transformer 모델이 겹겹히 쌓여있는 형태인 RoBERTa(<span class="citation" data-cites="liu2019roberta">Liu 기타 (<a href="#ref-liu2019roberta" role="doc-biblioref">2019</a>)</span>) model을 적용한 <strong>ProtoTransformer</strong> 라는 구조를 제안했다. 이 모델을 통해서 Python 코드를 입력으로 넣고, 이에 대한 출력으로 코드에 대한 Embedding 정보를 추출하고자 했다. 그런데 단순히 이렇게만 활용해서는 성능이 나오지 않았기 때문에 이를 개선하기 위해서 몇가지 trick을 적용했다.</p>
+<ul>
+<li>
+<strong>Task Augmentation</strong>: 먼저 훈련 데이터가 부족한 것을 극복하기 위해서, Python 코드에서 발생하는 컴파일 에러를 예측하거나 Language Model에서 활용되는 Masked Token을 예측하는 self-supervised task를 추가로 만들어서 같이 학습시켰다.</li>
+<li>
+<strong>Side Information</strong>: 단순히 코드만 입력하는 것이 아니라 Rubric에 대한 항목의 이름이나, 문제의 텍스트 자체를 보조 정보로 입력하여 Few-shot Learning시 발생할 수 있는 ambiguity를 줄이려고 노력했다.</li>
+<li>
+<strong>Pre-train</strong>: 처음부터 무작위로 정의된 가중치로 시작하지 않고, 사전에 인터넷에 공개되어 있는 코드(CodeSearchNet 데이터셋(<span class="citation" data-cites="husain2019codesearchnet">Husain 기타 (<a href="#ref-husain2019codesearchnet" role="doc-biblioref">2019</a>)</span>)) 로 학습된 CodeBERT(<span class="citation" data-cites="feng2020codebert">Feng 기타 (<a href="#ref-feng2020codebert" role="doc-biblioref">2020</a>)</span>) 의 가중치를 가져왔다.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="./images/29p_prototransformer.png" class="img-fluid figure-img"></p>
+<figcaption>ProtoTransformer</figcaption></figure>
+</div>
+<p>해당 모델에 대한 평가는 먼저 offline 데이터셋으로 진행되었고, 일반화 성능을 측정하기 위해서 held-out Test를 진행했다. 이때 Held-out Rubric, 즉 모델이 훈련 과정에서 한번도 본 적 없는 “새로운 Rubric” 에 대해서 제출된 코드에 대한 평가를 진행하기도 했고, Held-out Exam, 학습 데이터에 없었던 새로운 시험 문제를 대상으로 평가하게 하는 테스트도 진행했다. 우선 Held-out Rubric 케이스에 대해서는 사람이 진행한 경우나 Supervised 방법보다 성능이 더 좋게 나왔으나, Held-out Exam에 대해서는 사람에 비해서 성능이 떨어지는 결과가 나왔다. 사실 이 케이스는 전혀 새로운 형태의 코드나 변수들이 등장할 수 있기 때문에 Held-out Rubric 케이스보다 난이도가 더 크고, 성능을 개선할 수 있는 여지가 존재한다는 것을 확인할 수 있었다.</p>
+<p>이 실험 결과들을 토대로 ProtoTransformer 모델이 단순히 기존 정답을 암기한 것이 아니라, 새로운 채점 기준이나 문제같은 새로운 환경에서도 얼마나 빠르고 정확하게 일반화할 수 있는지를 확인해볼 수 있는 결과였다.</p>
+<div id="fig-feedback" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/29p_feedback.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림 11: Code Feedback from submitted Snippets
+</figcaption></figure>
+</div>
+<p>그리고 실제로도 <a href="#fig-feedback" class="quarto-xref">그림 11</a> 과 같은 UI를 만들어 학생들에게 AI로 생성한 피드백을 제공하기도 했으며, 학생들이 받은 피드백에 대해서도 좋고 나쁜지 여부를 평가할 수 있는 평가창을 별도로 만들어, 실제로 학생들이 AI 피드백에 대한 평가도 같이 진행했는데, AI 피드백이 사람이 제공한 피드백보다 미세하게 높은 결과를 받았다. 혹시 모를 편향성을 확인하기 위해서 성별 및 국가별 데이터를 대상으로도 검증했으나, 이에 대해서도 AI가 공정하게 채점했음을 확인할 수 있었다.</p>
+</section><section id="properties-of-meta-learning-algorithms" class="level2"><h2 class="anchored" data-anchor-id="properties-of-meta-learning-algorithms">Properties of Meta-Learning Algorithms</h2>
+<p>지금까지의 강의를 통해서 Task에 대한 정보를 일종의 Parameter로 가지는 Parametric 방식의 Black-box Approach와 Optimization-based Approach, 그리고 Non-parametric Approach에 대한 내용을 다뤘다. 해결해야 할 문제에 대해서 어떤 방식이 적절한지 각 접근 방법별 비교를 통해서 정리를 해보고자 한다.</p>
+<section id="computation-graph-perspective" class="level3"><h3 class="anchored" data-anchor-id="computation-graph-perspective">Computation Graph perspective</h3>
+<p>세 방식 모두 훈련 데이터(<span class="math inline">\(\mathcal{D}^{tr}_i\)</span>)와 새로운 test 데이터(<span class="math inline">\(x^{ts}\)</span>)를 입력으로 받아, test 데이터에 대한 label(<span class="math inline">\(y^{ts}\)</span>)를 추정하는 하나의 거대한 신경망으로 볼 수 있다. 그래서 겉으로 보았을때는 내부 구조가 완전히 달라보이지만, 내부적으로 처리되는 과정(연산 그래프) 측면에서는 모두 동일한 형태를 취하고 있다. 특별한 차이라면 <strong>inner-loop</strong>에서 예측값을 도출하는 방식에 따른 것이다. Black-box approach는 구조에 대한 아무런 제약없이 데이터를 RNN같은 신경망에 그대로 통과시키는 방식이었고, Optimization-based approach는 최적화과정인 Gradient Descent 자체를 inner-loop안에서 소화할 수 있도록 내재화되었다. 마지막으로 Non-parametric 방식에선 데이터가 투영된 Embedding space에서 Nearest Neightbor 기반의 Similarity를 계산해서 예측값을 추정하는 방식으로 이뤄져 있다. 이렇게 연산 그래프 측면에서 비슷하게 동작하기 때문에 내부 구성 요소에 대해서 각각 조합하여 장점을 부각시킨 Hybrid 모델도 만들 수 있다. 교수는 이에 대한 관련 논문으로 3개를 소개했고, 첫번째는 <strong>Class-Aware Meta-Learning (CAML)</strong> (<span class="citation" data-cites="Jiang2018LearningTL">Jiang 기타 (<a href="#ref-Jiang2018LearningTL" role="doc-biblioref">2018</a>)</span>) 인데, 이 논문은 Black-box 방식과 Optimization-based 방식을 조합한 형태이다. 그래서 데이터를 바탕으로 추론하는 신경망을 조건화시키는 방식을 취하면서, 내부적으로는 Gradient Descent를 수행하여 최적화하는 형태로 제안되었다. 두번째 논문은 <strong>Latent Embedding Optimization (LEO)</strong> (<span class="citation" data-cites="rusu2018meta">Rusu 기타 (<a href="#ref-rusu2018meta" role="doc-biblioref">2018</a>)</span>) 라는 Non-parametric 방식과 Optimization 방식을 조합한 방식이었다. 기본적인 틀은 앞에서 소개한 Relation Networks처럼 Distance function을 직접 학습하는 형태를 따르되, 이를 통해 도출된 Embedding Space상에서 Gradient Descent를 수행하게끔 된다. 마지막으로 소개된 <strong>Proto-MAML</strong> (<span class="citation" data-cites="Triantafillou2020Meta-Dataset">Triantafillou 기타 (<a href="#ref-Triantafillou2020Meta-Dataset" role="doc-biblioref">2020</a>)</span>) 도 Non-parametric 방식과 Optimization-based 방식이 조합된 hybrid 방식으로 기본적으로는 Optimization-based 방식인 MAML을 사용하되, 신경망의 마지막 layer를 앞에서 소개한 Prototypical Networks로 초기화하여 Meta-training시 학습시키는 방식으로 두 방식의 장점을 결합하려 노력했다.</p>
+</section><section id="algorithmic-properties-perspective" class="level3"><h3 class="anchored" data-anchor-id="algorithmic-properties-perspective">Algorithmic properties perspective</h3>
+<p>강의에서는 각 접근방법별로 수학적이고 알고리즘적인 성질 측면에 대해서도 비교했다. 이 때 주로 살펴볼 부분은 <strong>표현력(Expressive Power)</strong>와 <strong>일관성(Consistency)</strong> 측면이다.</p>
+<ul>
+<li>표현력 (Expressive): 학습 모델이 얼마나 다양하고 광범위한 학습 절차(learning procedure)를 표현하고, 이를 묘사할 수 있는지를 나타내는 능력을 말한다. 모델이 높은 표현력을 가질수록 방대한 meta-training 데이터가 주어지는 환경 상에서의 확장가능성(Scalability)측면이나 복잡한 도메인에서의 적합성(Applicability) 측면에서 유리하다.</li>
+<li>일관성 (Consistency): 모델에게 제공되는 학습데이터가 많아질수록 모델의 성능이 일관적으로 향상되는 것을 보장하는 성질을 뜻한다. 쉽게 말해 데이터가 많이 확보되면 확보될수록 모델의 성능이 보장되는 것이므로, 이런 특성이 보장된다면 굳이 meta-training 단계에서 많은 양의 task 관련 데이터를 확보할 필요도 없어지고, 특히 meta-test시에도 기존 분포에는 없던(Out-of-Distribution) task가 나타나도 훨씬 더 안정적인 합리적인 성능을 얻을 수 있다.</li>
+</ul>
+<p>이런 측면에서 각 접근방법별 특징을 나열해보면 다음과 같다.</p>
+<table class="caption-top table">
+<caption>알고리즘별 특징 및 장단점</caption>
+<colgroup>
+<col style="width: 30%">
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 26%">
+</colgroup>
+<thead><tr class="header">
+<th>측면</th>
+<th style="text-align: left;">Black-box</th>
+<th style="text-align: right;">Optimization</th>
+<th style="text-align: center;">Non-parametric</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Expressive</td>
+<td style="text-align: left;">완전한 표현력</td>
+<td style="text-align: right;">very deep model에서만 표현력을 가짐</td>
+<td style="text-align: center;">대부분의 표현력</td>
+</tr>
+<tr class="even">
+<td>Consistency</td>
+<td style="text-align: left;">일관적이지 않음</td>
+<td style="text-align: right;">일관적이며, Gradient Descent로 환원됨</td>
+<td style="text-align: center;">특정 조건에서만 일관적임</td>
+</tr>
+<tr class="odd">
+<td>장점</td>
+<td style="text-align: left;">SL, RL과 같이 다른 방법론과 결합하기 쉬움</td>
+<td style="text-align: right;">positive inductive bias, 모델 다양성</td>
+<td style="text-align: center;">자원이 많이 필요하지 않고, 최적화하기 쉬움</td>
+</tr>
+<tr class="even">
+<td>단점</td>
+<td style="text-align: left;">최적화가 어렵고, 데이터가 많이 필요함</td>
+<td style="text-align: right;">2차 최적화로 인해 자원이 많이 필요함</td>
+<td style="text-align: center;">일반화가 어려움</td>
+</tr>
+</tbody>
+</table>
+<p>표현력 관점에서 보면 Black-box 방식은 어떤 형태의 함수이던간에 근사할 수 있기 때문에 완전한 표현력(Complete Expressive power)을 가진다. Optimization-based 방식도 역시 신경망이 충분히 깊다면 높은 표현력을 가지며, Non-parametric 방식도 대부분의 구조에서 우수한 표현력을 가진다. 반면 일관성 측면에서는 조금 달라지는데, 데이터 특성에 의존하는 Black-box 방식은 데이터가 늘어난다고 해서 무조건적으로 성능 개선이 보장되지 않는다. 반면 Optimization-based 방식은 주어진 데이터에 대해서 최적화를 수행하는 과정이 내부적으로 포함되어 있기 때문에 일관성이 강하게 보장된다. 그리고 Non-parametric 방식에서는 Embedding space로 넘기는 과정에서 데이터의 정보가 없어지지 않는한 일관성을 가진다고 설명하고 있다.</p>
+<p>장단점 측면에서도 정리해보자면 Black-box 방식은 Supervised Learning이나 Reinforcement Learning에도 같이 활용할 수 있을만큼 쉽게 다룰 수 있으나, 초기 단계에서 task에 대한 정보(inductive bias)가 제공되지 않기 때문에, 학습이 불안정할 수 있다. 또한 데이터에 의존하는 특성으로 인해서 비효율적인 측면도 존재한다. Optimization-based 방식은 Black-box 방식과 다르게 초기에 inductive bias를 주기 때문에 이로 인해서 학습초기에 안정적으로 수행할 수 있으며, 모델의 구조적 특성을 고려하지 않고도 활용할 수 있지만, 최적화 과정을 중첩으로 수행하면서 컴퓨팅 자원도 많이 소모된다는 단점이 있다. 마지막으로 Non-parametric 방식은 meta-test 단계에서 다른 방식들처럼 optimization 을 수행하지 않고, 완전히 feedfoward를 통해서 수행할 수 있어 연산도 빠르고 컴퓨팅 자원도 그만큼 덜 든다. 대신 지금까지는 해당 방식이 Classification에만 적용된 사례가 있을뿐, 확장성 측면에서 어려운 부분이 있다.</p>
+<p>이밖에도 알고리즘을 선정하는 기준 측면에서는 학습 과정내에서 문제의 모호성(Ambiguity)을 추론하는 <strong>불확실성 (Uncertainty-aware)</strong> 도 고려되어야 하고, 이부분은 추후에 다룰 Active Learning이나 Safety-critical settings, 강화학습에서의 문제 해결에 유용하게 활용될 수 있다고 설명했다.</p>
+</section></section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>바로 앞의 절을 통해서 Meta-Learning에서 기본적으로 다뤄지는 알고리즘인 Black-box Approach와 Optimization-based Approach, 그리고 Non-parametric Approach에 대한 내용을 다루고, 각 알고리즘별 장단점에 대해서 간단하게 소개했다. 특히 이번 강의에서 다뤘던 Non-parametric Approach에서는 task에 대한 정보를 parameter화하지 않고, 전통적인 머신러닝에서 많이 다뤄진 Nearest Neighbor 방식으로 유사도를 판단하여 예측값을 추정하되, metric 자체를 학습하거나 데이터간의 상관관계 및 robustness 측면을 고려하여, Matching Network이나 Prototypical Network 같은 개선된 구조에 대해서 소개했다. 마지막으로 실제 사례에도 접목한 사례를 통해 Non-parametric Few-shot Learning에서도 Meta-Learning을 활용하여 좋은 결과를 얻은 것에 대해 공유했다.</p>
+<p>알고리즘적 특성을 고려해볼 때, 교수는 일반적으로 실제 벤치마크에서도 튜닝만 잘 된다면 세가지 방식 모두 비슷하게 좋은 성능을 보여준다고 언급했으며, 다만 문제의 정의나 조건에 따라서 접근 방식을 다르게 선택할 수 있다고 설명했다. 예를 들어서 데이터가 풍부한 상황이라면 Black-box 방식을 택할 수 있고, Out-of-Distribution 상황에서도 일반화된 성능이 중요하다면 Optimization-based 방식을, 만약 Classification 문제에서 빠르게 적용해봐야 할 필요성이 있다면 Non-parametric 방식을 취해볼 수 있다는 경험적인 제안도 같이 공유했다.</p>
+<p>그리고 마지막으로 나온 질문으로 Multi-task Learning과 Meta-Learning의 방향성에 대해서도 답변이 이뤄졌는데, 사실 Meta-Learning에서는 일반적으로 많은 수의 Task에 대해서 대응할 수 있는 능력을 요구하며, 이 같은 경우가 아닌 적은 수의 task에 대해서만 대응해야 한다면 Multi-task Learning이 적합하다는 부연설명도 곁들였다.</p>
+
+
+
+</section><div id="quarto-appendix" class="default">
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-pmlr-v97-allen19b" class="csl-entry" role="listitem">
+Allen, Kelsey, Evan Shelhamer, Hanul Shin, 와/과 Joshua Tenenbaum. 2019. <span>“Infinite Mixture Prototypes for Few-shot Learning”</span>. In <em>Proceedings of the 36th International Conference on Machine Learning</em>, 편집자： Kamalika Chaudhuri 와/과 Ruslan Salakhutdinov, 97:232–41. Proceedings of Machine Learning Research. PMLR. <a href="https://proceedings.mlr.press/v97/allen19b.html">https://proceedings.mlr.press/v97/allen19b.html</a>.
+</div>
+<div id="ref-Bromley1993SignatureVU" class="csl-entry" role="listitem">
+Bromley, Jane, James W. Bentz, Léon Bottou, Isabelle M Guyon, Yann LeCun, Cliff Moore, Eduard Säckinger, 와/과 Roopak Shah. 1993. <span>“Signature Verification Using A "Siamese" Time Delay Neural Network”</span>. <em>Int. J. Pattern Recognit. Artif. Intell.</em> 7: 669–88. <a href="https://api.semanticscholar.org/CorpusID:16394033">https://api.semanticscholar.org/CorpusID:16394033</a>.
+</div>
+<div id="ref-feng2020codebert" class="csl-entry" role="listitem">
+Feng, Zhangyin, Daya Guo, Duyu Tang, Nan Duan, Xiaocheng Feng, Ming Gong, Linjun Shou, 기타. 2020. <span>“Codebert: A pre-trained model for programming and natural languages”</span>. In <em>Findings of the association for computational linguistics: EMNLP 2020</em>, 1536–47.
+</div>
+<div id="ref-garcia2017few" class="csl-entry" role="listitem">
+Garcia, Victor, 와/과 Joan Bruna. 2017. <span>“Few-shot learning with graph neural networks”</span>. <em>arXiv preprint arXiv:1711.04043</em>.
+</div>
+<div id="ref-gori2005new" class="csl-entry" role="listitem">
+Gori, M., G. Monfardini, 와/과 F. Scarselli. 2005. <span>“A new model for learning in graph domains”</span>. In <em>Proceedings. 2005 IEEE International Joint Conference on Neural Networks, 2005.</em>, 2:729–734 vol. 2. <a href="https://doi.org/10.1109/IJCNN.2005.1555942">https://doi.org/10.1109/IJCNN.2005.1555942</a>.
+</div>
+<div id="ref-husain2019codesearchnet" class="csl-entry" role="listitem">
+Husain, Hamel, Ho-Hsiang Wu, Tiferet Gazit, Miltiadis Allamanis, 와/과 Marc Brockschmidt. 2019. <span>“Codesearchnet challenge: Evaluating the state of semantic code search”</span>. <em>arXiv preprint arXiv:1909.09436</em>.
+</div>
+<div id="ref-Jiang2018LearningTL" class="csl-entry" role="listitem">
+Jiang, Xiang, Mohammad Havaei, Farshid Varno, Gabriel Chartrand, Nicolas Chapados, 와/과 Stan Matwin. 2018. <span>“Learning to Learn with Conditional Class Dependencies”</span>. In <em>International Conference on Learning Representations</em>. <a href="https://api.semanticscholar.org/CorpusID:53551947">https://api.semanticscholar.org/CorpusID:53551947</a>.
+</div>
+<div id="ref-kipf2016semi" class="csl-entry" role="listitem">
+Kipf, Thomas N, 와/과 Max Welling. 2016. <span>“Semi-supervised classification with graph convolutional networks”</span>. <em>arXiv preprint arXiv:1609.02907</em>.
+</div>
+<div id="ref-Koch2015SiameseNN" class="csl-entry" role="listitem">
+Koch, Gregory R. 2015. <span>“Siamese Neural Networks for One-Shot Image Recognition”</span>. In. <a href="https://api.semanticscholar.org/CorpusID:13874643">https://api.semanticscholar.org/CorpusID:13874643</a>.
+</div>
+<div id="ref-liu2019roberta" class="csl-entry" role="listitem">
+Liu, Yinhan, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, 와/과 Veselin Stoyanov. 2019. <span>“Roberta: A robustly optimized bert pretraining approach”</span>. <em>arXiv preprint arXiv:1907.11692</em>.
+</div>
+<div id="ref-prabhu2018prototypical" class="csl-entry" role="listitem">
+Prabhu, Viraj, Anitha Kannan, Murali Ravuri, Manish Chablani, David Sontag, 와/과 Xavier Amatriain. 2018. <span>“Prototypical clustering networks for dermatological disease diagnosis”</span>. <em>arXiv preprint arXiv:1811.03066</em>.
+</div>
+<div id="ref-rusu2018meta" class="csl-entry" role="listitem">
+Rusu, Andrei A, Dushyant Rao, Jakub Sygnowski, Oriol Vinyals, Razvan Pascanu, Simon Osindero, 와/과 Raia Hadsell. 2018. <span>“Meta-learning with latent embedding optimization”</span>. <em>arXiv preprint arXiv:1807.05960</em>.
+</div>
+<div id="ref-Scarselli2029GraphNN" class="csl-entry" role="listitem">
+Scarselli, Franco, Marco Gori, Ah Chung Tsoi, Markus Hagenbuchner, 와/과 Gabriele Monfardini. 2009. <span>“The Graph Neural Network Model”</span>. <em>IEEE Transactions on Neural Networks</em> 20 (1): 61–80. <a href="https://doi.org/10.1109/TNN.2008.2005605">https://doi.org/10.1109/TNN.2008.2005605</a>.
+</div>
+<div id="ref-snell2017prototypical" class="csl-entry" role="listitem">
+Snell, Jake, Kevin Swersky, 와/과 Richard Zemel. 2017. <span>“Prototypical networks for few-shot learning”</span>. <em>Advances in neural information processing systems</em> 30.
+</div>
+<div id="ref-sung2018learning" class="csl-entry" role="listitem">
+Sung, Flood, Yongxin Yang, Li Zhang, Tao Xiang, Philip HS Torr, 와/과 Timothy M Hospedales. 2018. <span>“Learning to compare: Relation network for few-shot learning”</span>. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em>, 1199–1208.
+</div>
+<div id="ref-Triantafillou2020Meta-Dataset" class="csl-entry" role="listitem">
+Triantafillou, Eleni, Tyler Zhu, Vincent Dumoulin, Pascal Lamblin, Utku Evci, Kelvin Xu, Ross Goroshin, 기타. 2020. <span>“Meta-Dataset: A Dataset of Datasets for Learning to Learn from Few Examples”</span>. In <em>International Conference on Learning Representations</em>. <a href="https://openreview.net/forum?id=rkgAGAVKPr">https://openreview.net/forum?id=rkgAGAVKPr</a>.
+</div>
+<div id="ref-vinyals2016matching" class="csl-entry" role="listitem">
+Vinyals, Oriol, Charles Blundell, Timothy Lillicrap, Daan Wierstra, 기타. 2016. <span>“Matching networks for one shot learning”</span>. <em>Advances in neural information processing systems</em> 29.
+</div>
+<div id="ref-wu2021prototransformer" class="csl-entry" role="listitem">
+Wu, Mike, Noah Goodman, Chris Piech, 와/과 Chelsea Finn. 2021. <span>“Prototransformer: A meta-learning approach to providing student feedback”</span>. <em>arXiv preprint arXiv:2107.14035</em>.
+</div>
+<div id="ref-zhang2018unreasonable" class="csl-entry" role="listitem">
+Zhang, Richard, Phillip Isola, Alexei A Efros, Eli Shechtman, 와/과 Oliver Wang. 2018. <span>“The unreasonable effectiveness of deep features as a perceptual metric”</span>. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em>, 586–95.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section>
+</div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+</body>
+</html>
