@@ -20,8 +20,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Add .nojekyll
-        run: touch _site/.nojekyll
+      # - name: Add .nojekyll
+      #   run: touch _site/.nojekyll
 
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
