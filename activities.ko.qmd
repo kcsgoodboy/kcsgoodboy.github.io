@@ -1,7 +1,7 @@
 ---
 title: "활동"
 lang: ko
-date: '2026-02-11'
+date: '2026-02-26'
 output: distill::distill_article
 editor_options: 
   chunk_output_type: console
@@ -16,6 +16,14 @@ comments: false
 library(distilltools)
 ```
 ## 2026
+
+**(2026. 02)** 베타리더로 참여한 **"미니멀리즘 프로그래머"** (한빛미디어) 책이 출간되었습니다.
+
+::: {.callout-note title="Comment"}
+단순함(simplicity)이란 컨셉트에 맞게 가벼운 분량으로 개발자가 가벼움을 고려하는 적절한 개발 습관에 대한 내용을 다루고 있습니다. 책을 읽으면서 저자의 의식에 몰입되는 경험을 하게 되었는데, 저자가 문제라고 언급하던 부분이 평소에는 제가 편의로 인해서 대충하던 일상이었던 것 같습니다. 그런 습관들을 해결하기 위해 여러 전략들을 저한테도 접목시킬 수 있다는 부분이 책을 통해서 얻을 수 있는 수확이 아니었을까 생각합니다. 복잡함을 추구하면서 개발하느라 복잡해진 머리를 이 책을 통해서 간결하게 만들 수 있으면 좋겠습니다.
+:::
+
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000219333716")`
 
 **(2026. 02)** 베타리더로 참여한 **"AI 자율학습 클로드 코드·코덱스 CLI·제미나이 CLI 완전 활용법"** (길벗) 책이 출간되었습니다.
 
