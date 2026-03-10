@@ -87,12 +87,56 @@ $$
 \mathbb{E}_{s \sim \mathcal{D}, a \sim \mu(\cdot \vert s)}[Q(s, a)] = \log \sum_a \exp (Q(s, a))
 $$
 
-## Example Application
+## Example Application of CQL
 
 ![Optimizing policy for sending notifications to users on LinkedIn](./images/9p_CQL_application.png)
 
 CQL이 적용된 사례로 KDD '22에 소개된 @prabhakar2022multi 에 대한 예시를 공유했다. 해당 논문에서는 LinkedIn에서 CTR(Click-Through-Rate)와 WAU(Weekly-Active-User)를 늘리기 위해 Offline RL을 사용한 사례를 공유했다. 보통 CTR과 WAU는 IT 서비스에서 주로 활용되는 KPI 중 하나로, 일반적으로는 어떤 서비스에 대해서 Notification이 가면, 사용자가 이에 반응해 해당 서비스를 이용하는 형태로 되어 있다. 물론 Notification을 많이 줄수록 사용자의 접근성이 늘겠지만, 이에 대한 비용이나 단점도 고려해야 되기 때문에 모든 요소를 고려한 적절한 점을 찾아야 하는 것이 목적(Multi-objective)이다. 그래서 논문의 저자들은 기존에 구현되어 있던 baseline(@10.1145/3488560.3510017) 과 Online RL 알고리즘인 Double DQN(DDQN), 그리고 앞에서 언급한 CQL을 결합했을 때의 결과를 Online A/B 테스트를 통해서 뽑고 성능을 비교하였다. 이 결과 단순하게 DDQN을 적용했을때는 WAU와 CTR이 줄어들면서 notification이 많아지는 안 좋은 방향으로 학습이 되었지만, DDQN과 CQL Loss가 결합된 형태는 모든 지표에서 성능이 개선되는 결과를 확인할 수 있었다.
 
 
+## Where does the reward come from?
 
+이제 Offline RL이 아닌, 이번 강의의 주제인 **Reward Learning**에 대한 내용이다.
 
+{{< video https://www.youtube.com/shorts/HA4fWhzAfnY >}}
+
+강의에 소개된 영상인데, 이 영상은 어린 아이가 스스로 물이 들어있는 병에서 컵에다 물을 따르고, 따른 물을 마시는 일련의 과정을 보여주고 있다. 여기에서 주목할 부분은 어린 아이가 어떻게 병에서 컵에다가 물을 따르고, 이 물을 마시는 과정을 "학습"할 수 있었느냐는 것이다. 이 영상에는 표현되지 않았지만, 아마 처음에는 시행착오를 겪으면서도 컵에 물을 따르고, 마시는 과정을 통해서 일련의 만족감을 느꼈기 때문에 이를 통해서 배우지 않았을까 하는 추측을 해볼 수 있다. 이처럼 이런 만족감을 일종의 보상(Reward)로 표현할 수 있는데, 로봇에게 동일한 과정을 시키게 된다면 어떻게 Reward를 줄 수 있을까? 컵에 물을 따를때 물을 얼마나 흘리지 않고 따를 수 있나? 아니면 따라진 물을 마셨을 때 물의 양을 바탕으로 보상의 정도를 설정할 수 있을까? 이런 다양한 요소를 Reward로 정의하기가 Real World에서는 어렵다. 게임과 같은 경우는 명확하게 Score나 Termination과 같은 기준이 존재하기 때문에 모델에게 명확한 보상을 전달할 수 있지만, 강의에서 예시로 든 dialog나 자율주행에서는 이런 보상(혹은 reward function)을 정의하는 것이 어렵다.
+
+사실 이런 일련의 과정을 다루는 가장 쉬운 방법은 바로 전문가의 행동을 따라하는 **Imitation Learning** 과 같은 방법을 활용하는 것이다. 하지만 Imitation Learning 역시 일종의 Supervised Learning이기 때문에 실제 환경에 내재된 dynamic에 대한 고려(reasoning)없이 전문가의 행동을 따라하는 경향을 가지며, 전문가 데이터를 모으거나 활용하는 것이 실제환경에서는 제한된 경우가 많다.
+
+{{< video https://www.youtube.com/watch?v=Z-eU5xZW7cU >}}
+
+해당 내용을 설명할때 교수는 하나의 재미있는 영상을 공유했다. 이 영상에서는 어른(전문가)의 행동을 보고 어린 아이와 침팬지가 행동을 배우는 과정에 대해서 소개하고 있는데, 눈여겨 볼 부분은 전문가가 잘못된 행동을 보여줬음에도, 어린 아이/침팬지가 그 행동을 따라하는 것이 아니라, 올바른 행동으로 고쳐서 수행했다는 것이다. 이를 통해 어떤 학습 과정도 전문가의 행동을 그대로 따라하는 것외에도 좋은 행동이라는 것을 표현하는 뭔가를 학습했다는 것을 의미한다. 이 부분이 바로 Reward Learning에서 다루는 아이디어의 기반이다.
+
+## Goal Classifiers
+
+Reward를 직접적으로 학습하는 방법보다 조금더 쉽게 접근할 수 있는 방법은 현재 주어진 상태를 통해서 목표 상태를 분류하는 **Goal Classifier**를 만드는 것이다.
+
+![Example Task: put penscil case behind notebook](./images/15p_goal_classifier.png)
+
+위의 그림은 Goal Classifier의 동작원리를 소개한 그림이다. 큰 과정으로 나눠서 살펴보면
+
+1. 로봇팔을 통해서 노트북 뒤로 필통을 놓는 것을 학습하고자 할때 로봇팔의 입력으로 들어오는 이미지에 대해서 실제로 노트북 뒤로 필통이 놓여진 좋은 케이스와 그렇지 않은 나쁜 케이스에 대한 데이터를 쌓는다.
+2. 이 데이터를 활용하여 이미지가 들어왔을 때 좋은 케이스인지 여부를 구별하는 binary classifier를 학습시킨다. 이때 입력은 $s_i$, 출력은 $0/1$ 형태로 나온다.
+3. 그리고 이렇게 학습된 classifier의 output을 강화학습시 reward로 활용한다.
+
+와 같다. 쉬운 방법이지만, 여기에서도 생각해볼 부분이, 과연 강화학습 알고리즘이 goal classifier가 내놓은 reward를 바탕으로 좋은 action을 취하는 policy를 학습시킬 수 있느냐 하는 점이다. 사실 goal classifier가 입력될 수 있는 모든 state에 대해서 좋은지 나쁜지를 판단할 수 있는 범용적인 형태라면 좋겠지만, 대부분의 경우는 학습되지 않은 상태에서는 보간이 되는 형태로 학습된다. 그렇기 때문에 실제로 학습되지 않은 state에 대해서는 좋은지 나쁜지 확실치 않은 상태에서 그 상태에 대한 출력을 바탕으로 강화학습이 수행된다면, 모델은 좋은 상태를 따라가기 보다는 오히려 classifier가 학습되지 않은 영역에 대한 약점을 추구할 가능성이 존재한다.(exploiting the classifiers weakness) 이런 현상을 **Reward Hacking** 이란 표현으로 정의하기도 하는데, 말그대로 목적을 달성하기 위해서 reward를 최대화하는 방향이 아닌 약점을 통해서 reward를 최대화하는 방법을 말한다. 
+
+사실 이 맥락에서보면 뭔가 학습되어야 할 policy는 앞에서 언급했던 CQL처럼 보수적으로 접근할 필요성이 있다. 그래서 강의에서 제안한 방법은 이미 경험하고 판정이 끝난 state에 대해서는 무조건 나쁜 케이스라고 정의하고 classifier를 계속 update 하는 것이다. 세부적으로 나누면
+
+1. 성공 케이스 ($\mathcal{D}_{+}$)와 실패 케이스 ($\mathcal{D}_{-}$)에 대한 초기 집합을 구성한다.
+2. $\mathcal{D}_{+}$ 와 $\mathcal{D}_{-}$ 를 50:50 비율로 맞춘뒤 classifier를 학습시킨다.
+3. 학습하려는 policy $\pi$ 를 사용해서 trajectory ($s_t, a_t, \dots$) 를 수집한다.
+4. Classifier로부터 얻은 reward를 활용하여 $\pi$를 업데이트한다.
+5. 이미 방문했던 state $s_t$ 를 무조건 실패 케이스에 추가한다. ($\mathcal{D}_{-} \leftarrow \mathcal{D}_{-} \cup \{s_t\}$)
+6. 2번부터 재수행한다.
+
+그러면 상대적으로 모델은 나쁜 reward를 받는 것에 대해서 CQL과 같이 보수적인 관점에서 action을 선택하게 된다. 다만 안 좋은 점이라면, 실제로 policy를 수행했을때 쌓은 trajectory 중에서도 분명 성공 케이스가 있을텐데, 이 경우도 실패케이스로 간주할 경우 궁극적으로 좋은 action을 취할 가능성이 적어진다는 것이다. 하지만, 데이터를 수집할 여건 자체가 앞에서 정의한 것처럼 50:50의 비율로 균형있게 쌓을수만 있다면, 적어도 classifier가 잘못 구별하는 케이스는 줄어들 것이다.
+
+::: {layout-ncol=2}
+{{< video ./images/19p_bc.mp4 >}} {#vid-bc}
+
+{{< video ./images/19p_medal++.mp4 >}} {#vid-medal}
+:::
+
+위의 영상은 실제로 앞에서 정의한 Goal Classifier를 Robotics RL에 적용한 사례이다.(@sharma2023self) 이 논문에서는 goal classifier를 학습하기 위해서 먼저 50개의 전문가 데이터를 수집하고, 전문가 데이터의 마지막 state를 성공 케이스로 정의하고, 이를 강화학습시 replay buffer안에 저장해서 학습하는 off-policy 방법을 따랐다. 이를 통해서 단순히 Imitation Learning을 취했던 @vid-bc 는 성공율이 26%에 그쳤던 반면, 학습시 goal classifier를 사용한 케이스인 @vid-medal 에선 62%까지 성공율을 높였다.
