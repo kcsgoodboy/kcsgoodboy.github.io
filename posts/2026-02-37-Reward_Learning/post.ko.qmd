@@ -134,9 +134,10 @@ Reward를 직접적으로 학습하는 방법보다 조금더 쉽게 접근할 �
 그러면 상대적으로 모델은 나쁜 reward를 받는 것에 대해서 CQL과 같이 보수적인 관점에서 action을 선택하게 된다. 다만 안 좋은 점이라면, 실제로 policy를 수행했을때 쌓은 trajectory 중에서도 분명 성공 케이스가 있을텐데, 이 경우도 실패케이스로 간주할 경우 궁극적으로 좋은 action을 취할 가능성이 적어진다는 것이다. 하지만, 데이터를 수집할 여건 자체가 앞에서 정의한 것처럼 50:50의 비율로 균형있게 쌓을수만 있다면, 적어도 classifier가 잘못 구별하는 케이스는 줄어들 것이다.
 
 ::: {layout-ncol=2}
-{{< video ./images/19p_bc.mp4 >}} {#vid-bc}
+{{< video ./images/19p_bc.mp4 >}} Direct Imitation Learning
 
-{{< video ./images/19p_medal++.mp4 >}} {#vid-medal}
+{{< video ./images/19p_medal++.mp4 >}} Medal++
 :::
 
-위의 영상은 실제로 앞에서 정의한 Goal Classifier를 Robotics RL에 적용한 사례이다.(@sharma2023self) 이 논문에서는 goal classifier를 학습하기 위해서 먼저 50개의 전문가 데이터를 수집하고, 전문가 데이터의 마지막 state를 성공 케이스로 정의하고, 이를 강화학습시 replay buffer안에 저장해서 학습하는 off-policy 방법을 따랐다. 이를 통해서 단순히 Imitation Learning을 취했던 @vid-bc 는 성공율이 26%에 그쳤던 반면, 학습시 goal classifier를 사용한 케이스인 @vid-medal 에선 62%까지 성공율을 높였다.
+위의 영상은 실제로 앞에서 정의한 Goal Classifier를 Robotics RL에 적용한 사례이다.(@sharma2023self) 이 논문에서는 goal classifier를 학습하기 위해서 먼저 50개의 전문가 데이터를 수집하고, 전문가 데이터의 마지막 state를 성공 케이스로 정의하고, 이를 강화학습시 replay buffer안에 저장해서 학습하는 off-policy 방법을 따랐다. 이를 통해서 단순히 Imitation Learning을 취했던 첫번째 영상의 경우는 성공율이 26%에 그쳤던 반면, 학습된 goal classifier를 사용한 케이스인 MEDAL++에선 62%까지 성공율을 높였다. 교수는 한편으로 실험 결과를 통해서 단순히 50:50 비율로 데이터를 확보하는 것 이상으로 classifier를 regularize 하는 방법이 필요하다고 언급했다.
+
