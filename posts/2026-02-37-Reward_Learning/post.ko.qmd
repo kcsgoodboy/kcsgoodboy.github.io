@@ -1,7 +1,7 @@
 ---
-title: Offline RL
+title: Reward Learning
 description: 2025년에 진행한 CS224R 강의 중 Lecture 8. Reward Learning에 대한 강의 요약
-date: '2026-02-27'
+date: '2026-03-10'
 bibliography: ../../contents/references.bib
 image: ./images/Reward_Learning_overview.ko.png
 filters:
@@ -25,3 +25,74 @@ categories:
 ![](./images/Reward_Learning_overview.ko.png)
 
 ## Recap
+
+이전 강의를 통해서 Offline RL 이라는 개념에 대해서 다뤘다. 환경과의 실시간 interaction을 통한 학습이 이뤄지는 Online RL과는 다르게, Offline RL에서는 online data collection이 없는 상태에서 주어진 데이터셋만으로 이상적인 policy를 학습시키는 것이 목적이다. 이 때 replay buffer를 쓰는 Off-policy RL에서도 다뤄졌던 내용처럼, 실제 데이터를 수집했을 때 사용한 policy ($= \text{behavior policy} \quad \pi_{\beta}$) 에 대한 정보를 모르는 상태에서, 해당 policy들을 통해 수집된 데이터를 바탕으로 실제 학습될 policy $\pi_{\theta}$ 의 expected return을 최대화할 수 있어야 한다. 
+
+$$ 
+\min_{\phi} \sum_{(s, a, s') \sim \mathcal{D}} \Vert \hat{Q}_{\phi}^{\pi_{\theta}}(s, a) - \big( r(s, a) + \gamma \mathbb{E}_{\color{blue} a' \sim \pi_{\theta}(\cdot \vert s')}[{\color{blue} \hat{Q}_{\phi}^{\pi_{\theta}}(s', a')}] \big)
+$$ {#eq-off-policy-critic-objective}
+
+@eq-off-policy-critic-objective 은 Off-policy RL에서 Critic의 objective function을 나타낸 것인데, 파란색 부분처럼 현재 State의 Q-value를 추정하기 위한 과정 중 필요한 다음 state에서 취할 action $a'$ 은 실제 데이터를 수집할 때 사용했던 $\pi_{\beta}$ 가 아닌, 현재 학습중인 $\pi_{\theta}$ 에서 추출하기 때문에, 이로 인해 overestimation이 발생할 수 있다고 언급했었다. 즉, Out-of-Distribution (OoD) Action으로 Q-value를 추정하는데 있어 문제가 발생하는 것이다.
+
+그래서 지난 강의의 후반부에 소개했던 **Implicit Q-Learning (IQL)** 에서는 이렇게 Overestimation을 야기하는 OoD action을 샘플링하는 과정을 막는 것과 더불어 몇가지 trick이 더해졌다. 먼저 비대칭 loss인 **expectile loss** 를 사용해서 $\pi_{\beta}$ 에 대한 평균이 아닌, percentile 결과에 기반해여 value function을 추정하도록 학습시켰다.
+
+$$
+\hat{V}(s) \leftarrow \arg \min_{V} \mathbb{E}_{(s, a) \sim \mathcal{D}}[\ell_2^{\lambda}(V(s) - \hat{Q}(s, a))]
+$$
+
+그리고 TD-Learning을 사용해서 위에서 구한 $V(s)$ 를 활용하여 $Q$를 추정함으로써, Variance를 줄이는 방식까지 적용되었다.
+
+$$
+\hat{Q}(s, a) \leftarrow \arg \min_{Q} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \big[ \big( Q(s, a) - \big( r + \gamma \hat{V}(s')\big) \big) \big]
+$$
+
+## Mitigating Overestimation in Offline RL
+
+사실 이렇게 OoD Action을 아예 추출하지 않게 하는 방법이외에도 Overestimation을 대응할 수 있는 방법은 여러가지가 있는데, 강의에서 소개한 방법은 Estimation 자체를 약간 보수적으로 바라보고 이에 기반하여 Q-value를 추정하는 것이다. 흔히 Pessimistic (@shi2022pessimistic), Conservative (@kumar2020conservative) 라는 표현을 사용하는데, 단어 표현 그대로 어떤 Q-value가 과도하게 크게 나타나면, 이를 보수적으로(혹은 비관적으로) 보고 Q-value estimation을 하자는 것이다. 
+
+$$
+\hat{Q}^{\pi} = \arg \min_Q \max_{\mu} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \big[ \big(\underbrace{Q(s, a) - (r(s, a) + \gamma \mathbb{E}_{a' \sim \pi}[Q(s', a')])}_{\text{standard critic update}} \big)^2  \big] + \underbrace{\alpha \mathbb{E}_{s \sim \mathcal{D}, a \sim \mu(\cdot \vert s)}[Q(s, a)]}_{\text{push down on large Q-values}} 
+$$ {#eq-cql-1st}
+
+@eq-cql-1st 식에서 첫번째 term은 앞에서 많이 다뤄졌던 cricit update 에 대한 항이고, 앞의 과도하게 큰 Q-value를 낮추는 방법으로 두번째 term이 들어간 것인데, 여기에서 새롭게 나타나는 $\mu$ 는 실제 주어진 state $s$ 에서의 Q-value estimation시 필요한 action에 대한 임의의 policy distribution을 나타낸다. 이 분포에는 당연히 OoD Action도 포함되어 있다. 그래서 위의 식을 다시 설명해보면 첫번째와 두번째 항을 합쳐서 우선은 $\mu$ 가 최대화가 되는 방향을 찾으면서, 동시에 기존의 목표였던 Q를 낮추는 방향으로 학습을 수행하게끔 하자는 것이다. 그러면 결과적으로 $\mu$ 가 커지면서 두번째 항이 커지게 되겠지만, 전체적으로는 이 constraint상에서 Q를 낮추는 방향으로 Critic을 학습시킬 수 있게 된다.
+
+여기에서 $\alpha$ 가 이 과대하게 큰 Q에 대한 penalty를 추는 일종의 hyperparameter가 되는데, 만약 이 값이 잘못 잡혀서 **너무** 과도하게 Q-value estimation을 수행하는 경우도 고려해볼 수 있다. 이런 경우를 막기 위해서, 실제 OoD action까지 포함된 $\mu$ 란 분포 내에서도 실제 데이터셋 내에 존재한 action $a$ 에 대한 Q에 대해서는 조금 완화시켜주는 세번째 term이 등장한다.
+
+$$
+\begin{aligned}
+\hat{Q}^{\pi} &= \arg \min_Q \max_{\mu} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \big[ \big(\underbrace{Q(s, a) - (r(s, a) + \gamma \mathbb{E}_{a' \sim \pi}[Q(s', a')])}_{\text{standard critic update}} \big)^2  \big] + \underbrace{\alpha \mathbb{E}_{s \sim \mathcal{D}, a \sim \mu(\cdot \vert s)}[Q(s, a)]}_{\text{push down on large Q-values}} \\
+&- \underbrace{\alpha \mathbb{E}_{(s, a) \sim \mathcal{D}}[Q(s, a)]}_{\text{push up on Q-values for }(s, a) \text{ in the } \mathcal{D}}
+\end{aligned}
+$$ {#eq-cql-final}
+
+물론 이렇게 하면, 모든 $(s, a)$ 에서의 추정된 $\hat{Q}^{\pi}$ 가 실제 $Q^{\pi}$ 보다 낮게(보수적으로) 계산될 것이라는 부분이 @eq-cql-1st 에 비해 보장되지는 않겠지만, 적어도 $\mathcal{D}$ 에 있는 $s$ 에 대한 $Q$ 의 평균값에 대해서는 항상 보수적으로 계산되는 것으로 보장할 수 있다. 이 접근 방식이 **Conservative Q-Learning (CQL)** (@kumar2020conservative) 에 대한 내용이다. 식에 대한 자세한 증명은 논문에 소개되어 있다.
+
+:::{.callout-note}
+참고로 위의 식과 @kumar2020conservative 논문에서 소개된 식이 조금 다르다고 느낄 수 있는데, 논문에서는 $\mathcal{D}$ 에 대한 term을 묶어서 표기했을 뿐 결과적으로 같은 의미를 가진다.
+:::
+
+![Actual Q function vs. Conservative Q function](./images/6p_naive_vs_conservative.png){#fig-CQL}
+
+@fig-CQL 이 [소개자료](https://bair.berkeley.edu/blog/2020/12/07/offline/) 에 있는 내용으로 실제로 데이터셋 내에 있는 action(Action support)이 아닌 OoD action에 대해서 overestimation이 발생하는 일반적인 Q-function과는 다르게 Conservative하게 Q-function을 구하게 되면, Action support 내에서는 나름대로 좋은 방향대로 Q-value를 추정하되, OoD action 영역에서는 Q-function이 실제 Q-function보다 낮게 추정되는 것을 확인할 수 있다.
+
+실제 논문에서는 @eq-cql-final 의 식외에 $\mathcal{R}(\mu)$ 라는 항이 하나 더 붙어있는 것을 확인할 수 있는데, 이는 앞에서 설명한 임의의 policy distribution인 $\mu$ 의 범주를 더 넓혀주는 일종의 regulizer의 역할을 수행한다. 일반적으로 Offline RL에서는 다양한 state, action 에서의 정확한 Q-value를 추정하는 것이 관건이 되는데, 그러면 우리가 정의하는 임의의 분포인 $\mu$ 역시도 조금더 다양한 영역을 담고 있을수록 좋을 것이다. 이때문에 entropy $\mathcal{H}$ 를 사용해서 다음과 같이 $\mathcal{R}(\mu)$ 를 일반적으로 정의한다.
+
+$$
+\mathcal{R}(\mu) = \mathbb{E}_{s \sim \mathcal{D}}[\mathcal{H}(\cdot \vert s)]
+$$
+
+강의에서는 이에 대한 자세한 설명을 하지는 않았지만, 이렇게 regularizer를 정의하게 되면 $\mu(a \vert s) \propto \exp (Q(s, a))$ 형태가 되고, 결과적으로 이런 regularizer 를 추가한 것도 앞의 objective와 동일한 Q에 대한 형태로 표현된다고 설명하고 있다. 이렇게 되면 앞의 $\min_Q \max_{\mu}$ 의 형태가 $\min_Q$ 라는 간단한 형태로 바뀌게 되는 것이다. 그러면 임의의 policy distribution $\mu$ 도 정의할 필요가 없어지게 된다.
+
+$$ 
+\mathbb{E}_{s \sim \mathcal{D}, a \sim \mu(\cdot \vert s)}[Q(s, a)] = \log \sum_a \exp (Q(s, a))
+$$
+
+## Example Application
+
+![Optimizing policy for sending notifications to users on LinkedIn](./images/9p_CQL_application.png)
+
+CQL이 적용된 사례로 KDD '22에 소개된 @prabhakar2022multi 에 대한 예시를 공유했다. 해당 논문에서는 LinkedIn에서 CTR(Click-Through-Rate)와 WAU(Weekly-Active-User)를 늘리기 위해 Offline RL을 사용한 사례를 공유했다. 보통 CTR과 WAU는 IT 서비스에서 주로 활용되는 KPI 중 하나로, 일반적으로는 어떤 서비스에 대해서 Notification이 가면, 사용자가 이에 반응해 해당 서비스를 이용하는 형태로 되어 있다. 물론 Notification을 많이 줄수록 사용자의 접근성이 늘겠지만, 이에 대한 비용이나 단점도 고려해야 되기 때문에 모든 요소를 고려한 적절한 점을 찾아야 하는 것이 목적(Multi-objective)이다. 그래서 논문의 저자들은 기존에 구현되어 있던 baseline(@10.1145/3488560.3510017) 과 Online RL 알고리즘인 Double DQN(DDQN), 그리고 앞에서 언급한 CQL을 결합했을 때의 결과를 Online A/B 테스트를 통해서 뽑고 성능을 비교하였다. 이 결과 단순하게 DDQN을 적용했을때는 WAU와 CTR이 줄어들면서 notification이 많아지는 안 좋은 방향으로 학습이 되었지만, DDQN과 CQL Loss가 결합된 형태는 모든 지표에서 성능이 개선되는 결과를 확인할 수 있었다.
+
+
+
+
