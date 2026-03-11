@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-02-37-Reward_Learning/post.html" />
 <link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-02-37-Reward_Learning/post.ko.html" />
@@ -8,8 +8,9 @@
 <meta name="generator" content="quarto-1.7.6">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Chanseok Kang">
-<meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 8. Reward Learning에 대한 강의 요약">
-<title>Reward Learning – 생각많은 소심남의 연구노트</title>
+<meta name="dcterms.date" content="2026-03-11">
+<meta name="description" content="Summary of lecture CS224R (2025) Lecture 8. Reward Learning">
+<title>Reward Learning – Chan’s Research Note</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,17 +67,17 @@ div.csl-indent {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "일치 없음",
-    "search-matching-documents-text": "일치된 문서",
-    "search-copy-link-title": "검색 링크 복사",
-    "search-hide-matches-text": "추가 검색 결과 숨기기",
-    "search-more-match-text": "추가 검색결과",
-    "search-more-matches-text": "추가 검색결과",
-    "search-clear-button-title": "제거",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "취소",
-    "search-submit-button-title": "검색",
-    "search-label": "검색"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
 
@@ -133,17 +134,17 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top quarto-banner"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    <span class="navbar-title">Chan’s Research Note</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="검색"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item"><div class="dropdown" id="languages-links-parent">
-<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/posts/2026-02-37-Reward_Learning/post.html" id="language-link-en">English</a></li></ul>
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/posts/2026-02-37-Reward_Learning/post.html" id="language-link-ko">한국어</a></li></ul>
 </div></li>
 <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
@@ -151,25 +152,25 @@ window.Quarto = {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">소개</span></a>
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../blog.html"> 
-<span class="menu-text">블로그</span></a>
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../publications.html"> 
-<span class="menu-text">출간물</span></a>
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../activities.html"> 
-<span class="menu-text">활동</span></a>
+<span class="menu-text">Activities</span></a>
   </li>  
 </ul>
 <ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
 </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full"><div class="quarto-title-banner page-columns page-full">
@@ -177,7 +178,7 @@ window.Quarto = {
       <h1 class="title">Reward Learning</h1>
                   <div>
         <div class="description">
-          2025년에 진행한 CS224R 강의 중 Lecture 8. Reward Learning에 대한 강의 요약
+          Summary of lecture CS224R (2025) Lecture 8. Reward Learning
         </div>
       </div>
                           <div class="quarto-categories">
@@ -188,8 +189,8 @@ window.Quarto = {
   </div>
     
   <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">저자</div>
-    <div class="quarto-title-meta-heading">소속</div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
     
       <div class="quarto-title-meta-contents">
       <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
@@ -207,9 +208,9 @@ window.Quarto = {
 
         
       <div>
-      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">2026년 3월 10일</p>
+        <p class="date">March 11, 2026</p>
       </div>
     </div>
     
@@ -222,7 +223,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#%EA%B0%95%EC%9D%98-%EB%B0%8F-%EC%9E%90%EB%A3%8C" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+<li><a href="#resource" id="toc-resource" class="nav-link active" data-scroll-target="#resource">Resource</a></li>
   <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
   <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
   <li><a href="#mitigating-overestimation-in-offline-rl" id="toc-mitigating-overestimation-in-offline-rl" class="nav-link" data-scroll-target="#mitigating-overestimation-in-offline-rl">Mitigating Overestimation in Offline RL</a></li>
@@ -242,7 +243,7 @@ window.Quarto = {
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="강의-및-자료" class="level3"><h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<main class="content quarto-banner-title-block" id="quarto-document-content"><section id="resource" class="level3"><h3 class="anchored" data-anchor-id="resource">Resource</h3>
 <div>
 
 </div>
@@ -257,46 +258,46 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Reward_Learning_overview.ko.png" class="img-fluid"></p>
+<p><img src="./images/Reward_Learning_overview.en.png" class="img-fluid"></p>
 </section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
-<p>이전 강의를 통해서 Offline RL 이라는 개념에 대해서 다뤘다. 환경과의 실시간 interaction을 통한 학습이 이뤄지는 Online RL과는 다르게, Offline RL에서는 online data collection이 없는 상태에서 주어진 데이터셋만으로 이상적인 policy를 학습시키는 것이 목적이다. 이 때 replay buffer를 쓰는 Off-policy RL에서도 다뤄졌던 내용처럼, 실제 데이터를 수집했을 때 사용한 policy (<span class="math inline">\(= \text{behavior policy} \quad \pi_{\beta}\)</span>) 에 대한 정보를 모르는 상태에서, 해당 policy들을 통해 수집된 데이터를 바탕으로 실제 학습될 policy <span class="math inline">\(\pi_{\theta}\)</span> 의 expected return을 최대화할 수 있어야 한다.</p>
+<p>In the previous lecture, we covered the concept of Offline Reinforcement Learning. Unlike Online RL, where learning happens through real-time interaction with the environment, the goal of Offline RL is to learn an ideal policy using only a fixed dataset, without collecting new data online. As in off-policy RL with a replay buffer, the challenge is to maximize the expected return of the learned policy (<span class="math inline">\(\pi_{\theta}\)</span>) even when the behavior policy (<span class="math inline">\(\pi_{\beta}\)</span>) that generated the data is unknown.</p>
 <p><span id="eq-off-policy-critic-objective"><span class="math display">\[
 \min_{\phi} \sum_{(s, a, s') \sim \mathcal{D}} \Vert \hat{Q}_{\phi}^{\pi_{\theta}}(s, a) - \big( r(s, a) + \gamma \mathbb{E}_{\color{blue} a' \sim \pi_{\theta}(\cdot \vert s')}[{\color{blue} \hat{Q}_{\phi}^{\pi_{\theta}}(s', a')}] \big)
 \tag{1}\]</span></span></p>
-<p><a href="#eq-off-policy-critic-objective" class="quarto-xref">방정식 1</a> 은 Off-policy RL에서 Critic의 objective function을 나타낸 것인데, 파란색 부분처럼 현재 State의 Q-value를 추정하기 위한 과정 중 필요한 다음 state에서 취할 action <span class="math inline">\(a'\)</span> 은 실제 데이터를 수집할 때 사용했던 <span class="math inline">\(\pi_{\beta}\)</span> 가 아닌, 현재 학습중인 <span class="math inline">\(\pi_{\theta}\)</span> 에서 추출하기 때문에, 이로 인해 overestimation이 발생할 수 있다고 언급했었다. 즉, Out-of-Distribution (OoD) Action으로 Q-value를 추정하는데 있어 문제가 발생하는 것이다.</p>
-<p>그래서 지난 강의의 후반부에 소개했던 <strong>Implicit Q-Learning (IQL)</strong> 에서는 이렇게 Overestimation을 야기하는 OoD action을 샘플링하는 과정을 막는 것과 더불어 몇가지 trick이 더해졌다. 먼저 비대칭 loss인 <strong>expectile loss</strong> 를 사용해서 <span class="math inline">\(\pi_{\beta}\)</span> 에 대한 평균이 아닌, percentile 결과에 기반해여 value function을 추정하도록 학습시켰다.</p>
+<p><a href="#eq-off-policy-critic-objective" class="quarto-xref">Equation 1</a> describes the critic objective in off-policy RL. As mentioned before, when estimating the Q-value for the current state, the next action <span class="math inline">\(a'\)</span> is sampled not from the behavior policy <span class="math inline">\(\pi_{\beta}\)</span> that collected the data, but from the current policy <span class="math inline">\(\pi_{\theta}\)</span> being trained. This can lead to overestimation. In other words, the problem comes from estimating Q-values using out-of-distribution (OoD) actions.</p>
+<p>That is why <strong>Implicit Q-Learning (IQL)</strong>, introduced at the end of the previous lecture, adds several tricks to avoid sampling the OoD actions that cause overestimation. First, it uses an asymmetric expectile loss so that the value function is estimated not from the mean under <span class="math inline">\(\pi_{\beta}\)</span>, but from a percentile-based target.</p>
 <p><span class="math display">\[
 \hat{V}(s) \leftarrow \arg \min_{V} \mathbb{E}_{(s, a) \sim \mathcal{D}}[\ell_2^{\lambda}(V(s) - \hat{Q}(s, a))]
 \]</span></p>
-<p>그리고 TD-Learning을 사용해서 위에서 구한 <span class="math inline">\(V(s)\)</span> 를 활용하여 <span class="math inline">\(Q\)</span>를 추정함으로써, Variance를 줄이는 방식까지 적용되었다.</p>
+<p>Then, it uses TD learning to estimate <span class="math inline">\(Q\)</span> from the learned <span class="math inline">\(V(s)\)</span>, which also helps reduce variance.</p>
 <p><span class="math display">\[
 \hat{Q}(s, a) \leftarrow \arg \min_{Q} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \big[ \big( Q(s, a) - \big( r + \gamma \hat{V}(s')\big) \big) \big]
 \]</span></p>
 </section><section id="mitigating-overestimation-in-offline-rl" class="level2"><h2 class="anchored" data-anchor-id="mitigating-overestimation-in-offline-rl">Mitigating Overestimation in Offline RL</h2>
-<p>사실 이렇게 OoD Action을 아예 추출하지 않게 하는 방법이외에도 Overestimation을 대응할 수 있는 방법은 여러가지가 있는데, 강의에서 소개한 방법은 Estimation 자체를 약간 보수적으로 바라보고 이에 기반하여 Q-value를 추정하는 것이다. 흔히 Pessimistic (<span class="citation" data-cites="shi2022pessimistic">Shi 기타 (<a href="#ref-shi2022pessimistic" role="doc-biblioref">2022</a>)</span>), Conservative (<span class="citation" data-cites="kumar2020conservative">Kumar 기타 (<a href="#ref-kumar2020conservative" role="doc-biblioref">2020</a>)</span>) 라는 표현을 사용하는데, 단어 표현 그대로 어떤 Q-value가 과도하게 크게 나타나면, 이를 보수적으로(혹은 비관적으로) 보고 Q-value estimation을 하자는 것이다.</p>
+<p>Besides completely avoiding OoD actions, there are other ways to address overestimation. The approach introduced in the lecture was to estimate Q-values more conservatively. This idea is often described as pessimistic(<span class="citation" data-cites="shi2022pessimistic">Shi et al. (<a href="#ref-shi2022pessimistic" role="doc-biblioref">2022</a>)</span>) or conservative(<span class="citation" data-cites="kumar2020conservative">Kumar et al. (<a href="#ref-kumar2020conservative" role="doc-biblioref">2020</a>)</span>): when a Q-value appears excessively large, we deliberately push it downward and estimate it more cautiously.</p>
 <p><span id="eq-cql-1st"><span class="math display">\[
 \hat{Q}^{\pi} = \arg \min_Q \max_{\mu} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \big[ \big(\underbrace{Q(s, a) - (r(s, a) + \gamma \mathbb{E}_{a' \sim \pi}[Q(s', a')])}_{\text{standard critic update}} \big)^2  \big] + \underbrace{\alpha \mathbb{E}_{s \sim \mathcal{D}, a \sim \mu(\cdot \vert s)}[Q(s, a)]}_{\text{push down on large Q-values}}
 \tag{2}\]</span></span></p>
-<p><a href="#eq-cql-1st" class="quarto-xref">방정식 2</a> 식에서 첫번째 term은 앞에서 많이 다뤄졌던 cricit update 에 대한 항이고, 앞의 과도하게 큰 Q-value를 낮추는 방법으로 두번째 term이 들어간 것인데, 여기에서 새롭게 나타나는 <span class="math inline">\(\mu\)</span> 는 실제 주어진 state <span class="math inline">\(s\)</span> 에서의 Q-value estimation시 필요한 action에 대한 임의의 policy distribution을 나타낸다. 이 분포에는 당연히 OoD Action도 포함되어 있다. 그래서 위의 식을 다시 설명해보면 첫번째와 두번째 항을 합쳐서 우선은 <span class="math inline">\(\mu\)</span> 가 최대화가 되는 방향을 찾으면서, 동시에 기존의 목표였던 Q를 낮추는 방향으로 학습을 수행하게끔 하자는 것이다. 그러면 결과적으로 <span class="math inline">\(\mu\)</span> 가 커지면서 두번째 항이 커지게 되겠지만, 전체적으로는 이 constraint상에서 Q를 낮추는 방향으로 Critic을 학습시킬 수 있게 된다.</p>
-<p>여기에서 <span class="math inline">\(\alpha\)</span> 가 이 과대하게 큰 Q에 대한 penalty를 추는 일종의 hyperparameter가 되는데, 만약 이 값이 잘못 잡혀서 <strong>너무</strong> 과도하게 Q-value estimation을 수행하는 경우도 고려해볼 수 있다. 이런 경우를 막기 위해서, 실제 OoD action까지 포함된 <span class="math inline">\(\mu\)</span> 란 분포 내에서도 실제 데이터셋 내에 존재한 action <span class="math inline">\(a\)</span> 에 대한 Q에 대해서는 조금 완화시켜주는 세번째 term이 등장한다.</p>
+<p>In <a href="#eq-cql-1st" class="quarto-xref">Equation 2</a>, the first term is the standard critic update, while the second term is added to suppress excessively large Q-values. The new distribution <span class="math inline">\(\mu\)</span> represents an arbitrary policy distribution over actions for a given state <span class="math inline">\(s\)</span>, and naturally includes OoD actions as well. Intuitively, the objective first looks for a distribution <span class="math inline">\(\mu\)</span> that makes the penalty large, while simultaneously learning $ Q$ in a direction that lowers those inflated values. As a result, the critic is trained under a constraint that penalizes overly optimistic Q estimates.</p>
+<p>Here, <span class="math inline">\(\alpha\)</span> acts as a hyperparameter controlling the penalty strength. If it is chosen poorly, Q-values may be pushed down too aggressively. To prevent that, <a href="#eq-cql-final" class="quarto-xref">Equation 3</a> adds a third term that slightly relaxes the penalty for actions that actually appear in the dataset.</p>
 <p><span id="eq-cql-final"><span class="math display">\[
 \begin{aligned}
 \hat{Q}^{\pi} &amp;= \arg \min_Q \max_{\mu} \mathbb{E}_{(s, a, s') \sim \mathcal{D}} \big[ \big(\underbrace{Q(s, a) - (r(s, a) + \gamma \mathbb{E}_{a' \sim \pi}[Q(s', a')])}_{\text{standard critic update}} \big)^2  \big] + \underbrace{\alpha \mathbb{E}_{s \sim \mathcal{D}, a \sim \mu(\cdot \vert s)}[Q(s, a)]}_{\text{push down on large Q-values}} \\
 &amp;- \underbrace{\alpha \mathbb{E}_{(s, a) \sim \mathcal{D}}[Q(s, a)]}_{\text{push up on Q-values for }(s, a) \text{ in the } \mathcal{D}}
 \end{aligned}
 \tag{3}\]</span></span></p>
-<p>물론 이렇게 하면, 모든 <span class="math inline">\((s, a)\)</span> 에서의 추정된 <span class="math inline">\(\hat{Q}^{\pi}\)</span> 가 실제 <span class="math inline">\(Q^{\pi}\)</span> 보다 낮게(보수적으로) 계산될 것이라는 부분이 <a href="#eq-cql-1st" class="quarto-xref">방정식 2</a> 에 비해 보장되지는 않겠지만, 적어도 <span class="math inline">\(\mathcal{D}\)</span> 에 있는 <span class="math inline">\(s\)</span> 에 대한 <span class="math inline">\(Q\)</span> 의 평균값에 대해서는 항상 보수적으로 계산되는 것으로 보장할 수 있다. 이 접근 방식이 <strong>Conservative Q-Learning (CQL)</strong> (<span class="citation" data-cites="kumar2020conservative">Kumar 기타 (<a href="#ref-kumar2020conservative" role="doc-biblioref">2020</a>)</span>) 에 대한 내용이다. 식에 대한 자세한 증명은 논문에 소개되어 있다.</p>
+<p>Although this does not guarantee that every estimated <span class="math inline">\(\hat{Q}^{\pi}\)</span> will be lower than the true <span class="math inline">\(Q^{\pi}\)</span>, it does guarantee conservative estimation, at least on average, over states contained in the dataset. This is the key idea behind <strong>Conservative Q-Learning (CQL)</strong> (<span class="citation" data-cites="kumar2020conservative">Kumar et al. (<a href="#ref-kumar2020conservative" role="doc-biblioref">2020</a>)</span>).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-노트
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>참고로 위의 식과 <span class="citation" data-cites="kumar2020conservative">Kumar 기타 (<a href="#ref-kumar2020conservative" role="doc-biblioref">2020</a>)</span> 논문에서 소개된 식이 조금 다르다고 느낄 수 있는데, 논문에서는 <span class="math inline">\(\mathcal{D}\)</span> 에 대한 term을 묶어서 표기했을 뿐 결과적으로 같은 의미를 가진다.</p>
+<p>The note in the article adds that the equation shown in the lecture may look slightly different from the one in <span class="citation" data-cites="kumar2020conservative">Kumar et al. (<a href="#ref-kumar2020conservative" role="doc-biblioref">2020</a>)</span>, but the meaning is effectively the same because the paper groups the dataset-related terms differently.</p>
 </div>
 </div>
 <div id="fig-CQL" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -304,55 +305,47 @@ window.Quarto = {
 <img src="./images/6p_naive_vs_conservative.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CQL-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 1: Actual Q function vs. Conservative Q function
+Figure 1: Actual Q function vs. Conservative Q function
 </figcaption></figure>
 </div>
-<p><a href="#fig-CQL" class="quarto-xref">그림 1</a> 이 <a href="https://bair.berkeley.edu/blog/2020/12/07/offline/">소개자료</a> 에 있는 내용으로 실제로 데이터셋 내에 있는 action(Action support)이 아닌 OoD action에 대해서 overestimation이 발생하는 일반적인 Q-function과는 다르게 Conservative하게 Q-function을 구하게 되면, Action support 내에서는 나름대로 좋은 방향대로 Q-value를 추정하되, OoD action 영역에서는 Q-function이 실제 Q-function보다 낮게 추정되는 것을 확인할 수 있다.</p>
-<p>실제 논문에서는 <a href="#eq-cql-final" class="quarto-xref">방정식 3</a> 의 식외에 <span class="math inline">\(\mathcal{R}(\mu)\)</span> 라는 항이 하나 더 붙어있는 것을 확인할 수 있는데, 이는 앞에서 설명한 임의의 policy distribution인 <span class="math inline">\(\mu\)</span> 의 범주를 더 넓혀주는 일종의 regulizer의 역할을 수행한다. 일반적으로 Offline RL에서는 다양한 state, action 에서의 정확한 Q-value를 추정하는 것이 관건이 되는데, 그러면 우리가 정의하는 임의의 분포인 <span class="math inline">\(\mu\)</span> 역시도 조금더 다양한 영역을 담고 있을수록 좋을 것이다. 이때문에 entropy <span class="math inline">\(\mathcal{H}\)</span> 를 사용해서 다음과 같이 <span class="math inline">\(\mathcal{R}(\mu)\)</span> 를 일반적으로 정의한다.</p>
-<p><span class="math display">\[
-\mathcal{R}(\mu) = \mathbb{E}_{s \sim \mathcal{D}}[\mathcal{H}(\cdot \vert s)]
-\]</span></p>
-<p>강의에서는 이에 대한 자세한 설명을 하지는 않았지만, 이렇게 regularizer를 정의하게 되면 <span class="math inline">\(\mu(a \vert s) \propto \exp (Q(s, a))\)</span> 형태가 되고, 결과적으로 이런 regularizer 를 추가한 것도 앞의 objective와 동일한 Q에 대한 형태로 표현된다고 설명하고 있다. 이렇게 되면 앞의 <span class="math inline">\(\min_Q \max_{\mu}\)</span> 의 형태가 <span class="math inline">\(\min_Q\)</span> 라는 간단한 형태로 바뀌게 되는 것이다. 그러면 임의의 policy distribution <span class="math inline">\(\mu\)</span> 도 정의할 필요가 없어지게 된다.</p>
-<p><span class="math display">\[
-\mathbb{E}_{s \sim \mathcal{D}, a \sim \mu(\cdot \vert s)}[Q(s, a)] = \log \sum_a \exp (Q(s, a))
-\]</span></p>
+<p><a href="#fig-CQL" class="quarto-xref">Figure 1</a> also illustrates that, unlike a standard Q-function that overestimates on OoD actions, a conservative Q-function keeps reasonable estimates within the action support while assigning lower values in OoD regions. The lecture also mentions an additional regularizer <span class="math inline">\(\mathcal{R}(\mu)\)</span>, typically defined using entropy, to broaden the action coverage of <span class="math inline">\(\mu\)</span>. With this regularizer, <span class="math inline">\(\mu(a \vert s) \propto \exp (Q(s, a))\)</span>, which simplifies the original <span class="math inline">\(\min_Q \max_{\mu}\)</span> form into a simpler objective depending only on <span class="math inline">\(Q\)</span>.</p>
 </section><section id="example-application-of-cql" class="level2"><h2 class="anchored" data-anchor-id="example-application-of-cql">Example Application of CQL</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="./images/9p_CQL_application.png" class="img-fluid figure-img"></p>
 <figcaption>Optimizing policy for sending notifications to users on LinkedIn</figcaption></figure>
 </div>
-<p>CQL이 적용된 사례로 KDD ’22에 소개된 <span class="citation" data-cites="prabhakar2022multi">Prabhakar 기타 (<a href="#ref-prabhakar2022multi" role="doc-biblioref">2022</a>)</span> 에 대한 예시를 공유했다. 해당 논문에서는 LinkedIn에서 CTR(Click-Through-Rate)와 WAU(Weekly-Active-User)를 늘리기 위해 Offline RL을 사용한 사례를 공유했다. 보통 CTR과 WAU는 IT 서비스에서 주로 활용되는 KPI 중 하나로, 일반적으로는 어떤 서비스에 대해서 Notification이 가면, 사용자가 이에 반응해 해당 서비스를 이용하는 형태로 되어 있다. 물론 Notification을 많이 줄수록 사용자의 접근성이 늘겠지만, 이에 대한 비용이나 단점도 고려해야 되기 때문에 모든 요소를 고려한 적절한 점을 찾아야 하는 것이 목적(Multi-objective)이다. 그래서 논문의 저자들은 기존에 구현되어 있던 baseline(<span class="citation" data-cites="10.1145/3488560.3510017">Muralidharan (<a href="#ref-10.1145/3488560.3510017" role="doc-biblioref">2022</a>)</span>) 과 Online RL 알고리즘인 Double DQN(DDQN), 그리고 앞에서 언급한 CQL을 결합했을 때의 결과를 Online A/B 테스트를 통해서 뽑고 성능을 비교하였다. 이 결과 단순하게 DDQN을 적용했을때는 WAU와 CTR이 줄어들면서 notification이 많아지는 안 좋은 방향으로 학습이 되었지만, DDQN과 CQL Loss가 결합된 형태는 모든 지표에서 성능이 개선되는 결과를 확인할 수 있었다.</p>
+<p>As an example of CQL in practice, the lecture introduced the KDD 2022 work by <span class="citation" data-cites="prabhakar2022multi">Prabhakar et al. (<a href="#ref-prabhakar2022multi" role="doc-biblioref">2022</a>)</span>, which applied Offline RL at LinkedIn to improve CTR (Click-Through Rate) and WAU (Weekly Active Users). In this setting, notifications can increase user engagement, but sending too many notifications also has costs and downsides. The task is therefore a multi-objective optimization problem.</p>
+<p>The authors compared an existing baseline(<span class="citation" data-cites="10.1145/3488560.3510017">Muralidharan (<a href="#ref-10.1145/3488560.3510017" role="doc-biblioref">2022</a>)</span>), Double DQN (DDQN), and a version combining DDQN with CQL loss through online A/B testing. Plain DDQN led to an undesirable result: WAU and CTR dropped while the number of notifications increased. In contrast, combining DDQN with CQL improved all metrics.</p>
 </section><section id="where-does-the-reward-come-from" class="level2"><h2 class="anchored" data-anchor-id="where-does-the-reward-come-from">Where does the reward come from?</h2>
-<p>이제 Offline RL이 아닌, 이번 강의의 주제인 <strong>Reward Learning</strong>에 대한 내용이다.</p>
+<p>The lecture then moved from Offline RL to <strong>Reward Learning</strong>.</p>
 <div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="./images/12p_child.mp4"></source></video></div>
-<p>강의에 소개된 영상인데, 이 영상은 어린 아이가 스스로 물이 들어있는 병에서 컵에다 물을 따르고, 따른 물을 마시는 일련의 과정을 보여주고 있다. 여기에서 주목할 부분은 어린 아이가 어떻게 병에서 컵에다가 물을 따르고, 이 물을 마시는 과정을 “학습”할 수 있었느냐는 것이다. 이 영상에는 표현되지 않았지만, 아마 처음에는 시행착오를 겪으면서도 컵에 물을 따르고, 마시는 과정을 통해서 일련의 만족감을 느꼈기 때문에 이를 통해서 배우지 않았을까 하는 추측을 해볼 수 있다. 이처럼 이런 만족감을 일종의 보상(Reward)로 표현할 수 있는데, 로봇에게 동일한 과정을 시키게 된다면 어떻게 Reward를 줄 수 있을까? 컵에 물을 따를때 물을 얼마나 흘리지 않고 따를 수 있나? 아니면 따라진 물을 마셨을 때 물의 양을 바탕으로 보상의 정도를 설정할 수 있을까? 이런 다양한 요소를 Reward로 정의하기가 Real World에서는 어렵다. 게임과 같은 경우는 명확하게 Score나 Termination과 같은 기준이 존재하기 때문에 모델에게 명확한 보상을 전달할 수 있지만, 강의에서 예시로 든 dialog나 자율주행에서는 이런 보상(혹은 reward function)을 정의하는 것이 어렵다.</p>
-<p>사실 이런 일련의 과정을 다루는 가장 쉬운 방법은 바로 전문가의 행동을 따라하는 <strong>Imitation Learning</strong> 과 같은 방법을 활용하는 것이다. 하지만 Imitation Learning 역시 일종의 Supervised Learning이기 때문에 실제 환경에 내재된 dynamic에 대한 고려(reasoning)없이 전문가의 행동을 따라하는 경향을 가지며, 전문가 데이터를 모으거나 활용하는 것이 실제환경에서는 제한된 경우가 많다.</p>
+<p>It introduced a video of a young child pouring water from a bottle into a cup and then drinking it. The key question is how the child could have learned that sequence of actions. Although the video does not show it directly, we can imagine that the child learned through trial and error, guided by some internal sense of satisfaction. That sense of satisfaction can be viewed as a kind of reward.</p>
+<p>But if we asked a robot to do the same task, how would we define the reward? Should the reward depend on how little water is spilled, or how much water ends up in the cup? In real-world settings, it is hard to define all such reward components explicitly. In games, by contrast, rewards are usually clear because there are obvious signals like scores or termination conditions. In domains like dialogue or autonomous driving, defining a reward function is much harder.</p>
+<p>One easy way to handle such tasks is <strong>Imitation Learning</strong>, where the system simply imitates expert behavior. However, imitation learning is still a form of supervised learning, so it often copies expert actions without reasoning about the true dynamics of the environment. It also depends on collecting and using expert data, which is often limited in real-world settings.</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Z-eU5xZW7cU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>해당 내용을 설명할때 교수는 하나의 재미있는 영상을 공유했다. 이 영상에서는 어른(전문가)의 행동을 보고 어린 아이와 침팬지가 행동을 배우는 과정에 대해서 소개하고 있는데, 눈여겨 볼 부분은 전문가가 잘못된 행동을 보여줬음에도, 어린 아이/침팬지가 그 행동을 따라하는 것이 아니라, 올바른 행동으로 고쳐서 수행했다는 것이다. 이를 통해 어떤 학습 과정도 전문가의 행동을 그대로 따라하는 것외에도 좋은 행동이라는 것을 표현하는 뭔가를 학습했다는 것을 의미한다. 이 부분이 바로 Reward Learning에서 다루는 아이디어의 기반이다.</p>
+<p>The lecture illustrated this with a video in which a child and a chimpanzee observed an adult performing an action incorrectly, yet corrected the mistake instead of copying it exactly. This suggests that learning is not just about imitating behavior, but also about internalizing what counts as good behavior. That is the central motivation behind reward learning.</p>
 </section><section id="goal-classifiers" class="level2"><h2 class="anchored" data-anchor-id="goal-classifiers">Goal Classifiers</h2>
-<p>Reward를 직접적으로 학습하는 방법보다 조금더 쉽게 접근할 수 있는 방법은 현재 주어진 상태를 통해서 목표 상태를 분류하는 <strong>Goal Classifier</strong>를 만드는 것이다.</p>
+<p>An easier alternative to directly learning a reward is to build a <strong>goal classifier</strong> that predicts whether the current state matches a desired goal state.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="./images/15p_goal_classifier.png" class="img-fluid figure-img"></p>
 <figcaption>Example Task: put penscil case behind notebook</figcaption></figure>
 </div>
-<p>위의 그림은 Goal Classifier의 동작원리를 소개한 그림이다. 큰 과정으로 나눠서 살펴보면</p>
+<p>The example in the lecture was a robot arm learning to place a pencil case behind a notebook.</p>
 <ol type="1">
-<li>로봇팔을 통해서 노트북 뒤로 필통을 놓는 것을 학습하고자 할때 로봇팔의 입력으로 들어오는 이미지에 대해서 실제로 노트북 뒤로 필통이 놓여진 좋은 케이스와 그렇지 않은 나쁜 케이스에 대한 데이터를 쌓는다.</li>
-<li>이 데이터를 활용하여 이미지가 들어왔을 때 좋은 케이스인지 여부를 구별하는 binary classifier를 학습시킨다. 이때 입력은 <span class="math inline">\(s_i\)</span>, 출력은 <span class="math inline">\(0/1\)</span> 형태로 나온다.</li>
-<li>그리고 이렇게 학습된 classifier의 output을 강화학습시 reward로 활용한다.</li>
+<li>First, we collect images of successful and unsuccessful cases.</li>
+<li>Then we train a binary classifier that takes a state <span class="math inline">\(s_i\)</span> as input and predicts whether it is a good case or not.</li>
+<li>Finally, we use the classifier’s output as the reward signal for reinforcement learning.</li>
 </ol>
-<p>와 같다. 쉬운 방법이지만, 여기에서도 생각해볼 부분이, 과연 강화학습 알고리즘이 goal classifier가 내놓은 reward를 바탕으로 좋은 action을 취하는 policy를 학습시킬 수 있느냐 하는 점이다. 사실 goal classifier가 입력될 수 있는 모든 state에 대해서 좋은지 나쁜지를 판단할 수 있는 범용적인 형태라면 좋겠지만, 대부분의 경우는 학습되지 않은 상태에서는 보간이 되는 형태로 학습된다. 그렇기 때문에 실제로 학습되지 않은 state에 대해서는 좋은지 나쁜지 확실치 않은 상태에서 그 상태에 대한 출력을 바탕으로 강화학습이 수행된다면, 모델은 좋은 상태를 따라가기 보다는 오히려 classifier가 학습되지 않은 영역에 대한 약점을 추구할 가능성이 존재한다.(exploiting the classifiers weakness) 이런 현상을 <strong>Reward Hacking</strong> 이란 표현으로 정의하기도 하는데, 말그대로 목적을 달성하기 위해서 reward를 최대화하는 방향이 아닌 약점을 통해서 reward를 최대화하는 방법을 말한다.</p>
-<p>사실 이 맥락에서보면 뭔가 학습되어야 할 policy는 앞에서 언급했던 CQL처럼 보수적으로 접근할 필요성이 있다. 그래서 강의에서 제안한 방법은 이미 경험하고 판정이 끝난 state에 대해서는 무조건 나쁜 케이스라고 정의하고 classifier를 계속 update 하는 것이다. 세부적으로 나누면</p>
+<p>This is a simple approach, but it raises an important concern: can the RL algorithm really learn a good policy from the classifier’s reward? Ideally, the classifier would correctly judge every possible state, but in practice it usually only interpolates around the states it has seen. As a result, when RL encounters unseen states, it may exploit weaknesses in the classifier rather than pursue genuinely good behavior. This phenomenon is often called <strong>Reward Hacking</strong>: instead of maximizing the intended objective, the agent finds loopholes that maximize the reward.</p>
+<p>From this perspective, the policy should again be trained conservatively, much like CQL. The lecture therefore suggested an iterative scheme:</p>
 <ol type="1">
-<li>성공 케이스 (<span class="math inline">\(\mathcal{D}_{+}\)</span>)와 실패 케이스 (<span class="math inline">\(\mathcal{D}_{-}\)</span>)에 대한 초기 집합을 구성한다.</li>
-<li>
-<span class="math inline">\(\mathcal{D}_{+}\)</span> 와 <span class="math inline">\(\mathcal{D}_{-}\)</span> 를 50:50 비율로 맞춘뒤 classifier를 학습시킨다.</li>
-<li>학습하려는 policy <span class="math inline">\(\pi\)</span> 를 사용해서 trajectory (<span class="math inline">\(s_t, a_t, \dots\)</span>) 를 수집한다.</li>
-<li>Classifier로부터 얻은 reward를 활용하여 <span class="math inline">\(\pi\)</span>를 업데이트한다.</li>
-<li>이미 방문했던 state <span class="math inline">\(s_t\)</span> 를 무조건 실패 케이스에 추가한다. (<span class="math inline">\(\mathcal{D}_{-} \leftarrow \mathcal{D}_{-} \cup \{s_t\}\)</span>)</li>
-<li>2번부터 재수행한다.</li>
+<li>start with initial sets of successful states (<span class="math inline">\(\mathcal{D}_{+}\)</span>) and failed states (<span class="math inline">\(\mathcal{D}_{-}\)</span>)</li>
+<li>balance them 50:50 when training the classifier</li>
+<li>collect trajectories with the current policy, update the policy using the classifier-derived reward</li>
+<li>add every visited state <span class="math inline">\(s_t\)</span> to the failure set (<span class="math inline">\(\mathcal{D}_{-}\)</span>) ​</li>
+<li>Repeating this process</li>
 </ol>
-<p>그러면 상대적으로 모델은 나쁜 reward를 받는 것에 대해서 CQL과 같이 보수적인 관점에서 action을 선택하게 된다. 다만 안 좋은 점이라면, 실제로 policy를 수행했을때 쌓은 trajectory 중에서도 분명 성공 케이스가 있을텐데, 이 경우도 실패케이스로 간주할 경우 궁극적으로 좋은 action을 취할 가능성이 적어진다는 것이다. 하지만, 데이터를 수집할 여건 자체가 앞에서 정의한 것처럼 50:50의 비율로 균형있게 쌓을수만 있다면, 적어도 classifier가 잘못 구별하는 케이스는 줄어들 것이다.</p>
+<p>This process encourages the model to act conservatively by treating previously visited states as failures. The downside is that even some genuinely successful states from collected trajectories may be labeled as failures, which can reduce the chance of learning the best actions. Still, if the dataset can be kept balanced, this helps reduce classifier mistakes.</p>
 <div>
 
 </div>
@@ -368,7 +361,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>위의 영상은 실제로 앞에서 정의한 Goal Classifier를 Robotics RL에 적용한 사례이다.(<span class="citation" data-cites="sharma2023self">Sharma 기타 (<a href="#ref-sharma2023self" role="doc-biblioref">2023</a>)</span>) 이 논문에서는 goal classifier를 학습하기 위해서 먼저 50개의 전문가 데이터를 수집하고, 전문가 데이터의 마지막 state를 성공 케이스로 정의하고, 이를 강화학습시 replay buffer안에 저장해서 학습하는 off-policy 방법을 따랐다. 이를 통해서 단순히 Imitation Learning을 취했던 첫번째 영상의 경우는 성공율이 26%에 그쳤던 반면, 학습된 goal classifier를 사용한 케이스인 MEDAL++에선 62%까지 성공율을 높였다. 교수는 한편으로 실험 결과를 통해서 단순히 50:50 비율로 데이터를 확보하는 것 이상으로 classifier를 regularize 하는 방법이 필요하다고 언급했다.</p>
+<p>The professor then introduces <strong>MEDAL++</strong>, a robotics RL example from <span class="citation" data-cites="sharma2023self">Sharma et al. (<a href="#ref-sharma2023self" role="doc-biblioref">2023</a>)</span>. In that work, the authors first collected 50 expert demonstrations, treated the last state of each expert trajectory as a success case, and stored those examples in the replay buffer for off-policy learning. Compared with direct imitation learning, which achieved only a 26% success rate, MEDAL++ using the learned goal classifier reached 62%. The lecture also noted that beyond simply balancing the dataset, additional regularization of the classifier seems necessary.</p>
 <div id="fig-gan" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
@@ -395,13 +388,12 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-gan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 2
+Figure 2
 </figcaption></figure>
 </div>
-<p>사실 앞에서 소개한 학습 방법은 <strong>Generative Adversairal Networks (GAN)</strong>의 학습 방법과 유사하다. GAN에서는 Classifier와 Generator 두개의 요소로 나눠서 각각을 학습시키는 형태로 되어 있는데, Classifier로 하여금 실제의 이미지와 생성된 이미지를 잘 구분시키도록 학습시키고, Generator에게는 Classifier가 생성한 이미지를 진짜라고 생각할 수 있을만큼 생성하는 방향으로 학습시킨다. <a href="#fig-vqgan" class="quarto-xref">그림 2 (a)</a> 은 <span class="citation" data-cites="yu2021vector">Yu 기타 (<a href="#ref-yu2021vector" role="doc-biblioref">2021</a>)</span> 논문에 소개된 <strong>ViT-VQGAN</strong>의 동작 예시인데, 내부적으로는 Vector-Quantized GAN(VQ-GAN)을 통해서 생성한 이미지를 바탕으로 Vision Transformer(ViT)을 학습시키는 형태로 되어 있다. 그래서 서로 다른 viewpoint와 겉모습이 다른 이미지를 생성하면서 ViT의 일반화 성능을 높이는 것을 소개했다. <a href="#fig-phenaki" class="quarto-xref">그림 2 (b)</a> (<span class="citation" data-cites="villegas2022phenaki">Villegas 기타 (<a href="#ref-villegas2022phenaki" role="doc-biblioref">2022</a>)</span>) 는 <strong>Phenaki</strong> 라는 Video Generation Model 에 대한 내용인데, 주어진 text에 대해서 알맞는 video를 생성할 수 있도록 모델을 학습시키는데 GAN loss를 사용했다는게 특징이다. 결과적으로 GAN에서도 Generator가 실제에 가까운 이미지를 생성할 수 있도록 학습시키면서 궁극적으로는 생성된 이미지의 분포가 원래의 이미지 분포와 가까워지게 된다는 점은 앞에서 소개한 Goal Classifier도 동일한 관점에서 봤을때 잘 동작할 것임을 유추할 수 있다.</p>
-<p>Reward Classifier에 대해서 간단하게 요약해보자면, 어떤 현재 상태에 대해서 성공/실패 여부를 판별하는 별도의 모델을 만들어 이를 강화학습시 활용하자는 것인데, 단순하게 학습하고 활용하는 형태는 강화학습 모델에게 Reward Hacking으로 인한 exploitation을 유발할 수 있다. 그래서 추가로 적용해볼 수 있는 방법은 RL 수행 중에도 생성한 데이터를 가지고 Classifier를 추가로 업데이트하는 것이었고, 이때 이미 경험한 trajectory에 대해서는 실패로 간주함으로써 보수적으로 학습시키는 방법을 추구할 수 있다고 소개했다. 이런 방법론은 구현하기도 쉽고, task specification에 있어서는 실용적으로 접근할 수 있는 Framework이지만, 강화학습 모델의 탐색을 통해서 생성한 trajectory를 바탕으로 학습하고 이를 보상으로 삼는 케이스는 GAN에서도 겪는것처럼 학습이 불안정할 여지가 존재하다. 그리고 근본적으로 이런 접근 방식이 잘 동작하려면 기본적으로 성공하는 케이스에 대한 데이터가 필요하다는 한계도 내재하고 있다. 물론 이를 완화하기 위해서 <span class="citation" data-cites="sharma2023self">Sharma 기타 (<a href="#ref-sharma2023self" role="doc-biblioref">2023</a>)</span> 처럼 사전에 전문가 데이터를 수집하여 replay buffer에 해당 데이터를 미리 집어넣어서 학습에 활용하는 케이스도 존재한다.</p>
+<p>The professor further notes that this training style resembles <strong>Generative Adversarial Networks (GAN)</strong>, where a classifier and a generator are trained together. The classifier learns to distinguish real from generated samples, while the generator learns to fool the classifier. The examples of <strong>ViT-VQGAN</strong>(<span class="citation" data-cites="yu2021vector">Yu et al. (<a href="#ref-yu2021vector" role="doc-biblioref">2021</a>)</span>) and <strong>Phenaki</strong>(<span class="citation" data-cites="villegas2022phenaki">Villegas et al. (<a href="#ref-villegas2022phenaki" role="doc-biblioref">2022</a>)</span>) are used to illustrate how generated images or videos can help generalization. In the same spirit, a reward classifier can serve as a useful framework for task specification, but because it relies on adversarial-style interaction with trajectories produced during RL, training can be unstable. More fundamentally, it also requires some successful examples to begin with, though this limitation can be partly alleviated by seeding the replay buffer with expert data(<span class="citation" data-cites="sharma2023self">Sharma et al. (<a href="#ref-sharma2023self" role="doc-biblioref">2023</a>)</span>).</p>
 </section><section id="learning-rewards-from-human-preferences" class="level2"><h2 class="anchored" data-anchor-id="learning-rewards-from-human-preferences">Learning Rewards from Human Preferences</h2>
-<p>앞의 케이스처럼 전문가 데이터를 활용하여 Reward Classifier를 학습할 수도 있지만, 사실 이를 위해서는 어떤 데이터가 좋은지 나쁜지를 판단하는 기준이 필요하고, 기준이 불명확한 경우에는 이를 도출하기 위한 일정량의 데이터가 필요하다. 그러면 다른 방식으로 좋고 나쁜지를 판단하는 방법도 생각해볼 수 있다.</p>
+<p>Instead of learning a reward classifier from expert-labeled data, we can also learn rewards from human preferences. The problem with the classifier approach is that we need a criterion for deciding which data are good or bad, and when that criterion is unclear, we must first gather some amount of labeled data to infer it. This motivates a different strategy for judging quality.</p>
 <div id="fig-preference" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-preference-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
@@ -428,31 +420,30 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-preference-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 3
+Figure 3
 </figcaption></figure>
 </div>
-<p>위의 그림은 goal까지 도달하는 trajectory가 있다고 가정했을때, 해당 trajectory의 좋은 정도를 판단하는 예시이다. <a href="#fig-how-good" class="quarto-xref">그림 3 (a)</a> 같은 경우에서는 사전에 정의된 reward function과 같이 좋고 나쁜 정도에 대한 기준이 있어야 해당 trajectory가 좋은지 여부를 판단할 수 있다. 대신 <a href="#fig-which" class="quarto-xref">그림 3 (b)</a> 처럼 여러 개의 trajectory가 같이 놓여져 있다면 좋고 나쁜 정도의 기준이 앞의 케이스와 다르게 상대적으로 바뀐다. 대부분의 사람들이 이 케이스에는 파란색의 trajectory보다 짧고 간결하기 때문에 다른 trajectory보다 더 좋다고 평가할 수 있다. 이렇게 상대적인 기준에 따른 선호도(preference)는 절대적 기준에 따르는 것보다 부여하기가 쉽다.</p>
+<p>The professor explains this using two cases. In one case, we ask, “How good is this trajectory?” That requires an absolute standard, like a predefined reward function. In the other case, we ask, “Which trajectory is better?” When multiple trajectories are shown together, people can often judge them relatively. For example, most people would prefer a shorter, more direct blue trajectory over a longer alternative. Relative preference is often easier to provide than an absolute score.</p>
 <section id="how-to-learn-a-reward-function-from-human-preferences" class="level3"><h3 class="anchored" data-anchor-id="how-to-learn-a-reward-function-from-human-preferences">How to learn a reward function from human preferences?</h3>
-<p>그러면 우선은 RL을 위한 reward function이 필요하다는 전제하여, 위의 경우처럼 여러개의 trajectory중 좋은 trajectory (<span class="math inline">\(\tau_{\text{win}}\)</span>)과 나쁜 trajectory (<span class="math inline">\(\tau_{\text{lose}}\)</span>)가 있다고 가정해보자. 이때의 표현은 <span class="math inline">\(\tau_{\text{win}} &gt; \tau_{\text{lose}}\)</span> 로 할 수 있다. 참고로 <span class="math inline">\(\tau\)</span>는 전체 episode에 대한 trajectory일 수도 있고, 부분적인 policy roll-out 일 수도 있다. 그러면 우리가 찾고자 하는 reward function의 형태는</p>
+<p>Suppose we have a better trajectory (<span class="math inline">\(\tau_{\text{win}}\)</span>) and a worse trajectory (<span class="math inline">\(\tau_{\text{lose}}\)</span>), written as <span class="math inline">\(\tau_{\text{win}} &gt; \tau_{\text{lose}}\)</span>. Here, <span class="math inline">\(\tau\)</span> may be a full episode trajectory or just a partial rollout. The goal is to learn a reward function such that the total reward assigned to the better trajectory is greater than the total reward assigned to the worse one.</p>
 <p><span class="math display">\[
 \sum_{(s, a) \in \tau_{\text{win}}} r_{\theta}(s, a) &gt; \sum_{(s, a) \in \tau_{\text{lose}}}r_{\theta}(s, a)
 \]</span></p>
-<p>로 정의할 수 있다. 그러면 위의 식을 간단하게 축약해 각각 <span class="math inline">\(r_{\theta}(\tau_{\text{win}}), r_{\theta}(\tau_{\text{lose}})\)</span> 라고 표현한다면, 이를 활용하여 <span class="math inline">\(r_{\theta}(\tau_{\text{win}})\)</span> 가 <span class="math inline">\(r_{\theta}(\tau_{\text{lose}})\)</span> 에 비해서 얼마나 좋은지를 다음과 같이 정의할 수 있다.</p>
+<p>In shorthand, this becomes <span class="math inline">\(r_{\theta}(\tau_{\text{win}}), r_{\theta}(\tau_{\text{lose}})\)</span>. The degree to which one is better than the other can then be modeled with a sigmoid over the reward difference.</p>
 <p><span class="math display">\[
 \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))
 \]</span></p>
-<p>그러면 <strong>Maximum likelihood Estimation(MLE)</strong>을 다음의 objective function을 가지는 reward function model을 학습시킬 수 있다.</p>
+<p>Using that formulation, we can train the reward model with <strong>maximum likelihood estimation (MLE)</strong> by maximizing the log probability that the preferred trajectory receives the higher reward.</p>
 <p><span class="math display">\[
 \max_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}} [ \log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]
 \]</span></p>
-<p>이렇게 선호도에 기반한 reward function 을 학습시키는, <strong>reward learning</strong> 의 동작은 다음과 같이 표현된다.</p>
-<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-line-number="true" data-pseudocode-number="1" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-indent-size="1.2em">
+<p>The lecture then summarizes the full algorithm:</p>
+<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-line-number="true" data-comment-delimiter="//" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Complete Reward Learning} \begin{algorithmic} \State Given dataset $\{\tau_i\}$, sample batches of $k$ trajectories and ask humans to rank. \State Compute $r_{\theta}(\tau_1), \dots, r_{\theta}(\tau_k)$ under current reward model $r_{\theta}$ \State For all $\big(\begin{smallmatrix}k \\ 2 \end{smallmatrix}\big)$ pairs per batch, compute $\nabla_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}}[\log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]$ where $\tau_{\text{win}} &gt; \tau_{\text{lose}}$ \State Update $\theta$ using computed gradient \State Repeat from 2 to 4 \end{algorithmic} \end{algorithm}
 </div>
 </div>
-<p>이런 reward learning 방식은 Language Model 학습시에도 많이 활용되며, 특히 첫번째 단계에서는 동일한 prompt에 대해서 <span class="math inline">\(k\)</span> 개의 trajectory를 뽑을 수 있다. 그리고 이에 대한 평가를 사람이 하는 방식으로 이뤄진다. 보통 언어에는 단어의 위치에 따라서 의미가 달라지고, 이에 대한 선호도가 변경될 수 있기 때문에 다른 prompt가 아닌, 동일한 prompt내에서 trajectory sampling이 이뤄진다.</p>
-<p>이 모든 과정이 실제로 Online RL을 할때도 수행할 수 있기 때문에, policy를 update하는 와중에도 수집된 trajectory에 대해서 human이 평가한 것을 활용하여 reward model을 계속 업데이트할 수 있다. 이런 과정을 통해서 reward model을 정확하게 만들 수 있다면 선호도 기반의 policy optimization이 가능하게 될 것이다. 이런 연구 주제를 <strong>Preference-based RL (PbRL)</strong> 이라고 표현하는 것 같다.</p>
+<p>This style of reward learning is also widely used for language models. In that setting, the <span class="math inline">\(k\)</span> trajectories correspond to multiple candidate outputs for the same prompt, and humans compare them. Because word order and phrasing matter, these comparisons are usually made among outputs generated from the same prompt, rather than across different prompts. This process can also run alongside online RL, meaning that a reward model can keep improving as the policy collects more data and humans continue providing feedback. This overall research direction is commonly known as <strong>Preference-based RL (PbRL)</strong>.</p>
 <div id="fig-human" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-human-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
@@ -491,78 +482,78 @@ window.Quarto = {
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-human-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림 4
+Figure 4
 </figcaption></figure>
 </div>
-<p>강의에서는 선호도 기반의 강화학습이 적용된 세 개의 사례에 대해서 소개했다. <a href="#fig-backflip" class="quarto-xref">그림 4 (a)</a> 은 NeurIPS 2017에서 <span class="citation" data-cites="christiano2017deep">Christiano 기타 (<a href="#ref-christiano2017deep" role="doc-biblioref">2017</a>)</span> 논문에서 소개된, human preference가 강화학습에 적용된 첫 사례이다. 실제로 Online RL을 수행하는 루프 내에서 이런 reward learning 과정을 수행하기 위해서 사전에 사람이 평가한 900개의 preference query를 사용했다고 한다. preference를 정하는 내용은 <a href="https://openai.com/index/learning-from-human-preferences/">OpenAI 블로그</a>에 정리되어 있다. 자율주행에서도 다양한 케이스에 대한 reward function을 정의하기가 어려운데, <span class="citation" data-cites="Sadigh2017ActivePL">Sadigh 기타 (<a href="#ref-Sadigh2017ActivePL" role="doc-biblioref">2017</a>)</span> 논문에서는 가상 자율주행 환경 내에서 다양한 케이스에 대한 Preference를 모아서 학습시킨 예시를 공유했다.</p>
-<p>사실 사람들에게 많이 알려져있는 사례는 <a href="#fig-rlhf" class="quarto-xref">그림 4 (c)</a> 와 같이 Prompt에 대한 Preference를 활용하여 LLM을 학습시키는 방법일 것이다. <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>(<span class="citation" data-cites="ouyang2022training">Ouyang 기타 (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span>) 란 이름으로 소개된 이 기법은 GPT-3를 Fine-tuning한 InstructGPT를 학습시킨 핵심 기술 중 하나이며,<a href="https://openai.com/index/instruction-following/">링크</a>에서도 해당 기술이 앞에서 소개한 <span class="citation" data-cites="christiano2017deep">Christiano 기타 (<a href="#ref-christiano2017deep" role="doc-biblioref">2017</a>)</span> 에서 발전된 내용임을 밝히고 있다.</p>
+<p>The lecture introduced three major examples. <a href="#fig-backflip" class="quarto-xref">Figure 4 (a)</a> is the early work by <span class="citation" data-cites="christiano2017deep">Christiano et al. (<a href="#ref-christiano2017deep" role="doc-biblioref">2017</a>)</span>, one of the first demonstrations of using human preferences inside an online RL loop. According to the lecture, the approach used 900 human-labeled preference queries. Further details are described in OpenAI’s <a href="https://openai.com/index/learning-from-human-preferences/">Blog</a>. Another example is autonomous driving(<span class="citation" data-cites="Sadigh2017ActivePL">Sadigh et al. (<a href="#ref-Sadigh2017ActivePL" role="doc-biblioref">2017</a>)</span>), where it is difficult to define reward functions for all cases explicitly, so preferences over driving behavior can instead be collected and learned. The article also notes that the best-known modern example is <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>, where LLMs are trained from preference comparisons over prompt responses. This is the one of core technique for training InstructGPT, which is fine-tuned from GPT-3, <a href="https://openai.com/index/instruction-following/">Link</a> described that it is originated from <span class="citation" data-cites="christiano2017deep">Christiano et al. (<a href="#ref-christiano2017deep" role="doc-biblioref">2017</a>)</span>.</p>
 </section><section id="learning-rewards-from-humanai-feedback-for-llms" class="level3"><h3 class="anchored" data-anchor-id="learning-rewards-from-humanai-feedback-for-llms">Learning Rewards from Human/AI Feedback for LLMs</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="./images/29p_RL_for_LLM.png" class="img-fluid figure-img"></p>
 <figcaption>RL for LLMs</figcaption></figure>
 </div>
-<p>마지막으로 앞에서 소개한 LLM을 학습시키는데 있어 강화학습을 활용하는 과정을 소개했다. 우선 주어진 데이터셋을 통해서 초기의 Language Model을 학습시키는 <strong>Large-scale Pre-Training</strong>을 수행한다. 이때는 보통 어떤 단어나 문맥이 주어졌을때 다음 token이 뭔지를 예측하는 형태의 학습이 이뤄지고, 주어진 데이터셋 역시 정제된 데이터가 아닌, 일반적인 형태대로 학습에 활용된다. 이후 Language Model이 학습되면, 추가로 주어진 prompt에 대한 사용자가 원하는 response를 pair로 한 고품질의 데이터셋을 확보하여 <strong>Supervised Fine-Tuning(SFT)</strong>를 수행한다. 그러고 나서 바로 앞에서 설명한 <strong>RL from Human Feedback</strong>을 수행한다.</p>
-<p>이때 마지막 단계를 오늘 다룬 내용과 맞춰서 살펴보면 우선은 주어진 데이터에 대해서 사람의 선호도가 반영된 데이터를 확보한다. 이를테면 어떤 prompt가 주어졌을 때, LLM이 출력한 서로 다른 두개의 response 중에서 사람이 어떤 response가 더 좋은지를 선정하는 것이다.(<strong>Gather preference data</strong>) 이렇게 확보된 데이터를 바탕으로 주어진 prompt에 대해서 response의 좋은 정도를 나타낼 reward model <span class="math inline">\(r(x, y)\)</span> 를 학습하고(<strong>Train reward model</strong>), 이 reward function을 활용하여 expected return을 최대화할 수 있는 강화학습을 수행해서 모델을 fine-tuning을 할 수 있게 된다. (<span class="citation" data-cites="ouyang2022training">Ouyang 기타 (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span> 논문에서는 PPO를 사용했다고 알려져 있다.)</p>
+<p>Finally, the lecture explains how RL is used in training LLMs. First, a language model is trained through <strong>large-scale Pre-Training</strong>, usually by predicting the next token from large, general-purpose datasets. After that, <strong>supervised fine-tuning (SFT)</strong> is performed using a higher-quality dataset of prompt-response pairs aligned with user intent. Then <strong>RL from Human Feedback (RLHF)</strong> is applied.</p>
+<p>Viewed through the lens of reward learning, the final stage works as follows: collect human preference data over multiple responses to the same prompt, train a reward model <span class="math inline">\(r(x, y)\)</span> that scores the quality of a response for a given prompt, and then run reinforcement learning to maximize expected return under that reward. The lecture notes that <span class="citation" data-cites="ouyang2022training">Ouyang et al. (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span> used <strong>PPO</strong> for this step.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="./images/30p_rlaif.png" class="img-fluid figure-img"></p>
 <figcaption>RL from AI feedback</figcaption></figure>
 </div>
-<p>사실 이쯤되면 preference를 human이 아닌 AI가 주는 방법에 대해서 고민해볼 수 있고, 이에 대한 내용은 <strong>RL from AI Feedback(RLAIF)</strong>라는 주제로 연구가 이뤄지고 있다. <strong>Constitutional RL</strong>(<span class="citation" data-cites="bai2022constitutional">Bai 기타 (<a href="#ref-bai2022constitutional" role="doc-biblioref">2022</a>)</span>) 이라 표현된 이 논문에서는 LLM이 출력한 결과에 대해서 또다른 LLM이 어떻게 평가하는지에 대해서 연구한 내용을 소개했다. 강의에서는 간단하게 소개했지만, 핵심 내용은 일반적인 RLHF를 통한 모델 성능 개선보다 LLM내의 Chain-of-Thought (CoT) 같은 기술이 연계되면 조금더 성능을 끌어올 수 있다는 Pareto Improvement 결과를 보여주었다. 개인적으로도 ideation 중 해당 기술을 활용해보려고 찾다보니 <strong>Motif</strong>(<span class="citation" data-cites="klissarov2023motif">Klissarov 기타 (<a href="#ref-klissarov2023motif" role="doc-biblioref">2023</a>)</span>) 라는 논문도 찾았었다. 해당 논문에서는 <a href="https://github.com/facebookresearch/nle">NetHack</a> 이란 일종의 강화학습 환경에서 게이머의 행동에 대한 평가를 LLM이 하고, 이를 통해 Reward Model을 활용하면서 일종의 Motivation을 유발한다는 내용인데, 관심이 있으면 읽어보면 좋을것 같다.</p>
+<p>At this point, we can also ask whether the preferences must come from humans at all. That leads to <strong>RL from AI Feedback (RLAIF)</strong>. The article mentions <strong>Constitutional AI</strong> by <span class="citation" data-cites="bai2022constitutional">Bai et al. (<a href="#ref-bai2022constitutional" role="doc-biblioref">2022</a>)</span>, where one LLM evaluates the outputs of another LLM. The lecture only touched on this briefly, but the main message was that when such techniques are combined with mechanisms like chain-of-thought (CoT), they can produce Pareto improvements over standard RLHF. I also have interests in this topic such as <strong>Motif</strong>(<span class="citation" data-cites="klissarov2023motif">Klissarov et al. (<a href="#ref-klissarov2023motif" role="doc-biblioref">2023</a>)</span>), which studies AI-generated feedback in RL environments like <a href="https://github.com/facebookresearch/nle">NetHack</a>, where an LLM evaluates player behavior and helps provide motivation-like reward signals.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="./images/32p_unsupervised_RL.png" class="img-fluid figure-img"></p>
 <figcaption>Unsupervised RL</figcaption></figure>
 </div>
-<p>또한 이런 reward나 preference가 없는 상태(no supervision)에서도 모델이 원하는 목적까지 도달할 수 있는지에 대한 연구도 <strong>Unsupervised RL</strong>이란 주제로 활발히 진행되고 있다. (<span class="citation" data-cites="sukhbaatar2017intrinsic">Sukhbaatar 기타 (<a href="#ref-sukhbaatar2017intrinsic" role="doc-biblioref">2017</a>)</span>)</p>
+<p>The section ends by mentioning that even in the absence of explicit rewards or preferences, research on Unsupervised RL explores whether agents can still learn to reach meaningful goals. (<span class="citation" data-cites="sukhbaatar2017intrinsic">Sukhbaatar et al. (<a href="#ref-sukhbaatar2017intrinsic" role="doc-biblioref">2017</a>)</span>)</p>
 </section></section><section id="summary" class="level2"><h2 class="anchored" data-anchor-id="summary">Summary</h2>
-<p>이번 강의에서는 초반부에는 Offline RL에서 발생할 수 있는 Overestimation을 완화시켜줄 수 있도록 OoD action으로 인해서 과도하게 큰 Q-value를 낮추는 방향으로 학습되게끔 구성된 <strong>Conservative Q-Learning(CQL)</strong>을 다뤘고, 후반부에는 강화학습시 필요한 Reward를 신경망을 통해서 추론하는 <strong>Reward Learning</strong>에 대해서 다뤘다. 그중 Reward Learning에 대한 내용을 정리해보면, 우선 실제 환경을 포함한 대부분의 환경이 Reward Function이라는 것을 정의하기가 어렵고, 이를 극복하기 위해서 어떤 목표지점에서의 state를 잘 구별할 수 있는 일종의 <strong>Goal Classifier</strong>를 학습시키는 방안을 소개했다. 물론 이와중에 발생할 수 있는 Reward Hacking같은 현상을 완화하기 위해서 보수적으로 데이터를 수집하여 Classifier를 재학습하는 방식, 그리고 더 나아가 전문가가 쌓은 trajectory를 확보하여 이를 기반으로 <strong>Reward Classifier</strong>를 학습시킨 사례도 공유했다. 이런 방식은 task specification을 할때는 실용적으로 적용할 수 있는 방법이기는 하나, 아무래도 임의로 레이블링한 데이터를 기반으로 학습하는 adversarial training이다보니 학습이 불안정한 부분도 존재한다. 또한 목표치에 해당하는 데이터가 어느정도 필요하다는 한계도 있다.</p>
-<p>한편으로는 <strong>사람의 선호도(Preference)</strong> 를 기반으로 reward를 학습시키는 방법도 있다. 어떤 좋고 나쁜것에 대한 절대적인 기준보다는 여러개의 trajectory에 대해서 상대적인 선호도를 평가하는 것은 쉽기 때문에, 이를 기반으로 사용자가 원하는 목적에 맞게 학습시키는 방법이다. 이 경우 앞에서 지적했던 전문가의 데이터가 없어도 주어진 데이터에 대한 상대적인 선호도를 바탕으로 reward가 매겨지기 때문에, 전문가 데이터가 필요하다는 한계를 극복할 수 있다. 또한 최근에 LLM에 적용된 사례처럼, scale을 크게 넓혀서 적용할 수도 있고, 대부분의 LLM을 학습하는 핵심 기술로도 활용되고 있다. 다만, 선호도를 매기기 위해선 결과적으로 주어진 샘플에 대한 supervision이 필요하고, 강화학습 내에서 사람을 통해서 이런 supervision을 제공하는 경우 비용이 많이 든다는 단점도 존재한다. 물론 이를 해결하기 위해서 마지막에 설명된 <strong>RLAIF</strong>같은 기술도 연구가 되고 있다.</p>
+<p>In the first half of the lecture, the focus was on <strong>Conservative Q-Learning (CQL)</strong>, which mitigates overestimation in Offline RL by pushing down Q-values that become too large due to OoD actions. In the second half, the lecture covered <strong>Reward Learning</strong>, where the reward needed for reinforcement learning is inferred by a neural network rather than being manually specified.</p>
+<p>To summarize the reward-learning part: in most real environments, it is hard to define an explicit reward function. One practical solution is to train a <strong>goal classifier</strong> that distinguishes goal states from non-goal states and use its output as reward. To reduce problems like reward hacking, one can conservatively collect data and repeatedly retrain the classifier; some works also bootstrap this process using expert trajectories. This is practical for task specification, but because it relies on adversarial-style training over labeled data, instability can arise, and it still needs at least some expert examples.</p>
+<p>Another route is to learn rewards from <strong>human preferences</strong>. Because relative judgments across trajectories are often easier than defining absolute standards, this approach can align training with desired behavior without requiring expert demonstrations in the same way. It also scales well, which is why it has become a key technique in LLM training. That said, preference-based methods still require supervision over sampled outputs, and collecting that supervision from humans can be expensive. Techniques like <strong>RLAIF</strong> are being studied to reduce that cost.</p>
 
 
 
 </section><div id="quarto-appendix" class="default">
-<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2>
+<section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bai2022constitutional" class="csl-entry" role="listitem">
-Bai, Yuntao, Saurav Kadavath, Sandipan Kundu, Amanda Askell, Jackson Kernion, Andy Jones, Anna Chen, 기타. 2022. <span>“Constitutional ai: Harmlessness from ai feedback”</span>. <em>arXiv preprint arXiv:2212.08073</em>.
+Bai, Yuntao, Saurav Kadavath, Sandipan Kundu, Amanda Askell, Jackson Kernion, Andy Jones, Anna Chen, et al. 2022. <span>“Constitutional Ai: Harmlessness from Ai Feedback.”</span> <em>arXiv Preprint arXiv:2212.08073</em>.
 </div>
 <div id="ref-christiano2017deep" class="csl-entry" role="listitem">
-Christiano, Paul F, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, 와/과 Dario Amodei. 2017. <span>“Deep reinforcement learning from human preferences”</span>. <em>Advances in neural information processing systems</em> 30.
+Christiano, Paul F, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and Dario Amodei. 2017. <span>“Deep Reinforcement Learning from Human Preferences.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
 </div>
 <div id="ref-klissarov2023motif" class="csl-entry" role="listitem">
-Klissarov, Martin, Pierluca D’Oro, Shagun Sodhani, Roberta Raileanu, Pierre-Luc Bacon, Pascal Vincent, Amy Zhang, 와/과 Mikael Henaff. 2023. <span>“Motif: Intrinsic motivation from artificial intelligence feedback”</span>. <em>arXiv preprint arXiv:2310.00166</em>.
+Klissarov, Martin, Pierluca D’Oro, Shagun Sodhani, Roberta Raileanu, Pierre-Luc Bacon, Pascal Vincent, Amy Zhang, and Mikael Henaff. 2023. <span>“Motif: Intrinsic Motivation from Artificial Intelligence Feedback.”</span> <em>arXiv Preprint arXiv:2310.00166</em>.
 </div>
 <div id="ref-kumar2020conservative" class="csl-entry" role="listitem">
-Kumar, Aviral, Aurick Zhou, George Tucker, 와/과 Sergey Levine. 2020. <span>“Conservative q-learning for offline reinforcement learning”</span>. <em>Advances in neural information processing systems</em> 33: 1179–91.
+Kumar, Aviral, Aurick Zhou, George Tucker, and Sergey Levine. 2020. <span>“Conservative q-Learning for Offline Reinforcement Learning.”</span> <em>Advances in Neural Information Processing Systems</em> 33: 1179–91.
 </div>
 <div id="ref-10.1145/3488560.3510017" class="csl-entry" role="listitem">
-Muralidharan, Ajith. 2022. <span>“Near Real Time AI Personalization for Notifications at LinkedIn”</span>. In <em>Proceedings of the Fifteenth ACM International Conference on Web Search and Data Mining</em>, 1648. WSDM ’22. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3488560.3510017">https://doi.org/10.1145/3488560.3510017</a>.
+Muralidharan, Ajith. 2022. <span>“Near Real Time AI Personalization for Notifications at LinkedIn.”</span> In <em>Proceedings of the Fifteenth ACM International Conference on Web Search and Data Mining</em>, 1648. WSDM ’22. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3488560.3510017">https://doi.org/10.1145/3488560.3510017</a>.
 </div>
 <div id="ref-ouyang2022training" class="csl-entry" role="listitem">
-Ouyang, Long, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, Pamela Mishkin, Chong Zhang, 기타. 2022. <span>“Training language models to follow instructions with human feedback”</span>. <em>Advances in neural information processing systems</em> 35: 27730–44.
+Ouyang, Long, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, Pamela Mishkin, Chong Zhang, et al. 2022. <span>“Training Language Models to Follow Instructions with Human Feedback.”</span> <em>Advances in Neural Information Processing Systems</em> 35: 27730–44.
 </div>
 <div id="ref-prabhakar2022multi" class="csl-entry" role="listitem">
-Prabhakar, Prakruthi, Yiping Yuan, Guangyu Yang, Wensheng Sun, 와/과 Ajith Muralidharan. 2022. <span>“Multi-objective optimization of notifications using offline reinforcement learning”</span>. In <em>Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining</em>, 3752–60.
+Prabhakar, Prakruthi, Yiping Yuan, Guangyu Yang, Wensheng Sun, and Ajith Muralidharan. 2022. <span>“Multi-Objective Optimization of Notifications Using Offline Reinforcement Learning.”</span> In <em>Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining</em>, 3752–60.
 </div>
 <div id="ref-Sadigh2017ActivePL" class="csl-entry" role="listitem">
-Sadigh, Dorsa, Anca D. Dragan, S. Shankar Sastry, 와/과 Sanjit A. Seshia. 2017. <span>“Active Preference-Based Learning of Reward Functions”</span>. In <em>Robotics: Science and Systems</em>. <a href="https://api.semanticscholar.org/CorpusID:12226563">https://api.semanticscholar.org/CorpusID:12226563</a>.
+Sadigh, Dorsa, Anca D. Dragan, S. Shankar Sastry, and Sanjit A. Seshia. 2017. <span>“Active Preference-Based Learning of Reward Functions.”</span> In <em>Robotics: Science and Systems</em>. <a href="https://api.semanticscholar.org/CorpusID:12226563">https://api.semanticscholar.org/CorpusID:12226563</a>.
 </div>
 <div id="ref-sharma2023self" class="csl-entry" role="listitem">
-Sharma, Archit, Ahmed M Ahmed, Rehaan Ahmad, 와/과 Chelsea Finn. 2023. <span>“Self-improving robots: End-to-end autonomous visuomotor reinforcement learning”</span>. <em>arXiv preprint arXiv:2303.01488</em>.
+Sharma, Archit, Ahmed M Ahmed, Rehaan Ahmad, and Chelsea Finn. 2023. <span>“Self-Improving Robots: End-to-End Autonomous Visuomotor Reinforcement Learning.”</span> <em>arXiv Preprint arXiv:2303.01488</em>.
 </div>
 <div id="ref-shi2022pessimistic" class="csl-entry" role="listitem">
-Shi, Laixi, Gen Li, Yuting Wei, Yuxin Chen, 와/과 Yuejie Chi. 2022. <span>“Pessimistic q-learning for offline reinforcement learning: Towards optimal sample complexity”</span>. In <em>International conference on machine learning</em>, 19967–20025. PMLR.
+Shi, Laixi, Gen Li, Yuting Wei, Yuxin Chen, and Yuejie Chi. 2022. <span>“Pessimistic q-Learning for Offline Reinforcement Learning: Towards Optimal Sample Complexity.”</span> In <em>International Conference on Machine Learning</em>, 19967–20025. PMLR.
 </div>
 <div id="ref-sukhbaatar2017intrinsic" class="csl-entry" role="listitem">
-Sukhbaatar, Sainbayar, Zeming Lin, Ilya Kostrikov, Gabriel Synnaeve, Arthur Szlam, 와/과 Rob Fergus. 2017. <span>“Intrinsic motivation and automatic curricula via asymmetric self-play”</span>. <em>arXiv preprint arXiv:1703.05407</em>.
+Sukhbaatar, Sainbayar, Zeming Lin, Ilya Kostrikov, Gabriel Synnaeve, Arthur Szlam, and Rob Fergus. 2017. <span>“Intrinsic Motivation and Automatic Curricula via Asymmetric Self-Play.”</span> <em>arXiv Preprint arXiv:1703.05407</em>.
 </div>
 <div id="ref-villegas2022phenaki" class="csl-entry" role="listitem">
-Villegas, Ruben, Mohammad Babaeizadeh, Pieter-Jan Kindermans, Hernan Moraldo, Han Zhang, Mohammad Taghi Saffar, Santiago Castro, Julius Kunze, 와/과 Dumitru Erhan. 2022. <span>“Phenaki: Variable length video generation from open domain textual description”</span>. <em>arXiv preprint arXiv:2210.02399</em>.
+Villegas, Ruben, Mohammad Babaeizadeh, Pieter-Jan Kindermans, Hernan Moraldo, Han Zhang, Mohammad Taghi Saffar, Santiago Castro, Julius Kunze, and Dumitru Erhan. 2022. <span>“Phenaki: Variable Length Video Generation from Open Domain Textual Description.”</span> <em>arXiv Preprint arXiv:2210.02399</em>.
 </div>
 <div id="ref-yu2021vector" class="csl-entry" role="listitem">
-Yu, Jiahui, Xin Li, Jing Yu Koh, Han Zhang, Ruoming Pang, James Qin, Alexander Ku, Yuanzhong Xu, Jason Baldridge, 와/과 Yonghui Wu. 2021. <span>“Vector-quantized image modeling with improved vqgan”</span>. <em>arXiv preprint arXiv:2110.04627</em>.
+Yu, Jiahui, Xin Li, Jing Yu Koh, Han Zhang, Ruoming Pang, James Qin, Alexander Ku, Yuanzhong Xu, Jason Baldridge, and Yonghui Wu. 2021. <span>“Vector-Quantized Image Modeling with Improved Vqgan.”</span> <em>arXiv Preprint arXiv:2110.04627</em>.
 </div>
-</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2>
-<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2>
+<div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section>
 </div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -750,12 +741,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "복사완료!");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "복사완료!");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -797,7 +788,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

@@ -225,9 +225,9 @@ $$
 
 :::
 
-강의에서는 선호도 기반의 강화학습이 적용된 두 개의 사례에 대해서 소개했다. @fig-backflip 은 NeurIPS 2027에서 @christiano2017deep 논문에서 소개된, human preference가 강화학습에 적용된 첫 사례이다. 실제로 Online RL을 수행하는 루프 내에서 이런 reward learning 과정을 수행하기 위해서 사전에 사람이 평가한 900개의 preference query를 사용했다고 한다. preference를 정하는 내용은 [OpenAI 블로그](https://openai.com/index/learning-from-human-preferences/)에 정리되어 있다. 자율주행에서도 다양한 케이스에 대한 reward function을 정의하기가 어려운데, @Sadigh2017ActivePL 논문에서는 가상 자율주행 환경 내에서 다양한 케이스에 대한 Preference를 모아서 학습시킨 예시를 공유했다.
+강의에서는 선호도 기반의 강화학습이 적용된 세 개의 사례에 대해서 소개했다. @fig-backflip 은 NeurIPS 2017에서 @christiano2017deep 논문에서 소개된, human preference가 강화학습에 적용된 첫 사례이다. 실제로 Online RL을 수행하는 루프 내에서 이런 reward learning 과정을 수행하기 위해서 사전에 사람이 평가한 900개의 preference query를 사용했다고 한다. preference를 정하는 내용은 [OpenAI 블로그](https://openai.com/index/learning-from-human-preferences/)에 정리되어 있다. 자율주행에서도 다양한 케이스에 대한 reward function을 정의하기가 어려운데, @Sadigh2017ActivePL 논문에서는 가상 자율주행 환경 내에서 다양한 케이스에 대한 Preference를 모아서 학습시킨 예시를 공유했다.
 
-사실 사람들에게 많이 알려져있는 사례는 @fig-rlhf 와 같이 Prompt에 대한 Preference를 활용하여 LLM을 학습시키는 방법일 것이다. **Reinforcement Learning from Human Feedback (RLHF)**(@ouyang2022training) 란 이름으로 소개된 이 기법은 GPT-3를 학습시킨 핵심 기술 중 하나이며,[링크](https://openai.com/index/instruction-following/)에서도 해당 기술이 앞에서 소개한 @christiano2017deep 에서 발전된 내용임을 밝히고 있다.
+사실 사람들에게 많이 알려져있는 사례는 @fig-rlhf 와 같이 Prompt에 대한 Preference를 활용하여 LLM을 학습시키는 방법일 것이다. **Reinforcement Learning from Human Feedback (RLHF)**(@ouyang2022training) 란 이름으로 소개된 이 기법은 GPT-3를 Fine-tuning한 InstructGPT를 학습시킨 핵심 기술 중 하나이며,[링크](https://openai.com/index/instruction-following/)에서도 해당 기술이 앞에서 소개한 @christiano2017deep 에서 발전된 내용임을 밝히고 있다.
 
 ### Learning Rewards from Human/AI Feedback for LLMs
 

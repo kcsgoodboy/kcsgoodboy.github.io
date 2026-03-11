@@ -12,7 +12,7 @@ categories:
   - CS224R
 ---
 
-### 강의 및 자료
+### Resource
 
 ::: {layout-ncol=2}
 [![](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/watch?v=lRDaXnPIzks&list=PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL&index=7)
