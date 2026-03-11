@@ -69,7 +69,7 @@ $$ {#eq-cql-final}
 Although this does not guarantee that every estimated $\hat{Q}^{\pi}$ will be lower than the true $Q^{\pi}$, it does guarantee conservative estimation, at least on average, over states contained in the dataset. This is the key idea behind **Conservative Q-Learning (CQL)** (@kumar2020conservative).
 
 :::{.callout-note}
-The note in the article adds that the equation shown in the lecture may look slightly different from the one in @kumar2020conservative, but the meaning is effectively the same because the paper groups the dataset-related terms differently.
+The equation shown in the lecture may look slightly different from the one in @kumar2020conservative, but the meaning is effectively the same because the paper groups the dataset-related terms differently.
 :::
 
 ![Actual Q function vs. Conservative Q function](./images/6p_naive_vs_conservative.png){#fig-CQL}
