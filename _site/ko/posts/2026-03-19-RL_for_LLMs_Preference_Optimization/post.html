@@ -11,7 +11,7 @@
 <meta name="author" content="Chanseok Kang">
 <meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 10. RL for LLMs:Preference Optimization에 대한 강의 요약">
 
-<title>Reward Learning – 생각많은 소심남의 연구노트</title>
+<title>RL for LLMs - Preference Optimization – 생각많은 소심남의 연구노트</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -206,7 +206,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Reward Learning</h1>
+      <h1 class="title">RL for LLMs - Preference Optimization</h1>
                   <div>
         <div class="description">
           2025년에 진행한 CS224R 강의 중 Lecture 10. RL for LLMs:Preference Optimization에 대한 강의 요약
@@ -260,6 +260,7 @@ window.Quarto = {
   <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#instruction-finetuning" id="toc-instruction-finetuning" class="nav-link" data-scroll-target="#instruction-finetuning">Instruction Finetuning</a></li>
+  <li><a href="#reinforcement-learing-from-human-preference" id="toc-reinforcement-learing-from-human-preference" class="nav-link" data-scroll-target="#reinforcement-learing-from-human-preference">Reinforcement Learing from Human Preference</a></li>
   </ul>
 </nav>
 </nav>
@@ -433,12 +434,15 @@ window.Quarto = {
 <p>위의 예시는 논문에도 소개된 Finetuning의 효과를 확인할 수 있는 예시였는데, Big-Bench에 포함되어 있는 예제 중 Chain-of-Thought (CoT) Reasoning 과정을 확인하는 것으로, Finetuning하지 않은 모델(PaLM 540B)와 Instruction Finetuning을 수행한 모델(FLAN-PaLM 540B)의 출력을 비교했을 때, 후자가 조금 더 사용자의 의도에 맞는 출력을 내놓는 것을 확인할 수 있었다.</p>
 <p>물론 이런 Instruction Finetuning 방법이 장점만 가지고 있는 것은 아니다. 제일 큰 문제는 사실 Finetuning할때 사용할 다양한 task에 대한 데이터를 확보하기가 어렵다는 것이다. 이렇게 어떤 Prompt에 대한 label을 pair로 만들어줘야 하기 때문에 무한정으로 확장하기가 어렵다. 또한 사람이 던질 수 있는 Prompt 중에도 답이 없는 Prompt도 많을 수 있다는 것이다. 예를 들어서 “강아지와 애완용 메뚜기에 대한 소설을 써줘” 와 같은 창의적인 Prompt에는 사실 정해진 답이 없기 때문에, 이를 활용하여 Instruction Finetuning을 수행하기도 어렵다. 그리고 지금 소개한 방법은 엄밀하게 말하면 사용자의 목적에 맞게 모델을 학습할 수 있는 방법론에 대한 내용이지, 이 내용이 반드시 사용자의 선호도를 반영한 학습이라고 말하기는 어렵다.</p>
 <p>어떤 주어진 질문에 대해서 딱 이게 답이다라고 하는 Task도 많은 만큼, 단순하게 하나의 정답을 외우게 하는 방법만으로는 사용자가 원하는 비서 역할을 수행할 수 없다. 이때문에 이런 모델을 학습하는데 있어서 사람의 <strong>“선호도(Preference)”</strong>를 명시적으로 반영할 수 있는 방법에 대해서 고민하게 된다.</p>
+</section>
+<section id="reinforcement-learing-from-human-preference" class="level2">
+
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Reinforcement Learing from Human Preference</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-andreas2022language" class="csl-entry" role="listitem">
 Andreas, Jacob. 2022. <span>“Language models as agent models”</span>. In <em>Findings of the Association for Computational Linguistics: EMNLP 2022</em>, 5769–79.
 </div>

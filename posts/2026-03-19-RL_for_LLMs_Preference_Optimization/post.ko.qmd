@@ -1,9 +1,9 @@
 ---
-title: Reward Learning
+title: RL for LLMs - Preference Optimization
 description: 2025년에 진행한 CS224R 강의 중 Lecture 10. RL for LLMs:Preference Optimization에 대한 강의 요약
 date: '2026-03-19'
 bibliography: ../../contents/references.bib
-image: ./images/Preference_Optimization.ko.png
+image: ./images/Preference_Optimization_overview.ko.png
 filters:
   - pseudocode
 lang: ko
@@ -89,6 +89,8 @@ Span Corruption task를 통해서 pretrain된 T5 모델을 기반으로, 1800여
 물론 이런 Instruction Finetuning 방법이 장점만 가지고 있는 것은 아니다. 제일 큰 문제는 사실 Finetuning할때 사용할 다양한 task에 대한 데이터를 확보하기가 어렵다는 것이다. 이렇게 어떤 Prompt에 대한 label을 pair로 만들어줘야 하기 때문에 무한정으로 확장하기가 어렵다. 또한 사람이 던질 수 있는 Prompt 중에도 답이 없는 Prompt도 많을 수 있다는 것이다. 예를 들어서 "강아지와 애완용 메뚜기에 대한 소설을 써줘" 와 같은 창의적인 Prompt에는 사실 정해진 답이 없기 때문에, 이를 활용하여 Instruction Finetuning을 수행하기도 어렵다. 그리고 지금 소개한 방법은 엄밀하게 말하면 사용자의 목적에 맞게 모델을 학습할 수 있는 방법론에 대한 내용이지, 이 내용이 반드시 사용자의 선호도를 반영한 학습이라고 말하기는 어렵다. 
 
 어떤 주어진 질문에 대해서 딱 이게 답이다라고 하는 Task도 많은 만큼, 단순하게 하나의 정답을 외우게 하는 방법만으로는 사용자가 원하는 비서 역할을 수행할 수 없다. 이때문에 이런 모델을 학습하는데 있어서 사람의 **"선호도(Preference)"**를 명시적으로 반영할 수 있는 방법에 대해서 고민하게 된다.
+
+## Reinforcement Learing from Human Preference
 
 
 
