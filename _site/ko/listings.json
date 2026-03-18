@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/2026-03-19-RL_for_LLMs_Preference_Optimization/post.html",
       "/posts/2026-02-37-Reward_Learning/post.html",
       "/posts/2026-02-23-Offline_RL/post.html",
       "/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.html",
