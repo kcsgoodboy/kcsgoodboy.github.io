@@ -437,7 +437,24 @@ window.Quarto = {
 </section>
 <section id="reinforcement-learning-from-human-preference" class="level2">
 <h2 class="anchored" data-anchor-id="reinforcement-learning-from-human-preference">Reinforcement Learning from Human Preference</h2>
-<p>TBD</p>
+<p>사람의 선호도를 높이는 방법으로 모델을 학습시키는데 강화학습을 활용하는 방법이 제안되기 시작했다. 사실 강화학습의 궁극적인 목적은 목표지점에 도달했을때 얻을 수 있는 총 보상의 기대치가 최대화가 되는 방향으로 policy를 학습시키는 것인데, 가령 주어진 task에 대해서 Language Model을 학습시키는데 있어 강화학습을 적용해본다고 생각해보자.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/23p_RL_case.png" class="img-fluid figure-img"></p>
+<figcaption>Reward in Language Model</figcaption>
+</figure>
+</div>
+<p>그리고 Instruction과 이에 대한 Language Model의 output이 있을때, 만약 사람이 눈으로 Language Model의 output을 보고 좋고 나쁜정도를 수치화할 수 있는 방법이 있다고 가정했을때, 이를 Reward로 삼아서 이 reward의 기대치가 최대화가 되는 방향으로 모델을 학습시키면 될 것이다. 그러면 결국 사람이 좋고 나쁜 정도를 수치화한 것 자체가 이미 Preference가 반영된 것이니, 이를 기반으로 강화학습을 활용한 최적화문제를 수행하게 된다.</p>
+<p><span class="math display">\[
+\max \mathbb{E}_{\hat{y} \sim p_{\theta}(y \vert x)}[R(x, \hat{y})]
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/24p_RLHF.png" class="img-fluid figure-img"></p>
+<figcaption>RL from Human Feedback (RLHF)</figcaption>
+</figure>
+</div>
+<p>이 내용이 이전 강의에서 소개했던 InstructGPT (<span class="citation" data-cites="ouyang2022training">Ouyang 기타 (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span>) 논문에 소개된 <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>의 내용이다. 그림을 통해서 확인할 수 있는 것처럼, 1단계에서는 앞에서 소개한 <strong>Supervised FineTuning (SFT)</strong> 이라는 일종의 Instruction Finetuning을 수행하고, 2,3 단계를 통해서 reward를 최대화되는 방향으로 policy를 최적화하는 형태로 되어 있다.</p>
 
 
 

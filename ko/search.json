@@ -130,7 +130,7 @@
     "href": "posts/2026-03-19-RL_for_LLMs_Preference_Optimization/post.html#reinforcement-learning-from-human-preference",
     "title": "RL for LLMs - Preference Optimization",
     "section": "Reinforcement Learning from Human Preference",
-    "text": "Reinforcement Learning from Human Preference\nTBD"
+    "text": "Reinforcement Learning from Human Preference\n사람의 선호도를 높이는 방법으로 모델을 학습시키는데 강화학습을 활용하는 방법이 제안되기 시작했다. 사실 강화학습의 궁극적인 목적은 목표지점에 도달했을때 얻을 수 있는 총 보상의 기대치가 최대화가 되는 방향으로 policy를 학습시키는 것인데, 가령 주어진 task에 대해서 Language Model을 학습시키는데 있어 강화학습을 적용해본다고 생각해보자.\n\n\n\nReward in Language Model\n\n\n그리고 Instruction과 이에 대한 Language Model의 output이 있을때, 만약 사람이 눈으로 Language Model의 output을 보고 좋고 나쁜정도를 수치화할 수 있는 방법이 있다고 가정했을때, 이를 Reward로 삼아서 이 reward의 기대치가 최대화가 되는 방향으로 모델을 학습시키면 될 것이다. 그러면 결국 사람이 좋고 나쁜 정도를 수치화한 것 자체가 이미 Preference가 반영된 것이니, 이를 기반으로 강화학습을 활용한 최적화문제를 수행하게 된다.\n\\[\n\\max \\mathbb{E}_{\\hat{y} \\sim p_{\\theta}(y \\vert x)}[R(x, \\hat{y})]\n\\]\n\n\n\nRL from Human Feedback (RLHF)\n\n\n이 내용이 이전 강의에서 소개했던 InstructGPT (Ouyang 기타 (2022)) 논문에 소개된 Reinforcement Learning from Human Feedback (RLHF)의 내용이다. 그림을 통해서 확인할 수 있는 것처럼, 1단계에서는 앞에서 소개한 Supervised FineTuning (SFT) 이라는 일종의 Instruction Finetuning을 수행하고, 2,3 단계를 통해서 reward를 최대화되는 방향으로 policy를 최적화하는 형태로 되어 있다."
   },
   {
     "objectID": "posts/2026-01-23_Transfer_learning/post.html",
