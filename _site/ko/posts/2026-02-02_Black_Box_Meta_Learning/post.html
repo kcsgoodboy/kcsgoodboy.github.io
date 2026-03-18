@@ -361,7 +361,7 @@ window.Quarto = {
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>로 정리할 수 있다. 알고리즘 형태로 표현하면 다음과 같다.</p>
-<div class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number-punc=":" data-pseudocode-number="1" data-indent-size="1.2em" data-no-end="false" data-line-number="true" data-comment-delimiter="//">
+<div class="pseudocode-container quarto-float" data-no-end="false" data-line-number-punc=":" data-indent-size="1.2em" data-pseudocode-number="1" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>
