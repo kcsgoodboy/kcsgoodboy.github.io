@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-02-37-Reward_Learning/post.html" />
-<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-02-37-Reward_Learning/post.ko.html" />
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-03-10-Reward_Learning/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-03-10-Reward_Learning/post.ko.html" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
@@ -143,7 +143,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item"><div class="dropdown" id="languages-links-parent">
-<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/posts/2026-02-37-Reward_Learning/post.html" id="language-link-en">English</a></li></ul>
+<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/posts/2026-03-10-Reward_Learning/post.html" id="language-link-en">English</a></li></ul>
 </div></li>
 <li class="nav-item">
     <a class="nav-link" href="../../index.html"> 
@@ -446,7 +446,7 @@ window.Quarto = {
 \max_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}} [ \log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]
 \]</span></p>
 <p>이렇게 선호도에 기반한 reward function 을 학습시키는, <strong>reward learning</strong> 의 동작은 다음과 같이 표현된다.</p>
-<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-comment-delimiter="//" data-no-end="false" data-line-number="true" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-pseudocode-number="1" data-line-number="true" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Complete Reward Learning} \begin{algorithmic} \State Given dataset $\{\tau_i\}$, sample batches of $k$ trajectories and ask humans to rank. \State Compute $r_{\theta}(\tau_1), \dots, r_{\theta}(\tau_k)$ under current reward model $r_{\theta}$ \State For all $\big(\begin{smallmatrix}k \\ 2 \end{smallmatrix}\big)$ pairs per batch, compute $\nabla_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}}[\log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]$ where $\tau_{\text{win}} &gt; \tau_{\text{lose}}$ \State Update $\theta$ using computed gradient \State Repeat from 2 to 4 \end{algorithmic} \end{algorithm}
 </div>
