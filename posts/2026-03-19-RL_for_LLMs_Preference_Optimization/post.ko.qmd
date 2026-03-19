@@ -1,6 +1,6 @@
 ---
 title: RL for LLMs - Preference Optimization
-description: 2025년에 진행한 CS224R 강의 중 Lecture 10. RL for LLMs:Preference Optimization에 대한 강의 요약
+description: 2025년에 진행한 CS224R 강의 중 Lecture 9. RL for LLMs:Preference Optimization에 대한 강의 요약
 date: '2026-03-19'
 bibliography: ../../contents/references.bib
 image: ./images/Preference_Optimization_overview.ko.png
@@ -94,7 +94,7 @@ Span Corruption task를 통해서 pretrain된 T5 모델을 기반으로, 1800여
 
 사람의 선호도를 높이는 방법으로 모델을 학습시키는데 강화학습을 활용하는 방법이 제안되기 시작했다. 사실 강화학습의 궁극적인 목적은 목표지점에 도달했을때 얻을 수 있는 총 보상의 기대치가 최대화가 되는 방향으로 policy를 학습시키는 것인데, 가령 주어진 task에 대해서 Language Model을 학습시키는데 있어 강화학습을 적용해본다고 생각해보자.
 
-![Reward in Language Model](./images/23p_RL_case.png)
+![Reward in Language Model](./images/23p_RL_case.png){#fig-rl-case}
 
 그리고 Instruction과 이에 대한 Language Model의 output이 있을때, 만약 사람이 눈으로 Language Model의 output을 보고 좋고 나쁜정도를 수치화할 수 있는 방법이 있다고 가정했을때, 이를 Reward로 삼아서 이 reward의 기대치가 최대화가 되는 방향으로 모델을 학습시키면 될 것이다. 그러면 결국 사람이 좋고 나쁜 정도를 수치화한 것 자체가 이미 Preference가 반영된 것이니, 이를 기반으로 강화학습을 활용한 최적화문제를 수행하게 된다.
 
@@ -102,9 +102,68 @@ $$
 \max \mathbb{E}_{\hat{y} \sim p_{\theta}(y \vert x)}[R(x, \hat{y})]
 $$
 
-![RL from Human Feedback (RLHF)](./images/24p_RLHF.png)
+![RL from Human Feedback (RLHF)](./images/24p_RLHF.png){#fig-rlhf}
 
-이 내용이 이전 강의에서 소개했던 InstructGPT (@ouyang2022training) 논문에 소개된 **Reinforcement Learning from Human Feedback (RLHF)**의 내용이다. 그림을 통해서 확인할 수 있는 것처럼, 1단계에서는 앞에서 소개한 **Supervised FineTuning (SFT)** 이라는 일종의 Instruction Finetuning을 수행하고, 2,3 단계를 통해서 reward를 최대화되는 방향으로 policy를 최적화하는 형태로 되어 있다. 
+이 내용이 이전 강의에서 소개했던 InstructGPT (@ouyang2022training) 논문에 소개된 **Reinforcement Learning from Human Feedback (RLHF)**의 내용이다. 그림을 통해서 확인할 수 있는 것처럼, 1단계에서는 앞에서 소개한 **Supervised FineTuning (SFT)** 이라는 일종의 Instruction Finetuning을 수행하고, 2,3 단계를 통해서 reward를 최대화되는 방향으로 policy를 최적화하는 형태로 되어 있다. 세부적으로 나누면 주어진 prompt와 모델에서 출력한 output를 pair로 만든후, 사람이 직접 눈으로 확인하면서 output에 대한 점수를 매긴다. 이 데이터를 활용하여, 주어진 prompt에 대해서 reward를 부여할 수 있는 **Reward Model** 이란 것을 학습시키고, 실제 RL을 수행할때 학습된 Reward Model에서 뽑은 reward를 바탕으로 학습시키는 형태로 되어 있다.
 
+그러면 단순하게 생각해보면 이런 prompt에 대한 reward가 정해져 있으면 단순히 backpropagation을 통해서 expected reward을 최대화하는 방향으로 할 수 있지 않을까 하는 생각을 가져볼 수 있다. 그러면 우선 이런 형태로 문제를 정의해보면,
 
+$$ 
+\mathbb{E}_{\hat{s} \sim p_{\theta}(s)}[R(\hat{s})]
+$$
 
+즉, $\theta$ 를 weight으로 가지는 Language Model의 output 분포에서 어떤 output이 샘플링되었다면, 이 output에 대한 reward의 expectation이 최대화하는 방향으로 $\theta$ 를 update하면 되지 않을까 하는 것이다. 그러면 gradient ascent를 사용해서 
+
+$$
+\theta_{t+1} := \theta_t + \alpha \nabla_{\theta_t} \mathbb{E}_{\hat{s} \sim p_{\theta_t}(s)}[R(\hat{s})]
+$$
+
+이렇게 하면 될 것 같지만, 사실 위의 수식에선 한가지 문제가 있다. 바로 Language Model로부터 $\hat{s}$ 를 샘플링하는 단계인데, 보통 output으로 출력되는 token은 discrete한 특성이 있고, 이를 샘플링하는 과정이 포함된 수식은 일반적으로 미분이 불가능하기 때문에, 이를 통한 최적화를 수행할 수 없다. 그런데 샘플링한 데이터이 주어졌을 때 강화학습을 활용하면 이에 대한 모델 최적화를 수행할 수 있어서, 이렇게 Language Model을 학습하는데 있어 강화학습을 활용하게 된 것이다. 강의에서는 우선 Vanila Policy Gradient인 REINFORCE (@williams1992reinforce) 를 기준으로 설명했다.
+
+$$
+\begin{aligned}
+\nabla_{\theta} \mathbb{E}_{\hat{s} \sim p_{\theta}(s)}[R(\hat{s})] &= \nabla_{\theta} {\color{red} \sum_s} R(s) {\color{red} p_{\theta}(s)} \\
+&= \sum_{s} R(s) {\color{yellow} \nabla_{\theta} p_{\theta}(s)} 
+\end{aligned}
+$$
+
+우선 Discrete한 확률 분포에서의 Expectation은 위의 식의 빨간색에서 정의한 것처럼 각 sample별 확률의 합으로 표현할 수 있고, 미분의 대상이 되는 $\theta$ 는 Reward가 아닌 확률 분포와 관련되어 있기 때문에 노란색과 같이 linearity에 의해서 식의 안으로 넣을 수 있다. 이때 많이 알려져 있는 **log-derivative trick**을 사용하면, $p_{\theta}$ 를 대체할 수 있다.
+
+:::{.callout-note title="log-derivative trick"}
+일반적으로 
+
+$$
+\nabla \log x = \frac{x'}{x}
+$$
+
+로 알려져있고, $x'$ 에 대한 식으로 바꿔보면 
+
+$$
+x' = x \nabla \log x
+$$
+
+로 대체할 수 있다.
+:::
+
+그러면 chain rule에 따라서 우리가 구해야 할 $\nabla_{\theta} p_{\theta}(s)$ 는 $p_{\theta}(s) \nabla_{\theta}(s) \log p_{\theta}(s)$ 로 바꿀 수 있게 되고, 이를 우리가 원래 구하고자 했던 수식에 넣으면 된다.
+
+$$
+\begin{aligned}
+\sum_s R(s) \nabla_{\theta} p_{\theta}(s) &= {\color{red} \sum_s p_{\theta}(s)} {\color{green} R(s) \nabla_{\theta} \log p_{\theta}(s)}  \\
+&= {\color{red} \mathbb{E}_{\hat{s} \sim p_{\theta}(s)}}[{\color{green} R(\hat{s}) \nabla_{\theta} \log p_{\theta}(\hat{s})}]
+\end{aligned}
+$$
+
+그런데, 이를 실제로 계산하지 않고, Monte Carlo Estimation을 사용해서 대략적으로 근사할 수 있다.
+
+$$
+\mathbb{E}_{\hat{s} \sim p_{\theta}(s)}[R(\hat{s}) \nabla_{\theta} \log p_{\theta}(\hat{s})] \approx \frac{1}{m} \sum_{i=1}^m R(s_i) \nabla_{\theta} \log p_{\theta}(s_i)
+$$
+
+결과적으로 샘플링 데이터에 대해서 미분을 하지 않고도, Monte Carlo Estimation을 사용해서 주어진 output의 확률값과 Reward값만 알면 된다는 것이다. 사실 Policy Gradient 계열의 방법론이 지향하는 부분도 이와 동일한데, 좋은 action이 들어있는 trajectory가 있으면 해당 action을 더 많이 하는 방향으로 policy를 update하고, 반대로 나쁜 action이 있으면 해당 action을 덜 하는 방향으로 policy update를 수행하는 것이다. Language Model에서도 만약 Reward가 큰 output이 들어오면 해당 output이 나오도록 Model을 학습시키고, Reward가 낮은 output을 내보내는 action에 대해서는 Model이 덜 하게끔 학습하는, 생각해보면 간단하면서도 상식적인 방법으로 모델을 학습시키게 된다.
+
+물론 앞에서 소개했던 RLHF도 문제가 있긴 하다.
+
+![Limitation of RLHF](./images/28p_RLHF_limit.png)
+
+@fig-rl-case 에서 처럼 어떤 Reward Model을 학습시키고자 할 때, 사람이 설정한 Reward, 즉 Ground-truth Reward가 필요한데, 이를 위해서는 사람이 이렇게 학습 과정내에 직접 개입해야 한다. 이런 과정을 보통 **Human-In-The-Loop (HITL)**이라고 표현하는데, 문제는 이렇게 인위적으로 점수를 정의하는데도 비용이 든다는 것이다.

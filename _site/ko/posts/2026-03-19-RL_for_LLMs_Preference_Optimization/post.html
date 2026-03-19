@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Chanseok Kang">
-<meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 10. RL for LLMs:Preference Optimization에 대한 강의 요약">
+<meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 9. RL for LLMs:Preference Optimization에 대한 강의 요약">
 
 <title>RL for LLMs - Preference Optimization – 생각많은 소심남의 연구노트</title>
 <style>
@@ -209,7 +209,7 @@ window.Quarto = {
       <h1 class="title">RL for LLMs - Preference Optimization</h1>
                   <div>
         <div class="description">
-          2025년에 진행한 CS224R 강의 중 Lecture 10. RL for LLMs:Preference Optimization에 대한 강의 요약
+          2025년에 진행한 CS224R 강의 중 Lecture 9. RL for LLMs:Preference Optimization에 대한 강의 요약
         </div>
       </div>
                           <div class="quarto-categories">
@@ -438,23 +438,88 @@ window.Quarto = {
 <section id="reinforcement-learning-from-human-preference" class="level2">
 <h2 class="anchored" data-anchor-id="reinforcement-learning-from-human-preference">Reinforcement Learning from Human Preference</h2>
 <p>사람의 선호도를 높이는 방법으로 모델을 학습시키는데 강화학습을 활용하는 방법이 제안되기 시작했다. 사실 강화학습의 궁극적인 목적은 목표지점에 도달했을때 얻을 수 있는 총 보상의 기대치가 최대화가 되는 방향으로 policy를 학습시키는 것인데, 가령 주어진 task에 대해서 Language Model을 학습시키는데 있어 강화학습을 적용해본다고 생각해보자.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/23p_RL_case.png" class="img-fluid figure-img"></p>
-<figcaption>Reward in Language Model</figcaption>
+<div id="fig-rl-case" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rl-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/23p_RL_case.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rl-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;1: Reward in Language Model
+</figcaption>
 </figure>
 </div>
 <p>그리고 Instruction과 이에 대한 Language Model의 output이 있을때, 만약 사람이 눈으로 Language Model의 output을 보고 좋고 나쁜정도를 수치화할 수 있는 방법이 있다고 가정했을때, 이를 Reward로 삼아서 이 reward의 기대치가 최대화가 되는 방향으로 모델을 학습시키면 될 것이다. 그러면 결국 사람이 좋고 나쁜 정도를 수치화한 것 자체가 이미 Preference가 반영된 것이니, 이를 기반으로 강화학습을 활용한 최적화문제를 수행하게 된다.</p>
 <p><span class="math display">\[
 \max \mathbb{E}_{\hat{y} \sim p_{\theta}(y \vert x)}[R(x, \hat{y})]
 \]</span></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./images/24p_RLHF.png" class="img-fluid figure-img"></p>
-<figcaption>RL from Human Feedback (RLHF)</figcaption>
+<div id="fig-rlhf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/24p_RLHF.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;2: RL from Human Feedback (RLHF)
+</figcaption>
 </figure>
 </div>
-<p>이 내용이 이전 강의에서 소개했던 InstructGPT (<span class="citation" data-cites="ouyang2022training">Ouyang 기타 (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span>) 논문에 소개된 <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>의 내용이다. 그림을 통해서 확인할 수 있는 것처럼, 1단계에서는 앞에서 소개한 <strong>Supervised FineTuning (SFT)</strong> 이라는 일종의 Instruction Finetuning을 수행하고, 2,3 단계를 통해서 reward를 최대화되는 방향으로 policy를 최적화하는 형태로 되어 있다.</p>
+<p>이 내용이 이전 강의에서 소개했던 InstructGPT (<span class="citation" data-cites="ouyang2022training">Ouyang 기타 (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span>) 논문에 소개된 <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>의 내용이다. 그림을 통해서 확인할 수 있는 것처럼, 1단계에서는 앞에서 소개한 <strong>Supervised FineTuning (SFT)</strong> 이라는 일종의 Instruction Finetuning을 수행하고, 2,3 단계를 통해서 reward를 최대화되는 방향으로 policy를 최적화하는 형태로 되어 있다. 세부적으로 나누면 주어진 prompt와 모델에서 출력한 output를 pair로 만든후, 사람이 직접 눈으로 확인하면서 output에 대한 점수를 매긴다. 이 데이터를 활용하여, 주어진 prompt에 대해서 reward를 부여할 수 있는 <strong>Reward Model</strong> 이란 것을 학습시키고, 실제 RL을 수행할때 학습된 Reward Model에서 뽑은 reward를 바탕으로 학습시키는 형태로 되어 있다.</p>
+<p>그러면 단순하게 생각해보면 이런 prompt에 대한 reward가 정해져 있으면 단순히 backpropagation을 통해서 expected reward을 최대화하는 방향으로 할 수 있지 않을까 하는 생각을 가져볼 수 있다. 그러면 우선 이런 형태로 문제를 정의해보면,</p>
+<p><span class="math display">\[
+\mathbb{E}_{\hat{s} \sim p_{\theta}(s)}[R(\hat{s})]
+\]</span></p>
+<p>즉, <span class="math inline">\(\theta\)</span> 를 weight으로 가지는 Language Model의 output 분포에서 어떤 output이 샘플링되었다면, 이 output에 대한 reward의 expectation이 최대화하는 방향으로 <span class="math inline">\(\theta\)</span> 를 update하면 되지 않을까 하는 것이다. 그러면 gradient ascent를 사용해서</p>
+<p><span class="math display">\[
+\theta_{t+1} := \theta_t + \alpha \nabla_{\theta_t} \mathbb{E}_{\hat{s} \sim p_{\theta_t}(s)}[R(\hat{s})]
+\]</span></p>
+<p>이렇게 하면 될 것 같지만, 사실 위의 수식에선 한가지 문제가 있다. 바로 Language Model로부터 <span class="math inline">\(\hat{s}\)</span> 를 샘플링하는 단계인데, 보통 output으로 출력되는 token은 discrete한 특성이 있고, 이를 샘플링하는 과정이 포함된 수식은 일반적으로 미분이 불가능하기 때문에, 이를 통한 최적화를 수행할 수 없다. 그런데 샘플링한 데이터이 주어졌을 때 강화학습을 활용하면 이에 대한 모델 최적화를 수행할 수 있어서, 이렇게 Language Model을 학습하는데 있어 강화학습을 활용하게 된 것이다. 강의에서는 우선 Vanila Policy Gradient인 REINFORCE (<span class="citation" data-cites="williams1992reinforce">Williams (<a href="#ref-williams1992reinforce" role="doc-biblioref">1992</a>)</span>) 를 기준으로 설명했다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\nabla_{\theta} \mathbb{E}_{\hat{s} \sim p_{\theta}(s)}[R(\hat{s})] &amp;= \nabla_{\theta} {\color{red} \sum_s} R(s) {\color{red} p_{\theta}(s)} \\
+&amp;= \sum_{s} R(s) {\color{yellow} \nabla_{\theta} p_{\theta}(s)}
+\end{aligned}
+\]</span></p>
+<p>우선 Discrete한 확률 분포에서의 Expectation은 위의 식의 빨간색에서 정의한 것처럼 각 sample별 확률의 합으로 표현할 수 있고, 미분의 대상이 되는 <span class="math inline">\(\theta\)</span> 는 Reward가 아닌 확률 분포와 관련되어 있기 때문에 노란색과 같이 linearity에 의해서 식의 안으로 넣을 수 있다. 이때 많이 알려져 있는 <strong>log-derivative trick</strong>을 사용하면, <span class="math inline">\(p_{\theta}\)</span> 를 대체할 수 있다.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="log-derivative trick">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+log-derivative trick
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>일반적으로</p>
+<p><span class="math display">\[
+\nabla \log x = \frac{x'}{x}
+\]</span></p>
+<p>로 알려져있고, <span class="math inline">\(x'\)</span> 에 대한 식으로 바꿔보면</p>
+<p><span class="math display">\[
+x' = x \nabla \log x
+\]</span></p>
+<p>로 대체할 수 있다.</p>
+</div>
+</div>
+<p>그러면 chain rule에 따라서 우리가 구해야 할 <span class="math inline">\(\nabla_{\theta} p_{\theta}(s)\)</span> 는 <span class="math inline">\(p_{\theta}(s) \nabla_{\theta}(s) \log p_{\theta}(s)\)</span> 로 바꿀 수 있게 되고, 이를 우리가 원래 구하고자 했던 수식에 넣으면 된다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_s R(s) \nabla_{\theta} p_{\theta}(s) &amp;= {\color{red} \sum_s p_{\theta}(s)} {\color{green} R(s) \nabla_{\theta} \log p_{\theta}(s)}  \\
+&amp;= {\color{red} \mathbb{E}_{\hat{s} \sim p_{\theta}(s)}}[{\color{green} R(\hat{s}) \nabla_{\theta} \log p_{\theta}(\hat{s})}]
+\end{aligned}
+\]</span></p>
+<p>그런데, 이를 실제로 계산하지 않고, Monte Carlo Estimation을 사용해서 대략적으로 근사할 수 있다.</p>
+<p><span class="math display">\[
+\mathbb{E}_{\hat{s} \sim p_{\theta}(s)}[R(\hat{s}) \nabla_{\theta} \log p_{\theta}(\hat{s})] \approx \frac{1}{m} \sum_{i=1}^m R(s_i) \nabla_{\theta} \log p_{\theta}(s_i)
+\]</span></p>
+<p>결과적으로 샘플링 데이터에 대해서 미분을 하지 않고도, Monte Carlo Estimation을 사용해서 주어진 output의 확률값과 Reward값만 알면 된다는 것이다. 사실 Policy Gradient 계열의 방법론이 지향하는 부분도 이와 동일한데, 좋은 action이 들어있는 trajectory가 있으면 해당 action을 더 많이 하는 방향으로 policy를 update하고, 반대로 나쁜 action이 있으면 해당 action을 덜 하는 방향으로 policy update를 수행하는 것이다. Language Model에서도 만약 Reward가 큰 output이 들어오면 해당 output이 나오도록 Model을 학습시키고, Reward가 낮은 output을 내보내는 action에 대해서는 Model이 덜 하게끔 학습하는, 생각해보면 간단하면서도 상식적인 방법으로 모델을 학습시키게 된다.</p>
+<p>물론 앞에서 소개했던 RLHF도 문제가 있긴 하다.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/28p_RLHF_limit.png" class="img-fluid figure-img"></p>
+<figcaption>Limitation of RLHF</figcaption>
+</figure>
+</div>
+<p><a href="#fig-rl-case" class="quarto-xref">그림&nbsp;1</a> 에서 처럼 어떤 Reward Model을 학습시키고자 할 때, 사람이 설정한 Reward, 즉 Ground-truth Reward가 필요한데, 이를 위해서는 사람이 이렇게 학습 과정내에 직접 개입해야 한다. 이런 과정을 보통 <strong>Human-In-The-Loop (HITL)</strong>이라고 표현하는데, 문제는 이렇게 인위적으로 점수를 정의하는데도 비용이 든다는 것이다.</p>
 
 
 
@@ -487,6 +552,9 @@ Raffel, Colin, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael
 </div>
 <div id="ref-srivastava2023beyond" class="csl-entry" role="listitem">
 Srivastava, Aarohi, Abhinav Rastogi, Abhishek Rao, Abu Awal Md Shoeb, Abubakar Abid, Adam Fisch, Adam R Brown, 기타. 2023. <span>“Beyond the imitation game: Quantifying and extrapolating the capabilities of language models”</span>. <em>Transactions on machine learning research</em>.
+</div>
+<div id="ref-williams1992reinforce" class="csl-entry" role="listitem">
+Williams, Ronald J. 1992. <span>“Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning”</span>. <em>Mach. Learn.</em> 8 (3–4): 229–56. <a href="https://doi.org/10.1007/BF00992696">https://doi.org/10.1007/BF00992696</a>.
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
