@@ -54,7 +54,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
-  "copy-button": false,
+  "copy-button": true,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
@@ -64,7 +64,6 @@ div.csl-indent {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -126,6 +125,18 @@ window.Quarto = {
   typesetMath
 };
 </script><link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Non Parametric Few-Shot Learning – Chan’s Research Note">
+<meta property="og:description" content="Summary of lecture CS330 (2022) Lecture 6. Non Parametric Few-Shot Learning">
+<meta property="og:image" content="https://kcsgoodboy.github.io/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/images/Non_Parametric_Few_Shot_Learning_overview.en.png">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:width" content="2752">
+<meta name="twitter:title" content="Non Parametric Few-Shot Learning – Chan’s Research Note">
+<meta name="twitter:description" content="Summary of lecture CS330 (2022) Lecture 6. Non Parametric Few-Shot Learning">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/images/Non_Parametric_Few_Shot_Learning_overview.en.png">
+<meta name="twitter:image-height" content="1536">
+<meta name="twitter:image-width" content="2752">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="floating nav-fixed">
 
@@ -367,7 +378,7 @@ Figure 5: Matching Network
 \hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta}(x^{ts}, x_k) y_k
 \]</span></p>
 <p>By replacing the previous indicator function with this softmax function, the equation becomes differentiable. This enables backpropagation through the error, allowing the parameters to be directly optimized end-to-end. Additionally, even in situations where multiple test data points are given (<span class="math inline">\(K&gt;1\)</span>), Matching Networks operate via a sort of voting mechanism utilizing the existing formula. Inference is performed by predicting the label that accumulates the most votes based on the similarities between the Support Set data and the test data. Expressing this entire process as an algorithm yields the following.</p>
-<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//" data-pseudocode-number="1">
+<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-line-number="true" data-pseudocode-number="1" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{General Algorithm of Non-parametric approach} \begin{algorithmic} \State Sample task $\mathcal{T}_i \quad$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta} (x^{ts}, x_k) y_k$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\hat{y}^{ts}, y^{ts})$ \end{algorithmic} \end{algorithm}
 </div>

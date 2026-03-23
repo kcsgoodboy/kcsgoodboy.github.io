@@ -53,7 +53,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
-  "copy-button": false,
+  "copy-button": true,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
@@ -63,7 +63,6 @@ div.csl-indent {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "일치 없음",
     "search-matching-documents-text": "일치된 문서",
@@ -125,6 +124,18 @@ window.Quarto = {
   typesetMath
 };
 </script><link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Non Parametric Few-Shot Learning – 생각많은 소심남의 연구노트">
+<meta property="og:description" content="2022년에 진행한 CS330 강의 중 Lecture 6. Non Parametric Few-Shot Learning에 대한 강의 요약">
+<meta property="og:image" content="https://kcsgoodboy.github.io/ko/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/images/Non_Parametric_Few_Shot_Learning_overview.ko.png">
+<meta property="og:site_name" content="생각많은 소심남의 연구노트">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:width" content="2752">
+<meta name="twitter:title" content="Non Parametric Few-Shot Learning – 생각많은 소심남의 연구노트">
+<meta name="twitter:description" content="2022년에 진행한 CS330 강의 중 Lecture 6. Non Parametric Few-Shot Learning에 대한 강의 요약">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/posts/2026-02-20_Non_Parametric_Few_Shot_Learning/images/Non_Parametric_Few_Shot_Learning_overview.ko.png">
+<meta name="twitter:image-height" content="1536">
+<meta name="twitter:image-width" content="2752">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="floating nav-fixed">
 
@@ -363,7 +374,7 @@ window.Quarto = {
 \hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta}(x^{ts}, x_k) y_k
 \]</span></p>
 <p>기존의 indicator function이 이렇게 softmax function으로 대체되면서 미분도 가능해지고, 오차를 통한 backpropagation도 가능해지면서 parameter를 <strong>end-to-end</strong>로 직접 최적화할 수 있게 된다. 추가로 주어진 test 데이터가 여러 개인 상황(<span class="math inline">\(K&gt;1\)</span>) 에서도, Matching Networks는 기존의 수식을 활용하면서 일종의 투표방식(Voting)으로 동작하게 되는데, Support Set에서의 데이터와 test 데이터 간의 유사도를 기반으로 선택된 label에 투표가 많이 누적된 것으로 추론하는 방식으로 이뤄진다. 이 전체 과정을 알고리즘으로 표현하면 다음과 같다.</p>
-<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-no-end="false" data-pseudocode-number="1" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true">
+<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="1" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{General Algorithm of Non-parametric approach} \begin{algorithmic} \State Sample task $\mathcal{T}_i \quad$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta} (x^{ts}, x_k) y_k$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\hat{y}^{ts}, y^{ts})$ \end{algorithmic} \end{algorithm}
 </div>

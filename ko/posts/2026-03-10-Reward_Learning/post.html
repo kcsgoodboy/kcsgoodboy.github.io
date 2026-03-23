@@ -54,7 +54,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script><link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
-  "copy-button": false,
+  "copy-button": true,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
@@ -64,7 +64,6 @@ div.csl-indent {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "일치 없음",
     "search-matching-documents-text": "일치된 문서",
@@ -126,6 +125,18 @@ window.Quarto = {
   typesetMath
 };
 </script><link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Reward Learning – 생각많은 소심남의 연구노트">
+<meta property="og:description" content="2025년에 진행한 CS224R 강의 중 Lecture 8. Reward Learning에 대한 강의 요약">
+<meta property="og:image" content="https://kcsgoodboy.github.io/ko/posts/2026-03-10-Reward_Learning/images/Reward_Learning_overview.ko.png">
+<meta property="og:site_name" content="생각많은 소심남의 연구노트">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:width" content="2752">
+<meta name="twitter:title" content="Reward Learning – 생각많은 소심남의 연구노트">
+<meta name="twitter:description" content="2025년에 진행한 CS224R 강의 중 Lecture 8. Reward Learning에 대한 강의 요약">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/posts/2026-03-10-Reward_Learning/images/Reward_Learning_overview.ko.png">
+<meta name="twitter:image-height" content="1536">
+<meta name="twitter:image-width" content="2752">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="floating nav-fixed">
 
@@ -446,7 +457,7 @@ window.Quarto = {
 \max_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}} [ \log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]
 \]</span></p>
 <p>이렇게 선호도에 기반한 reward function 을 학습시키는, <strong>reward learning</strong> 의 동작은 다음과 같이 표현된다.</p>
-<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":" data-pseudocode-number="1" data-no-end="false">
+<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-pseudocode-number="1" data-comment-delimiter="//" data-line-number-punc=":" data-line-number="true" data-caption-prefix="Algorithm" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Complete Reward Learning} \begin{algorithmic} \State Given dataset $\{\tau_i\}$, sample batches of $k$ trajectories and ask humans to rank. \State Compute $r_{\theta}(\tau_1), \dots, r_{\theta}(\tau_k)$ under current reward model $r_{\theta}$ \State For all $\big(\begin{smallmatrix}k \\ 2 \end{smallmatrix}\big)$ pairs per batch, compute $\nabla_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}}[\log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]$ where $\tau_{\text{win}} &gt; \tau_{\text{lose}}$ \State Update $\theta$ using computed gradient \State Repeat from 2 to 4 \end{algorithmic} \end{algorithm}
 </div>
