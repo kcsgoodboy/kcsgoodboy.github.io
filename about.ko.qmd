@@ -49,7 +49,7 @@ comments: false
 
 ## Experience
 
-- **엘지전자** | 선임연구원 | 2014년 - (재직중)
+- **엘지전자** | 책임연구원 | 2014년 - (재직중)
 
 - **Carnegie Mellon University (CMU)** | 방문연구원 | 2019년
 
