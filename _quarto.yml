@@ -8,11 +8,22 @@ website:
   site-url: https://kcsgoodboy.github.io/
   repo-url: https://github.com/kcsgoodboy/kcsgoodboy.github.io
   title: "Chan's Research Note"
+  description: "A practitioner - scholar's research note on AI, Reinforcement Learning, and On-Device AI. Sharing insights from experiments, applications, and theories."
   page-navigation: true
+  bread-crumbs: true
+  open-graph:
+    image: contents/images/persona.png
+  twitter-card:
+    image: contents/images/persona.png
+    card-style: summary_large_image
   navbar:
     background: primary
     right: []
   google-analytics: "G-0JHM3R8BEZ"
+  search:
+    location: navbar
+    type: overlay
+    copy-button: true
 
 format:
   html:

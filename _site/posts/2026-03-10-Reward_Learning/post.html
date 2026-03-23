@@ -55,7 +55,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script><link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
-  "copy-button": false,
+  "copy-button": true,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
@@ -65,7 +65,6 @@ div.csl-indent {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -127,6 +126,18 @@ window.Quarto = {
   typesetMath
 };
 </script><link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Reward Learning – Chan’s Research Note">
+<meta property="og:description" content="Summary of lecture CS224R (2025) Lecture 8. Reward Learning">
+<meta property="og:image" content="https://kcsgoodboy.github.io/posts/2026-03-10-Reward_Learning/images/Reward_Learning_overview.en.png">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:width" content="2752">
+<meta name="twitter:title" content="Reward Learning – Chan’s Research Note">
+<meta name="twitter:description" content="Summary of lecture CS224R (2025) Lecture 8. Reward Learning">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/posts/2026-03-10-Reward_Learning/images/Reward_Learning_overview.en.png">
+<meta name="twitter:image-height" content="1536">
+<meta name="twitter:image-width" content="2752">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="floating nav-fixed">
 
@@ -438,7 +449,7 @@ Figure 3
 \max_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}} [ \log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]
 \]</span></p>
 <p>The lecture then summarizes the full algorithm:</p>
-<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number-punc=":" data-no-end="false">
+<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-no-end="false" data-line-number="true" data-indent-size="1.2em" data-pseudocode-number="1" data-line-number-punc=":" data-comment-delimiter="//" data-caption-prefix="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Complete Reward Learning} \begin{algorithmic} \State Given dataset $\{\tau_i\}$, sample batches of $k$ trajectories and ask humans to rank. \State Compute $r_{\theta}(\tau_1), \dots, r_{\theta}(\tau_k)$ under current reward model $r_{\theta}$ \State For all $\big(\begin{smallmatrix}k \\ 2 \end{smallmatrix}\big)$ pairs per batch, compute $\nabla_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}}[\log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]$ where $\tau_{\text{win}} &gt; \tau_{\text{lose}}$ \State Update $\theta$ using computed gradient \State Repeat from 2 to 4 \end{algorithmic} \end{algorithm}
 </div>

@@ -1,5 +1,7 @@
 ---
 title: 실천적 지혜의 상승
+description: "생각많은 소심남의 연구노트: 강화 학습과 온디바이스 AI를 통한 이론과 실제 엔지니어링의 융합을 탐구합니다."
+keywords: ["인공지능", "강화 학습", "온디바이스 AI", "딥러닝", "엔지니어링", "머신러닝"]
 lang: ko
 about:
   template: marquee

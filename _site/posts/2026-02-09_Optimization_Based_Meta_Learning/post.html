@@ -54,7 +54,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
-  "copy-button": false,
+  "copy-button": true,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
@@ -64,7 +64,6 @@ div.csl-indent {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -126,6 +125,18 @@ window.Quarto = {
   typesetMath
 };
 </script><link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Optimization-Based Meta-Learning – Chan’s Research Note">
+<meta property="og:description" content="Summary of lecture CS330 (2022) Lecture 5. Optimization-Based Meta-Learning">
+<meta property="og:image" content="https://kcsgoodboy.github.io/posts/2026-02-09_Optimization_Based_Meta_Learning/images/optimization_based_meta_learning_overview.en.png">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:width" content="2752">
+<meta name="twitter:title" content="Optimization-Based Meta-Learning – Chan’s Research Note">
+<meta name="twitter:description" content="Summary of lecture CS330 (2022) Lecture 5. Optimization-Based Meta-Learning">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/posts/2026-02-09_Optimization_Based_Meta_Learning/images/optimization_based_meta_learning_overview.en.png">
+<meta name="twitter:image-height" content="1536">
+<meta name="twitter:image-width" content="2752">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="floating nav-fixed">
 
@@ -324,7 +335,7 @@ Figure 3: Model-Agnostic Meta-Learning(MAML)
 <p>Regarding the algorithm’s name, <strong>Model-Agnostic</strong> stems from the fact that the update process relies entirely on the model’s gradients, without being tied to specific model architectures like RNNs or Transformers, which were not the focus of this lecture section. In other words, the focus is placed solely on the optimization process described in the lecture, independent of the model architecture.</p>
 <p>Additionally, she introduced a paper (<span class="citation" data-cites="kim2018auto">Kim et al. (<a href="#ref-kim2018auto" role="doc-biblioref">2018</a>)</span>) that explores searching for model architectures optimized for MAML. This research shared results from applying Neural Architecture Search (NAS), an AutoML-based method, to find structures optimized for MAML that facilitate fast adaptation. When comparing MAML results on MiniImageNet using basic model structures versus those optimized via NAS, accuracy improved by approximately 11%. An interesting finding was that, contrary to the general belief in deep learning that wide model structures perform better, the models identified by NAS as optimized for Meta Learning were <strong>deep &amp; narrow</strong>. In other words, this suggests that for the Meta Learning tasks discussed in the lecture, structures that differ from conventional wisdom may actually be more advantageous for adaptation.</p>
 <p>The Optimization-Based Adaptation discussed so far can be formalized as an algorithm as follows.</p>
-<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-line-number="true" data-line-number-punc=":" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="1" data-no-end="false">
+<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-line-number="true" data-indent-size="1.2em" data-no-end="false" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Optimization-Based Adaptation} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}^{tr}_i, \mathcal{D}^{ts}_i$ from $\mathcal{D}_i$ \State Optimize $\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)$ \State Update $\theta$ using $\nabla_{\theta} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)$ \end{algorithmic} \end{algorithm}
 </div>

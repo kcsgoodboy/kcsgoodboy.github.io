@@ -1,5 +1,6 @@
 ---
 title: "활동"
+description: "주요 활동, 컨퍼런스 발표 및 기술 기여 내역입니다."
 lang: ko
 date: '2026-02-26'
 output: distill::distill_article

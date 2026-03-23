@@ -1,5 +1,6 @@
 ---
 title: "출간물"
+description: "학술 논문, 저서 및 기술 검토 참여 목록입니다."
 lang: ko
 date: today
 output: distill::distill_article

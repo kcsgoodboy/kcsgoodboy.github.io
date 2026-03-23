@@ -1,5 +1,6 @@
 ---
 title: "Blog"
+description: "A collection of articles on AI research, implementation, and insights."
 lang: en
 comments: false
 listing:

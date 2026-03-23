@@ -27,7 +27,10 @@ execute:
 
 # Default format
 format: 
-  html: default
+  html:
+    default: true
+    open-graph: true
+    twitter-card: true
 
 # Default language
 lang: en

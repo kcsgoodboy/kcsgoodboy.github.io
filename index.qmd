@@ -1,5 +1,7 @@
 ---
 title: Ascent of Applied Wisdom
+description: "A blog by Chanseok Kang exploring the fusion of AI theory and real-world engineering through Reinforcement Learning and On-Device AI."
+keywords: ["AI", "Reinforcement Learning", "On-Device AI", "Deep Learning", "Engineering", "Machine Learning"]
 lang: en
 about:
   template: marquee

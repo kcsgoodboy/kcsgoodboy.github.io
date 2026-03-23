@@ -54,7 +54,7 @@ div.csl-indent {
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
-  "copy-button": false,
+  "copy-button": true,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
@@ -64,7 +64,6 @@ div.csl-indent {
     "/",
     "s"
   ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -126,6 +125,18 @@ window.Quarto = {
   typesetMath
 };
 </script><link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Black-Box Meta-Learning &amp; In-Context Learning – Chan’s Research Note">
+<meta property="og:description" content="Summary of lecture CS330 (2022) Lecture 4. Black-Box Meta-Learning &amp; In-Context Learning">
+<meta property="og:image" content="https://kcsgoodboy.github.io/posts/2026-02-02_Black_Box_Meta_Learning/images/black_box_meta_learning_overview.en.png">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta property="og:image:height" content="1536">
+<meta property="og:image:width" content="2752">
+<meta name="twitter:title" content="Black-Box Meta-Learning &amp; In-Context Learning – Chan’s Research Note">
+<meta name="twitter:description" content="Summary of lecture CS330 (2022) Lecture 4. Black-Box Meta-Learning &amp; In-Context Learning">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/posts/2026-02-02_Black_Box_Meta_Learning/images/black_box_meta_learning_overview.en.png">
+<meta name="twitter:image-height" content="1536">
+<meta name="twitter:image-width" content="2752">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="floating nav-fixed">
 
@@ -358,7 +369,7 @@ Figure 2: Version 1 vs. Version 2
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>Expressed in the form of an algorithm, it is as follows:</p>
-<div class="pseudocode-container quarto-float" data-line-number-punc=":" data-pseudocode-number="1" data-no-end="false" data-caption-prefix="Algorithm" data-comment-delimiter="//" data-indent-size="1.2em" data-line-number="true">
+<div class="pseudocode-container quarto-float" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":" data-line-number="true" data-indent-size="1.2em" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>

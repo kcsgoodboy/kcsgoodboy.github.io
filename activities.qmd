@@ -1,5 +1,6 @@
 ---
 title: "Activities"
+description: "Professional activities, conference presentations, and technical contributions"
 lang: en
 date: '2026-02-11'
 output: distill::distill_article

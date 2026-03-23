@@ -1,5 +1,6 @@
 ---
 title: About
+description: "Learn more about Real World Problem Solving with Reinforcement Learning and On-Device AI."
 lang: en
 about:
   template: trestles

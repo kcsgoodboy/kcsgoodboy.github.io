@@ -1,5 +1,6 @@
 ---
 title: "Publications"
+description: "A list of academic papers, books, and technical reviews"
 lang: en
 date: today
 output: distill::distill_article
