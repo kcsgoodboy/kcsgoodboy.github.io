@@ -1,0 +1,26 @@
+---
+title: Model-Based RL
+description: 2025년에 진행한 CS224R 강의 중 Lecture 11. Model-Based RL에 대한 강의 요약
+date: '2026-03-24'
+bibliography: ../../contents/references.bib
+image: ./images/Model_Based_RL_overview.ko.png
+filters:
+  - pseudocode
+lang: ko
+categories:
+  - Lecture
+  - CS224R
+---
+
+### 강의 및 자료
+
+::: {layout-ncol=2}
+[![](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/watch?v=PDIxDhA9Z6Y&list=PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL&index=11)
+
+[![](https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&logo=googleslides&logoColor=white)](https://cs224r.stanford.edu/slides/11_cs224r_mbrl_2025.pdf)
+:::
+
+## Lecture Summary with NotebookLM
+
+![](./images/Model_Based_RL_overview.ko.png)
+
