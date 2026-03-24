@@ -24,3 +24,10 @@ categories:
 
 ![](./images/Model_Based_RL_overview.ko.png)
 
+## Recap
+
+지금까지 다룬 강화학습 강의 요약을 통해서 다양한 알고리즘들을 살펴보았다.
+
+![Model-Free RL](./images/4p_model_free_rl.png){#fig-model-free}
+
+먼저 블로그에선 다루지 않았지만, 현재 학습중인 policy가 경험한 trajectory들을 활용하여 policy를 update하는 **On-Policy RL**에 대해서 소개하였고, 이때 가장 기본적인 Policy Gradient인 REINFORCE(@williams1992reinforce) 에 대해서 다뤘다. 물론 학습중인 policy를 직접적으로 학습하면, interaction에 따른 feedback을 바로 반영할 수 있기 때문에 학습 효율성은 좋겠지만, 그만큼 데이터를 많이 활용할 수 없는 Data Inefficiency 문제가 존재한다. 반면, 다음으로 소개된 **Off-Policy RL**에서는 학습중인 policy가 아니더라도, 과거의 다른 정책들이 쌓았던 경험을 바탕으로 policy를 update할 수 있게 되었고, 해당 내용에서 처음 소개한 내용이 Off-Policy 
