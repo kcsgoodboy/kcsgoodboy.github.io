@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
-<head>
-<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/publications.html" />
-<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/publications.ko.html" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/posts/2026-03-24-Model_Based_RL/post.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/posts/2026-03-24-Model_Based_RL/post.ko.html" />
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="description" content="학술 논문, 저서 및 기술 검토 참여 목록입니다.">
-<title>출간물 – 생각많은 소심남의 연구노트</title>
+
+<meta name="author" content="Chanseok Kang">
+<meta name="description" content="2025년에 진행한 CS224R 강의 중 Lecture 11. Model-Based RL에 대한 강의 요약">
+
+<title>Model-Based RL – 생각많은 소심남의 연구노트</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,14 +24,49 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
-<script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -54,34 +92,59 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "검색",
     "search-label": "검색"
   }
-}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script>
+
+<script type="text/javascript">
 
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-<link rel="stylesheet" href="assets/css/styles.css">
-<meta property="og:title" content="출간물 – 생각많은 소심남의 연구노트">
-<meta property="og:description" content="학술 논문, 저서 및 기술 검토 참여 목록입니다.">
-<meta property="og:image" content="https://kcsgoodboy.github.io/ko/contents/images/persona.png">
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Model-Based RL – 생각많은 소심남의 연구노트">
+<meta property="og:description" content="2025년에 진행한 CS224R 강의 중 Lecture 11. Model-Based RL에 대한 강의 요약">
+<meta property="og:image" content="https://kcsgoodboy.github.io/ko/posts/2026-03-24-Model_Based_RL/images/Model_Based_RL_overview.ko.png">
 <meta property="og:site_name" content="생각많은 소심남의 연구노트">
 <meta property="og:image:height" content="1536">
-<meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="출간물 – 생각많은 소심남의 연구노트">
-<meta name="twitter:description" content="학술 논문, 저서 및 기술 검토 참여 목록입니다.">
-<meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/contents/images/persona.png">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image:width" content="2752">
+<meta name="twitter:title" content="Model-Based RL – 생각많은 소심남의 연구노트">
+<meta name="twitter:description" content="2025년에 진행한 CS224R 강의 중 Lecture 11. Model-Based RL에 대한 강의 요약">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/posts/2026-03-24-Model_Based_RL/images/Model_Based_RL_overview.ko.png">
 <meta name="twitter:image-height" content="1536">
-<meta name="twitter:image-width" content="1024">
+<meta name="twitter:image-width" content="2752">
+<meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="nav-fixed">
+
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">생각많은 소심남의 연구노트</span>
     </a>
   </div>
@@ -91,105 +154,178 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-<li class="nav-item"><div class="dropdown" id="languages-links-parent">
-<button class="btn btn-primary dropdown-toggle babelquarto-languages-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/publications.html" id="language-link-en">English</a></li></ul>
-</div></li>
-<li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">소개</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link" href="../../blog.html"> 
 <span class="menu-text">블로그</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./publications.html" aria-current="page"> 
+    <a class="nav-link" href="../../publications.html"> 
 <span class="menu-text">출간물</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./activities.html"> 
+    <a class="nav-link" href="../../activities.html"> 
 <span class="menu-text">활동</span></a>
   </li>  
 </ul>
-<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
-</div> <!-- /navcollapse -->
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+</ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Model-Based RL</h1>
+                  <div>
+        <div class="description">
+          2025년에 진행한 CS224R 강의 중 Lecture 11. Model-Based RL에 대한 강의 요약
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Lecture</div>
+                <div class="quarto-category">CS224R</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">저자</div>
+    <div class="quarto-title-meta-heading">소속</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author"><a href="https://kcsgoodboy.github.io">Chanseok Kang</a> </p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://www.lge.co.kr/">
+              LG Electronics
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">공개</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">2026년 3월 24일</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">목차</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">2024</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">2021</a></li>
-  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">2020</a></li>
-  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">2019</a></li>
-  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">2017</a></li>
-  </ul></nav>
-</div>
-<!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">출간물</h1>
-</div>
-
-<div>
-  <div class="description">
-    학술 논문, 저서 및 기술 검토 참여 목록입니다.
-  </div>
-</div>
-
-
-<div class="quarto-title-meta">
-
-    
-    <div>
-    <div class="quarto-title-meta-heading">공개</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">2026년 3월 25일</p>
+  <li><a href="#강의-및-자료" id="toc-강의-및-자료" class="nav-link active" data-scroll-target="#강의-및-자료">강의 및 자료</a></li>
+  <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
+  <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
-  </div>
-  
-    
-  </div>
-  
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
-</header><p><a href="https://scholar.google.com/citations?user=tyjigLkAAAAJ&amp;hl=en" class="icon-link" target="_blank" rel="noopener"><i class="ai ai-google-scholar"></i> Google Scholar</a></p>
-<!-- Manually add forthcoming pubs, e.g. 
-
-## Forthcoming 
-
-**Nitta, J. H.**, S. W. Laffan, B. D. Mishler, and W. Iwasaki. "canaper: Categorical analysis of neo- and paleo-endemism in R". In-press, *Ecography*.
-
-`<a href="https://www.biorxiv.org/content/10.1101/2022.10.06.511072v1" class="icon-link" target="_blank" rel="noopener">Preprint</a>`{=html}
-`<a href="https://github.com/ropensci/canaper" class="icon-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>`{=html} !-->
-<section id="section" class="level2"><h2 class="anchored" data-anchor-id="section">2024</h2>
-<p><strong>Chanseok Kang</strong>, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).</p>
-<p><a href="https://ieeexplore.ieee.org/abstract/document/10605463" class="icon-link" target="_blank" rel="noopener"><i class="ai ai-ieee"></i> Preprint</a></p>
-<p><strong>강찬석</strong>. (2024) “실물 환경에서의 데이터 기반 강화학습 적용방안”. 2024 대한전자공학회.</p>
-<p><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11799172" class="icon-link" target="_blank" rel="noopener">Preprint</a></p>
-</section><section id="section-1" class="level2"><h2 class="anchored" data-anchor-id="section-1">2021</h2>
-<p><strong>Chanseok Kang</strong>. (2021) “그로킹 심층 강화학습”. 한빛미디어.</p>
-<p><a href="https://www.hanbit.co.kr/store/books/look.php?p_code=B8984169041" class="icon-link" target="_blank" rel="noopener"><i class="fas fa-book"></i> Book</a></p>
-</section><section id="section-2" class="level2"><h2 class="anchored" data-anchor-id="section-2">2020</h2>
-<p>Changmin Ahn, Seungyul Lee, <strong>Chanseok Kang</strong>, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.</p>
-<p><a href="https://link.springer.com/chapter/10.1007/978-3-030-63058-4_12" class="icon-link" target="_blank" rel="noopener"><i class="ai ai-springer"></i> Preprint</a></p>
-</section><section id="section-3" class="level2"><h2 class="anchored" data-anchor-id="section-3">2019</h2>
-<p>송교석, <strong>강찬석</strong> (감수). (2019) “텐서플로를 활용한 머신러닝”. 한빛미디어. <a href="https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495" class="icon-link" target="_blank" rel="noopener"><i class="fas fa-book"></i> Book</a></p>
-</section><section id="section-4" class="level2"><h2 class="anchored" data-anchor-id="section-4">2017</h2>
-<p><strong>Chanseok Kang</strong>, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.</p>
-<p><a href="https://link.springer.com/chapter/10.1007/978-3-319-61756-5_3" class="icon-link" target="_blank" rel="noopener"><i class="ai ai-springer"></i> Preprint</a></p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+<section id="강의-및-자료" class="level3">
+<h3 class="anchored" data-anchor-id="강의-및-자료">강의 및 자료</h3>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://www.youtube.com/watch?v=PDIxDhA9Z6Y&amp;list=PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL&amp;index=11"><img src="https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&amp;logo=YouTube&amp;logoColor=white" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="https://cs224r.stanford.edu/slides/11_cs224r_mbrl_2025.pdf"><img src="https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&amp;logo=googleslides&amp;logoColor=white.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+</section>
+<section id="lecture-summary-with-notebooklm" class="level2">
+<h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
+<p><img src="./images/Model_Based_RL_overview.ko.png" class="img-fluid"></p>
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<p>지금까지 다룬 강화학습 강의 요약을 통해서 다양한 알고리즘들을 살펴보았다.</p>
+<div id="fig-model-free" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model-free-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/4p_model_free_rl.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-free-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;1: Model-Free RL
+</figcaption>
+</figure>
+</div>
+<p>먼저 블로그에선 다루지 않았지만, 현재 학습중인 policy가 경험한 trajectory들을 활용하여 policy를 update하는 <strong>On-Policy RL</strong>에 대해서 소개하였고, 이때 가장 기본적인 Policy Gradient인 <strong>REINFORCE</strong>(<span class="citation" data-cites="williams1992reinforce">Williams (<a href="#ref-williams1992reinforce" role="doc-biblioref">1992</a>)</span>) 에 대해서 다뤘다. 물론 학습중인 policy를 직접적으로 학습하면, interaction에 따른 feedback을 바로 반영할 수 있기 때문에 학습 효율성은 좋겠지만, 그만큼 데이터를 많이 활용할 수 없는 Data Inefficiency 문제가 존재한다. 반면, 다음으로 소개된 <strong>Off-Policy RL</strong>에서는 학습중인 policy가 아니더라도, 과거의 다른 정책들이 쌓았던 경험을 바탕으로 policy를 update할 수 있게 되었고, 해당 강의에서 처음 소개한 내용이 Off-Policy Actor-Critic 기법인 <strong>PPO</strong> (<span class="citation" data-cites="schulman2017proximal">Schulman 기타 (<a href="#ref-schulman2017proximal" role="doc-biblioref">2017</a>)</span>) 이었다. Off-Policy RL에서는 기본적으로 학습하는 policy와 분리된 Behavior Policy, 즉 경험을 수집하는 policy가 따로 존재하기 때문에, 수집된 분포의 경향에 따라 Weight를 다르게 부여하는 <strong>Importance Sampling</strong> 같은 기법도 소개했었다. 소개된 두 기법은 샘플링된 trajectory에 대해서 여러번 gradient step을 밟아 update하는 형태로 되어 있다. 이어서 설명된 <strong>Q-Learning</strong> 강의에서는 Actor-Critic 방식에서 Action을 취하는 Actor를 빼고, 현재 state에 대한 가치를 최대화하는 방향으로 policy를 정의하는 <strong>DQN</strong> (<span class="citation" data-cites="mnih2013playing">Mnih 기타 (<a href="#ref-mnih2013playing" role="doc-biblioref">2013</a>)</span>) 나 <strong>SAC</strong> (<span class="citation" data-cites="haarnoja2018soft">Haarnoja 기타 (<a href="#ref-haarnoja2018soft" role="doc-biblioref">2018</a>)</span>) 을 소개했었다. 이 두 방법에서는 Replay Buffer를 사용해서 과거에 수집된 trajectory를 활용함으로써 Data Efficiency를 높인 사례로 소개되었다.</p>
+<p>앞에서 소개한 알고리즘들이 환경과의 실시간 interaction이 전제가 된 <strong>Online RL</strong>이었고, 이어진 강의에서는 이런 전제없이 static dataset을 기반으로 policy learning이 이뤄지는 <strong>Offline RL</strong>에 대해서 설명했다. 여러번 강의에서도 설명되었던 내용이지만 Offline RL에서 발생할 수 있는 가장 큰 문제는 dataset에 없는 action, 즉 Out-of-Distribution Action을 통해서 Q-value를 추정함으로서 발생하는 overestimation이었고, 이를 완화하기 위해서 아예 dataset에 없는 Action을 취하지 않게 하거나(<strong>AWR</strong> (<span class="citation" data-cites="peng2019advantage">Peng 기타 (<a href="#ref-peng2019advantage" role="doc-biblioref">2019</a>)</span>), <strong>AWAC</strong> (<span class="citation" data-cites="nair2020awac">Nair 기타 (<a href="#ref-nair2020awac" role="doc-biblioref">2020</a>)</span>), <strong>IQL</strong> (<span class="citation" data-cites="kostrikov2021offline">Kostrikov, Nair, 와/과 Levine (<a href="#ref-kostrikov2021offline" role="doc-biblioref">2021</a>)</span>)), 아니면 Q-value를 비관적으로 추정해서 Overestimation에 빠지지 않게 하는 방법 (<strong>CQL</strong> (<span class="citation" data-cites="kumar2020conservative">Kumar 기타 (<a href="#ref-kumar2020conservative" role="doc-biblioref">2020</a>)</span>)) 들이 제안되었다. 물론 이렇게 강화학습처럼 학습하는 것이 아니라, expert data를 바탕으로 지도학습 방식으로 학습한 경우도 존재한다. 해당 내용은 강의 첫 주제였던 <strong>Imitation Learning</strong>에서 다뤄졌으며, offline 데이터만으로 학습하는 기본적인 <strong>Behavior Cloning</strong>과, online demonstration으로 Imitation Learning을 수행하는 <strong>DAgger</strong> (<span class="citation" data-cites="ross2011reduction">Ross, Gordon, 와/과 Bagnell (<a href="#ref-ross2011reduction" role="doc-biblioref">2011</a>)</span>) 에 대해서 소개했다.</p>
+<p>지금까지 Policy Gradient, Actor-Critic, Q-Learning, Offline RL 등 다양한 terminology가 등장했는데, 지금까지 다룬 알고리즘은 모두 환경에 대한 정보를 dataset으로든, 환경과의 interaction을 통해서 policy를 학습하는 방식이다. 한마디로 <strong>“환경에 대한 사전 정보가 없는 상태”</strong>에서 탐색을 통해서 경험을 쌓고, 이를 기반으로 policy update하는 방식이었다. 그런데 사람이 경험 기반으로 학습할때를 상상해보면, 실제로 환경에서 경험한 것도 있겠지만, 혼자서 머리속으로 가상으로 상상</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-haarnoja2018soft" class="csl-entry" role="listitem">
+Haarnoja, Tuomas, Aurick Zhou, Pieter Abbeel, 와/과 Sergey Levine. 2018. <span>“Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor”</span>. In <em>International conference on machine learning</em>, 1861–70. Pmlr.
+</div>
+<div id="ref-kostrikov2021offline" class="csl-entry" role="listitem">
+Kostrikov, Ilya, Ashvin Nair, 와/과 Sergey Levine. 2021. <span>“Offline reinforcement learning with implicit q-learning”</span>. <em>arXiv preprint arXiv:2110.06169</em>.
+</div>
+<div id="ref-kumar2020conservative" class="csl-entry" role="listitem">
+Kumar, Aviral, Aurick Zhou, George Tucker, 와/과 Sergey Levine. 2020. <span>“Conservative q-learning for offline reinforcement learning”</span>. <em>Advances in neural information processing systems</em> 33: 1179–91.
+</div>
+<div id="ref-mnih2013playing" class="csl-entry" role="listitem">
+Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, 와/과 Martin Riedmiller. 2013. <span>“Playing atari with deep reinforcement learning”</span>. <em>arXiv preprint arXiv:1312.5602</em>.
+</div>
+<div id="ref-nair2020awac" class="csl-entry" role="listitem">
+Nair, Ashvin, Abhishek Gupta, Murtaza Dalal, 와/과 Sergey Levine. 2020. <span>“Awac: Accelerating online reinforcement learning with offline datasets”</span>. <em>arXiv preprint arXiv:2006.09359</em>.
+</div>
+<div id="ref-peng2019advantage" class="csl-entry" role="listitem">
+Peng, Xue Bin, Aviral Kumar, Grace Zhang, 와/과 Sergey Levine. 2019. <span>“Advantage-weighted regression: Simple and scalable off-policy reinforcement learning”</span>. <em>arXiv preprint arXiv:1910.00177</em>.
+</div>
+<div id="ref-ross2011reduction" class="csl-entry" role="listitem">
+Ross, Stéphane, Geoffrey Gordon, 와/과 Drew Bagnell. 2011. <span>“A reduction of imitation learning and structured prediction to no-regret online learning”</span>. In <em>Proceedings of the fourteenth international conference on artificial intelligence and statistics</em>, 627–35. JMLR Workshop; Conference Proceedings.
+</div>
+<div id="ref-schulman2017proximal" class="csl-entry" role="listitem">
+Schulman, John, Filip Wolski, Prafulla Dhariwal, Alec Radford, 와/과 Oleg Klimov. 2017. <span>“Proximal policy optimization algorithms”</span>. <em>arXiv preprint arXiv:1707.06347</em>.
+</div>
+<div id="ref-williams1992reinforce" class="csl-entry" role="listitem">
+Williams, Ronald J. 1992. <span>“Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning”</span>. <em>Mach. Learn.</em> 8 (3–4): 229–56. <a href="https://doi.org/10.1007/BF00992696">https://doi.org/10.1007/BF00992696</a>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">라이센스</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.ko">CC BY 4.0</a></div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -750,10 +886,90 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
 </div> <!-- /content -->
+    <script type="text/javascript">
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let pseudocodeOptions = {
+          indentSize: el.dataset.indentSize,
+          commentDelimiter: el.dataset.commentDelimiter,
+          lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+          lineNumberPunc: el.dataset.lineNumberPunc,
+          noEnd: el.dataset.noEnd.toLowerCase() === "true",
+          titlePrefix: el.dataset.captionPrefix
+        };
+        pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+      });
+    })(document);
+    (function(d) {
+      d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+        let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+        if (captionSpan !== null) {
+          let captionPrefix = el.dataset.captionPrefix + " ";
+          let captionNumber = "";
+          if (el.dataset.pseudocodeNumber) {
+            captionNumber = el.dataset.pseudocodeNumber + " ";
+            if (el.dataset.chapterLevel) {
+              captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+            }
+          }
+          captionSpan.innerHTML = captionPrefix + captionNumber;
+        }
+      });
+    })(document);
+    </script>
+  
 
 
 
 
-</body>
-</html>
+</body></html>
