@@ -30,7 +30,7 @@ categories:
 
 ![Model-Free RL](./images/4p_model_free_rl.png){#fig-model-free}
 
-먼저 블로그에선 다루지 않았지만, 현재 학습중인 policy가 경험한 trajectory들을 활용하여 policy를 update하는 **On-Policy RL**에 대해서 소개하였고, 이때 가장 기본적인 Policy Gradient인 **REINFORCE**(@williams1992reinforce) 에 대해서 다뤘다. 물론 학습중인 policy를 직접적으로 학습하면, interaction에 따른 feedback을 바로 반영할 수 있기 때문에 학습 효율성은 좋겠지만, 그만큼 데이터를 많이 활용할 수 없는 Data Inefficiency 문제가 존재한다. 반면, 다음으로 소개된 **Off-Policy RL**에서는 학습중인 policy가 아니더라도, 과거의 다른 정책들이 쌓았던 경험을 바탕으로 policy를 update할 수 있게 되었고, 해당 강의에서 처음 소개한 내용이 Off-Policy Actor-Critic 기법인 **PPO** (@schulman2017proximal) 이었다. Off-Policy RL에서는 기본적으로 학습하는 policy와 분리된 Behavior Policy, 즉 경험을 수집하는 policy가 따로 존재하기 때문에, 수집된 분포의 경향에 따라 Weight를 다르게 부여하는 **Importance Sampling** 같은 기법도 소개했었다. 소개된 두 기법은 샘플링된 trajectory에 대해서 여러번 gradient step을 밟아 update하는 형태로 되어 있다. 이어서 설명된 **Q-Learning** 강의에서는 Actor-Critic 방식에서 Action을 취하는 Actor를 빼고, 현재 state에 대한 가치를 최대화하는 방향으로 policy를 정의하는 **DQN** (@mnih2013playing) 나 **SAC** (@haarnoja2018soft) 을 소개했었다. 이 두 방법에서는 Replay Buffer를 사용해서 과거에 수집된 trajectory를 활용함으로써 Data Efficiency를 높인 사례로 소개되었다.
+먼저 블로그에선 다루지 않았지만, 현재 학습중인 policy가 경험한 trajectory들을 활용하여 policy를 update하는 **On-Policy RL**에 대해서 소개하였고, 이때 가장 기본적인 Policy Gradient인 **REINFORCE**(@williams1992reinforce) 에 대해서 다뤘다. 물론 학습중인 policy를 직접적으로 학습하면, interaction에 따른 feedback을 바로 반영할 수 있기 때문에 학습 효율성은 좋겠지만, 그만큼 데이터를 많이 활용할 수 없는 Data Inefficiency 문제가 존재한다. 다음으로 소개된 **Off-Policy RL**에서는 학습중인 policy가 쌓았던 경험을 바탕으로 현재의 policy를 update하는 방법에 대해서 소개되었고, 해당 강의에서 처음 소개한 내용이 On-Policy Actor-Critic 기법인 **PPO** (@schulman2017proximal) 이었다. 이어서 다룬 Off-Policy RL에서는 기본적으로 학습하는 policy와 분리된 Behavior Policy이 수집한 데이터를 활용하는데, 이때 학습되는 policy가 아닌, 경험을 수집하는 policy가 따로 존재하기 때문에, 수집된 분포의 경향에 따라 Weight를 다르게 부여하는 **Importance Sampling** 같은 기법도 소개했었다. 소개된 두 기법은 샘플링된 trajectory에 대해서 여러번 gradient step을 밟아 update하는 형태로 되어 있다. 이어서 설명된 **Q-Learning** 강의에서는 Actor-Critic 방식에서 Action을 취하는 Actor를 빼고, 현재 state에 대한 가치를 최대화하는 방향으로 policy를 정의하는 **DQN** (@mnih2013playing) 나 **SAC** (@haarnoja2018soft) 을 소개했었다. 이 두 방법에서는 Replay Buffer를 사용해서 과거에 수집된 trajectory를 활용함으로써 Data Efficiency를 높인 사례로 소개되었다.
 
 앞에서 소개한 알고리즘들이 환경과의 실시간 interaction이 전제가 된 **Online RL**이었고, 이어진 강의에서는 이런 전제없이 static dataset을 기반으로 policy learning이 이뤄지는 **Offline RL**에 대해서 설명했다. 여러번 강의에서도 설명되었던 내용이지만 Offline RL에서 발생할 수 있는 가장 큰 문제는 dataset에 없는 action, 즉 Out-of-Distribution Action을 통해서 Q-value를 추정함으로서 발생하는 overestimation이었고, 이를 완화하기 위해서 아예 dataset에 없는 Action을 취하지 않게 하거나(**AWR** (@peng2019advantage), **AWAC** (@nair2020awac), **IQL** (@kostrikov2021offline)), 아니면 Q-value를 비관적으로 추정해서 Overestimation에 빠지지 않게 하는 방법 (**CQL** (@kumar2020conservative)) 들이 제안되었다. 물론 이렇게 강화학습처럼 학습하는 것이 아니라, expert data를 바탕으로 지도학습 방식으로 학습한 경우도 존재한다. 해당 내용은 강의 첫 주제였던 **Imitation Learning**에서 다뤄졌으며, offline 데이터만으로 학습하는 기본적인 **Behavior Cloning**과, online demonstration으로 Imitation Learning을 수행하는 **DAgger** (@ross2011reduction) 에 대해서 소개했다.
 
@@ -133,7 +133,7 @@ categories:
 \begin{algorithmic}
 \State Initialize $\hat{a}_{t:t+H}$
 \State Compute Gradient $\nabla_{a_{t:t+H}} \sum r$
-\State $\hat{a}_{t:t+H} \leftarrow \hat{a}_{t:t+H} - \alpha \nabla_{a_{t:t+H}} \sum r$
+\State $\hat{a}_{t:t+H} \leftarrow \hat{a}_{t:t+H} + \alpha \nabla_{a_{t:t+H}} \sum r$
 \end{algorithmic}
 \end{algorithm}
 ```
@@ -145,7 +145,7 @@ $$
 
 :::
 
-이렇게 gradient에 기반하여 action을 최적화하는 방법도 있지만, 이 방법은 gradient가 계산되는 영역에서만 최적화가 가능하기 때문에, gradient를 계산할 수 없는 non-linear한 영역에서는 적용하기 어렵다. 강의에서는 이 방법과 비교해 Sampling 기반으로 최적화하는 과정에 대해서도 소개했다.
+이렇게 gradient에 기반하여 action을 최적화하는 방법도 있지만, 이 방법은 gradient가 계산되는 영역에서만 최적화가 가능하기 때문에, gradient를 계산할 수 없는 영역에서는 적용하기 어렵다. 강의에서는 이 방법과 비교해 Sampling 기반으로 최적화하는 과정에 대해서도 소개했다.
 
 ::: {#fig-optimization layout-ncol=2}
 
@@ -155,7 +155,7 @@ $$
 
 :::
 
-@fig-gradient 에서 최적화가 수행되는 과정처럼 어느 한 점에서 시작해, expected reward가 최대화가 되는 방향으로 최적화가 수행되는 것과 다르게, Sampling 기반 최적화 기법에서는 여러 점에서의 action에 대한 reward를 보고, 이를 최대화시킬 수 있는 action을 유추하는 것이다. 이 과정에서 gradient를 계산하지 않기 때문에 **Gradient-free optimization**이라고 표현하기도 한다. 물론 주어진 데이터의 패턴을 보고 최적화 지점을 찾는 방법이기 때문에, 실제 sampling되지 않은 영역에서의 값이 부정확하기 때문에 interpolation 같은 방법을 쓰겠지만, gradient를 구할 필요가 없다는 장점때문에 앞에서 언급한 discrete action space와 같은 non-linear한 영역에서도 활용이 가능하다.
+@fig-gradient 에서 최적화가 수행되는 과정처럼 어느 한 점에서 시작해, expected reward가 최대화가 되는 방향으로 최적화가 수행되는 것과 다르게, Sampling 기반 최적화 기법에서는 여러 점에서의 action에 대한 reward를 보고, 이를 최대화시킬 수 있는 action을 유추하는 것이다. 이 과정에서 gradient를 계산하지 않기 때문에 **Gradient-free optimization**이라고 표현하기도 한다. 물론 주어진 데이터의 패턴을 보고 최적화 지점을 찾는 방법이기 때문에, 실제 sampling되지 않은 영역에서의 값이 부정확하기 때문에 interpolation 같은 방법을 쓰겠지만, gradient를 구할 필요가 없다는 장점때문에 앞에서 언급한 discrete action space와 같은 미분불가능한 영역에서도 활용이 가능하다.
 
 ```pseudocode
 #| html-indent-size: "1.2em"
@@ -191,7 +191,7 @@ Sampling 기반의 최적화 방법 중에서 가장 간단하게 생각해볼 �
 4. $A_{i_1}, \dots, A_{i_M}$ 를 가지고 $p_{i+1}(A)$ 를 fit한다.
 5. 1부터 4까지의 과정을 반복적으로 수행한다.
 
-위의 과정을 반복적으로 수행하다 보면 최종적으로 $A_1$ 이란 하나의 최적값으로 수렴하게 된다. 
+위의 과정을 반복적으로 수행하다 보면 최종적으로 어떤 최적 분포값으로 수렴하게 된다. 
 
 이렇게 두 방법을 간단하게 비교하면서 각각의 장단점에 대해서 소개했는데, Gradient-based Method의 경우, 여타 딥러닝 계열에서도 많이 활용되는 것처럼 고차원 공간으로 확장이 매우 용이하고, 특히 신경망과 같이 내부 parameter가 엄청나게 많은 overparametrized regimes 환경에서도 잘 동작한다는 장점이 있다. 대신 최적점을 찾기위한 적절한 optimization 기법도 동반되어야 한다. Sampling-based Method에서는 앞에서 소개한 것처럼 데이터 기반으로 최적점을 찾기 때문에, 병렬화가 가능하고, gradient를 계산하기 위한 미분 과정이 필요없기 때문에 연산이 Gradient-based Method에 비해서 적다는 장점이 있다. 대신 주어진 점들을 가지고 어떤 분포에 맞추는 과정이 포함되어 있기 때문에, 데이터가 많아진다던지 하는 고차원 영역으로의 확장이 어렵다는 부분이 한계로 남아있다.
 
@@ -236,7 +236,7 @@ Sampling 기반의 최적화 방법 중에서 가장 간단하게 생각해볼 �
 
 :::
 
-지금까지 다룬 Model-based Approach는 어떤 Model로부터 현재 상태 $s$ 에서 시작해 expected reward를 최대화할 수 있는 action에 대한 trajectory를 도출해 그대로 수행하는 것이다. 다시 말해, 현재 수행하는 policy가 $H$ 만큼의 planning 범주를 가지고 Model로부터 어떤 action trajectory($a_1, \dots, a_H$)가 가장 좋은 reward를 받을 수 있는지 planning을 미리 수행하고, 그대로 action trajectory대로 수행하는 것이다. Model을 통해서 미리 해본셈이므로, 어느 정도는 맞겠지만 만약 Model이 실제 환경을 그대로 표현하지 못한다던지, 아니면 환경의 dynamic가 변화하는 조건이 있는 상태에서는 이렇게 action trajectory를 그대로 수행하는 것은 이상적인 방법이 아닐 수 있다. 이 방법을 강의에서는 **Open-loop**라고 소개했다. 반면, 이렇게 action trajectory를 그대로 수행할 것이 아니라, planning을 통해서 어떤 action trajectory가 도출되어 있을때, 이 중 첫번째 action $a_t$ 을 실제 환경에서 수행하고 받은 next_state $s_{t+1}$ 를 보고, 그 상태에서 다시 action trajectory를 replanning 하는 것도 생각해볼 수 있다. 이 방법을 **Closed-loop** 라고 소개했다.
+지금까지 다룬 Model-based Approach는 어떤 Model로부터 현재 상태 $s$ 에서 시작해 expected reward를 최대화할 수 있는 action에 대한 trajectory를 도출해 그대로 수행하는 것이다. 다시 말해, 현재 수행하는 policy가 $H$ 만큼의 planning 범주를 가지고 Model로부터 어떤 action trajectory($a_1, \dots, a_H$)가 가장 좋은 reward를 받을 수 있는지 planning을 미리 수행하고, 그대로 action trajectory대로 수행하는 것이다. Model을 통해서 미리 해본 셈이므로, 어느 정도는 맞겠지만 만약 Model이 실제 환경을 그대로 표현하지 못한다던지, 아니면 환경의 dynamic가 변화하는 조건이 있는 상태에서는 이렇게 action trajectory를 그대로 수행하는 것은 이상적인 방법이 아닐 수 있다. 이 방법을 강의에서는 **Open-loop**라고 소개했다. 반면, 이렇게 action trajectory를 그대로 수행할 것이 아니라, planning을 통해서 어떤 action trajectory가 도출되어 있을때, 이 중 첫번째 action $a_t$ 을 실제 환경에서 수행하고 받은 next_state $s_{t+1}$ 를 보고, 그 상태에서 다시 action trajectory를 replanning 하는 것도 생각해볼 수 있다. 이 방법을 **Closed-loop** 라고 소개했다.
 
 ```pseudocode
 #| html-indent-size: "1.2em"
@@ -260,7 +260,7 @@ Sampling 기반의 최적화 방법 중에서 가장 간단하게 생각해볼 �
 \end{algorithm}
 ```
 
-이렇게 Closed-loop 형식으로 action을 취하는 Sampling-based Approach를 **Model-Predictive Control** (@GARCIA1989335) 라고 한다. 이름 그대로 Model이 예측한 action trejectory에 대해서 첫번째 action을 취하고, 다음 state에 대해서 또 action trajectory를 예측하는 식으로 제어하는 것이다. 이를 통해서 plan후 실제 환경에서 수행시 발생하는 Model Error를 줄일 수 있고, 더 나아가 Replan을 통해서 Model의 정확성을 높일 수 있는 방법이기 때문에, 산업계의 다양한 분야에서도 많이 활용되는 알고리즘이기도 하다. 대신 매 interaction을 수행할 때마다 정해진 step $H$ 만큼을 계속 planning하기 때문에, 단순한 Closed-loop Sampling-based Approach보다는 연산량이 크다는 부분을 고려해야 한다. 그리고 @algo-mpc 에서 보이는 것처럼 Replay buffer를 활용해서 policy를 학습하기 때문에 Off-policy 방식이다. 
+이렇게 Closed-loop 형식으로 action을 취하는 Sampling-based Approach를 **Model-Predictive Control** (@GARCIA1989335) 라고 한다. 이름 그대로 Model이 예측한 action trejectory에 대해서 첫번째 action을 취하고, 다음 state에 대해서 또 action trajectory를 예측하는 식으로 제어하는 것이다. 이를 통해서 plan후 실제 환경에서 수행시 발생하는 Model Error를 줄일 수 있고, 더 나아가 Replan을 통해서 Model의 정확성을 높일 수 있는 방법이기 때문에, 산업계의 다양한 분야에서도 많이 활용되는 알고리즘이기도 하다. 대신 매 interaction을 수행할 때마다 정해진 step $H$ 만큼을 계속 planning하기 때문에, 단순한 Closed-loop Sampling-based Approach보다는 연산량이 크다는 부분을 고려해야 한다. 그리고 @algo-mpc 에서 보이는 것처럼 Replay buffer를 활용해서 policy를 학습하기 때문에 Off-policy와 비슷한 방식이다. (사실 강화학습이 아니기 때문에 Off-policy라고 표현하기 보다는 **Receding-Horizon-Control(RHC)**이라고 표기하는 것이 맞을것 같다.)
 
 강의중에 나온 질문 중에 MPC를 수행하면, 매번 Model error를 줄이는 방향으로 replan이 수행되면, action도 매번 달라지면서 일종의 oscillation 같은 현상을 유발할 수 있지 않을까 하는 내용도 나왔는데, 이에 대한 교수의 답변으로는 충분히 나올 수 있는 문제이며 이를 대응하기 위해서 "Warm-Start" 개념에 대해서도 언급했다. 예를 들어서 지금처럼 $H$ step만큼 미리 planning을 수행하고, 이중 첫번째 action만 수행하던 것이 기본 MPC라면, Warm-Start에서는 어느정도 threshold에 도달하기 전까지는 동일한 planning한 action을 유지하다가 다시 planning을 하게 하는 방식으로 oscillation등을 피할 수 있다고 소개했다.
 
