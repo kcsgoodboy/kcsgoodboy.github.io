@@ -17,7 +17,7 @@ categories:
 ::: {layout-ncol=2}
 [![](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/watch?v=-7kv6jf0isQ&list=PLoROMvodv4rPwxE0ONYRa_itZFdaKCylL&index=6)
 
-[![](https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&logo=googleslides&logoColor=white)](https://cs224r.stanford.edu/slides/06_cs224r_qlearning_2025.pdf)
+[![](https://img.shields.io/badge/Google%20Slides-F9AB00?style=for-the-badge&logo=googleslides&logoColor=white)](https://cs224r.stanford.edu/spring_2025/slides/06_cs224r_qlearning_2025.pdf)
 :::
 
 ## Lecture Summary with NotebookLM
