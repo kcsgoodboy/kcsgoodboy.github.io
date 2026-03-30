@@ -67,6 +67,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
 <link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script>
+<link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -271,7 +273,12 @@ window.Quarto = {
   <li><a href="#lecture-summary-with-notebooklm" id="toc-lecture-summary-with-notebooklm" class="nav-link" data-scroll-target="#lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</a></li>
   <li><a href="#recap" id="toc-recap" class="nav-link" data-scroll-target="#recap">Recap</a></li>
   <li><a href="#simulator" id="toc-simulator" class="nav-link" data-scroll-target="#simulator">“Simulator”</a></li>
-  <li><a href="#how-to-use-a-learned-dynamics-model" id="toc-how-to-use-a-learned-dynamics-model" class="nav-link" data-scroll-target="#how-to-use-a-learned-dynamics-model">How to use a learned dynamics model?</a></li>
+  <li><a href="#optimize-over-actions-using-model" id="toc-optimize-over-actions-using-model" class="nav-link" data-scroll-target="#optimize-over-actions-using-model">Optimize over actions using model</a></li>
+  <li><a href="#plan-and-replan-using-model" id="toc-plan-and-replan-using-model" class="nav-link" data-scroll-target="#plan-and-replan-using-model">Plan And Replan using Model</a></li>
+  <li><a href="#planning-with-learned-models" id="toc-planning-with-learned-models" class="nav-link" data-scroll-target="#planning-with-learned-models">Planning with Learned Models</a></li>
+  <li><a href="#case-study---online-planning-with-deep-dynamics-model-pddm" id="toc-case-study---online-planning-with-deep-dynamics-model-pddm" class="nav-link" data-scroll-target="#case-study---online-planning-with-deep-dynamics-model-pddm">Case Study - Online Planning with Deep Dynamics Model (PDDM)</a></li>
+  <li><a href="#model-based-policy-optimization-mbpo" id="toc-model-based-policy-optimization-mbpo" class="nav-link" data-scroll-target="#model-based-policy-optimization-mbpo">Model-Based Policy Optimization (MBPO)</a></li>
+  <li><a href="#takeways" id="toc-takeways" class="nav-link" data-scroll-target="#takeways">Takeways</a></li>
   </ul>
 </nav>
 </nav>
@@ -361,7 +368,7 @@ window.Quarto = {
 </figure>
 </div>
 <p>일반적으로 학습된 Simlator를 활용하여 강화학습을 수행하는 과정은 크게 다음과 같다.</p>
-<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-comment-delimiter="//" data-line-number="true">
+<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Notional "learned simulator" algorithm} \begin{algorithmic} \State Get some data $\mathcal{D} = \{s_i, a_i, s_i' \}$ collected using some base policy $\pi_0(a \vert s)$ \State Learn "simulator" $f(a, s) = s'$ using $\min_f \sum_i \Vert f(s_i, a_i) - s_i' \Vert^2$ \State Run your favorite RL method inside "simulator" $f$ \end{algorithmic} \end{algorithm}
 </div>
@@ -412,8 +419,8 @@ window.Quarto = {
 </div>
 <p>강화학습이 잘 동작한다고 알려진 게임 환경처럼 환경에 대한 Model이 잘 정의된 도메인도 있고, 앞에서 잠깐 언급한 MuJoCo처럼 physics를 모사할 수 있는 엔진의 도움을 받아 대략적으로 알 수 있는 도메인도 있지만 아마 대부분의 실제 환경은 이런 환경을 모사할 수 있는 Model이 정의되어 있지 않다. 이 때문에 처음부터 끝까지 데이터 기반으로 학습하는 형태로 Dynamics Model을 학습시키는데, 교수가 설명한 첫번째 사례처럼 Video Model을 학습시키는 케이스에서도 모든 pixel에서 어떤 action을 가했을 때, 그 픽셀의 변화를 모두 표현하기란 쉽지 않다. 그렇기 때문에 대안으로 많이 활용되는 것은 주어진 State <span class="math inline">\(s_t\)</span> 에서 그 state를 함축적으로 표현할 수 있는 저차원의 state representation <span class="math inline">\(z_t\)</span> 로 변환하여, 그 상태에서 dynamics model을 학습시키는 방법이다. 물론 여기에서도 이렇게 저차원으로 낮추게 되면 본래의 state가 가지고 있는 정보량이 줄어들텐데, 어떻게 해야 좋은 State Representation을 뽑을 수 있느냐는 것이 고민해야될 부분이긴 하다. 하지만 좋은 State Representation을 뽑는 방법을 알고만 있다면, 이 방법은 기존의 State를 사용해서 Dynamics Model을 활용하는 것보다 computational cost를 많이 줄일 수 있기 때문에 이에 대한 연구가 계속 이뤄지고 있다. 어떻게 보면 추후 강의를 통해 소개될 Meta RL 에서도 연결될 부분이기도 하다.</p>
 </section>
-<section id="how-to-use-a-learned-dynamics-model" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use-a-learned-dynamics-model">How to use a learned dynamics model?</h2>
+<section id="optimize-over-actions-using-model" class="level2">
+<h2 class="anchored" data-anchor-id="optimize-over-actions-using-model">Optimize over actions using model</h2>
 <div id="fig-planning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-planning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -425,9 +432,9 @@ window.Quarto = {
 </figure>
 </div>
 <p>만약 앞에서 소개한 방법들을 고려해 학습된 dynamics model을 만들었을 때, 어떻게 하면 이 model을 사용해서 policy를 학습시킬 수 있을까? 가장 쉽게 해볼 수 있는 방법은 주어진 model을 기반을 상상을 해보는 <strong>“planning”</strong>을 해보는 것이다. 실제로 환경에서 interaction을 하지 않더라도, Model을 통해서 주어진 State와 action을 통해서 Next State를 추론할 수 있기 때문에, 이를 기반으로 정해진 목표지점까지 경험을 쭉 쌓는 것이다. 이 경험을 바탕으로 일반적인 강화학습의 objective처럼 expected reward가 최대화가 되는 방향(<span class="math inline">\(\max_{a_t:t+H} \sum_t r(s_t, a_t)\)</span>)으로 policy를 학습하게 되고, 이를 backpropagation을 통해서 최적화를 수행하면 된다.</p>
-<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="2" data-comment-delimiter="//" data-line-number="true">
+<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="2">
 <div class="pseudocode">
-\begin{algorithm} \caption{Planning via backpropagation} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Backpropagate through $f_{\phi}(s, a)$ to choose actions. ($\hat{a}_{t:t+H} \leftarrow \arg\max \sum_{t'=t}^{t+H} r_{t'}$) \end{algorithmic} \end{algorithm}
+\begin{algorithm} \caption{Planning via backpropagation} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Backpropagate through $f_{\phi}(s, a)$ to choose actions. ($\hat{a}_{t:t+H} \leftarrow \arg\max \sum_{t'=t}^{t+H} r_{t'}$) \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Computing Gradient to choose action">
@@ -441,7 +448,7 @@ Computing Gradient to choose action
 </div>
 <div class="callout-body-container callout-body">
 <p>교수가 질판에 서술한 내용이지만, <span class="math inline">\(\hat{a}_{t:t+H}\)</span> 를 얻기 위한 backpropagration을 수행하기 위해선 expected reward를 최대화할 수 있는 방향을 나타내는 gradient를 계산할 수 있어야 한다. 아래 식은 이를 표현한 것이다.</p>
-<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="3" data-comment-delimiter="//" data-line-number="true">
+<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="3">
 <div class="pseudocode">
 \begin{algorithm} \caption{Compute Gradient} \begin{algorithmic} \State Initialize $\hat{a}_{t:t+H}$ \State Compute Gradient $\nabla_{a_{t:t+H}} \sum r$ \State $\hat{a}_{t:t+H} \leftarrow \hat{a}_{t:t+H} - \alpha \nabla_{a_{t:t+H}} \sum r$ \end{algorithmic} \end{algorithm}
 </div>
@@ -452,14 +459,240 @@ Computing Gradient to choose action
 \]</span></p>
 </div>
 </div>
+<p>이렇게 gradient에 기반하여 action을 최적화하는 방법도 있지만, 이 방법은 gradient가 계산되는 영역에서만 최적화가 가능하기 때문에, gradient를 계산할 수 없는 non-linear한 영역에서는 적용하기 어렵다. 강의에서는 이 방법과 비교해 Sampling 기반으로 최적화하는 과정에 대해서도 소개했다.</p>
+<div id="fig-optimization" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-optimization" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-gradient" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-gradient-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/13p_gradient_based.png" class="img-fluid figure-img" data-ref-parent="fig-optimization">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-gradient-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Gradient-based Optimization
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-optimization" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-sampling" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-sampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/13p_sampling_based.png" class="img-fluid figure-img" data-ref-parent="fig-optimization">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Sampling-based Optimization
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;5
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-gradient" class="quarto-xref">그림&nbsp;5 (a)</a> 에서 최적화가 수행되는 과정처럼 어느 한 점에서 시작해, expected reward가 최대화가 되는 방향으로 최적화가 수행되는 것과 다르게, Sampling 기반 최적화 기법에서는 여러 점에서의 action에 대한 reward를 보고, 이를 최대화시킬 수 있는 action을 유추하는 것이다. 이 과정에서 gradient를 계산하지 않기 때문에 <strong>Gradient-free optimization</strong>이라고 표현하기도 한다. 물론 주어진 데이터의 패턴을 보고 최적화 지점을 찾는 방법이기 때문에, 실제 sampling되지 않은 영역에서의 값이 부정확하기 때문에 interpolation 같은 방법을 쓰겠지만, gradient를 구할 필요가 없다는 장점때문에 앞에서 언급한 discrete action space와 같은 non-linear한 영역에서도 활용이 가능하다.</p>
+<div id="algo-sampling-planning" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="4">
+<div class="pseudocode">
+\begin{algorithm} \caption{Planning via Sampling} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>Sampling 기반의 최적화 방법 중에서 가장 간단하게 생각해볼 수 있는 방법은 그냥 어림 짐작으로 맞추는 것이다. 강의에서는 이를 <strong>“Random Shooting”</strong>이라고 표현했는데, 말 그대로 어떤 주어진 distribution내에서 <span class="math inline">\(N\)</span> 개의 action sample을 구하고, 주어진 state <span class="math inline">\(s\)</span> 에서의 action <span class="math inline">\(a\)</span> 를 대입했을때 expected reward가 가장 커지는 action을 뽑는 것이다.</p>
+<ol type="1">
+<li>특정 분포로부터 <span class="math inline">\(A_1, \dots, A_N\)</span> 을 sampling한다. (e.g.&nbsp;uniform)</li>
+<li><span class="math inline">\(\arg \max_i \sum_{t'=t}^{t+H}r(s_{t'}, a_{t'})\)</span> 에 맞는 <span class="math inline">\(A_i\)</span> 를 구한다.</li>
+</ol>
+<p>물론 이 경우, 어떤 distribution 형태로 sample을 추출할 것인지 정의하는 단계가 남아있기 때문에, 다음으로 설명한 부분이 <strong>Cross-Entropy Method (CEM)</strong> 이란 것이었다. 이 방법은 간단하게 말하자면, 어떤 정답지가 포함된 분포를 일종의 Distribution (일반적으로는 Gaussian) 이라고 가정하고, 샘플링한 데이터들이 그 분포에 맞게끔 fitting하는 것이다.</p>
+<ol type="1">
+<li><span class="math inline">\(p_i(A)\)</span> 분포에서 <span class="math inline">\(A_1, \dots, A_N\)</span> 을 sampling한다.</li>
+<li><span class="math inline">\(J(A_i) = \sum_{t'=t}^{t+H}r(s_{t'}, a_{t'})\)</span> 을 계산한다.</li>
+<li><span class="math inline">\(M &lt; N\)</span> 인 조건 상에서 <span class="math inline">\(J(A)\)</span> 를 크게 만드는 상위 sample <span class="math inline">\(A_{i_1}, \dots, A_{i_M}\)</span> 을 구한다.</li>
+<li><span class="math inline">\(A_{i_1}, \dots, A_{i_M}\)</span> 를 가지고 <span class="math inline">\(p_{i+1}(A)\)</span> 를 fit한다.</li>
+<li>1부터 4까지의 과정을 반복적으로 수행한다.</li>
+</ol>
+<p>위의 과정을 반복적으로 수행하다 보면 최종적으로 <span class="math inline">\(A_1\)</span> 이란 하나의 최적값으로 수렴하게 된다.</p>
+<p>이렇게 두 방법을 간단하게 비교하면서 각각의 장단점에 대해서 소개했는데, Gradient-based Method의 경우, 여타 딥러닝 계열에서도 많이 활용되는 것처럼 고차원 공간으로 확장이 매우 용이하고, 특히 신경망과 같이 내부 parameter가 엄청나게 많은 overparametrized regimes 환경에서도 잘 동작한다는 장점이 있다. 대신 최적점을 찾기위한 적절한 optimization 기법도 동반되어야 한다. Sampling-based Method에서는 앞에서 소개한 것처럼 데이터 기반으로 최적점을 찾기 때문에, 병렬화가 가능하고, gradient를 계산하기 위한 미분 과정이 필요없기 때문에 연산이 Gradient-based Method에 비해서 적다는 장점이 있다. 대신 주어진 점들을 가지고 어떤 분포에 맞추는 과정이 포함되어 있기 때문에, 데이터가 많아진다던지 하는 고차원 영역으로의 확장이 어렵다는 부분이 한계로 남아있다.</p>
+<div id="fig-fail-case" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fail-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/18p_fail_case.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fail-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;6: Fail Case of Sampling-based Approach
+</figcaption>
+</figure>
+</div>
+<p>강의에서는 <a href="#fig-fail-case" class="quarto-xref">그림&nbsp;6</a> 의 예시를 통해서 이 방법이 적절하지 않은 케이스에 대해서도 소개했다. <a href="#fig-fail-case" class="quarto-xref">그림&nbsp;6</a> 에서는 절벽에서 가장 멋진 광경을 보기 위해서 경로를 찾는 과정에 앞에서 소개한 Sampling-based Approach를 적용했는데, 실제로 빨간 경로에 대한 샘플만 추출이 된 상태로 어떤 Model이 학습되고, 이에 기반하여 Action을 취하게 된다면, policy는 오른쪽으로 가는 행동이 expected reward를 높이는 이상적인 policy라고 학습하게 될 것이다. 하지만 그림에도 보다시피 오른쪽으로만 가게되면 끝에서는 절벽에서 떨어지는 문제가 발생한다. 여기에서 언급한 것은 어떤 분포라고 가정된 상태에서 샘플링된 데이터 외에도 실제 환경에서 나올 수 있는 데이터는 그 분포에서 벗어난 Out-of-Distribution Sample이 나올 수 있다는 점이다. 즉, 이 상태에서 초기의 policy에 의한 distribution <span class="math inline">\(p_{\pi_0}(s)\)</span> 와 완전히 학습된 후 접할 수 있는 distribution <span class="math inline">\(p_{\pi_f}(s)\)</span> 가 달라지는 <strong>Data Distribution Mismatch</strong>가 발생하는 것이다.</p>
+<p>이를 해결하기 위해서 간단하게 개선해볼 수 있는 방법은 실제 환경에서 Model에 의해 planning된 action을 수행했을 때 겪은 trajectory도 Model을 학습시키는데 활용하자는 것이다.</p>
+<div id="algo-sampling-planning-2" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="5">
+<div class="pseudocode">
+\begin{algorithm} \caption{Planning via Sampling (Updated)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute planned actions, appending visiting tuples $(s, a, s')$ to $\mathcal{D}$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<div id="fig-success-case" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-success-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/20p_success_case.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-success-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;7: Success Case of Sampling-based Approach
+</figcaption>
+</figure>
+</div>
+<p>이렇게 실제 취한 action에 대한 trajectory도 dynamics 모델에 반영됨으로써, Model과 실제 환경간의 gap을 줄이고, 그만큼 policy도 이상적인 방향으로 학습시킬 수 있다.</p>
+</section>
+<section id="plan-and-replan-using-model" class="level2">
+<h2 class="anchored" data-anchor-id="plan-and-replan-using-model">Plan And Replan using Model</h2>
+<div id="fig-plan" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-plan" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-open" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_open_loop.png" class="img-fluid figure-img" data-ref-parent="fig-plan">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Open-loop Interaction
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-plan" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-close" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-close-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/21p_close_loop.png" class="img-fluid figure-img" data-ref-parent="fig-plan">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-close-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Closed-loop Ineraction
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-plan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;8
+</figcaption>
+</figure>
+</div>
+<p>지금까지 다룬 Model-based Approach는 어떤 Model로부터 현재 상태 <span class="math inline">\(s\)</span> 에서 시작해 expected reward를 최대화할 수 있는 action에 대한 trajectory를 도출해 그대로 수행하는 것이다. 다시 말해, 현재 수행하는 policy가 <span class="math inline">\(H\)</span> 만큼의 planning 범주를 가지고 Model로부터 어떤 action trajectory(<span class="math inline">\(a_1, \dots, a_H\)</span>)가 가장 좋은 reward를 받을 수 있는지 planning을 미리 수행하고, 그대로 action trajectory대로 수행하는 것이다. Model을 통해서 미리 해본셈이므로, 어느 정도는 맞겠지만 만약 Model이 실제 환경을 그대로 표현하지 못한다던지, 아니면 환경의 dynamic가 변화하는 조건이 있는 상태에서는 이렇게 action trajectory를 그대로 수행하는 것은 이상적인 방법이 아닐 수 있다. 이 방법을 강의에서는 <strong>Open-loop</strong>라고 소개했다. 반면, 이렇게 action trajectory를 그대로 수행할 것이 아니라, planning을 통해서 어떤 action trajectory가 도출되어 있을때, 이 중 첫번째 action <span class="math inline">\(a_t\)</span> 을 실제 환경에서 수행하고 받은 next_state <span class="math inline">\(s_{t+1}\)</span> 를 보고, 그 상태에서 다시 action trajectory를 replanning 하는 것도 생각해볼 수 있다. 이 방법을 <strong>Closed-loop</strong> 라고 소개했다.</p>
+<div id="algo-mpc" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="6">
+<div class="pseudocode">
+\begin{algorithm} \caption{Model Predictive Control (MPC)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Use model $f_{\phi}(s, a)$ to optimize action sequence \State Execute **the first** planned action, observe resulting state $s'$ \State Append $(s, a, s')$ to dataset $\mathcal{D}$ \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>이렇게 Closed-loop 형식으로 action을 취하는 Sampling-based Approach를 <strong>Model-Predictive Control</strong> (<span class="citation" data-cites="GARCIA1989335">García, Prett, 와/과 Morari (<a href="#ref-GARCIA1989335" role="doc-biblioref">1989</a>)</span>) 라고 한다. 이름 그대로 Model이 예측한 action trejectory에 대해서 첫번째 action을 취하고, 다음 state에 대해서 또 action trajectory를 예측하는 식으로 제어하는 것이다. 이를 통해서 plan후 실제 환경에서 수행시 발생하는 Model Error를 줄일 수 있고, 더 나아가 Replan을 통해서 Model의 정확성을 높일 수 있는 방법이기 때문에, 산업계의 다양한 분야에서도 많이 활용되는 알고리즘이기도 하다. 대신 매 interaction을 수행할 때마다 정해진 step <span class="math inline">\(H\)</span> 만큼을 계속 planning하기 때문에, 단순한 Closed-loop Sampling-based Approach보다는 연산량이 크다는 부분을 고려해야 한다. 그리고 <a href="#algo-mpc" class="quarto-xref">Algorithm 6</a> 에서 보이는 것처럼 Replay buffer를 활용해서 policy를 학습하기 때문에 Off-policy 방식이다.</p>
+<p>강의중에 나온 질문 중에 MPC를 수행하면, 매번 Model error를 줄이는 방향으로 replan이 수행되면, action도 매번 달라지면서 일종의 oscillation 같은 현상을 유발할 수 있지 않을까 하는 내용도 나왔는데, 이에 대한 교수의 답변으로는 충분히 나올 수 있는 문제이며 이를 대응하기 위해서 “Warm-Start” 개념에 대해서도 언급했다. 예를 들어서 지금처럼 <span class="math inline">\(H\)</span> step만큼 미리 planning을 수행하고, 이중 첫번째 action만 수행하던 것이 기본 MPC라면, Warm-Start에서는 어느정도 threshold에 도달하기 전까지는 동일한 planning한 action을 유지하다가 다시 planning을 하게 하는 방식으로 oscillation등을 피할 수 있다고 소개했다.</p>
+</section>
+<section id="planning-with-learned-models" class="level2">
+<h2 class="anchored" data-anchor-id="planning-with-learned-models">Planning with Learned Models</h2>
+<p>지금까지 수집된 데이터 내에서 dynamics model을 학습하고, 이를 기반으로 planning을 수행해서 policy를 학습하는 형태의 Model-based RL 방법론에 대해서 소개했다. 크게 수행 과정을 나눠보자면,</p>
+<ol type="1">
+<li>Gradient-based Optimization이나 Sampling-based Optimization을 통해서 action trajectory <span class="math inline">\(a_1, \dots, a_H\)</span> 를 미리 planning한다.</li>
+<li>planning을 통해 도출된 action을 실제 환경에서 수행해서 수집된 데이터로 dynamics model을 update한다.</li>
+<li>기존의 Model과 실제 환경사이에 발생한 Model error를 대응하기 위해서 replanning을 수행한다.</li>
+</ol>
+<p>와 같다. 핵심적인 내용은 실제 환경의 dynamics를 정확하게 묘사할 수 있는 Model을 학습하고, 이를 통해서 planning을 수행하는 것이며, 구현 방법 자체가 쉽게 되어 있고, 사용자가 정의한 개별적인 goals이나 reward에 대해서도 데이터를 가지고 개별 model을 학습시킬 수 있기 때문에, Model-free 방식에 비해서 조금더 다양한 문제에 적용해볼 수 있다. (여기서 다양한 문제에 적용해볼 수 있다는 것은 그 문제에 최적화된 policy를 빠르게 찾을 수 있다기 보다는 다양한 환경에 따라서 모델을 변형하고 학습에 활용할 수 있다는 것을 의미한다.) 대신 매번 state에서의 action trajectory를 도출하기 위한 plan과정이 이뤄지기 때문에 다른 방식에 비해서 Computation이 많이 들고, 그만큼 Model의 Accuracy가 전체 성능을 좌우하기 때문에 infinite하거나 long-horizon 보다는 short horizon 같은 환경에서만 적용이 가능하다. 생각해보면 먼 미래에 대해서 미리 생각한 것보다는 가까운 미래에 대해서 미리 생각한 것이 조금더 실현 가능성이 높은 것과 동일한 개념이다.</p>
+</section>
+<section id="case-study---online-planning-with-deep-dynamics-model-pddm" class="level2">
+<h2 class="anchored" data-anchor-id="case-study---online-planning-with-deep-dynamics-model-pddm">Case Study - Online Planning with Deep Dynamics Model (PDDM)</h2>
+<p>강의에서는 Dynamics Model을 실제로 적용한 사례에 대해서 소개했다.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="./images/32p_pddm.mp4"></video></div>
+<p>이 내용은 <span class="citation" data-cites="nagabandi2020deep">Nagabandi 기타 (<a href="#ref-nagabandi2020deep" role="doc-biblioref">2020</a>)</span> 논문에서 소개된, 24-DoF를 가진 dexterous multi-fingered hand를 Dynamics Model로 학습시켜서 Online으로 Planning을 수행하면서 좋은 성능을 보여준다는 내용이다. 논문 제목으로 소개된 <a href="https://sites.google.com/view/pddm/"><strong>online Planning with Deep Dynamics Model (PDDM)</strong></a> 에도 표현되어 있는 것처럼, 일반적인 강화학습처럼 별도의 policy network없이, 학습된 dynamics model을 가지고도 online planning을 통해서 좋은 성능을 보여준다. 교수도 본인이 봐왔던 로봇 관련 프로젝트 중에서 가장 인상깊었던 내용 중 하나로 소개하며, 무엇보다도 다른 알고리즘과의 비교가 잘되어 있어서 강의에서 소개했다고 언급했다.</p>
+<p>우선 주어진 문제는 24 DoF를 가진, 손가락이 5개 달려있는 손을 제어하는 것이고, 손과 객체에 대한 정보가 State로 들어온다. 이 때의 Reward는 목표 객체의 trajectory를 따라가면서 얼마나 task를 잘 수행했느냐에 따라 부여되며, 동작중 객체를 떨어뜨리면 penalty가 부여되는 형태로 되어 있다. 이에 대한 Dynamics Model을 학습시키기 위해서 논문에서는 3개의 신경망을 ensemble에서 사용했으며, 각 신경망마다 다른 batch sampling 방법과 방식을 다르게 하여 학습함으로써 model error에 효과적으로 대응할 수 있게끔 했다. Planning시 앞에서 소개했던 Cross-Entropy Method (CEM)을 변형하여, 행동을 샘플링하고, 보상을 평가한 뒤 다음 행동을 결정하는 Model Predictive Control 방식을 취했다.</p>
+<p>비교실험은 이전 강의에서 다뤘던 <strong>Soft Actor-Critic (SAC)</strong>와 <strong>Natural Policy Gradient</strong> (NPG - <span class="citation" data-cites="kakade2001natural">Kakade (<a href="#ref-kakade2001natural" role="doc-biblioref">2001</a>)</span>) 와 같은 Model-free 계열과 Model-based 계열인 <strong>Model-Based Policy Optimization</strong> (MBPO - <span class="citation" data-cites="janner2019trust">Janner 기타 (<a href="#ref-janner2019trust" role="doc-biblioref">2019</a>)</span>) 와 <strong>Probabilistic Ensembles with Trajectory Sampling</strong> (PETS - <span class="citation" data-cites="chua2018deep">Chua 기타 (<a href="#ref-chua2018deep" role="doc-biblioref">2018</a>)</span>) 을 같이 놓고 비교하였다. (추가로 저자가 이전에 제안했던 <strong>Model-Based Deep RL with Model-Free Fine-Tuning</strong> (MBMF - <span class="citation" data-cites="nagabandi2018neural">Nagabandi 기타 (<a href="#ref-nagabandi2018neural" role="doc-biblioref">2018</a>)</span>) 도 비교군에 두었다. 사실 이 방법은 앞에서 잠깐 언급했던 random shooting 방식이라고 보면 될 것 같다.)</p>
+<div id="fig-result" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-result" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-baoding" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-baoding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/34p_baoding_balls.png" class="img-fluid figure-img" data-ref-parent="fig-result">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-baoding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Baoding Balls
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-result" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-handwriting" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-handwriting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/34p_handwriting.png" class="img-fluid figure-img" data-ref-parent="fig-result">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-handwriting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Handwriting
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;9
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-result" class="quarto-xref">그림&nbsp;9</a> 가 실제 비교군과의 결과인데, Model-based 계열과 Model-free 계열로 구분하고 비교했을때, Model-based 계열이 조금 더 빠르게 성능을 높이는 것을 확인할 수 있었고, 이는 Dynamics Model을 통한 Planning이 Data efficiency 측면에서 도움이 된다는 것을 보여주었다. 또한 Model-based 계열끼리 비교해도 Random Sampling보다는 3개의 Ensemble Model을 통한 Planning이 복잡한 Task에서도 잘 동작하는 결과도 확인할 수 있었다. Hand-Writing task는 오히려 Model-Free 계열이 Model-Based 계열보다 좋은 성능을 보여주고 있으나, 제안한 알고리즘은 Model-Free보다도 더 빠르게 좋은 성능에 보여주었다. 이를 통해서 Model-Free 계열보다 데이터 효율성 측면에서 개선되고, 여타 Model-based 알고리즘보다 성능이 좋다는 결과도 같이 공유되었다.</p>
+<p>사실 Data Efficiency 관점은 Real World에서는 조금더 중점적으로 봐야할 부분인데, 특히 강의에서 소개한 고장이 잘 나기 쉬운 Task (Fragile Hardware) 에서는 학습 후 다시 reset하는 과정이 들어있어서, 제어나 데이터 수집 측면에서 제한을 두게 되는데, 역시 이 부분에 대해서도 학습을 수행할수록 성능이 개선되는 효과를 확인할 수 있었다.</p>
+</section>
+<section id="model-based-policy-optimization-mbpo" class="level2">
+<h2 class="anchored" data-anchor-id="model-based-policy-optimization-mbpo">Model-Based Policy Optimization (MBPO)</h2>
+<p>사실 Model-Based RL에서는 앞에서 소개했던 것처럼 Planning을 위한 방법이 있지만, 또다른 측면으로는 Dynamics Model을 활용하여 임의의 Trajectory를 생성(augment)하는 방법도 존재한다. 그래서 첫강의에서는 이 Planning에 대한 내용을 소개했고, 다음 강의의 전반부에서 Data Augmentation으로 활용한 Model-Based RL에 대한 내용을 다뤄서 이에 대한 내용도 여기에 소개한다.</p>
+<p>서두에도 이야기했던 부분이긴 하지만, Model은 agent가 생각하는 실제 환경의 모사체이다. 그래서 실제로 환경과 직접적으로 interaction하지 않고도, 주어진 state와 action에 대한 next state를 뽑을 수 있기 때문에, 이를 simulator로도 활용할 수 있다. 그러면 이 simulator를 활용하여, 이전의 Model-Based RL에서는 없었던 Policy Network을 직접적으로 학습할 수 있지 않을까 생각해볼 수 있다. 그러면 더이상 실제 환경에서 수행할때는 Planning 과정이 없어지므로 Computation Cost도 줄일 수 있게 된다. 이를 위해서 <strong>Model-Based Policy Optimization</strong> (MBPO - <span class="citation" data-cites="janner2019trust">Janner 기타 (<a href="#ref-janner2019trust" role="doc-biblioref">2019</a>)</span>) 알고리즘에서는 Dynamics Model로부터 생성한 데이터로 Model-Free RL 알고리즘을 수행하는 것에 대한 내용을 담고 있다.</p>
+<div id="fig-augmented" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-augmented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/27p_augmented_data.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-augmented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;10: Augmented Data
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-augmented" class="quarto-xref">그림&nbsp;10</a> 에서도 검정색 Trajectory로 표현된 실제 데이터가 있다고 가정해보자. 여기에서 파란색은 initial state이고, <span class="math inline">\(s_1, \dots s_6\)</span> 에 이르기까지의 데이터가 있다. 그러면 실제로 Policy Network을 학습하기 위해서는 data augmentation을 수행해야 할텐데, 몇가지 케이스를 고려해볼 수 있다. 아예 처음부터 terminal에 이르기까지의 모든 state에 대한 action trajectory를 뽑아볼 수도 있고, initial state에서 partial action trajectory만 생성할 수 있다. 하지만 전자의 경우, 앞에서 언급한 것처럼 long-horizon 에 대해서는 dynamics model도 정확한 상태를 예측한다는 보장이 없고, 후자의 경우도 initial state에서 커버하는 partial trajectory 외의 부분에서는 어떻게 될지 모른다. 그래서 생각해본 대안은 MPC 처럼 data 내에 있는 모든 State에 대해서 full trajectory가 아닌 partial trajectory를 생성하자는 것이다.</p>
+<div id="algo-mbpo" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-pseudocode-number="7">
+<div class="pseudocode">
+\begin{algorithm} \caption{Model-Based Policy Optimization (MBPO)} \begin{algorithmic} \State Collect data using current policy $\pi_{\phi}$, add to $\mathcal{D}_{env}$ \State Update model $p_{\theta}(s' \vert s, a)$ using $\mathcal{D}_{env}$ \State Collect synthetic roll-outs using $\pi_{\phi}$ in model $p_{\theta}$ from states in $\mathcal{D}_{env}$ \State Update policy $\pi_{\theta}$ (and critic $Q$) using $\mathcal{D}_{env} \cup \mathcal{D}_{model}$ \State Repeat 1 to 4 until convergence \end{algorithmic} \end{algorithm}
+</div>
+</div>
+<p>핵심 아이디어는 Dynamics Model로부터 simulated된 roll-out으로 policy network을 학습하자는 것이고, 학습된 policy network을 실제 환경에서 수행하면서 수집된 trajectory를 다시 Dynamics Model과 Policy network, Critic 을 학습하는데 재활용하자는 것이다. 지금 <a href="#algo-mbpo" class="quarto-xref">Algorithm 7</a> 는 Online 구조로 되어 있긴 하지만, Offline RL에서처럼 Static Dataset 환경으로도 MBPO를 변형할 수도 있고, 학습 알고리즘보다는 프로세스 측면에서 개선시킬 수 있는 부분이기 때문에 이전 강의에서 언급했던 다른 Model-free RL 알고리즘과 결합해서도 사용할 수 있다.</p>
+</section>
+<section id="takeways" class="level2">
+<h2 class="anchored" data-anchor-id="takeways">Takeways</h2>
+<p>지금까지 Model-Based RL의 동작 원리와 많이 알려져있는 Model Predictive Control과 Model-Based Policy Optimization을 통해서 Planning과 Data Augmentation관점에서 활용되는 Model-Based RL에 대해서 소개했다. Model이 존재한다면, 실제 환경에서도 interaction할 필요없이 next state를 추정할 수 있기 때문에 model만 잘 학습시킬 수 있다면 이전에 다뤘던 Model-free 방식에 비해 Data Efficiency를 높일 수 있다. 마찬가지로, Dynamics Model 학습에만 한정하고 보자면, 주어진 trajectory 기반으로 Self-Supervised Learning 형태로 학습시킬 수 있기 때문에 Reward 정의가 필요없다. (물론 planning시에는 Reward가 있어야 가능하긴 하다.) 그리고 하나의 모델을 만들어 놓으면 다른 유사한 Task에서도 활용할 수 있을만큼 task-agnostic한 특성을 가진다. 예를 들어서 로봇이 움직이는 것에 대한 dynamics model을 학습시켰다면, 이를 활용하여 앞으로 걷는 task도 학습시킬 수도 있고, 점프하거나 다른 동작을 하는 task에 대해서 학습시키는데도 활용할 수 있다. 결과적으로 reward와 dynamics model이 분리되어 있어 Plug-in 형식으로 Planning에 활용할 수 있다는 것이다.</p>
+<p>뮬론 Model-based RL의 한계점도 존재한다. 지금까지 다룬 내용이 다 Dynamics Model을 학습시키는데 초점이 맞춰져 있지, 사실 이를 잘 학습시킨다고 해서 이에 최적화된 policy를 학습시킬 수 있다는 것은 아니다. 어쩌면 최적화된 policy를 학습시키는 것보다도 이 Dynamics model을 학습시키는 것이 더 어려울 수도 있다. 또한 Model과 연계된 hyperparameter나 학습절차가 Model-free 방식과 다르게 포함되어 있어, 어쩌면 연산량이 늘어났다고 볼수 있다. 다양한 장단점이 있기 때문에 Model-based RL 방식을 선택할지 말지에 대한 고민은 해당 문제에 대한 domain knowledge에 따라 결정해야 될 부분이다.</p>
+<p>강의에서 소개한 dynamics model(<span class="math inline">\(p(s_{t+1} \vert s_t, a_t)\)</span>)외에도 다양한 형태의 model들이 존재한다. 먼저 다음 state를 예측하는 것이 아니라, 상태 전이를 보고, 어떤 action이 취해졌는지를 유추하는 inverse dynamics model (<span class="math inline">\(p(a_t \vert s_t, s_{t+1})\)</span>) 도 있고, 이를 multi-step으로 확장한 multi-step inverse model도 있다.(<span class="math inline">\(p(a_t \vert s_t, a_{t+n})\)</span> or <span class="math inline">\(p(a_{t:t+n} \vert s_t, s_{t+n})\)</span>). 아니면 action 정보 없이 next state만 예측하는 model(<span class="math inline">\(p(s_{t+1:t+n} \vert s_t)\)</span>)도 있고, 맨 처음의 예시처럼 비디오 생성시 중간을 보간하는 모델 (<span class="math inline">\(p(s_{t+1:t+n} \vert s_t, s_{t+n+1})\)</span>) 도 존재하고, dynamics 자체를 표현하는 transition distribution model(<span class="math inline">\(p(s_t, a_t, s_{t+1}\)</span>)도 생각해볼 수 있다.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">참고문헌</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-chua2018deep" class="csl-entry" role="listitem">
+Chua, Kurtland, Roberto Calandra, Rowan McAllister, 와/과 Sergey Levine. 2018. <span>“Deep reinforcement learning in a handful of trials using probabilistic dynamics models”</span>. <em>Advances in neural information processing systems</em> 31.
+</div>
+<div id="ref-GARCIA1989335" class="csl-entry" role="listitem">
+García, Carlos E., David M. Prett, 와/과 Manfred Morari. 1989. <span>“Model predictive control: Theory and practice—A survey”</span>. <em>Automatica</em> 25 (3): 335–48. https://doi.org/<a href="https://doi.org/10.1016/0005-1098(89)90002-2">https://doi.org/10.1016/0005-1098(89)90002-2</a>.
+</div>
 <div id="ref-haarnoja2018soft" class="csl-entry" role="listitem">
 Haarnoja, Tuomas, Aurick Zhou, Pieter Abbeel, 와/과 Sergey Levine. 2018. <span>“Soft actor-critic: Off-policy maximum entropy deep reinforcement learning with a stochastic actor”</span>. In <em>International conference on machine learning</em>, 1861–70. Pmlr.
+</div>
+<div id="ref-janner2019trust" class="csl-entry" role="listitem">
+Janner, Michael, Justin Fu, Marvin Zhang, 와/과 Sergey Levine. 2019. <span>“When to trust your model: Model-based policy optimization”</span>. <em>Advances in neural information processing systems</em> 32.
+</div>
+<div id="ref-kakade2001natural" class="csl-entry" role="listitem">
+Kakade, Sham M. 2001. <span>“A Natural Policy Gradient”</span>. In <em>Advances in Neural Information Processing Systems</em>, 편집자： T. Dietterich, S. Becker, 와/과 Z. Ghahramani. Vol 14. MIT Press. <a href="https://proceedings.neurips.cc/paper_files/paper/2001/file/4b86abe48d358ecf194c56c69108433e-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2001/file/4b86abe48d358ecf194c56c69108433e-Paper.pdf</a>.
 </div>
 <div id="ref-kostrikov2021offline" class="csl-entry" role="listitem">
 Kostrikov, Ilya, Ashvin Nair, 와/과 Sergey Levine. 2021. <span>“Offline reinforcement learning with implicit q-learning”</span>. <em>arXiv preprint arXiv:2110.06169</em>.
@@ -469,6 +702,12 @@ Kumar, Aviral, Aurick Zhou, George Tucker, 와/과 Sergey Levine. 2020. <span>�
 </div>
 <div id="ref-mnih2013playing" class="csl-entry" role="listitem">
 Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, 와/과 Martin Riedmiller. 2013. <span>“Playing atari with deep reinforcement learning”</span>. <em>arXiv preprint arXiv:1312.5602</em>.
+</div>
+<div id="ref-nagabandi2018neural" class="csl-entry" role="listitem">
+Nagabandi, Anusha, Gregory Kahn, Ronald S Fearing, 와/과 Sergey Levine. 2018. <span>“Neural network dynamics for model-based deep reinforcement learning with model-free fine-tuning”</span>. In <em>2018 IEEE international conference on robotics and automation (ICRA)</em>, 7559–66. IEEE.
+</div>
+<div id="ref-nagabandi2020deep" class="csl-entry" role="listitem">
+Nagabandi, Anusha, Kurt Konolige, Sergey Levine, 와/과 Vikash Kumar. 2020. <span>“Deep dynamics models for learning dexterous manipulation”</span>. In <em>Conference on robot learning</em>, 1101–12. PMLR.
 </div>
 <div id="ref-nair2020awac" class="csl-entry" role="listitem">
 Nair, Ashvin, Abhishek Gupta, Murtaza Dalal, 와/과 Sergey Levine. 2020. <span>“Awac: Accelerating online reinforcement learning with offline datasets”</span>. <em>arXiv preprint arXiv:2006.09359</em>.
@@ -1132,6 +1371,7 @@ loadGiscusWhenReady();
     })(document);
     </script>
   
+<script>videojs(video_shortcode_videojs_video1);</script>
 
 
 
