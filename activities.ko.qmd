@@ -2,7 +2,7 @@
 title: "활동"
 description: "주요 활동, 컨퍼런스 발표 및 기술 기여 내역입니다."
 lang: ko
-date: '2026-03-30'
+date: '2026-04-17'
 output: distill::distill_article
 editor_options: 
   chunk_output_type: console
@@ -17,6 +17,41 @@ comments: false
 library(distilltools)
 ```
 ## 2026
+
+**(2026. 04)** 2026 IEEE 22nd CASE(International Conference on Automation Science and Engineering)의 Reviewer를 수행했습니다.
+`r icon_link(text = "Link", url = "https://2026.ieeecase.org/")`
+
+**(2026. 04)** 베타리더로 참여한 **"그림으로 배우는 생성형 AI"** (한빛미디어) 책이 출간되었습니다.
+
+::: {.callout-note title="Comment"}
+실생활에서 생성형 AI 서비스를 사용하며 모델이 어떤 원리로 학습되고, 인간과 유사한 출력을 내는지 늘 궁금했습니다. 강의를 통해 공부해도 쉽게 이해되지 않는 부분이 있었는데, 이 책은 생성형 AI에 대한 기본지식이 있는 사람이라면 누구나 동작 원리와 예시를 이해할 수 있도록 도식과 설명이 잘 정리되어 있습니다.
+:::
+
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000219713793")`
+
+**(2026. 04)** 베타리더로 참여한 **"그림으로 이해하는 AWS 구조와 기술 (2판)"** (길벗) 책이 출간되었습니다.
+
+::: {.callout-note title="Comment"}
+TBD 
+:::
+
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000219682418")`
+
+**(2026. 04)** 베타리더로 참여한 **"개발자가 블로그도 잘 써야 하나요?"** (길벗) 책이 출간되었습니다.
+
+::: {.callout-note title="Comment"}
+TBD 
+:::
+
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000219662458")`
+
+**(2026. 04)** 베타리더로 참여한 **"21개의 실무 앱으로 배우는 Dify"** (제이펍) 책이 출간되었습니다.
+
+::: {.callout-note title="Comment"}
+TBD
+:::
+
+`r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000219647516")`
 
 **(2026. 04)** 베타리더로 참여한 **"AI 자율학습 제미나이로 일 잘하는 법"** (길벗) 책이 출간되었습니다.
 

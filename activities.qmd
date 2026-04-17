@@ -2,7 +2,7 @@
 title: "Activities"
 description: "Professional activities, conference presentations, and technical contributions"
 lang: en
-date: '2026-02-11'
+date: '2026-04-17'
 output: distill::distill_article
 editor_options: 
   chunk_output_type: console
@@ -16,6 +16,11 @@ comments: false
 #| include: false
 library(distilltools)
 ```
+
+## 2026
+
+**(2026. 04)** I served as a reviewer in 2026 IEEE 22nd CASE(International Conference on Automation Science and Engineering).
+`r icon_link(text = "Link", url = "https://2026.ieeecase.org/")`
 
 ## 2024
 
