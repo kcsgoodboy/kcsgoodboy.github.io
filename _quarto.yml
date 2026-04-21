@@ -33,6 +33,10 @@ format:
     css:  
       - assets/css/styles.css            
     toc: true
+    lightbox:
+      match: auto
+      effect: fade
+      desc-position: bottom
     comments:
       giscus:
         repo: kcsgoodboy/kcsgoodboy.github.io

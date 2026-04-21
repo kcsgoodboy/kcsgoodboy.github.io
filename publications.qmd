@@ -32,7 +32,8 @@ library(distilltools)
 
 **Chanseok Kang**, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) "Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines". 2024 IEEE Conference on Artificial Intelligence (CAI).
 
-`r icon_link(icon = "ieee", text = "Preprint", url = "https://ieeexplore.ieee.org/abstract/document/10605463")`
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/data-driven-rl-washing-machines/", target = "_self")`
+`r icon_link(icon = "ieee", text = "IEEE", url = "https://ieeexplore.ieee.org/document/10605463/")`
 
 **Chanseok Kang**. (2024) "Applying Data-Driven Reinforcement Learning Approach in Real World Environment". 2024 Journal of Institute of Electronics and Information Engineers (IEIE).
 

@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -266,7 +268,7 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/transfer_learning_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/transfer_learning_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/transfer_learning_overview.en.png" class="img-fluid"></a></p>
 </section><section id="multi-task-learning-vs.-transfer-learning" class="level2"><h2 class="anchored" data-anchor-id="multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs. Transfer Learning</h2>
 <p><strong>Multi-Task Learning</strong>, as discussed in the previous lecture, aims to solve multiple tasks (<span class="math inline">\(\mathcal{T}_1, \mathcal{T_2}, \dots, \mathcal{T}_T\)</span>) <strong>simultaneously</strong>. In other words, the goal is to train a single model that performs well across all given tasks. Accordingly, the objective function for parameter updates is defined as follows:</p>
 <p><span class="math display">\[
@@ -284,7 +286,7 @@ window.Quarto = {
 \]</span></p>
 <div id="fig-finetuning-result" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/6p_finetuning_result.png" class="img-fluid figure-img">
+<a href="./images/6p_finetuning_result.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: PASCAL/SUN Resulf of Model pre-trained with ImageNet Dataset"><img src="./images/6p_finetuning_result.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: PASCAL/SUN Resulf of Model pre-trained with ImageNet Dataset
@@ -319,7 +321,7 @@ Note
 <p>While it is often assumed that massive datasets are strictly necessary for pre-training to achieve performance gains through transfer learning or fine-tuning, evidence suggests otherwise.</p>
 <div id="fig-diverse-data" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/7p_diverse_data.png" class="img-fluid figure-img">
+<a href="./images/7p_diverse_data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure 2: Proof of not requiring diverse data for pre-training"><img src="./images/7p_diverse_data.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 2: Proof of not requiring diverse data for pre-training
@@ -329,7 +331,7 @@ Figure 2: Proof of not requiring diverse data for pre-training
 <p><span class="citation" data-cites="lee2022surgical">Lee et al. (<a href="#ref-lee2022surgical" role="doc-biblioref">2022</a>)</span> also introduces content that challenges similar conventional wisdom.</p>
 <div id="fig-surgical-fine-tuning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_surgical_fine-tuning.png" class="img-fluid figure-img">
+<a href="./images/8p_surgical_fine-tuning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure 3: Surgical Fine-tuning"><img src="./images/8p_surgical_fine-tuning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 3: Surgical Fine-tuning
@@ -339,7 +341,7 @@ Figure 3: Surgical Fine-tuning
 <p>Thus, the idea mentioned by the professor is the <strong>Linear Probing then Full Fine-tuning (LP-FT)</strong> method introduced in <span class="citation" data-cites="kumar2022fine">Kumar et al. (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span>.</p>
 <div id="fig-LP-FT" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/9p_LP-FT.png" class="img-fluid figure-img">
+<a href="./images/9p_LP-FT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure 4: Linear Probing then Full Fine-tuning"><img src="./images/9p_LP-FT.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: Linear Probing then Full Fine-tuning
@@ -350,7 +352,7 @@ Figure 4: Linear Probing then Full Fine-tuning
 <p>Another common belief in transfer learning is that pre-training is always advantageous.</p>
 <div id="fig-ULMFiT" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/10p_ULMFiT.png" class="img-fluid figure-img">
+<a href="./images/10p_ULMFiT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure 5: Universal Language Model Fine-tuning"><img src="./images/10p_ULMFiT.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 5: Universal Language Model Fine-tuning
@@ -372,7 +374,7 @@ Figure 5: Universal Language Model Fine-tuning
 <p>While the lecture primarily focuses on the Mechanistic View, it first briefly introduced how Meta-Learning operates from a probabilistic perspective.</p>
 <div id="fig-probabilistic-graphical-model" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/14p_Probabilistic_Graphical_Model.png" class="img-fluid figure-img">
+<a href="./images/14p_Probabilistic_Graphical_Model.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure 6: Probabilistic Graphical Model"><img src="./images/14p_Probabilistic_Graphical_Model.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 6: Probabilistic Graphical Model
@@ -388,7 +390,7 @@ Figure 6: Probabilistic Graphical Model
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bayesian-meta-learning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multi-task-sinusoid" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-task-sinusoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_sinusoid.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning">
+<a href="./images/15p_sinusoid.png" class="lightbox" data-gallery="fig-bayesian-meta-learning" title="Figure 7 (a): Multi-task Sinusoid Problem"><img src="./images/15p_sinusoid.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-sinusoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Multi-task Sinusoid Problem
@@ -398,7 +400,7 @@ Figure 6: Probabilistic Graphical Model
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bayesian-meta-learning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multi-language-machine-translation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-language-machine-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_language_translation.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning">
+<a href="./images/15p_language_translation.png" class="lightbox" data-gallery="fig-bayesian-meta-learning" title="Figure 7 (b): Multi-language Machine Translation"><img src="./images/15p_language_translation.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-language-machine-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Multi-language Machine Translation
@@ -421,7 +423,7 @@ Figure 7
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-meta-learning" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div id="fig-meta-training" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-meta-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/18p_meta-training.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning">
+<a href="./images/18p_meta-training.png" class="lightbox" data-gallery="fig-meta-learning" title="Figure 8 (a): Meta Training"><img src="./images/18p_meta-training.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-meta-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Meta Training
@@ -433,7 +435,7 @@ Figure 7
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-meta-learning" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div id="fig-meta-testing" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-meta-testing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/18p_meta-testing.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning">
+<a href="./images/18p_meta-testing.png" class="lightbox" data-gallery="fig-meta-learning" title="Figure 8 (b): Meta Testing"><img src="./images/18p_meta-testing.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-meta-testing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Meta Testing
@@ -1137,6 +1139,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

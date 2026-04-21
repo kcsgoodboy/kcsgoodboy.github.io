@@ -1,0 +1,200 @@
+---
+pagetitle: "Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines"
+description: "Project page for the IEEE CAI 2024 paper on continual offline reinforcement learning for washing-machine motor control."
+lang: en
+page-layout: full
+toc: false
+comments: false
+resources:
+  - assets/*
+---
+
+::: {.paper-project}
+
+::: {.paper-hero}
+<div class="paper-title">Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines</div>
+
+::: {.paper-venue}
+2024 IEEE Conference on Artificial Intelligence (CAI), Singapore
+:::
+
+<div class="paper-authors">
+  <a class="paper-author" href="../../about.html">Chanseok Kang</a>
+  <span class="paper-author">Guntae Bae</span>
+  <span class="paper-author">Daesung Kim</span>
+  <span class="paper-author">Kyoungwoo Lee</span>
+  <span class="paper-author">Dohyeon Son</span>
+  <span class="paper-author">Chul Lee</span>
+  <span class="paper-author">Jaeho Lee</span>
+  <span class="paper-author">Jinwoo Lee</span>
+  <span class="paper-author">Jae Woong Yun</span>
+</div>
+
+::: {.paper-affiliation}
+LG Electronics AI Lab
+:::
+
+<div class="paper-links">
+  <a class="paper-button" href="https://ieeexplore.ieee.org/document/10605463/" target="_blank" rel="noopener"><i class="ai ai-ieee"></i> IEEE</a>
+  <a class="paper-button" href="https://doi.org/10.1109/CAI59869.2024.00083" target="_blank" rel="noopener"><i class="fas fa-link"></i> DOI</a>
+  <!-- Add a local manuscript after placing projects/data-driven-rl-washing-machines/assets/paper.pdf:
+  <a class="paper-button" href="assets/paper.pdf"><i class="fas fa-file-pdf"></i> PDF</a>
+  -->
+</div>
+:::
+
+## TL;DR
+
+::: {.paper-tldr}
+Delayed Online Update combines real washing-machine operation data with continual offline reinforcement learning to improve load balancing during dehydration without hand-coding every laundry scenario.
+:::
+
+::: {.paper-teaser}
+::: {.paper-figure .paper-figure-main}
+![Delayed online update framework for continual offline reinforcement learning.](assets/dou_framework.png){.paper-image}
+
+::: {.paper-media-caption}
+Delayed Online Update (DOU) workflow for post-deployment improvement.
+:::
+:::
+:::
+
+## Overview
+
+::: {.paper-summary-grid}
+::: {.paper-summary-card}
+### Problem
+
+Modern washing machines must keep loads balanced across many operating conditions. Manual trial-and-error tuning can limit how quickly control performance improves after deployment.
+:::
+
+::: {.paper-summary-card}
+### Approach
+
+The paper introduces a continual offline reinforcement learning workflow for washer motor control, using logged transition data and delayed online updates to reduce distribution-shift risk.
+:::
+
+::: {.paper-summary-card}
+### Outcome
+
+Experiments report improved balance-maintenance behavior during the dehydration cycle across tasks with different laundry conditions.
+:::
+:::
+
+## Method
+
+::: {.paper-method}
+::: {.paper-method-steps}
+1. Collect transition data from real washing-machine operation.
+2. Train an offline RL policy for dehydration-cycle motor control.
+3. Accumulate new online interaction data over a delay window.
+4. Update the policy from the expanded dataset instead of reacting to every short online rollout.
+:::
+
+::: {.paper-figure}
+![Offline and online data distributions across three tasks.](assets/tsne-3tasks.png){.paper-image}
+
+::: {.paper-media-caption}
+Offline and online data coverage for selected laundry tasks.
+:::
+:::
+:::
+
+## Results
+
+::: {.paper-result-grid}
+::: {.paper-result-card .paper-result-wide}
+### Average Success Rate
+
+![Average success rate comparison across laundry tasks.](assets/result_asr.png){.paper-image}
+
+DOU variants improve average success rate over the baseline across the evaluated laundry tasks.
+:::
+
+::: {.paper-result-card}
+### Multi-Task Laundry Set
+
+![Multi-task laundry configurations.](assets/multi_task.png){.paper-image}
+
+Representative laundry configurations used for multi-task evaluation.
+:::
+
+::: {.paper-result-card}
+### Unseen Tasks
+
+![Unseen laundry configurations.](assets/unseen_task.png){.paper-image}
+
+Unseen laundry combinations for evaluating generalization.
+:::
+
+::: {.paper-result-card}
+### Production Device
+
+![Production-ready washer product using offline reinforcement learning.](assets/nc.png){.paper-image}
+
+Production-ready target device with the offline RL control approach.
+:::
+:::
+
+## Videos
+
+::: {.paper-media-grid}
+::: {.paper-media-card .paper-media-feature}
+```{=html}
+<video class="paper-video" controls muted loop playsinline preload="metadata">
+  <source src="assets/supplement_2.mp4" type="video/mp4">
+</video>
+```
+
+::: {.paper-media-caption}
+Supplemental motion example.
+:::
+:::
+
+::: {.paper-media-card}
+```{=html}
+<video class="paper-video" controls muted loop playsinline preload="metadata">
+  <source src="assets/sample1.mp4" type="video/mp4">
+</video>
+```
+
+::: {.paper-media-caption}
+Naive rule-based baseline motion.
+:::
+:::
+
+::: {.paper-media-card}
+```{=html}
+<video class="paper-video" controls muted loop playsinline preload="metadata">
+  <source src="assets/sample2.mp4" type="video/mp4">
+</video>
+```
+
+::: {.paper-media-caption}
+Proposed learned motion.
+:::
+:::
+:::
+
+## Poster
+
+::: {.paper-poster}
+![IEEE CAI 2024 poster.](assets/poster.png){.paper-image}
+:::
+
+## Citation
+
+::: {.paper-citation}
+```bibtex
+@inproceedings{kang2024dataDrivenRLWasher,
+  title     = {Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines},
+  author    = {Kang, Chanseok and Bae, Guntae and Kim, Daesung and Lee, Kyoungwoo and Son, Dohyeon and Lee, Chul and Lee, Jaeho and Lee, Jinwoo and Yun, Jae Woong},
+  booktitle = {Proceedings - 2024 IEEE Conference on Artificial Intelligence (CAI)},
+  pages     = {418--424},
+  year      = {2024},
+  doi       = {10.1109/CAI59869.2024.00083}
+}
+```
+:::
+
+:::

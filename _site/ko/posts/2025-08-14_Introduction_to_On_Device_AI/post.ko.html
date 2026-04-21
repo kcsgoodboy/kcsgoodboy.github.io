@@ -64,6 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -200,7 +202,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">2026년 4월 17일</p>
+        <p class="date-modified">2026년 4월 21일</p>
       </div>
     </div>
       
@@ -237,7 +239,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <p>그래서 해당 강의에서는 On-Device AI에서 필요한 단계를 직접 수행하고, 하드웨어에까지 적용해보는 과정을 진행하게 된다.</p>
 </section><section id="why-on-device" class="level2"><h2 class="anchored" data-anchor-id="why-on-device">Why on-device?</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/why_on_device.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/why_on_device.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="강의 슬라이드에서 발췌"><img src="./images/why_on_device.png" class="img-fluid figure-img" alt="강의 슬라이드에서 발췌"></a></p>
 <figcaption>강의 슬라이드에서 발췌</figcaption></figure>
 </div>
 <p>우선 앞에서 소개한 내용처럼 다양한 AI 모델이 만들어졌지만, 이를 왜 휴대용 장치에서 직접 구동시키는 형태가 필요한 것인지에 대한 정의가 필요하다. 강의에서는 크게 4가지로 구분해서 그 필요성에 대해 설명하고 있다.</p>
@@ -249,7 +251,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </ul>
 <p>보통 On-Device AI를 수행하기 위해서는 Device-In-The-Loop (DILT) (혹은 Hardware-In-The-Loop라는 표현을 쓰기도 한다) deployment 과정을 수행한다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/device_in_the_loop.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/device_in_the_loop.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="강의 슬라이드에서 발췌"><img src="./images/device_in_the_loop.png" class="img-fluid figure-img" alt="강의 슬라이드에서 발췌"></a></p>
 <figcaption>강의 슬라이드에서 발췌</figcaption></figure>
 </div>
 <p>일반적인 AI 모델 학습과 다르게, 휴대용 장치에서의 모델 적용은 장비(device)가 연계된 상태에서의 성능 검증 및 최적화 작업이 필요하다. 또한 휴대용 장치의 스펙이 목적에 따라서 다 다르기 때문에, 기기에 따라 접근 방법이 조금씩 다르다. 예를 들어서 NPU가 달린 하드웨어에서 모델을 구동시키기 위해서는 NPU에서 가속을 지원하는 기능을 활용할 수 있도록 컴파일 옵션을 부여한다던가, 혹은 Floating Point를 지원하지 않는 CPU를 가진 하드웨어라면, Floating Point를 지원한 상태에서 학습된 모델도 수행할 수 있도록 변환시 양자화 처리를 해준다던가 하는 방법의 차이를 말한다. 사실 궁극적인 On-Device AI라면 실제 하드웨어에서의 학습, 즉 On-Device Training까지 포함된 형태를 말하는 것이겠지만, 현실적으로 이게 불가능한 부분이기 때문에 학습된 모델을 모델에 올려서 추론한 결과로 개선이 이뤄지는 범위까지만 한정지은 것 같다.</p>
@@ -269,7 +271,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </div>
 <p>우선 강의에서 사용한 모델은 Qualcomm AI Research에서 제안한 <a href="https://aihub.qualcomm.com/models/ffnet_40s">FFNet-40s</a>(<a href="https://arxiv.org/abs/2206.08236">논문</a>)이라는 Real-time Image Segmentation에 최적의 성능을 내는 경령화 모델이다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/ffnet.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/ffnet.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="FFNet 구조 (논문에서 발췌)"><img src="./images/ffnet.png" class="img-fluid figure-img" alt="FFNet 구조 (논문에서 발췌)"></a></p>
 <figcaption>FFNet 구조 (논문에서 발췌)</figcaption></figure>
 </div>
 <p><strong>Fuss-Free Network (FFNet)</strong>은 간단한 ResNet 형태의 backboane과 작은 multi-scale task head로 구성되어 있다. Encoder-Decoder 구조로 되어 있으며, 이전의 Segmentation model로 제안된 HRNet, FANet, DDRNet에 비해서 성능이 좋은 것으로 소개되어 있다. 무엇보다도 연산 측면에서 효율성이 있어, 강의의 목적인 device deployment를 실습하는데 적당한 모델이라고 할 수 있다. 또한 decoder부분이 task head처럼 구성되어 있어, 개발자에 맞게 head의 수를 조절할 수 있다는 특징을 가지고 있다.</p>
@@ -680,7 +682,7 @@ Initializing ffnnet40S_dBBB_mobile weights</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post.ko_files/figure-html/cell-7-output-5.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="post.ko_files/figure-html/cell-7-output-5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="post.ko_files/figure-html/cell-7-output-5.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -695,7 +697,7 @@ Running Inference on 0 samples</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post.ko_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="post.ko_files/figure-html/cell-8-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="post.ko_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -710,7 +712,7 @@ Running Inference on 0 samples</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post.ko_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="post.ko_files/figure-html/cell-9-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="post.ko_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -726,7 +728,7 @@ Running Inference on 0 samples</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post.ko_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="post.ko_files/figure-html/cell-10-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="post.ko_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -851,7 +853,7 @@ Running Inference on 0 samples</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
-<figure class="figure"><p><img src="post.ko_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="post.ko_files/figure-html/cell-12-output-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="post.ko_files/figure-html/cell-12-output-2.png" class="img-fluid figure-img"></a></p>
 </figure>
 </div>
 </div>
@@ -947,7 +949,7 @@ python /data/git/kcsgoodboy.github.io/.venv/lib/python3.12/site-packages/qai_hub
 </div>
 </div>
 <p>그러면 hub에도 현재 export수행한 모델의 진행 현황과 정보를 확인해볼 수 있는 사이트가 등록되고, 해당 창을 통해서 모델 다운로드 및 시각화 결과를 볼 수 있다.</p>
-<p><img src="images/export_output.png" class="img-fluid"></p>
+<p><a href="images/export_output.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="images/export_output.png" class="img-fluid"></a></p>
 </section><section id="결론" class="level2"><h2 class="anchored" data-anchor-id="결론">결론</h2>
 <p>최종적으로 On-Device AI가 수행되는 일반적인 프로세스, 그리고 Qualcomm 칩 기반의 On-Device AI가 수행되는 과정을 직접 다뤄보았다. 사실 개인적으로 느낀 부분은 모델 deploy하는 입장에서 큰 회사에서는 model zoo 같은 것을 운영하면서 칩에 최적화된 모델을 배포하는 것을 활용할 수 있다는 부분이 좋았던 것 같다. 내가 어떤 task에 모델을 쓸건지와 타겟 하드웨어만 정해지면, 모델을 처음부터 학습할 필요도 없고, 원하는 입맛에 맞게 수정도 가능하다는 것이다. 다만, 디바이스에 맞게 export하는 과정에서 처리되는 profiling이나 quantization 관련 부분은 실제 온라인으로 연결되어야 가능하다는 점, 결과적으로 그 부분은 개발자 입장에서 black box로 남아있는 부분은 조금 아쉽긴 하다. (그냥 로컬에서 quantization도 지원하면 조금더 개발 측면에서 확장 범위가 늘어날거 같은데…)</p>
 <p>아무튼 이전 목표처럼 Tachyon 보드에서 탑재할 모델까지 만드는 것을 해보았고, 이어진 포스트를 통해서 실제 deploy하는 과정과 모델을 양자화하는 과정, 그리고 관련하여 기기에서의 필요한 작업을 조금더 다뤄볼 예정이다. 아마 여기까지 해야 Mini-pupper에서의 제어보드에 모델을 탑재하는 작업을 해볼 수 있지 않을까 싶다.</p>
@@ -1562,9 +1564,37 @@ function loadGiscusWhenReady() {
 loadGiscusWhenReady();
 </script>
 </div> <!-- /content -->
-
-
-
-
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

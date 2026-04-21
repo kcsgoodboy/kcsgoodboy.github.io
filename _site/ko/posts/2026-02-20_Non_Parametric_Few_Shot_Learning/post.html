@@ -51,6 +51,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -270,7 +272,7 @@ window.Quarto = {
 </div>
 <p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Non_Parametric_Few_Shot_Learning_overview.ko.png" class="img-fluid"></p>
+<p><a href="./images/Non_Parametric_Few_Shot_Learning_overview.ko.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Non_Parametric_Few_Shot_Learning_overview.ko.png" class="img-fluid"></a></p>
 </section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>앞에서 다룬 Meta Learning 방법론 중 Black-Box Meta Learning과 Optimization-based Meta Learning에 대해서 다뤘다.</p>
 <div id="fig-parametric-approach" class="quarto-layout-panel">
@@ -279,7 +281,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-parametric-approach" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-black-box" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-black-box-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/4p_black_box_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach">
+<a href="./images/4p_black_box_meta_learning.png" class="lightbox" data-gallery="fig-parametric-approach" title="그림 1 (a): Black Box Meta Learning"><img src="./images/4p_black_box_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-black-box-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Black Box Meta Learning
@@ -289,7 +291,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-parametric-approach" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-optimization" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/5p_optimization_based_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach">
+<a href="./images/5p_optimization_based_meta_learning.png" class="lightbox" data-gallery="fig-parametric-approach" title="그림 1 (b): Optimization-Based Meta Learning"><img src="./images/5p_optimization_based_meta_learning.png" class="img-fluid figure-img" data-ref-parent="fig-parametric-approach"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optimization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Optimization-Based Meta Learning
@@ -307,14 +309,14 @@ window.Quarto = {
 </section><section id="non-parametric-methods" class="level2"><h2 class="anchored" data-anchor-id="non-parametric-methods">Non-Parametric Methods</h2>
 <p>앞에서 언급된 Parametric Model는 기본적으로 데이터에 대한 가정이 정의되어 있는 상태(예를 들어서 어떤 확률분포를 가진다? 같은…) 상태에서 입력 데이터와 출력 데이터간의 관계를 일종의 수학적으로 정의한 모델이고, 이런 데이터에 대한 가정없이 (결과적으로는 수학적으로 관계가 정의되지 않고), 데이터로부터 그 의미를 추출하는 방식을 <strong>Non-Parametric Model</strong>이라고 한다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/10p_KNN.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/10p_KNN.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Example of Non-Parametric Model"><img src="./images/10p_KNN.png" class="img-fluid figure-img" alt="Example of Non-Parametric Model"></a></p>
 <figcaption>Example of Non-Parametric Model</figcaption></figure>
 </div>
 <p>사실 이 개념은 신경망이 등장하기 전에도 나왔던 개념으로 흔히 알고있는 Decision Tree나 K-Nearest Neighborhood(KNN), Support Vector Machine(SVM) 등이 이 부류에 속한다. 각 알고리즘의 동작원리를 상기해보면 알겠지만, 대부분의 알고리즘이 데이터의 많고 적음을 떠나서 현재 상태에서의 데이터간의 관계를 도출해낼 수 있다. 특히 데이터가 매우 적은 상황(Low data regime) 에서도 Parametric 방식에 비해 구현도 쉬울 뿐더러 잘 동작하는 것을 확인할 수 있다. 그런데 이 low data regime의 상황을 meta learning에 투영해보면, meta-test 에서도 이와 유사하게 발생한다. 특히 meta test에서 수행하는 Few-Shot Learning 과 같은 경우는 학습되지 않은 task에 대한 sample (<span class="math inline">\(x^{ts}\)</span>)이 얼마없는 상황에서도 이에 맞는 label(<span class="math inline">\(y^{ts}\)</span>)을 추정해야 되는데, 앞의 Parametric model은 바로 이 과정에서 task parameter <span class="math inline">\(\phi_i\)</span> 를 추론하면서 단점이 야기된다는 것이다.</p>
 <p>그러면 한가지 고려해볼 수 있는 부분이, 실제로 다양한 task에 대한 representation 방법을 학습하는 meta-train단계에서는 이전에 소개했던 parametric model을 활용하되, Few-Shot Learning이 발생하는 meta-test단계에서는 앞단계에서 뽑은 정보를 활용하는 non-parametric model을 사용하는 일종의 하이브리드 방식이 이 있을 것이다.</p>
 <div id="fig-non-parametric" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-non-parametric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/11p_non_parametric_learner.png" class="img-fluid figure-img">
+<a href="./images/11p_non_parametric_learner.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="그림 2: Non Parametric Learning"><img src="./images/11p_non_parametric_learner.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-non-parametric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 2: Non Parametric Learning
@@ -323,7 +325,7 @@ window.Quarto = {
 <p><a href="#fig-non-parametric" class="quarto-xref">그림 2</a> 은 앞에서도 많이 소개되었던 Few-shot classification 예시이며, 이 그림에서 소개하는 근본적인 방법은 meta-test 단계에서 주어진 test 데이터(<span class="math inline">\(x^{ts}\)</span>)가 있을때, 이 데이터를 실제 meta-train단계에서 학습할때 활용했던 데이터와 비교하는 것이다. 비교 방법이 어떠하던지 간에, 기존 학습 데이터와 가장 유사한 데이터가 있으면 학습 데이터에서의 label을 따르게 하면 된다. 그러면 이제 관건은 “어떤 기준으로 학습 데이터와 테스트 데이터가 유사하다고 할까?”이다. 흔히 유사성을 측정하는 metric으로는 <strong>Euclidian Distance</strong>라고 <span class="math inline">\(\ell_2\)</span> Distance같은 것도 있고, cosine similarity 같은 것도 있다. 우선은 이렇게 주어진 이미지들간의 <span class="math inline">\(\ell_2\)</span> Distance로 유사성을 판단한다고 가정해보자.</p>
 <div id="fig-unreasonable" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-unreasonable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/12p_unreasonable.png" class="img-fluid figure-img">
+<a href="./images/12p_unreasonable.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="그림 3: \ell_2 Distance in meta-test"><img src="./images/12p_unreasonable.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unreasonable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 3: <span class="math inline">\(\ell_2\)</span> Distance in meta-test
@@ -336,13 +338,13 @@ window.Quarto = {
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/14p_siamese_neg.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/14p_siamese_neg.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Negative Case"><img src="./images/14p_siamese_neg.png" class="img-fluid figure-img"></a></p>
 <figcaption>Negative Case</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/15p_siamese_pos.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/15p_siamese_pos.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Positive Case"><img src="./images/15p_siamese_pos.png" class="img-fluid figure-img"></a></p>
 <figcaption>Positive Case</figcaption></figure>
 </div>
 </div>
@@ -363,7 +365,7 @@ window.Quarto = {
 <p><strong>Matching Networks</strong>은 <span class="citation" data-cites="vinyals2016matching">Vinyals 기타 (<a href="#ref-vinyals2016matching" role="doc-biblioref">2016</a>)</span> 에서 소개된 방식으로, 앞에서 언급된 Siamese Network을 활용한 One-shot Learning에서 도출된 한계를 극복하기 위해서 제안되었다. 근본적으로는 “학습환경과 테스트환경간의 불일치” 문제를 해소하기 위해 몇가지 trick을 적용했다.</p>
 <div id="fig-matching-network" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-matching-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/18p_matching_network.png" class="img-fluid figure-img">
+<a href="./images/18p_matching_network.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="그림 5: Matching Network"><img src="./images/18p_matching_network.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matching-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 5: Matching Network
@@ -374,7 +376,7 @@ window.Quarto = {
 \hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta}(x^{ts}, x_k) y_k
 \]</span></p>
 <p>기존의 indicator function이 이렇게 softmax function으로 대체되면서 미분도 가능해지고, 오차를 통한 backpropagation도 가능해지면서 parameter를 <strong>end-to-end</strong>로 직접 최적화할 수 있게 된다. 추가로 주어진 test 데이터가 여러 개인 상황(<span class="math inline">\(K&gt;1\)</span>) 에서도, Matching Networks는 기존의 수식을 활용하면서 일종의 투표방식(Voting)으로 동작하게 되는데, Support Set에서의 데이터와 test 데이터 간의 유사도를 기반으로 선택된 label에 투표가 많이 누적된 것으로 추론하는 방식으로 이뤄진다. 이 전체 과정을 알고리즘으로 표현하면 다음과 같다.</p>
-<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-no-end="false" data-line-number-punc=":" data-line-number="true" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="1">
+<div id="algo-Matching-Networks" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="1" data-comment-delimiter="//" data-line-number="true" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{General Algorithm of Non-parametric approach} \begin{algorithmic} \State Sample task $\mathcal{T}_i \quad$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $\hat{y}^{ts} = \sum_{x_k, y_k \in \mathcal{D}^{tr}} f_{\theta} (x^{ts}, x_k) y_k$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\hat{y}^{ts}, y^{ts})$ \end{algorithmic} \end{algorithm}
 </div>
@@ -398,7 +400,7 @@ window.Quarto = {
 <p>앞에서 언급한 바와 같이 각각의 test 데이터에 독립적으로 판단하면서 정상적인 결과가 묻혀버리는 Matching Networks의 한계를 극복하기 위해서 제안된 아이디어는 이렇게 개별 훈련 데이터를 일일이 distance를 비교하는 대신, 각 class별로 데이터들의 정보를 모아(aggregate) 하나의 대표값(prototypical embedding)을 만드는 것이었다. 그리고 만약 새로운 테스트 데이터가 들어오면, 개별 데이터가 아닌 이 대표값들과의 distance만 비교하는 형태(Nearest Neighbors to the prototypes)로 분류가 진행된다면, 앞에서 발생한 한계를 극복할 수 있을텐데 이 방법이 바로 <strong>Prototypical Networks</strong>란 이름으로 <span class="citation" data-cites="snell2017prototypical">Snell, Swersky, 와/과 Zemel (<a href="#ref-snell2017prototypical" role="doc-biblioref">2017</a>)</span> 의 논문에 소개되었다.</p>
 <div id="fig-prototypical-networks" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-prototypical-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_Prototypical_networks.png" class="img-fluid figure-img">
+<a href="./images/20p_Prototypical_networks.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="그림 6: Prototypical Networks"><img src="./images/20p_Prototypical_networks.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prototypical-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 6: Prototypical Networks
@@ -418,7 +420,7 @@ p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(
 <p>앞에서 소개한 것처럼 주어진 데이터에 대한 embedding space를 구하고, Nearest Neighbor 방식을 통해 test 데이터의 label을 추정하는 방법은 Non-parametric 기법에서 생각해볼 수 있는 가장 보편적인 방법이지만, 이런 방식에도 앞에서 언급한 바와 같이 한계점이 존재한다. 개별 데이터에 대해서 독립적으로 구한다던가, 단순한 distance 측정을 통해서 찾는 유사성보다도 데이터들간에 내재되어 있는 복잡한 관계에 대해서도 어떻게 대응할 수 있을지 생각해볼 필요가 있다.</p>
 <div id="fig-relation-networks" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-relation-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_relation_networks.png" class="img-fluid figure-img">
+<a href="./images/21p_relation_networks.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="그림 7: Relation Networks"><img src="./images/21p_relation_networks.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-relation-networks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 7: Relation Networks
@@ -427,7 +429,7 @@ p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(
 <p><a href="#fig-relation-networks" class="quarto-xref">그림 7</a> 는 <span class="citation" data-cites="sung2018learning">Sung 기타 (<a href="#ref-sung2018learning" role="doc-biblioref">2018</a>)</span> 논문에서 소개된 <strong>Relation Networks</strong> 라는 구조로, 앞에서 잠깐 언급했던 distanace를 구하는 과정 자체를 신경망으로 학습시키는 방식이다. 기존 방식은 embedding 후 <span class="math inline">\(\ell_2\)</span> Distance나 Cosine Similarity 같은 사전에 정의된 distance function을 활용했었는데, 이 경우 복잡한 관계를 가진 데이터들간에 대해서는 명확하게 계산하기가 어려웠다. 이를 해결하기 위해서 해당 논문에서는 우선 test 데이터와 training 데이터의 Feature map을 embedding module (<span class="math inline">\(f_\phi\)</span>)을 통해서 추출한 후, 각 feature map들을 하나로 이어붙였다.(Concatenation) 그 후 이에 대한 출력값을 뒤에 있는 relation module (<span class="math inline">\(g_\phi\)</span>) 에 넣음으로써 나오는 Relation Score를 통해 test 데이터가 어떤 label을 가지는지를 추정할 수 있도록 설계되었다.</p>
 <div id="fig-imp" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-imp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_infinite_mixture_Prototypes.png" class="img-fluid figure-img">
+<a href="./images/21p_infinite_mixture_Prototypes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="그림 8: Infinite Mixture Prototypes"><img src="./images/21p_infinite_mixture_Prototypes.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-imp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 8: Infinite Mixture Prototypes
@@ -436,7 +438,7 @@ p_{\theta}(y_k=n \vert x_k) = \frac{\exp(-d(f_{\theta}(x), c_n))}{\sum_{n'}\exp(
 <p><a href="#fig-imp" class="quarto-xref">그림 8</a> 도 데이터간의 복잡한 관계를 추출하기 위한 방법으로 소개된 <strong>Infinite Mixture Prototypes (IMP)</strong> 라는 구조에 대한 내용이다. 해당 구조는 <span class="citation" data-cites="pmlr-v97-allen19b">Allen 기타 (<a href="#ref-pmlr-v97-allen19b" role="doc-biblioref">2019</a>)</span> 논문에서 제안된 방식인데, 앞에서 언급된 Prototypical Networks 방식은 군집화가 이뤄진 데이터들의 대표값(Prototype)을 통해서 유사성을 계산하는 방식을 개선하고자 했다. 교수는 이 방식의 필요성에 대해서 예시를 들어 잠깐 설명했는데, 예를 들어 고양이란 class내에서도 개와 비슷하게 생긴 특이한 품종이 있을수도 있을텐데, 이런 경우를 강제로 Prototype화 시키면 오히려 성능이 떨어지게 된다. 그래서 논문에서 제안한 아이디어는 class별로 무조건 한개의 prototype을 갖게 하지 말고, 실제로 데이터의 분포 형태를 보고 adaptive하게 여러개의 prototype을 생성하게 하는 방식이다. 이에 따라 cluster의 갯수도 유연하게 조절할 수 있어, 데이터 간의 복잡한 관계성에 대응할 수 있게 해준다.</p>
 <div id="fig-gnn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gnn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_gnn.png" class="img-fluid figure-img">
+<a href="./images/21p_gnn.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="그림 9: Graph Neural Network for Few-shot Learning"><img src="./images/21p_gnn.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gnn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 9: Graph Neural Network for Few-shot Learning
@@ -460,7 +462,7 @@ Graph Neural Network
 <p>강의 자료에서는 각 Meta Learning 알고리즘의 차이점에 대한 내용이 이어졌지만, 실제 강의에서는 Non-Parametric Few-shot Learning의 실사례에 대해서 먼저 소개했다.</p>
 <div id="fig-prototypical-clustering" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-prototypical-clustering-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/34p_prototypical_clustering.png" class="img-fluid figure-img">
+<a href="./images/34p_prototypical_clustering.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="그림 10: Prototypical Clustering Networks"><img src="./images/34p_prototypical_clustering.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prototypical-clustering-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 10: Prototypical Clustering Networks
@@ -493,14 +495,14 @@ Code in Place
 <strong>Pre-train</strong>: 처음부터 무작위로 정의된 가중치로 시작하지 않고, 사전에 인터넷에 공개되어 있는 코드(CodeSearchNet 데이터셋(<span class="citation" data-cites="husain2019codesearchnet">Husain 기타 (<a href="#ref-husain2019codesearchnet" role="doc-biblioref">2019</a>)</span>)) 로 학습된 CodeBERT(<span class="citation" data-cites="feng2020codebert">Feng 기타 (<a href="#ref-feng2020codebert" role="doc-biblioref">2020</a>)</span>) 의 가중치를 가져왔다.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/29p_prototransformer.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/29p_prototransformer.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="ProtoTransformer"><img src="./images/29p_prototransformer.png" class="img-fluid figure-img" alt="ProtoTransformer"></a></p>
 <figcaption>ProtoTransformer</figcaption></figure>
 </div>
 <p>해당 모델에 대한 평가는 먼저 offline 데이터셋으로 진행되었고, 일반화 성능을 측정하기 위해서 held-out Test를 진행했다. 이때 Held-out Rubric, 즉 모델이 훈련 과정에서 한번도 본 적 없는 “새로운 Rubric” 에 대해서 제출된 코드에 대한 평가를 진행하기도 했고, Held-out Exam, 학습 데이터에 없었던 새로운 시험 문제를 대상으로 평가하게 하는 테스트도 진행했다. 우선 Held-out Rubric 케이스에 대해서는 사람이 진행한 경우나 Supervised 방법보다 성능이 더 좋게 나왔으나, Held-out Exam에 대해서는 사람에 비해서 성능이 떨어지는 결과가 나왔다. 사실 이 케이스는 전혀 새로운 형태의 코드나 변수들이 등장할 수 있기 때문에 Held-out Rubric 케이스보다 난이도가 더 크고, 성능을 개선할 수 있는 여지가 존재한다는 것을 확인할 수 있었다.</p>
 <p>이 실험 결과들을 토대로 ProtoTransformer 모델이 단순히 기존 정답을 암기한 것이 아니라, 새로운 채점 기준이나 문제같은 새로운 환경에서도 얼마나 빠르고 정확하게 일반화할 수 있는지를 확인해볼 수 있는 결과였다.</p>
 <div id="fig-feedback" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/29p_feedback.png" class="img-fluid figure-img">
+<a href="./images/29p_feedback.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="그림 11: Code Feedback from submitted Snippets"><img src="./images/29p_feedback.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-feedback-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 11: Code Feedback from submitted Snippets
@@ -1269,6 +1271,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

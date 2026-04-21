@@ -51,6 +51,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -266,7 +268,7 @@ window.Quarto = {
 </div>
 <p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/transfer_learning_overview.ko.png" class="img-fluid"></p>
+<p><a href="./images/transfer_learning_overview.ko.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/transfer_learning_overview.ko.png" class="img-fluid"></a></p>
 </section><section id="multi-task-learning-vs.-transfer-learning" class="level2"><h2 class="anchored" data-anchor-id="multi-task-learning-vs.-transfer-learning">Multi-Task Learning vs. Transfer Learning</h2>
 <p>이전 강의에서 다뤘던 <strong>Multi-Task Learning</strong>은 여러 개의 task(<span class="math inline">\(\mathcal{T}_1, \mathcal{T_2}, \dots, \mathcal{T}_T\)</span>)에 대해서 <strong>동시에</strong> 해결하는 것이 목표이다. 즉, 하나의 모델이 주어진 모든 task에 대해서 좋은 성능을 내도록 학습하는 것이다. 이에 따라 parameter update를 위한 objective function도 다음과 같이 정의된다.</p>
 <p><span class="math display">\[
@@ -282,7 +284,7 @@ window.Quarto = {
 \]</span></p>
 <div id="fig-finetuning-result" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/6p_finetuning_result.png" class="img-fluid figure-img">
+<a href="./images/6p_finetuning_result.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="그림 1: ImageNet Dataset으로 사전학습한 모델의 PASCAL/SUN 에서의 성능"><img src="./images/6p_finetuning_result.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-finetuning-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 1: ImageNet Dataset으로 사전학습한 모델의 PASCAL/SUN 에서의 성능
@@ -317,7 +319,7 @@ window.Quarto = {
 <p>사실, 사전 모델 학습에 있어서 반드시 크고 방대한 데이터셋이 있어야만 이런 transfer learning이나 fine-tuning을 통한 성능 개선이 가능할 것 같지만, 이를 반증하는 내용도 제시되어 있다.</p>
 <div id="fig-diverse-data" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/7p_diverse_data.png" class="img-fluid figure-img">
+<a href="./images/7p_diverse_data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="그림 2: pre-training시 반드시 diverse한 데이터가 필요하지 않다는 반증"><img src="./images/7p_diverse_data.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diverse-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 2: pre-training시 반드시 diverse한 데이터가 필요하지 않다는 반증
@@ -327,7 +329,7 @@ window.Quarto = {
 <p><span class="citation" data-cites="lee2022surgical">Lee 기타 (<a href="#ref-lee2022surgical" role="doc-biblioref">2022</a>)</span> 논문에서도 이런 비슷한 통념을 깬 내용을 소개하고 있다.</p>
 <div id="fig-surgical-fine-tuning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_surgical_fine-tuning.png" class="img-fluid figure-img">
+<a href="./images/8p_surgical_fine-tuning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="그림 3: Surgical Fine-tuning"><img src="./images/8p_surgical_fine-tuning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surgical-fine-tuning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 3: Surgical Fine-tuning
@@ -337,7 +339,7 @@ window.Quarto = {
 <p>그래서 교수가 언급한 아이디어는 <span class="citation" data-cites="kumar2022fine">Kumar 기타 (<a href="#ref-kumar2022fine" role="doc-biblioref">2022</a>)</span> 에서 소개된 Linear Probing then Full Fine-tuning (LP-FT) 이란 방식이다.</p>
 <div id="fig-LP-FT" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/9p_LP-FT.png" class="img-fluid figure-img">
+<a href="./images/9p_LP-FT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="그림 4: Linear Probing then Full Fine-tuning"><img src="./images/9p_LP-FT.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-LP-FT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 4: Linear Probing then Full Fine-tuning
@@ -347,7 +349,7 @@ window.Quarto = {
 <p>transfer learning에서의 통념 중 하나는 pre-training이 항상 유리하다는 점이다.</p>
 <div id="fig-ULMFiT" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/10p_ULMFiT.png" class="img-fluid figure-img">
+<a href="./images/10p_ULMFiT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="그림 5: Universal Language Model Fine-tuning"><img src="./images/10p_ULMFiT.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ULMFiT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 5: Universal Language Model Fine-tuning
@@ -363,7 +365,7 @@ window.Quarto = {
 <p>강의의 전체적인 내용은 Mechanistic View에 초점을 맞추지만, 해당 내용을 설명하기에 앞서 확률론적 관점에서 meta-learning이 어떻게 동작하는지에 대해서 간단하게 설명했다.</p>
 <div id="fig-probabilistic-graphical-model" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/14p_Probabilistic_Graphical_Model.png" class="img-fluid figure-img">
+<a href="./images/14p_Probabilistic_Graphical_Model.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="그림 6: Probabilistic Graphical Model"><img src="./images/14p_Probabilistic_Graphical_Model.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probabilistic-graphical-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 6: Probabilistic Graphical Model
@@ -378,7 +380,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bayesian-meta-learning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multi-task-sinusoid" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-task-sinusoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_sinusoid.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning">
+<a href="./images/15p_sinusoid.png" class="lightbox" data-gallery="fig-bayesian-meta-learning" title="그림 7 (a): Multi-task Sinusoid Problem"><img src="./images/15p_sinusoid.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-sinusoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Multi-task Sinusoid Problem
@@ -388,7 +390,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bayesian-meta-learning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multi-language-machine-translation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-language-machine-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_language_translation.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning">
+<a href="./images/15p_language_translation.png" class="lightbox" data-gallery="fig-bayesian-meta-learning" title="그림 7 (b): Multi-language Machine Translation"><img src="./images/15p_language_translation.png" class="img-fluid figure-img" data-ref-parent="fig-bayesian-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-language-machine-translation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Multi-language Machine Translation
@@ -410,7 +412,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-meta-learning" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div id="fig-meta-training" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-meta-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/18p_meta-training.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning">
+<a href="./images/18p_meta-training.png" class="lightbox" data-gallery="fig-meta-learning" title="그림 8 (a): Meta Training"><img src="./images/18p_meta-training.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-meta-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Meta Training
@@ -422,7 +424,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-meta-learning" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div id="fig-meta-testing" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-meta-testing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/18p_meta-testing.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning">
+<a href="./images/18p_meta-testing.png" class="lightbox" data-gallery="fig-meta-learning" title="그림 8 (b): Meta Testing"><img src="./images/18p_meta-testing.png" class="img-fluid figure-img" data-ref-parent="fig-meta-learning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-meta-testing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Meta Testing
@@ -1121,6 +1123,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

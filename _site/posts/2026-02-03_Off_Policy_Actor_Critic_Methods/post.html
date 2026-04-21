@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -267,7 +269,7 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Off_Policy_Actor_Critic_Methods_Overview.en.png" class="img-fluid"></p>
+<p><a href="./images/Off_Policy_Actor_Critic_Methods_Overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Off_Policy_Actor_Critic_Methods_Overview.en.png" class="img-fluid"></a></p>
 </section><section id="recap-for-on-policy-actor-critic-methods" class="level2"><h2 class="anchored" data-anchor-id="recap-for-on-policy-actor-critic-methods">Recap for (On-Policy) Actor Critic Methods</h2>
 <p>In our previous discussion, we covered the fundamentals of Policy Gradient and introduced Actor-Critic methods, which involve training a policy by leveraging a model that estimates the value function. To recap the Policy Gradient formulation:</p>
 <p><span id="eq-policy-gradient"><span class="math display">\[\nabla_{\theta}J(\theta) \approx \frac{1}{N} {\color{blue} \sum_{i=1}^N} \sum_{t=1}^T \nabla_{\theta} {\color{red} \log \pi_{\theta}(a_{i, t} \vert s_{i, t})} \Big( {\color{green} \Big( \sum_{t'=t}^T r(s_{i, t'}, a_{i, t'})\Big)} {\color{cyan} - b}\Big)
@@ -308,7 +310,7 @@ r_t(\theta) = \frac{\pi_{\theta}(a_t \vert s_t)}{\pi_{\theta_{old}}(a_t \vert s_
 </div>
 <section id="multiple-gradient-step" class="level3"><h3 class="anchored" data-anchor-id="multiple-gradient-step">Multiple Gradient Step</h3>
 <p>The first approach introduced in the lecture, <strong>Multiple Gradient Step</strong>, focuses on repeating the process of computing gradients and updating parameters multiple times on the same batch of data.</p>
-<div id="algo-Multiple-Gradient-Step" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-line-number="true" data-pseudocode-number="1">
+<div id="algo-Multiple-Gradient-Step" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Version 1. Multiple Gradient Step} \begin{algorithmic} \State Sample batch of data $\{(s_{1, i}, a_{1, i}, \dots s_{T,i}, a_{T, i})\}$ from $\pi_{\theta}$ \State Fit $\hat{V}_{\phi}^{\pi_{\theta}}$ to summed rewards in data \State Evaluate $\hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i}) = r(s_{t, i}, a_{t, i}) + \gamma \hat{V}_{\phi}^{\pi_{\theta}}(s_{t+1, i}) - \hat{V}_{\phi}^{\pi_{\theta}}(s_{t, i})$, $\forall t, i$ \State Evaluate $\nabla_{\theta'} J(\theta') = \sum_{t, i} \frac{\pi_{\theta'} (a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})} \nabla_{\theta'} \log \pi_{\theta'} (a_{t, i} \vert s_{t, i}) \hat{A}^{\pi_{\theta}}(s_{t, i}, a_{t, i})$ \State Update $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \State Repeat steps 4 and 5 for multiple iterations \end{algorithmic} \end{algorithm}
 </div>
@@ -368,7 +370,7 @@ p_{\theta}(\tau) \nabla_{\theta} \log p_{\theta}(\tau) = \nabla_{\theta} p_{\the
 \]</span></p>
 <p>While tuning <span class="math inline">\(\lambda\)</span> remains a challenge, GAE allows us to place more weight on information from the immediate future and less on the distant future. This effectively maintains a proper balance between bias and variance.</p>
 <p>By combining the <strong>Clipped Surrogate Objective</strong> and <strong>Generalized Advantage Estimation</strong>, the final <strong>PPO-clip</strong> algorithm is summarized below:</p>
-<div id="algo-PPO" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-line-number="true" data-pseudocode-number="2">
+<div id="algo-PPO" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="2" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Proximal Policy Optimization (PPO)} \begin{algorithmic} \State Sample batch of data $\{(s_{1, i}, a_{1, i}, \dots s_{T,i}, a_{T, i})\}$ from $\pi_{\theta}$ \State Fit $\hat{V}_{\phi}^{\pi_{\theta}}$ to summed rewards in data \State Evaluate $\hat{A}_{GAE}^{\pi}(s_t, a_t) = \sum_{n=1}^{\infty} w_n ( \sum_{t'=t}^{t+n} \gamma^{t'-t} r(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi}(s_t) + \gamma^n \hat{V}_{\phi}^{\pi}(s_{t+n}))$ \State Update policy with $M$ gradient steps on surrogate objective: $\tilde(J)(\theta') \approx \sum_{t, i} \min \Big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}\hat{A}_{GAE}^{\pi}(s_{t, i}, a_{t,i}), \text{clip} \big( \frac{\pi_{\theta'}(a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})}, 1 - \epsilon, 1 + \epsilon \big) \hat{A}_{GAE}^{\pi}(s_{t, i}, a_{t,i})\Big)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -380,14 +382,14 @@ p_{\theta}(\tau) \nabla_{\theta} \log p_{\theta}(\tau) = \nabla_{\theta} p_{\the
 <p>The Replay Buffer, also known as <strong>“experience replay”</strong> as introduced in <span class="citation" data-cites="lin1992self">Lin (<a href="#ref-lin1992self" role="doc-biblioref">1992</a>)</span>, is a storage space for trajectories experienced by different policies during exploration. In an Off-Policy Actor-Critic framework, the core process involves training the value function and evaluating the advantage function using samples drawn from this buffer.</p>
 <div id="fig-replay-buffer" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-replay-buffer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_replay-buffer.png" class="img-fluid figure-img">
+<a href="./images/15p_replay-buffer.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: Replay Buffer"><img src="./images/15p_replay-buffer.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-replay-buffer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Replay Buffer
 </figcaption></figure>
 </div>
 <p><a href="#fig-replay-buffer" class="quarto-xref">Figure 1</a> illustrates the parameter update process in conjunction with a replay buffer. When storing experience, we save it in the form of a tuple containing the current state <span class="math inline">\(s\)</span>, the action taken <span class="math inline">\(a\)</span>, the received reward <span class="math inline">\(r\)</span>, and the transitioned next state <span class="math inline">\(s'\)</span>. During training, we sample these <span class="math inline">\((s, a, r, s')\)</span> tuples to update <span class="math inline">\(\theta\)</span>. This allows us to formulate the algorithm with an integrated replay buffer as follows:</p>
-<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-line-number="true" data-pseudocode-number="3">
+<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="3" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Actor-Critic Methods with Replay Buffer} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{V}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{V}_{\phi}^{\pi}(s_i')}$ for each $s_i$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \frac{\pi_{\theta'} (a_{t, i} \vert s_{t, i})}{\pi_{\theta} (a_{t, i} \vert s_{t, i})} {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -432,7 +434,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a
 \mathcal{L}(\phi) = \frac{1}{N} \sum_i \Vert \hat{Q}_{\phi}^{\pi}(s_i, a_i) - y_i \Vert^2
 \]</span></p>
 <p>The following is the revised algorithm designed to address the value function mismatch discussed earlier:</p>
-<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-line-number="true" data-pseudocode-number="4">
+<div id="algo-Replay-Buffer" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="4" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Version 2: Fixing the value function mismatch} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -441,7 +443,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a
 <p>Regarding the second issue found in the term <span class="math inline">\({\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i \vert s_i) \hat{A}^{\pi}(s_i, a_i)}\)</span>, there are specific points of refinement to consider. Traditionally, calculating the advantage function <span class="math inline">\(\hat{A}^{\pi}\)</span> requires both the value function and the Q-function. However, since we have already transitioned from <span class="math inline">\(V(s)\)</span> to <span class="math inline">\(Q(s, a)\)</span> to fix the value mismatch, it is much more practical to replace the advantage term directly with <span class="math inline">\(\hat{Q}^{\pi}\)</span>.</p>
 <p>While using the Q-function directly may increase variance—as we are essentially removing the baseline—the ability to leverage the vast, diverse data collected by past policies in the replay buffer allows us to train a significantly more accurate Q-function.</p>
 <p>Another key modification addresses the <strong>Action Mismatch</strong> caused by using actions sampled directly from the replay buffer for the policy update. This is resolved by instead using actions sampled from the current policy. The final refined algorithm incorporating these changes is represented in <a href="#algo-action-mismatch" class="quarto-xref">Algorithm 5</a>.</p>
-<div id="algo-action-mismatch" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-line-number="true" data-pseudocode-number="5">
+<div id="algo-action-mismatch" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="5" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Version 2: Fixing the action mismatch} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets ${\color{red} y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')}$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i {\color{blue} \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})}$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -449,7 +451,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', a
 <p>It is true that <span class="math inline">\(s_i\)</span> itself might be a state that the current policy has never experienced, which can still lead to potential issues. However, there is no practical way to handle states that haven’t been visited yet, and the lecture explained that we simply have to accept this as an inherent part of the method.</p>
 <p>This concludes the <strong>(Fully) Off-Policy Actor-Critic Method</strong>, an algorithm that trains a Q-function model based on data extracted from a replay buffer and uses it to update the policy. By incorporating several additional implementation details, this approach was formally introduced as the <strong>Soft Actor-Critic (SAC)</strong> algorithm (<span class="citation" data-cites="haarnoja2018soft">Haarnoja, Zhou, Abbeel, et al. (<a href="#ref-haarnoja2018soft" role="doc-biblioref">2018</a>)</span>). The following section will briefly touch upon the specific implementation details introduced in that paper.</p>
 </section></section><section id="soft-actor-critic-sac" class="level2"><h2 class="anchored" data-anchor-id="soft-actor-critic-sac">Soft Actor-Critic (SAC)</h2>
-<div id="algo-soft-actor-critic" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-line-number-punc=":" data-caption-prefix="Algorithm" data-line-number="true" data-pseudocode-number="6">
+<div id="algo-soft-actor-critic" class="pseudocode-container quarto-float" data-line-number-punc=":" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="6" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Soft Actor-Critic} \begin{algorithmic} \State Collect experience $\{(s_i, a_i)\}$ from $\pi_{\theta}$ (\&amp; add to replay buffer) \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ for each $s_i, a_i$ \State Evaluate $\hat{A}^{\pi}(s_i, a_i) = r(s_i, a_i) + \gamma \hat{V}_{\phi}^{\pi}(s_i') - \hat{V}_{\phi}^{\pi}(s_i)$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_\theta (a \vert s_i)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -1142,6 +1144,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

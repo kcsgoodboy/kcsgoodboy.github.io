@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -263,10 +265,10 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Offline_RL_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/Offline_RL_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Offline_RL_overview.en.png" class="img-fluid"></a></p>
 </section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>Through previous lectures, we have covered representative reinforcement learning algorithms: Policy Gradient, Actor-Critic Methods, and Q-Learning. The ultimate goal of reinforcement learning is to learn a policy that maximizes the expected total reward the model can receive upon reaching an outcome, based on the data it has collected. To achieve this, there was the <strong>Policy Gradient</strong> method, which gathers entire trajectories, encouraging actions that led to better-than-average rewards while discouraging actions that resulted in poor rewards. There was also the <strong>Actor-Critic</strong> method, which estimates the value of the current state (Critic) and takes actions that increase the expected total reward based on this estimation (Actor). Furthermore, there were methods like <strong>Q-Learning</strong>, which implicitly defines a policy to take actions that maximize the estimated value of the current state without training a separate Actor. Among these, let’s revisit the algorithm of the Off-Policy Actor-Critic Method, which is highly related to <strong>Offline RL</strong>, the main topic of this lecture.</p>
-<div id="algo-Off-Policy-Actor-Critic" class="pseudocode-container quarto-float" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="1" data-caption-prefix="Algorithm">
+<div id="algo-Off-Policy-Actor-Critic" class="pseudocode-container quarto-float" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Full Off-policy Actor-Critic Method (SAC-style)} \begin{algorithmic} \State take action $a \sim \pi_{\theta}(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State Sample a batch $\{s_i, a_i, r_i, s_i'\}$ from replay buffer $\mathcal{R}$ \State Update $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}^{\pi}_{\phi}(s_i', a_i')$ where $a_i' \sim \pi_{\theta}(\cdot \vert s_i')$ \State $\nabla_{\theta} J(\theta) \approx \frac{1}{N} \sum_i \nabla_{\theta} \log \pi_{\theta}(a_i^{\pi} \vert s_i) \hat{Q}^{\pi}(s_i, a_i^{\pi})$ where $a_i^{\pi} \sim \pi_{\theta}(a \vert s_t)$ \State $\theta \leftarrow \theta + \alpha \nabla_{\theta} J(\theta)$ \State Repeat 1 to 5 until convergence \end{algorithmic} \end{algorithm}
 </div>
@@ -303,7 +305,7 @@ window.Quarto = {
 <p>When training a traditional Off-policy method, the model must calculate the Q-value for the next action <span class="math inline">\(a'\)</span> to be taken in the next state <span class="math inline">\(s'\)</span> in order to update the policy currently being trained. However, this is an action sampled from the current policy <span class="math inline">\(\pi_{\theta}\)</span>, and there is a possibility that it does not exist within the data accumulated by the previous behavior policy <span class="math inline">\(\pi_{\beta}\)</span>. If it were Online RL, the model could simply explore and immediately update the Q-value for that action. But since Offline RL uses a static dataset, if the action is absent, the corresponding Q-function will inevitably be inaccurate. Just like the autonomous driving model training example mentioned earlier, the model might attempt to explore dangerous behaviors not present in the dataset, such as making a U-turn on a highway.</p>
 <div id="fig-ood-action" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ood-action-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/11p_ood_action.png" class="img-fluid figure-img">
+<a href="./images/11p_ood_action.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: Out-of-Distribution Action"><img src="./images/11p_ood_action.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ood-action-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Out-of-Distribution Action
@@ -315,7 +317,7 @@ Figure 1: Out-of-Distribution Action
 <p>The easiest way to mitigate Overestimation is to perform <strong>Imitation Learning</strong> using only the actions already present in the dataset. Imitation Learning is a form of Supervised Learning that trains the model to execute only the actions found in the dataset. In this case, actions not in the dataset are neither attempted nor evaluated, leaving no room for Overestimation to occur. However, unlike general reinforcement learning, it only executes given actions. Thus, if training is done through simple mimicry (Vanilla Imitation Learning), it does not utilize reward information and, consequently, cannot surpass the performance of the policy that originally collected the dataset. If the dataset was collected during the exploration phase of RL or gathered by an under-trained policy, better performance cannot be achieved. Furthermore, since connections between states are not considered, there is no possibility of finding a better trajectory by selecting only the good segments from various data trajectories.</p>
 <div id="fig-stitching" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-stitching-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/14p_stitching.png" class="img-fluid figure-img">
+<a href="./images/14p_stitching.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure 2: Stitching"><img src="./images/14p_stitching.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stitching-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 2: Stitching
@@ -323,7 +325,7 @@ Figure 2: Stitching
 </div>
 <p>The area where Offline RL gains a strong advantage over Imitation Learning is <strong>Trajectory Stitching</strong>, introduced in <a href="#fig-stitching" class="quarto-xref">Figure 2</a>. As shown in the figure, assuming there are two trajectories (<span class="math inline">\(s_1 \rightarrow s_6, s_1 \rightarrow s_9\)</span>) in the offline dataset, and <span class="math inline">\(s_3\)</span> and <span class="math inline">\(s_7\)</span> are states in close proximity: if we simply perform Imitation Learning, the model wouldn’t reach the target destination <span class="math inline">\(s_9\)</span> unless it starts from the exact same state. However, Offline RL can utilize internal information to determine that <span class="math inline">\(s_1 \rightarrow s_3\)</span> and <span class="math inline">\(s_7 \rightarrow s_9\)</span> are partially good trajectories, and can ultimately be trained to find and stitch together the optimal trajectory of <span class="math inline">\(s_1 \rightarrow s_9\)</span>.</p>
 <p>A way to improve Imitation Learning and address these limitations is a method called <strong>Filtered Behavior Cloning</strong>, which selects and imitates only a few trajectories with high rewards from the dataset. While this approach lacks the aforementioned stitching capability, it is very simple to implement and serves as a excellent baseline for training an improved model using only the initial dataset.</p>
-<div id="algo-Filtered-Behavior-Cloning" class="pseudocode-container quarto-float" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="2" data-caption-prefix="Algorithm">
+<div id="algo-Filtered-Behavior-Cloning" class="pseudocode-container quarto-float" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="2">
 <div class="pseudocode">
 \begin{algorithm} \caption{Filtered Behavior Cloning} \begin{algorithmic} \State Rank trajectories by return $r(\tau) = \sum_{(s_t, a_t) \in \tau}r(s_t, a_t)$ \State Filter dataset to include top $k\%$ of data: $\tilde{\mathcal{D}} = \{\tau \vert r(\tau) \gt \eta \}$ \State Imitate filtered dataset: $\max_{\theta} \sum_{(s, a) \in \tilde{\mathcal{D}}} \log \pi_{\theta}(a \vert s)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -351,7 +353,7 @@ Implicit Policy Constraint
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/17p_advantage_weighted.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/17p_advantage_weighted.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Advantage weights"><img src="./images/17p_advantage_weighted.png" class="img-fluid figure-img" alt="Advantage weights"></a></p>
 <figcaption>Advantage weights</figcaption></figure>
 </div>
 <p>Then, even in the previous Stitching example, by identifying the value of a good action through the Advantage weight even in similar states between two trajectories, we can create a trajectory that is helpful for learning. For reference, a question arose during the lecture asking if identical states between trajectories in the dataset were strictly necessary, as in this example. The professor mentioned that, due to the representation characteristics of neural networks, the Advantage for similar states can be utilized even if they are not exactly identical. He also added that while it is written in the form of Exponentiated Advantage in the equation above, in practice, a form with an arbitrary hyperparameter added (<span class="math inline">\(\exp(\frac{1}{\alpha}A(s, a))\)</span>) is used to prevent the value from becoming excessively large.</p>
@@ -362,7 +364,7 @@ Implicit Policy Constraint
 A^{\pi_{\beta}}(s_t, a_t) = r(s_t, a_t) + \gamma V^{\pi_{\beta}}(s_{t+1}) - V^{\pi_{\beta}}(s_t)
 \]</span></p>
 <p>However, to calculate the Advantage in this Temporal Difference form, the Value function must be trained very accurately. Due to the nature of learning relying purely on a dataset, this might be difficult in the early stages of training. Therefore, instead of calculating it this way, a Monte Carlo Estimation approach is taken, which subtracts the estimated Value Function from the sum of actual rewards (Empirical return) present in the dataset. By defining it this way, implementation becomes very simple since TD computation is not required, and there is no risk of evaluating actions that are not in the dataset. On the downside, the problem of high variance remains, which is the exact same disadvantage of Monte Carlo Estimation mentioned previously. Additionally, because using Monte Carlo Estimation relies solely on the empirical returns of actual episodes, the aforementioned trajectory stitching capability is severely limited. The algorithm that trains a model by estimating the Advantage function within the dataset in this manner was introduced in the paper <span class="citation" data-cites="peng2019advantage">Peng et al. (<a href="#ref-peng2019advantage" role="doc-biblioref">2019</a>)</span> under the name <strong>Advantage-Weighted Regression (AWR)</strong>. A brief equation expansion for AWR is as follows.</p>
-<div id="algo-Advantage-weighted-Regression" class="pseudocode-container quarto-float" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="3" data-caption-prefix="Algorithm">
+<div id="algo-Advantage-weighted-Regression" class="pseudocode-container quarto-float" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="3">
 <div class="pseudocode">
 \begin{algorithm} \caption{Advantage Weighted Regression (AWR)} \begin{algorithmic} \State Fit value function: $\min_{\phi} \sum_{s_t \sim \mathcal{D}} \Vert \hat{V}_{\phi^{\pi_{\beta}}}(s_t) - \sum_{t'=t}^Tr(s_{t'}, a_{t'}) \Vert^2$ \State Train Policy: $\max_{\theta} \mathbb{E}_{(s_t, a_t) \sim \mathcal{D}}\Big[ \log \pi_{\theta}(a_t \vert s_t) \exp \Big( \frac{1}{\alpha} \Big( \sum_{t'=t}^Tr(s_{t'}, a_{t'}) - \hat{V}_{\phi}^{\pi_{\beta}}(s_t) \Big) \Big) \Big]$ \end{algorithmic} \end{algorithm}
 </div>
@@ -388,7 +390,7 @@ A(s, a) = Q(s, a) - (r + \underbrace{\gamma Q(s', a')}_{\text{a sample of } V^{\
 <p>it is defined like this. Looking at it according to the original definition, this equation tells us how much higher the value of the action <span class="math inline">\(a\)</span> taken in the current state <span class="math inline">\(s\)</span> is compared to the average value. In other words, it judges whether it is good based on <span class="math inline">\(V^{\pi_{\beta}}(s')\)</span>, which is the Value function of the behavior policy <span class="math inline">\(\pi_{\beta}\)</span> at <span class="math inline">\(s\)</span>. In fact, when this happens, even if there is a state-action pair with a good Q-value in a given state, it gets buried by bad Q-values, leaving no room to find a better action. Subsequently, if it is trained to match the target Q using an <span class="math inline">\(\ell_2\)</span> loss, it penalizes the error equally (or symmetrically) regardless of whether the predicted value is large or small. Therefore, the learned value function simply points to the average value. Then, couldn’t we estimate the Advantage by setting some upper standard instead of this average value? What if we could apply something like percentiles used in statistics instead of the average? This idea is exactly the developmental direction of the <strong>Implicit Q-Learning (IQL)</strong> (<span class="citation" data-cites="kostrikov2021offline">Kostrikov, Nair, and Levine (<a href="#ref-kostrikov2021offline" role="doc-biblioref">2021</a>)</span>) algorithm.</p>
 <div id="fig-percentile" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-percentile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_percentile.png" class="img-fluid figure-img">
+<a href="./images/21p_percentile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure 3: Percentile of Value function"><img src="./images/21p_percentile.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-percentile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 3: Percentile of Value function
@@ -407,7 +409,7 @@ Expectile Regression
 <div class="callout-body-container callout-body">
 <div id="fig-asymmetric" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-asymmetric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_asymmetric_loss.png" class="img-fluid figure-img">
+<a href="./images/21p_asymmetric_loss.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure 4: Asymmetric Loss"><img src="./images/21p_asymmetric_loss.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-asymmetric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: Asymmetric Loss
@@ -427,7 +429,7 @@ Figure 4: Asymmetric Loss
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-expectile-regression" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-expectile" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-expectile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/22p_expectile_regression_loss.png" class="img-fluid figure-img" data-ref-parent="fig-expectile-regression">
+<a href="./images/22p_expectile_regression_loss.png" class="lightbox" data-gallery="fig-expectile-regression" title="Figure 5 (a): Expectile Regression Loss"><img src="./images/22p_expectile_regression_loss.png" class="img-fluid figure-img" data-ref-parent="fig-expectile-regression"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-expectile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Expectile Regression Loss
@@ -437,7 +439,7 @@ Figure 4: Asymmetric Loss
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-expectile-regression" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-expectile-example" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-expectile-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/22p_example_expectile.png" class="img-fluid figure-img" data-ref-parent="fig-expectile-regression">
+<a href="./images/22p_example_expectile.png" class="lightbox" data-gallery="fig-expectile-regression" title="Figure 5 (b): Example with a 2D random variable"><img src="./images/22p_example_expectile.png" class="img-fluid figure-img" data-ref-parent="fig-expectile-regression"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-expectile-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Example with a 2D random variable
@@ -454,7 +456,7 @@ Figure 5
 </div>
 </div>
 <p>Along with this, the operational mechanism of IQL involves training the policy by utilizing the Advantage assigned with the Exponentiated Weight from the previously explained AWR method. The algorithm described in the lecture materials is as follows.</p>
-<div id="algo-Implicit-Q-Learning" class="pseudocode-container quarto-float" data-line-number="true" data-line-number-punc=":" data-no-end="false" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="4" data-caption-prefix="Algorithm">
+<div id="algo-Implicit-Q-Learning" class="pseudocode-container quarto-float" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-comment-delimiter="//" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="4">
 <div class="pseudocode">
 \begin{algorithm} \caption{Implicit Q Learning (IQL)} \begin{algorithmic} \State Fit $V$ with expectile loss: $\hat{V}(s) \leftarrow \arg \min_V \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \ell_2^{\lambda}(\hat{Q}(s, a) - V(s))]$ using large $\lambda \gt 0.5$ \State Update $Q$ with typical MSE loss: $\hat{Q}(s, a) \leftarrow \arg \min_Q \mathbb{E}_{(s, a, s') \sim \mathcal{D}} [(Q(s, a) - (r + \gamma \hat{V}(s')))^2]$ \State Repeat 1, 2 until convergence \State Extract policy with AWR: $\hat{\pi} \leftarrow \arg \max_{\pi} \mathbb{E}_{(s, a) \sim \mathcal{D}} [ \log \pi(a \vert s) \exp (\frac{1}{\alpha} (\hat{Q}(s, a) - \hat{V}(s)))]$ \end{algorithmic} \end{algorithm}
 </div>
@@ -1141,6 +1143,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

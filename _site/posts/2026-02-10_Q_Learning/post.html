@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -270,7 +272,7 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Q_Learning_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/Q_Learning_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Q_Learning_overview.en.png" class="img-fluid"></a></p>
 </section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>To set the stage for this post, let’s briefly review the concepts covered in previous lectures.</p>
 <div id="fig-value-function" class="quarto-layout-panel">
@@ -279,7 +281,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-value-function" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-v-function" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-v-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/3p_value_function.png" class="img-fluid figure-img" data-ref-parent="fig-value-function">
+<a href="./images/3p_value_function.png" class="lightbox" data-gallery="fig-value-function" title="Figure 1 (a): State Value Function"><img src="./images/3p_value_function.png" class="img-fluid figure-img" data-ref-parent="fig-value-function"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-v-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) State Value Function
@@ -289,7 +291,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-value-function" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-q-function" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/3p_q_function.png" class="img-fluid figure-img" data-ref-parent="fig-value-function">
+<a href="./images/3p_q_function.png" class="lightbox" data-gallery="fig-value-function" title="Figure 1 (b): State-Action Value Function"><img src="./images/3p_q_function.png" class="img-fluid figure-img" data-ref-parent="fig-value-function"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q-function-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) State-Action Value Function
@@ -339,7 +341,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', \
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-grid-world" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-grid-init" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-grid-init-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/7p_grid_world_init.png" class="img-fluid figure-img" data-ref-parent="fig-grid-world">
+<a href="./images/7p_grid_world_init.png" class="lightbox" data-gallery="fig-grid-world" title="Figure 2 (a): initial State"><img src="./images/7p_grid_world_init.png" class="img-fluid figure-img" data-ref-parent="fig-grid-world"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-grid-init-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) initial State
@@ -349,7 +351,7 @@ Q^{\pi_{\theta}}(s_i, a_i) \approx r(s_i, a_i) + \gamma Q^{\pi_{\theta}}(s_i', \
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-grid-world" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-grid-1st" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-grid-1st-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/7p_grid_world_1st.png" class="img-fluid figure-img" data-ref-parent="fig-grid-world">
+<a href="./images/7p_grid_world_1st.png" class="lightbox" data-gallery="fig-grid-world" title="Figure 2 (b): 1st iteration"><img src="./images/7p_grid_world_1st.png" class="img-fluid figure-img" data-ref-parent="fig-grid-world"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-grid-1st-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) 1st iteration
@@ -385,13 +387,13 @@ Policy Iteration
 </div>
 </div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/8p_policy_gradient.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/8p_policy_gradient.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Process of Policy Gradient"><img src="./images/8p_policy_gradient.png" class="img-fluid figure-img" alt="Process of Policy Gradient"></a></p>
 <figcaption>Process of Policy Gradient</figcaption></figure>
 </div>
 <p>This series of steps—estimating expected future returns using the updated value function and updating the policy based on those estimates—is similar to the processes of Policy Gradient or Actor-Critic methods introduced earlier. The key difference lies in how the policy is defined. In previous methods, the policy dictating the action was defined as a separate entity called an Actor (or policy network). In contrast, as shown in <a href="#eq-greedy-policy" class="quarto-xref">Equation 3</a>, Q-Learning sidesteps this entirely: as long as we can find the action that yields the highest Q-value in the current state <span class="math inline">\(s\)</span> (<span class="math inline">\(\arg \max_a Q(s, a)\)</span>), we will naturally discover the optimal policy for the given environment.</p>
 </section><section id="from-actor-critic-to-critic-only" class="level2"><h2 class="anchored" data-anchor-id="from-actor-critic-to-critic-only">From Actor-Critic to Critic only</h2>
 <p>To summarize the previous points: if we can accurately estimate the value function <span class="math inline">\(Q(s, a)\)</span>—the expected return of taking a specific action <span class="math inline">\(a\)</span> in the current state <span class="math inline">\(s\)</span>—we can deduce the ideal policy. This approach of learning a policy purely based on the Q-function is known as <strong>Q-Learning</strong> (<a href="#algo-Q-Learning" class="quarto-xref">Algorithm 1</a>).</p>
-<div id="algo-Q-Learning" class="pseudocode-container quarto-float" data-line-number="true" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-no-end="false" data-line-number-punc=":" data-comment-delimiter="//" data-indent-size="1.2em">
+<div id="algo-Q-Learning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":" data-pseudocode-number="1" data-line-number="true" data-no-end="false" data-indent-size="1.2em">
 <div class="pseudocode">
 \begin{algorithm} \caption{Q-Learning with Replay Buffer / (SARSA-style) TD target} \begin{algorithmic} \State take action $a \sim \pi(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State sample a batch $\{s_i, a_i, r_i, s_i'\}$ from buffer $\mathcal{R}$ \State $\hat{Q}_{\phi}^{\pi}$ using targets $y_i = r_i + \gamma \hat{Q}_{\phi}^{\pi}(s_i', a_i')$ from $a_i' \sim \pi(\cdot \vert s_i')$ \State define new policy $\pi(a_t \vert s_t) = \begin{cases} 1 &amp; \text{if } a_t = \arg \max_{a} \hat{Q}_{\phi}(s_t, a) \\ 0 &amp; \text{otherwise} \end{cases}$ \State Iterate from step 1 to 4 until finding optimal policy \end{algorithmic} \end{algorithm}
 </div>
@@ -407,7 +409,7 @@ Q^{\pi^*}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim p(\cdot \vert s, a)} [\ma
 \tag{4}\]</span></span></p>
 <p>Consequently, the next action <span class="math inline">\(a'\)</span> to be taken in the next state <span class="math inline">\(s'\)</span> is precisely the action that maximizes the Q-function, allowing us to compute it directly through the function itself. This redefined equation, assuming an optimal policy, is known as the <strong>Bellman Optimality Equation</strong>. All of this is possible precisely because the Q-function alone is sufficient for decision-making.</p>
 <p>Based on this concept, we can refine the previously defined Q-Learning algorithm as follows:</p>
-<div id="algo-improved-Q-Learning" class="pseudocode-container quarto-float" data-line-number="true" data-pseudocode-number="2" data-caption-prefix="Algorithm" data-no-end="false" data-line-number-punc=":" data-comment-delimiter="//" data-indent-size="1.2em">
+<div id="algo-improved-Q-Learning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":" data-pseudocode-number="2" data-line-number="true" data-no-end="false" data-indent-size="1.2em">
 <div class="pseudocode">
 \begin{algorithm} \caption{Improved Q-Learning with Replay Buffer} \begin{algorithmic} \State take action $a \sim \pi(a \vert s)$, get $(s, a, s', r)$, store in $\mathcal{R}$ \State sample a batch $\{s_i, a_i, r_i, s_i'\}$ from buffer $\mathcal{R}$ \State $\hat{Q}_{\phi}$ using targets ${\color{red} y_i = r_i + \gamma \max_{a'} \hat{Q}_{\phi}(s_i', a')}$ \State define new policy $\pi(a_t \vert s_t) = \begin{cases} 1 &amp; \text{if } a_t = \arg \max_{a} \hat{Q}_{\phi}(s_t, a) \\ 0 &amp; \text{otherwise} \end{cases}$ \State Iterate from step 1 to 4 until finding optimal policy \end{algorithmic} \end{algorithm}
 </div>
@@ -462,7 +464,7 @@ Why Q, not V?
 <p>This formula might look familiar—it is essentially the Softmax function applied to the current Q-function. By going through this normalization process, the relative magnitudes of the given Q-values are converted into probabilities. Consequently, by transforming the Q-function into a probability distribution and sampling actions from it, the agent doesn’t act purely randomly like in Epsilon-Greedy. Instead, it explores more efficiently by prioritizing actions that “look promising.”</p>
 <p>However, this method presents an implementation challenge. To express the softmax function as a probability distribution, the value for each possible action must be explicitly defined. This is straightforward in environments with discrete action spaces, but in environments with continuous action spaces, computing these probabilities—and particularly calculating the denominator over an infinite number of actions—is extremely difficult. Specifically, finding the <span class="math inline">\(\arg \max_a Q(s, a)\)</span> does not typically yield a closed-form solution. In such continuous cases, it is more common to simply add Gaussian noise to the deterministic action or employ separate sampling-based optimization techniques.</p>
 <p>Incorporating all the concepts discussed so far, the final formulation of Q-Learning, which learns from trajectories sampled from a Replay Buffer, is defined as follows:</p>
-<div id="algo-full-Q-Learning" class="pseudocode-container quarto-float" data-line-number="true" data-pseudocode-number="3" data-caption-prefix="Algorithm" data-no-end="false" data-line-number-punc=":" data-comment-delimiter="//" data-indent-size="1.2em">
+<div id="algo-full-Q-Learning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":" data-pseudocode-number="3" data-line-number="true" data-no-end="false" data-indent-size="1.2em">
 <div class="pseudocode">
 \begin{algorithm} \caption{Full Q-Learning with Replay Buffer} \begin{algorithmic} \State collect data $\{(s_i, a_i, r_i, s_i')\}$ using some policy, add it to $\mathcal{R}$ \Forall{K} \State sample a batch $(s_i, a_i, r_i, s_i')$ from $\mathcal{R}$ \State $\phi \leftarrow - \alpha \sum_i \frac{d Q_{\phi}}{d \phi} (s_i, a_i) (Q_{\phi}(s_i, a_i) - [r(s_i, a_i) + \gamma \max_{a'}Q_{\phi}(s_i', a_i')])$ \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -471,7 +473,7 @@ Why Q, not V?
 <p>Next, we update the parameters of the neural network approximating the value function via gradient descent for <span class="math inline">\(K\)</span> iterations. While <span class="math inline">\(K=1\)</span> is typically used, performing multiple gradient steps can be considered to enhance data efficiency. This entire process ultimately produces a well-trained Q-function <span class="math inline">\(Q_{\phi}\)</span>. From then on, the agent simply follows the policy defined in <a href="#eq-greedy-policy" class="quarto-xref">Equation 3</a>, constantly executing the action that yields the highest Q-value.</p>
 <div id="fig-q-learning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-q-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_Q_Learning.png" class="img-fluid figure-img">
+<a href="./images/15p_Q_Learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure 3: Policy Iteration"><img src="./images/15p_Q_Learning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 3: Policy Iteration
@@ -485,7 +487,7 @@ Figure 3: Policy Iteration
 <p>This might be acceptable if the Q-function converged smoothly and didn’t fluctuate significantly across different states. However, neural networks are highly sensitive to factors like parameter initialization and recent parameter updates. Consequently, the target value shifts concurrently with the network updates, leading to a phenomenon known as the <strong>“Moving Target”</strong> problem. Simply put, the “answer key” keeps changing while the model is actively trying to learn it.</p>
 <p>To solve this, the authors proposed fixing the network used to calculate the target values, only updating it periodically after a certain number of training steps. This ensures that the target Q-value changes much more slowly, resulting in a significantly more stable training process.</p>
 <p>To implement this, they introduced a separate neural network structurally identical to the main network being trained. Using the paper’s terminology, they deployed a dedicated target network solely for calculating target values. This target network is kept “frozen” during the continuous gradient updates of the main network, and its parameters are only periodically synchronized (copied over) from the main network.</p>
-<div id="algo-full-Q-Learning-target-network" class="pseudocode-container quarto-float" data-line-number="true" data-pseudocode-number="4" data-caption-prefix="Algorithm" data-no-end="false" data-line-number-punc=":" data-comment-delimiter="//" data-indent-size="1.2em">
+<div id="algo-full-Q-Learning-target-network" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":" data-pseudocode-number="4" data-line-number="true" data-no-end="false" data-indent-size="1.2em">
 <div class="pseudocode">
 \begin{algorithm} \caption{Q-Learning with Replay Buffer and target network} \begin{algorithmic} \State save target network parameters: ${\color{red}\phi'} \leftarrow \phi$ \Forall{N} \State collect data $\{(s_i, a_i, r_i, s_i')\}$ using some policy, add it to $\mathcal{R}$ \Forall{K} \State sample a batch $(s_i, a_i, r_i, s_i')$ from $\mathcal{R}$ \State $\phi \leftarrow \phi - \alpha \sum_i \nabla_{\phi} Q_{\phi}(s_i, a_i) \left( Q_{\phi}(s_i, a_i) - [r(s_i, a_i) + \gamma \max_{a'} {\color{red}Q_{\phi'}(s_i', a_i')}] \right)$ \EndFor \EndFor \end{algorithmic} \end{algorithm}
 </div>
@@ -493,7 +495,7 @@ Figure 3: Policy Iteration
 <p>Compared to <a href="#algo-full-Q-Learning" class="quarto-xref">Algorithm 3</a>, the defining difference in <a href="#algo-full-Q-Learning-target-network" class="quarto-xref">Algorithm 4</a> is the introduction of a separate target network <span class="math inline">\(\phi'\)</span>, which is kept in a frozen state until the periodic network update occurs.</p>
 <div id="fig-dqn-result" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-dqn-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/19p_dqn_result.png" class="img-fluid figure-img">
+<a href="./images/19p_dqn_result.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure 4: Result of DQN"><img src="./images/19p_dqn_result.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dqn-result-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: Result of DQN
@@ -506,7 +508,7 @@ Figure 4: Result of DQN
 <p>So, does a high Q-value inherently guarantee excellent actual performance? The lecture presented counter-evidence through the results of a follow-up paper.</p>
 <div id="fig-true-vs-estimate" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-true-vs-estimate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_true_vs_estimates.png" class="img-fluid figure-img">
+<a href="./images/20p_true_vs_estimates.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure 5: True value vs. Estimated value"><img src="./images/20p_true_vs_estimates.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-true-vs-estimate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 5: True value vs. Estimated value
@@ -547,12 +549,12 @@ Q_{\phi_B}(s, a) &amp;\leftarrow r + \gamma Q_{\phi_A}(s', \arg \max_{a'}Q_{\phi
 <p>The professor shared that, in practice, researchers often either just ignore this theoretical inconsistency and proceed anyway, or simply default to <span class="math inline">\(N=1\)</span> to avoid the issue entirely. Strictly speaking, rigorous off-policy corrections, such as utilizing Importance Sampling Weights to adjust for the discrepancy between the behavior and target policies, are required. Nevertheless, in many practical implementations and papers—such as the N-step DQN or the renowned Rainbow algorithm—practitioners simply mix in <span class="math inline">\(N\)</span>-step returns without rigorous corrections and still achieve state-of-the-art performance empirically.</p>
 </section></section><section id="q-learning-in-practice" class="level2"><h2 class="anchored" data-anchor-id="q-learning-in-practice">Q-Learning in Practice</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/26p_outperform.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/26p_outperform.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="DQN in Atari Games"><img src="./images/26p_outperform.png" class="img-fluid figure-img" alt="DQN in Atari Games"></a></p>
 <figcaption>DQN in Atari Games</figcaption></figure>
 </div>
 <p>The foundational work from <span class="citation" data-cites="mnih2013playing">Mnih et al. (<a href="#ref-mnih2013playing" role="doc-biblioref">2013</a>)</span> was further refined and subsequently published in the journal Nature in 2015 (<span class="citation" data-cites="mnih2015humanlevel">Mnih et al. (<a href="#ref-mnih2015humanlevel" role="doc-biblioref">2015</a>)</span>). The results presented in this landmark paper were groundbreaking, demonstrating that an agent trained strictly with Q-Learning could achieve superhuman performance across the vast majority of classic Atari games. Alongside the highly publicized success of AlphaGo (<span class="citation" data-cites="Silver_2016">Silver et al. (<a href="#ref-Silver_2016" role="doc-biblioref">2016</a>)</span>) during that era, this paper remains one of the most iconic milestones proving the immense potential and real-world efficacy of Deep RL.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/26p_qt_opt.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/26p_qt_opt.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="QT-Opt"><img src="./images/26p_qt_opt.png" class="img-fluid figure-img" alt="QT-Opt"></a></p>
 <figcaption>QT-Opt</figcaption></figure>
 </div>
 <p>Furthermore, the lecture shared a compelling case study (<span class="citation" data-cites="kalashnikov2018scalable">Kalashnikov et al. (<a href="#ref-kalashnikov2018scalable" role="doc-biblioref">2018</a>)</span>) highlighting that the capabilities of Q-Learning extend far beyond virtual environments and video games; it can be effectively deployed for real-world, physical robot control. This paper introduced the <strong>QT-Opt</strong> algorithm, which trained a robust Q-function using a massive real-world dataset of robotic arm grasping attempts. As a result, the model successfully generalized its learned policy to execute a wide variety of complex grasping tasks in the physical world.</p>
@@ -1231,6 +1233,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

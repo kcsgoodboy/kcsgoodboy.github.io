@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -261,7 +263,7 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/black_box_meta_learning_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/black_box_meta_learning_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/black_box_meta_learning_overview.en.png" class="img-fluid"></a></p>
 </section><section id="one-view-on-the-meta-learning-problem" class="level2"><h2 class="anchored" data-anchor-id="one-view-on-the-meta-learning-problem">One View on the Meta-Learning Problem</h2>
 <p>Before diving into the main topic of this lecture, <strong>Black-Box Meta-Learning</strong>, the professor explained that meta-learning can be viewed as an extension of supervised learning, referencing definitions from her Ph.D. thesis (<span class="citation" data-cites="Finn:EECS-2018-105">Finn (<a href="#ref-Finn:EECS-2018-105" role="doc-biblioref">2018</a>)</span>).</p>
 <div id="tbl-panel" class="quarto-layout-panel anchored">
@@ -322,7 +324,7 @@ Table 1: Comparison of Supervised Learning &amp; Meta-Supervised Learning
 </section><section id="benchmarks-for-meta-learning-meta-training" class="level2"><h2 class="anchored" data-anchor-id="benchmarks-for-meta-learning-meta-training">Benchmarks for Meta Learning &amp; Meta-training</h2>
 <div id="fig-omniglot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/14p_omniglot.png" class="img-fluid figure-img">
+<a href="./images/14p_omniglot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: Omniglot Dataset"><img src="./images/14p_omniglot.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Omniglot Dataset
@@ -351,7 +353,7 @@ Figure 1: Omniglot Dataset
 <p>I have reconstructed the content regarding the two structures of Black-box adaptation mentioned in the lecture notes using Gemini. <a href="#fig-black-box-adaptation" class="quarto-xref">Figure 2</a> illustrates the concepts described above.</p>
 <div id="fig-black-box-adaptation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-black-box-adaptation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/14p_parameter_estimation_context_vector.png" class="img-fluid figure-img">
+<a href="./images/14p_parameter_estimation_context_vector.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure 2: Version 1 vs. Version 2"><img src="./images/14p_parameter_estimation_context_vector.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-black-box-adaptation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 2: Version 1 vs. Version 2
@@ -369,7 +371,7 @@ Figure 2: Version 1 vs. Version 2
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>Expressed in the form of an algorithm, it is as follows:</p>
-<div class="pseudocode-container quarto-float" data-pseudocode-number="1" data-line-number="true" data-line-number-punc=":" data-indent-size="1.2em" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm">
+<div class="pseudocode-container quarto-float" data-no-end="false" data-caption-prefix="Algorithm" data-line-number-punc=":" data-comment-delimiter="//" data-indent-size="1.2em" data-pseudocode-number="1" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>
@@ -379,7 +381,7 @@ Figure 2: Version 1 vs. Version 2
 <p>However, the <strong>Memory-Augmented Neural Network (MANN)</strong> architecture proposed by <span class="citation" data-cites="santoro2016meta">Santoro et al. (<a href="#ref-santoro2016meta" role="doc-biblioref">2016</a>)</span> demonstrated that few-shot learning is indeed possible using neural networks with structures like LSTMs or Neural Turing Machines. This research effectively became the origin of Black-Box Meta-Learning.</p>
 <p>In MANN, the model sequentially reads the training data (Support Set) and stores important information in external memory or the LSTM’s cell state. When new data (Query Set) arrives, it retrieves relevant information from the stored memory to predict labels. In essence, by binding data to memory and retrieving it later, the model creates the appearance of learning without explicit parameter updates.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/19p_MANN.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/19p_MANN.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Memory-Augmented Neural Network (MANN)"><img src="./images/19p_MANN.png" class="img-fluid figure-img" alt="Memory-Augmented Neural Network (MANN)"></a></p>
 <figcaption>Memory-Augmented Neural Network (MANN)</figcaption></figure>
 </div>
 <p>At this point, the lecture revisited the topic of Multi-task Learning covered previously. In traditional Multi-task Learning, a Task Descriptor <span class="math inline">\(z_i\)</span> was explicitly provided to the model. However, in the meta-learning scenarios we are discussing, new tasks are constantly introduced, making it impossible to define and provide metadata for task information as done in multi-task approaches.</p>
@@ -387,7 +389,7 @@ Figure 2: Version 1 vs. Version 2
 <p>The lecture referred to this as <strong>Sufficient Statistics</strong>. This implies that even without updating or predicting the entire information required to estimate the task, a low-dimensional vector <span class="math inline">\(h_i\)</span>, such as a context vector, contains sufficient contextual information to perform the task.</p>
 <p>Additionally, the lecture introduced various studies aimed at extracting this Context Vector <span class="math inline">\(h_i\)</span> more effectively. During the lecture, a question was raised regarding <strong>catastrophic forgetting</strong> due to the multi-task nature of the problem. Inherently, architectures like RNNs/LSTMs process data sequentially, leading to the <strong>Long-term dependency</strong> problem where information from the beginning of the sequence is lost as the sequence grows longer.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/19p_SNAIL.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/19p_SNAIL.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Simple Neural AttentIve Meta-Learner (SNAIL)"><img src="./images/19p_SNAIL.png" class="img-fluid figure-img" alt="Simple Neural AttentIve Meta-Learner (SNAIL)"></a></p>
 <figcaption>Simple Neural AttentIve Meta-Learner (SNAIL)</figcaption></figure>
 </div>
 <p>The <strong>Simple Neural AttentIve Meta-Learner (SNAIL)</strong> architecture, introduced in <span class="citation" data-cites="mishra2017simple">Mishra et al. (<a href="#ref-mishra2017simple" role="doc-biblioref">2017</a>)</span>, combines Convolution and Attention operations to efficiently generate task information. The Convolution operations extract local information within the data, while the Attention mechanism allows direct access to specific information within the entire sequence. This structure enables the model to instantly reference specific data points (e.g., data from the support set) within a long sequence without forgetting them.</p>
@@ -402,7 +404,7 @@ Figure 2: Version 1 vs. Version 2
 <p>GPT-3 can perform a wide variety of tasks, including translation, grammar correction, and arithmetic. The reason a single model can handle such diverse tasks is that it unifies all problems by converting them into a <strong>text-to-text</strong> format.</p>
 <div id="fig-learning-loop" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-learning-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/24p_in_context_learning.png" class="img-fluid figure-img">
+<a href="./images/24p_in_context_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure 3: Learning Loop of GPT-3"><img src="./images/24p_in_context_learning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-learning-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 3: Learning Loop of GPT-3
@@ -418,7 +420,7 @@ Figure 3: Learning Loop of GPT-3
 <p>You might wonder how this is feasible. However, as established in the premise of Black-Box Meta-Learning, it becomes possible if the model architecture possesses sufficient capacity (expressivity) to capture the characteristics of such vast data and tasks. Apart from the mechanism, the lecture also presented specific examples demonstrating GPT-3’s One-shot and Few-shot learning capabilities.</p>
 <div id="fig-limitation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-limitation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/26p_limitation.png" class="img-fluid figure-img">
+<a href="./images/26p_limitation.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure 4: Limitation of GPT-3"><img src="./images/26p_limitation.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-limitation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: Limitation of GPT-3
@@ -1118,6 +1120,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

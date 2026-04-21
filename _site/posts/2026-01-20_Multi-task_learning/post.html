@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -282,7 +284,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-tasks" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-single-task" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-single-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/single_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks">
+<a href="./images/single_task.png" class="lightbox" data-gallery="fig-tasks" title="Figure 1 (a): Single-task model"><img src="./images/single_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-single-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Single-task model
@@ -292,7 +294,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-tasks" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multi-task" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/multi_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks">
+<a href="./images/multi_task.png" class="lightbox" data-gallery="fig-tasks" title="Figure 1 (b): Multi-task model"><img src="./images/multi_task.png" class="img-fluid figure-img" data-ref-parent="fig-tasks"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Multi-task model
@@ -321,7 +323,7 @@ Figure 1: General architecture of task handling
 <p>First, we address how to define the task descriptor and how to train the model for individual tasks. For ease of understanding, let’s assume the task descriptor is defined as a one-hot vector. From a model design perspective, the question then becomes: “How can we condition the model on the task to enable multi-task learning?”</p>
 <div id="fig-independent-training" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-independent-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/independent_training.png" class="img-fluid figure-img">
+<a href="./images/independent_training.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure 2: independent-training"><img src="./images/independent_training.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-independent-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 2: independent-training
@@ -330,7 +332,7 @@ Figure 2: independent-training
 <p>The simplest approach is to train separate models corresponding to each individual task and condition them at the output stage. As shown in <a href="#fig-independent-training" class="quarto-xref">Figure 2</a>, this essentially employs multiplicative gating—using the output of a network trained for a specific task only when the task descriptor matches that task. Of course, in this case, no parameter sharing occurs between the internal networks, though from the outside, it appears as a single large network. While this might be the most straightforward way to conceive a multi-task solution, it fails to consider computational efficiency or model size.</p>
 <div id="fig-all-shared-training" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-all-shared-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/11p_all_shared_training.png" class="img-fluid figure-img">
+<a href="./images/11p_all_shared_training.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure 3: all-shared-training"><img src="./images/11p_all_shared_training.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-shared-training-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 3: all-shared-training
@@ -348,7 +350,7 @@ Figure 3: all-shared-training
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-concatenation-based-conditioning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-concatenation-based-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/13p_concatenation_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+<a href="./images/13p_concatenation_conditioning.png" class="lightbox" data-gallery="fig-conditioning" title="Figure 4 (a): concatenation-based conditioning"><img src="./images/13p_concatenation_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-concatenation-based-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) concatenation-based conditioning
@@ -358,7 +360,7 @@ Figure 3: all-shared-training
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-additive-conditioning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-additive-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/13p_additive_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+<a href="./images/13p_additive_conditioning.png" class="lightbox" data-gallery="fig-conditioning" title="Figure 4 (b): additive conditioning"><img src="./images/13p_additive_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-additive-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) additive conditioning
@@ -370,7 +372,7 @@ Figure 3: all-shared-training
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multi-head" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/14p_multi-head.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+<a href="./images/14p_multi-head.png" class="lightbox" data-gallery="fig-conditioning" title="Figure 4 (c): multi-head architecture"><img src="./images/14p_multi-head.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-head-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (c) multi-head architecture
@@ -380,7 +382,7 @@ Figure 3: all-shared-training
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-conditioning" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multiplicative-conditioning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multiplicative-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/14p_multiplicative_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning">
+<a href="./images/14p_multiplicative_conditioning.png" class="lightbox" data-gallery="fig-conditioning" title="Figure 4 (d): multiplicative conditioning"><img src="./images/14p_multiplicative_conditioning.png" class="img-fluid figure-img" data-ref-parent="fig-conditioning"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multiplicative-conditioning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (d) multiplicative conditioning
@@ -405,7 +407,7 @@ Figure 4: Some common choices for conditioning (Source: <a href="https://distil
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-cross-switch-network" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-cross-switch-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_cross-switch-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+<a href="./images/15p_cross-switch-network.png" class="lightbox" data-gallery="fig-architecture" title="Figure 5 (a): Cross-switch Network"><img src="./images/15p_cross-switch-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cross-switch-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Cross-switch Network
@@ -415,7 +417,7 @@ Figure 4: Some common choices for conditioning (Source: <a href="https://distil
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-multi-task-attention-network" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-multi-task-attention-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_multi-task-attention-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+<a href="./images/15p_multi-task-attention-network.png" class="lightbox" data-gallery="fig-architecture" title="Figure 5 (b): Multi-task Attention Network"><img src="./images/15p_multi-task-attention-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multi-task-attention-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Multi-task Attention Network
@@ -427,7 +429,7 @@ Figure 4: Some common choices for conditioning (Source: <a href="https://distil
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-deep-relation-network" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-deep-relation-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_deep-relation-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+<a href="./images/15p_deep-relation-network.png" class="lightbox" data-gallery="fig-architecture" title="Figure 5 (c): Deep Relation Network"><img src="./images/15p_deep-relation-network.png" class="img-fluid figure-img" data-ref-parent="fig-architecture"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-deep-relation-network-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (c) Deep Relation Network
@@ -437,7 +439,7 @@ Figure 4: Some common choices for conditioning (Source: <a href="https://distil
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-architecture" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-perceiver-io" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-perceiver-io-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/15p_perceiver-io.png" class="img-fluid figure-img" data-ref-parent="fig-architecture">
+<a href="./images/15p_perceiver-io.png" class="lightbox" data-gallery="fig-architecture" title="Figure 5 (d): Perceiver IO"><img src="./images/15p_perceiver-io.png" class="img-fluid figure-img" data-ref-parent="fig-architecture"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-perceiver-io-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (d) Perceiver IO
@@ -464,7 +466,7 @@ Figure 5: Various multi-task architectures (<a href="@misra2016cross">a (Misra 
 <p>Another approach is to frame the problem of minimizing losses across multiple tasks as a min-max optimization problem (<span class="math inline">\(\min_\theta \max_i \mathcal{L}_i (\theta, \mathcal{D}_i)\)</span>). In other words, this method focuses on optimizing the loss of the worst-performing task. This concept is presented as <strong>Distributionally Robust Optimization (DRO)</strong> in <span class="citation" data-cites="kuhn2025distributionally">Kuhn, Shafiee, and Wiesemann (<a href="#ref-kuhn2025distributionally" role="doc-biblioref">2025</a>)</span>. Beyond these methods, objective functions can also be defined from the perspectives of task robustness or fairness.</p>
 </section><section id="optimizing-the-objective" class="level2"><h2 class="anchored" data-anchor-id="optimizing-the-objective">Optimizing the objective</h2>
 <p>We begin by outlining the optimization process for the basic objective function, excluding the task-specific weights discussed earlier.</p>
-<div class="pseudocode-container quarto-float" data-pseudocode-number="1" data-no-end="false" data-line-number="true" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number-punc=":" data-caption-prefix="Algorithm">
+<div class="pseudocode-container quarto-float" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number="true" data-line-number-punc=":" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//">
 <div class="pseudocode">
 \begin{algorithm} \caption{Basic Version} \begin{algorithmic} \State Sample mini-batch of tasks $\mathcal{B} \sim {\mathcal{T}_i}$ \State Sample mini-batch of datapoints for each task $\mathcal{D}_i^b \sim \mathcal{D}_i$ \State Compute loss on the mini-batch: $\hat{\mathcal{L}}(\theta, \mathcal{B}) = \sum_{\mathcal{T}_k \in \mathcal{B}} \mathcal{L}_k (\theta, \mathcal{D}_k^b)$ \State Backpropagate loss to compute gradient $\nabla_{\theta} \hat{\mathcal{L}}$ \State Apply gradient with your favorite neural net optimizer (e.g. Adam) \end{algorithmic} \end{algorithm}
 </div>
@@ -479,7 +481,7 @@ Figure 5: Various multi-task architectures (<a href="@misra2016cross">a (Misra 
 <section id="negative-trasfer-overfitting" class="level3"><h3 class="anchored" data-anchor-id="negative-trasfer-overfitting">Negative Trasfer &amp; Overfitting</h3>
 <div id="fig-negative-transfer" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-negative-transfer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/22p_negative-transfer.png" class="img-fluid figure-img">
+<a href="./images/22p_negative-transfer.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure 6: Negative Transfer"><img src="./images/22p_negative-transfer.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-negative-transfer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 6: Negative Transfer
@@ -516,7 +518,7 @@ Note
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-similarity" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-task-affinity" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-task-affinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/25p_TAG.png" class="img-fluid figure-img" data-ref-parent="fig-similarity">
+<a href="./images/25p_TAG.png" class="lightbox" data-gallery="fig-similarity" title="Figure 7 (a): Task Affinity Grouping (Fifty et al)"><img src="./images/25p_TAG.png" class="img-fluid figure-img" data-ref-parent="fig-similarity"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-task-affinity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Task Affinity Grouping (Fifty et al)
@@ -526,7 +528,7 @@ Note
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-similarity" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-DoReMi" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-DoReMi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/25p_DoReMi.png" class="img-fluid figure-img" data-ref-parent="fig-similarity">
+<a href="./images/25p_DoReMi.png" class="lightbox" data-gallery="fig-similarity" title="Figure 7 (b): DoReMi"><img src="./images/25p_DoReMi.png" class="img-fluid figure-img" data-ref-parent="fig-similarity"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-DoReMi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) DoReMi
@@ -1208,6 +1210,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>
