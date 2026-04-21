@@ -53,6 +53,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script><link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -264,12 +266,12 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Model_Based_RL_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/Model_Based_RL_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Model_Based_RL_overview.en.png" class="img-fluid"></a></p>
 </section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>So far, the lecture series has covered a wide range of reinforcement learning algorithms.</p>
 <div id="fig-model-free" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-model-free-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/4p_model_free_rl.png" class="img-fluid figure-img">
+<a href="./images/4p_model_free_rl.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: Model-Free RL"><img src="./images/4p_model_free_rl.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-free-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Model-Free RL
@@ -284,13 +286,13 @@ Figure 1: Model-Free RL
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/6p_veo2_example.gif" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/6p_veo2_example.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Veo 2"><img src="./images/6p_veo2_example.gif" class="img-fluid figure-img"></a></p>
 <figcaption>Veo 2</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/6p_sora_example.gif" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/6p_sora_example.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Sora"><img src="./images/6p_sora_example.gif" class="img-fluid figure-img"></a></p>
 <figcaption>Sora</figcaption></figure>
 </div>
 </div>
@@ -302,11 +304,11 @@ Figure 2
 </div>
 <p>The lecture broadens the notion of a model, that video-generation systems(<a href="#fig-video-model" class="quarto-xref">Figure 2</a>) such as Google Veo 2 or OpenAI Sora can also be viewed as models, in the sense that they produce future observations from input descriptions. It also mentions stock-market prediction and games as domains where some kind of model can be useful. In chess or Go, where the rules are explicit, a learned model may be less necessary, but in settings where the rules are only partially known or are entangled with other agents and complicated dynamics, a model becomes important. The post also remarks that the “reward model” introduced in the previous lecture can itself be seen as a type of model.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/7p_learned_simulator.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/7p_learned_simulator.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Learned Simulator"><img src="./images/7p_learned_simulator.png" class="img-fluid figure-img" alt="Learned Simulator"></a></p>
 <figcaption>Learned Simulator</figcaption></figure>
 </div>
 <p>A typical learned-simulator pipeline is then described as follows:</p>
-<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="1">
+<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number="true" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Notional "learned simulator" algorithm} \begin{algorithmic} \State Get some data $\mathcal{D} = \{s_i, a_i, s_i' \}$ collected using some base policy $\pi_0(a \vert s)$ \State Learn "simulator" $f(a, s) = s'$ using $\min_f \sum_i \Vert f(s_i, a_i) - s_i' \Vert^2$ \State Run your favorite RL method inside "simulator" $f$ \end{algorithmic} \end{algorithm}
 </div>
@@ -318,7 +320,7 @@ Figure 2
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-learned-simulator" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-maze" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-maze-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_maze.png" class="img-fluid figure-img" data-ref-parent="fig-learned-simulator">
+<a href="./images/8p_maze.png" class="lightbox" data-gallery="fig-learned-simulator" title="Figure 3 (a): Maze"><img src="./images/8p_maze.png" class="img-fluid figure-img" data-ref-parent="fig-learned-simulator"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-maze-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Maze
@@ -328,7 +330,7 @@ Figure 2
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-learned-simulator" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-sora-humanoid" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-sora-humanoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_grasp.png" class="img-fluid figure-img" data-ref-parent="fig-learned-simulator">
+<a href="./images/8p_grasp.png" class="lightbox" data-gallery="fig-learned-simulator" title="Figure 3 (b): Sora Humanoid Robot"><img src="./images/8p_grasp.png" class="img-fluid figure-img" data-ref-parent="fig-learned-simulator"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sora-humanoid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Sora Humanoid Robot
@@ -344,14 +346,14 @@ Figure 3
 <p>As shown in <a href="#fig-learned-simulator" class="quarto-xref">Figure 3</a>, the answer is <strong>coverage</strong> and <strong>model fidelity</strong>. If the collected data cover only a small part of the state-action space, then the simulator only learns that region well and will be inaccurate elsewhere. The maze example(<a href="#fig-maze" class="quarto-xref">Figure 3 (a)</a>) illustrates this by showing a dataset that covers only one region of the maze. The Sora example(<a href="#fig-sora-humanoid" class="quarto-xref">Figure 3 (b)</a>) makes the same point from another angle: a model may generate visually plausible outputs while still violating basic physical consistency. So the usefulness of the simulator depends heavily on the quality of the data and on how hard the target domain is to model faithfully.</p>
 <p>The section ends by briefly discussing how dynamics models are learned in practice.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/10p_good_dynamics_model.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/10p_good_dynamics_model.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Using State Representation"><img src="./images/10p_good_dynamics_model.png" class="img-fluid figure-img" alt="Using State Representation"></a></p>
 <figcaption>Using State Representation</figcaption></figure>
 </div>
 <p>In many real environments, we do not have a clean analytical model, so we learn one entirely from data. Instead of predicting raw high-dimensional observations directly, a common alternative is to compress the state into a low-dimensional latent representation <span class="math inline">\(z_t\)</span> and learn the dynamics there. This reduces computational cost, although it raises the separate problem of how to choose a good state representation.</p>
 </section><section id="optimize-over-actions-using-model" class="level2"><h2 class="anchored" data-anchor-id="optimize-over-actions-using-model">Optimize over actions using model</h2>
 <div id="fig-planning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-planning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/12p_planning.png" class="img-fluid figure-img">
+<a href="./images/12p_planning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure 4: Planning"><img src="./images/12p_planning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-planning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: Planning
@@ -359,7 +361,7 @@ Figure 4: Planning
 </div>
 <p>Once a learned dynamics model is available, the simplest way to use it is <strong>“planning”</strong>. Even without interacting with the real environment, the model can be rolled forward to predict future states under candidate actions. This lets us search for an action sequence that maximizes expected reward over a finite horizon, i.e. solve something like <span class="math inline">\(\max_{a_t:t+H} \sum_t r(s_t, a_t)\)</span>. This can be expressed as “imagining” trajectories inside the model and optimizing actions through backpropagation.</p>
 <p>To do that, the lecture introduces a <strong>“planning via backpropagation”</strong> algorithm:</p>
-<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="2">
+<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="2" data-line-number="true" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via backpropagation} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Backpropagate through $f_{\phi}(s, a)$ to choose actions. ($\hat{a}_{t:t+H} \leftarrow \arg\max \sum_{t'=t}^{t+H} r_{t'}$) \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
 </div>
@@ -375,7 +377,7 @@ Computing Gradient to choose action
 </div>
 <div class="callout-body-container callout-body">
 <p>As the professor described in hand, To do backpropagation for <span class="math inline">\(\hat{a}_{t:t+H}\)</span>, we need to calculate the direction of gradient that maxmize expected reward. Below is the detailed expression.</p>
-<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="3">
+<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="3" data-line-number="true" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Compute Gradient} \begin{algorithmic} \State Initialize $\hat{a}_{t:t+H}$ \State Compute Gradient $\nabla_{a_{t:t+H}} \sum r$ \State $\hat{a}_{t:t+H} \leftarrow \hat{a}_{t:t+H} + \alpha \nabla_{a_{t:t+H}} \sum r$ \end{algorithmic} \end{algorithm}
 </div>
@@ -393,7 +395,7 @@ Computing Gradient to choose action
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-optimization" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-gradient" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-gradient-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/13p_gradient_based.png" class="img-fluid figure-img" data-ref-parent="fig-optimization">
+<a href="./images/13p_gradient_based.png" class="lightbox" data-gallery="fig-optimization" title="Figure 5 (a): Gradient-based Optimization"><img src="./images/13p_gradient_based.png" class="img-fluid figure-img" data-ref-parent="fig-optimization"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-gradient-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Gradient-based Optimization
@@ -403,7 +405,7 @@ Computing Gradient to choose action
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-optimization" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-sampling" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-sampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/13p_sampling_based.png" class="img-fluid figure-img" data-ref-parent="fig-optimization">
+<a href="./images/13p_sampling_based.png" class="lightbox" data-gallery="fig-optimization" title="Figure 5 (b): Sampling-based Optimization"><img src="./images/13p_sampling_based.png" class="img-fluid figure-img" data-ref-parent="fig-optimization"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sampling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Sampling-based Optimization
@@ -417,7 +419,7 @@ Figure 5
 </figcaption></figure>
 </div>
 <p>Rather than starting from a single point and following the gradient, the sampling-based view evaluates many candidate action sequences and selects or refits toward the ones with high return. Because it does not require explicit gradient computation, It can be described as <strong>gradient-free optimization</strong> and notes that it can be useful in settings where differentiating through the optimization objective is difficult.</p>
-<div id="algo-sampling-planning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="4">
+<div id="algo-sampling-planning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="4" data-line-number="true" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via Sampling} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
 </div>
@@ -426,21 +428,21 @@ Figure 5
 <p>The lecture then compares the two families of methods. Gradient-based methods scale naturally to large parameter spaces and fit well with neural-network models, but require a suitable optimization procedure. Sampling-based methods are simple and parallelizable, and do not require differentiating the planner objective, but they become harder to scale as the action dimension and planning horizon grow. The lecture slides make the same high-level comparison, emphasizing that sampling-based optimization is simple and can be fast when parallelized, but does not scale well to high-dimensional settings.</p>
 <div id="fig-fail-case" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-fail-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/18p_fail_case.png" class="img-fluid figure-img">
+<a href="./images/18p_fail_case.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure 6: Fail Case of Sampling-based Approach"><img src="./images/18p_fail_case.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fail-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 6: Fail Case of Sampling-based Approach
 </figcaption></figure>
 </div>
 <p>The section closes with a failure example (<a href="#fig-fail-case" class="quarto-xref">Figure 6</a>) using a cliff environment. If the planner is trained only on trajectories that happen to move rightward, it may conclude that “going right” is always good, even though continuing right eventually causes the agent to fall off the cliff. This is framed as <strong>data-distribution mismatch</strong>: the state distribution induced by the final policy can differ from the state distribution seen in the initial data. A simple fix is to add newly visited real trajectories back into the model-training dataset and keep updating the model as planning proceeds.</p>
-<div id="algo-sampling-planning-2" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="5">
+<div id="algo-sampling-planning-2" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="5" data-line-number="true" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via Sampling (Updated)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute planned actions, appending visiting tuples $(s, a, s')$ to $\mathcal{D}$ \end{algorithmic} \end{algorithm}
 </div>
 </div>
 <div id="fig-success-case" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-success-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_success_case.png" class="img-fluid figure-img">
+<a href="./images/20p_success_case.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure 7: Success Case of Sampling-based Approach"><img src="./images/20p_success_case.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-success-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 7: Success Case of Sampling-based Approach
@@ -453,7 +455,7 @@ Figure 7: Success Case of Sampling-based Approach
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-plan" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-open" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_open_loop.png" class="img-fluid figure-img" data-ref-parent="fig-plan">
+<a href="./images/21p_open_loop.png" class="lightbox" data-gallery="fig-plan" title="Figure 8 (a): Open-loop Interaction"><img src="./images/21p_open_loop.png" class="img-fluid figure-img" data-ref-parent="fig-plan"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-open-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Open-loop Interaction
@@ -463,7 +465,7 @@ Figure 7: Success Case of Sampling-based Approach
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-plan" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-close" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-close-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_close_loop.png" class="img-fluid figure-img" data-ref-parent="fig-plan">
+<a href="./images/21p_close_loop.png" class="lightbox" data-gallery="fig-plan" title="Figure 8 (b): Closed-loop Ineraction"><img src="./images/21p_close_loop.png" class="img-fluid figure-img" data-ref-parent="fig-plan"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-close-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Closed-loop Ineraction
@@ -477,7 +479,7 @@ Figure 8
 </figcaption></figure>
 </div>
 <p>The next section contrasts open-loop and closed-loop use of a model. In the open-loop case, the planner computes a full action trajectory <span class="math inline">\(a_1, \dots, a_H\)</span> in advance and then executes it as-is. This can work when the model is accurate, but if the model is wrong or the environment changes during execution, blindly following the original plan may be a poor choice. A <strong>closed-loop</strong> alternative is to execute only the first planned action, observe the true next state from the environment, and then replan from that new state.</p>
-<div id="algo-mpc" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="6">
+<div id="algo-mpc" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="6" data-line-number="true" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Model Predictive Control (MPC)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Use model $f_{\phi}(s, a)$ to optimize action sequence \State Execute **the first** planned action, observe resulting state $s'$ \State Append $(s, a, s')$ to dataset $\mathcal{D}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -504,7 +506,7 @@ Figure 8
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-result" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-baoding" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-baoding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/34p_baoding_balls.png" class="img-fluid figure-img" data-ref-parent="fig-result">
+<a href="./images/34p_baoding_balls.png" class="lightbox" data-gallery="fig-result" title="Figure 9 (a): Baoding Balls"><img src="./images/34p_baoding_balls.png" class="img-fluid figure-img" data-ref-parent="fig-result"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-baoding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Baoding Balls
@@ -514,7 +516,7 @@ Figure 8
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-result" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-handwriting" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-handwriting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/34p_handwriting.png" class="img-fluid figure-img" data-ref-parent="fig-result">
+<a href="./images/34p_handwriting.png" class="lightbox" data-gallery="fig-result" title="Figure 9 (b): Handwriting"><img src="./images/34p_handwriting.png" class="img-fluid figure-img" data-ref-parent="fig-result"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-handwriting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Handwriting
@@ -531,14 +533,14 @@ Figure 9
 <p>Model-based RL can also be used in a different way: instead of planning online at test time, the learned dynamics model can be used to generate <strong>synthetic rollouts</strong> that help train a policy network. This is the core idea of <strong>Model-Based Policy Optimization (MBPO)</strong>(<span class="citation" data-cites="janner2019trust">Janner et al. (<a href="#ref-janner2019trust" role="doc-biblioref">2019</a>)</span>). The important design choice in MBPO is not to trust the model for arbitrarily long imagined trajectories. Instead, MBPO uses <strong>short model-generated rollouts branched from real data</strong>, which helps limit compounding model error while still improving sample efficiency.</p>
 <div id="fig-augmented" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-augmented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/27p_augmented_data.png" class="img-fluid figure-img">
+<a href="./images/27p_augmented_data.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure 10: Augmented Data"><img src="./images/27p_augmented_data.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-augmented-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 10: Augmented Data
 </figcaption></figure>
 </div>
 <p>Operationally, MBPO alternates between collecting real transitions, updating the learned dynamics model, generating short synthetic rollouts from real states—often replay-buffer states—and then updating a model-free learner using both real and model-generated data. In the original paper, this policy-optimization backbone is implemented with SAC.</p>
-<div id="algo-mbpo" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number="true" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-pseudocode-number="7">
+<div id="algo-mbpo" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-pseudocode-number="7" data-line-number="true" data-line-number-punc=":" data-no-end="false">
 <div class="pseudocode">
 \begin{algorithm} \caption{Model-Based Policy Optimization (MBPO)} \begin{algorithmic} \State Collect data using current policy $\pi_{\phi}$, add to $\mathcal{D}_{env}$ \State Update model $p_{\theta}(s' \vert s, a)$ using $\mathcal{D}_{env}$ \State Collect synthetic roll-outs using $\pi_{\phi}$ in model $p_{\theta}$ from states in $\mathcal{D}_{env}$ \State Update policy $\pi_{\theta}$ (and critic $Q$) using $\mathcal{D}_{env} \cup \mathcal{D}_{model}$ \State Repeat 1 to 4 until convergence \end{algorithmic} \end{algorithm}
 </div>
@@ -1242,6 +1244,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script><script>videojs(video_shortcode_videojs_video1);</script>
+    </script><script>videojs(video_shortcode_videojs_video1);</script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

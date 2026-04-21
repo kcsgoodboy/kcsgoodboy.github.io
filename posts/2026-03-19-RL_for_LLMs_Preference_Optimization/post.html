@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -260,7 +262,7 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Preference_Optimization_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/Preference_Optimization_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Preference_Optimization_overview.en.png" class="img-fluid"></a></p>
 </section><section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>This lecture was delivered as a guest lecture by Archit Sharma, one of the co-authors of the <strong>Direct Preference Optimization (DPO)</strong> paper (<span class="citation" data-cites="rafailov2023direct">Rafailov et al. (<a href="#ref-rafailov2023direct" role="doc-biblioref">2023</a>)</span>), and it introduced cases where reinforcement learning has been used in LLM training.</p>
 <div>
@@ -270,13 +272,13 @@ window.Quarto = {
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/2p_scale.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/2p_scale.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="The blessings of scale"><img src="./images/2p_scale.png" class="img-fluid figure-img" alt="The blessings of scale"></a></p>
 <figcaption>The blessings of scale</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/2p_ai_predict.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/2p_ai_predict.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="AI in 2027"><img src="./images/2p_ai_predict.png" class="img-fluid figure-img" alt="AI in 2027"></a></p>
 <figcaption>AI in 2027</figcaption></figure>
 </div>
 </div>
@@ -290,19 +292,19 @@ window.Quarto = {
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/4p_gpt.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/4p_gpt.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="ChatGPT"><img src="./images/4p_gpt.png" class="img-fluid figure-img" alt="ChatGPT"></a></p>
 <figcaption>ChatGPT</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/4p_claude.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/4p_claude.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Claude AI"><img src="./images/4p_claude.png" class="img-fluid figure-img" alt="Claude AI"></a></p>
 <figcaption>Claude AI</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/4p_gemini.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/4p_gemini.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Gemini"><img src="./images/4p_gemini.png" class="img-fluid figure-img" alt="Gemini"></a></p>
 <figcaption>Gemini</figcaption></figure>
 </div>
 </div>
@@ -317,13 +319,13 @@ window.Quarto = {
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/13p_gpt_fail.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/13p_gpt_fail.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="GPT-3 Fail Answer"><img src="./images/13p_gpt_fail.png" class="img-fluid figure-img" alt="GPT-3 Fail Answer"></a></p>
 <figcaption>GPT-3 Fail Answer</figcaption></figure>
 </div>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/14p_human_express.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/14p_human_express.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Human Answer"><img src="./images/14p_human_express.png" class="img-fluid figure-img" alt="Human Answer"></a></p>
 <figcaption>Human Answer</figcaption></figure>
 </div>
 </div>
@@ -333,18 +335,18 @@ window.Quarto = {
 </section><section id="instruction-finetuning" class="level2"><h2 class="anchored" data-anchor-id="instruction-finetuning">Instruction Finetuning</h2>
 <p>As mentioned above, the first method introduced in the lecture for aligning the user’s intent with a language model was the <strong>pretrain/finetune</strong> approach.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/15p_pretrain_finetune.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/15p_pretrain_finetune.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Pretrain/Finetune"><img src="./images/15p_pretrain_finetune.png" class="img-fluid figure-img" alt="Pretrain/Finetune"></a></p>
 <figcaption>Pretrain/Finetune</figcaption></figure>
 </div>
 <p>In fact, the pretrain/finetune concept is not limited to language models. More generally, it plays a transfer-learning role: it preserves prior knowledge from pretraining while adapting the model to a new task using additional data. A common NLP example is movie sentiment analysis. One first trains a model on a large amount of general movie-related data, and then collects extra task-specific data to further train the model for the user’s desired purpose. In this case, the additional data may consist of only a limited number of labels indicating sentiment, and the amount of new data required can be much smaller than the original pretraining data while still producing useful results.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/16p_pretrain_finetune_scale.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/16p_pretrain_finetune_scale.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Scaling up finetuning"><img src="./images/16p_pretrain_finetune_scale.png" class="img-fluid figure-img" alt="Scaling up finetuning"></a></p>
 <figcaption>Scaling up finetuning</figcaption></figure>
 </div>
 <p>However, applying this idea to LLMs raises many more issues from a finetuning perspective. To support user-intended reasoning across diverse tasks—such as behavior modeling, coding, and research—the model must handle many kinds of tasks, and there are also many possible labels beyond a simple good/bad distinction, depending on the domain.</p>
 <p>From this perspective, one model studied from a finetuning standpoint to support many different tasks is Google’s <strong>FLAN-T5</strong> (<span class="citation" data-cites="chung2024scaling">Chung et al. (<a href="#ref-chung2024scaling" role="doc-biblioref">2024</a>)</span>).</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/17p_flan_t5.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/17p_flan_t5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="FLAN-T5"><img src="./images/17p_flan_t5.png" class="img-fluid figure-img" alt="FLAN-T5"></a></p>
 <figcaption>FLAN-T5</figcaption></figure>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -362,12 +364,12 @@ Note
 </div>
 <p>Built on a T5 model pretrained with the span corruption task, FLAN-T5 was finetuned on roughly 1,800 instruction-based tasks, and it outperformed T5 on most multitask benchmarks such as MMLU (<span class="citation" data-cites="hendrycks2020measuring">Hendrycks et al. (<a href="#ref-hendrycks2020measuring" role="doc-biblioref">2020</a>)</span>) and Big-Bench (<span class="citation" data-cites="srivastava2023beyond">Srivastava et al. (<a href="#ref-srivastava2023beyond" role="doc-biblioref">2023</a>)</span>).</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/18p_scale_performance.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/18p_scale_performance.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Scaling Model Size"><img src="./images/18p_scale_performance.png" class="img-fluid figure-img" alt="Scaling Model Size"></a></p>
 <figcaption>Scaling Model Size</figcaption></figure>
 </div>
 <p>An especially noteworthy point in the results above is that as model size increases (from 80M <span class="math inline">\(\rightarrow\)</span> 11B), the gain in generalization performance also increases. This suggests that instruction finetuning itself has a scaling property with respect to model size.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/20p_instruction_finetuning.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/20p_instruction_finetuning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Instruction Finetuning"><img src="./images/20p_instruction_finetuning.png" class="img-fluid figure-img" alt="Instruction Finetuning"></a></p>
 <figcaption>Instruction Finetuning</figcaption></figure>
 </div>
 <p>The example above, also introduced in the paper, shows the effect of finetuning through a Chain-of-Thought (CoT) reasoning example from Big-Bench. When comparing the output of a model without finetuning (PaLM 540B) to that of a model trained with instruction finetuning (FLAN-PaLM 540B), the latter produces responses that more closely match the user’s intent.</p>
@@ -377,7 +379,7 @@ Note
 <p>Researchers began proposing methods that use reinforcement learning to train models in ways that increase human preference. In reinforcement learning, the ultimate goal is to train a policy in the direction that maximizes the expected total reward obtainable when reaching the target. Suppose, for example, that we apply reinforcement learning to train a language model for a given task.</p>
 <div id="fig-rl-case" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rl-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/23p_RL_case.png" class="img-fluid figure-img">
+<a href="./images/23p_RL_case.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure 1: Reward in Language Model"><img src="./images/23p_RL_case.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rl-case-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Reward in Language Model
@@ -389,7 +391,7 @@ Figure 1: Reward in Language Model
 \]</span></p>
 <div id="fig-rlhf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/24p_RLHF.png" class="img-fluid figure-img">
+<a href="./images/24p_RLHF.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure 2: RL from Human Feedback (RLHF)"><img src="./images/24p_RLHF.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 2: RL from Human Feedback (RLHF)
@@ -447,7 +449,7 @@ x' = x \nabla \log x
 <p>As a result, we do not need to differentiate through the sampled data itself. With Monte Carlo estimation, it is enough to know the probability of a given output and its reward value. In fact, this is exactly what policy-gradient methods aim to do: if there is a trajectory containing good actions, update the policy so those actions become more likely; if there are bad actions, update the policy so they become less likely. In language models, if an output receives a high reward, the model is trained to produce that output more often; if an action leads to low-reward outputs, the model is trained to produce it less often. In that sense, the learning rule is both simple and intuitively reasonable.</p>
 <p>Of course, RLHF also has its own problems.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/28p_RLHF_limit.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/28p_RLHF_limit.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Limitation of RLHF"><img src="./images/28p_RLHF_limit.png" class="img-fluid figure-img" alt="Limitation of RLHF"></a></p>
 <figcaption>Limitation of RLHF</figcaption></figure>
 </div>
 <p>In the end, RLHF requires a human-defined reward—that is, a ground-truth reward—to function properly. This means humans must directly intervene in the training process. This setup is often called <strong>human-in-the-loop (HITL)</strong>, and the problem is that assigning scores in this way is costly. Training an LLM may require millions of queries and generations, and assigning evaluation scores through HITL at every step becomes nearly impossible in terms of both cost and time, while also scaling poorly. To address this, the paper <span class="citation" data-cites="10.1145/1597735.1597738">Knox and Stone (<a href="#ref-10.1145/1597735.1597738" role="doc-biblioref">2009</a>)</span> proposed using a small amount of human evaluation data to train a neural network that can replace human judgment by predicting which answer would be preferred. This model is the <strong>reward model</strong>. As shown in <a href="#fig-rlhf" class="quarto-xref">Figure 2</a>, stage 2 includes training such a reward model. The original paper explained this idea through a framework called <strong>Training an Agent Manually via Evaluative Reinforcement (TAMER)</strong>, available <a href="https://www.cs.utexas.edu/~bradknox/TAMER.html">here</a>.</p>
@@ -466,14 +468,14 @@ J_{RM}(\phi) = -\mathbb{E}_{(x, y^{\text{win}}, y_{\text{lose}}) \sim \mathcal{D
 \tag{2}\]</span></span></p>
 <p>This is similar in spirit to how CQL in offline RL responds conservatively when the learned Q-values drift too far from those supported by the data. In language-model training, this idea appears as a Kullback-Leibler (KL) penalty applied to samples that depart too much from the pretrained model. If the model begins assigning excessively high probability to strange answers that the pretrained model would almost never produce (<span class="math inline">\(p_{\theta}^{RL}(\hat{y} \vert x) &gt; p^{PT}(\hat{y} \vert x)\)</span>), the penalty discourages learning in that direction. Here, <span class="math inline">\(\beta\)</span> is a hyperparameter: the larger it is, the more strongly the model is penalized for moving away from the pretrained model.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/33p_hf_result.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/33p_hf_result.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="RLHF effect"><img src="./images/33p_hf_result.png" class="img-fluid figure-img" alt="RLHF effect"></a></p>
 <figcaption>RLHF effect</figcaption></figure>
 </div>
 <p>In <span class="citation" data-cites="stiennon2020learning">Stiennon et al. (<a href="#ref-stiennon2020learning" role="doc-biblioref">2020</a>)</span>, the authors applied the method above to summary data, often referred to as TL;DR, and compared performance against earlier models. They found that models trained using human feedback performed slightly better than models that were only pretrained (blue) or additionally instruction-finetuned (green). They also observed that performance improved consistently as model size increased.</p>
 </section><section id="direct-preference-optimization-dpo" class="level2"><h2 class="anchored" data-anchor-id="direct-preference-optimization-dpo">Direct Preference Optimization (DPO)</h2>
 <p>As the performance of language models trained with RLHF became increasingly validated, the use of reinforcement learning in LLM training also became more common. The figure below shows a reinforcement learning framework introduced in <span class="citation" data-cites="zheng2023secrets">Zheng et al. (<a href="#ref-zheng2023secrets" role="doc-biblioref">2023</a>)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/35p_ppo_max.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/35p_ppo_max.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="PPO-max"><img src="./images/35p_ppo_max.png" class="img-fluid figure-img" alt="PPO-max"></a></p>
 <figcaption>PPO-max</figcaption></figure>
 </div>
 <p>In that paper, the authors proposed <strong>PPO-max</strong>, an improved version of PPO, the algorithm commonly used in RLHF, to more efficiently improve the stability of policy learning. In the lecture, however, the point was not the PPO-max method itself, but rather that as RL architectures were adapted to LLM training, the internal structure became increasingly complicated. For RL to work properly for LLMs, one must consider not only the language model and reward model, but also components such as a value function. As the figure suggests, the proposed framework includes a complex structure with two copies each of the SFT model, reward model, policy model, and value model. The lecturer mentioned that this example was included to emphasize how difficult it becomes to properly build these systems as scale increases, even if they can achieve strong performance.</p>
@@ -501,7 +503,7 @@ J_{\text{DPO}}(\theta) = - \mathbb{E}_{(x, {\color{green} y^{\text{win}}}, {\col
 \]</span></p>
 <p>Through this formulation, the model proposed in the paper uses preference data to distinguish good samples from bad ones via a classification loss, while also making the reward model and the language model to be trained share the same parameter set <span class="math inline">\(\theta\)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/39p_dpo_result.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/39p_dpo_result.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19" title="Experiment Result of DPO"><img src="./images/39p_dpo_result.png" class="img-fluid figure-img" alt="Experiment Result of DPO"></a></p>
 <figcaption>Experiment Result of DPO</figcaption></figure>
 </div>
 <p>When compared for performance against previously proposed baselines such as SFT, Preferred FT (PFT), and PPO-based RLHF, DPO showed strong performance despite its relatively simple formulation. More importantly, because it was made available as open source, most open-source LLMs—including Llama 3, Mistral, and Qwen—have adopted the DPO algorithm as a standard method for training on human preference data.</p>
@@ -511,7 +513,7 @@ J_{\text{DPO}}(\theta) = - \mathbb{E}_{(x, {\color{green} y^{\text{win}}}, {\col
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/tlOIHko8ySg?si=JTHINZqEyGRJ-dr0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>In fact, OpenAI shared a post in 2016 titled <a href="https://openai.com/index/faulty-reward-functions/">“Faulty reward functions in the wild”</a>, showing research results in which poorly designed reward functions led models to behave abnormally. The video above features a game called <em>CoastRunners</em>, where the goal is for the boat to reach the destination as quickly as possible. Along the way, the player gains points by touching certain objects. However, the trained model did not learn to reach the destination quickly. Instead, it repeatedly touched the score-giving objects, because that was the most effective way to maximize reward. Similar issues can arise in chatbots: if they are trained incorrectly, they may produce answers that receive high reward despite containing hallucinations or factual errors. The paper <span class="citation" data-cites="stiennon2020learning">Stiennon et al. (<a href="#ref-stiennon2020learning" role="doc-biblioref">2020</a>)</span>, mentioned earlier, also reported results related to this phenomenon.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/52p_over_optimization.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/52p_over_optimization.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Reward Model Over-optimization"><img src="./images/52p_over_optimization.png" class="img-fluid figure-img" alt="Reward Model Over-optimization"></a></p>
 <figcaption>Reward Model Over-optimization</figcaption></figure>
 </div>
 <p>The result above also shows that the reward predicted by the reward model does not necessarily match actual human preference. In fact, a kind of misalignment appears in which the reward model evaluates outputs favorably even when their distribution differs from that of the supervised baseline. This problem is one of the major themes currently being studied in earnest as LLMs become more widely used in practice. As a result, active research is ongoing in this area, and the first direction introduced in the lecture was <strong>Constitutional AI</strong> (<span class="citation" data-cites="bai2022constitutional">Bai et al. (<a href="#ref-bai2022constitutional" role="doc-biblioref">2022</a>)</span>), which had also been mentioned in a previous lecture. In that lecture, the paper was introduced from the perspective of RL from AI Feedback (RLAIF), where one AI evaluates and supervises another AI’s outputs using self-critiques and revised responses.</p>
@@ -1225,6 +1227,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

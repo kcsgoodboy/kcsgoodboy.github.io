@@ -53,6 +53,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script><link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -269,7 +271,7 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Reward_Learning_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/Reward_Learning_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Reward_Learning_overview.en.png" class="img-fluid"></a></p>
 </section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>In the previous lecture, we covered the concept of Offline Reinforcement Learning. Unlike Online RL, where learning happens through real-time interaction with the environment, the goal of Offline RL is to learn an ideal policy using only a fixed dataset, without collecting new data online. As in off-policy RL with a replay buffer, the challenge is to maximize the expected return of the learned policy (<span class="math inline">\(\pi_{\theta}\)</span>) even when the behavior policy (<span class="math inline">\(\pi_{\beta}\)</span>) that generated the data is unknown.</p>
 <p><span id="eq-off-policy-critic-objective"><span class="math display">\[
@@ -313,7 +315,7 @@ Note
 </div>
 <div id="fig-CQL" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-CQL-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/6p_naive_vs_conservative.png" class="img-fluid figure-img">
+<a href="./images/6p_naive_vs_conservative.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: Actual Q function vs. Conservative Q function"><img src="./images/6p_naive_vs_conservative.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CQL-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Actual Q function vs. Conservative Q function
@@ -322,7 +324,7 @@ Figure 1: Actual Q function vs. Conservative Q function
 <p><a href="#fig-CQL" class="quarto-xref">Figure 1</a> also illustrates that, unlike a standard Q-function that overestimates on OoD actions, a conservative Q-function keeps reasonable estimates within the action support while assigning lower values in OoD regions. The lecture also mentions an additional regularizer <span class="math inline">\(\mathcal{R}(\mu)\)</span>, typically defined using entropy, to broaden the action coverage of <span class="math inline">\(\mu\)</span>. With this regularizer, <span class="math inline">\(\mu(a \vert s) \propto \exp (Q(s, a))\)</span>, which simplifies the original <span class="math inline">\(\min_Q \max_{\mu}\)</span> form into a simpler objective depending only on <span class="math inline">\(Q\)</span>.</p>
 </section><section id="example-application-of-cql" class="level2"><h2 class="anchored" data-anchor-id="example-application-of-cql">Example Application of CQL</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/9p_CQL_application.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/9p_CQL_application.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Optimizing policy for sending notifications to users on LinkedIn"><img src="./images/9p_CQL_application.png" class="img-fluid figure-img" alt="Optimizing policy for sending notifications to users on LinkedIn"></a></p>
 <figcaption>Optimizing policy for sending notifications to users on LinkedIn</figcaption></figure>
 </div>
 <p>As an example of CQL in practice, the lecture introduced the KDD 2022 work by <span class="citation" data-cites="prabhakar2022multi">Prabhakar et al. (<a href="#ref-prabhakar2022multi" role="doc-biblioref">2022</a>)</span>, which applied Offline RL at LinkedIn to improve CTR (Click-Through Rate) and WAU (Weekly Active Users). In this setting, notifications can increase user engagement, but sending too many notifications also has costs and downsides. The task is therefore a multi-objective optimization problem.</p>
@@ -338,7 +340,7 @@ Figure 1: Actual Q function vs. Conservative Q function
 </section><section id="goal-classifiers" class="level2"><h2 class="anchored" data-anchor-id="goal-classifiers">Goal Classifiers</h2>
 <p>An easier alternative to directly learning a reward is to build a <strong>goal classifier</strong> that predicts whether the current state matches a desired goal state.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/15p_goal_classifier.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/15p_goal_classifier.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Example Task: put penscil case behind notebook"><img src="./images/15p_goal_classifier.png" class="img-fluid figure-img" alt="Example Task: put penscil case behind notebook"></a></p>
 <figcaption>Example Task: put penscil case behind notebook</figcaption></figure>
 </div>
 <p>The example in the lecture was a robot arm learning to place a pencil case behind a notebook.</p>
@@ -379,7 +381,7 @@ Figure 1: Actual Q function vs. Conservative Q function
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-gan" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-vqgan" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-vqgan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_vit_vqgan.png" class="img-fluid figure-img" data-ref-parent="fig-gan">
+<a href="./images/20p_vit_vqgan.png" class="lightbox" data-gallery="fig-gan" title="Figure 2 (a): “Yorkshire terrier” generated by VQ-GAN"><img src="./images/20p_vit_vqgan.png" class="img-fluid figure-img" data-ref-parent="fig-gan"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-vqgan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) “Yorkshire terrier” generated by VQ-GAN
@@ -389,7 +391,7 @@ Figure 1: Actual Q function vs. Conservative Q function
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-gan" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-phenaki" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-phenaki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_phenaki.png" class="img-fluid figure-img" data-ref-parent="fig-gan">
+<a href="./images/20p_phenaki.png" class="lightbox" data-gallery="fig-gan" title="Figure 2 (b): Phenaki video generation"><img src="./images/20p_phenaki.png" class="img-fluid figure-img" data-ref-parent="fig-gan"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-phenaki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Phenaki video generation
@@ -411,7 +413,7 @@ Figure 2
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-preference" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-how-good" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-how-good-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/23p_how.png" class="img-fluid figure-img" data-ref-parent="fig-preference">
+<a href="./images/23p_how.png" class="lightbox" data-gallery="fig-preference" title="Figure 3 (a): “How good is this trajectory?”"><img src="./images/23p_how.png" class="img-fluid figure-img" data-ref-parent="fig-preference"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-how-good-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) “How good is this trajectory?”
@@ -421,7 +423,7 @@ Figure 2
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-preference" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-which" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-which-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/23p_which.png" class="img-fluid figure-img" data-ref-parent="fig-preference">
+<a href="./images/23p_which.png" class="lightbox" data-gallery="fig-preference" title="Figure 3 (b): “Which trajectory is better?”"><img src="./images/23p_which.png" class="img-fluid figure-img" data-ref-parent="fig-preference"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-which-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) “Which trajectory is better?”
@@ -449,7 +451,7 @@ Figure 3
 \max_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}} [ \log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]
 \]</span></p>
 <p>The lecture then summarizes the full algorithm:</p>
-<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-line-number="true" data-line-number-punc=":" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="1" data-indent-size="1.2em">
+<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-no-end="false" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":" data-line-number="true" data-indent-size="1.2em" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Complete Reward Learning} \begin{algorithmic} \State Given dataset $\{\tau_i\}$, sample batches of $k$ trajectories and ask humans to rank. \State Compute $r_{\theta}(\tau_1), \dots, r_{\theta}(\tau_k)$ under current reward model $r_{\theta}$ \State For all $\big(\begin{smallmatrix}k \\ 2 \end{smallmatrix}\big)$ pairs per batch, compute $\nabla_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}}[\log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]$ where $\tau_{\text{win}} &gt; \tau_{\text{lose}}$ \State Update $\theta$ using computed gradient \State Repeat from 2 to 4 \end{algorithmic} \end{algorithm}
 </div>
@@ -461,7 +463,7 @@ Figure 3
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-human" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-backflip" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-backflip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/27p_humanfeedbackjump.gif" class="img-fluid figure-img" data-ref-parent="fig-human">
+<a href="./images/27p_humanfeedbackjump.gif" class="lightbox" data-gallery="fig-human" title="Figure 4 (a): Backflip"><img src="./images/27p_humanfeedbackjump.gif" class="img-fluid figure-img" data-ref-parent="fig-human"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-backflip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Backflip
@@ -471,7 +473,7 @@ Figure 3
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-human" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-active" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-active-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/27p_Active.png" class="img-fluid figure-img" data-ref-parent="fig-human">
+<a href="./images/27p_Active.png" class="lightbox" data-gallery="fig-human" title="Figure 4 (b): Active Preference-Based Learning"><img src="./images/27p_Active.png" class="img-fluid figure-img" data-ref-parent="fig-human"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-active-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Active Preference-Based Learning
@@ -483,7 +485,7 @@ Figure 3
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-human" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div id="fig-rlhf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/28p_rlhf.png" class="img-fluid figure-img" data-ref-parent="fig-human">
+<a href="./images/28p_rlhf.png" class="lightbox" data-gallery="fig-human" title="Figure 4 (c): RL from Human Feedback"><img src="./images/28p_rlhf.png" class="img-fluid figure-img" data-ref-parent="fig-human"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (c) RL from Human Feedback
@@ -499,18 +501,18 @@ Figure 4
 <p>The lecture introduced three major examples. <a href="#fig-backflip" class="quarto-xref">Figure 4 (a)</a> is the early work by <span class="citation" data-cites="christiano2017deep">Christiano et al. (<a href="#ref-christiano2017deep" role="doc-biblioref">2017</a>)</span>, one of the first demonstrations of using human preferences inside an online RL loop. According to the lecture, the approach used 900 human-labeled preference queries. Further details are described in OpenAI’s <a href="https://openai.com/index/learning-from-human-preferences/">Blog</a>. Another example is autonomous driving(<span class="citation" data-cites="Sadigh2017ActivePL">Sadigh et al. (<a href="#ref-Sadigh2017ActivePL" role="doc-biblioref">2017</a>)</span>), where it is difficult to define reward functions for all cases explicitly, so preferences over driving behavior can instead be collected and learned. The article also notes that the best-known modern example is <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>, where LLMs are trained from preference comparisons over prompt responses. This is the one of core technique for training InstructGPT, which is fine-tuned from GPT-3, <a href="https://openai.com/index/instruction-following/">Link</a> described that it is originated from <span class="citation" data-cites="christiano2017deep">Christiano et al. (<a href="#ref-christiano2017deep" role="doc-biblioref">2017</a>)</span>.</p>
 </section><section id="learning-rewards-from-humanai-feedback-for-llms" class="level3"><h3 class="anchored" data-anchor-id="learning-rewards-from-humanai-feedback-for-llms">Learning Rewards from Human/AI Feedback for LLMs</h3>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/29p_RL_for_LLM.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/29p_RL_for_LLM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="RL for LLMs"><img src="./images/29p_RL_for_LLM.png" class="img-fluid figure-img" alt="RL for LLMs"></a></p>
 <figcaption>RL for LLMs</figcaption></figure>
 </div>
 <p>Finally, the lecture explains how RL is used in training LLMs. First, a language model is trained through <strong>large-scale Pre-Training</strong>, usually by predicting the next token from large, general-purpose datasets. After that, <strong>supervised fine-tuning (SFT)</strong> is performed using a higher-quality dataset of prompt-response pairs aligned with user intent. Then <strong>RL from Human Feedback (RLHF)</strong> is applied.</p>
 <p>Viewed through the lens of reward learning, the final stage works as follows: collect human preference data over multiple responses to the same prompt, train a reward model <span class="math inline">\(r(x, y)\)</span> that scores the quality of a response for a given prompt, and then run reinforcement learning to maximize expected return under that reward. The lecture notes that <span class="citation" data-cites="ouyang2022training">Ouyang et al. (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span> used <strong>PPO</strong> for this step.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/30p_rlaif.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/30p_rlaif.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="RL from AI feedback"><img src="./images/30p_rlaif.png" class="img-fluid figure-img" alt="RL from AI feedback"></a></p>
 <figcaption>RL from AI feedback</figcaption></figure>
 </div>
 <p>At this point, we can also ask whether the preferences must come from humans at all. That leads to <strong>RL from AI Feedback (RLAIF)</strong>. The article mentions <strong>Constitutional AI</strong> by <span class="citation" data-cites="bai2022constitutional">Bai et al. (<a href="#ref-bai2022constitutional" role="doc-biblioref">2022</a>)</span>, where one LLM evaluates the outputs of another LLM. The lecture only touched on this briefly, but the main message was that when such techniques are combined with mechanisms like chain-of-thought (CoT), they can produce Pareto improvements over standard RLHF. I also have interests in this topic such as <strong>Motif</strong>(<span class="citation" data-cites="klissarov2023motif">Klissarov et al. (<a href="#ref-klissarov2023motif" role="doc-biblioref">2023</a>)</span>), which studies AI-generated feedback in RL environments like <a href="https://github.com/facebookresearch/nle">NetHack</a>, where an LLM evaluates player behavior and helps provide motivation-like reward signals.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/32p_unsupervised_RL.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/32p_unsupervised_RL.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Unsupervised RL"><img src="./images/32p_unsupervised_RL.png" class="img-fluid figure-img" alt="Unsupervised RL"></a></p>
 <figcaption>Unsupervised RL</figcaption></figure>
 </div>
 <p>The section ends by mentioning that even in the absence of explicit rewards or preferences, research on Unsupervised RL explores whether agents can still learn to reach meaningful goals. (<span class="citation" data-cites="sukhbaatar2017intrinsic">Sukhbaatar et al. (<a href="#ref-sukhbaatar2017intrinsic" role="doc-biblioref">2017</a>)</span>)</p>
@@ -1203,6 +1205,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script><script>videojs(video_shortcode_videojs_video1);</script><script>videojs(video_shortcode_videojs_video2);</script><script>videojs(video_shortcode_videojs_video3);</script>
+    </script><script>videojs(video_shortcode_videojs_video1);</script><script>videojs(video_shortcode_videojs_video2);</script><script>videojs(video_shortcode_videojs_video3);</script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

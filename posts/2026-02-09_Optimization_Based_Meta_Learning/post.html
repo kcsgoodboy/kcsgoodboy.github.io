@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -273,12 +275,12 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/optimization_based_meta_learning_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/optimization_based_meta_learning_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/optimization_based_meta_learning_overview.en.png" class="img-fluid"></a></p>
 </section><section id="problem-settings-recap" class="level2"><h2 class="anchored" data-anchor-id="problem-settings-recap">Problem Settings Recap</h2>
 <p>In previous lectures, we have covered a progression of methodologies: starting with <strong>Multi-task Learning</strong>, which solves multiple tasks <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_T\)</span> simultaneously; moving to <strong>Transfer Learning</strong>, where knowledge learned from a source task <span class="math inline">\(\mathcal{T}_a\)</span> is transferred to solve a target task <span class="math inline">\(\mathcal{T}_b\)</span>; and finally arriving at <strong>Meta Learning</strong>, which extends the source tasks to multiple instances to solve a new task <span class="math inline">\(\mathcal{T}_{test}\)</span> more quickly, accurately, and stably.</p>
 <div id="fig-example-meta-learning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-example-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/5p_example_meta_learning.png" class="img-fluid figure-img">
+<a href="./images/5p_example_meta_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: Example of Meta Learning Problem"><img src="./images/5p_example_meta_learning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-example-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Example of Meta Learning Problem
@@ -291,7 +293,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 \]</span></p>
 <p>This allows the black-box neural network to infer the task identity and make decisions solely based on the dataset information without requiring separate mechanisms, enabling a more expressive response tailored to the structure of the dataset. However, performance can degrade significantly when encountering Out-of-Distribution (OOD) tasks due to the heavy reliance on data. Additionally, challenges remain regarding optimization, such as selecting appropriate optimization techniques or hyperparameters depending on the specific problem. This leads us to the question: <strong>“Can we explicitly incorporate the optimization process into Meta-learning?”</strong> This is the core concept of <strong>Optimization-based Meta Learning</strong>, which we will cover in this post.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/16p_optimization_based_meta_learning.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/16p_optimization_based_meta_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Optimization-Based Adaptation"><img src="./images/16p_optimization_based_meta_learning.png" class="img-fluid figure-img" alt="Optimization-Based Adaptation"></a></p>
 <figcaption>Optimization-Based Adaptation</figcaption></figure>
 </div>
 <p>The major difference from the previously introduced black-box approach is that while we still learn from the dataset <span class="math inline">\(\mathcal{D}^{tr}\)</span> during meta-training, the goal is now to find an ideal set of initial meta-parameters <span class="math inline">\(\theta\)</span> by performing iterative gradient updates. Once these initial meta-parameters are established, we can fine-tune the model using new data <span class="math inline">\(x^{ts}\)</span> to achieve an optimal model. We have previously discussed the related concept of <strong>fine-tuning</strong>.</p>
@@ -302,7 +304,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p><strong>Fine-tuning</strong> is a process we have previously discussed, where we find a new parameter <span class="math inline">\(\phi\)</span> through repeated gradient updates on a given dataset, starting from a pre-trained model parameter <span class="math inline">\(\theta\)</span>. In Meta Learning, this process involves adapting to the specific task using the parameter <span class="math inline">\(\phi\)</span>, as shown in <a href="#eq-fine-tuning-meta-training" class="quarto-xref">Equation 1</a>, by learning from the examples in the training dataset (Support Set).</p>
 <div id="fig-ULMFit" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ULMFit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/17p_ULMFiT.png" class="img-fluid figure-img">
+<a href="./images/17p_ULMFiT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure 2: Universal Language Model Fine-Tuning"><img src="./images/17p_ULMFiT.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ULMFit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 2: Universal Language Model Fine-Tuning
@@ -325,7 +327,7 @@ Figure 2: Universal Language Model Fine-Tuning
 <p>The implication of <a href="#eq-outer-loop-meta-learning" class="quarto-xref">Equation 2</a> is that the ultimate model parameters are updated using the loss calculated from the unseen data <span class="math inline">\(\mathcal{D}^{ts}_i\)</span>, based on the <span class="math inline">\(\phi_i\)</span> derived earlier. The core idea is to find a meta-parameter <span class="math inline">\(\theta\)</span> that yields high performance when transferred via fine-tuning across multiple given tasks. The professor introduced this concept as the <strong>Model-Agnostic Meta-Learning (MAML)</strong> algorithm.</p>
 <div id="fig-MAML" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-MAML-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/19p_MAML.png" class="img-fluid figure-img">
+<a href="./images/19p_MAML.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure 3: Model-Agnostic Meta-Learning(MAML)"><img src="./images/19p_MAML.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-MAML-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 3: Model-Agnostic Meta-Learning(MAML)
@@ -335,7 +337,7 @@ Figure 3: Model-Agnostic Meta-Learning(MAML)
 <p>Regarding the algorithm’s name, <strong>Model-Agnostic</strong> stems from the fact that the update process relies entirely on the model’s gradients, without being tied to specific model architectures like RNNs or Transformers, which were not the focus of this lecture section. In other words, the focus is placed solely on the optimization process described in the lecture, independent of the model architecture.</p>
 <p>Additionally, she introduced a paper (<span class="citation" data-cites="kim2018auto">Kim et al. (<a href="#ref-kim2018auto" role="doc-biblioref">2018</a>)</span>) that explores searching for model architectures optimized for MAML. This research shared results from applying Neural Architecture Search (NAS), an AutoML-based method, to find structures optimized for MAML that facilitate fast adaptation. When comparing MAML results on MiniImageNet using basic model structures versus those optimized via NAS, accuracy improved by approximately 11%. An interesting finding was that, contrary to the general belief in deep learning that wide model structures perform better, the models identified by NAS as optimized for Meta Learning were <strong>deep &amp; narrow</strong>. In other words, this suggests that for the Meta Learning tasks discussed in the lecture, structures that differ from conventional wisdom may actually be more advantageous for adaptation.</p>
 <p>The Optimization-Based Adaptation discussed so far can be formalized as an algorithm as follows.</p>
-<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-indent-size="1.2em" data-no-end="false" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number="true" data-comment-delimiter="//" data-line-number-punc=":">
+<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-pseudocode-number="1" data-line-number="true" data-caption-prefix="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Optimization-Based Adaptation} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}^{tr}_i, \mathcal{D}^{ts}_i$ from $\mathcal{D}_i$ \State Optimize $\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)$ \State Update $\theta$ using $\nabla_{\theta} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -408,7 +410,7 @@ Note
 <p>In fact, while we explicitly distinguished between the two forms, the lecture also introduced the possibility of conceiving new algorithms that leverage the characteristics of both (Mix &amp; Match) when viewed from the perspective of a computation graph. For instance, instead of simply using Gradient Descent, a method involves inserting a neural network that decides how to update parameters, thereby learning the update rule itself (<span class="math inline">\(\phi_i = \theta - \alpha f(\theta, \mathcal{D}^{tr}_i, \nabla_{\theta}\mathcal{L})\)</span>), which appeared in a follow-up paper to MAML (<span class="citation" data-cites="ravi2017optimization">Ravi and Larochelle (<a href="#ref-ravi2017optimization" role="doc-biblioref">2017</a>)</span>). It was noted that this perspective of viewing through a computation graph would be covered in detail in future lectures.</p>
 <div id="fig-omniglot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/25p_omniglot_image_classification.png" class="img-fluid figure-img">
+<a href="./images/25p_omniglot_image_classification.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure 4: Omniglot Image Classification"><img src="./images/25p_omniglot_image_classification.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: Omniglot Image Classification
@@ -450,7 +452,7 @@ Note
 </section></section><section id="case-study---meta-learning-for-few-shot-land-cover-classification" class="level2"><h2 class="anchored" data-anchor-id="case-study---meta-learning-for-few-shot-land-cover-classification">Case Study - Meta-Learning for Few-Shot Land Cover Classification</h2>
 <p>In the final section on Case Studies, the lecture introduced an application of Meta Learning for Few-shot Land Cover Classification, presented at the <a href="https://www.grss-ieee.org/wp-content/uploads/earthvision2020/">EarthVision Workshop</a> during CVPR 2020 (<span class="citation" data-cites="Russwurm_2020_CVPR_Workshops">Russwurm et al. (<a href="#ref-Russwurm_2020_CVPR_Workshops" role="doc-biblioref">2020</a>)</span>).</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/33p_land_cover_classification.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/33p_land_cover_classification.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Land Cover Classification"><img src="./images/33p_land_cover_classification.png" class="img-fluid figure-img" alt="Land Cover Classification"></a></p>
 <figcaption>Land Cover Classification</figcaption></figure>
 </div>
 <p>The problem addressed in this paper was to classify satellite imagery into categories such as Urban or Agriculture using public datasets like SEN12MS (<span class="citation" data-cites="schmitt2019sen12ms">Schmitt et al. (<a href="#ref-schmitt2019sen12ms" role="doc-biblioref">2019</a>)</span>) and DeepGlobe (<span class="citation" data-cites="demir2018deepglobe">Demir et al. (<a href="#ref-demir2018deepglobe" role="doc-biblioref">2018</a>)</span>). However, utilizing these datasets in practice presents realistic challenges. Since satellite images are used directly, the process of labeling each pixel to indicate land type is both costly and time-consuming. Furthermore, the appearance of land varies across different regions of the world, leading to statistical <strong>Distribution Shift</strong>.</p>
@@ -461,7 +463,7 @@ Note
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-SEN12MS" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/35p_sen12ms.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+<a href="./images/35p_sen12ms.png" class="lightbox" data-gallery="fig-datasets" title="Figure 5 (a): SEN12MS"><img src="./images/35p_sen12ms.png" class="img-fluid figure-img" data-ref-parent="fig-datasets"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) SEN12MS
@@ -471,7 +473,7 @@ Note
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-DeepGlobe" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/36p_deepglobe.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+<a href="./images/36p_deepglobe.png" class="lightbox" data-gallery="fig-datasets" title="Figure 5 (b): DeepGlobe"><img src="./images/36p_deepglobe.png" class="img-fluid figure-img" data-ref-parent="fig-datasets"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) DeepGlobe
@@ -505,7 +507,7 @@ Figure 5
 <p>The results are shown in <a href="#fig-results" class="quarto-xref">Figure 6</a>.</p>
 <div id="fig-results" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/37p_result_meta_learning.png" class="img-fluid figure-img">
+<a href="./images/37p_result_meta_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure 6: result of meta learning"><img src="./images/37p_result_meta_learning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 6: result of meta learning
@@ -1224,6 +1226,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

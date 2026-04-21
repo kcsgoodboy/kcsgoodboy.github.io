@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
 <script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script><link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -268,7 +270,7 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Reward_Learning_overview.ko.png" class="img-fluid"></p>
+<p><a href="./images/Reward_Learning_overview.ko.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Reward_Learning_overview.ko.png" class="img-fluid"></a></p>
 </section><section id="recap" class="level2"><h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p>이전 강의를 통해서 Offline RL 이라는 개념에 대해서 다뤘다. 환경과의 실시간 interaction을 통한 학습이 이뤄지는 Online RL과는 다르게, Offline RL에서는 online data collection이 없는 상태에서 주어진 데이터셋만으로 이상적인 policy를 학습시키는 것이 목적이다. 이 때 replay buffer를 쓰는 Off-policy RL에서도 다뤄졌던 내용처럼, 실제 데이터를 수집했을 때 사용한 policy (<span class="math inline">\(= \text{behavior policy} \quad \pi_{\beta}\)</span>) 에 대한 정보를 모르는 상태에서, 해당 policy들을 통해 수집된 데이터를 바탕으로 실제 학습될 policy <span class="math inline">\(\pi_{\theta}\)</span> 의 expected return을 최대화할 수 있어야 한다.</p>
 <p><span id="eq-off-policy-critic-objective"><span class="math display">\[
@@ -312,7 +314,7 @@ window.Quarto = {
 </div>
 <div id="fig-CQL" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-CQL-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/6p_naive_vs_conservative.png" class="img-fluid figure-img">
+<a href="./images/6p_naive_vs_conservative.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="그림 1: Actual Q function vs. Conservative Q function"><img src="./images/6p_naive_vs_conservative.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CQL-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 1: Actual Q function vs. Conservative Q function
@@ -329,7 +331,7 @@ window.Quarto = {
 \]</span></p>
 </section><section id="example-application-of-cql" class="level2"><h2 class="anchored" data-anchor-id="example-application-of-cql">Example Application of CQL</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/9p_CQL_application.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/9p_CQL_application.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Optimizing policy for sending notifications to users on LinkedIn"><img src="./images/9p_CQL_application.png" class="img-fluid figure-img" alt="Optimizing policy for sending notifications to users on LinkedIn"></a></p>
 <figcaption>Optimizing policy for sending notifications to users on LinkedIn</figcaption></figure>
 </div>
 <p>CQL이 적용된 사례로 KDD ’22에 소개된 <span class="citation" data-cites="prabhakar2022multi">Prabhakar 기타 (<a href="#ref-prabhakar2022multi" role="doc-biblioref">2022</a>)</span> 에 대한 예시를 공유했다. 해당 논문에서는 LinkedIn에서 CTR(Click-Through-Rate)와 WAU(Weekly-Active-User)를 늘리기 위해 Offline RL을 사용한 사례를 공유했다. 보통 CTR과 WAU는 IT 서비스에서 주로 활용되는 KPI 중 하나로, 일반적으로는 어떤 서비스에 대해서 Notification이 가면, 사용자가 이에 반응해 해당 서비스를 이용하는 형태로 되어 있다. 물론 Notification을 많이 줄수록 사용자의 접근성이 늘겠지만, 이에 대한 비용이나 단점도 고려해야 되기 때문에 모든 요소를 고려한 적절한 점을 찾아야 하는 것이 목적(Multi-objective)이다. 그래서 논문의 저자들은 기존에 구현되어 있던 baseline(<span class="citation" data-cites="10.1145/3488560.3510017">Muralidharan (<a href="#ref-10.1145/3488560.3510017" role="doc-biblioref">2022</a>)</span>) 과 Online RL 알고리즘인 Double DQN(DDQN), 그리고 앞에서 언급한 CQL을 결합했을 때의 결과를 Online A/B 테스트를 통해서 뽑고 성능을 비교하였다. 이 결과 단순하게 DDQN을 적용했을때는 WAU와 CTR이 줄어들면서 notification이 많아지는 안 좋은 방향으로 학습이 되었지만, DDQN과 CQL Loss가 결합된 형태는 모든 지표에서 성능이 개선되는 결과를 확인할 수 있었다.</p>
@@ -343,7 +345,7 @@ window.Quarto = {
 </section><section id="goal-classifiers" class="level2"><h2 class="anchored" data-anchor-id="goal-classifiers">Goal Classifiers</h2>
 <p>Reward를 직접적으로 학습하는 방법보다 조금더 쉽게 접근할 수 있는 방법은 현재 주어진 상태를 통해서 목표 상태를 분류하는 <strong>Goal Classifier</strong>를 만드는 것이다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/15p_goal_classifier.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/15p_goal_classifier.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Example Task: put penscil case behind notebook"><img src="./images/15p_goal_classifier.png" class="img-fluid figure-img" alt="Example Task: put penscil case behind notebook"></a></p>
 <figcaption>Example Task: put penscil case behind notebook</figcaption></figure>
 </div>
 <p>위의 그림은 Goal Classifier의 동작원리를 소개한 그림이다. 큰 과정으로 나눠서 살펴보면</p>
@@ -386,7 +388,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-gan" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-vqgan" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-vqgan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_vit_vqgan.png" class="img-fluid figure-img" data-ref-parent="fig-gan">
+<a href="./images/20p_vit_vqgan.png" class="lightbox" data-gallery="fig-gan" title="그림 2 (a): “Yorkshire terrier” generated by VQ-GAN"><img src="./images/20p_vit_vqgan.png" class="img-fluid figure-img" data-ref-parent="fig-gan"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-vqgan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) “Yorkshire terrier” generated by VQ-GAN
@@ -396,7 +398,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-gan" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-phenaki" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-phenaki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_phenaki.png" class="img-fluid figure-img" data-ref-parent="fig-gan">
+<a href="./images/20p_phenaki.png" class="lightbox" data-gallery="fig-gan" title="그림 2 (b): Phenaki video generation"><img src="./images/20p_phenaki.png" class="img-fluid figure-img" data-ref-parent="fig-gan"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-phenaki-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Phenaki video generation
@@ -419,7 +421,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-preference" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-how-good" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-how-good-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/23p_how.png" class="img-fluid figure-img" data-ref-parent="fig-preference">
+<a href="./images/23p_how.png" class="lightbox" data-gallery="fig-preference" title="그림 3 (a): “How good is this trajectory?”"><img src="./images/23p_how.png" class="img-fluid figure-img" data-ref-parent="fig-preference"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-how-good-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) “How good is this trajectory?”
@@ -429,7 +431,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-preference" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-which" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-which-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/23p_which.png" class="img-fluid figure-img" data-ref-parent="fig-preference">
+<a href="./images/23p_which.png" class="lightbox" data-gallery="fig-preference" title="그림 3 (b): “Which trajectory is better?”"><img src="./images/23p_which.png" class="img-fluid figure-img" data-ref-parent="fig-preference"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-which-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) “Which trajectory is better?”
@@ -457,7 +459,7 @@ window.Quarto = {
 \max_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}} [ \log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]
 \]</span></p>
 <p>이렇게 선호도에 기반한 reward function 을 학습시키는, <strong>reward learning</strong> 의 동작은 다음과 같이 표현된다.</p>
-<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-line-number="true" data-no-end="false">
+<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-line-number="true" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-no-end="false" data-line-number-punc=":" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Complete Reward Learning} \begin{algorithmic} \State Given dataset $\{\tau_i\}$, sample batches of $k$ trajectories and ask humans to rank. \State Compute $r_{\theta}(\tau_1), \dots, r_{\theta}(\tau_k)$ under current reward model $r_{\theta}$ \State For all $\big(\begin{smallmatrix}k \\ 2 \end{smallmatrix}\big)$ pairs per batch, compute $\nabla_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}}[\log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]$ where $\tau_{\text{win}} &gt; \tau_{\text{lose}}$ \State Update $\theta$ using computed gradient \State Repeat from 2 to 4 \end{algorithmic} \end{algorithm}
 </div>
@@ -470,7 +472,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-human" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-backflip" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-backflip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/27p_humanfeedbackjump.gif" class="img-fluid figure-img" data-ref-parent="fig-human">
+<a href="./images/27p_humanfeedbackjump.gif" class="lightbox" data-gallery="fig-human" title="그림 4 (a): Backflip"><img src="./images/27p_humanfeedbackjump.gif" class="img-fluid figure-img" data-ref-parent="fig-human"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-backflip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Backflip
@@ -480,7 +482,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-human" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-active" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-active-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/27p_Active.png" class="img-fluid figure-img" data-ref-parent="fig-human">
+<a href="./images/27p_Active.png" class="lightbox" data-gallery="fig-human" title="그림 4 (b): Active Preference-Based Learning"><img src="./images/27p_Active.png" class="img-fluid figure-img" data-ref-parent="fig-human"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-active-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Active Preference-Based Learning
@@ -492,7 +494,7 @@ window.Quarto = {
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-human" style="flex-basis: 100.0%;justify-content: flex-start;">
 <div id="fig-rlhf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/28p_rlhf.png" class="img-fluid figure-img" data-ref-parent="fig-human">
+<a href="./images/28p_rlhf.png" class="lightbox" data-gallery="fig-human" title="그림 4 (c): RL from Human Feedback"><img src="./images/28p_rlhf.png" class="img-fluid figure-img" data-ref-parent="fig-human"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-rlhf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (c) RL from Human Feedback
@@ -509,18 +511,18 @@ window.Quarto = {
 <p>사실 사람들에게 많이 알려져있는 사례는 <a href="#fig-rlhf" class="quarto-xref">그림 4 (c)</a> 와 같이 Prompt에 대한 Preference를 활용하여 LLM을 학습시키는 방법일 것이다. <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>(<span class="citation" data-cites="ouyang2022training">Ouyang 기타 (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span>) 란 이름으로 소개된 이 기법은 GPT-3를 Fine-tuning한 InstructGPT를 학습시킨 핵심 기술 중 하나이며,<a href="https://openai.com/index/instruction-following/">링크</a>에서도 해당 기술이 앞에서 소개한 <span class="citation" data-cites="christiano2017deep">Christiano 기타 (<a href="#ref-christiano2017deep" role="doc-biblioref">2017</a>)</span> 에서 발전된 내용임을 밝히고 있다.</p>
 </section><section id="learning-rewards-from-humanai-feedback-for-llms" class="level3"><h3 class="anchored" data-anchor-id="learning-rewards-from-humanai-feedback-for-llms">Learning Rewards from Human/AI Feedback for LLMs</h3>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/29p_RL_for_LLM.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/29p_RL_for_LLM.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="RL for LLMs"><img src="./images/29p_RL_for_LLM.png" class="img-fluid figure-img" alt="RL for LLMs"></a></p>
 <figcaption>RL for LLMs</figcaption></figure>
 </div>
 <p>마지막으로 앞에서 소개한 LLM을 학습시키는데 있어 강화학습을 활용하는 과정을 소개했다. 우선 주어진 데이터셋을 통해서 초기의 Language Model을 학습시키는 <strong>Large-scale Pre-Training</strong>을 수행한다. 이때는 보통 어떤 단어나 문맥이 주어졌을때 다음 token이 뭔지를 예측하는 형태의 학습이 이뤄지고, 주어진 데이터셋 역시 정제된 데이터가 아닌, 일반적인 형태대로 학습에 활용된다. 이후 Language Model이 학습되면, 추가로 주어진 prompt에 대한 사용자가 원하는 response를 pair로 한 고품질의 데이터셋을 확보하여 <strong>Supervised Fine-Tuning(SFT)</strong>를 수행한다. 그러고 나서 바로 앞에서 설명한 <strong>RL from Human Feedback</strong>을 수행한다.</p>
 <p>이때 마지막 단계를 오늘 다룬 내용과 맞춰서 살펴보면 우선은 주어진 데이터에 대해서 사람의 선호도가 반영된 데이터를 확보한다. 이를테면 어떤 prompt가 주어졌을 때, LLM이 출력한 서로 다른 두개의 response 중에서 사람이 어떤 response가 더 좋은지를 선정하는 것이다.(<strong>Gather preference data</strong>) 이렇게 확보된 데이터를 바탕으로 주어진 prompt에 대해서 response의 좋은 정도를 나타낼 reward model <span class="math inline">\(r(x, y)\)</span> 를 학습하고(<strong>Train reward model</strong>), 이 reward function을 활용하여 expected return을 최대화할 수 있는 강화학습을 수행해서 모델을 fine-tuning을 할 수 있게 된다. (<span class="citation" data-cites="ouyang2022training">Ouyang 기타 (<a href="#ref-ouyang2022training" role="doc-biblioref">2022</a>)</span> 논문에서는 PPO를 사용했다고 알려져 있다.)</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/30p_rlaif.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/30p_rlaif.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="RL from AI feedback"><img src="./images/30p_rlaif.png" class="img-fluid figure-img" alt="RL from AI feedback"></a></p>
 <figcaption>RL from AI feedback</figcaption></figure>
 </div>
 <p>사실 이쯤되면 preference를 human이 아닌 AI가 주는 방법에 대해서 고민해볼 수 있고, 이에 대한 내용은 <strong>RL from AI Feedback(RLAIF)</strong>라는 주제로 연구가 이뤄지고 있다. <strong>Constitutional RL</strong>(<span class="citation" data-cites="bai2022constitutional">Bai 기타 (<a href="#ref-bai2022constitutional" role="doc-biblioref">2022</a>)</span>) 이라 표현된 이 논문에서는 LLM이 출력한 결과에 대해서 또다른 LLM이 어떻게 평가하는지에 대해서 연구한 내용을 소개했다. 강의에서는 간단하게 소개했지만, 핵심 내용은 일반적인 RLHF를 통한 모델 성능 개선보다 LLM내의 Chain-of-Thought (CoT) 같은 기술이 연계되면 조금더 성능을 끌어올 수 있다는 Pareto Improvement 결과를 보여주었다. 개인적으로도 ideation 중 해당 기술을 활용해보려고 찾다보니 <strong>Motif</strong>(<span class="citation" data-cites="klissarov2023motif">Klissarov 기타 (<a href="#ref-klissarov2023motif" role="doc-biblioref">2023</a>)</span>) 라는 논문도 찾았었다. 해당 논문에서는 <a href="https://github.com/facebookresearch/nle">NetHack</a> 이란 일종의 강화학습 환경에서 게이머의 행동에 대한 평가를 LLM이 하고, 이를 통해 Reward Model을 활용하면서 일종의 Motivation을 유발한다는 내용인데, 관심이 있으면 읽어보면 좋을것 같다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/32p_unsupervised_RL.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/32p_unsupervised_RL.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Unsupervised RL"><img src="./images/32p_unsupervised_RL.png" class="img-fluid figure-img" alt="Unsupervised RL"></a></p>
 <figcaption>Unsupervised RL</figcaption></figure>
 </div>
 <p>또한 이런 reward나 preference가 없는 상태(no supervision)에서도 모델이 원하는 목적까지 도달할 수 있는지에 대한 연구도 <strong>Unsupervised RL</strong>이란 주제로 활발히 진행되고 있다. (<span class="citation" data-cites="sukhbaatar2017intrinsic">Sukhbaatar 기타 (<a href="#ref-sukhbaatar2017intrinsic" role="doc-biblioref">2017</a>)</span>)</p>
@@ -1212,6 +1214,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script><script>videojs(video_shortcode_videojs_video1);</script><script>videojs(video_shortcode_videojs_video2);</script><script>videojs(video_shortcode_videojs_video3);</script>
+    </script><script>videojs(video_shortcode_videojs_video1);</script><script>videojs(video_shortcode_videojs_video2);</script><script>videojs(video_shortcode_videojs_video3);</script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

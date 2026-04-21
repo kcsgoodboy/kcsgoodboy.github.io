@@ -51,6 +51,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -269,12 +271,12 @@ window.Quarto = {
 </div>
 <p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Actor_Critic_Methods_overview.ko.png" class="img-fluid"></p>
+<p><a href="./images/Actor_Critic_Methods_overview.ko.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Actor_Critic_Methods_overview.ko.png" class="img-fluid"></a></p>
 </section><section id="value-function-q-function" class="level2"><h2 class="anchored" data-anchor-id="value-function-q-function">Value function &amp; Q function</h2>
 <p>Actor-Critic Methods를 다루기에 앞서서 가장 먼저 정의되어야 할 개념은 과연 우리한테 주어져 있는 환경상에서의 가치(Value)를 어떻게 정의하고 측정할 수 있느냐 하는 점이다. 그래서 강화학습에서 다뤄지는 세가지 핵심 개념인 <strong>Value function</strong> <span class="math inline">\(V\)</span> 과 <strong>Q-function</strong> <span class="math inline">\(Q\)</span>, 그리고 <strong>Advantage function</strong> <span class="math inline">\(A\)</span> 에 대해서 먼저 설명해보고자 한다.</p>
 <div id="fig-VQ" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/6p_VQ.png" class="img-fluid figure-img">
+<a href="./images/6p_VQ.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="그림 1: Value function &amp; Q function"><img src="./images/6p_VQ.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 1: Value function &amp; Q function
@@ -299,7 +301,7 @@ A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 <p>이해를 쉽게 하기 위해서 악기를 연주하는 방법을 학습하는 과정에 대해서 앞의 notation을 적용하는 것을 예시로 제공했다.</p>
 <div id="fig-example" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/7p_example.png" class="img-fluid figure-img">
+<a href="./images/7p_example.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="그림 2: example"><img src="./images/7p_example.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 2: example
@@ -322,7 +324,7 @@ A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-robot-trajectory" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-robot-walking" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-robot-walking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_robot-walking.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory">
+<a href="./images/8p_robot-walking.png" class="lightbox" data-gallery="fig-robot-trajectory" title="그림 3 (a): Robot Walking Example"><img src="./images/8p_robot-walking.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-robot-walking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Robot Walking Example
@@ -332,7 +334,7 @@ A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-robot-trajectory" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-robot-folding" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-robot-folding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_robot_folding.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory">
+<a href="./images/8p_robot_folding.png" class="lightbox" data-gallery="fig-robot-trajectory" title="그림 3 (b): Robot Folding Example"><img src="./images/8p_robot_folding.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-robot-folding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Robot Folding Example
@@ -353,7 +355,7 @@ A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 </section><section id="improving-policy-gradient" class="level2"><h2 class="anchored" data-anchor-id="improving-policy-gradient">Improving Policy Gradient</h2>
 <div id="fig-monte-carlo-return" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/9p_monte_carlo_return.png" class="img-fluid figure-img">
+<a href="./images/9p_monte_carlo_return.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="그림 4: Monte Carlo Return"><img src="./images/9p_monte_carlo_return.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 4: Monte Carlo Return
@@ -375,7 +377,7 @@ A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 <p>결과적으로 advantage function <span class="math inline">\(A^{\pi}\)</span> 를 잘 추정하면 policy gradient시 필요한 gradient의 variance를 줄일 수 있다는 결론이 난다.</p>
 </section><section id="how-to-estimate-the-value-of-a-policy" class="level2"><h2 class="anchored" data-anchor-id="how-to-estimate-the-value-of-a-policy">How to estimate the value of a policy</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/12p_policy_gradient.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/12p_policy_gradient.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Policy Gradient"><img src="./images/12p_policy_gradient.png" class="img-fluid figure-img" alt="Policy Gradient"></a></p>
 <figcaption>Policy Gradient</figcaption></figure>
 </div>
 <p>지금까지의 결론은 policy gradient를 위해서는 value function (<span class="math inline">\(V^{\pi}, Q^{\pi}\)</span>)과 advantage function <span class="math inline">\(A^{\pi}\)</span> 를 잘 추정하고, 이때 계산한 값을 기반으로 policy를 improve시켜야 한다는 것이었다. 사실 advantage function을 계산하기 위해서는 <span class="math inline">\(V^{\pi}\)</span> 와 <span class="math inline">\(Q^{\pi}\)</span> 를 알아야 한다. 그리고 더 고민해보면 Q-function도 value function으로 표현할 수 있다는 것을 확인할 수 있다.</p>
@@ -446,7 +448,7 @@ A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 <p>두 방법의 큰 차이라면 실제 trajectory를 통해 쌓은 reward를 쓰느냐, 아니면, value function이라는 평균값을 사용하느냐 이다. 강의에서는 예시 <a href="#fig-value-function-estimation" class="quarto-xref">그림 5</a> 를 통해서 이 둘의 차이를 조금 더 쉽게 설명하고자 했다.</p>
 <div id="fig-value-function-estimation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/19p_value-function-estimation.png" class="img-fluid figure-img">
+<a href="./images/19p_value-function-estimation.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="그림 5: Example of MC vs. Bootstrapping"><img src="./images/19p_value-function-estimation.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 5: Example of MC vs. Bootstrapping
@@ -460,7 +462,7 @@ A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 <p>그래서 다음으로 설명한 내용이 Monte Carlo 방식의 unbiased한 특성과 Bootstrapping 방식의 low variance 특성을 조합한, N-step returns를 사용해서 value function을 추정하는 것에 대해서 설명했다.</p>
 <div id="fig-n-step-returns" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_N-step-returns.png" class="img-fluid figure-img">
+<a href="./images/20p_N-step-returns.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="그림 6: N-step returns"><img src="./images/20p_N-step-returns.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 6: N-step returns
@@ -479,7 +481,7 @@ A^{\pi}(s_t, a_t) \approx r(s_t, a_t) + V^{\pi}(s_{t+1}) - V^{\pi}(s_t)
 <p>강의에서는 N-step과 관련하여 <strong>discount factor</strong> 부분에서도 살펴볼만한 내용에 대해서 언급하고 있었다. 보통 <span class="math inline">\(\gamma\)</span> 로 표기되는 discount factor는 일반적으로는 미래에 얻을 수 있는 가치의 비중을 낮추는 수학적인 도구로 알고 있다. 만약 에피소드의 길이가 무한하거나 매우 길 때, 미래의 가치를 그대로 다 더하면 추정치가 무한대로 커질 수 있기 때문에 가까운 미래에 대한 가중치는 크게 주고, 먼 미래의 보상치는 가중치를 적게 주는 방식(<span class="math inline">\(r_t + \gamma t_1 + \gamma^2 t_2 \dots\)</span>)을 도입해서 합계가 수렴하도록 만든다.</p>
 <div id="fig-probability-of-death" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_probability-of-death.png" class="img-fluid figure-img">
+<a href="./images/21p_probability-of-death.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="그림 7: Probability of Death"><img src="./images/21p_probability-of-death.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 7: Probability of Death
@@ -1145,6 +1147,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

@@ -51,6 +51,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -273,12 +275,12 @@ window.Quarto = {
 </div>
 <p>포스트에 소개되어 있는 자료는 강의 자료에서 따왔습니다.</p>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/optimization_based_meta_learning_overview.ko.png" class="img-fluid"></p>
+<p><a href="./images/optimization_based_meta_learning_overview.ko.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/optimization_based_meta_learning_overview.ko.png" class="img-fluid"></a></p>
 </section><section id="problem-settings-recap" class="level2"><h2 class="anchored" data-anchor-id="problem-settings-recap">Problem Settings Recap</h2>
 <p>이전 강의부터 쭉 다루고 있는 내용은 여러 개의 task <span class="math inline">\(\mathcal{T}_1, \dots, \mathcal{T}_T\)</span> 에 대해서 한번에 푸는 <strong>Multi-task Learning</strong> 부터 시작해서, 어떤 source task <span class="math inline">\(\mathcal{T}_a\)</span> 에서 학습한 지식을 전이하는 방식으로 target task <span class="math inline">\(\mathcal{T}_b\)</span> 를 해결하는 <strong>Transfer Learning</strong>, 결과적으로 Transfer Learning의 source task를 여러개로 확장시켜, 새로운 task <span class="math inline">\(\mathcal{T}_{test}\)</span> 를 조금 더 빠르고, 정확하고, 안정적으로 해결하는 <strong>Meta Learning</strong> 방법론에 대해서 다뤘다.</p>
 <div id="fig-example-meta-learning" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-example-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/5p_example_meta_learning.png" class="img-fluid figure-img">
+<a href="./images/5p_example_meta_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="그림 1: Example of Meta Learning Problem"><img src="./images/5p_example_meta_learning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-example-meta-learning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 1: Example of Meta Learning Problem
@@ -286,7 +288,7 @@ window.Quarto = {
 </div>
 <p>Meta Learning에서 가장 흔하게 다루는 예시 중 하나인 이미지 분류 문제 (<a href="#fig-example-meta-learning" class="quarto-xref">그림 1</a>) 도 소개했다. 해당 예시에서는 MiniImageNet이란 데이터셋에서 클래스당 1개의 이미지만 가지고 5개의 클래스를 분류하는 5-way, 1-shot image classification 문제를 해결하는 것이었고, 이를 해결하기 위한 내부 process로 <strong>meta-training</strong>과 <strong>meta-test</strong> 라는 과정을 소개했다. meta-test 단계에서 새로운 task로 주어질 이미지를 분류하기 위해서, meta-training 단계에서 주어진 동일한 문제 형태(5-way, 1-shot) 형태로 모델에게 학습시켜 모델이 이미지 자체에 대한 학습이 아닌, 이미지를 분류하는 방법 자체를 빠르게 학습시키는 것이 목적이 되겠다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/6p_black_box_meta_learning.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/6p_black_box_meta_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Black-Box Adaptation"><img src="./images/6p_black_box_meta_learning.png" class="img-fluid figure-img" alt="Black-Box Adaptation"></a></p>
 <figcaption>Black-Box Adaptation</figcaption></figure>
 </div>
 <p>그래서 지난 강의에서 다룬 내용은 Meta Learning 기법 중 하나인 <strong>Black-box Adaptation</strong>, 즉 이렇게 Task를 학습하는 것 자체를 black-box 형태의 신경망 (<span class="math inline">\(\phi_i\)</span>) 에게 주입해서 학습시키는 방식이었다. 그래서 meta-training시 사용되는 데이터셋 <span class="math inline">\(\mathcal{D}_i^{tr}\)</span> 에서 유의미한 context를 뽑던, 데이터셋 자체를 바로 넣어서 모델을 학습시키고 난 후, 실제로 새로운 이미지 (<span class="math inline">\(x^{ts}\)</span>)가 주어졌을때, 이에 해당하는 label을 추론하는 방식으로 된다. 일반적인 문제 형태는 다음과 같이 정의된다.</p>
@@ -295,7 +297,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 \]</span></p>
 <p>이렇게 하면 별도의 장치없이 데이터셋의 정보만으로 어떤 Task인지 추론하고, 이에 대한 판단을 black-box 신경망이 하게 되므로 데이터셋의 형태에 따라 조금 더 표현적으로 대응할 수 있다. 하지만 기존에 학습되지 않은 새로운 유형(Out-of-Distribution)의 task가 나오면 데이터에 의존하는 특성상 성능이 급격히 떨어질 수 있고, 문제에 따라서 적용할 수 있는 최적화 기법의 종류나 hyperparameter 같은 최적화 문제가 남아있기는 하다. 그러면 여기서 던질 수 있는 질문은, <strong>“최적화 문제도 Meta-learning안에 직접 포함시킬 수 있지 않을까?”</strong> 이 내용이 이번 포스트에서 다룰 <strong>Optimization-based Meta Learning</strong> 의 핵심적인 내용이다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/16p_optimization_based_meta_learning.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/16p_optimization_based_meta_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Optimization-Based Adaptation"><img src="./images/16p_optimization_based_meta_learning.png" class="img-fluid figure-img" alt="Optimization-Based Adaptation"></a></p>
 <figcaption>Optimization-Based Adaptation</figcaption></figure>
 </div>
 <p>기존에 소개했던 black-box 방식과의 큰 차이라면, 이제는 meta-training 단계에서 주어진 데이터셋 <span class="math inline">\(\mathcal{D}^{tr}\)</span> 으로 학습하되, 이때 gradient update를 반복적으로 수행하면서, 학습에 이상적인 초기 meta parameter <span class="math inline">\(\theta\)</span> 를 찾는 것이 목표가 된다. 그러면 초기 meta parameter가 정해졌을 때, 주어진 새로운 데이터 <span class="math inline">\(x^{ts}\)</span> 를 활용하여 모델을 수정해주면 이상적인 모델을 만들 수 있을 것이다. 이전에도 이와 관련된 내용으로 <strong>fine-tuning</strong> 이란 개념을 다뤘었다.</p>
@@ -306,7 +308,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p><strong>fine-tuning</strong> 은 앞에서 다뤘던 것처럼 기존에 학습했던 모델의 parameter <span class="math inline">\(\theta\)</span> 가 주어진 상태에서 새로운 데이터가 주어졌을 때, 주어진 데이터셋에서의 반복적인 gradient update를 통해서 parameter <span class="math inline">\(\phi\)</span> 를 다시 찾는 과정이다. Meta Learning에서는 <a href="#eq-fine-tuning-meta-training" class="quarto-xref">방정식 1</a> 식처럼 학습 데이터셋 (Support Set)에 있는 구체적인 예시들을 보면서, 해당 task에 맞는 parameter <span class="math inline">\(\phi\)</span>로 adaptation하는 과정을 수행하게 된다.</p>
 <div id="fig-ULMFit" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ULMFit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/17p_ULMFiT.png" class="img-fluid figure-img">
+<a href="./images/17p_ULMFiT.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="그림 2: Universal Language Model Fine-Tuning"><img src="./images/17p_ULMFiT.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ULMFit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 2: Universal Language Model Fine-Tuning
@@ -329,7 +331,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p>이제 <a href="#eq-outer-loop-meta-learning" class="quarto-xref">방정식 2</a> 의 의미는 앞에서 구한 <span class="math inline">\(\phi_i\)</span> 를 바탕으로, 학습되지 않은 데이터 <span class="math inline">\(\mathcal{D}^{ts}_i\)</span> 를 맞춰봤을 때의 loss를 활용하여 궁극적인 모델 parameter를 업데이트하게 된다. 핵심 아이디어는 주어진 여러 개의 task에 대해서 fine-tuning을 통해서 transfer했을 때, 성능이 좋은 meta parameter <span class="math inline">\(\theta\)</span> 를 찾는 것이다. 교수는 이런 아이디어를 <strong>Model-Agnostic Meta-Learning(MAML)</strong> 이란 알고리즘으로 소개했다.</p>
 <div id="fig-MAML" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-MAML-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/19p_MAML.png" class="img-fluid figure-img">
+<a href="./images/19p_MAML.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="그림 3: Model-Agnostic Meta-Learning(MAML)"><img src="./images/19p_MAML.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-MAML-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 3: Model-Agnostic Meta-Learning(MAML)
@@ -339,7 +341,7 @@ y^{ts} = f_{\text{black-box}}(\mathcal{D}^{tr}_i, x^{ts})
 <p>이 알고리즘의 이름에 대해서 설명했는데, <strong>Model-Agnostic</strong> 이란 현재의 강의에서 다뤄지는 부분 중에서 RNN이나 Transformer같이 모델의 구조에 대해서 설명한 부분없이, 온전히 모델의 gradient를 통해서 update를 진행하고 있다는 점에서 나온 것이다. 즉, 모델의 구조와는 상관없이 해당 강의에서 설명하는 opimization 과정에만 초점이 맞춰져 있는 것이다.</p>
 <p>부연적으로 MAML에 최적화된 모델 구조를 탐색하는 과정에 대한 논문 (<span class="citation" data-cites="kim2018auto">Kim 기타 (<a href="#ref-kim2018auto" role="doc-biblioref">2018</a>)</span>) 도 소개했는데, 해당 논문에서는 fast adaptation할 수 있는 초기 parameter를 찾는 MAML에 최적화된 구조를 찾을 수 있도록 Neural Architecture Search(NAS)이라는 AutoML 기반의 방식을 적용한 결과를 공유했다. MiniImageNet을 대상으로 기본적인 모델 구조에서의 MAML의 결과와 대비하여 NAS를 적용하여 찾은 최적화된 모델에서의 MAML을 수행하면 정확도가 대략 11%정도 상승하였는데, 흥미로운 부분은 일반적으로 딥러닝이 잘된다고 알려져있는 모델의 폭이 넓은 구조가 아니라, NAS를 통해서 찾은 모델은 폭이 좁고 깊은 (deep &amp; narrow) 모델이 Meta Learning에 최적화된 모델이라는 것이다. 다시 말하면, 기존의 통념과는 다르지만, 강의에서 다루는 Meta Learning task에서는 상식과는 다른 구조가 오히려 adaptation에 유리하다는 점을 시사한 것이다.</p>
 <p>지금까지 다룬 Optimization-Based Adaptation을 알고리즘으로 풀어쓰면 다음과 같다.</p>
-<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-comment-delimiter="//" data-pseudocode-number="1" data-line-number="true" data-caption-prefix="Algorithm" data-no-end="false">
+<div id="algo-Optimization-Based-Adaptation" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-line-number-punc=":" data-line-number="true" data-comment-delimiter="//" data-indent-size="1.2em" data-no-end="false" data-caption-prefix="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Optimization-Based Adaptation} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini batch of tasks) \State Sample disjoint datasets $\mathcal{D}^{tr}_i, \mathcal{D}^{ts}_i$ from $\mathcal{D}_i$ \State Optimize $\phi_i \leftarrow \theta - \alpha \nabla_{\theta} \mathcal{L}(\theta, \mathcal{D}^{tr}_i)$ \State Update $\theta$ using $\nabla_{\theta} \mathcal{L}(\phi_i, \mathcal{D}^{ts}_i)$ \end{algorithmic} \end{algorithm}
 </div>
@@ -410,7 +412,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 <p>사실 명시적으로 두 형태를 구분했지만, computation graph 관점에서 바라보면 각각의 특징을 살리는(Mix &amp; Match) 새로운 알고리즘도 생각해볼 수 있었던 부분도 강의에서 소개했다. 예를 들어서 단순히 Gradient Descent를 사용하지 않고, parameter를 어떻게 업데이트할지 결정하는 신경망을 넣어서, update 규칙 자체를 학습하게 하는 방식 (<span class="math inline">\(\phi_i = \theta - \alpha f(\theta, \mathcal{D}^{tr}_i, \nabla_{\theta}\mathcal{L})\)</span>) 도 MAML의 후속 논문으로 나왔다. (<span class="citation" data-cites="ravi2017optimization">Ravi 와/과 Larochelle (<a href="#ref-ravi2017optimization" role="doc-biblioref">2017</a>)</span>) 이 computation graph로 바라보는 관점은 후의 강의에서 자세하게 다루는 것으로 정리했다.</p>
 <div id="fig-omniglot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/25p_omniglot_image_classification.png" class="img-fluid figure-img">
+<a href="./images/25p_omniglot_image_classification.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="그림 4: Omniglot Image Classification"><img src="./images/25p_omniglot_image_classification.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-omniglot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 4: Omniglot Image Classification
@@ -452,12 +454,12 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 </section></section><section id="case-study---meta-learning-for-few-shot-land-cover-classification" class="level2"><h2 class="anchored" data-anchor-id="case-study---meta-learning-for-few-shot-land-cover-classification">Case Study - Meta-Learning for Few-Shot Land Cover Classification</h2>
 <p>마지막 내용인 Case Study에서는 CVPR 2020에서 진행되었던 <a href="https://www.grss-ieee.org/wp-content/uploads/earthvision2020/">EarthVision Workshop</a>에서 Meta Learning을 활용해 Few-shot Land Cover Classification을 한 것에 대해 소개했다. (<span class="citation" data-cites="Russwurm_2020_CVPR_Workshops">Russwurm 기타 (<a href="#ref-Russwurm_2020_CVPR_Workshops" role="doc-biblioref">2020</a>)</span>)</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/33p_land_cover_classification.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/33p_land_cover_classification.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Land Cover Classification"><img src="./images/33p_land_cover_classification.png" class="img-fluid figure-img" alt="Land Cover Classification"></a></p>
 <figcaption>Land Cover Classification</figcaption></figure>
 </div>
 <p>해당 논문에서 풀고자 했던 문제는 공개되어 있는 위성에서 찍은 땅 이미지가 도심지역(Urban)인지, 농장지대(Agriculture)인지 등을 구분해내는 문제였고, 이때 공개되어 있는 데이터셋인 SEN12MS (<span class="citation" data-cites="schmitt2019sen12ms">Schmitt 기타 (<a href="#ref-schmitt2019sen12ms" role="doc-biblioref">2019</a>)</span>) 와 DeepGlobe (<span class="citation" data-cites="demir2018deepglobe">Demir 기타 (<a href="#ref-demir2018deepglobe" role="doc-biblioref">2018</a>)</span>) 를 사용했다. 그런데 실제 해당 데이터셋을 사용하고 활용할 때, 현실적인 문제를 겪는데, 인공위성 이미지를 직접적으로 활용하다 보니 이미지의 각 픽셀이 어떤 땅인지 표시하는 작업 자체가 비용과 시간이 많이 든다. 또한 전 세계의 지역마다 땅의 생김새가 다른 문제, 통계학적으로 보면 Distribution Shift가 발생하게 된다.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/34p_Framing_meta_Learning.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/34p_Framing_meta_Learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Framing as a meta-learning problem"><img src="./images/34p_Framing_meta_Learning.png" class="img-fluid figure-img" alt="Framing as a meta-learning problem"></a></p>
 <figcaption>Framing as a meta-learning problem</figcaption></figure>
 </div>
 <p>그래서 저자들이 생각한 방법은 해당 문제를 일종의 Few-shot Learning 문제로 재정의하고, 이를 meta learning을 활용해 해결하고자 한 것이다. 여기에서 Task는 각 지역에서 찍은 이미지를 분류하는 것이고, 다양한 지역 데이터와 이미지를 통해 새로운 지역의 데이터를 아주 조금(Few-shot)만 봐도, 그 지역의 특성에 맞게 빠르게 적응해서 분류를 할수 있는 모델을 학습시키고자 했다.</p>
@@ -467,7 +469,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-SEN12MS" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/35p_sen12ms.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+<a href="./images/35p_sen12ms.png" class="lightbox" data-gallery="fig-datasets" title="그림 5 (a): SEN12MS"><img src="./images/35p_sen12ms.png" class="img-fluid figure-img" data-ref-parent="fig-datasets"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-SEN12MS-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) SEN12MS
@@ -477,7 +479,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-datasets" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-DeepGlobe" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/36p_deepglobe.png" class="img-fluid figure-img" data-ref-parent="fig-datasets">
+<a href="./images/36p_deepglobe.png" class="lightbox" data-gallery="fig-datasets" title="그림 5 (b): DeepGlobe"><img src="./images/36p_deepglobe.png" class="img-fluid figure-img" data-ref-parent="fig-datasets"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-DeepGlobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) DeepGlobe
@@ -511,7 +513,7 @@ Hv \approx \frac{g(x + rv) - g(x)}{r}
 <p>을 두었고, 이에 대한 결과는 <a href="#fig-results" class="quarto-xref">그림 6</a> 와 같다.</p>
 <div id="fig-results" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/37p_result_meta_learning.png" class="img-fluid figure-img">
+<a href="./images/37p_result_meta_learning.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="그림 6: result of meta learning"><img src="./images/37p_result_meta_learning.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 그림 6: result of meta learning
@@ -1229,6 +1231,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>

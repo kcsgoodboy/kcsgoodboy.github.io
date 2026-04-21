@@ -52,6 +52,8 @@ div.csl-indent {
 <link href="../../site_libs/bootstrap/bootstrap-d8aba7acc1e78dc8ba8656c7503a08b1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-0a7ecfc971d25ff79b6e13c5fe01ef39.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script><link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -269,12 +271,12 @@ window.Quarto = {
 </div>
 </div>
 </section><section id="lecture-summary-with-notebooklm" class="level2"><h2 class="anchored" data-anchor-id="lecture-summary-with-notebooklm">Lecture Summary with NotebookLM</h2>
-<p><img src="./images/Actor_Critic_Methods_overview.en.png" class="img-fluid"></p>
+<p><a href="./images/Actor_Critic_Methods_overview.en.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="./images/Actor_Critic_Methods_overview.en.png" class="img-fluid"></a></p>
 </section><section id="value-function-q-function" class="level2"><h2 class="anchored" data-anchor-id="value-function-q-function">Value function &amp; Q function</h2>
 <p>Before diving into Actor-Critic Methods, the first concept that must be established is how to define and measure “Value” within a given environment. Therefore, I would like to start by explaining three core concepts in Reinforcement Learning: the <strong>Value function</strong> (<span class="math inline">\(V\)</span>), the <strong>Q-function</strong> (<span class="math inline">\(Q\)</span>), and the <strong>Advantage function</strong> (<span class="math inline">\(A\)</span>).</p>
 <div id="fig-VQ" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/6p_VQ.png" class="img-fluid figure-img">
+<a href="./images/6p_VQ.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 1: Value function &amp; Q function"><img src="./images/6p_VQ.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-VQ-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 1: Value function &amp; Q function
@@ -299,7 +301,7 @@ A^{\pi}(s, a) = Q^{\pi}(s, a) - V^{\pi}(s)
 <p>To make this easier to understand, let’s apply the above notation to an example of learning to play an instrument.</p>
 <div id="fig-example" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/7p_example.png" class="img-fluid figure-img">
+<a href="./images/7p_example.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure 2: example"><img src="./images/7p_example.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 2: example
@@ -321,7 +323,7 @@ Figure 2: example
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-robot-trajectory" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-robot-walking" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-robot-walking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_robot-walking.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory">
+<a href="./images/8p_robot-walking.png" class="lightbox" data-gallery="fig-robot-trajectory" title="Figure 3 (a): Robot Walking Example"><img src="./images/8p_robot-walking.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-robot-walking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Robot Walking Example
@@ -331,7 +333,7 @@ Figure 2: example
 <div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-robot-trajectory" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-robot-folding" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-robot-folding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/8p_robot_folding.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory">
+<a href="./images/8p_robot_folding.png" class="lightbox" data-gallery="fig-robot-trajectory" title="Figure 3 (b): Robot Folding Example"><img src="./images/8p_robot_folding.png" class="img-fluid figure-img" data-ref-parent="fig-robot-trajectory"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-robot-folding-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Robot Folding Example
@@ -352,7 +354,7 @@ Figure 3
 </section><section id="improving-policy-gradient" class="level2"><h2 class="anchored" data-anchor-id="improving-policy-gradient">Improving Policy Gradient</h2>
 <div id="fig-monte-carlo-return" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/9p_monte_carlo_return.png" class="img-fluid figure-img">
+<a href="./images/9p_monte_carlo_return.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure 4: Monte Carlo Return"><img src="./images/9p_monte_carlo_return.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-monte-carlo-return-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 4: Monte Carlo Return
@@ -376,7 +378,7 @@ Figure 4: Monte Carlo Return
 <p>Consequently, we arrive at the conclusion that if we can estimate the Advantage function <span class="math inline">\(A^{\pi}\)</span> accurately, we can significantly reduce the variance of the gradients in Policy Gradient methods.</p>
 </section><section id="how-to-estimate-the-value-of-a-policy" class="level2"><h2 class="anchored" data-anchor-id="how-to-estimate-the-value-of-a-policy">How to estimate the value of a policy</h2>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="./images/12p_policy_gradient.png" class="img-fluid figure-img"></p>
+<figure class="figure"><p><a href="./images/12p_policy_gradient.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Policy Gradient"><img src="./images/12p_policy_gradient.png" class="img-fluid figure-img" alt="Policy Gradient"></a></p>
 <figcaption>Policy Gradient</figcaption></figure>
 </div>
 <p>The conclusion drawn so far is that to perform Policy Gradient effectively, we need to accurately estimate the value functions (<span class="math inline">\(V^{\pi}, Q^{\pi}\)</span>) and the advantage function <span class="math inline">\(A^{\pi}\)</span>, and then use these calculated values to improve the policy. Strictly speaking, calculating the advantage function requires knowing both <span class="math inline">\(V^{\pi}\)</span> and <span class="math inline">\(Q^{\pi}\)</span>. However, upon further reflection, we can see that the Q-function can actually be expressed in terms of the value function.</p>
@@ -457,7 +459,7 @@ Note
 <p>The key difference between the two methods lies in whether we use the accumulated rewards obtained from an actual trajectory or utilize the <strong>value function</strong>, which represents an average value. The lecture illustrated this distinction using the example shown in <a href="#fig-value-function-estimation" class="quarto-xref">Figure 5</a>.</p>
 <div id="fig-value-function-estimation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/19p_value-function-estimation.png" class="img-fluid figure-img">
+<a href="./images/19p_value-function-estimation.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure 5: Example of MC vs. Bootstrapping"><img src="./images/19p_value-function-estimation.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-value-function-estimation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 5: Example of MC vs. Bootstrapping
@@ -479,7 +481,7 @@ Figure 5: Example of MC vs. Bootstrapping
 <p>Consequently, the lecture introduced <strong>N-step returns</strong> as a method to estimate the value function by combining the unbiased nature of Monte Carlo with the low variance characteristic of Bootstrapping.</p>
 <div id="fig-n-step-returns" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/20p_N-step-returns.png" class="img-fluid figure-img">
+<a href="./images/20p_N-step-returns.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure 6: N-step returns"><img src="./images/20p_N-step-returns.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-n-step-returns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 6: N-step returns
@@ -500,7 +502,7 @@ Figure 6: N-step returns
 <p>The lecture also highlighted an interesting perspective on the discount factor in the context of N-step returns. The discount factor, typically denoted as <span class="math inline">\(\gamma\)</span>, is generally understood as a mathematical tool used to reduce the weight of future values. If an episode has an infinite or extremely long horizon, simply summing up all future values can cause the estimate to diverge to infinity. Therefore, we introduce this factor to assign higher weights to near-future rewards and lower weights to distant future rewards (<span class="math inline">\(r_t + \gamma r_{t+1} + \gamma^2 r_{t+2} \dots\)</span>), ensuring that the total sum converges.</p>
 <div id="fig-probability-of-death" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/21p_probability-of-death.png" class="img-fluid figure-img">
+<a href="./images/21p_probability-of-death.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure 7: Probability of Death"><img src="./images/21p_probability-of-death.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-probability-of-death-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure 7: Probability of Death
@@ -1168,6 +1170,37 @@ loadGiscusWhenReady();
         }
       });
     })(document);
-    </script>
+    </script><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 </body>
 </html>
