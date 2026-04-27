@@ -46,7 +46,7 @@ LG Electronics AI Lab
 ## TL;DR
 
 ::: {.paper-tldr}
-Delayed Online Update는 실제 세탁기 운전 데이터와 continual offline reinforcement learning을 결합해 세탁물 시나리오를 모두 수동 규칙으로 작성하지 않고도 탈수 구간의 load balancing을 개선합니다.
+**Delayed Online Update (DOU)**는 실험실 환경에서의 모델 학습과 실제 환경에서 수행시 수집된 데이터를 조합한 Continual Offline Reinforcement Learning으로, 실생활에서 접하게 될 다양한 세탁물의 탈수 환경에서도 진동을 최소화할 수 있도록 load balancing 성능을 개선한 제어 방법입니다.
 :::
 
 ::: {.paper-teaser}
@@ -54,7 +54,7 @@ Delayed Online Update는 실제 세탁기 운전 데이터와 continual offline 
 ![Delayed online update framework for continual offline reinforcement learning.](assets/dou_framework.png){.paper-image}
 
 ::: {.paper-media-caption}
-Post-deployment 개선을 위한 Delayed Online Update (DOU) workflow.
+Post-deployment 후에도 지속적으로 강화학습 모델의 성능을 개선할 수 있는 Delayed Online Update (DOU).
 :::
 :::
 :::
@@ -64,20 +64,19 @@ Post-deployment 개선을 위한 Delayed Online Update (DOU) workflow.
 ::: {.paper-summary-grid}
 ::: {.paper-summary-card}
 ### Problem
-
-현대 세탁기는 여러 운전 조건에서 세탁물 균형을 유지해야 합니다. 수동 시행착오 중심의 튜닝은 배포 이후 제어 성능을 빠르게 개선하는 데 한계가 있습니다.
+세탁기의 탈수 과정 수행시 발생하는 진동을 줄이기 위해서는 기구 안의 세탁물간의 균형이 이뤄져야 하나, 그 세탁물의 조합은 무한대에 가까우며, 개별 조합에 따른 진동 패턴도 다릅니다. 또한 이 모든 경우의 수에 대응하기 위해서는 세탁기 개발자가 대표적인 세탁물 케이스에 한하여 실제 수행 착오를 겪으면서 성능을 개선하는 User-In-The-Loop(UITP) 과정을 취하고 있습니다. 또한 대량 생산되는 생활가전의 특성상 저사양의 MCU가 일반적으로 사용되기 때문에, 실제로 학습되지 않은 부하에 대해서 제어 성능을 개선하는 데 한계가 있습니다.
 :::
 
 ::: {.paper-summary-card}
 ### Approach
 
-본 논문은 세탁기 모터 제어를 위한 continual offline reinforcement learning workflow를 제안하며, 누적된 transition data와 delayed online update를 활용해 distribution shift 위험을 줄입니다.
+본 논문에서는 Continual Offline Reinforcement Learning을 활용한 세탁기 모터 제어를 통해 다양한 세탁물 탈수시 발생하는 진동을 저감하고자 했으며, 실제 환경에서 쌓이는 unseen transition data를 활용한 delayed online update (DOU) 방식을 통해 기존 데이터와 실제 환경 데이터간의 distribution shift 위험을 줄이고자 했습니다.
 :::
 
 ::: {.paper-summary-card}
 ### Outcome
 
-탈수 구간에서 서로 다른 세탁물 조건을 포함한 실험을 통해 균형 유지 성능 개선을 보고합니다.
+실험실 환경에서 6개의 세탁물을 대상으로 실험한 결과, 평균 $16%$ 정도의 진동을 줄일 수 있었습니다.
 :::
 :::
 
@@ -85,17 +84,17 @@ Post-deployment 개선을 위한 Delayed Online Update (DOU) workflow.
 
 ::: {.paper-method}
 ::: {.paper-method-steps}
-1. 실제 세탁기 운전에서 transition data를 수집합니다.
-2. 탈수 구간 모터 제어를 위한 offline RL policy를 학습합니다.
-3. 새로운 online interaction data를 delay window 동안 누적합니다.
-4. 짧은 online rollout마다 즉시 반응하는 대신 확장된 dataset으로 policy를 갱신합니다.
+1. 실험실 환경에서 세탁기 운전에서 다양한 세탁물에 대한 transition data를 수집합니다.
+2. 탈수 구간에서 진동을 줄일 수 있도록 Objective를 정의하고 이를 기반으로 Offline RL Policy를 학습합니다.
+3. 학습된 policy를 실제 환경에 deploy한 후, 새롭게 수집되는 online interaction data를 delay window 동안 누적합니다.
+4. 짧은 online rollout마다 즉시 반응하는 대신 확장된 dataset(기존데이터 + 새로 수집된 데이터)으로 policy를 갱신합니다.
 :::
 
 ::: {.paper-figure}
 ![Offline and online data distributions across three tasks.](assets/tsne-3tasks.png){.paper-image}
 
 ::: {.paper-media-caption}
-선택된 laundry task에서 offline/online data coverage 비교.
+동일한 세탁물에 대해서 실험실 환경에서 수집된 데이터와 실제 환경에서 수집된 데이터간의 분포를 시각화했을 때, 비슷하게 겹치는 세탁물도 있는 반면 둘 간의 분포가 일치하지 않는 현상도 나타났습니다. 이를 통해 Offline Data와 Online Data 간의 Distribution Shift가 발생하고 있는 것을 확인할 수 있었습니다.
 :::
 :::
 :::
@@ -108,31 +107,28 @@ Post-deployment 개선을 위한 Delayed Online Update (DOU) workflow.
 
 ![Average success rate comparison across laundry tasks.](assets/result_asr.png){.paper-image}
 
-평가한 laundry task 전반에서 DOU variant가 baseline보다 높은 평균 success rate를 보입니다.
+실험실 환경에서 6개의 세탁물을 대상으로 DOU를 두차례 수행했으며, 이에 대한 결과가 초기 baseline보다 높은 평균 success rate($16%$)를 보였습니다.
 :::
 
 ::: {.paper-result-card}
 ### Multi-Task Laundry Set
 
 ![Multi-task laundry configurations.](assets/multi_task.png){.paper-image}
-
-Multi-task evaluation에 사용한 대표 laundry configuration입니다.
+세탁기에 세탁물이 투입되어 있는 형태를 하나의 task를 정의했으며, 실험시 Multi-task 형태로 구성하여 진행했습니다.
 :::
 
 ::: {.paper-result-card}
 ### Unseen Tasks
 
 ![Unseen laundry configurations.](assets/unseen_task.png){.paper-image}
-
-Generalization 평가를 위한 unseen laundry combination입니다.
+학습된 세탁물뿐만 아니라 실생활에서도 접하게 될, unseen 세탁물에 대해서도 성능 평가를 진행하여 Generalization 여부도 확인하고자 했습니다.
 :::
 
 ::: {.paper-result-card}
 ### Production Device
 
 ![Production-ready washer product using offline reinforcement learning.](assets/nc.png){.paper-image}
-
-Offline RL control approach가 적용된 production-ready target device입니다.
+해당 과정을 통해 개선된 강화학습 모델은 실제로 대량생산된 모델에 탑재되어 세계최초로 출시되었습니다.
 :::
 :::
 
