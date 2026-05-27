@@ -10,33 +10,40 @@
     "objectID": "publications.html#section",
     "href": "publications.html#section",
     "title": "Publications",
-    "section": "2024",
-    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Project  IEEE\nChanseok Kang. (2024) “Applying Data-Driven Reinforcement Learning Approach in Real World Environment”. 2024 Journal of Institute of Electronics and Information Engineers (IEIE).\nPreprint"
+    "section": "2026",
+    "text": "2026\nJinwoo Lee, Chanseok Kang, Guntae Bae. (2026) “Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer”. 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE)."
   },
   {
     "objectID": "publications.html#section-1",
     "href": "publications.html#section-1",
     "title": "Publications",
-    "section": "2021",
-    "text": "2021\nChanseok Kang. (2021) “Grokking Deep Reinforcement Learning” (Korean). Hanbit Media.\n Book"
+    "section": "2024",
+    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Project  IEEE\nChanseok Kang. (2024) “Applying Data-Driven Reinforcement Learning Approach in Real World Environment”. 2024 Journal of Institute of Electronics and Information Engineers (IEIE).\nPreprint"
   },
   {
     "objectID": "publications.html#section-2",
     "href": "publications.html#section-2",
     "title": "Publications",
-    "section": "2020",
-    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
+    "section": "2021",
+    "text": "2021\nChanseok Kang. (2021) “Grokking Deep Reinforcement Learning” (Korean). Hanbit Media.\n Book"
   },
   {
     "objectID": "publications.html#section-3",
     "href": "publications.html#section-3",
     "title": "Publications",
-    "section": "2019",
-    "text": "2019\nKyo-seok Song, Chanseok Kang (Reviewer). (2019) “Machine Learning with Tensorflow” (Korean). Hanbit Media.  Book"
+    "section": "2020",
+    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
   },
   {
     "objectID": "publications.html#section-4",
     "href": "publications.html#section-4",
+    "title": "Publications",
+    "section": "2019",
+    "text": "2019\nKyo-seok Song, Chanseok Kang (Reviewer). (2019) “Machine Learning with Tensorflow” (Korean). Hanbit Media.  Book"
+  },
+  {
+    "objectID": "publications.html#section-5",
+    "href": "publications.html#section-5",
     "title": "Publications",
     "section": "2017",
     "text": "2017\nChanseok Kang, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.\n Preprint"

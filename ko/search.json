@@ -10,33 +10,40 @@
     "objectID": "publications.html#section",
     "href": "publications.html#section",
     "title": "출간물",
-    "section": "2024",
-    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Project  IEEE\n강찬석. (2024) “실물 환경에서의 데이터 기반 강화학습 적용방안”. 2024 대한전자공학회.\nPreprint"
+    "section": "2026",
+    "text": "2026\nJinwoo Lee, Chanseok Kang, Guntae Bae. (2026) “Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer”. 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE)."
   },
   {
     "objectID": "publications.html#section-1",
     "href": "publications.html#section-1",
     "title": "출간물",
-    "section": "2021",
-    "text": "2021\nChanseok Kang. (2021) “그로킹 심층 강화학습”. 한빛미디어.\n Book"
+    "section": "2024",
+    "text": "2024\nChanseok Kang, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) “Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines”. 2024 IEEE Conference on Artificial Intelligence (CAI).\n Project  IEEE\n강찬석. (2024) “실물 환경에서의 데이터 기반 강화학습 적용방안”. 2024 대한전자공학회.\nPreprint"
   },
   {
     "objectID": "publications.html#section-2",
     "href": "publications.html#section-2",
     "title": "출간물",
-    "section": "2020",
-    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
+    "section": "2021",
+    "text": "2021\nChanseok Kang. (2021) “그로킹 심층 강화학습”. 한빛미디어.\n Book"
   },
   {
     "objectID": "publications.html#section-3",
     "href": "publications.html#section-3",
     "title": "출간물",
-    "section": "2019",
-    "text": "2019\n송교석, 강찬석 (감수). (2019) “텐서플로를 활용한 머신러닝”. 한빛미디어.  Book"
+    "section": "2020",
+    "text": "2020\nChangmin Ahn, Seungyul Lee, Chanseok Kang, Bernhard Egger. (2020) “NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control”. International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.\n Preprint"
   },
   {
     "objectID": "publications.html#section-4",
     "href": "publications.html#section-4",
+    "title": "출간물",
+    "section": "2019",
+    "text": "2019\n송교석, 강찬석 (감수). (2019) “텐서플로를 활용한 머신러닝”. 한빛미디어.  Book"
+  },
+  {
+    "objectID": "publications.html#section-5",
+    "href": "publications.html#section-5",
     "title": "출간물",
     "section": "2017",
     "text": "2017\nChanseok Kang, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) “Scheduling for Better Energy Efficiency on Many-Core Chips”. Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.\n Preprint"
