@@ -308,7 +308,7 @@ window.Quarto = {
 <figcaption>Learned Simulator</figcaption></figure>
 </div>
 <p>일반적으로 학습된 Simlator를 활용하여 강화학습을 수행하는 과정은 크게 다음과 같다.</p>
-<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="1" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="1" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Notional "learned simulator" algorithm} \begin{algorithmic} \State Get some data $\mathcal{D} = \{s_i, a_i, s_i' \}$ collected using some base policy $\pi_0(a \vert s)$ \State Learn "simulator" $f(a, s) = s'$ using $\min_f \sum_i \Vert f(s_i, a_i) - s_i' \Vert^2$ \State Run your favorite RL method inside "simulator" $f$ \end{algorithmic} \end{algorithm}
 </div>
@@ -360,7 +360,7 @@ window.Quarto = {
 </figcaption></figure>
 </div>
 <p>만약 앞에서 소개한 방법들을 고려해 학습된 dynamics model을 만들었을 때, 어떻게 하면 이 model을 사용해서 policy를 학습시킬 수 있을까? 가장 쉽게 해볼 수 있는 방법은 주어진 model을 기반을 상상을 해보는 <strong>“planning”</strong>을 해보는 것이다. 실제로 환경에서 interaction을 하지 않더라도, Model을 통해서 주어진 State와 action을 통해서 Next State를 추론할 수 있기 때문에, 이를 기반으로 정해진 목표지점까지 경험을 쭉 쌓는 것이다. 이 경험을 바탕으로 일반적인 강화학습의 objective처럼 expected reward가 최대화가 되는 방향(<span class="math inline">\(\max_{a_t:t+H} \sum_t r(s_t, a_t)\)</span>)으로 policy를 학습하게 되고, 이를 backpropagation을 통해서 최적화를 수행하면 된다.</p>
-<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="2" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="2" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via backpropagation} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Backpropagate through $f_{\phi}(s, a)$ to choose actions. ($\hat{a}_{t:t+H} \leftarrow \arg\max \sum_{t'=t}^{t+H} r_{t'}$) \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
 </div>
@@ -376,7 +376,7 @@ Computing Gradient to choose action
 </div>
 <div class="callout-body-container callout-body">
 <p>교수가 질판에 서술한 내용이지만, <span class="math inline">\(\hat{a}_{t:t+H}\)</span> 를 얻기 위한 backpropagration을 수행하기 위해선 expected reward를 최대화할 수 있는 방향을 나타내는 gradient를 계산할 수 있어야 한다. 아래 식은 이를 표현한 것이다.</p>
-<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="3" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="3" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Compute Gradient} \begin{algorithmic} \State Initialize $\hat{a}_{t:t+H}$ \State Compute Gradient $\nabla_{a_{t:t+H}} \sum r$ \State $\hat{a}_{t:t+H} \leftarrow \hat{a}_{t:t+H} + \alpha \nabla_{a_{t:t+H}} \sum r$ \end{algorithmic} \end{algorithm}
 </div>
@@ -418,7 +418,7 @@ Computing Gradient to choose action
 </figcaption></figure>
 </div>
 <p><a href="#fig-gradient" class="quarto-xref">그림 5 (a)</a> 에서 최적화가 수행되는 과정처럼 어느 한 점에서 시작해, expected reward가 최대화가 되는 방향으로 최적화가 수행되는 것과 다르게, Sampling 기반 최적화 기법에서는 여러 점에서의 action에 대한 reward를 보고, 이를 최대화시킬 수 있는 action을 유추하는 것이다. 이 과정에서 gradient를 계산하지 않기 때문에 <strong>Gradient-free optimization</strong>이라고 표현하기도 한다. 물론 주어진 데이터의 패턴을 보고 최적화 지점을 찾는 방법이기 때문에, 실제 sampling되지 않은 영역에서의 값이 부정확하기 때문에 interpolation 같은 방법을 쓰겠지만, gradient를 구할 필요가 없다는 장점때문에 앞에서 언급한 discrete action space와 같은 미분불가능한 영역에서도 활용이 가능하다.</p>
-<div id="algo-sampling-planning" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="4" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div id="algo-sampling-planning" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="4" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via Sampling} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
 </div>
@@ -453,7 +453,7 @@ Computing Gradient to choose action
 </div>
 <p>강의에서는 <a href="#fig-fail-case" class="quarto-xref">그림 6</a> 의 예시를 통해서 이 방법이 적절하지 않은 케이스에 대해서도 소개했다. <a href="#fig-fail-case" class="quarto-xref">그림 6</a> 에서는 절벽에서 가장 멋진 광경을 보기 위해서 경로를 찾는 과정에 앞에서 소개한 Sampling-based Approach를 적용했는데, 실제로 빨간 경로에 대한 샘플만 추출이 된 상태로 어떤 Model이 학습되고, 이에 기반하여 Action을 취하게 된다면, policy는 오른쪽으로 가는 행동이 expected reward를 높이는 이상적인 policy라고 학습하게 될 것이다. 하지만 그림에도 보다시피 오른쪽으로만 가게되면 끝에서는 절벽에서 떨어지는 문제가 발생한다. 여기에서 언급한 것은 어떤 분포라고 가정된 상태에서 샘플링된 데이터 외에도 실제 환경에서 나올 수 있는 데이터는 그 분포에서 벗어난 Out-of-Distribution Sample이 나올 수 있다는 점이다. 즉, 이 상태에서 초기의 policy에 의한 distribution <span class="math inline">\(p_{\pi_0}(s)\)</span> 와 완전히 학습된 후 접할 수 있는 distribution <span class="math inline">\(p_{\pi_f}(s)\)</span> 가 달라지는 <strong>Data Distribution Mismatch</strong>가 발생하는 것이다.</p>
 <p>이를 해결하기 위해서 간단하게 개선해볼 수 있는 방법은 실제 환경에서 Model에 의해 planning된 action을 수행했을 때 겪은 trajectory도 Model을 학습시키는데 활용하자는 것이다.</p>
-<div id="algo-sampling-planning-2" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="5" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div id="algo-sampling-planning-2" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="5" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via Sampling (Updated)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute planned actions, appending visiting tuples $(s, a, s')$ to $\mathcal{D}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -498,7 +498,7 @@ Computing Gradient to choose action
 </figcaption></figure>
 </div>
 <p>지금까지 다룬 Model-based Approach는 어떤 Model로부터 현재 상태 <span class="math inline">\(s\)</span> 에서 시작해 expected reward를 최대화할 수 있는 action에 대한 trajectory를 도출해 그대로 수행하는 것이다. 다시 말해, 현재 수행하는 policy가 <span class="math inline">\(H\)</span> 만큼의 planning 범주를 가지고 Model로부터 어떤 action trajectory(<span class="math inline">\(a_1, \dots, a_H\)</span>)가 가장 좋은 reward를 받을 수 있는지 planning을 미리 수행하고, 그대로 action trajectory대로 수행하는 것이다. Model을 통해서 미리 해본 셈이므로, 어느 정도는 맞겠지만 만약 Model이 실제 환경을 그대로 표현하지 못한다던지, 아니면 환경의 dynamic가 변화하는 조건이 있는 상태에서는 이렇게 action trajectory를 그대로 수행하는 것은 이상적인 방법이 아닐 수 있다. 이 방법을 강의에서는 <strong>Open-loop</strong>라고 소개했다. 반면, 이렇게 action trajectory를 그대로 수행할 것이 아니라, planning을 통해서 어떤 action trajectory가 도출되어 있을때, 이 중 첫번째 action <span class="math inline">\(a_t\)</span> 을 실제 환경에서 수행하고 받은 next_state <span class="math inline">\(s_{t+1}\)</span> 를 보고, 그 상태에서 다시 action trajectory를 replanning 하는 것도 생각해볼 수 있다. 이 방법을 <strong>Closed-loop</strong> 라고 소개했다.</p>
-<div id="algo-mpc" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="6" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div id="algo-mpc" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="6" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Model Predictive Control (MPC)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Use model $f_{\phi}(s, a)$ to optimize action sequence \State Execute **the first** planned action, observe resulting state $s'$ \State Append $(s, a, s')$ to dataset $\mathcal{D}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -562,7 +562,7 @@ Computing Gradient to choose action
 </figcaption></figure>
 </div>
 <p><a href="#fig-augmented" class="quarto-xref">그림 10</a> 에서도 검정색 Trajectory로 표현된 실제 데이터가 있다고 가정해보자. 여기에서 파란색은 initial state이고, <span class="math inline">\(s_1, \dots s_6\)</span> 에 이르기까지의 데이터가 있다. 그러면 실제로 Policy Network을 학습하기 위해서는 data augmentation을 수행해야 할텐데, 몇가지 케이스를 고려해볼 수 있다. 아예 처음부터 terminal에 이르기까지의 모든 state에 대한 action trajectory를 뽑아볼 수도 있고, initial state에서 partial action trajectory만 생성할 수 있다. 하지만 전자의 경우, 앞에서 언급한 것처럼 long-horizon 에 대해서는 dynamics model도 정확한 상태를 예측한다는 보장이 없고, 후자의 경우도 initial state에서 커버하는 partial trajectory 외의 부분에서는 어떻게 될지 모른다. 그래서 생각해본 대안은 MPC 처럼 data 내에 있는 모든 State에 대해서 full trajectory가 아닌 partial trajectory를 생성하자는 것이다.</p>
-<div id="algo-mbpo" class="pseudocode-container quarto-float" data-line-number="true" data-no-end="false" data-pseudocode-number="7" data-indent-size="1.2em" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-line-number-punc=":">
+<div id="algo-mbpo" class="pseudocode-container quarto-float" data-line-number-punc=":" data-indent-size="1.2em" data-caption-prefix="Algorithm" data-no-end="false" data-pseudocode-number="7" data-comment-delimiter="//" data-line-number="true">
 <div class="pseudocode">
 \begin{algorithm} \caption{Model-Based Policy Optimization (MBPO)} \begin{algorithmic} \State Collect data using current policy $\pi_{\phi}$, add to $\mathcal{D}_{env}$ \State Update model $p_{\theta}(s' \vert s, a)$ using $\mathcal{D}_{env}$ \State Collect synthetic roll-outs using $\pi_{\phi}$ in model $p_{\theta}$ from states in $\mathcal{D}_{env}$ \State Update policy $\pi_{\theta}$ (and critic $Q$) using $\mathcal{D}_{env} \cup \mathcal{D}_{model}$ \State Repeat 1 to 4 until convergence \end{algorithmic} \end{algorithm}
 </div>
