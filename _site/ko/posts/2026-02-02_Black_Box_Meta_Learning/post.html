@@ -84,7 +84,8 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
 <style type="text/css">
     .ps-root .ps-algorithm {
@@ -374,7 +375,7 @@ window.Quarto = {
 \min_{\theta} \sum_{\mathcal{T}_i} \mathcal{L}(f_{\theta}(\mathcal{D}_i^{tr}), \mathcal{D}_i^{ts})
 \]</span></p>
 <p>로 정리할 수 있다. 알고리즘 형태로 표현하면 다음과 같다.</p>
-<div class="pseudocode-container quarto-float" data-no-end="false" data-line-number="true" data-caption-prefix="Algorithm" data-pseudocode-number="1" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number-punc=":">
+<div class="pseudocode-container quarto-float" data-indent-size="1.2em" data-line-number-punc=":" data-no-end="false" data-line-number="true" data-comment-delimiter="//" data-caption-prefix="Algorithm" data-pseudocode-number="1">
 <div class="pseudocode">
 \begin{algorithm} \caption{Black Box Meta Learning} \begin{algorithmic} \State Sample task $\mathcal{T}_i$ (or mini-batch of tasks) \State Sample disjoint datasets $\mathcal{D}_i^{tr}, \mathcal{D}_i^{ts}$ from $\mathcal{D}_i$ \State Compute $h_i (\approx \phi_i) \leftarrow f_{\theta}(\mathcal{D}_i^{tr})$ \State Update $\theta$ using $\nabla_{\theta}\mathcal{L}(\phi_i, \mathcal{D}_i^{ts})$ \State Iterate 1~4 \end{algorithmic} \end{algorithm}
 </div>

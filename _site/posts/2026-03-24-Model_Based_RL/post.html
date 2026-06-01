@@ -86,7 +86,8 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
-</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
 <style type="text/css">
     .ps-root .ps-algorithm {
@@ -308,7 +309,7 @@ Figure 2
 <figcaption>Learned Simulator</figcaption></figure>
 </div>
 <p>A typical learned-simulator pipeline is then described as follows:</p>
-<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="1" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-learned-simulator" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="1" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Notional "learned simulator" algorithm} \begin{algorithmic} \State Get some data $\mathcal{D} = \{s_i, a_i, s_i' \}$ collected using some base policy $\pi_0(a \vert s)$ \State Learn "simulator" $f(a, s) = s'$ using $\min_f \sum_i \Vert f(s_i, a_i) - s_i' \Vert^2$ \State Run your favorite RL method inside "simulator" $f$ \end{algorithmic} \end{algorithm}
 </div>
@@ -361,7 +362,7 @@ Figure 4: Planning
 </div>
 <p>Once a learned dynamics model is available, the simplest way to use it is <strong>“planning”</strong>. Even without interacting with the real environment, the model can be rolled forward to predict future states under candidate actions. This lets us search for an action sequence that maximizes expected reward over a finite horizon, i.e. solve something like <span class="math inline">\(\max_{a_t:t+H} \sum_t r(s_t, a_t)\)</span>. This can be expressed as “imagining” trajectories inside the model and optimizing actions through backpropagation.</p>
 <p>To do that, the lecture introduces a <strong>“planning via backpropagation”</strong> algorithm:</p>
-<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="2" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-backpropagation-planning" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="2" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via backpropagation} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Backpropagate through $f_{\phi}(s, a)$ to choose actions. ($\hat{a}_{t:t+H} \leftarrow \arg\max \sum_{t'=t}^{t+H} r_{t'}$) \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
 </div>
@@ -377,7 +378,7 @@ Computing Gradient to choose action
 </div>
 <div class="callout-body-container callout-body">
 <p>As the professor described in hand, To do backpropagation for <span class="math inline">\(\hat{a}_{t:t+H}\)</span>, we need to calculate the direction of gradient that maxmize expected reward. Below is the detailed expression.</p>
-<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="3" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-compute-gradient" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="3" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Compute Gradient} \begin{algorithmic} \State Initialize $\hat{a}_{t:t+H}$ \State Compute Gradient $\nabla_{a_{t:t+H}} \sum r$ \State $\hat{a}_{t:t+H} \leftarrow \hat{a}_{t:t+H} + \alpha \nabla_{a_{t:t+H}} \sum r$ \end{algorithmic} \end{algorithm}
 </div>
@@ -419,7 +420,7 @@ Figure 5
 </figcaption></figure>
 </div>
 <p>Rather than starting from a single point and following the gradient, the sampling-based view evaluates many candidate action sequences and selects or refits toward the ones with high return. Because it does not require explicit gradient computation, It can be described as <strong>gradient-free optimization</strong> and notes that it can be useful in settings where differentiating through the optimization objective is difficult.</p>
-<div id="algo-sampling-planning" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="4" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-sampling-planning" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="4" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via Sampling} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute $\hat{a}_{t:t+H}$ in real environment. \end{algorithmic} \end{algorithm}
 </div>
@@ -435,7 +436,7 @@ Figure 6: Fail Case of Sampling-based Approach
 </figcaption></figure>
 </div>
 <p>The section closes with a failure example (<a href="#fig-fail-case" class="quarto-xref">Figure 6</a>) using a cliff environment. If the planner is trained only on trajectories that happen to move rightward, it may conclude that “going right” is always good, even though continuing right eventually causes the agent to fall off the cliff. This is framed as <strong>data-distribution mismatch</strong>: the state distribution induced by the final policy can differ from the state distribution seen in the initial data. A simple fix is to add newly visited real trajectories back into the model-training dataset and keep updating the model as planning proceeds.</p>
-<div id="algo-sampling-planning-2" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="5" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-sampling-planning-2" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="5" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Planning via Sampling (Updated)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Iteratively sample action sequences, run through model $f_{\phi}(s, a)$ to choose actions \State Execute planned actions, appending visiting tuples $(s, a, s')$ to $\mathcal{D}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -479,7 +480,7 @@ Figure 8
 </figcaption></figure>
 </div>
 <p>The next section contrasts open-loop and closed-loop use of a model. In the open-loop case, the planner computes a full action trajectory <span class="math inline">\(a_1, \dots, a_H\)</span> in advance and then executes it as-is. This can work when the model is accurate, but if the model is wrong or the environment changes during execution, blindly following the original plan may be a poor choice. A <strong>closed-loop</strong> alternative is to execute only the first planned action, observe the true next state from the environment, and then replan from that new state.</p>
-<div id="algo-mpc" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="6" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-mpc" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="6" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Model Predictive Control (MPC)} \begin{algorithmic} \State Run some policy (e.g. random policy) to collect data $\mathcal{D} = \{ (s, a, s')_i\}$ \State Learn model $f_{\phi}(s, a)$ to minimize $\sum_i \Vert f_{\phi}(s_i, a_i) - s_i' \Vert^2$ \State Use model $f_{\phi}(s, a)$ to optimize action sequence \State Execute **the first** planned action, observe resulting state $s'$ \State Append $(s, a, s')$ to dataset $\mathcal{D}$ \end{algorithmic} \end{algorithm}
 </div>
@@ -540,7 +541,7 @@ Figure 10: Augmented Data
 </figcaption></figure>
 </div>
 <p>Operationally, MBPO alternates between collecting real transitions, updating the learned dynamics model, generating short synthetic rollouts from real states—often replay-buffer states—and then updating a model-free learner using both real and model-generated data. In the original paper, this policy-optimization backbone is implemented with SAC.</p>
-<div id="algo-mbpo" class="pseudocode-container quarto-float" data-caption-prefix="Algorithm" data-no-end="false" data-comment-delimiter="//" data-line-number="true" data-pseudocode-number="7" data-indent-size="1.2em" data-line-number-punc=":">
+<div id="algo-mbpo" class="pseudocode-container quarto-float" data-no-end="false" data-pseudocode-number="7" data-caption-prefix="Algorithm" data-indent-size="1.2em" data-comment-delimiter="//" data-line-number="true" data-line-number-punc=":">
 <div class="pseudocode">
 \begin{algorithm} \caption{Model-Based Policy Optimization (MBPO)} \begin{algorithmic} \State Collect data using current policy $\pi_{\phi}$, add to $\mathcal{D}_{env}$ \State Update model $p_{\theta}(s' \vert s, a)$ using $\mathcal{D}_{env}$ \State Collect synthetic roll-outs using $\pi_{\phi}$ in model $p_{\theta}$ from states in $\mathcal{D}_{env}$ \State Update policy $\pi_{\theta}$ (and critic $Q$) using $\mathcal{D}_{env} \cup \mathcal{D}_{model}$ \State Repeat 1 to 4 until convergence \end{algorithmic} \end{algorithm}
 </div>
