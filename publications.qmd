@@ -29,8 +29,9 @@ library(distilltools)
 `r icon_link(icon = "github", text = "Code", url = "https://github.com/ropensci/canaper")` !-->
 ## 2026
 
-Jinwoo Lee, **Chanseok Kang**, Guntae Bae. (2026) "Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer". 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE).
+Jinwoo Lee, **Chanseok Kang**, Guntae Bae. (2026) "Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer". To appear at 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026.
 
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/reward-learning-dryer/", target = "_self")`
 
 ## 2024
 

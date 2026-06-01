@@ -12,3 +12,6 @@ renv/python/
 .Rhistory
 .RData
 .Ruserdata
+
+# Review-only manuscript source for the dryer project page draft.
+projects/reward-learning-dryer/assets/CASE26_0577_MS.pdf

@@ -266,7 +266,7 @@ body.quarto-dark .paper-project,
 }
 
 .paper-figure-grid {
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
   margin-top: 0;
 }
@@ -332,6 +332,27 @@ body.quarto-dark .paper-project,
 
 .paper-result-card .paper-image {
   margin: 0.75rem 0;
+}
+
+.paper-motion-grid .paper-result-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.paper-motion-grid .paper-result-card .paper-image {
+  aspect-ratio: 4 / 3;
+  max-height: none;
+  object-fit: cover;
+}
+
+.paper-setup-grid .paper-image {
+  aspect-ratio: 3 / 4;
+  max-height: none;
+  object-fit: cover;
+}
+
+.paper-setup-grid {
+  margin-top: 0;
 }
 
 .paper-method {
