@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -73,7 +73,8 @@ jobs:
           rm -rf _site docs site_libs
           Rscript -e 'babelquarto::render_website(site_url="https://kcsgoodboy.github.io/")'
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
-      - uses: actions/deploy-pages@v4
+          include-hidden-files: true
+      - uses: actions/deploy-pages@v5
