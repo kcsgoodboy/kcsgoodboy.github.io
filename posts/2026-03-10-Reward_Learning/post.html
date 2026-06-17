@@ -452,7 +452,7 @@ Figure 3
 \max_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}} [ \log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]
 \]</span></p>
 <p>The lecture then summarizes the full algorithm:</p>
-<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-pseudocode-number="1" data-line-number-punc=":" data-caption-prefix="Algorithm" data-no-end="false" data-indent-size="1.2em" data-line-number="true" data-comment-delimiter="//">
+<div id="algo-reward-learning" class="pseudocode-container quarto-float" data-comment-delimiter="//" data-pseudocode-number="1" data-line-number="true" data-no-end="false" data-indent-size="1.2em" data-line-number-punc=":" data-caption-prefix="Algorithm">
 <div class="pseudocode">
 \begin{algorithm} \caption{Complete Reward Learning} \begin{algorithmic} \State Given dataset $\{\tau_i\}$, sample batches of $k$ trajectories and ask humans to rank. \State Compute $r_{\theta}(\tau_1), \dots, r_{\theta}(\tau_k)$ under current reward model $r_{\theta}$ \State For all $\big(\begin{smallmatrix}k \\ 2 \end{smallmatrix}\big)$ pairs per batch, compute $\nabla_{\theta} \mathbb{E}_{\tau_{\text{win}}, \tau_{\text{lose}}}[\log \sigma (r_{\theta}(\tau_{\text{win}}) - r_{\theta}(\tau_{\text{lose}}))]$ where $\tau_{\text{win}} &gt; \tau_{\text{lose}}$ \State Update $\theta$ using computed gradient \State Repeat from 2 to 4 \end{algorithmic} \end{algorithm}
 </div>
