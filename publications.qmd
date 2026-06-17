@@ -29,6 +29,8 @@ library(distilltools)
 `r icon_link(icon = "github", text = "Code", url = "https://github.com/ropensci/canaper")` !-->
 ## 2026
 
+**Chanseok Kang**, Jinwoo Lee, Guntae Bae. (2026) "Decoupling Task Inference in Offline Meta-RL". To appear at 2026 Reinforcement Learning Conference Workshop: Automated RL (AutoRL), August 2026.
+
 Jinwoo Lee, **Chanseok Kang**, Guntae Bae. (2026) "Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer". To appear at 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026.
 
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/reward-learning-dryer/", target = "_self")`
