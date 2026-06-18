@@ -22,6 +22,9 @@ library(distilltools)
 **(2026. 04)** I served as a reviewer in 2026 IEEE 22nd CASE(International Conference on Automation Science and Engineering).
 `r icon_link(text = "Link", url = "https://2026.ieeecase.org/")`
 
+## 2025
+**(2025. 09)** I served as a Mentor (AI session) in 2025 LG Software Developer Conference (SDC).
+
 ## 2024
 
 **(2024. 09)** I gave a corporate presentation and recruitment session at ComSee, an event hosted by the Student Association of Seoul National University’s Department of Computer Science and Engineering, on the topic **“Data‑Driven Reinforcement Learning in Real‑World Environments.”**

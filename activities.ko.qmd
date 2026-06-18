@@ -163,6 +163,8 @@ RAG나 에이전트 구현을 처음 접하는 사람을 위해 LLM과 라마인
 **(2025. 10)** 제가 베타리더로 참여한 **"유니티 교과서"** (길벗) 책이 출간되었습니다.
 `r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000218148306")`
 
+**(2025. 09)** 2025 LG전자 개발자 컨퍼런스 (SDC)에서 AI 세션에서 멘토로 참여했습니다.
+
 **(2025. 09)** 제가 베타리더로 참여한 **"AI 엔지니어링"** (한빛미디어) 책이 출간되었습니다.
 `r icon_link(text = "Link", url = "https://product.kyobobook.co.kr/detail/S000217939673")`
 
