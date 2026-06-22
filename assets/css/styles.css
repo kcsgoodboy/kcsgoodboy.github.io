@@ -22,6 +22,64 @@ d-article a:hover, a:focus { color: var(--bs-secondary); font-weight: 500; borde
   background-color: var(--bs-secondary);
 }
 
+/* Activities */
+.activity-item {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+  margin: 1.15rem 0 1.6rem;
+}
+
+.activity-item > p {
+  margin: 0;
+}
+
+.activity-body > :first-child {
+  margin-top: 0;
+}
+
+.activity-body > :last-child {
+  margin-bottom: 0;
+}
+
+.activity-image {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 6px;
+  background: var(--bs-body-bg);
+}
+
+.activity-photo {
+  grid-template-columns: minmax(160px, 220px) minmax(0, 1fr);
+}
+
+.activity-photo .activity-image {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.activity-book {
+  grid-template-columns: 108px minmax(0, 1fr);
+}
+
+.activity-book .activity-image {
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+  padding: 0.25rem;
+}
+
+@media (max-width: 760px) {
+  .activity-photo,
+  .activity-book {
+    grid-template-columns: 1fr;
+  }
+
+  .activity-book .activity-image {
+    max-width: 120px;
+  }
+}
+
 /* Conference paper project pages */
 .paper-project {
   --paper-accent: #1967d2;

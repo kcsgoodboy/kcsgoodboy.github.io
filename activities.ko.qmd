@@ -234,7 +234,13 @@ RAG나 에이전트 구현을 처음 접하는 사람을 위해 LLM과 라마인
 **(2024. 09)** 서울대학교 컴퓨터공학부 학생회에서 주최하는 ComSee 행사에서 **"실물 환경에서의 데이터 기반 강화학습 적용 방안"**이란 주제로 기업 강연 및 채용설명회를 진행했습니다.
 `r icon_link(text = "File", url = "contents/files/AI_ComSee_RWRL.pdf")`
 
+::: {.activity-item .activity-photo}
+![](projects/data-driven-rl-washing-machines/assets/poster.png){.activity-image fig-alt="Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines 포스터"}
+
+::: {.activity-body}
 **(2024. 06)** 싱가포르에서 진행된 2024 [IEEE Conference on Artificial Intelligence (CAI)](https://ieeecai.org/)에서 **"Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines"**이란 주제로 포스터 세션을 진행했습니다.
+:::
+:::
 
 ## 2023
 **(2023. 02)** 제가 속한 팀에서 만든, 세계 최초로 Offline RL이 적용된 탈수 모델이 세탁기에 탑재되어 출시했습니다.

@@ -30,7 +30,13 @@ library(distilltools)
 **(2024. 09)** I gave a corporate presentation and recruitment session at ComSee, an event hosted by the Student Association of Seoul National University’s Department of Computer Science and Engineering, on the topic **“Data‑Driven Reinforcement Learning in Real‑World Environments.”**
 `r icon_link(text = "File", url = "contents/files/AI_ComSee_RWRL.pdf")`
 
+::: {.activity-item .activity-photo}
+![](projects/data-driven-rl-washing-machines/assets/poster.png){.activity-image fig-alt="Poster for Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines"}
+
+::: {.activity-body}
 **(2024. 06)** I presented a poster entitled **"Data‑Driven Reinforcement Learning for Optimal Motor Control in Washing Machines"** at the 2024 [IEEE Conference on Artificial Intelligence (CAI)](https://ieeecai.org/) in Singapore.
+:::
+:::
 
 ## 2023
 **(2023. 02)** AI dehydration model with Offline RL created by our team has been launched in a washing machine.
