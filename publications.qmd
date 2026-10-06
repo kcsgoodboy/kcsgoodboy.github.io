@@ -33,7 +33,9 @@ library(distilltools)
 
 **Chanseok Kang**. (2026) "When Reward and Safety Need Different Model Horizons: A Selection Theorem for Pessimistic Offline Planning". Reinforcement Learning Conference 2026 Workshop: Model-based RL in the Era of Generative World Models (WMW), August 2026.
 
-Jinwoo Lee, **Chanseok Kang**, Guntae Bae. (2026) "Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer". To appear at 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026.
+`r icon_link(text = "OpenReview", url = "https://openreview.net/forum?id=7PWdqDgrd7")`
+
+Jinwoo Lee, **Chanseok Kang**, Guntae Bae. (2026) "Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer". 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026.
 
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/reward-learning-dryer/", target = "_self")`
 
