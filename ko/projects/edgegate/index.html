@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/projects/edgegate/index.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/projects/edgegate/index.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Meta Global AI Developer Hackathon 2026 출품작 EdgeGate의 프로젝트 페이지입니다. 택배 도착을 알리는 비전 모델의 모든 빌드를 실제로 돌아갈 Jetson Orin Nano와 Hailo-8에서 측정하고, 평가 전에 써 둔 규칙이 배포 여부를 결정합니다.">
+<title>EdgeGate: A Deployment Gate for Edge Vision – 생각많은 소심남의 연구노트</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="EdgeGate: A Deployment Gate for Edge Vision">
+<meta property="og:description" content="Meta Global AI Developer Hackathon 2026 출품작 EdgeGate의 프로젝트 페이지입니다. 택배 도착을 알리는 비전 모델의 모든 빌드를 실제로 돌아갈 Jetson Orin Nano와 Hailo-8에서 측정하고, 평가 전에 써 둔 규칙이 배포 여부를 결정합니다.">
+<meta property="og:image" content="https://kcsgoodboy.github.io/ko/projects/edgegate/contents/images/persona.png">
+<meta property="og:site_name" content="생각많은 소심남의 연구노트">
+<meta name="twitter:title" content="EdgeGate: A Deployment Gate for Edge Vision">
+<meta name="twitter:description" content="Meta Global AI Developer Hackathon 2026 출품작 EdgeGate의 프로젝트 페이지입니다. 택배 도착을 알리는 비전 모델의 모든 빌드를 실제로 돌아갈 Jetson Orin Nano와 Hailo-8에서 측정하고, 평가 전에 써 둔 규칙이 배포 여부를 결정합니다.">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/projects/edgegate/contents/images/persona.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/projects/edgegate/index.html" id="language-link-en">English</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">소개</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">블로그</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">출간물</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">활동</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><div class="paper-project">
+<div class="paper-hero">
+<div class="paper-title">
+EdgeGate: A Deployment Gate for Edge Vision
+</div>
+<div class="paper-venue">
+<p>Meta Global AI Developer Hackathon 2026 · Indie developer track · Push the Frontier · 2026년 10월 26일 – 11월 4일</p>
+</div>
+<div class="paper-authors">
+<p><a class="paper-author" href="../../about.html">Chanseok Kang</a></p>
+</div>
+<div class="paper-affiliation">
+<p>개인 프로젝트</p>
+</div>
+<div class="paper-links">
+<p><a class="paper-button" href="https://github.com/goodboychan/edgeGate"><i class="fab fa-github"></i> 코드와 기록 (GitHub)</a> <a class="paper-button" href="https://www.youtube.com/watch?v=J4OQVwTwqV8"><i class="fab fa-youtube"></i> 영상 (3분)</a> <a class="paper-button" href="https://huggingface.co/datasets/chans/edgegate-package-entrance-eval"><i class="fas fa-database"></i> 평가 세션 (Hugging Face)</a> <a class="paper-button" href="https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/gallery/1584"><i class="fas fa-trophy"></i> 해커톤 갤러리</a></p>
+</div>
+</div>
+<section id="요약" class="level2"><h2 class="anchored" data-anchor-id="요약">요약</h2>
+<div class="paper-tldr">
+<p>데모에서 돌아가는 모델이 곧 배포해도 되는 모델은 아닙니다. EdgeGate는 작은 비전 모델의 모든 빌드를 실제로 돌아갈 엣지 칩에서 측정하고, 평가 전에 써 둔 규칙으로 배포 여부를 결정합니다. 가장 좋은 student는 Jetson Orin Nano와 Hailo-8 모두에서 택배 도착 <strong>26건 중 25건</strong>을 잡았지만, 오탐이 시간당 <strong>4.24회</strong>(Jetson, Hailo-8은 4.59회)로 한도 1회를 넘어 HOLD됐습니다. 일부러 망가뜨린 빌드 12개도 모두 HOLD였고, 배포된 빌드는 없습니다.</p>
+</div>
+<div class="paper-teaser">
+<div class="paper-figure paper-figure-main">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/preview.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="11월 4일 라이브: 상자 다섯 개를 차례로 놓은 장면. 세 개는 학습에 쓴 상자, 두 개는 처음 보는 상자이고, 각각 알림이 한 번씩 왔습니다."><img src="assets/preview.gif" class="paper-image img-fluid figure-img" alt="11월 4일 라이브: 상자 다섯 개를 차례로 놓은 장면. 세 개는 학습에 쓴 상자, 두 개는 처음 보는 상자이고, 각각 알림이 한 번씩 왔습니다."></a></p>
+<figcaption>11월 4일 라이브: 상자 다섯 개를 차례로 놓은 장면. 세 개는 학습에 쓴 상자, 두 개는 처음 보는 상자이고, 각각 알림이 한 번씩 왔습니다.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>과제는 “현관에 택배가 놓이면 알려줘”입니다. 이 장면의 러너는 측정 모드라 모든 알림에 TEST가 붙습니다. 승인된 빌드가 없으므로 배포된 것은 없습니다. 이 페이지의 판정은 이 라이브 장면이 아니라 고정된 평가 세션에서 나왔습니다.</p>
+</div>
+</div>
+</div>
+<div class="paper-metric-strip">
+<div class="paper-metric">
+<p><strong>25/26 → HOLD</strong> <span>가장 좋은 student가 두 칩에서 잡은 도착 수. 오탐이 시간당 4.24회(Jetson), 4.59회(Hailo-8)로 한도 1회를 넘어 HOLD</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>12/12</strong> <span>일부러 망가뜨린 빌드(색 채널 뒤바꿈, 정규화 누락, 4-bit weight, calibration 이미지 10장)가 모두 HOLD</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>20 · 4 · 0</strong> <span>같은 기록으로 always-deploy, 오탐만 보는 게이트, 규칙이 각각 배포했을 빌드 수</span></p>
+</div>
+</div>
+</section><section id="개요" class="level2"><h2 class="anchored" data-anchor-id="개요">개요</h2>
+<div class="paper-summary-grid">
+<section id="문제" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="문제">문제</h3>
+<p>엣지 비전 모델은 재학습, 양자화, 재컴파일, 장치 변경을 거치고, 그때마다 동작이 달라질 수 있습니다. 데모는 빌드 하나가 한 번 돌아갔다는 것만 보여줍니다. <strong>지금 배포하려는 그 파일이 그 장치에서</strong> 요구사항을 만족하는지는 보여주지 않습니다. 여기서 요구사항은 택배가 놓이면 10초 안에, 헛알림 없이 알리는 것입니다.</p>
+</section><section id="접근" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="접근">접근</h3>
+<p>각 빌드를 자기 장치에서 고정된 평가 녹화로 측정합니다. 결과 기록은 모델, 컴파일된 파일, 장치, 런타임, 평가셋, 이벤트 설정에 해시로 묶입니다. <strong>후보를 측정하기 전에 써 둔 규칙</strong>이 PASS와 HOLD를 정하고, Muse Glimmer 30B는 근거를 감사해 HOLD를 더할 수만 있습니다.</p>
+</section><section id="결과" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="결과">결과</h3>
+<p>student 네 개의 빌드 20개를 2시간 50분 분량의 평가 세션으로 측정했습니다. Jetson Orin Nano Super에서는 TensorRT, Raspberry Pi 5 + Hailo-8에서는 HEF입니다. 통과한 빌드는 없습니다. 같은 기록으로 더 단순한 정책이었다면 무엇을 배포했을지도 함께 보입니다.</p>
+</section>
+</div>
+</section><section id="한-문장에서-판정까지" class="level2"><h2 class="anchored" data-anchor-id="한-문장에서-판정까지">한 문장에서 판정까지</h2>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/pipeline.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="위: 직접 찍은 녹화로 GX10에서 과제를 학습하고, 칩별로 컴파일하며, 일부러 결함을 넣은 빌드도 만듭니다. 아래: 모든 빌드를 자기 장치에서 측정하고 규칙이 판정합니다. Glimmer의 감사는 PASS를 HOLD로 바꿀 수만 있습니다."><img src="assets/pipeline.svg" class="paper-image img-fluid figure-img" alt="위: 직접 찍은 녹화로 GX10에서 과제를 학습하고, 칩별로 컴파일하며, 일부러 결함을 넣은 빌드도 만듭니다. 아래: 모든 빌드를 자기 장치에서 측정하고 규칙이 판정합니다. Glimmer의 감사는 PASS를 HOLD로 바꿀 수만 있습니다."></a></p>
+<figcaption>위: 직접 찍은 녹화로 GX10에서 과제를 학습하고, 칩별로 컴파일하며, 일부러 결함을 넣은 빌드도 만듭니다. 아래: 모든 빌드를 자기 장치에서 측정하고 규칙이 판정합니다. Glimmer의 감사는 PASS를 HOLD로 바꿀 수만 있습니다.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>SAM 3.1은 학습 세션에만 라벨을 답니다. 그 라벨로 YOLOv8n student를 distill해 ONNX로 내보내고, Jetson용 TensorRT FP16과 Hailo-8용 INT8 HEF로 컴파일합니다. 평가 프레임과 그 정답은 학습이나 calibration에 한 번도 쓰지 않았습니다.</p>
+</div>
+</div>
+</section><section id="게이트-기록이-맞아야-하는-것" class="level2"><h2 class="anchored" data-anchor-id="게이트-기록이-맞아야-하는-것">게이트: 기록이 맞아야 하는 것</h2>
+<div class="paper-pipeline">
+<div class="pipeline-stage">
+<span>측정</span> <strong>실제 장치에서</strong>
+<p>
+모든 빌드가 같은 고정 녹화를 자기 장치에서 처리합니다. 추론, 디코딩, 도착 규칙을 그 장치에서 실행하고 시간을 잽니다. 검출 결과는 모든 빌드에 같은 코드로 이벤트 점수가 매겨집니다.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>결속</span> <strong>정확히 그 대상에만</strong>
+<p>
+기록은 그 모델 해시, 컴파일 파일 해시, 대상 장치와 런타임, 평가셋 해시, 이벤트 설정에만 유효하고 24시간 뒤 만료됩니다. 평가셋 해시는 후보를 측정하기 전에 정책에 적어 두었습니다.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>판정</span> <strong>규칙이 정하고, 감사가 뒤따름</strong>
+<p>
+이벤트 recall ≥ 0.9, 오탐 시간당 ≤ 1회, 중복 알림 0, 검출 지연 p95 ≤ 5초, 지연 p95 ≤ 100 ms(Hailo-8: 50 ms), 최대 메모리 ≤ 2 GB. Glimmer는 PASS를 거부할 수 있지만 HOLD를 풀 수는 없습니다.
+</p>
+</div>
+</div>
+</section><section id="결과-1" class="level2"><h2 class="anchored" data-anchor-id="결과-1">결과</h2>
+<div class="paper-result-grid">
+<section id="모든-빌드-자기-장치에서-측정" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="모든-빌드-자기-장치에서-측정">모든 빌드, 자기 장치에서 측정</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/builds_v2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="평가셋 v2에서 측정한 모든 빌드의 이벤트 recall과 시간당 오탐. PASS 영역은 비어 있습니다."><img src="assets/builds_v2.png" class="paper-image img-fluid figure-img" alt="평가셋 v2에서 측정한 모든 빌드의 이벤트 recall과 시간당 오탐. PASS 영역은 비어 있습니다."></a></p>
+<figcaption>평가셋 v2에서 측정한 모든 빌드의 이벤트 recall과 시간당 오탐. PASS 영역은 비어 있습니다.</figcaption></figure>
+</div>
+<p>평가셋 v2: 세션 e01–e06과 u01, 2시간 50분, 채점 대상 도착 26건. 스탠드 하나만 켠 밤, 방 조명을 켠 밤, 비 오는 낮, 택배 없이 2시간 비워 둔 구간이 들어 있습니다. 기준값은 한 번도 바꾸지 않았습니다.</p>
+</section><section id="student-네-개" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="student-네-개">student 네 개</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 10%">
+</colgroup>
+<thead><tr class="header">
+<th>Student</th>
+<th>학습 데이터</th>
+<th>Backend</th>
+<th style="text-align: right;">Recall</th>
+<th style="text-align: right;">오탐/h</th>
+<th style="text-align: right;">중복</th>
+<th style="text-align: right;">추론 지연 p95</th>
+<th>HOLD 사유</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>s1 (YOLOv8n)</td>
+<td>t01–t03</td>
+<td>Jetson (TensorRT)</td>
+<td style="text-align: right;">0.885</td>
+<td style="text-align: right;">5.65</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.4 ms</td>
+<td>recall, 오탐, 중복</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.846</td>
+<td style="text-align: right;">7.06</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16.1 ms</td>
+<td>recall, 오탐, 중복</td>
+</tr>
+<tr class="odd">
+<td>s2 (YOLOv8n)</td>
+<td>t01–t03, 재라벨</td>
+<td>Jetson (TensorRT)</td>
+<td style="text-align: right;">0.731</td>
+<td style="text-align: right;">3.18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">19.4 ms</td>
+<td>recall, 오탐</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.731</td>
+<td style="text-align: right;">2.12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15.4 ms</td>
+<td>recall, 오탐</td>
+</tr>
+<tr class="odd">
+<td><strong>s3 (YOLOv8n)</strong></td>
+<td>t01–t05</td>
+<td>Jetson (TensorRT)</td>
+<td style="text-align: right;"><strong>0.962</strong></td>
+<td style="text-align: right;">4.24</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">19.5 ms</td>
+<td>오탐</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>Hailo-8</td>
+<td style="text-align: right;"><strong>0.962</strong></td>
+<td style="text-align: right;">4.59</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15.9 ms</td>
+<td>오탐, 중복</td>
+</tr>
+<tr class="odd">
+<td>s4 (YOLOv8s)</td>
+<td>t01–t05</td>
+<td>Jetson (TensorRT)</td>
+<td style="text-align: right;">0.846</td>
+<td style="text-align: right;">4.95</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">22.9 ms</td>
+<td>recall, 오탐</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.885</td>
+<td style="text-align: right;">4.95</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">21.5 ms</td>
+<td>recall, 오탐</td>
+</tr>
+</tbody>
+</table>
+<p>s3가 유일한 개선 라운드입니다. s1이 어두울 때 도착을 놓친 뒤 학습용 밤 녹화를 두 번 더 했고, s3와 s4를 t01–t05로 한 번씩 학습했습니다. Jetson에서 recall은 0.885에서 0.962로 올랐고 중복 알림도 사라졌지만 오탐은 줄지 않았습니다. GX10의 ONNX 기준 모델도 TensorRT 빌드와 같은 recall과 오탐 수를 냅니다.</p>
+</section><section id="가장-좋은-모델이-hold된-이유" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="가장-좋은-모델이-hold된-이유">가장 좋은 모델이 HOLD된 이유</h3>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>s3 오탐 12건의 원인</th>
+<th style="text-align: right;">건수</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>규칙: 영역 안에서 손에 든 상자</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td>규칙: 영역 경계에 걸쳐 내려놓은 상자</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td>어둠 속 검출 실패 또는 없는 상자 검출</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<p>오탐은 한 건씩 프레임 단위로 확인했습니다. 12건 모두 사람이 있던 50분에 몰려 있고(사람과 상자가 움직이는 동안 시간당 약 14회), 비워 둔 2시간에는 0건입니다. 9건이 이벤트 규칙이 손과 경계를 만나서 생긴 것이므로, 다음 수정 대상은 모델이 아니라 규칙입니다. 새 정책 버전으로 만들어 새 세션에서 측정해야 합니다.</p>
+</section><section id="같은-기록-네-가지-판정-방식" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="같은-기록-네-가지-판정-방식">같은 기록, 네 가지 판정 방식</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead><tr class="header">
+<th>정책</th>
+<th style="text-align: right;">배포</th>
+<th>의미</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Always deploy</td>
+<td style="text-align: right;">20</td>
+<td>17개는 도착의 10% 넘게 놓치고, 16개는 오탐이 시간당 1회를 넘음</td>
+</tr>
+<tr class="even">
+<td>오탐만 확인</td>
+<td style="text-align: right;">4</td>
+<td>알림을 아예 내지 않는 빌드 3개와, 26건 중 8건만 잡는 <code>s4 w4</code>
+</td>
+</tr>
+<tr class="odd">
+<td>규칙</td>
+<td style="text-align: right;">0</td>
+<td>모든 빌드 HOLD, 사유 출력</td>
+</tr>
+<tr class="even">
+<td>규칙 + Glimmer</td>
+<td style="text-align: right;">0</td>
+<td>4개 빌드 감사, 거부 0건. 규칙이 이미 HOLD한 빌드였음</td>
+</tr>
+</tbody>
+</table>
+<p>“Always deploy”는 기록으로 계산한 가정일 뿐, 실제로 배포하지 않았습니다.</p>
+</section><section id="일부러-망가뜨린-빌드-모두-hold" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="일부러-망가뜨린-빌드-모두-hold">일부러 망가뜨린 빌드: 모두 HOLD</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 10%">
+</colgroup>
+<thead><tr class="header">
+<th>Student</th>
+<th>결함</th>
+<th>Backend</th>
+<th style="text-align: right;">Recall</th>
+<th style="text-align: right;">오탐/h</th>
+<th style="text-align: right;">중복</th>
+<th style="text-align: right;">검출 지연 p95</th>
+<th>HOLD 사유</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>s3</td>
+<td>bgr</td>
+<td>Jetson</td>
+<td style="text-align: right;">0.769</td>
+<td style="text-align: right;">3.53</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.2 s</td>
+<td>recall, 오탐, 중복</td>
+</tr>
+<tr class="even">
+<td>s3</td>
+<td>bgr</td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.808</td>
+<td style="text-align: right;">3.89</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.4 s</td>
+<td>recall, 오탐, 중복</td>
+</tr>
+<tr class="odd">
+<td>s3</td>
+<td>no_norm</td>
+<td>Jetson</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">–</td>
+<td>recall, 지연 (알림 없음)</td>
+</tr>
+<tr class="even">
+<td>s3</td>
+<td>no_norm</td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">–</td>
+<td>recall, 지연 (알림 없음)</td>
+</tr>
+<tr class="odd">
+<td>s3</td>
+<td>w4</td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.615</td>
+<td style="text-align: right;">4.59</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6.8 s</td>
+<td>recall, 오탐, 중복, 지연</td>
+</tr>
+<tr class="even">
+<td>s3</td>
+<td>calib10</td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.923</td>
+<td style="text-align: right;">5.30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.1 s</td>
+<td>오탐, 중복</td>
+</tr>
+<tr class="odd">
+<td>s4</td>
+<td>bgr</td>
+<td>Jetson</td>
+<td style="text-align: right;">0.692</td>
+<td style="text-align: right;">5.30</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3.3 s</td>
+<td>recall, 오탐, 중복</td>
+</tr>
+<tr class="even">
+<td>s4</td>
+<td>bgr</td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.769</td>
+<td style="text-align: right;">3.18</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3.3 s</td>
+<td>recall, 오탐, 중복</td>
+</tr>
+<tr class="odd">
+<td>s4</td>
+<td>no_norm</td>
+<td>Jetson</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">–</td>
+<td>recall, 지연 (알림 없음)</td>
+</tr>
+<tr class="even">
+<td>s4</td>
+<td>no_norm</td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.269</td>
+<td style="text-align: right;">3.18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2.5 s</td>
+<td>recall, 오탐</td>
+</tr>
+<tr class="odd">
+<td><strong>s4</strong></td>
+<td><strong>w4</strong></td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.308</td>
+<td style="text-align: right;"><strong>0.353</strong></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3.4 s</td>
+<td><strong>recall</strong></td>
+</tr>
+<tr class="even">
+<td>s4</td>
+<td>calib10</td>
+<td>Hailo-8</td>
+<td style="text-align: right;">0.885</td>
+<td style="text-align: right;">3.89</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3.1 s</td>
+<td>recall, 오탐, 중복</td>
+</tr>
+</tbody>
+</table>
+<p><code>bgr</code>은 컴파일 전에 색 채널을 뒤바꾸고, <code>no_norm</code>은 입력 정규화를 빼고, <code>w4</code>는 Hailo-8에서 4-bit weight를 쓰고, <code>calib10</code>은 calibration 이미지를 64장 대신 10장만 씁니다. <code>s4 w4</code>는 알림을 내는 빌드 중 오탐이 가장 적은데, 그 이유가 도착의 69%를 놓치기 때문입니다. 오탐만 보는 게이트라면 이 빌드를 배포했을 것입니다.</p>
+</section><section id="알림-전달-같은-시계로-측정" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="알림-전달-같은-시계로-측정">알림 전달, 같은 시계로 측정</h3>
+<p>판정을 내린 프레임부터 푸시 서버까지 <strong>1.2초</strong>입니다. 후보를 측정하기 전에 실제 경로에서 재서 정책에 적어 둔 값입니다. 휴대폰의 카메라 플래시 알림까지는 <strong>1.7–2.4초</strong>로, 11월 3일 라이브 세션의 알림 4건 모두에서 쟀습니다. 기록 안의 10초 요구사항은 푸시 서버까지만 검증된 것입니다.</p>
+</section><section id="바꿔치기한-파일은-실행되지-않음" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="바꿔치기한-파일은-실행되지-않음">바꿔치기한 파일은 실행되지 않음</h3>
+<p>통과한 실제 빌드가 없어서, PASS 경로는 오탐 한도만 5로 올린 별도 표시의 테스트 정책으로 확인했습니다. 실제 정책은 s3의 새 Jetson 기록을 HOLD했고, 테스트 정책은 PASS했습니다. <code>deploy.py</code>가 승인 기록을 쓰고 러너를 시작했으며, 재생한 도착에 알림이 왔습니다. 같은 승인으로 다른 모델 파일을 실행하자 거부됐습니다: <code>not starting: this model file is not the approved one</code>.</p>
+</section>
+</div>
+</section><section id="학습에-쓴-상자-처음-보는-상자" class="level2"><h2 class="anchored" data-anchor-id="학습에-쓴-상자-처음-보는-상자">학습에 쓴 상자, 처음 보는 상자</h2>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/boxes.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="세 상자는 학습과 calibration 세션에 나오고, 두 상자는 평가 세션에만 나옵니다."><img src="assets/boxes.jpg" class="paper-image img-fluid figure-img" alt="세 상자는 학습과 calibration 세션에 나오고, 두 상자는 평가 세션에만 나옵니다."></a></p>
+<figcaption>세 상자는 학습과 calibration 세션에 나오고, 두 상자는 평가 세션에만 나옵니다.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>왼쪽: 학습·calibration 세션 t01–t05, c01에 나오는 상자. 오른쪽: 평가 세션 e01–e06에만 나오는 상자. 표시된 값은 상자 가로 길이입니다.</p>
+</div>
+</div>
+</section><section id="영상" class="level2"><h2 class="anchored" data-anchor-id="영상">영상</h2>
+<div style="position:relative;width:100%;aspect-ratio:16/9;margin:0.5rem 0 1.5rem">
+  <iframe src="https://www.youtube-nocookie.com/embed/J4OQVwTwqV8" title="EdgeGate 영상 (3분)" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:6px" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+</section><section id="meta-모델을-쓴-방식" class="level2"><h2 class="anchored" data-anchor-id="meta-모델을-쓴-방식">Meta 모델을 쓴 방식</h2>
+<div class="paper-method">
+<div class="paper-method-steps">
+<ol type="1">
+<li>
+<strong>SAM 3.1</strong>이 GX10에서 학습 세션에 라벨을 답니다. YOLOv8n·YOLOv8s student는 이 라벨로 distill했습니다. 평가 정답은 사람이 직접 표시했고, SAM은 평가 프레임을 보지 않았습니다.</li>
+<li>
+<strong>Muse Glimmer 30B</strong>는 GX10에서 로컬로 띄운 open weights 모델로, MCP 도구로 후보를 감사합니다. 규칙 판정, 평가 coverage, slice별 recall(조명, 크기, 태그, 세션)을 봅니다. 규칙이 PASS한 backend에만, 자기 감사에서 나온 근거를 인용할 때만 HOLD를 제안할 수 있습니다.</li>
+<li>
+<strong>Muse Spark 1.3</strong>과 <strong>Muse Voice Transcribe</strong>는 타이핑하거나 말한 한 문장을 과제 사양으로 바꿉니다. 이 사양은 사람이 쓴 정책과 대조할 뿐, 정책에 쓰이지 않습니다.</li>
+</ol>
+</div>
+<section id="각-모델이-실제로-기여한-것" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="각-모델이-실제로-기여한-것">각 모델이 실제로 기여한 것</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>모델</th>
+<th>기여</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>SAM 3.1</td>
+<td>학습 라벨</td>
+</tr>
+<tr class="even">
+<td>측정값과 규칙</td>
+<td>모든 판정</td>
+</tr>
+<tr class="odd">
+<td>Glimmer 30B</td>
+<td>실제 빌드 4개 감사, 거부 0건(모두 이미 HOLD). 합성 사례 5개 × 3회 × 장치 2대에서 예상 판정 30/30</td>
+</tr>
+<tr class="even">
+<td>Spark와 Voice</td>
+<td>정책과 일치하는 사양. 후보를 측정한 뒤에 추가</td>
+</tr>
+</tbody>
+</table></section>
+</div>
+</section><section id="배운-점과-한계" class="level2"><h2 class="anchored" data-anchor-id="배운-점과-한계">배운 점과 한계</h2>
+<div class="paper-summary-grid">
+<section id="배운-점" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="배운-점">배운 점</h3>
+<ul>
+<li>높은 recall이 배포 결정은 아닙니다. 가장 좋은 모델은 오탐 때문에 HOLD됐고, 지표 하나만 보는 게이트는 도착 26건 중 8건만 잡는 빌드를 배포했을 것입니다.</li>
+<li>근거를 정확히 그 파일에 묶어야 합니다. 모델, 컴파일 파일, 장치, 런타임, 평가셋, 설정, 그리고 만료 시각까지.</li>
+<li>오탐 대부분은 검출기가 아니라, 이벤트 규칙이 손과 경계를 만나서 생겼습니다.</li>
+</ul></section><section id="한계" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="한계">한계</h3>
+<ul>
+<li>집 한 곳, 카메라 한 대, 영역 하나, 도착 26건입니다. s3 recall의 95% 단측 하한은 0.83이고, 정책은 아직 표본 크기를 검사하지 않습니다.</li>
+<li>통과한 실제 빌드가 없어서 PASS 경로는 별도 표시의 테스트 정책으로만 보였습니다.</li>
+<li>실제 빌드에서 Glimmer의 거부권이 필요했던 적은 없고, 단순한 slice 규칙보다 나은지는 보이지 않았습니다. 승인은 서명되지 않은 로컬 파일이며, 러너가 시작할 때만 확인합니다.</li>
+</ul></section><section id="출처" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="출처">출처</h3>
+<p>2026년 10월 26일부터 11월 4일 사이에 처음부터 만들었습니다. 모든 측정 기록, 감사, 판정이 저장소에 커밋돼 있어 하드웨어 없이 재현되고, CI가 push마다 비교표를 다시 만들어 대조합니다. 평가 세션은 사람을 블러 처리해 Hugging Face에 공개했습니다(CC BY-NC 4.0). 코드는 AGPL-3.0입니다.</p>
+</section>
+</div>
+</section><section id="인용" class="level2"><h2 class="anchored" data-anchor-id="인용">인용</h2>
+<div class="paper-citation">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">@software{kang2026edgegate,</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">  title  = {EdgeGate: A Deployment Gate for Edge Vision},</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">  author = {Kang, Chanseok},</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  year   = {2026},</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  url    = {https://github.com/goodboychan/edgeGate},</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  note   = {Meta Global AI Developer Hackathon 2026, Indie developer track}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+
+
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+</body>
+</html>

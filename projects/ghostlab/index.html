@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/projects/ghostlab/index.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/projects/ghostlab/index.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="A hands-only Meta Quest workbench for inspecting recorded SO-101 motion: select a note, replay the joint, and save an observation to revisit offline.">
+<title>GhostLab: Review Robot Motion with Your Hands – Chan's Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<link rel="stylesheet" href="assets/ghostlab.css">
+<meta property="og:title" content="GhostLab: Review Robot Motion with Your Hands">
+<meta property="og:description" content="A hands-only Meta Quest workbench for inspecting recorded SO-101 motion: select a note, replay the joint, and save an observation to revisit offline.">
+<meta property="og:image" content="https://kcsgoodboy.github.io/projects/ghostlab/assets/01-ghostlab-cover.jpg">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta name="twitter:title" content="GhostLab: Review Robot Motion with Your Hands">
+<meta name="twitter:description" content="A hands-only Meta Quest workbench for inspecting recorded SO-101 motion: select a note, replay the joint, and save an observation to revisit offline.">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/projects/ghostlab/assets/01-ghostlab-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/projects/ghostlab/index.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><div class="paper-project ghostlab-project">
+<div class="paper-hero">
+<p><img class="ghostlab-logo" src="assets/ghostlab-logo.png" alt="GhostLab logo: a robot arm and its motion echo inside a G" width="160" height="160"></p>
+<h1 class="paper-title">
+GhostLab: Review Robot Motion <br>with Your Hands
+</h1>
+<div class="paper-venue">
+<p>Meta VR Start Developer Competition 2026 · Productivity · New Experience</p>
+</div>
+<div class="paper-authors">
+<p><a class="paper-author" href="https://kcsgoodboy.github.io/about.html">Chanseok Kang</a></p>
+</div>
+<div class="paper-affiliation">
+<p>SO-101 robotics · Meta Quest · Spatial motion review</p>
+</div>
+<div class="paper-links">
+<p><a class="paper-button ghostlab-primary" href="https://www.meta.com/s/caSHme36e">Try on Quest</a> <a class="paper-button" href="https://youtu.be/N_KHN0hDETw">Watch the demo</a> <a class="paper-button" href="https://devpost.com/software/ghostlab-ximb0c">Devpost</a> <a class="paper-button" href="https://github.com/goodboychan/GhostLab">Code &amp; records</a> <a class="paper-button" href="https://huggingface.co/datasets/chans/quantgate-so101-coaster">Demonstration dataset</a></p>
+</div>
+</div>
+<section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<div class="paper-tldr">
+<p><strong>Find the moment. Replay it. Keep the review.</strong> GhostLab turns a recorded robot run into a workbench you can inspect at arm’s length. Press a timestamped note, watch the relevant joint at quarter speed, and save an observation you can reopen offline. The bundled experience works on a Quest alone, without a robot, workstation or API key.</p>
+</div>
+<div class="paper-teaser">
+<div class="paper-figure paper-figure-main">
+<p><a href="assets/01-ghostlab-cover.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/01-ghostlab-cover.jpg" class="paper-image img-fluid" alt="The GhostLab workbench with an SO-101 model, estimated tip trail and timestamped motion notes."></a></p>
+<div class="paper-media-caption">
+<p>Native Quest 2 capture from GhostLab 0.6.9. The solid arm follows measured joint data; the teal trail estimates the gripper-tip position. Each note links an observation to its time in the original recording.</p>
+</div>
+</div>
+</div>
+<div class="paper-metric-strip">
+<div class="paper-metric">
+<p><strong>60 seconds</strong> <span>1,797 samples from a real SO-101 policy run, bundled with the app</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>0.25× replay</strong> <span>A short interval around a selected event, with its joint highlighted</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>Offline review</strong> <span>Reopen the source, selected range, cursor and playback speed on the headset</span></p>
+</div>
+</div>
+</section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div class="paper-summary-grid">
+<section id="problem" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="problem">Problem</h3>
+<p>After a robot run, understanding what happened often means moving between camera footage and joint plots. The movement is spatial, but the review takes place across separate two-dimensional views.</p>
+</section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
+<p>Bring the recorded arm into a seated Quest workbench. Use hand tracking to move through time, inspect a measured event and keep the interval that matters.</p>
+</section><section id="result" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="result">Result</h3>
+<p>A complete note-to-review workflow: select, replay, save and reopen. Version 0.6.10 adds a four-step guide and clearer visual feedback, tested on Quest 2.</p>
+</section>
+</div>
+</section><section id="from-teaching-a-robot-to-reviewing-its-motion" class="level2"><h2 class="anchored" data-anchor-id="from-teaching-a-robot-to-reviewing-its-motion">From teaching a robot to reviewing its motion</h2>
+<p>The idea began while I was teleoperating an SO-101. On the bench, we recorded <strong>120 demonstrations</strong> of a can-to-coaster task, published them on Hugging Face, and trained an <strong>ACT policy on 80 of them</strong>. Once the policy ran on its own, I wanted to examine the resulting motion in a virtual environment, using my hands to move through time.</p>
+<p>GhostLab opens on <code>rollout_main012_1008_004335</code>: a <strong>learned-policy execution</strong> in which the arm picks up a cola can and stands it upright on a coaster. The public demonstrations are its training-data context; the bundled run is the policy’s resulting behavior. Keeping that distinction visible is part of the review.</p>
+<div class="paper-pipeline">
+<div class="pipeline-stage">
+<span>Recorded motion</span> <strong>Keep the source</strong>
+<p>
+Load the original run with measured joints, source timestamps and any available logged targets. Missing data remains a gap.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>Spatial inspection</span> <strong>Find the event</strong>
+<p>
+Select a timestamped observation or drag the timeline. Replay the relevant joint slowly and inspect the estimated tip trail.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>Saved review</span> <strong>Return to the context</strong>
+<p>
+Keep the event, source, interval and tag together. Reopen the observation after restarting the app, including offline.
+</p>
+</div>
+</div>
+</section><section id="watch-the-experience" class="level2"><h2 class="anchored" data-anchor-id="watch-the-experience">Watch the experience</h2>
+<div class="paper-figure">
+<div class="ghostlab-video">
+  <iframe src="https://www.youtube-nocookie.com/embed/N_KHN0hDETw" title="GhostLab — narrated 2 minute 53 second demo" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+</div>
+<div class="paper-media-caption">
+<p>The <strong>2:53 demo</strong> uses human narration, English captions and native Quest 2 footage. Scene 3 was captured on 0.6.8; scenes 4–9 use 0.6.9. The same review flow is available in 0.6.10, with the additional guidance shown below. <a href="https://youtu.be/N_KHN0hDETw">Watch on YouTube</a>.</p>
+</div>
+</div>
+</section><section id="use-your-hands-to-move-through-time" class="level2"><h2 class="anchored" data-anchor-id="use-your-hands-to-move-through-time">Use your hands to move through time</h2>
+<div class="paper-media-grid">
+<section id="select-a-note" class="level3 paper-media-card"><h3 class="anchored" data-anchor-id="select-a-note">Select a note</h3>
+<p><a href="assets/02-control-with-your-hands.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/02-control-with-your-hands.jpg" class="paper-image img-fluid" loading="lazy" alt="A tracked fingertip approaching the gripper note and its press-ready cue."></a></p>
+<div class="paper-media-caption">
+<p>Point and press a time card, or pinch and release over it. The fingertip and intended target light up together. Controllers are not required.</p>
+</div>
+</section><section id="replay-the-joint" class="level3 paper-media-card"><h3 class="anchored" data-anchor-id="replay-the-joint">Replay the joint</h3>
+<p><a href="assets/03-replay-the-moment.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/03-replay-the-moment.jpg" class="paper-image img-fluid" loading="lazy" alt="The gripper highlighted during a quarter-speed replay."></a></p>
+<div class="paper-media-caption">
+<p>The <strong>4.21s</strong> example selects a gripper reversal. <strong>Replay moment</strong> plays a short interval at 0.25×, pulses the joint at the event and stops at <strong>5.41s</strong>.</p>
+</div>
+</section><section id="keep-the-observation" class="level3 paper-media-card"><h3 class="anchored" data-anchor-id="keep-the-observation">Keep the observation</h3>
+<p><a href="assets/05-save-an-observation.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="assets/05-save-an-observation.jpg" class="paper-image img-fluid" loading="lazy" alt="A saved Gripper reversal card with its replay interval and review tag."></a></p>
+<div class="paper-media-caption">
+<p>After natural replay completion, the same front button becomes <strong>Save this moment</strong>. A separate press saves the observation. Reopening its named card returns to the original event.</p>
+</div>
+</section><section id="return-offline" class="level3 paper-media-card"><h3 class="anchored" data-anchor-id="return-offline">Return offline</h3>
+<p><a href="assets/06-return-offline.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="assets/06-return-offline.jpg" class="paper-image img-fluid" loading="lazy" alt="A saved range reopened with its cursor and quarter-speed setting restored."></a></p>
+<div class="paper-media-caption">
+<p>For your own interval, pinch and drag the white timeline marker, set start and end, then save a tagged range. The recorded offline check restored <strong>13.7–20.3s</strong>, the <strong>20.3s</strong> cursor and <strong>0.25×</strong> speed.</p>
+</div>
+</section>
+</div>
+</section><section id="motion-notes-connected-to-evidence" class="level2"><h2 class="anchored" data-anchor-id="motion-notes-connected-to-evidence">Motion notes connected to evidence</h2>
+<p>GhostLab analyzes continuous spans of measured joint data before asking a model for language. A reversal requires an excursion of at least <strong>8° on both sides</strong>, or <strong>8 percentage points</strong> for the gripper. Interior reversals can be detected even when the largest excursion occurs at the end of the chosen range. Gaps break the analysis span.</p>
+<p>When the lab gateway is paired, <strong>Meta Muse Ember</strong> receives up to four measured facts and returns one or two supported English observations. The response is checked against the event IDs, joints, values and permitted wording. Selecting a note returns to the same recorded evidence that supports its description.</p>
+<div class="paper-figure ghostlab-table">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead><tr class="header">
+<th>Label in the app</th>
+<th>What it means</th>
+<th>Availability</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><strong>Meta · Example</strong></td>
+<td>Two actual Meta-generated notes bundled with the example run</td>
+<td>Works offline on a fresh headset installation</td>
+</tr>
+<tr class="even">
+<td><strong>On-device analysis</strong></td>
+<td>New observations selected locally from the chosen interval</td>
+<td>Works offline for new ranges</td>
+</tr>
+<tr class="odd">
+<td><strong>Meta · Saved</strong></td>
+<td>A Meta response saved with the user’s review</td>
+<td>Generation needs the paired gateway; the saved result reopens offline</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>New live Meta generation is an optional lab feature. The model API key stays on the GX10; the headset receives its own pairing token. A public generation endpoint is prepared separately and is not part of the standalone first-use experience.</p>
+</section><section id="the-physical-motion-and-its-virtual-reconstruction" class="level2"><h2 class="anchored" data-anchor-id="the-physical-motion-and-its-virtual-reconstruction">The physical motion and its virtual reconstruction</h2>
+<div class="paper-figure paper-figure-main">
+<p><a href="assets/04-real-robot-and-vr.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="assets/04-real-robot-and-vr.jpg" class="paper-image img-fluid" loading="lazy" alt="A camera view of the physical SO-101 beside the same policy run replayed on Quest."></a></p>
+<div class="paper-media-caption">
+<p>An edited comparison from the demo, matching the robot camera recording and Quest replay by control time. This comparison is not an in-app synchronized camera player. The measured joints drive the virtual model; the teal tip path remains a forward-kinematics estimate.</p>
+</div>
+</div>
+<p>A lab-paired headset can also open <strong>Live monitor</strong>. Passthrough reveals the real desk, with a measured SO-101 pose displayed beside the physical Follower. The optional <strong>OpenMV wrist-camera feed</strong> and <strong>Record 20s</strong> capture support bench review. These features require the paired GX10 and robot setup. GhostLab’s connection is read-only and does not command the arm.</p>
+</section><section id="a-clearer-first-review-in-0.6.10" class="level2"><h2 class="anchored" data-anchor-id="a-clearer-first-review-in-0.6.10">A clearer first review in 0.6.10</h2>
+<div class="paper-method">
+<div class="paper-method-steps">
+<ol type="1">
+<li>
+<strong>Select.</strong> Four slim progress segments and a short instruction identify the next action. The example’s first note is emphasized.</li>
+<li>
+<strong>Replay.</strong> Secondary controls become quieter so the selected joint and front replay control remain prominent.</li>
+<li>
+<strong>Save.</strong> <strong>Saved on this headset</strong> confirms success, and the saved card briefly pulses in teal.</li>
+<li>
+<strong>Reopen.</strong> Opening that card completes the guide. Completion persists after restart, so returning users keep the ordinary controls without repeating the introduction.</li>
+</ol>
+<p>The source label and replay stop time remain visible throughout the relevant steps.</p>
+</div>
+<div class="paper-figure">
+<p><a href="assets/review-guide-0.6.10.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="assets/review-guide-0.6.10.png" class="paper-image img-fluid" loading="lazy" alt="The 0.6.10 saved state, with local confirmation, four progress segments and a highlighted review card."></a></p>
+<div class="paper-media-caption">
+<p>Editor render of the 0.6.10 interface. The existing user separately confirmed the guidance, visual emphasis and card reopening on Quest 2.</p>
+</div>
+</div>
+</div>
+</section><section id="validation-and-current-limits" class="level2"><h2 class="anchored" data-anchor-id="validation-and-current-limits">Validation and current limits</h2>
+<div class="paper-figure ghostlab-table">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>Check</th>
+<th>Recorded evidence</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Automated behavior</td>
+<td>
+<strong>111 EditMode + 40 PlayMode tests passed</strong> on November 16, 2026</td>
+</tr>
+<tr class="even">
+<td>Quest 2 use</td>
+<td>The existing user completed note selection, replay, saving and reopening with the new guidance</td>
+</tr>
+<tr class="odd">
+<td>Update and restart</td>
+<td>All <strong>18 existing saved files</strong> survived the update; guide completion and the selected review persisted after restart</td>
+</tr>
+<tr class="even">
+<td>Short performance sample</td>
+<td>
+<strong>27 reports over 27.329 seconds</strong>, each reporting 72 FPS at 72 Hz; three stale frames in total; app GPU p95 <strong>6.78 ms</strong>
+</td>
+</tr>
+<tr class="odd">
+<td>Distribution</td>
+<td>Production-signed <strong>0.6.10 (27)</strong> uploaded to the Competition channel on November 16, 2026</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The performance sample is a short hands-on check, not a five-minute endurance result. Independent first use on Quest 3/3S and installation through another Meta account remain unverified. <a href="https://github.com/goodboychan/GhostLab/blob/main/docs/REVIEW_POLISH_0.6.10.md">Versioned validation record</a>.</p>
+<div class="paper-summary-grid">
+<section id="joint-evidence-and-tip-estimates" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="joint-evidence-and-tip-estimates">Joint evidence and tip estimates</h3>
+<p>The tip trail comes from forward kinematics, not a measured Cartesian position. Physical holdout checks found errors up to <strong>18 cm</strong>. The interface labels the trail as estimated and the amber logged target as unverified.</p>
+</section><section id="observation-and-control" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="observation-and-control">Observation and control</h3>
+<p>The app reviews recorded motion and reads live telemetry. Moving through a clip does not move the physical Follower. Live bench access and wrist video are optional paired features.</p>
+</section><section id="validation-scope" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="validation-scope">Validation scope</h3>
+<p>Automated checks and the existing user’s Quest 2 sessions support the current workflow. They do not establish a general usability success rate, precise tip registration or performance on every headset.</p>
+</section>
+</div>
+</section><section id="try-it-on-quest" class="level2"><h2 class="anchored" data-anchor-id="try-it-on-quest">Try it on Quest</h2>
+<p>Join the <a href="https://www.meta.com/s/caSHme36e">Competition release channel</a> with a Meta account and install GhostLab. Enable hand tracking and sit comfortably at a desk or table.</p>
+<ol type="1">
+<li>Face the workbench; use <strong>Recenter</strong> if needed.</li>
+<li>On first launch, the example notes are already open. On later visits, choose <strong>Try motion notes</strong>.</li>
+<li>Press <strong>4.21s · Gripper</strong>, then <strong>Replay moment</strong>. Lower your hand while it plays.</li>
+<li>After the stop at <strong>5.41s</strong>, press <strong>Save this moment</strong>.</li>
+<li>Open the highlighted card to revisit the event. Use <strong>Review tools</strong> to choose your own interval afterward.</li>
+</ol></section><section id="built-with" class="level2"><h2 class="anchored" data-anchor-id="built-with">Built with</h2>
+<div class="paper-figure ghostlab-table">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>Layer</th>
+<th>Tools and role</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Standalone Quest app</td>
+<td>Unity 6, C#, OpenXR, Unity XR Hands and URP</td>
+</tr>
+<tr class="even">
+<td>Interaction</td>
+<td>Custom finger-press, pinch selection and timeline-drag logic</td>
+</tr>
+<tr class="odd">
+<td>Motion and data</td>
+<td>SO-101 recordings, an ACT policy run, Python import tools and a public LeRobot-format demonstration dataset</td>
+</tr>
+<tr class="even">
+<td>Motion descriptions</td>
+<td>Meta Model API, Muse Ember, evidence validation and local offline analysis</td>
+</tr>
+<tr class="odd">
+<td>Optional bench connection</td>
+<td>GX10, read-only Follower telemetry, Meta passthrough and OpenMV wrist video</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section id="next-steps" class="level2"><h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
+<p>The next step is to test the first review with new users, then bring recorded review onto the real desk through passthrough. Further work includes inspecting demonstration episodes beside policy runs and exporting human-confirmed observations for learning experiments, beginning in simulation. These are planned extensions to the current review tool.</p>
+</section><section id="code-data-and-provenance" class="level2"><h2 class="anchored" data-anchor-id="code-data-and-provenance">Code, data and provenance</h2>
+<ul>
+<li>
+<a href="https://github.com/goodboychan/GhostLab">GhostLab source and engineering records</a>. Repository access is currently restricted; public access is pending as of November 18, 2026.</li>
+<li>
+<a href="https://huggingface.co/datasets/chans/quantgate-so101-coaster">120 SO-101 demonstrations on Hugging Face</a>, released under CC BY 4.0. The bundled example is a separate policy-execution recording, not a demonstration episode.</li>
+<li>
+<a href="https://github.com/goodboychan/nebius-physical-ai">Related QuantGate project</a>, providing the bench and policy-execution context.</li>
+<li>
+<a href="https://devpost.com/software/ghostlab-ximb0c">Devpost project</a> and <a href="https://youtu.be/N_KHN0hDETw">narrated demo</a>.</li>
+</ul>
+<p>The logo and Quest footage were supplied or recorded by Chanseok. The six gallery images show 0.6.9; the new guide screenshot is an editor render from 0.6.10. The page layout follows the <a href="https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/">paired-task audits project page</a>.</p>
+<div class="paper-media-caption">
+<p>Project status checked against the repository records on November 18, 2026.</p>
+</div>
+</section>
+</div>
+
+
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+</body>
+</html>
