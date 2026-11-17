@@ -31,6 +31,10 @@ library(distilltools)
 
 **Chanseok Kang**. (2026) "Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control". To appear at NeurIPS 2026 Workshop: On-Device Intelligence: Foundation Models under Real-World Constraints (ODI), December 2026.
 
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/paired-task-audits-on-device/", target = "_self")`
+`r icon_link(text = "NeurIPS", url = "https://neurips.cc/virtual/2026/loc/sydney/170031")`
+`r icon_link(text = "OpenReview", url = "https://openreview.net/forum?id=gvQyNdXzRc")`
+
 **Chanseok Kang**. (2026) "When Reward and Safety Need Different Model Horizons: A Selection Theorem for Pessimistic Offline Planning". Reinforcement Learning Conference 2026 Workshop: Model-based RL in the Era of Generative World Models (WMW), August 2026.
 
 `r icon_link(text = "OpenReview", url = "https://openreview.net/forum?id=7PWdqDgrd7")`
@@ -38,6 +42,7 @@ library(distilltools)
 Jinwoo Lee, **Chanseok Kang**, Guntae Bae. (2026) "Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer". 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026.
 
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/reward-learning-dryer/", target = "_self")`
+`r icon_link(icon = "ieee", text = "IEEE", url = "https://ieeexplore.ieee.org/document/11704219")`
 
 ## 2024
 

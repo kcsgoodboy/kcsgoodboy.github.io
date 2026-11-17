@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="260" viewBox="0 0 1000 260">
+<style>text{font-family:Inter,Arial,sans-serif}.small{font-size:12px}</style>
+<rect x="0.00" y="0.00" width="1000.00" height="260.00" rx="0.00" fill="#FFFFFF" stroke="none" opacity="1.000" />
+<rect x="94.00" y="10.00" width="770.87" height="74.12" rx="0.00" fill="#EFF7F0" stroke="none" opacity="1.000" />
+<text x="851.87" y="31.00" font-size="16" font-weight="700" fill="#228833" text-anchor="end">CONTRACT REGION</text>
+<line x1="130.71" y1="10.00" x2="130.71" y2="190.00" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="130.71" y="213.00" font-size="15" font-weight="400" fill="#20242A" text-anchor="middle">0.10</text>
+<line x1="314.25" y1="10.00" x2="314.25" y2="190.00" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="314.25" y="213.00" font-size="15" font-weight="400" fill="#20242A" text-anchor="middle">0.20</text>
+<line x1="497.79" y1="10.00" x2="497.79" y2="190.00" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="497.79" y="213.00" font-size="15" font-weight="400" fill="#20242A" text-anchor="middle">0.30</text>
+<line x1="681.33" y1="10.00" x2="681.33" y2="190.00" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="681.33" y="213.00" font-size="15" font-weight="400" fill="#20242A" text-anchor="middle">0.40</text>
+<line x1="864.87" y1="10.00" x2="864.87" y2="190.00" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="864.87" y="213.00" font-size="15" font-weight="400" fill="#20242A" text-anchor="middle">0.50</text>
+<line x1="94.00" y1="190.00" x2="975.00" y2="190.00" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="83.00" y="195.00" font-size="15" font-weight="400" fill="#20242A" text-anchor="end">90%</text>
+<line x1="94.00" y1="147.65" x2="975.00" y2="147.65" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="83.00" y="152.65" font-size="15" font-weight="400" fill="#20242A" text-anchor="end">92%</text>
+<line x1="94.00" y1="105.29" x2="975.00" y2="105.29" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="83.00" y="110.29" font-size="15" font-weight="400" fill="#20242A" text-anchor="end">94%</text>
+<line x1="94.00" y1="84.12" x2="975.00" y2="84.12" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="83.00" y="89.12" font-size="15" font-weight="400" fill="#20242A" text-anchor="end">95%</text>
+<line x1="94.00" y1="62.94" x2="975.00" y2="62.94" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="83.00" y="67.94" font-size="15" font-weight="400" fill="#20242A" text-anchor="end">96%</text>
+<line x1="94.00" y1="20.59" x2="975.00" y2="20.59" stroke="#CDD2D8" stroke-width="0.90" />
+<text x="83.00" y="25.59" font-size="15" font-weight="400" fill="#20242A" text-anchor="end">98%</text>
+<line x1="94.00" y1="190.00" x2="975.00" y2="190.00" stroke="#20242A" stroke-width="1.50" />
+<line x1="94.00" y1="10.00" x2="94.00" y2="190.00" stroke="#20242A" stroke-width="1.50" />
+<line x1="864.87" y1="10.00" x2="864.87" y2="190.00" stroke="#EE6677" stroke-width="2.20" stroke-dasharray="7 5" />
+<line x1="94.00" y1="84.12" x2="975.00" y2="84.12" stroke="#EE6677" stroke-width="2.20" stroke-dasharray="7 5" />
+<rect x="176.11" y="27.87" width="121.64" height="45.50" rx="2.00" fill="#D9EBDD" stroke="#228833" opacity="1.000" />
+<line x1="176.11" y1="50.62" x2="297.75" y2="50.62" stroke="#228833" stroke-width="3.00" />
+<line x1="235.73" y1="27.87" x2="235.73" y2="73.36" stroke="#228833" stroke-width="3.00" />
+<line x1="176.11" y1="43.62" x2="176.11" y2="57.62" stroke="#228833" stroke-width="2.00" />
+<line x1="297.75" y1="43.62" x2="297.75" y2="57.62" stroke="#228833" stroke-width="2.00" />
+<line x1="228.73" y1="27.87" x2="242.73" y2="27.87" stroke="#228833" stroke-width="2.00" />
+<line x1="228.73" y1="73.36" x2="242.73" y2="73.36" stroke="#228833" stroke-width="2.00" />
+<circle cx="235.73" cy="50.62" r="7.00" fill="#228833" stroke="#20242A" stroke-width="1.20" />
+<text x="313.73" y="30.62" font-size="14" font-weight="600" fill="#20242A" text-anchor="start">even</text>
+<text x="313.73" y="52.62" font-size="16" font-weight="700" fill="#228833" text-anchor="start">PASS</text>
+<rect x="310.27" y="63.02" width="150.85" height="57.90" rx="2.00" fill="#F4EFCB" stroke="#CCBB44" opacity="1.000" />
+<line x1="310.27" y1="91.98" x2="461.11" y2="91.98" stroke="#CCBB44" stroke-width="3.00" />
+<line x1="384.04" y1="63.02" x2="384.04" y2="120.93" stroke="#CCBB44" stroke-width="3.00" />
+<line x1="310.27" y1="84.98" x2="310.27" y2="98.98" stroke="#CCBB44" stroke-width="2.00" />
+<line x1="461.11" y1="84.98" x2="461.11" y2="98.98" stroke="#CCBB44" stroke-width="2.00" />
+<line x1="377.04" y1="63.02" x2="391.04" y2="63.02" stroke="#CCBB44" stroke-width="2.00" />
+<line x1="377.04" y1="120.93" x2="391.04" y2="120.93" stroke="#CCBB44" stroke-width="2.00" />
+<circle cx="384.04" cy="91.98" r="7.00" fill="#CCBB44" stroke="#20242A" stroke-width="1.20" />
+<text x="475.04" y="86.98" font-size="14" font-weight="600" fill="#20242A" text-anchor="start">odd</text>
+<text x="475.04" y="110.98" font-size="16" font-weight="700" fill="#CCBB44" text-anchor="start">INDETERMINATE</text>
+<rect x="636.08" y="106.45" width="250.90" height="68.24" rx="2.00" fill="#FBE1E5" stroke="#EE6677" opacity="1.000" />
+<line x1="636.08" y1="139.54" x2="886.98" y2="139.54" stroke="#EE6677" stroke-width="3.00" />
+<line x1="760.03" y1="106.45" x2="760.03" y2="174.70" stroke="#EE6677" stroke-width="3.00" />
+<line x1="636.08" y1="132.54" x2="636.08" y2="146.54" stroke="#EE6677" stroke-width="2.00" />
+<line x1="886.98" y1="132.54" x2="886.98" y2="146.54" stroke="#EE6677" stroke-width="2.00" />
+<line x1="753.03" y1="106.45" x2="767.03" y2="106.45" stroke="#EE6677" stroke-width="2.00" />
+<line x1="753.03" y1="174.70" x2="767.03" y2="174.70" stroke="#EE6677" stroke-width="2.00" />
+<circle cx="760.03" cy="139.54" r="7.00" fill="#EE6677" stroke="#20242A" stroke-width="1.20" />
+<text x="620.03" y="129.54" font-size="14" font-weight="600" fill="#20242A" text-anchor="end">fixed-random</text>
+<text x="620.03" y="153.54" font-size="16" font-weight="700" fill="#EE6677" text-anchor="end">FAIL</text>
+<text x="104.00" y="181.00" font-size="15" font-weight="600" fill="#EE6677" text-anchor="start">phase-middle: ΔR ≈ 15.1, success 21.4% — off scale</text>
+<text x="534.50" y="248.00" font-size="17" font-weight="400" fill="#20242A" text-anchor="middle">Paired return loss (FP32 - deployed)</text>
+<text x="24.00" y="100.00" font-size="17" font-weight="400" fill="#20242A" text-anchor="middle" transform="rotate(-90.00 24.00 100.00)">Terminal success</text>
+</svg>

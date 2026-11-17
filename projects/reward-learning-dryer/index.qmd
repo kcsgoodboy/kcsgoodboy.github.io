@@ -15,7 +15,7 @@ resources:
 <div class="paper-title">Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer</div>
 
 ::: {.paper-venue}
-To appear at 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026
+2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026
 :::
 
 <div class="paper-authors">
@@ -29,7 +29,11 @@ LG Electronics AI Lab
 :::
 
 <div class="paper-links">
-  <span class="paper-button"><i class="fas fa-calendar-check"></i> To appear</span>
+  <a class="paper-button" href="https://ieeexplore.ieee.org/document/11704219" target="_blank" rel="noopener"><i class="ai ai-ieee"></i> IEEE</a>
+  <a class="paper-button" href="https://doi.org/10.1109/CASE69030.2026.11704219" target="_blank" rel="noopener"><i class="fas fa-link"></i> DOI</a>
+  <!-- Add a local manuscript after placing projects/data-driven-rl-washing-machines/assets/paper.pdf:
+  <a class="paper-button" href="assets/paper.pdf"><i class="fas fa-file-pdf"></i> PDF</a>
+  -->
 </div>
 :::
 
