@@ -231,7 +231,7 @@ Supplementary demonstration of dryer tumble-motion control.
 @misc{lee2026sensorRewardDryer,
   title  = {Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer},
   author = {Lee, Jinwoo and Kang, Chanseok and Bae, Guntae},
-  note   = {To appear at 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE)},
+  note   = {2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE)},
   year   = {2026}
 }
 ```
