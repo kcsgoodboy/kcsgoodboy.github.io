@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/index.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/projects/paired-task-audits-on-device/index.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="NeurIPS 2026 ODI 워크숍 논문의 프로젝트 페이지입니다. INT8 label은 controller 하나를 가리키지 않으므로, 컴파일된 artifact를 실제 Edge TPU와 Hailo-8 가속기 위의 paired task outcome으로 판정합니다.">
+<title>Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control – 생각많은 소심남의 연구노트</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control">
+<meta property="og:description" content="NeurIPS 2026 ODI 워크숍 논문의 프로젝트 페이지입니다. INT8 label은 controller 하나를 가리키지 않으므로, 컴파일된 artifact를 실제 Edge TPU와 Hailo-8 가속기 위의 paired task outcome으로 판정합니다.">
+<meta property="og:image" content="https://kcsgoodboy.github.io/ko/projects/paired-task-audits-on-device/contents/images/persona.png">
+<meta property="og:site_name" content="생각많은 소심남의 연구노트">
+<meta name="twitter:title" content="Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control">
+<meta name="twitter:description" content="NeurIPS 2026 ODI 워크숍 논문의 프로젝트 페이지입니다. INT8 label은 controller 하나를 가리키지 않으므로, 컴파일된 artifact를 실제 Edge TPU와 Hailo-8 가속기 위의 paired task outcome으로 판정합니다.">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/projects/paired-task-audits-on-device/contents/images/persona.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">생각많은 소심남의 연구노트</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="검색"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="탐색 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> 한국어</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/index.html" id="language-link-en">English</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">소개</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">블로그</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">출간물</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">활동</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="다크 모드 전환"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><div class="paper-project">
+<div class="paper-hero">
+<div class="paper-title">
+Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control
+</div>
+<div class="paper-venue">
+<p>NeurIPS 2026 Workshop on On-Device Intelligence: Foundation Models under Real-World Constraints (ODI) · Poster · ICC Sydney, 2026년 12월 12일</p>
+</div>
+<div class="paper-authors">
+<p><a class="paper-author" href="../../about.html">Chanseok Kang</a></p>
+</div>
+<div class="paper-affiliation">
+<p>LG Electronics</p>
+</div>
+<div class="paper-links">
+<p><a class="paper-button" href="https://openreview.net/forum?id=gvQyNdXzRc"><i class="fas fa-file-alt"></i> 논문과 리뷰 (OpenReview)</a> <a class="paper-button" href="assets/odi2026_poster.pdf"><i class="fas fa-image"></i> 포스터 (PDF, 61 × 85 cm)</a> <span class="paper-button"><i class="fas fa-code"></i> 코드와 기록: 추후 공개</span></p>
+</div>
+</div>
+<section id="요약" class="level2"><h2 class="anchored" data-anchor-id="요약">요약</h2>
+<div class="paper-tldr">
+<p>“INT8”이라는 label은 controller 하나를 가리키지 않습니다. 같은 policy, 같은 Hailo-8 toolchain 경로, 같은 1,024개의 paired 시작 상태에서 quantizer 범위를 정하는 기록 state만 바꿔도 terminal success가 <strong>96.6%와 21.4%</strong>로 갈립니다. 컴파일된 artifact는 checkpoint나 precision label, local error 통계가 아니라 <strong>실제로 배포되는 그 instance의 paired task outcome</strong>으로 판정해야 합니다.</p>
+</div>
+<div class="paper-teaser">
+<div class="paper-figure paper-figure-main">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/reach_fp32_vs_artifact.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="같은 시작 상태를 기록된 action으로 재생한 장면. FP32 policy(왼쪽)는 goal에 도달하고, phase middle row로 calibration한 Hailo-8 artifact(오른쪽)는 goal에서 멀어집니다."><img src="assets/reach_fp32_vs_artifact.gif" class="paper-image img-fluid figure-img" alt="같은 시작 상태를 기록된 action으로 재생한 장면. FP32 policy(왼쪽)는 goal에 도달하고, phase middle row로 calibration한 Hailo-8 artifact(오른쪽)는 goal에서 멀어집니다."></a></p>
+<figcaption>같은 시작 상태를 기록된 action으로 재생한 장면. FP32 policy(왼쪽)는 goal에 도달하고, phase middle row로 calibration한 Hailo-8 artifact(오른쪽)는 goal에서 멀어집니다.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>device-in-the-loop 후속 실행의 128개 paired 시작 상태 중 하나(episode seed 290000025)를, 기록된 reset state와 각 arm의 기록된 action으로 MuJoCo에서 재생했습니다. 재생된 gripper 위치는 기록과 모든 step에서 정확히 일치합니다. 빨간 점이 goal입니다. 최종 goal 거리: FP32 2.5 cm, artifact 34.3 cm. device 시작 상태 128개 중 82개가 실패하며, 이 장면은 그 중앙값입니다.</p>
+</div>
+</div>
+</div>
+<div class="paper-metric-strip">
+<div class="paper-metric">
+<p><strong>96.6% vs 21.4%</strong> <span>같은 policy를 같은 1,024개 시작 상태에서 실행한 두 Hailo-8 빌드의 terminal success. 다른 것은 calibration row뿐입니다</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>≈30 cm</strong> <span>최선과 최악 artifact 사이의 return 차이 14.93 [14.32, 15.55]를 episode 평균 goal 거리로 환산한 값 (Edge TPU: 0.49)</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>7/8</strong> <span>독립적으로 학습한 policy 중 같은 calibration 변경이 같은 격차를 재현한 수. policy 평균 차이 8.60 [4.42, 12.51]</span></p>
+</div>
+</div>
+</section><section id="개요" class="level2"><h2 class="anchored" data-anchor-id="개요">개요</h2>
+<div class="paper-summary-grid">
+<section id="문제" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="문제">문제</h3>
+<p>Post-training quantization은 소수의 <strong>calibration</strong> state로 8-bit 수치 범위를 고정합니다. 감사한 Hailo 경로에서 compiler는 기본값인 64개 row를 썼고 개수는 보고했지만 어떤 row인지는 남기지 않았습니다. CPU만 있는 빌드 호스트는 최적화 수준을 조용히 level 0으로 낮췄습니다. 두 사실 모두 빌드 기록에 없었습니다.</p>
+</section><section id="접근" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="접근">접근</h3>
+<p><em>deployment instance</em>는 runtime, device, runner, I/O 처리에 묶인 바로 그 실행 파일입니다. 이를 source에서 decision까지의 provenance 기록과 <strong>paired complete-task audit</strong>으로 판정합니다. FP32와 instance를 동일한 시작 상태에서, 매 control step마다 실제 가속기를 써서 실행합니다.</p>
+</section><section id="결과" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="결과">결과</h3>
+<p>policy 하나에 calibration 규칙 여덟 개를 적용하면 여덟 개의 controller가 나오고, Hailo-8에서는 성공률이 96.6%에서 21.4%까지 벌어집니다. 이 효과는 독립적으로 학습한 policy 7/8에서 사전 등록된 조건으로 재현되고, compiler level 1과 3에서도 남습니다. 고정 state의 오차 proxy는 이를 예측하지 못합니다.</p>
+</section>
+</div>
+</section><section id="빌드-기록에-빠진-것" class="level2"><h2 class="anchored" data-anchor-id="빌드-기록에-빠진-것">빌드 기록에 빠진 것</h2>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/pipeline.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="checkpoint에서 outcome까지. 주황색 상자가 원래 빌드 기록이 담지 않은 것들입니다. 같은 checkpoint, 같은 경로, 같은 INT8 label이어도 서로 다른 controller일 수 있습니다."><img src="assets/pipeline.svg" class="paper-image img-fluid figure-img" alt="checkpoint에서 outcome까지. 주황색 상자가 원래 빌드 기록이 담지 않은 것들입니다. 같은 checkpoint, 같은 경로, 같은 INT8 label이어도 서로 다른 controller일 수 있습니다."></a></p>
+<figcaption>checkpoint에서 outcome까지. 주황색 상자가 원래 빌드 기록이 담지 않은 것들입니다. 같은 checkpoint, 같은 경로, 같은 INT8 label이어도 서로 다른 controller일 수 있습니다.</figcaption></figure>
+</div>
+</div>
+</section><section id="감사-설계-calibration-row만-바꾼다" class="level2"><h2 class="anchored" data-anchor-id="감사-설계-calibration-row만-바꾼다">감사 설계: calibration row만 바꾼다</h2>
+<div class="paper-pipeline">
+<div class="pipeline-stage">
+<span>고정</span> <strong>policy 하나, 경로 하나</strong>
+<p>
+SAC FetchReach policy 하나, ONNX export 하나, toolchain–device 경로 하나, 1,024개의 paired reset seed, 그리고 매 control step의 실제 가속기. 시뮬레이터는 디바이스가 action을 돌려준 뒤에만 진행합니다.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>변경</span> <strong>어떤 state로 calibration하는가</strong>
+<p>
+결과를 보기 전에 고정한 여덟 규칙: 짝수/홀수 episode, episode 앞/뒤, phase early/middle/late, fixed random.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>비교</span> <strong>paired task outcome</strong>
+<p>
+같은 시작 상태에서 FP32와 비교한 paired return(경로 전체; FP32 평균 -0.663)과 terminal success(종점). return 0.5은 평균 goal 거리 약 1 cm입니다.
+</p>
+</div>
+</div>
+</section><section id="결과-1" class="level2"><h2 class="anchored" data-anchor-id="결과-1">결과</h2>
+<div class="paper-result-grid">
+<section id="같은-policy-같은-경로-여덟-개의-controller" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="같은-policy-같은-경로-여덟-개의-controller">같은 policy, 같은 경로, 여덟 개의 controller</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/family.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="calibration 규칙별 terminal success와 return loss. Hailo-8(주황)과 Edge TPU(청록)."><img src="assets/family.svg" class="paper-image img-fluid figure-img" alt="calibration 규칙별 terminal success와 return loss. Hailo-8(주황)과 Edge TPU(청록)."></a></p>
+<figcaption>calibration 규칙별 terminal success와 return loss. Hailo-8(주황)과 Edge TPU(청록).</figcaption></figure>
+</div>
+<p>경로당 artifact 8개, 각 1,024개 시작 상태. 경로 내부 이질성은 두 경로 모두 p &lt; 0.001 (Holm). Hailo-8 범위 14.93 [14.32, 15.55], Edge TPU 0.49 [0.46, 0.52]. Edge TPU에서는 return이 가장 나쁜 두 규칙이 성공률은 가장 높습니다. return과 success가 갈라지므로 하나만 보면 행동의 일부를 놓칩니다. 경로 내부 효과이지 vendor 비교가 아닙니다.</p>
+</section><section id="독립적으로-학습한-policy에서도-반복된다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="독립적으로-학습한-policy에서도-반복된다">독립적으로 학습한 policy에서도 반복된다</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/replication.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="policy seed별 early 빼기 middle paired return, Hailo-8 level 0."><img src="assets/replication.svg" class="paper-image img-fluid figure-img" alt="policy seed별 early 빼기 middle paired return, Hailo-8 level 0."></a></p>
+<figcaption>policy seed별 early 빼기 middle paired return, Hailo-8 level 0.</figcaption></figure>
+</div>
+<p>사전 등록된 replication: FetchReach SAC seed 8개 각각에 세 규칙과 256개 paired 시작 상태. Hailo의 early 빼기 middle 대비가 유일한 확증 검정이었습니다. 7/8 policy에서 middle이 early보다 나빴고, policy 평균 차이 8.60 [4.42, 12.51] (≈17 cm), sign-flip p = 0.0156, 통합 성공률 45.9% 대 99.0%.</p>
+</section><section id="compiler를-더-세게-돌려도-사라지지-않는다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="compiler를-더-세게-돌려도-사라지지-않는다">compiler를 더 세게 돌려도 사라지지 않는다</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead><tr class="header">
+<th>8개 규칙 family의 Hailo DFC 빌드</th>
+<th style="text-align: right;">Family range</th>
+<th>95% 구간</th>
+<th>구분</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Level 0 (auto), 64 rows, stride 4</td>
+<td style="text-align: right;">14.93</td>
+<td>[14.32, 15.55]</td>
+<td>locked</td>
+</tr>
+<tr class="even">
+<td>Level 1 (forced), 64 rows, stride 4</td>
+<td style="text-align: right;">14.57</td>
+<td>[13.92, 15.21]</td>
+<td>informed</td>
+</tr>
+<tr class="odd">
+<td>Level 0 (forced), all 256 rows</td>
+<td style="text-align: right;">14.97</td>
+<td>[14.35, 15.58]</td>
+<td>informed</td>
+</tr>
+<tr class="even">
+<td>Level 3 AdaRound, all 256 rows</td>
+<td style="text-align: right;">14.42</td>
+<td>[13.83, 15.04]</td>
+<td>informed</td>
+</tr>
+</tbody>
+</table>
+<p>level 1을 강제하면 모든 artifact의 action field가 바뀌지만 최선-최악 범위는 그대로입니다. level-0 fallback도 AdaRound clamping도 단독으로는 이 폭을 설명하지 못합니다. “informed” 행은 첫 결과를 본 뒤에 설계했습니다.</p>
+</section><section id="기록에는-row의-개수-정체성-그리고-순서가-필요하다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="기록에는-row의-개수-정체성-그리고-순서가-필요하다">기록에는 row의 개수, 정체성, <em>그리고 순서</em>가 필요하다</h3>
+<p>같은 256개 row를 역순으로 공급하자 범위를 정하는 64개 row가 달라졌습니다. 512개 paired 시작 상태에서 terminal success <strong>69.9% → 97.1%</strong>, return +1.23 [1.07, 1.39]. 256개 전체를 쓴 빌드는 명시적인 first-64 대조군과 모든 action과 outcome에서 일치했습니다. toolchain이 보고하는 개수로는 이 중 아무것도 구별할 수 없습니다.</p>
+</section><section id="실패한-artifact는-무엇이-달라졌나" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="실패한-artifact는-무엇이-달라졌나">실패한 artifact는 무엇이 달라졌나</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+</colgroup>
+<thead><tr class="header">
+<th>Calibration 규칙</th>
+<th>Hailo 출력 범위</th>
+<th style="text-align: right;">FP32 범위 밖 (%)</th>
+<th style="text-align: right;">경계값 (%)</th>
+<th style="text-align: right;">Hailo 성공률</th>
+<th style="text-align: right;">Edge TPU 성공률</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Episode head</td>
+<td>[-1.01, 1.00]</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">92.7</td>
+<td style="text-align: right;">91.7</td>
+</tr>
+<tr class="even">
+<td>Episode tail</td>
+<td>[-1.01, 1.00]</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">96.4</td>
+<td style="text-align: right;">96.6</td>
+</tr>
+<tr class="odd">
+<td>Even episodes</td>
+<td>[-1.01, 1.00]</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">96.6</td>
+<td style="text-align: right;">96.7</td>
+</tr>
+<tr class="even">
+<td>Odd episodes</td>
+<td>[-1.01, 1.00]</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">94.6</td>
+<td style="text-align: right;">91.6</td>
+</tr>
+<tr class="odd">
+<td>Phase early</td>
+<td>[-1.01, 1.00]</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">95.7</td>
+<td style="text-align: right;">96.4</td>
+</tr>
+<tr class="even">
+<td><strong>Phase middle</strong></td>
+<td>[-0.66, 0.20]</td>
+<td style="text-align: right;">24.2</td>
+<td style="text-align: right;">21.1</td>
+<td style="text-align: right;"><strong>21.4</strong></td>
+<td style="text-align: right;">97.9</td>
+</tr>
+<tr class="odd">
+<td><strong>Phase late</strong></td>
+<td>[-0.66, 0.20]</td>
+<td style="text-align: right;">24.2</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;"><strong>22.0</strong></td>
+<td style="text-align: right;">97.9</td>
+</tr>
+<tr class="even">
+<td>Fixed random</td>
+<td>[-1.01, 1.00]</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">92.4</td>
+<td style="text-align: right;">96.8</td>
+</tr>
+</tbody>
+</table>
+<p>결과를 본 뒤, 고정된 800개 early-phase state 패널로 조사했습니다. early-phase row가 하나도 없는 두 규칙만 출력(tanh) layer를 좁은 범위로 calibration했고, 그 결과 early FP32 출력의 4분의 1이 범위 밖으로 떨어지며 Hailo-8 성공률이 무너집니다. 같은 규칙의 Edge TPU는 98% 근처를 유지합니다. 기여 요인이지 단독 원인은 아닙니다.</p>
+</section><section id="local-proxy로는-deployment-instance를-판정할-수-없다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="local-proxy로는-deployment-instance를-판정할-수-없다">local proxy로는 deployment instance를 판정할 수 없다</h3>
+<p>평균 action-error norm과 RMSE가 10% 이내로 일치하는, 결과를 보지 않고 고른 artifact 쌍 5개가 paired return에서 0.08–0.17, terminal success에서 최대 5.0 포인트 차이를 보입니다. closed-loop amplification 진단(CLAE)은 선택된 구간에서는 action 크기보다 경보 순위를 잘 매겼지만, 새 데이터에서 사전 지정한 기준을 넘지 못했습니다.</p>
+</section>
+</div>
+</section><section id="실패한-artifact는-reach를-어떻게-바꾸는가" class="level2"><h2 class="anchored" data-anchor-id="실패한-artifact는-reach를-어떻게-바꾸는가">실패한 artifact는 reach를 어떻게 바꾸는가</h2>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/filmstrip.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="위 장면의 세 순간. 윗줄은 FP32 policy, 아랫줄은 Hailo-8 artifact. 각 프레임에 step과 goal까지의 거리를 적었습니다."><img src="assets/filmstrip.png" class="paper-image img-fluid figure-img" alt="위 장면의 세 순간. 윗줄은 FP32 policy, 아랫줄은 Hailo-8 artifact. 각 프레임에 step과 goal까지의 거리를 적었습니다."></a></p>
+<figcaption>위 장면의 세 순간. 윗줄은 FP32 policy, 아랫줄은 Hailo-8 artifact. 각 프레임에 step과 goal까지의 거리를 적었습니다.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>논문의 파이프라인을 그대로 재사용한 device-in-the-loop 후속 실행: policy seed 202609201, phase middle row 256개로 calibration한 Hailo-8 level-0 빌드, 새 paired 시작 상태 128개, FP32 arm과 device arm은 동일한 reset state에서 출발합니다. FP32 policy는 128/128에서 goal에 도달하고 artifact는 46/128입니다. 평균 return은 -1.06 (FP32) 대 -11.07 (device). 이 실행은 메커니즘을 보여주기 위한 것이고, 이 페이지의 다른 숫자는 모두 논문의 cohort에서 나왔습니다.</p>
+</div>
+</div>
+<section id="개-시작-상태-전체-step-단위로" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="개-시작-상태-전체-step-단위로">128개 시작 상태 전체, step 단위로</h3>
+<iframe src="assets/reach_interactive.html" title="인터랙티브 reach 패널: FP32 policy와 실패한 Hailo-8 artifact" style="width:100%;height:600px;border:0" loading="lazy"></iframe>
+<div class="paper-media-caption">
+<p>왼쪽: goal 기준 gripper 위치(cm)를 위에서 본 그림. 초록 원은 5 cm 성공 반경이고, device 경로 20개는 ±40 cm 프레임을 벗어납니다. 오른쪽: 50 step episode 동안의 goal 거리. 가는 선은 개별 시작 상태, 굵은 선은 중앙값입니다. 재생 버튼으로 episode를 다시 볼 수 있고, 체크박스는 실패한 시작 상태만 남깁니다.</p>
+</div>
+</section></section><section id="응용의-계약-아래에서-paired-outcome으로-판정한다" class="level2"><h2 class="anchored" data-anchor-id="응용의-계약-아래에서-paired-outcome으로-판정한다">응용의 계약 아래에서 paired outcome으로 판정한다</h2>
+<div class="paper-method">
+<div class="paper-method-steps">
+<ol type="1">
+<li>task 소유자가 빌드 전에 계약을 정합니다. paired return loss의 허용치 τ와 success 하한 ρ입니다.</li>
+<li>construction 항목은 빌드 시점에, execution·audit·decision 항목은 판정 시점에 기록합니다.</li>
+<li>FP32와 instance를, artifact 선택에 쓰지 않은 시작 블록에서, 매 control step마다 실제 가속기로 실행합니다.</li>
+<li>return-loss 구간 [L<sub>R</sub>, U<sub>R</sub>]과 success 구간 [L<sub>S</sub>, U<sub>S</sub>]에 대해 U<sub>R</sub> ≤ τ이고 L<sub>S</sub> ≥ ρ이면 <strong>pass</strong>, L<sub>R</sub> &gt; τ이거나 U<sub>S</sub> &lt; ρ이면 <strong>fail</strong>, 그 외에는 <strong>indeterminate</strong>. family 단위로는 출하 전에 분리된 시작 블록이나 동시 구간이 필요합니다.</li>
+<li>construction이나 execution 조건이 바뀌면 다시 판정하고, 계약이 바뀌면 있는 증거로 결정을 재평가합니다.</li>
+</ol>
+</div>
+<section id="deployment-instance별-기록" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="deployment-instance별-기록">deployment instance별 기록</h3>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>구분</th>
+<th>항목</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Source</td>
+<td>policy, ONNX, script 해시</td>
+</tr>
+<tr class="even">
+<td>Calibration</td>
+<td>pool, 규칙, seed, 순서 해시; 공급·보고·추론된 개수</td>
+</tr>
+<tr class="odd">
+<td>Build</td>
+<td>compiler, flag, 요청 및 실제 level, host, 실행 파일 해시</td>
+</tr>
+<tr class="even">
+<td>Execution</td>
+<td>runtime, device, runner, I/O 처리, action-dump 해시</td>
+</tr>
+<tr class="odd">
+<td>Audit</td>
+<td>task 버전, seed, horizon, 종점</td>
+</tr>
+<tr class="even">
+<td>Decision</td>
+<td>허용치, 하한, 구간, 증거 상태</td>
+</tr>
+</tbody>
+</table></section>
+</div>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/figure_odi_qualification_contract.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="고정된 응용 계약 아래에서 calibration artifact를 분류한 예시."><img src="assets/figure_odi_qualification_contract.svg" class="paper-image img-fluid figure-img" alt="고정된 응용 계약 아래에서 calibration artifact를 분류한 예시."></a></p>
+<figcaption>고정된 응용 계약 아래에서 calibration artifact를 분류한 예시.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>각 사각형은 artifact 하나의 paired return loss와 deployment success 95% 구간의 곱이고, 계약의 허용치와 하한이 평면을 pass, fail, indeterminate 영역으로 나눕니다. 사후적인 예시이지 출하 결정이 아닙니다.</p>
+</div>
+</div>
+</section><section id="정리와-한계" class="level2"><h2 class="anchored" data-anchor-id="정리와-한계">정리와 한계</h2>
+<div class="paper-summary-grid">
+<section id="정리" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="정리">정리</h3>
+<ul>
+<li>두 실행 파일이 checkpoint, 경로, INT8 label을 공유하면서도 서로 다른 controller일 수 있습니다.</li>
+<li>calibration row는 provenance입니다. 개수, 정체성, 순서 모두가 결과를 바꿨습니다.</li>
+<li>고정 state의 오차는 일치했지만 task outcome은 달랐습니다. 디바이스 위에서, paired로, task 전체를 감사해야 합니다.</li>
+</ul></section><section id="한계" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="한계">한계</h3>
+<ul>
+<li>이런 일이 일어날 수 있음을 보였을 뿐 얼마나 자주인지는 모릅니다. task 3개, policy seed 8개, 가속기 2종입니다.</li>
+<li>GPU 호스트 빌드, 실시간 마감, 실제 로봇, foundation-model controller는 다루지 않았습니다.</li>
+<li>판정 규칙은 사후적으로 예시했을 뿐 end to end로 검증하지 않았습니다.</li>
+</ul></section><section id="출처" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="출처">출처</h3>
+<p>이 페이지의 모든 숫자는 포스터를 만드는 스크립트가 커밋된 감사 출력에서 생성한 것이며, 포스터 manifest에 각 원본 파일과 해시가 적혀 있습니다. Hailo artifact는 CPU 전용 호스트에서 DFC 3.33.1로, Edge TPU artifact는 TFLite full-integer PTQ로 빌드했습니다. 스크립트, 빌드 설정, 실행 기록은 논문과 함께 공개합니다.</p>
+</section>
+</div>
+</section><section id="인용" class="level2"><h2 class="anchored" data-anchor-id="인용">인용</h2>
+<div class="paper-citation">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@inproceedings</span>{<span class="ot">kang2026pairedtaskaudits</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>     = {Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>    = {Kang, Chanseok},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">booktitle</span> = {NeurIPS 2026 Workshop on On-Device Intelligence: Foundation Models under Real-World Constraints},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>      = {2026},</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>       = {https://openreview.net/forum?id=gvQyNdXzRc}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+
+
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/ko");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+</body>
+</html>
