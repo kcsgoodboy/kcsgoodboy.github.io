@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/projects/lablens/index.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/projects/lablens/index.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Project page for LabLens v1.1: an annotation-aware robot episode investigator that links SO-101 trajectory intervals to exact camera frames and deterministic signal statistics through a bounded two-call Gemini 4 Argon loop on Google Cloud.">
+<title>LabLens: Inspect the Rollout, Follow the Evidence – Chan's Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script><link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="LabLens: Inspect the Rollout, Follow the Evidence">
+<meta property="og:description" content="Project page for LabLens v1.1: an annotation-aware robot episode investigator that links SO-101 trajectory intervals to exact camera frames and deterministic signal statistics through a bounded two-call Gemini 4 Argon loop on Google Cloud.">
+<meta property="og:image" content="https://kcsgoodboy.github.io/projects/lablens/assets/06_evidence_map_overview.png">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:width" content="1920">
+<meta name="twitter:title" content="LabLens: Inspect the Rollout, Follow the Evidence">
+<meta name="twitter:description" content="Project page for LabLens v1.1: an annotation-aware robot episode investigator that links SO-101 trajectory intervals to exact camera frames and deterministic signal statistics through a bounded two-call Gemini 4 Argon loop on Google Cloud.">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/projects/lablens/assets/06_evidence_map_overview.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="1080">
+<meta name="twitter:image-width" content="1920">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/projects/lablens/index.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">LabLens: Inspect the Rollout, Follow the Evidence</h1>
+</div>
+
+<div>
+  <div class="description">
+    Project page for LabLens v1.1: an annotation-aware robot episode investigator that links SO-101 trajectory intervals to exact camera frames and deterministic signal statistics through a bounded two-call Gemini 4 Argon loop on Google Cloud.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta column-page">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="paper-project">
+<div class="paper-hero">
+<div class="paper-title">
+<p>LabLens: Inspect the Rollout, Follow the Evidence</p>
+</div>
+<div class="paper-venue">
+<p>Hackathon project · Track: Gemini 4 Argon in Hard Tech · October 2026</p>
+</div>
+<div class="paper-authors">
+<p><a href="../../about.html" class="paper-author">Chanseok Kang</a></p>
+</div>
+<div class="paper-affiliation">
+<p>LG Electronics</p>
+</div>
+<div class="paper-links">
+<p><a class="paper-button" href="https://github.com/goodboychan/LabLens"><i class="fas fa-code"></i> Code</a> <a class="paper-button" href="https://www.youtube.com/watch?v=9px8uzak--s"><i class="fas fa-play-circle"></i> Video (3 min)</a></p>
+</div>
+</div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/9px8uzak--s" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<div class="paper-tldr">
+<p>A robot rollout log answers <em>what</em> the joints did, and the camera answers <em>what the scene looked like</em>, but neither tells a reviewer <strong>where to look first</strong>. LabLens gives Gemini 4 Argon one rollout, a question and eight overview frames, lets it request <strong>exactly two deterministic tools</strong> (a CSV signal window and an exact frame bundle), and returns a report in which <strong>every sentence points to a frame or a computed number</strong>. On the failed rollout T2012 it narrowed 1,796 samples to <strong>samples 1600–1620</strong>, the 0.7 s in which the can tips over.</p>
+</div>
+<div class="paper-teaser">
+<div class="paper-figure paper-figure-main">
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title="LabLens demo: T2012 selection, operator approval, live Gemini 4 Argon run, three-column report, Evidence Map clicks and sanitized JSON export."><source src="assets/demo_lablens_v1_1.mp4"></source></video></div>
+<div class="paper-media-caption">
+<p>One uninterrupted session on rollout_T2012_1014_231614 (policy rollout, supplied outcome: failure): episode selection → question → operator approval → live two-call run → report → Evidence Map (camera node, then numerical node) → sanitized JSON export. The live wait of 115 s is shortened in the video; per-step timings are in the receipts below.</p>
+</div>
+</div>
+</div>
+<div class="paper-metric-strip">
+<div class="paper-metric">
+<p><strong>1,796 → 21</strong> <span>samples in the episode versus samples in the interval Gemini 4 Argon flagged first (1600–1620, 53.33–54.00 s video time)</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>2 calls · 1 tool round</strong> <span>hard budget per investigation; 14 unique frames and 18 computed signal summaries reached the model</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>112.7 s</strong> <span>measured live run: 37.6 s plan call, 0.4 s server tools, 74.8 s review call on Vertex AI (ADC)</span></p>
+</div>
+</div>
+</section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div class="paper-summary-grid">
+<section id="problem" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="problem">Problem</h3>
+<p>A failed SO-101 pick-and-place rollout is ~60 s of two camera streams and 12 joint signals. Reviewers scrub video by hand, and a general-purpose model asked to “explain the failure” mixes <strong>what was recorded</strong> with <strong>what it guesses</strong>, and can confuse a policy rollout with a teleoperation demo, which changes what <code>action.*</code> even means.</p>
+</section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
+<p>A <strong>bounded investigation loop</strong>. Call 1 (<em>plan</em>) sees the question and 8 overview frames and asks for one signal window and one frame bundle. The server computes them deterministically from the CSV and the original MP4s. Call 2 (<em>review</em>) must tie every claim to the evidence IDs it was given, under a fixed authority class.</p>
+</section><section id="outcome" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="outcome">Outcome</h3>
+<p>On T2012 the plan call chose samples 1500–1620 and a detail window 1570–1620. The review call reported the can upright through sample 1603 and on its side by sample 1620, aligned with a wrist_flex peak at 1602 and gripper opening toward 1620, and left contact force <strong>explicitly unverified</strong>.</p>
+</section>
+</div>
+</section><section id="what-a-raw-log-leaves-out" class="level2"><h2 class="anchored" data-anchor-id="what-a-raw-log-leaves-out">What a raw log leaves out</h2>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/01_startup_T2012.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The supplied context LabLens shows before any model call: source kind, action meaning, outcome rule and operator note, read from episode.json."><img src="assets/01_startup_T2012.png" class="paper-image img-fluid figure-img" alt="The supplied context LabLens shows before any model call: source kind, action meaning, outcome rule and operator note, read from episode.json."></a></p>
+<figcaption>The supplied context LabLens shows before any model call: source kind, action meaning, outcome rule and operator note, read from episode.json.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>The same 12 columns mean different things in different episodes. In a policy rollout <code>action.*</code> is the <strong>issued robot command</strong> (policy output after chunk blending and motor-limit clipping); in a teleop demo it is the <strong>human leader arm</strong>. The outcome label is a consensus of an overhead-camera geometric judge and a blind video re-judge, and is kept separate from the operator note. LabLens reads all three from <code>episode.json</code> and states them before the model speaks.</p>
+</div>
+</div>
+</section><section id="the-loop-two-calls-two-tools-one-episode" class="level2"><h2 class="anchored" data-anchor-id="the-loop-two-calls-two-tools-one-episode">The loop: two calls, two tools, one episode</h2>
+<div class="paper-pipeline">
+<div class="pipeline-stage">
+<p><span>Call 1 · plan</span> <strong>Where to look</strong></p>
+<p>Question + supplied outcome + 8 overview frames (top and wrist at samples 1500, 1540, 1580, 1620). Gemini 4 Argon returns a structured <code>InspectionPlanResponse</code>: one signal window and one frame window.</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<p><span>Server · tools</span> <strong>Compute, don’t guess</strong></p>
+<p><code>query_signal_window</code> computes min, max, mean, delta and state-minus-action gaps over every row (121 rows, 39 ms). <code>get_frame_bundle</code> decodes exact original frames with PyAV (8 frames, 349 ms). Each result gets an evidence ID and a SHA-256 of its source.</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<p><span>Call 2 · review</span> <strong>Claim with receipts</strong></p>
+<p>14 unique frames + 18 computed facts. The <code>EvidenceReviewResponse</code> labels every item as computed fact, visual observation, hypothesis or unresolved, and schema validation rejects overclaims such as “verified physical cause”.</p>
+</div>
+</div>
+</section><section id="results-on-rollout-t2012" class="level2"><h2 class="anchored" data-anchor-id="results-on-rollout-t2012">Results on rollout T2012</h2>
+<div class="paper-result-grid">
+<section id="the-model-picks-the-interval-where-the-failure-happens" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="the-model-picks-the-interval-where-the-failure-happens">The model picks the interval where the failure happens</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/03_live_report_top.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Live report after the two-call run: the answer names samples 1600–1620 first, and the model ID is on the badge and in the receipts."><img src="assets/03_live_report_top.png" class="paper-image img-fluid figure-img" alt="Live report after the two-call run: the answer names samples 1600–1620 first, and the model ID is on the badge and in the receipts."></a></p>
+<figcaption>Live report after the two-call run: the answer names samples 1600–1620 first, and the model ID is on the badge and in the receipts.</figcaption></figure>
+</div>
+<p>Gemini 4 Argon’s answer: <em>“Inspect model-selected interval [1600, 1620] first, followed by [1535, 1587]. Sampled top-camera images show the can upright on the coaster … through sample 1603, and tipped onto its side on the mat by sample 1620.”</em> The supplied operator note for this episode says the can was set down properly and the gripper then knocked it over; the flagged window is where that happens.</p>
+</section><section id="computed-facts-behind-the-sentence" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="computed-facts-behind-the-sentence">Computed facts behind the sentence</h3>
+<table class="caption-top table">
+<thead><tr class="header">
+<th style="text-align: left;">Signal (samples 1500–1620)</th>
+<th style="text-align: right;">First</th>
+<th style="text-align: right;">Last</th>
+<th style="text-align: right;">Δ</th>
+<th style="text-align: right;">Peak at</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">state.wrist_flex (deg)</td>
+<td style="text-align: right;">23.25</td>
+<td style="text-align: right;">−43.38</td>
+<td style="text-align: right;">−66.64</td>
+<td style="text-align: right;">1602</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">state.shoulder_lift (deg)</td>
+<td style="text-align: right;">−16.84</td>
+<td style="text-align: right;">24.84</td>
+<td style="text-align: right;">+41.67</td>
+<td style="text-align: right;">1620</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">action.shoulder_pan (deg)</td>
+<td style="text-align: right;">−1.43</td>
+<td style="text-align: right;">−19.86</td>
+<td style="text-align: right;">−18.42</td>
+<td style="text-align: right;">1610</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">state.gripper (% open)</td>
+<td style="text-align: right;">3.67</td>
+<td style="text-align: right;">33.26</td>
+<td style="text-align: right;">+29.59</td>
+<td style="text-align: right;">1620</td>
+</tr>
+</tbody>
+</table>
+<p>Every row is recomputed by the server from <code>trajectory.csv</code>; the model can cite these numbers but cannot produce them.</p>
+</section><section id="hypotheses-stay-hypotheses" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="hypotheses-stay-hypotheses">Hypotheses stay hypotheses</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/05_visual_hypotheses_receipt.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Visual observations and hypotheses, each with the evidence IDs it rests on and what is missing."><img src="assets/05_visual_hypotheses_receipt.png" class="paper-image img-fluid figure-img" alt="Visual observations and hypotheses, each with the evidence IDs it rests on and what is missing."></a></p>
+<figcaption>Visual observations and hypotheses, each with the evidence IDs it rests on and what is missing.</figcaption></figure>
+</div>
+<p>Both hypotheses carry <em>cause unresolved</em> and list the missing evidence: frames between samples 1603 and 1620, contact or force sensing, servo current. <em>Calculation checked ≠ physical cause confirmed.</em></p>
+</section><section id="every-node-opens-its-source" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="every-node-opens-its-source">Every node opens its source</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/07_evidence_map_frame_node_hold.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Camera node: TOP · sample 1603 (53.43 s) opens the exact decoded frame from both cameras."><img src="assets/07_evidence_map_frame_node_hold.png" class="paper-image img-fluid figure-img" alt="Camera node: TOP · sample 1603 (53.43 s) opens the exact decoded frame from both cameras."></a></p>
+<figcaption>Camera node: TOP · sample 1603 (53.43 s) opens the exact decoded frame from both cameras.</figcaption></figure>
+</div>
+</div>
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/08_evidence_map_numerical_node_hold.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Numerical node: state.wrist_flex (1500–1620) opens the full summary, model ID, CSV hash and tool receipts."><img src="assets/08_evidence_map_numerical_node_hold.png" class="paper-image img-fluid figure-img" alt="Numerical node: state.wrist_flex (1500–1620) opens the full summary, model ID, CSV hash and tool receipts."></a></p>
+<figcaption>Numerical node: state.wrist_flex (1500–1620) opens the full summary, model ID, CSV hash and tool receipts.</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The Evidence Map is bounded to ≤ 20 nodes and ≤ 30 edges with no orphans. Solid edges are recorded relations (PART_OF, GROUNDED_IN); dashed edges are interpretation (INVESTIGATES, BEARS_ON). Clicking any evidence node shows what was recorded, not what was concluded.</p>
+</section>
+</div>
+</section><section id="receipts-for-the-live-run" class="level2"><h2 class="anchored" data-anchor-id="receipts-for-the-live-run">Receipts for the live run</h2>
+<div class="paper-method">
+<div class="paper-method-steps">
+<ol type="1">
+<li>The operator selects one episode; switching episodes cancels any running investigation.</li>
+<li>The operator approves the run with a server-side secret; there is no unattended or batch model call.</li>
+<li>Call 1 (<code>lablens-plan-v1_1</code>) returns one plan; the server runs at most one tool round with at most two tools.</li>
+<li>Call 2 (<code>lablens-review-v1_1</code>) returns the report; any claim without a matching evidence ID, or with a forbidden phrase, fails schema validation.</li>
+<li>Export writes a sanitized JSON bundle: no secrets, no local paths, no project IDs.</li>
+</ol>
+</div>
+<section id="measured-on-vertex-ai-global-thinking-level-medium" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="measured-on-vertex-ai-global-thinking-level-medium">Measured on Vertex AI (global), thinking level MEDIUM</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Model / tool</th>
+<th style="text-align: right;">Duration</th>
+<th style="text-align: right;">Input</th>
+<th style="text-align: right;">Output</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Call 1 · plan</td>
+<td style="text-align: left;"><code>gemini-4-argon</code></td>
+<td style="text-align: right;">37.56 s</td>
+<td style="text-align: right;">20,855 tok · 8 frames</td>
+<td style="text-align: right;">2,608 tok</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tool T1</td>
+<td style="text-align: left;"><code>query_signal_window</code></td>
+<td style="text-align: right;">0.04 s</td>
+<td style="text-align: right;">121 rows · 12 signals + 6 gaps</td>
+<td style="text-align: right;">18 facts</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tool T3</td>
+<td style="text-align: left;"><code>get_frame_bundle</code></td>
+<td style="text-align: right;">0.35 s</td>
+<td style="text-align: right;">samples 1570, 1587, 1603, 1620</td>
+<td style="text-align: right;">8 frames</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Call 2 · review</td>
+<td style="text-align: left;"><code>gemini-4-argon</code></td>
+<td style="text-align: right;">74.76 s</td>
+<td style="text-align: right;">36,932 tok · 14 frames</td>
+<td style="text-align: right;">5,895 tok</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"><strong>112.70 s</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table></section>
+</div>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/09_sanitized_export_bundle.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Sanitized export: the bundle records the requested and reported model ID for each call and passes the zero-secrets, zero-local-paths and zero-project-ID checks."><img src="assets/09_sanitized_export_bundle.png" class="paper-image img-fluid figure-img" alt="Sanitized export: the bundle records the requested and reported model ID for each call and passes the zero-secrets, zero-local-paths and zero-project-ID checks."></a></p>
+<figcaption>Sanitized export: the bundle records the requested and reported model ID for each call and passes the zero-secrets, zero-local-paths and zero-project-ID checks.</figcaption></figure>
+</div>
+</div>
+</section><section id="takeaways-and-limits" class="level2"><h2 class="anchored" data-anchor-id="takeaways-and-limits">Takeaways and limits</h2>
+<div class="paper-summary-grid">
+<section id="takeaways" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="takeaways">Takeaways</h3>
+<ul>
+<li>Let the model choose <em>where</em> to look; let the server compute <em>what</em> is there.</li>
+<li>Source semantics are part of the evidence: a rollout and a teleop demo must never be described the same way.</li>
+<li>A short, bounded loop with receipts is easier to trust than a long free-form explanation.</li>
+</ul></section><section id="limits" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="limits">Limits</h3>
+<ul>
+<li>One episode per approved run; 16 prepared episodes (14 ACT policy rollouts: 4 success, 10 failure; 2 teleop demos).</li>
+<li>Sparse frames can miss events between samples; the 30 fps cameras and joint encoders cannot establish contact force.</li>
+<li>Annotation-aware review, not blind outcome classification or root-cause diagnosis.</li>
+</ul></section><section id="provenance" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="provenance">Provenance</h3>
+<p>Every number on this page comes from the receipts of the live run exported by the app. Backend (FastAPI, PyAV, google-genai with ADC), frontend and the 13 release gates were built during the event; all 13 gates pass. Code is Apache 2.0; the SO-101 episode recordings are CC BY 4.0.</p>
+</section>
+</div>
+</section><section id="citation" class="level2"><h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<div class="paper-citation">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@misc</span>{<span class="ot">kang2026lablens</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>        = {LabLens: Inspect the Rollout, Follow the Evidence},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>       = {Kang, Chanseok},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>         = {2026},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">howpublished</span> = {<span class="ch">\url</span>{https://github.com/goodboychan/LabLens}}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+
+
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><input type="hidden" id="giscus-base-theme" value="light"><input type="hidden" id="giscus-alt-theme" value="dark"><script>
+function loadGiscusWhenReady() {
+  // Function to get the theme based on body class
+  const getTheme = () => {
+    const baseTheme = document.getElementById('giscus-base-theme').value;
+    const altTheme = document.getElementById('giscus-alt-theme').value;
+    return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+  };
+  // Create the Giscus script and add it to the desired location
+  const loadGiscus = () => {
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "kcsgoodboy/kcsgoodboy.github.io";
+    script.dataset.repoId = "R_kgDOPRiawA";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOPRiawM4CtfeS";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "bottom";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  };
+  // MutationObserver to detect when the 'quarto-light' or 'quarto-dark' class is added to the body
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (document.body.classList.contains('quarto-light') || document.body.classList.contains('quarto-dark')) {
+          loadGiscus();
+          observer.disconnect(); // Stop observing once Giscus is loaded
+          break;
+        }
+      }
+    }
+  });
+  // Start observing the body for class attribute changes
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+loadGiscusWhenReady();
+</script>
+</div> <!-- /content -->
+<script>videojs(video_shortcode_videojs_video1);</script><script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+</body>
+</html>

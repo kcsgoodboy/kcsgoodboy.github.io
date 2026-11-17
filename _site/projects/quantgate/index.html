@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/projects/quantgate/index.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/projects/quantgate/index.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Project page for QuantGate, a Nebius × NVIDIA Global AI Hackathon (Physical AI) entry: one ACT policy on an SO-101 arm, 26 deployable builds on a Jetson Orin Nano Super, and 745 sealed real-arm trials that decide which build to validate next, and why none is approved yet.">
+<title>QuantGate: A Deployment Review for Quantized Robot Policies – Chan's Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="QuantGate: A Deployment Review for Quantized Robot Policies">
+<meta property="og:description" content="Project page for QuantGate, a Nebius × NVIDIA Global AI Hackathon (Physical AI) entry: one ACT policy on an SO-101 arm, 26 deployable builds on a Jetson Orin Nano Super, and 745 sealed real-arm trials that decide which build to validate next, and why none is approved yet.">
+<meta property="og:image" content="https://kcsgoodboy.github.io/projects/quantgate/contents/images/persona.png">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta name="twitter:title" content="QuantGate: A Deployment Review for Quantized Robot Policies">
+<meta name="twitter:description" content="Project page for QuantGate, a Nebius × NVIDIA Global AI Hackathon (Physical AI) entry: one ACT policy on an SO-101 arm, 26 deployable builds on a Jetson Orin Nano Super, and 745 sealed real-arm trials that decide which build to validate next, and why none is approved yet.">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/projects/quantgate/contents/images/persona.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/projects/quantgate/index.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><div class="paper-project">
+<div class="paper-hero">
+<div class="paper-title">
+QuantGate: A Deployment Review for Quantized Robot Policies
+</div>
+<div class="paper-venue">
+<p>Nebius × NVIDIA Global AI Hackathon · Physical AI track · Submitted 30 October 2026</p>
+</div>
+<div class="paper-authors">
+<p><a class="paper-author" href="../../about.html">Chanseok Kang</a></p>
+</div>
+<div class="paper-affiliation">
+<p>Personal project</p>
+</div>
+<div class="paper-links">
+<p><a class="paper-button" href="https://github.com/goodboychan/nebius-physical-ai"><i class="fas fa-code"></i> Code (Apache 2.0)</a> <a class="paper-button" href="https://www.youtube.com/watch?v=fC_mkn_U36Q"><i class="fas fa-play-circle"></i> Video (3 min)</a> <a class="paper-button" href="https://claude.ai/artifact/2tUAoJHBeT8uLU96BmgPNK"><i class="fas fa-chart-bar"></i> Dashboard</a> <a class="paper-button" href="https://huggingface.co/datasets/chans/quantgate-so101-coaster"><i class="fas fa-database"></i> Datasets (Hugging Face)</a> <a class="paper-button" href="https://devpost.com/software/quantgate"><i class="fas fa-file-alt"></i> Devpost write-up</a></p>
+</div>
+</div>
+<section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<div class="paper-tldr">
+<p>One robot policy can ship as many different builds. QuantGate compares the FP32, FP16 and 24 INT8 builds of one ACT checkpoint by <strong>cost measured on the Jetson</strong> and <strong>behavior measured in 745 sealed real-arm trials</strong>, then says which build to validate next and whether any may be deployed. In this study FP16 was the cheapest build, the INT8 offline ranking did not predict the arm (<strong>73/75 vs 73/75</strong>), and <strong>no build is approved yet</strong>: the evidence is not strong enough, and the review names the test that could change that.</p>
+</div>
+<div class="paper-teaser">
+<div class="paper-figure paper-figure-main">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/quantgate_preview.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Same robot, same task: one run succeeds, one fails. Move the can 3 cm and it misses (overhead camera, 4×)."><img src="assets/quantgate_preview.gif" class="paper-image img-fluid figure-img" alt="Same robot, same task: one run succeeds, one fails. Move the can 3 cm and it misses (overhead camera, 4×)."></a></p>
+<figcaption>Same robot, same task: one run succeeds, one fails. Move the can 3 cm and it misses (overhead camera, 4×).</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>An SO-101 arm, driven by a LeRobot ACT policy on a Jetson Orin Nano Super, picks up a can and stands it on a coaster. Benchmarks and open-loop metrics looked fine for every build; neither said whether the arm would still put the can on the coaster, or how sure we could be.</p>
+</div>
+</div>
+</div>
+<div class="paper-metric-strip">
+<div class="paper-metric">
+<p><strong>11.6 ms · 82 mJ</strong> <span>FP16 per inference on the Jetson (trtexec, 15 W), faster and cheaper than every INT8 build (16.8–17.1 ms, 101 mJ); FP32 53.4 ms, 403 mJ</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>73/75 vs 73/75</strong> <span>real-arm successes of the offline audit’s top-ranked INT8 builds and of randomly picked ones</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>745</strong> <span>real-arm trials, all under sealed, interleaved schedules; logs hashed before unsealing, primary analyses pre-registered</span></p>
+</div>
+</div>
+</section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div class="paper-summary-grid">
+<section id="problem" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="problem">Problem</h3>
+<p>Shipping a policy to an edge device means choosing a build: FP32, FP16, or one of many INT8 calibrations. Each is a different artifact. Speed benchmarks and offline scores are cheap, but they do not say whether the arm still completes the task, and small real-arm samples are easy to overread.</p>
+</section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
+<p>A <strong>deployment review</strong> per build: cost measured on the target device, an offline audit frozen before any real trial, and sealed, interleaved real-arm trials under rules fixed in advance. Code writes every number and verdict (GO, HOLD or BLOCK); AI models judge frames and explain, but never decide.</p>
+</section><section id="outcome" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="outcome">Outcome</h3>
+<p>FP16 is the next build to validate. No precision effect was shown; deployment conditions (grip, start position, a knocked camera) moved success instead. A position weakness was fixed with 100 new demonstrations and two fine-tunes, each re-tested sealed at conditions never in training.</p>
+</section>
+</div>
+</section><section id="the-video" class="level2"><h2 class="anchored" data-anchor-id="the-video">The video</h2>
+<div class="paper-figure">
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/fC_mkn_U36Q" title="QuantGate (3 min): validate FP16 first, deployment HOLD, the next test planned" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="paper-media-caption">
+<p>Three minutes, about 101 s of it on the real arm: what the review tells a developer, how it was built, and the failures it found.</p>
+</div>
+</div>
+</section><section id="how-the-review-works" class="level2"><h2 class="anchored" data-anchor-id="how-the-review-works">How the review works</h2>
+<div class="paper-pipeline">
+<div class="pipeline-stage">
+<span>Measure</span> <strong>Cost on the device</strong>
+<p>
+26 TensorRT engines of one ACT checkpoint (51.6M parameters), built on the Jetson with a frozen timing cache and timed with trtexec and tegrastats at 15 W.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>Screen</span> <strong>Offline audit, frozen</strong>
+<p>
+2,000 held-out states scored per INT8 cell on Nebius Jobs (CPU fan-out). The ranking was frozen before any real trial, so the arm could test it.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>Test</span> <strong>Sealed real-arm trials</strong>
+<p>
+Interleaved schedules; the operator saw trial numbers only. Outcomes from an automatic judge and a blind re-judge of the saved video by code; logs hashed before unsealing.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>Decide</span> <strong>Code writes the verdict</strong>
+<p>
+Non-inferiority against FP32 with Newcombe intervals, a placement tolerance and an on-device preflight. GO, HOLD or BLOCK, and the next test’s trials per arm.
+</p>
+</div>
+</div>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/architecture.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="The system: the bench (SO-101 arms, cameras, the Jetson with its TensorRT engine, trial runner and preflight), Nebius AI Cloud (training, the audit fan-out, Cosmos-Reason2 and Nemotron), the repository where code decides, and what is public."><img src="assets/architecture.svg" class="paper-image img-fluid figure-img" alt="The system: the bench (SO-101 arms, cameras, the Jetson with its TensorRT engine, trial runner and preflight), Nebius AI Cloud (training, the audit fan-out, Cosmos-Reason2 and Nemotron), the repository where code decides, and what is public."></a></p>
+<figcaption>The system: the bench (SO-101 arms, cameras, the Jetson with its TensorRT engine, trial runner and preflight), Nebius AI Cloud (training, the audit fan-out, Cosmos-Reason2 and Nemotron), the repository where code decides, and what is public.</figcaption></figure>
+</div>
+</div>
+<section id="which-model-does-what" class="level3"><h3 class="anchored" data-anchor-id="which-model-does-what">Which model does what</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead><tr class="header">
+<th>Part</th>
+<th>Model or tool</th>
+<th>Its job</th>
+<th>What it is not allowed to do</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Robot policy</td>
+<td>ACT (51.6M), trained on Nebius Jobs (L40S)</td>
+<td>picks up the can</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td>Candidates</td>
+<td>TensorRT FP32 / FP16 / INT8 engines</td>
+<td>the builds under review</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Judge</td>
+<td>Cosmos-Reason2-2B on a Nebius AI Endpoint</td>
+<td>says whether the can ended standing on the coaster</td>
+<td>decide a verdict on its own; validated on held-out recordings first</td>
+</tr>
+<tr class="even">
+<td>Writer</td>
+<td>Nemotron 3 Super on Nebius Token Factory</td>
+<td>explains the review in words</td>
+<td>write any number, verdict or approval word (code rejects them)</td>
+</tr>
+<tr class="odd">
+<td>Verdicts</td>
+<td>plain code</td>
+<td>every number, interval and GO / HOLD / BLOCK</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></section></section><section id="results" class="level2"><h2 class="anchored" data-anchor-id="results">Results</h2>
+<div class="paper-result-grid">
+<section id="cost-is-not-approval" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="cost-is-not-approval">Cost is not approval</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/fig_cost_evidence.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Real-arm success (Wilson 95%) against GPU time per chunk on the Jetson. Cheaper is to the left; the intervals overlap."><img src="assets/fig_cost_evidence.png" class="paper-image img-fluid figure-img" alt="Real-arm success (Wilson 95%) against GPU time per chunk on the Jetson. Cheaper is to the left; the intervals overlap."></a></p>
+<figcaption>Real-arm success (Wilson 95%) against GPU time per chunk on the Jetson. Cheaper is to the left; the intervals overlap.</figcaption></figure>
+</div>
+<p>FP16 is the fastest and the cheapest build on this device, not INT8, a result only on-device measurement showed. Its success against FP32 is still undecided: with 25 trials per arm the success interval is about ±28 pp wide, so every comparison is INSUFFICIENT_EVIDENCE and deployment stays HOLD. The pre-registered ceiling rule keeps two arms that are both at or above 95% undecided at any sample size; under a revised, pre-registered rule, about 120 trials per arm give 80% power for the success criterion.</p>
+</section><section id="the-offline-audit-did-not-predict-the-arm" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-offline-audit-did-not-predict-the-arm">The offline audit did not predict the arm</h3>
+<p>The audit’s top-ranked INT8 cells went <strong>73/75</strong> on the arm; randomly picked cells also went <strong>73/75</strong>. The offline rank did not track placement error either (Spearman 0.02–0.08). A deliberately broken, black-frame-calibrated build scored badly offline yet went 11/12 on the arm; an input check catches it before the arm.</p>
+</section><section id="deployment-conditions-moved-success-not-precision" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="deployment-conditions-moved-success-not-precision">Deployment conditions moved success, not precision</h3>
+<p>No precision effect was shown. Removing the gripper’s anti-slip pads dropped success to <strong>8/24</strong>; moving the start 3 cm gave <strong>0/3</strong>. INT8 seemed to make the gripper chatter twice as much; a pre-registered test found 1.3×, not significant (p = 0.12). Grip, start position, can size and camera mounting are recorded as deployment conditions, so a failure is not blamed on the build by default.</p>
+</section><section id="found-fixed-with-data-re-tested-sealed" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="found-fixed-with-data-re-tested-sealed">Found, fixed with data, re-tested sealed</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/fig_ft_position.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Position fine-tune against the old policy, interleaved, 12 vs 12 per held-out mark (24 vs 24 at the training mark), Wilson 95%."><img src="assets/fig_ft_position.png" class="paper-image img-fluid figure-img" alt="Position fine-tune against the old policy, interleaved, 12 vs 12 per held-out mark (24 vs 24 at the training mark), Wilson 95%."></a></p>
+<figcaption>Position fine-tune against the old policy, interleaved, 12 vs 12 per held-out mark (24 vs 24 at the training mark), Wilson 95%.</figcaption></figure>
+</div>
+<p>50 new demonstrations at −4…+4 cm and a 25-minute fine-tune on Nebius Jobs, compared under a rule fixed in advance at positions never in training: <strong>12/12 vs 3/12 at +3 cm</strong> (+75 pp, 95% CI [+38, +91]) and <strong>10/12 vs 2/12 at −3 cm</strong>. At the training mark it is still undecided (22/24 vs 23/24, with a pre-registered replication), so the review does not approve it there.</p>
+</section><section id="how-far-the-fix-reaches-and-the-second-fix" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="how-far-the-fix-reaches-and-the-second-fix">How far the fix reaches, and the second fix</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/reach_on_the_table.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Where the fine-tune works on the table: success out of 12 per start mark for the fine-tuned and old policies, and fine-tune v2 at +6 cm."><img src="assets/reach_on_the_table.png" class="paper-image img-fluid figure-img" alt="Where the fine-tune works on the table: success out of 12 per start mark for the fine-tuned and old policies, and fine-tune v2 at +6 cm."></a></p>
+<figcaption>Where the fine-tune works on the table: success out of 12 per start mark for the fine-tuned and old policies, and fine-tune v2 at +6 cm.</figcaption></figure>
+</div>
+<p>A new pre-registration mapped the reach of the first fine-tune: <strong>8/12 vs 0/12 at −6 cm</strong>, beyond its demonstrations, but <strong>0/12 vs 0/12 at +6 cm</strong> and <strong>0/12 vs 3/12 with a smaller yellow can at +3 cm</strong>. Fifty more demonstrations (the yellow can, starts at +5 and +7 cm) and a second fine-tune closed both gaps: <strong>12/12 vs 7/12 with the yellow can</strong> and <strong>12/12 vs 2/12 at +6 cm</strong>, again at conditions never in training, with no drop at the trained spot (12/12 vs 12/12).</p>
+</section><section id="the-ai-judge-is-a-part-to-validate" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-ai-judge-is-a-part-to-validate">The AI judge is a part to validate</h3>
+<p>With a one-word prompt Cosmos-Reason2 caught <strong>1 of 21</strong> failures. A validated prompt caught 20/21 on held-out recordings, then held up live on 96 new trials: <strong>22/24</strong> failures caught, <strong>2/72</strong> false alarms. It still misses some: a can left standing at the start looks like a success to it. A 2 Hz shadow supervisor did not detect failures and is reported as such.</p>
+</section><section id="the-model-writes-words-code-writes-facts" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-model-writes-words-code-writes-facts">The model writes words, code writes facts</h3>
+<p>The Nemotron report went through three versions. In the last, code writes every verdict, number and status; the model writes only why the review looks as it does and the open questions, and a validator rejects any digit, verdict label, approval word or known misreading. In a six-model comparison on Token Factory, Nemotron 3 Super was the only variant with zero unmatched numbers and a complete format in every repeat.</p>
+</section>
+</div>
+</section><section id="the-approval-rule" class="level2"><h2 class="anchored" data-anchor-id="the-approval-rule">The approval rule</h2>
+<div class="paper-method">
+<div class="paper-method-steps">
+<ol type="1">
+<li>Rules are fixed before outcomes are read: pre-registrations and post-lock hashes of the sealed logs (LOCK-1 to LOCK-4); every amendment and error is logged.</li>
+<li>Each candidate is compared with FP32 from interleaved trials in the same session.</li>
+<li>The <strong>success criterion</strong> is met when the Newcombe 95% lower bound of <span class="math inline">\(p_{\text{cand}} - p_{\text{FP32}}\)</span> is above −10 pp.</li>
+<li>A final <strong>GO</strong> also needs placement error within its 5 px tolerance, the ceiling rule not holding the comparison undecided, and the on-device preflight passing (engine hash, normalization manifest, the runner’s 200 ms chunk deadline).</li>
+<li>Otherwise the review says <strong>HOLD</strong> (not enough evidence) or <strong>BLOCK</strong> (a check failed), and states how many trials per arm the next test needs. Passing the gate means “worth validating next”, not “approved”.</li>
+</ol>
+</div>
+<section id="what-the-review-tells-a-developer" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="what-the-review-tells-a-developer">What the review tells a developer</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>Question</th>
+<th>Answer in this study</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Which build do I validate first?</td>
+<td>FP16: 11.6 ms, 82 mJ per inference</td>
+</tr>
+<tr class="even">
+<td>Which do I distrust?</td>
+<td>the black-frame calibration (input check); any build that fails the preflight</td>
+</tr>
+<tr class="odd">
+<td>Can I approve deployment?</td>
+<td>Not yet: INSUFFICIENT_EVIDENCE, HOLD</td>
+</tr>
+<tr class="even">
+<td>What would settle it?</td>
+<td>a revised, pre-registered ceiling rule and about 120 trials per arm</td>
+</tr>
+<tr class="odd">
+<td>Bring your own results</td>
+<td>
+<code>quantgate.py judge your_results.csv</code> applies the same rules</td>
+</tr>
+</tbody>
+</table></section>
+</div>
+</section><section id="failures-we-publish" class="level2"><h2 class="anchored" data-anchor-id="failures-we-publish">Failures we publish</h2>
+<div class="paper-summary-grid">
+<section id="a-knocked-wrist-camera" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="a-knocked-wrist-camera">A knocked wrist camera</h3>
+<p>Success at the trained spot suddenly fell. Every result stayed sealed while we ruled out the software, found stray markers and a wrist camera knocked off-axis, and fixed the mount. A pre-registered health check then read back to nominal. Six trials run in the bad scene were discarded unopened.</p>
+</section><section id="the-scene-mattered" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="the-scene-mattered">The scene mattered</h3>
+<p>In the fine-tune v2 session the first fine-tune also did better than before (7/12 and 2/12 against 0/12), which fits the knocked camera having caused part of the earlier gap. A comparison across sessions cannot settle it, so the page does not claim it.</p>
+</section><section id="the-simulator-cannot-predict-the-arm-yet" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="the-simulator-cannot-predict-the-arm-yet">The simulator cannot predict the arm yet</h3>
+<p>An Isaac Sim twin of the task agreed with 10 of 14 real runs only because it predicts failure every time. It stays exploratory until it is calibrated against the arm.</p>
+</section>
+</div>
+</section><section id="takeaways-and-limits" class="level2"><h2 class="anchored" data-anchor-id="takeaways-and-limits">Takeaways and limits</h2>
+<div class="paper-summary-grid">
+<section id="takeaways" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="takeaways">Takeaways</h3>
+<ul>
+<li>Measure cost on the target device; the precision name does not tell you the cost.</li>
+<li>An offline ranking is a hypothesis for the arm to test, not a substitute for it.</li>
+<li>“No failure observed” is not safety evidence. A review should say how far its evidence goes.</li>
+<li>An AI judge or writer is a component to validate on held-out data, not an oracle.</li>
+</ul></section><section id="limits" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="limits">Limits</h3>
+<ul>
+<li>One arm, one task, one base policy; 12–25 trials per arm, so intervals are wide.</li>
+<li>Operator blinding was partial in the fine-tune blocks, where the two policies move visibly differently.</li>
+<li>Sessions were not compared under control, and the review has not yet been tried by outside teams.</li>
+</ul></section><section id="provenance" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="provenance">Provenance</h3>
+<p>Numbers are frozen at LOCK-4 (23 October 2026) and come from committed artifacts; <code>quantgate.py verify | review</code> rebuilds the review with no GPU, robot or API key. Training data are public as three LeRobot v3 datasets (120 + 50 + 50 demonstrations, CC BY 4.0). The serverless Nemotron model used for the report text was retired by Token Factory on 9 November 2026; the committed reports are unchanged. Code was written with Claude Code; the study design, the bench and every trial are mine.</p>
+</section>
+</div>
+</section><section id="citation" class="level2"><h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<div class="paper-citation">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">@misc</span>{<span class="ot">kang2026quantgate</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">title</span>        = {QuantGate: A Deployment Review for Quantized Robot Policies},</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">author</span>       = {Kang, Chanseok},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">howpublished</span> = {Nebius $<span class="ch">\times</span>$ NVIDIA Global AI Hackathon, Physical AI track},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">year</span>         = {2026},</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">url</span>          = {https://github.com/goodboychan/nebius-physical-ai}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+
+
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+</body>
+</html>

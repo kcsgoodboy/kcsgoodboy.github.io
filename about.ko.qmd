@@ -11,6 +11,8 @@ about:
       href: https://github.com/goodboychan
     - icon: linkedin
       href: https://www.linkedin.com/in/chanseokk/
+    - icon: file-earmark-pdf-fill
+      href: "contents/files/Chanseok_Kang_CV_20261114.pdf"
 execute: 
   echo: false
 comments: false

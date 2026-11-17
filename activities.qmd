@@ -19,6 +19,11 @@ library(distilltools)
 
 ## 2026
 
+**(2026. 08)** I presented a poster entitled **"When Reward and Safety Need Different Model Horizons: A Selection Theorem for Pessimistic Offline Planning"** at the [RLC 2026 Workshop - Model-Based RL in the Era of Generative World Models](https://worldmodels-rlc.github.io/) in Montreal, Canada.
+
+**(2026. 08)** I participated in [NAS Unseen-Data Challenge 2026](https://www.nascompetition.com/), which held in AutoML 2026 Competition, and took 25th place.
+`r icon_link(text = "Certificate", url = "contents/files/NAS_Certificate.pdf")`
+
 **(2026. 04)** I served as a reviewer in 2026 IEEE 22nd CASE(International Conference on Automation Science and Engineering).
 `r icon_link(text = "Link", url = "https://2026.ieeecase.org/")`
 

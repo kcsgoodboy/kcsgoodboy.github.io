@@ -1,0 +1,57 @@
+{
+  "version": "0.6.10",
+  "pageLanguage": "en",
+  "reference": "https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/",
+  "files": [
+    {
+      "path": "assets/01-ghostlab-cover.jpg",
+      "bytes": 176288,
+      "sha256": "8dafb02042351922da67e341953bbd34f384b46f45d8d72fe3d52845ecea2438"
+    },
+    {
+      "path": "assets/02-control-with-your-hands.jpg",
+      "bytes": 171390,
+      "sha256": "2881705fab7912cbfc844615b5b3778eaf58f8f499f0c9e629635b00a8706f91"
+    },
+    {
+      "path": "assets/03-replay-the-moment.jpg",
+      "bytes": 137339,
+      "sha256": "6689123bca4fa3546ea0d3f719148cb72c939beb21097d2ca3bd2fa4b41303a9"
+    },
+    {
+      "path": "assets/04-real-robot-and-vr.jpg",
+      "bytes": 151542,
+      "sha256": "ac727ceae1c5295c51b487d895869f1819f468b9c011165a58063613ae369ef8"
+    },
+    {
+      "path": "assets/05-save-an-observation.jpg",
+      "bytes": 167854,
+      "sha256": "7ba08baa5a9a4893f842ee325374f20c46bd9b0ab282c87792e36bb1733122c5"
+    },
+    {
+      "path": "assets/06-return-offline.jpg",
+      "bytes": 142357,
+      "sha256": "68b740d1df66048592294f28b00a0c3d580e9b4673bcd59ea75dc005e43efc84"
+    },
+    {
+      "path": "assets/ghostlab-logo.png",
+      "bytes": 637236,
+      "sha256": "311f7132ec7b93e450884d91c41796c2bbff92c6dd85dfd2f3253a6b5dc34382"
+    },
+    {
+      "path": "assets/ghostlab.css",
+      "bytes": 10082,
+      "sha256": "36f9f82551a52b1d1cad3b50e570604837102b03decfa3f21b08bdf21529715e"
+    },
+    {
+      "path": "assets/review-guide-0.6.10.png",
+      "bytes": 725878,
+      "sha256": "476a2899e1e693bd69df070c350d9b55deab366baa14f41cec82476c89533a57"
+    },
+    {
+      "path": "index.qmd",
+      "bytes": 15620,
+      "sha256": "f0f4141940f71ea2889882855e2bb852c12d398c2c99710dbc327980ea8fc0c9"
+    }
+  ]
+}

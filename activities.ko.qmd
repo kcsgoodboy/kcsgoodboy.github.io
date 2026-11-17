@@ -19,6 +19,11 @@ library(distilltools)
 
 ## 2026
 
+**(2026. 08)** Canada Montreal에서 열린 RLC 2026 Workshop인 [Model-Based RL in the Era of Generative World Models](https://worldmodels-rlc.github.io/)에서 **"When Reward and Safety Need Different Model Horizons: A Selection Theorem for Pessimistic Offline Planning"** 이란 내용으로 포스터 발표를 진행하였습니다.
+
+**(2026. 08)** AutoML 2026에서 진행된 Competition인 [NAS Unseen-Data Challenge 2026](https://www.nascompetition.com/)에 참여하여 25위를 하였습니다.
+`r icon_link(text = "Certificate", url = "contents/files/NAS_Certificate.pdf")`
+
 **(2026. 04)** 2026 IEEE 22nd CASE(International Conference on Automation Science and Engineering)의 Reviewer를 수행했습니다.
 `r icon_link(text = "Link", url = "https://2026.ieeecase.org/")`
 

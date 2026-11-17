@@ -11,6 +11,8 @@ about:
       href: https://github.com/goodboychan
     - icon: linkedin
       href: https://www.linkedin.com/in/chanseokk/
+    - icon: file-earmark-pdf-fill
+      href: "contents/files/Chanseok_Kang_CV_20261114.pdf"
 execute: 
   echo: false
 comments: false
@@ -33,7 +35,7 @@ I usually work with **reinforcement learning (RL)** as a problem solver. To make
 
 I am committed to continuous personal growth through external engagements, including:
 
-- 1 conference paper, 1 registered patent
+- Some conference papers & patents
 - Translator of "Grokking Deep Reinforcement Learning" (Hanbit Media) and technical reviewer for "Machine Learning with TensorFlow" (Hanbit Media).
 - Technical reviewer for multiple specialized publications (Hanbit Media, Jpub, Gilbut, and others).
 
