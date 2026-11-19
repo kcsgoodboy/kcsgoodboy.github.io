@@ -204,7 +204,7 @@ QuantGate: A Deployment Review for Quantized Robot Policies
 </div>
 <section id="요약" class="level2"><h2 class="anchored" data-anchor-id="요약">요약</h2>
 <div class="paper-tldr">
-<p>로봇 policy 하나도 여러 build로 배포될 수 있습니다. QuantGate는 ACT checkpoint 하나의 FP32, FP16, INT8 24개 build를 <strong>Jetson에서 측정한 비용</strong>과 <strong>봉인된 실물 시행 745회에서 측정한 동작</strong>으로 비교하고, 다음에 검증할 build와 배포해도 되는 build가 있는지를 알려 줍니다. 이 연구에서는 FP16이 가장 저렴한 build였고, INT8의 offline 순위는 실물 결과를 예측하지 못했으며(<strong>73/75 대 73/75</strong>), <strong>아직 승인된 build는 없습니다</strong>. 근거가 충분하지 않기 때문이고, review는 이 판단을 바꿀 수 있는 다음 시험을 함께 제시합니다.</p>
+<p>로봇 policy 하나도 여러 build로 배포될 수 있습니다. QuantGate는 ACT checkpoint 하나의 FP32, FP16, INT8 24개 build를 <strong>Jetson에서 측정한 비용</strong>과 <strong>봉인된 실물 시행 745회에서 측정한 동작</strong>으로 비교하고, 다음에 검증할 build와 배포해도 되는 build가 있는지를 알려 줍니다. 이 연구에서는 FP16이 가장 저렴한 build였고, INT8의 offline 순위는 실물 결과를 예측하지 못했습니다(<strong>73/75 대 73/75</strong>). 근거가 충분하지 않아 <strong>아직 승인된 build는 없습니다</strong>. review는 이 판단을 바꿀 수 있는 다음 시험도 함께 제시합니다.</p>
 </div>
 <div class="paper-teaser">
 <div class="paper-figure paper-figure-main">
@@ -213,7 +213,7 @@ QuantGate: A Deployment Review for Quantized Robot Policies
 <figcaption>같은 로봇, 같은 작업에서 한 번은 성공하고 한 번은 실패합니다. 캔을 3 cm 옮기면 놓칩니다(위쪽 카메라, 4배속).</figcaption></figure>
 </div>
 <div class="paper-media-caption">
-<p>Jetson Orin Nano Super 위의 LeRobot ACT policy가 SO-101 로봇 팔로 캔을 집어 코스터 위에 세웁니다. 모든 build에서 benchmark와 open-loop 지표는 괜찮아 보였지만, 팔이 여전히 캔을 코스터에 올릴지, 그리고 얼마나 확신할 수 있는지는 어느 쪽도 알려 주지 않았습니다.</p>
+<p>Jetson Orin Nano Super에서 도는 LeRobot ACT policy가 SO-101 로봇 팔을 움직여 캔을 집어 코스터 위에 세웁니다. 모든 build에서 benchmark와 open-loop 지표는 괜찮아 보였지만, 팔이 여전히 캔을 코스터에 올려놓을지, 그걸 얼마나 확신할 수 있는지는 어느 쪽도 알려 주지 않았습니다.</p>
 </div>
 </div>
 </div>
@@ -225,7 +225,7 @@ QuantGate: A Deployment Review for Quantized Robot Policies
 <p><strong>73/75 대 73/75</strong> <span>offline audit 상위 INT8 build와 무작위로 고른 INT8 build의 실물 성공 횟수</span></p>
 </div>
 <div class="paper-metric">
-<p><strong>745</strong> <span>봉인되고 섞인 순서로 진행한 실물 시행 수. 봉인 해제 전에 로그를 hash로 고정했고, 주요 분석은 사전등록했습니다</span></p>
+<p><strong>745</strong> <span>모두 봉인하고 순서를 섞어 진행한 실물 시행 수. 봉인 해제 전에 로그를 hash로 고정했고, 주요 분석은 사전등록했습니다</span></p>
 </div>
 </div>
 </section><section id="개요" class="level2"><h2 class="anchored" data-anchor-id="개요">개요</h2>
@@ -233,9 +233,9 @@ QuantGate: A Deployment Review for Quantized Robot Policies
 <section id="문제" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="문제">문제</h3>
 <p>policy를 edge 기기에 배포하려면 build를 골라야 합니다. FP32, FP16, 또는 여러 INT8 calibration 중 하나이고, 각각이 서로 다른 artifact입니다. 속도 benchmark와 offline 점수는 얻기 쉽지만, 팔이 여전히 작업을 해내는지는 알려 주지 않습니다. 작은 실물 표본은 과하게 해석하기도 쉽습니다.</p>
 </section><section id="접근" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="접근">접근</h3>
-<p>build마다 <strong>deployment review</strong>를 합니다. 대상 기기에서 잰 비용, 실물 시행 전에 고정한 offline audit, 미리 정한 규칙 아래에서 봉인하고 섞어 진행한 실물 시행을 함께 봅니다. 모든 숫자와 판정(GO, HOLD, BLOCK)은 코드가 씁니다. AI 모델은 프레임을 판정하고 설명할 뿐, 결정하지 않습니다.</p>
+<p>build마다 <strong>deployment review</strong>를 합니다. 대상 기기에서 잰 비용, 실물 시행 전에 고정한 offline audit, 미리 정한 규칙에 따라 봉인하고 순서를 섞어 진행한 실물 시행을 함께 봅니다. 모든 숫자와 판정(GO, HOLD, BLOCK)은 코드가 씁니다. AI 모델은 프레임을 판정하고 설명할 뿐, 결정하지 않습니다.</p>
 </section><section id="결과" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="결과">결과</h3>
-<p>다음에 검증할 build는 FP16입니다. precision 효과는 확인되지 않았고, 대신 배포 조건(그립, 시작 위치, 부딪힌 카메라)이 성공률을 바꿨습니다. 위치에 대한 약점은 새 시연 100개와 두 번의 fine-tune으로 고쳤고, 매번 학습에 없던 조건에서 봉인된 시험으로 다시 확인했습니다.</p>
+<p>다음에 검증할 build는 FP16입니다. precision 효과는 확인되지 않았고, 대신 배포 조건(그립, 시작 위치, 부딪힌 카메라)이 성공률을 바꿨습니다. 위치 약점은 새 시연 100개와 fine-tune 두 번으로 고쳤고, 매번 학습에 없던 조건에서 봉인된 시험으로 다시 확인했습니다.</p>
 </section>
 </div>
 </section><section id="영상" class="level2"><h2 class="anchored" data-anchor-id="영상">영상</h2>
@@ -259,7 +259,7 @@ ACT checkpoint 하나(51.6M parameter)로 만든 TensorRT engine 26개를 Jetson
 <div class="pipeline-stage">
 <span>선별</span> <strong>고정된 offline audit</strong>
 <p>
-INT8 cell마다 held-out state 2,000개를 Nebius Jobs(CPU 병렬)에서 채점합니다. 순위는 실물 시행 전에 고정해, 실물 결과로 검증할 수 있게 했습니다.
+INT8 cell(INT8 calibration build 24개 각각)마다 held-out state 2,000개를 Nebius Jobs(CPU 병렬)에서 채점합니다. 순위는 실물 시행 전에 고정해, 실물 결과로 검증할 수 있게 했습니다.
 </p>
 </div>
 <div class="pipeline-arrow">
@@ -268,7 +268,7 @@ INT8 cell마다 held-out state 2,000개를 Nebius Jobs(CPU 병렬)에서 채점�
 <div class="pipeline-stage">
 <span>시험</span> <strong>봉인된 실물 시행</strong>
 <p>
-섞인 순서로 진행하고, 운영자는 시행 번호만 봅니다. 결과는 자동 판정과, 저장된 영상을 코드로 다시 판정한 blind 재판정에서 나오며, 로그는 봉인 해제 전에 hash로 고정합니다.
+순서를 섞어 진행하고, 운영자는 시행 번호만 봅니다. 결과는 자동 판정과, 저장된 영상을 코드로 다시 보는 blind 재판정으로 정합니다. 로그는 봉인 해제 전에 hash로 고정합니다.
 </p>
 </div>
 <div class="pipeline-arrow">
@@ -277,7 +277,7 @@ INT8 cell마다 held-out state 2,000개를 Nebius Jobs(CPU 병렬)에서 채점�
 <div class="pipeline-stage">
 <span>결정</span> <strong>판정은 코드가</strong>
 <p>
-Newcombe 구간으로 FP32 대비 non-inferiority를 보고, 배치 오차 허용치와 기기 위 preflight를 확인합니다. 결과는 GO, HOLD, BLOCK과 다음 시험에 필요한 arm별 시행 수입니다.
+Newcombe 구간으로 FP32 대비 non-inferiority를 보고, 배치 오차 허용치와 기기에서 도는 preflight를 확인합니다. 결과는 GO, HOLD, BLOCK과 다음 시험에 필요한 arm별 시행 수입니다.
 </p>
 </div>
 </div>
@@ -340,11 +340,11 @@ Newcombe 구간으로 FP32 대비 non-inferiority를 보고, 배치 오차 허�
 <figure class="figure"><p><a href="assets/fig_cost_evidence.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Jetson에서 잰 chunk당 GPU 시간과 실물 성공률(Wilson 95%). 왼쪽일수록 저렴하고, 구간은 서로 겹칩니다."><img src="assets/fig_cost_evidence.png" class="paper-image img-fluid figure-img" alt="Jetson에서 잰 chunk당 GPU 시간과 실물 성공률(Wilson 95%). 왼쪽일수록 저렴하고, 구간은 서로 겹칩니다."></a></p>
 <figcaption>Jetson에서 잰 chunk당 GPU 시간과 실물 성공률(Wilson 95%). 왼쪽일수록 저렴하고, 구간은 서로 겹칩니다.</figcaption></figure>
 </div>
-<p>이 기기에서는 INT8이 아니라 FP16이 가장 빠르고 저렴했습니다. 기기에서 직접 측정해야만 보이는 결과입니다. 하지만 FP32 대비 성공률은 아직 판단할 수 없습니다. arm당 25회로는 성공률 구간 폭이 약 ±28 pp라서 모든 비교가 INSUFFICIENT_EVIDENCE이고, 배포는 HOLD입니다. 사전등록한 ceiling 규칙은 두 arm이 모두 95% 이상이면 표본 수와 상관없이 판단을 보류하게 합니다. 사전등록한 수정 규칙 아래에서는 arm당 약 120회로 성공 기준에 대한 검정력 80%를 얻습니다.</p>
+<p>이 기기에서는 INT8이 아니라 FP16이 가장 빠르고 저렴했습니다. 기기에서 직접 측정해야만 보이는 결과입니다. 하지만 FP32 대비 성공률은 아직 판단할 수 없습니다. arm당 25회로는 성공률 구간 폭이 약 ±28 pp(percentage point, %p)라서 모든 비교가 INSUFFICIENT_EVIDENCE이고, 배포는 HOLD입니다. 사전등록한 ceiling 규칙은 두 arm이 모두 95% 이상이면 표본 수와 상관없이 판단을 보류하게 합니다. 사전등록한 수정 규칙을 쓰면 arm당 약 120회로 성공 기준의 검정력 80%를 얻습니다.</p>
 </section><section id="offline-audit은-실물-결과를-예측하지-못했습니다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="offline-audit은-실물-결과를-예측하지-못했습니다">Offline audit은 실물 결과를 예측하지 못했습니다</h3>
 <p>audit 상위 INT8 cell은 실물에서 <strong>73/75</strong>, 무작위로 고른 cell도 <strong>73/75</strong>였습니다. offline 순위는 배치 오차와도 관계가 없었습니다(Spearman 0.02–0.08). 일부러 검은 프레임으로 calibration한 build는 offline 점수가 나빴지만 실물에서는 11/12였습니다. 이 build는 실물 시행 전에 입력 검사가 잡아냅니다.</p>
 </section><section id="precision이-아니라-배포-조건이-성공률을-바꿨습니다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="precision이-아니라-배포-조건이-성공률을-바꿨습니다">Precision이 아니라 배포 조건이 성공률을 바꿨습니다</h3>
-<p>precision 효과는 확인되지 않았습니다. 그리퍼의 미끄럼 방지 패드를 떼자 성공이 <strong>8/24</strong>로 떨어졌고, 시작 위치를 3 cm 옮기자 <strong>0/3</strong>이었습니다. INT8이 그리퍼 떨림을 두 배로 늘리는 것처럼 보였지만, 사전등록한 시험에서는 1.3배였고 유의하지 않았습니다(p = 0.12). 그립, 시작 위치, 캔 크기, 카메라 장착 상태를 배포 조건으로 기록해, 실패를 기본적으로 build 탓으로 돌리지 않습니다.</p>
+<p>precision 효과는 확인되지 않았습니다. 그리퍼의 미끄럼 방지 패드를 떼자 성공이 <strong>8/24</strong>로 떨어졌고, 시작 위치를 3 cm 옮기자 <strong>0/3</strong>이었습니다. INT8이 그리퍼 떨림을 두 배로 늘리는 것처럼 보였지만, 사전등록한 시험에서는 1.3배였고 유의하지 않았습니다(p = 0.12). 그립, 시작 위치, 캔 크기, 카메라 장착 상태를 배포 조건으로 기록해, 실패를 곧바로 build 탓으로 돌리지 않습니다.</p>
 </section><section id="찾고-데이터로-고치고-봉인된-시험으로-다시-확인했습니다" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="찾고-데이터로-고치고-봉인된-시험으로-다시-확인했습니다">찾고, 데이터로 고치고, 봉인된 시험으로 다시 확인했습니다</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><a href="assets/fig_ft_position.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="위치 fine-tune과 기존 policy 비교. 섞인 순서로 held-out 위치마다 12 대 12(학습 위치는 24 대 24), Wilson 95%."><img src="assets/fig_ft_position.png" class="paper-image img-fluid figure-img" alt="위치 fine-tune과 기존 policy 비교. 섞인 순서로 held-out 위치마다 12 대 12(학습 위치는 24 대 24), Wilson 95%."></a></p>
@@ -356,22 +356,22 @@ Newcombe 구간으로 FP32 대비 non-inferiority를 보고, 배치 오차 허�
 <figure class="figure"><p><a href="assets/reach_on_the_table.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="테이블 위에서 fine-tune이 통하는 범위: 시작 위치별 fine-tune과 기존 policy의 12회 중 성공 횟수, 그리고 +6 cm에서의 fine-tune v2."><img src="assets/reach_on_the_table.png" class="paper-image img-fluid figure-img" alt="테이블 위에서 fine-tune이 통하는 범위: 시작 위치별 fine-tune과 기존 policy의 12회 중 성공 횟수, 그리고 +6 cm에서의 fine-tune v2."></a></p>
 <figcaption>테이블 위에서 fine-tune이 통하는 범위: 시작 위치별 fine-tune과 기존 policy의 12회 중 성공 횟수, 그리고 +6 cm에서의 fine-tune v2.</figcaption></figure>
 </div>
-<p>새로 사전등록한 시험으로 첫 fine-tune의 범위를 확인했습니다. 시연 범위를 벗어난 <strong>−6 cm에서는 8/12 대 0/12</strong>였지만, <strong>+6 cm에서는 0/12 대 0/12</strong>, <strong>작은 노란 캔으로 +3 cm에서는 0/12 대 3/12</strong>였습니다. 시연 50개(노란 캔, +5 cm와 +7 cm 시작)를 더 모아 두 번째 fine-tune을 하자 두 약점이 모두 해결됐습니다. <strong>노란 캔에서 12/12 대 7/12</strong>, <strong>+6 cm에서 12/12 대 2/12</strong>로, 역시 학습에 없던 조건이며 학습 위치에서도 떨어지지 않았습니다(12/12 대 12/12).</p>
+<p>새로 사전등록한 시험으로 첫 fine-tune의 범위를 확인했습니다. 시연 범위를 벗어난 <strong>−6 cm에서는 8/12 대 0/12</strong>였지만, <strong>+6 cm에서는 0/12 대 0/12</strong>, <strong>작은 노란 캔으로 +3 cm에서는 0/12 대 3/12</strong>였습니다. 시연 50개(노란 캔, +5 cm와 +7 cm 시작)를 더 모아 두 번째 fine-tune을 하자 두 약점이 모두 해결됐습니다. <strong>노란 캔에서 12/12 대 7/12</strong>, <strong>+6 cm에서 12/12 대 2/12</strong>였고, 둘 다 학습에 없던 조건입니다. 학습 위치에서도 성능이 떨어지지 않았습니다(12/12 대 12/12).</p>
 </section><section id="ai-판정-모델도-검증-대상입니다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="ai-판정-모델도-검증-대상입니다">AI 판정 모델도 검증 대상입니다</h3>
-<p>한 단어로 답하게 한 prompt에서 Cosmos-Reason2는 실패 21개 중 <strong>1개</strong>만 잡았습니다. 검증한 prompt는 held-out 녹화에서 20/21을 잡았고, 새 실물 시행 96회에서도 실패 <strong>22/24</strong>를 잡고 오경보는 <strong>2/72</strong>였습니다. 그래도 놓치는 경우가 있습니다. 시작 위치에 서 있는 캔은 성공처럼 보입니다. 2 Hz shadow supervisor는 실패를 감지하지 못했고, 그대로 보고했습니다.</p>
+<p>한 단어로 답하게 한 prompt에서 Cosmos-Reason2는 실패 21개 중 <strong>1개</strong>만 잡았습니다. 검증한 prompt는 held-out 녹화에서 20/21을 잡았습니다. 새 실물 시행 96회에서도 실패 <strong>22/24</strong>를 잡았고, 오경보는 <strong>2/72</strong>였습니다. 그래도 놓치는 경우가 있습니다. 시작 위치에 선 채로 남은 캔은 이 모델에게 성공처럼 보입니다. 2 Hz shadow supervisor는 실패를 감지하지 못했고, 그대로 보고했습니다.</p>
 </section><section id="말은-모델이-사실은-코드가-씁니다" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="말은-모델이-사실은-코드가-씁니다">말은 모델이, 사실은 코드가 씁니다</h3>
-<p>Nemotron 보고서는 세 번 바뀌었습니다. 마지막 버전에서는 모든 판정, 숫자, 상태를 코드가 쓰고, 모델은 review가 왜 이렇게 나왔는지와 남은 질문만 씁니다. 검증기는 숫자, 판정 label, 승인 단어, 알려진 오독이 들어간 문장을 거부합니다. Token Factory에서 모델 6개를 비교했을 때, 반복마다 근거에 없는 숫자가 하나도 없고 형식을 모두 지킨 모델은 Nemotron 3 Super뿐이었습니다.</p>
+<p>Nemotron 보고서는 세 버전을 거쳤습니다. 마지막 버전에서는 모든 판정, 숫자, 상태를 코드가 쓰고, 모델은 review가 왜 이렇게 나왔는지와 남은 질문만 씁니다. 검증기는 숫자, 판정 label, 승인 단어, 알려진 오독이 들어간 문장을 거부합니다. Token Factory에서 모델 6개를 비교했을 때, 반복마다 근거에 없는 숫자가 하나도 없고 형식을 모두 지킨 모델은 Nemotron 3 Super뿐이었습니다.</p>
 </section>
 </div>
 </section><section id="승인-규칙" class="level2"><h2 class="anchored" data-anchor-id="승인-규칙">승인 규칙</h2>
 <div class="paper-method">
 <div class="paper-method-steps">
 <ol type="1">
-<li>결과를 보기 전에 규칙을 고정합니다. 사전등록과, 봉인된 로그의 post-lock hash(LOCK-1부터 LOCK-4)로 고정하고, 모든 수정과 오류는 기록합니다.</li>
+<li>결과를 보기 전에 사전등록과 봉인된 로그의 post-lock hash(LOCK-1부터 LOCK-4)로 규칙을 고정합니다. 모든 수정과 오류는 기록합니다.</li>
 <li>각 후보는 같은 세션에서 섞인 순서로 진행한 FP32 시행과 비교합니다.</li>
 <li>
 <span class="math inline">\(p_{\text{cand}} - p_{\text{FP32}}\)</span>의 Newcombe 95% 하한이 −10 pp보다 크면 <strong>성공 기준</strong>을 충족합니다.</li>
-<li>최종 <strong>GO</strong>에는 배치 오차가 5 px 허용치 안에 있고, ceiling 규칙이 비교를 보류하지 않으며, 기기 위 preflight(engine hash, 정규화 manifest, runner의 200 ms chunk 마감)를 통과하는 것도 필요합니다.</li>
+<li>최종 <strong>GO</strong>를 받으려면 배치 오차가 5 px 허용치 안에 있고, ceiling 규칙이 비교를 보류하지 않고, 기기에서 도는 preflight(engine hash, 정규화 manifest, runner의 200 ms chunk 마감)도 통과해야 합니다.</li>
 <li>그렇지 않으면 review는 <strong>HOLD</strong>(근거 부족) 또는 <strong>BLOCK</strong>(검사 실패)을 내고, 다음 시험에 필요한 arm별 시행 수를 알려 줍니다. gate를 통과했다는 것은 “다음에 검증할 가치가 있다”는 뜻이지 “승인”이 아닙니다.</li>
 </ol>
 </div>
@@ -413,11 +413,11 @@ Newcombe 구간으로 FP32 대비 non-inferiority를 보고, 배치 오차 허�
 </section><section id="공개하는-실패-사례" class="level2"><h2 class="anchored" data-anchor-id="공개하는-실패-사례">공개하는 실패 사례</h2>
 <div class="paper-summary-grid">
 <section id="부딪힌-손목-카메라" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="부딪힌-손목-카메라">부딪힌 손목 카메라</h3>
-<p>학습 위치의 성공률이 갑자기 떨어졌습니다. 모든 결과를 봉인한 채 소프트웨어 원인을 배제했고, 남아 있던 표시물과 축이 틀어진 손목 카메라를 찾아 장착부를 고쳤습니다. 이후 사전등록한 health check는 정상으로 돌아왔다고 나왔습니다. 문제 있는 환경에서 진행한 6회는 열어 보지 않고 폐기했습니다.</p>
+<p>학습 위치의 성공률이 갑자기 떨어졌습니다. 모든 결과를 봉인한 채 소프트웨어 원인을 배제했고, 남아 있던 표시물과 축이 틀어진 손목 카메라를 찾아 장착부를 고쳤습니다. 이후 사전등록한 health check 값이 정상으로 돌아왔습니다. 문제가 있던 환경에서 진행한 6회는 열어 보지 않고 폐기했습니다.</p>
 </section><section id="환경이-결과에-영향을-줬습니다" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="환경이-결과에-영향을-줬습니다">환경이 결과에 영향을 줬습니다</h3>
-<p>fine-tune v2 세션에서는 첫 fine-tune도 이전보다 좋았습니다(0/12에서 7/12와 2/12). 부딪힌 카메라가 이전 차이의 일부 원인이었다는 해석과 맞지만, 세션 간 비교로는 확정할 수 없어 그렇게 주장하지 않습니다.</p>
+<p>fine-tune v2 세션에서는 첫 fine-tune도 이전보다 좋았습니다(0/12에서 7/12와 2/12). 이전 차이의 일부는 부딪힌 카메라 때문이었다는 해석과 맞습니다. 다만 세션 간 비교로는 확정할 수 없어 그렇게 주장하지 않습니다.</p>
 </section><section id="시뮬레이터는-아직-실물을-예측하지-못합니다" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="시뮬레이터는-아직-실물을-예측하지-못합니다">시뮬레이터는 아직 실물을 예측하지 못합니다</h3>
-<p>이 작업의 Isaac Sim twin은 실물 14회 중 10회와 일치했지만, 매번 실패로 예측했기 때문입니다. 실물에 맞춰 보정하기 전까지는 탐색용으로만 둡니다.</p>
+<p>이 작업의 Isaac Sim twin은 실물 14회 중 10회와 일치했는데, 매번 실패를 예측했기 때문일 뿐입니다. 실물에 맞춰 보정하기 전까지는 탐색용으로만 둡니다.</p>
 </section>
 </div>
 </section><section id="배운-점과-한계" class="level2"><h2 class="anchored" data-anchor-id="배운-점과-한계">배운 점과 한계</h2>
@@ -432,7 +432,7 @@ Newcombe 구간으로 FP32 대비 non-inferiority를 보고, 배치 오차 허�
 <ul>
 <li>로봇 팔 하나, 작업 하나, 기본 policy 하나이고, arm당 12–25회라 구간이 넓습니다.</li>
 <li>fine-tune 블록에서는 두 policy의 움직임이 눈에 띄게 달라 운영자 blinding이 부분적이었습니다.</li>
-<li>세션 간 비교는 통제되지 않았고, 아직 외부 팀이 써 보지 않았습니다.</li>
+<li>세션 간 비교는 통제되지 않았습니다. review를 외부 팀이 써 본 적도 아직 없습니다.</li>
 </ul></section><section id="출처" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="출처">출처</h3>
 <p>숫자는 LOCK-4(2026년 10월 23일)에 고정했고 모두 커밋된 결과물에서 나옵니다. <code>quantgate.py verify | review</code>는 GPU, 로봇, API 키 없이 review를 다시 만듭니다. 학습 데이터는 LeRobot v3 데이터셋 3개(시연 120 + 50 + 50개, CC BY 4.0)로 공개했습니다. 보고서 문장에 쓴 serverless Nemotron 모델은 2026년 11월 9일 Token Factory에서 종료됐지만, 커밋된 보고서는 그대로입니다. 코드는 Claude Code와 함께 작성했고, 연구 설계, 실험대 구성, 모든 시행은 제가 직접 했습니다.</p>
 </section>

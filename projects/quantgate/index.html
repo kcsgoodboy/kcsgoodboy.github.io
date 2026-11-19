@@ -259,7 +259,7 @@ QuantGate: A Deployment Review for Quantized Robot Policies
 <div class="pipeline-stage">
 <span>Screen</span> <strong>Offline audit, frozen</strong>
 <p>
-2,000 held-out states scored per INT8 cell on Nebius Jobs (CPU fan-out). The ranking was frozen before any real trial, so the arm could test it.
+2,000 held-out states scored per INT8 cell (one of the 24 INT8 calibration builds) on Nebius Jobs (CPU fan-out). The ranking was frozen before any real trial, so the arm could test it.
 </p>
 </div>
 <div class="pipeline-arrow">
@@ -340,7 +340,7 @@ Non-inferiority against FP32 with Newcombe intervals, a placement tolerance and 
 <figure class="figure"><p><a href="assets/fig_cost_evidence.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Real-arm success (Wilson 95%) against GPU time per chunk on the Jetson. Cheaper is to the left; the intervals overlap."><img src="assets/fig_cost_evidence.png" class="paper-image img-fluid figure-img" alt="Real-arm success (Wilson 95%) against GPU time per chunk on the Jetson. Cheaper is to the left; the intervals overlap."></a></p>
 <figcaption>Real-arm success (Wilson 95%) against GPU time per chunk on the Jetson. Cheaper is to the left; the intervals overlap.</figcaption></figure>
 </div>
-<p>FP16 is the fastest and the cheapest build on this device, not INT8, a result only on-device measurement showed. Its success against FP32 is still undecided: with 25 trials per arm the success interval is about ±28 pp wide, so every comparison is INSUFFICIENT_EVIDENCE and deployment stays HOLD. The pre-registered ceiling rule keeps two arms that are both at or above 95% undecided at any sample size; under a revised, pre-registered rule, about 120 trials per arm give 80% power for the success criterion.</p>
+<p>On this device the fastest and cheapest build is FP16, not INT8, and only on-device measurement showed it. Its success against FP32 is still undecided: with 25 trials per experiment arm the success interval is about ±28 percentage points (pp) wide, so every comparison is INSUFFICIENT_EVIDENCE and deployment stays HOLD. The pre-registered ceiling rule keeps two arms that are both at or above 95% undecided at any sample size; under a revised, pre-registered rule, about 120 trials per arm give 80% power for the success criterion.</p>
 </section><section id="the-offline-audit-did-not-predict-the-arm" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-offline-audit-did-not-predict-the-arm">The offline audit did not predict the arm</h3>
 <p>The audit’s top-ranked INT8 cells went <strong>73/75</strong> on the arm; randomly picked cells also went <strong>73/75</strong>. The offline rank did not track placement error either (Spearman 0.02–0.08). A deliberately broken, black-frame-calibrated build scored badly offline yet went 11/12 on the arm; an input check catches it before the arm.</p>
 </section><section id="deployment-conditions-moved-success-not-precision" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="deployment-conditions-moved-success-not-precision">Deployment conditions moved success, not precision</h3>
@@ -358,9 +358,9 @@ Non-inferiority against FP32 with Newcombe intervals, a placement tolerance and 
 </div>
 <p>A new pre-registration mapped the reach of the first fine-tune: <strong>8/12 vs 0/12 at −6 cm</strong>, beyond its demonstrations, but <strong>0/12 vs 0/12 at +6 cm</strong> and <strong>0/12 vs 3/12 with a smaller yellow can at +3 cm</strong>. Fifty more demonstrations (the yellow can, starts at +5 and +7 cm) and a second fine-tune closed both gaps: <strong>12/12 vs 7/12 with the yellow can</strong> and <strong>12/12 vs 2/12 at +6 cm</strong>, again at conditions never in training, with no drop at the trained spot (12/12 vs 12/12).</p>
 </section><section id="the-ai-judge-is-a-part-to-validate" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-ai-judge-is-a-part-to-validate">The AI judge is a part to validate</h3>
-<p>With a one-word prompt Cosmos-Reason2 caught <strong>1 of 21</strong> failures. A validated prompt caught 20/21 on held-out recordings, then held up live on 96 new trials: <strong>22/24</strong> failures caught, <strong>2/72</strong> false alarms. It still misses some: a can left standing at the start looks like a success to it. A 2 Hz shadow supervisor did not detect failures and is reported as such.</p>
+<p>With a one-word prompt Cosmos-Reason2 caught <strong>1 of 21</strong> failures. A validated prompt caught 20/21 on held-out recordings, then held up live on 96 new trials: <strong>22/24</strong> failures caught, <strong>2/72</strong> false alarms. It still misses some: a can left standing at the start looks like a success to it. A 2 Hz shadow supervisor did not detect failures, and we report that.</p>
 </section><section id="the-model-writes-words-code-writes-facts" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-model-writes-words-code-writes-facts">The model writes words, code writes facts</h3>
-<p>The Nemotron report went through three versions. In the last, code writes every verdict, number and status; the model writes only why the review looks as it does and the open questions, and a validator rejects any digit, verdict label, approval word or known misreading. In a six-model comparison on Token Factory, Nemotron 3 Super was the only variant with zero unmatched numbers and a complete format in every repeat.</p>
+<p>The Nemotron report went through three versions. In the last, code writes every verdict, number and status; the model writes only why the review came out as it did, plus the open questions, and a validator rejects any digit, verdict label, approval word or known misreading. In a six-model comparison on Token Factory, Nemotron 3 Super was the only variant with zero unmatched numbers and a complete format in every repeat.</p>
 </section>
 </div>
 </section><section id="the-approval-rule" class="level2"><h2 class="anchored" data-anchor-id="the-approval-rule">The approval rule</h2>
@@ -412,7 +412,7 @@ Non-inferiority against FP32 with Newcombe intervals, a placement tolerance and 
 </section><section id="failures-we-publish" class="level2"><h2 class="anchored" data-anchor-id="failures-we-publish">Failures we publish</h2>
 <div class="paper-summary-grid">
 <section id="a-knocked-wrist-camera" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="a-knocked-wrist-camera">A knocked wrist camera</h3>
-<p>Success at the trained spot suddenly fell. Every result stayed sealed while we ruled out the software, found stray markers and a wrist camera knocked off-axis, and fixed the mount. A pre-registered health check then read back to nominal. Six trials run in the bad scene were discarded unopened.</p>
+<p>Success at the trained spot suddenly fell. Every result stayed sealed while we ruled out the software, found stray markers and a wrist camera knocked off-axis, and fixed the mount. A pre-registered health check then came back nominal. Six trials run in the bad scene were discarded unopened.</p>
 </section><section id="the-scene-mattered" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="the-scene-mattered">The scene mattered</h3>
 <p>In the fine-tune v2 session the first fine-tune also did better than before (7/12 and 2/12 against 0/12), which fits the knocked camera having caused part of the earlier gap. A comparison across sessions cannot settle it, so the page does not claim it.</p>
 </section><section id="the-simulator-cannot-predict-the-arm-yet" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="the-simulator-cannot-predict-the-arm-yet">The simulator cannot predict the arm yet</h3>
@@ -429,9 +429,9 @@ Non-inferiority against FP32 with Newcombe intervals, a placement tolerance and 
 <li>An AI judge or writer is a component to validate on held-out data, not an oracle.</li>
 </ul></section><section id="limits" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="limits">Limits</h3>
 <ul>
-<li>One arm, one task, one base policy; 12–25 trials per arm, so intervals are wide.</li>
+<li>One robot arm, one task, one base policy; 12–25 trials per arm, so intervals are wide.</li>
 <li>Operator blinding was partial in the fine-tune blocks, where the two policies move visibly differently.</li>
-<li>Sessions were not compared under control, and the review has not yet been tried by outside teams.</li>
+<li>Comparisons across sessions were not controlled, and no outside team has tried the review yet.</li>
 </ul></section><section id="provenance" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="provenance">Provenance</h3>
 <p>Numbers are frozen at LOCK-4 (23 October 2026) and come from committed artifacts; <code>quantgate.py verify | review</code> rebuilds the review with no GPU, robot or API key. Training data are public as three LeRobot v3 datasets (120 + 50 + 50 demonstrations, CC BY 4.0). The serverless Nemotron model used for the report text was retired by Token Factory on 9 November 2026; the committed reports are unchanged. Code was written with Claude Code; the study design, the bench and every trial are mine.</p>
 </section>

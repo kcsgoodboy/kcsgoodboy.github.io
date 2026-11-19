@@ -197,11 +197,11 @@ Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines
 </section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <div class="paper-summary-grid">
 <section id="problem" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="problem">Problem</h3>
-<p>Modern washing machines must keep loads balanced across many operating conditions. Manual trial-and-error tuning can limit how quickly control performance improves after deployment.</p>
+<p>To keep vibration down during the dehydration cycle, a washer has to keep its load balanced, and the number of possible laundry combinations is effectively unlimited. Today developers tune the controller by trial and error on a handful of representative loads (a human-in-the-loop process). Mass-produced appliances also run on low-spec MCUs, so loads the controller was never tuned for are hard to handle well.</p>
 </section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
-<p>The paper introduces a continual offline reinforcement learning workflow for washer motor control, using logged transition data and delayed online updates to reduce distribution-shift risk.</p>
+<p>The paper introduces a continual offline reinforcement learning workflow for washer motor control. The policy trains on logged transition data, then gets delayed online updates so that distribution shift between lab and field data stays manageable.</p>
 </section><section id="outcome" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="outcome">Outcome</h3>
-<p>Experiments report improved balance-maintenance behavior during the dehydration cycle across tasks with different laundry conditions.</p>
+<p>In lab tests on six laundry types, two rounds of DOU raised the average success rate by about 16 percentage points over the baseline.</p>
 </section>
 </div>
 </section><section id="method" class="level2"><h2 class="anchored" data-anchor-id="method">Method</h2>
@@ -231,7 +231,7 @@ Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines
 <figure class="figure"><p><a href="assets/result_asr.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Average success rate comparison across laundry tasks."><img src="assets/result_asr.png" class="paper-image img-fluid figure-img" alt="Average success rate comparison across laundry tasks."></a></p>
 <figcaption>Average success rate comparison across laundry tasks.</figcaption></figure>
 </div>
-<p>DOU variants improve average success rate over the baseline across the evaluated laundry tasks.</p>
+<p>Both DOU rounds beat the baseline on every laundry task. After the second round, the average success rate went from about 0.53 to 0.69.</p>
 </section><section id="multi-task-laundry-set" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="multi-task-laundry-set">Multi-Task Laundry Set</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><a href="assets/multi_task.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Multi-task laundry configurations."><img src="assets/multi_task.png" class="paper-image img-fluid figure-img" alt="Multi-task laundry configurations."></a></p>
@@ -249,7 +249,7 @@ Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines
 <figure class="figure"><p><a href="assets/nc.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Production-ready washer product using offline reinforcement learning."><img src="assets/nc.png" class="paper-image img-fluid figure-img" alt="Production-ready washer product using offline reinforcement learning."></a></p>
 <figcaption>Production-ready washer product using offline reinforcement learning.</figcaption></figure>
 </div>
-<p>Production-ready target device with the offline RL control approach.</p>
+<p>The improved model shipped in a mass-produced LG SIGNATURE washer, the first mass-produced home appliance to use this kind of data-driven control.</p>
 </section>
 </div>
 </section><section id="videos" class="level2"><h2 class="anchored" data-anchor-id="videos">Videos</h2>
