@@ -174,14 +174,14 @@ Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Ho
 <p>LG Electronics AI Lab</p>
 </div>
 <div class="paper-links">
-<p><a class="paper-button" href="https://ieeexplore.ieee.org/document/11704219" target="_blank" rel="noopener"><i class="ai ai-ieee"></i> IEEE</a> <a class="paper-button" href="https://doi.org/10.1109/CASE69030.2026.11704219" target="_blank" rel="noopener"><i class="fas fa-link"></i> DOI</a> <!-- Add a local manuscript after placing projects/data-driven-rl-washing-machines/assets/paper.pdf:
+<p><a class="paper-button" href="https://ieeexplore.ieee.org/document/11704219" target="_blank" rel="noopener"><i class="ai ai-ieee"></i> IEEE</a> <a class="paper-button" href="https://doi.org/10.1109/CASE69030.2026.11704219" target="_blank" rel="noopener"><i class="fas fa-link"></i> DOI</a> <!-- Add a local manuscript after placing projects/reward-learning-dryer/assets/paper.pdf:
   <a class="paper-button" href="assets/paper.pdf"><i class="fas fa-file-pdf"></i> PDF</a>
   --></p>
 </div>
 </div>
 <section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
 <div class="paper-tldr">
-<p>This work transfers human video judgments of laundry motion into a deployable sensor-only reward model, then uses reinforcement learning to improve dryer drum-speed control without requiring video at runtime.</p>
+<p>This work turns human judgments of laundry motion in video into a sensor-only reward model that can be deployed on the dryer, then uses reinforcement learning to improve drum-speed control. No video is needed at runtime.</p>
 </div>
 <div class="paper-teaser">
 <div class="paper-figure paper-figure-main">
@@ -190,18 +190,18 @@ Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Ho
 <figcaption>Learning-based reward model pipeline for sensor-only dryer control.</figcaption></figure>
 </div>
 <div class="paper-media-caption">
-<p>Learning-based reward model pipeline: visual supervision is collected during development, distilled into a sensor-only reward model, and used for reinforcement learning.</p>
+<p>Learning-based reward model pipeline. Video supervision collected during development is distilled into a sensor-only reward model, which then supplies the reward for reinforcement learning.</p>
 </div>
 </div>
 </div>
 </section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <div class="paper-summary-grid">
 <section id="problem" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="problem">Problem</h3>
-<p>Efficient drying depends on maintaining cataracting laundry motion, but the internal tumble state is not directly observable from production sensors such as motor current and drum-speed signals.</p>
+<p>Efficient drying depends on keeping the laundry in cataracting motion, but production sensors such as motor current and drum speed cannot observe the tumble state inside the drum directly.</p>
 </section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
-<p>The method collects synchronized sensor trajectories and internal video during development, uses human video labels or preferences to train a sensor-only reward model, and freezes that model during SAC-based policy learning.</p>
+<p>During development, the method records sensor trajectories together with synchronized video from inside the drum. Human labels or preferences on that video train a sensor-only reward model, which stays frozen during SAC-based policy learning.</p>
 </section><section id="outcome" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="outcome">Outcome</h3>
-<p>Across five load compositions, the learned controller improved normalized moisture-removal performance by 2.04% on average and 2.86% in the best case compared with an expert-designed baseline.</p>
+<p>Across five load compositions, the learned controller improved normalized moisture-removal performance by 2.15% on average and 2.86% in the best case compared with an expert-designed baseline.</p>
 </section>
 </div>
 </section><section id="motion-labels" class="level2"><h2 class="anchored" data-anchor-id="motion-labels">Motion Labels</h2>
@@ -211,7 +211,7 @@ Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Ho
 <figure class="figure"><p><a href="assets/bad_motion1_compress.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Laundry mass follows the drum wall instead of tumbling."><img src="assets/bad_motion1_compress.png" class="paper-image img-fluid figure-img" alt="Laundry mass follows the drum wall instead of tumbling."></a></p>
 <figcaption>Laundry mass follows the drum wall instead of tumbling.</figcaption></figure>
 </div>
-<p>The laundry remains attached to the drum wall, reducing effective surface exposure to airflow.</p>
+<p>The laundry stays attached to the drum wall, so less of its surface is exposed to the airflow.</p>
 </section><section id="bad-motion-rolling" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="bad-motion-rolling">Bad Motion: Rolling</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><a href="assets/bad_motion2_compress.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Laundry mass rolls near the bottom of the drum."><img src="assets/bad_motion2_compress.png" class="paper-image img-fluid figure-img" alt="Laundry mass rolls near the bottom of the drum."></a></p>
@@ -223,7 +223,7 @@ Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Ho
 <figure class="figure"><p><a href="assets/good_motion_compress.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Desirable tumbling motion inside the dryer drum."><img src="assets/good_motion_compress.png" class="paper-image img-fluid figure-img" alt="Desirable tumbling motion inside the dryer drum."></a></p>
 <figcaption>Desirable tumbling motion inside the dryer drum.</figcaption></figure>
 </div>
-<p>The target motion exposes laundry surfaces more evenly to heated airflow and supports drying efficiency.</p>
+<p>The target motion exposes laundry surfaces more evenly to the heated airflow, which makes drying more efficient.</p>
 </section>
 </div>
 </section><section id="method" class="level2"><h2 class="anchored" data-anchor-id="method">Method</h2>
@@ -264,13 +264,13 @@ The frozen reward model supplies rewards to a SAC controller that adjusts drum s
 </ol>
 </div>
 <section id="motion-supervision" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="motion-supervision">Motion Supervision</h3>
-<p>The key design is to use video only as development-time supervision. Human-readable tumble quality is distilled into a reward model that maps sensor histories to scalar motion quality, so the learned controller remains compatible with production sensing constraints.</p>
+<p>The main design choice is to use video only as supervision during development. Tumble quality that a person can judge from video is distilled into a reward model that maps sensor histories to a scalar motion-quality score, so the learned controller only needs the sensors a production dryer already has.</p>
 <div class="paper-metric-strip">
 <div class="paper-metric">
 <p><strong>5</strong> <span>evaluated load compositions</span></p>
 </div>
 <div class="paper-metric">
-<p><strong>2.04%</strong> <span>average relative gain</span></p>
+<p><strong>2.15%</strong> <span>average relative gain</span></p>
 </div>
 <div class="paper-metric">
 <p><strong>2.86%</strong> <span>best-case gain</span></p>
@@ -291,17 +291,17 @@ The frozen reward model supplies rewards to a SAC controller that adjusts drum s
 </div>
 </div>
 <div class="paper-media-caption">
-<p>Real household dryer setup used for collecting synchronized sensor streams, observing internal tumble motion, and evaluating the learned controller.</p>
+<p>Real household dryer used to collect synchronized sensor streams, observe tumble motion inside the drum, and evaluate the learned controller.</p>
 </div>
 </div>
 </section><section id="results" class="level2"><h2 class="anchored" data-anchor-id="results">Results</h2>
 <div class="paper-result-grid">
 <section id="moisture-removal-performance" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="moisture-removal-performance">Moisture-Removal Performance</h3>
-<p>The proposed controller improved the normalized moisture-removal metric for all five evaluated loads. The mean metric increased from 0.6129 to 0.6261, corresponding to a mean per-load relative improvement of 2.04%.</p>
+<p>The proposed controller improved the normalized moisture-removal metric for all five evaluated loads. The mean metric rose from 0.6129 to 0.6261, a relative improvement of 2.15%.</p>
 </section><section id="load-coverage" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="load-coverage">Load Coverage</h3>
 <p>The experiments cover 3 kg and 5 kg mixed-fabric loads, different cotton-to-polyester ratios, and a towel-heavy 3 kg load.</p>
 </section><section id="preference-reward-check" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="preference-reward-check">Preference Reward Check</h3>
-<p>A preference-based reward model was also validated on the towel-heavy load. It followed the overall trend of binary motion labels and improved performance by 2.10%.</p>
+<p>A preference-based reward model was also validated on the towel-heavy load. Its rewards followed the overall trend of the binary motion labels, and the controller trained with it improved performance by 2.10% over the existing model.</p>
 </section><section id="deployment-constraint" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="deployment-constraint">Deployment Constraint</h3>
 <p>Video is used only for annotation during development. During RL training and deployment, both the reward model and controller use onboard sensor sequences only.</p>
 </section>

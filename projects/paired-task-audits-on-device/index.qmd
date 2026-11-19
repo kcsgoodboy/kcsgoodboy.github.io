@@ -150,8 +150,8 @@ Prospective replication: three rules and 256 paired starts for each of 8 FetchRe
 |---|---:|---|---|
 | Level 0 (auto), 64 rows, stride 4 | 14.93 | [14.32, 15.55] | locked |
 | Level 1 (forced), 64 rows, stride 4 | 14.57 | [13.92, 15.21] | informed |
-| Level 0 (forced), all 256 rows | 14.97 | [14.35, 15.58] | informed |
-| Level 3 AdaRound, all 256 rows | 14.42 | [13.83, 15.04] | informed |
+| Level 0 (forced), all 256 rows used | 14.97 | [14.35, 15.58] | informed |
+| Level 3 AdaRound, all 256 rows used | 14.42 | [13.83, 15.04] | informed |
 
 Forcing level 1 changes every artifact's action field, yet the best-to-worst range stays. Neither the level-0 fallback nor AdaRound clamping alone explains the spread; the "informed" rows were designed after the first result.
 :::
@@ -192,7 +192,7 @@ Post-outcome inspection on a fixed 800-state early-phase panel. Only the two rul
 ![Three moments of the start shown above. Top row: FP32 policy; bottom row: the Hailo-8 artifact. Each frame states the step and the distance to the goal.](assets/filmstrip.png){.paper-image}
 
 ::: {.paper-media-caption}
-Device-in-the-loop follow-up run on this paper's pipeline: policy seed 202609201, Hailo-8 level-0 build calibrated on 256 phase middle rows, 128 new paired starts, FP32 arm and device arm from identical reset states. The FP32 policy reaches the goal in 128/128 starts, the artifact in 46/128; mean return -1.06 (FP32) versus -11.07 (device). This run illustrates the mechanism; the numbers elsewhere on this page come from the paper's own cohorts.
+Device-in-the-loop follow-up run on this paper's pipeline: policy seed 202609201, Hailo-8 level-0 build calibrated on all 256 phase middle rows (calibset_size 256), 128 new paired starts, FP32 arm and device arm from identical reset states. The FP32 policy reaches the goal in 128/128 starts, the artifact in 46/128; mean return -1.06 (FP32) versus -11.07 (device). This run illustrates the mechanism; the numbers elsewhere on this page come from the paper's own cohorts.
 :::
 :::
 
@@ -255,7 +255,7 @@ Each rectangle is the product of the 95% intervals for paired return loss and de
 ::: {.paper-summary-card}
 ### Limits
 
-- The study shows that this can happen, not how often: three tasks, eight policy seeds, two accelerators.
+- The study shows that this can happen, not how often: three tasks (FetchReach, FetchPush, Ant), eight policy seeds, two accelerators.
 - No GPU-host builds, real-time deadlines, physical robots or foundation-model controllers.
 - The qualification rule is illustrated retrospectively, not validated end to end.
 :::
@@ -263,7 +263,7 @@ Each rectangle is the product of the 95% intervals for paired return loss and de
 ::: {.paper-summary-card}
 ### Provenance
 
-Every number on this page is generated from the committed audit outputs by the scripts that build the poster; the poster manifest lists each source file and its hash. Hailo artifacts were built on a CPU-only host with DFC 3.33.1; Edge TPU artifacts with TFLite full-integer PTQ. Scripts, build configurations and per-run records will be released with the paper.
+The numbers in the result cards are generated from the committed audit outputs of the paper's experiments by the scripts that build the poster; the poster manifest lists each source file and its hash. The reach animation, the filmstrip and the distance chart come from a separate device-in-the-loop follow-up run on the same pipeline, not from the paper's cohorts; its traces are committed, and the frames are replayed from them. Hailo artifacts were built on a CPU-only host with DFC 3.33.1; Edge TPU artifacts with TFLite full-integer PTQ. Scripts, build configurations and per-run records will be released with the paper.
 :::
 :::
 

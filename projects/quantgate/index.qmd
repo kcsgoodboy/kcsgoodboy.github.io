@@ -114,7 +114,7 @@ Three minutes, about 101 s of it on the real arm: what the review tells a develo
 ::: {.pipeline-stage}
 <span>Screen</span>
 <strong>Offline audit, frozen</strong>
-<p>2,000 held-out states scored per INT8 cell on Nebius Jobs (CPU fan-out). The ranking was frozen before any real trial, so the arm could test it.</p>
+<p>2,000 held-out states scored per INT8 cell (one of the 24 INT8 calibration builds) on Nebius Jobs (CPU fan-out). The ranking was frozen before any real trial, so the arm could test it.</p>
 :::
 
 ::: {.pipeline-arrow}
@@ -160,7 +160,7 @@ Three minutes, about 101 s of it on the real arm: what the review tells a develo
 
 ![Real-arm success (Wilson 95%) against GPU time per chunk on the Jetson. Cheaper is to the left; the intervals overlap.](assets/fig_cost_evidence.png){.paper-image}
 
-FP16 is the fastest and the cheapest build on this device, not INT8, a result only on-device measurement showed. Its success against FP32 is still undecided: with 25 trials per arm the success interval is about &plusmn;28 pp wide, so every comparison is INSUFFICIENT_EVIDENCE and deployment stays HOLD. The pre-registered ceiling rule keeps two arms that are both at or above 95% undecided at any sample size; under a revised, pre-registered rule, about 120 trials per arm give 80% power for the success criterion.
+On this device the fastest and cheapest build is FP16, not INT8, and only on-device measurement showed it. Its success against FP32 is still undecided: with 25 trials per experiment arm the success interval is about &plusmn;28 percentage points (pp) wide, so every comparison is INSUFFICIENT_EVIDENCE and deployment stays HOLD. The pre-registered ceiling rule keeps two arms that are both at or above 95% undecided at any sample size; under a revised, pre-registered rule, about 120 trials per arm give 80% power for the success criterion.
 :::
 
 ::: {.paper-result-card}
@@ -194,13 +194,13 @@ A new pre-registration mapped the reach of the first fine-tune: **8/12 vs 0/12 a
 ::: {.paper-result-card}
 ### The AI judge is a part to validate
 
-With a one-word prompt Cosmos-Reason2 caught **1 of 21** failures. A validated prompt caught 20/21 on held-out recordings, then held up live on 96 new trials: **22/24** failures caught, **2/72** false alarms. It still misses some: a can left standing at the start looks like a success to it. A 2 Hz shadow supervisor did not detect failures and is reported as such.
+With a one-word prompt Cosmos-Reason2 caught **1 of 21** failures. A validated prompt caught 20/21 on held-out recordings, then held up live on 96 new trials: **22/24** failures caught, **2/72** false alarms. It still misses some: a can left standing at the start looks like a success to it. A 2 Hz shadow supervisor did not detect failures, and we report that.
 :::
 
 ::: {.paper-result-card}
 ### The model writes words, code writes facts
 
-The Nemotron report went through three versions. In the last, code writes every verdict, number and status; the model writes only why the review looks as it does and the open questions, and a validator rejects any digit, verdict label, approval word or known misreading. In a six-model comparison on Token Factory, Nemotron 3 Super was the only variant with zero unmatched numbers and a complete format in every repeat.
+The Nemotron report went through three versions. In the last, code writes every verdict, number and status; the model writes only why the review came out as it did, plus the open questions, and a validator rejects any digit, verdict label, approval word or known misreading. In a six-model comparison on Token Factory, Nemotron 3 Super was the only variant with zero unmatched numbers and a complete format in every repeat.
 :::
 :::
 
@@ -234,7 +234,7 @@ The Nemotron report went through three versions. In the last, code writes every 
 ::: {.paper-summary-card}
 ### A knocked wrist camera
 
-Success at the trained spot suddenly fell. Every result stayed sealed while we ruled out the software, found stray markers and a wrist camera knocked off-axis, and fixed the mount. A pre-registered health check then read back to nominal. Six trials run in the bad scene were discarded unopened.
+Success at the trained spot suddenly fell. Every result stayed sealed while we ruled out the software, found stray markers and a wrist camera knocked off-axis, and fixed the mount. A pre-registered health check then came back nominal. Six trials run in the bad scene were discarded unopened.
 :::
 
 ::: {.paper-summary-card}
@@ -265,9 +265,9 @@ An Isaac Sim twin of the task agreed with 10 of 14 real runs only because it pre
 ::: {.paper-summary-card}
 ### Limits
 
-- One arm, one task, one base policy; 12&ndash;25 trials per arm, so intervals are wide.
+- One robot arm, one task, one base policy; 12&ndash;25 trials per arm, so intervals are wide.
 - Operator blinding was partial in the fine-tune blocks, where the two policies move visibly differently.
-- Sessions were not compared under control, and the review has not yet been tried by outside teams.
+- Comparisons across sessions were not controlled, and no outside team has tried the review yet.
 :::
 
 ::: {.paper-summary-card}

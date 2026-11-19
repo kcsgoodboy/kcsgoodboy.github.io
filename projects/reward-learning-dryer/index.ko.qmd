@@ -31,7 +31,7 @@ LG Electronics AI Lab
 <div class="paper-links">
   <a class="paper-button" href="https://ieeexplore.ieee.org/document/11704219" target="_blank" rel="noopener"><i class="ai ai-ieee"></i> IEEE</a>
   <a class="paper-button" href="https://doi.org/10.1109/CASE69030.2026.11704219" target="_blank" rel="noopener"><i class="fas fa-link"></i> DOI</a>
-  <!-- Add a local manuscript after placing projects/data-driven-rl-washing-machines/assets/paper.pdf:
+  <!-- Add a local manuscript after placing projects/reward-learning-dryer/assets/paper.pdf:
   <a class="paper-button" href="assets/paper.pdf"><i class="fas fa-file-pdf"></i> PDF</a>
   -->
 </div>
@@ -40,7 +40,7 @@ LG Electronics AI Lab
 ## TL;DR
 
 ::: {.paper-tldr}
-이 연구는 건조기 내부 영상에서 사람이 판단할 수 있는 세탁물 모션 품질을 센서 기반 reward model로 전이하고, 이를 강화학습에 활용하여 실제 제품 센서만으로 동작 가능한 drum-speed 제어 정책을 학습하는 방법입니다.
+이 연구는 건조기 내부 영상을 보고 사람이 판단할 수 있는 세탁물 모션 품질을 센서 기반 reward model로 옮깁니다. 이 reward model로 강화학습을 해서, 실제 제품 센서만으로 동작하는 drum-speed 제어 정책을 학습합니다.
 :::
 
 ::: {.paper-teaser}
@@ -48,7 +48,7 @@ LG Electronics AI Lab
 ![Sensor-only dryer control을 위한 learning-based reward model pipeline.](assets/lbrm.png){.paper-image}
 
 ::: {.paper-media-caption}
-Learning-based reward model pipeline: 개발 단계에서 영상 supervision을 수집하고, 이를 sensor-only reward model로 증류한 뒤 강화학습 제어에 활용합니다.
+Learning-based reward model pipeline: 개발 단계에서 모은 영상 supervision을 sensor-only reward model로 증류하고, 이 모델을 강화학습 제어에 씁니다.
 :::
 :::
 :::
@@ -59,19 +59,19 @@ Learning-based reward model pipeline: 개발 단계에서 영상 supervision을 
 ::: {.paper-summary-card}
 ### Problem
 
-건조 효율을 높이기 위해서는 세탁물이 drum 내부에서 cataracting motion을 유지해야 하지만, 실제 제품에서 사용할 수 있는 motor current, RPM 계열 센서만으로 내부 모션 상태를 직접 관측하기는 어렵습니다.
+건조 효율을 높이려면 세탁물이 drum 안에서 cataracting motion을 유지해야 합니다. 하지만 실제 제품에서 쓸 수 있는 motor current, RPM 계열 센서만으로는 내부 모션 상태를 직접 관측하기 어렵습니다.
 :::
 
 ::: {.paper-summary-card}
 ### Approach
 
-개발 단계에서 센서 데이터와 내부 영상을 동기화해 수집하고, 영상 기반 label 또는 pairwise preference를 이용해 sensor-only reward model을 학습합니다. 이후 해당 reward model을 고정한 상태에서 SAC 기반 drum-speed 제어 정책을 학습합니다.
+개발 단계에서 센서 데이터와 내부 영상을 동기화해 수집하고, 영상 기반 label 또는 pairwise preference로 sensor-only reward model을 학습합니다. 그다음 이 reward model을 고정해 두고 SAC 기반 drum-speed 제어 정책을 학습합니다.
 :::
 
 ::: {.paper-summary-card}
 ### Outcome
 
-5개의 load composition에서 expert-designed baseline 대비 normalized moisture-removal metric이 평균 2.04%, 최대 2.86% 개선되었습니다.
+5개의 load composition에서 expert-designed baseline 대비 normalized moisture-removal metric이 평균 2.15%, 최대 2.86% 개선되었습니다.
 :::
 :::
 
@@ -91,7 +91,7 @@ Learning-based reward model pipeline: 개발 단계에서 영상 supervision을 
 
 ![세탁물이 drum 하단에서 구르는 motion.](assets/bad_motion2_compress.png){.paper-image}
 
-Load가 drum 하단에서 rolling 형태로 움직이면 목표로 하는 falling motion에 도달하지 못합니다.
+세탁물이 drum 하단에서 rolling 형태로 움직이면 목표로 하는 falling motion에 도달하지 못합니다.
 :::
 
 ::: {.paper-result-card}
@@ -129,23 +129,23 @@ Load가 drum 하단에서 rolling 형태로 움직이면 목표로 하는 fallin
 ::: {.pipeline-stage}
 <span>Stage 3</span>
 <strong>Train Control</strong>
-<p>고정된 reward model이 제공하는 reward를 사용해 drum speed를 조절하는 SAC controller를 학습합니다.</p>
+<p>고정된 reward model이 주는 reward로 drum speed를 조절하는 SAC controller를 학습합니다.</p>
 :::
 :::
 
 ::: {.paper-method}
 ::: {.paper-method-steps}
-1. Drum speed를 동작 범위에서 sweep하며 센서 데이터와 내부 영상을 동시에 기록합니다.
-2. 영상 clip에 대해 desirable/undesirable tumble motion label을 부여하거나, 두 clip 간 상대적인 motion quality preference를 표시합니다.
-3. Annotation을 sensor window와 정렬하고 sensor-only reward model을 학습합니다.
-4. 학습된 reward를 이용해 Soft Actor-Critic 기반 incremental drum-speed controller를 학습합니다.
+1. drum speed를 모터 동작 범위에서 sweep하며 센서 데이터와 내부 영상을 동시에 기록합니다.
+2. 영상 clip마다 desirable/undesirable tumble motion label을 붙이거나, 두 clip을 비교해 상대적인 motion quality preference를 표시합니다.
+3. annotation을 sensor window와 정렬하고 sensor-only reward model을 학습합니다.
+4. 학습된 reward로 Soft Actor-Critic 기반 incremental drum-speed controller를 학습합니다.
 5. 최종 controller는 영상 없이 제품 센서 stream만으로 동작합니다.
 :::
 
 ::: {.paper-figure}
 ### Motion Supervision
 
-핵심은 영상을 개발 단계의 supervision으로만 사용하는 것입니다. 사람이 영상으로 판단할 수 있는 tumble quality를 sensor history에서 scalar motion quality를 예측하는 reward model로 증류하기 때문에, 최종 제어기는 실제 제품의 센서 제약 안에서 동작할 수 있습니다.
+핵심은 영상을 개발 단계의 supervision으로만 쓰는 것입니다. 사람이 영상을 보고 판단할 수 있는 tumble quality를 reward model로 증류합니다. 이 모델은 sensor history만 보고 scalar motion quality를 예측하므로, 최종 controller는 실제 제품의 센서 제약 안에서 동작할 수 있습니다.
 
 ::: {.paper-metric-strip}
 ::: {.paper-metric}
@@ -154,7 +154,7 @@ Load가 drum 하단에서 rolling 형태로 움직이면 목표로 하는 fallin
 :::
 
 ::: {.paper-metric}
-<strong>2.04%</strong>
+<strong>2.15%</strong>
 <span>평균 상대 성능 개선</span>
 :::
 
@@ -176,7 +176,7 @@ Load가 drum 하단에서 rolling 형태로 움직이면 목표로 하는 fallin
 :::
 
 ::: {.paper-media-caption}
-Sensor stream과 내부 motion 관측값을 동기화해 수집하고, 학습된 controller를 평가하기 위해 사용한 실제 household dryer setup입니다.
+sensor stream과 drum 내부 motion을 동기화해 기록하고, 학습된 controller를 평가하는 데 쓴 실제 가정용 건조기 setup입니다.
 :::
 :::
 
@@ -186,19 +186,19 @@ Sensor stream과 내부 motion 관측값을 동기화해 수집하고, 학습된
 ::: {.paper-result-card .paper-result-wide}
 ### Moisture-Removal Performance
 
-제안한 controller는 5개 평가 load 모두에서 normalized moisture-removal metric을 개선했습니다. 평균 metric은 0.6129에서 0.6261로 증가했으며, load별 평균 상대 개선율은 2.04%입니다.
+제안한 controller는 평가한 load 5개 모두에서 normalized moisture-removal metric을 개선했습니다. 평균 metric은 0.6129에서 0.6261로 2.15% 올랐습니다.
 :::
 
 ::: {.paper-result-card}
 ### Load Coverage
 
-실험은 3 kg/5 kg mixed-fabric load, cotton-to-polyester 비율이 다른 조합, 3 kg towel-heavy load를 포함합니다.
+실험에 쓴 load는 3 kg/5 kg mixed-fabric load, cotton-to-polyester 비율을 달리한 조합, 3 kg towel-heavy load입니다.
 :::
 
 ::: {.paper-result-card}
 ### Preference Reward Check
 
-Towel-heavy load에서는 preference-based reward model도 검증했습니다. Binary motion label의 전반적인 추세와 유사하게 reward가 형성되었고, 성능은 baseline 대비 2.10% 개선되었습니다.
+towel-heavy load에서는 preference-based reward model도 검증했습니다. 이 reward는 binary motion label의 전반적인 추세를 따랐고, 성능은 기존 모델 대비 2.10% 개선되었습니다.
 :::
 
 ::: {.paper-result-card}
@@ -219,7 +219,7 @@ Towel-heavy load에서는 preference-based reward model도 검증했습니다. B
 ```
 
 ::: {.paper-media-caption}
-건조기 tumble-motion control supplementary video.
+건조기 tumble-motion control을 보여주는 supplementary video입니다.
 :::
 :::
 :::

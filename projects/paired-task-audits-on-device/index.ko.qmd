@@ -84,7 +84,7 @@ Post-training quantization은 소수의 **calibration** state로 8-bit 수치 �
 ::: {.paper-summary-card}
 ### 결과
 
-policy 하나에 calibration 규칙 여덟 개를 적용하면 여덟 개의 controller가 나오고, Hailo-8에서는 성공률이 96.6%에서 21.4%까지 벌어집니다. 이 효과는 독립적으로 학습한 policy 7/8에서 사전 등록된 조건으로 재현되고, compiler level 1과 3에서도 남습니다. 고정 state의 오차 proxy는 이를 예측하지 못합니다.
+policy 하나에 calibration 규칙 여덟 개를 적용하면 여덟 개의 controller가 나오고, Hailo-8에서는 성공률이 96.6%에서 21.4%까지 벌어집니다. 이 효과는 독립적으로 학습한 policy 7/8에서 prospective 조건으로 재현되고, compiler level 1과 3에서도 남습니다. 고정 state의 오차 proxy는 이를 예측하지 못합니다.
 :::
 :::
 
@@ -140,7 +140,7 @@ policy 하나에 calibration 규칙 여덟 개를 적용하면 여덟 개의 con
 
 ![policy seed별 early 빼기 middle paired return, Hailo-8 level 0.](assets/replication.svg){.paper-image}
 
-사전 등록된 replication: FetchReach SAC seed 8개 각각에 세 규칙과 256개 paired 시작 상태. Hailo의 early 빼기 middle 대비가 유일한 확증 검정이었습니다. 7/8 policy에서 middle이 early보다 나빴고, policy 평균 차이 8.60 [4.42, 12.51] (&asymp;17 cm), sign-flip p = 0.0156, 통합 성공률 45.9% 대 99.0%.
+Prospective replication(규칙과 검정을 결과보다 먼저 고정): FetchReach SAC seed 8개 각각에 세 규칙과 256개 paired 시작 상태. Hailo의 early 빼기 middle 대비가 유일한 확증 검정이었습니다. 7/8 policy에서 middle이 early보다 나빴고, policy 평균 차이 8.60 [4.42, 12.51] (&asymp;17 cm), sign-flip p = 0.0156, 통합 성공률 45.9% 대 99.0%.
 :::
 
 ::: {.paper-result-card}
@@ -150,8 +150,8 @@ policy 하나에 calibration 규칙 여덟 개를 적용하면 여덟 개의 con
 |---|---:|---|---|
 | Level 0 (auto), 64 rows, stride 4 | 14.93 | [14.32, 15.55] | locked |
 | Level 1 (forced), 64 rows, stride 4 | 14.57 | [13.92, 15.21] | informed |
-| Level 0 (forced), all 256 rows | 14.97 | [14.35, 15.58] | informed |
-| Level 3 AdaRound, all 256 rows | 14.42 | [13.83, 15.04] | informed |
+| Level 0 (forced), all 256 rows used | 14.97 | [14.35, 15.58] | informed |
+| Level 3 AdaRound, all 256 rows used | 14.42 | [13.83, 15.04] | informed |
 
 level 1을 강제하면 모든 artifact의 action field가 바뀌지만 최선-최악 범위는 그대로입니다. level-0 fallback도 AdaRound clamping도 단독으로는 이 폭을 설명하지 못합니다. "informed" 행은 첫 결과를 본 뒤에 설계했습니다.
 :::
@@ -192,7 +192,7 @@ level 1을 강제하면 모든 artifact의 action field가 바뀌지만 최선-�
 ![위 장면의 세 순간. 윗줄은 FP32 policy, 아랫줄은 Hailo-8 artifact. 각 프레임에 step과 goal까지의 거리를 적었습니다.](assets/filmstrip.png){.paper-image}
 
 ::: {.paper-media-caption}
-논문의 파이프라인을 그대로 재사용한 device-in-the-loop 후속 실행: policy seed 202609201, phase middle row 256개로 calibration한 Hailo-8 level-0 빌드, 새 paired 시작 상태 128개, FP32 arm과 device arm은 동일한 reset state에서 출발합니다. FP32 policy는 128/128에서 goal에 도달하고 artifact는 46/128입니다. 평균 return은 -1.06 (FP32) 대 -11.07 (device). 이 실행은 메커니즘을 보여주기 위한 것이고, 이 페이지의 다른 숫자는 모두 논문의 cohort에서 나왔습니다.
+논문의 파이프라인을 그대로 재사용한 device-in-the-loop 후속 실행: policy seed 202609201, phase middle row 256개를 모두 calibration에 사용한(calibset_size 256) Hailo-8 level-0 빌드, 새 paired 시작 상태 128개, FP32 arm과 device arm은 동일한 reset state에서 출발합니다. FP32 policy는 128/128에서 goal에 도달하고 artifact는 46/128입니다. 평균 return은 -1.06 (FP32) 대 -11.07 (device). 이 실행은 메커니즘을 보여주기 위한 것이고, 이 페이지의 다른 숫자는 모두 논문의 cohort에서 나왔습니다.
 :::
 :::
 
@@ -255,7 +255,7 @@ level 1을 강제하면 모든 artifact의 action field가 바뀌지만 최선-�
 ::: {.paper-summary-card}
 ### 한계
 
-- 이런 일이 일어날 수 있음을 보였을 뿐 얼마나 자주인지는 모릅니다. task 3개, policy seed 8개, 가속기 2종입니다.
+- 이런 일이 일어날 수 있음을 보였을 뿐 얼마나 자주인지는 모릅니다. task 3개(FetchReach, FetchPush, Ant), policy seed 8개, 가속기 2종입니다.
 - GPU 호스트 빌드, 실시간 마감, 실제 로봇, foundation-model controller는 다루지 않았습니다.
 - 판정 규칙은 사후적으로 예시했을 뿐 end to end로 검증하지 않았습니다.
 :::
@@ -263,7 +263,7 @@ level 1을 강제하면 모든 artifact의 action field가 바뀌지만 최선-�
 ::: {.paper-summary-card}
 ### 출처
 
-이 페이지의 모든 숫자는 포스터를 만드는 스크립트가 커밋된 감사 출력에서 생성한 것이며, 포스터 manifest에 각 원본 파일과 해시가 적혀 있습니다. Hailo artifact는 CPU 전용 호스트에서 DFC 3.33.1로, Edge TPU artifact는 TFLite full-integer PTQ로 빌드했습니다. 스크립트, 빌드 설정, 실행 기록은 논문과 함께 공개합니다.
+결과 카드의 숫자는 포스터를 만드는 스크립트가 논문 실험의 커밋된 감사 출력에서 생성한 것이며, 포스터 manifest에 각 원본 파일과 해시가 적혀 있습니다. reach 애니메이션, 필름스트립, 거리 곡선은 논문의 cohort가 아니라 같은 파이프라인으로 따로 수행한 device-in-the-loop 후속 실행에서 나왔습니다. 그 trace는 커밋돼 있고 프레임은 그 trace에서 재생한 것입니다. Hailo artifact는 CPU 전용 호스트에서 DFC 3.33.1로, Edge TPU artifact는 TFLite full-integer PTQ로 빌드했습니다. 스크립트, 빌드 설정, 실행 기록은 논문과 함께 공개합니다.
 :::
 :::
 

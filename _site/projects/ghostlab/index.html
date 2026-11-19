@@ -175,12 +175,12 @@ GhostLab: Review Robot Motion <br>with Your Hands
 </section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
 <p>Bring the recorded arm into a seated Quest workbench. Use hand tracking to move through time, inspect a measured event and keep the interval that matters.</p>
 </section><section id="result" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="result">Result</h3>
-<p>A complete note-to-review workflow: select, replay, save and reopen. Version 0.6.10 adds a four-step guide and clearer visual feedback, tested on Quest 2.</p>
+<p>The note-to-review workflow works end to end: select, replay, save and reopen. Version 0.6.10 adds a four-step guide and clearer visual feedback, and was tested on Quest 2.</p>
 </section>
 </div>
 </section><section id="from-teaching-a-robot-to-reviewing-its-motion" class="level2"><h2 class="anchored" data-anchor-id="from-teaching-a-robot-to-reviewing-its-motion">From teaching a robot to reviewing its motion</h2>
-<p>The idea began while I was teleoperating an SO-101. On the bench, we recorded <strong>120 demonstrations</strong> of a can-to-coaster task, published them on Hugging Face, and trained an <strong>ACT policy on 80 of them</strong>. Once the policy ran on its own, I wanted to examine the resulting motion in a virtual environment, using my hands to move through time.</p>
-<p>GhostLab opens on <code>rollout_main012_1008_004335</code>: a <strong>learned-policy execution</strong> in which the arm picks up a cola can and stands it upright on a coaster. The public demonstrations are its training-data context; the bundled run is the policy’s resulting behavior. Keeping that distinction visible is part of the review.</p>
+<p>The idea began while I was teleoperating an SO-101. On the bench, we recorded <strong>120 demonstrations</strong> of a can-to-coaster task, published them on Hugging Face, and trained an <strong>ACT (Action Chunking with Transformers) policy on 80 of them</strong>. Once the policy ran on its own, I wanted to look at the resulting motion in a virtual environment and move through time with my hands.</p>
+<p>GhostLab opens on <code>rollout_main012_1008_004335</code>: a <strong>learned-policy execution</strong> in which the arm picks up a cola can and stands it upright on a coaster. The public demonstrations are where its training data came from; the bundled run is what the policy actually did. Keeping that distinction visible is part of the review.</p>
 <div class="paper-pipeline">
 <div class="pipeline-stage">
 <span>Recorded motion</span> <strong>Keep the source</strong>
@@ -213,7 +213,7 @@ Keep the event, source, interval and tag together. Reopen the observation after 
   <iframe src="https://www.youtube-nocookie.com/embed/N_KHN0hDETw" title="GhostLab — narrated 2 minute 53 second demo" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
 </div>
 <div class="paper-media-caption">
-<p>The <strong>2:53 demo</strong> uses human narration, English captions and native Quest 2 footage. Scene 3 was captured on 0.6.8; scenes 4–9 use 0.6.9. The same review flow is available in 0.6.10, with the additional guidance shown below. <a href="https://youtu.be/N_KHN0hDETw">Watch on YouTube</a>.</p>
+<p>The <strong>2:53 demo</strong> uses human narration, English captions and native Quest 2 footage. Scene 3 was captured on 0.6.8; scenes 4–9 use 0.6.9. The two versions differ only in parts the video does not show. The same review flow is available in 0.6.10, with the additional guidance shown below. <a href="https://youtu.be/N_KHN0hDETw">Watch on YouTube</a>.</p>
 </div>
 </div>
 </section><section id="use-your-hands-to-move-through-time" class="level2"><h2 class="anchored" data-anchor-id="use-your-hands-to-move-through-time">Use your hands to move through time</h2>
@@ -231,18 +231,18 @@ Keep the event, source, interval and tag together. Reopen the observation after 
 </section><section id="keep-the-observation" class="level3 paper-media-card"><h3 class="anchored" data-anchor-id="keep-the-observation">Keep the observation</h3>
 <p><a href="assets/05-save-an-observation.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="assets/05-save-an-observation.jpg" class="paper-image img-fluid" loading="lazy" alt="A saved Gripper reversal card with its replay interval and review tag."></a></p>
 <div class="paper-media-caption">
-<p>After natural replay completion, the same front button becomes <strong>Save this moment</strong>. A separate press saves the observation. Reopening its named card returns to the original event.</p>
+<p>When the replay finishes on its own, the same front button becomes <strong>Save this moment</strong>. Press it again to save the observation. Opening the named card later takes you back to the original event.</p>
 </div>
 </section><section id="return-offline" class="level3 paper-media-card"><h3 class="anchored" data-anchor-id="return-offline">Return offline</h3>
 <p><a href="assets/06-return-offline.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="assets/06-return-offline.jpg" class="paper-image img-fluid" loading="lazy" alt="A saved range reopened with its cursor and quarter-speed setting restored."></a></p>
 <div class="paper-media-caption">
-<p>For your own interval, pinch and drag the white timeline marker, set start and end, then save a tagged range. The recorded offline check restored <strong>13.7–20.3s</strong>, the <strong>20.3s</strong> cursor and <strong>0.25×</strong> speed.</p>
+<p>For your own interval, pinch and drag the white timeline marker, set start and end, then save a tagged range. In the recorded offline check, the app restored the <strong>13.7–20.3s</strong> range, the <strong>20.3s</strong> cursor and <strong>0.25×</strong> speed.</p>
 </div>
 </section>
 </div>
 </section><section id="motion-notes-connected-to-evidence" class="level2"><h2 class="anchored" data-anchor-id="motion-notes-connected-to-evidence">Motion notes connected to evidence</h2>
-<p>GhostLab analyzes continuous spans of measured joint data before asking a model for language. A reversal requires an excursion of at least <strong>8° on both sides</strong>, or <strong>8 percentage points</strong> for the gripper. Interior reversals can be detected even when the largest excursion occurs at the end of the chosen range. Gaps break the analysis span.</p>
-<p>When the lab gateway is paired, <strong>Meta Muse Ember</strong> receives up to four measured facts and returns one or two supported English observations. The response is checked against the event IDs, joints, values and permitted wording. Selecting a note returns to the same recorded evidence that supports its description.</p>
+<p>GhostLab analyzes continuous spans of measured joint data before it asks a model to describe anything. A reversal requires an excursion of at least <strong>8° on both sides</strong>, or <strong>8 percentage points</strong> for the gripper. Interior reversals can be detected even when the largest excursion occurs at the end of the chosen range. Gaps in the data split the analysis span.</p>
+<p>When the lab gateway is paired, <strong>Meta Muse Ember</strong> receives up to four measured facts and returns one or two English observations that those facts support. The response is checked against the event IDs, joints, values and permitted wording. Selecting a note returns to the same recorded evidence that supports its description.</p>
 <div class="paper-figure ghostlab-table">
 <table class="caption-top table">
 <colgroup>
@@ -274,15 +274,15 @@ Keep the event, source, interval and tag together. Reopen the observation after 
 </tbody>
 </table>
 </div>
-<p>New live Meta generation is an optional lab feature. The model API key stays on the GX10; the headset receives its own pairing token. A public generation endpoint is prepared separately and is not part of the standalone first-use experience.</p>
+<p>Generating new notes live with Meta is an optional lab feature. The model API key stays on the GX10 (an ASUS Ascent GX10 workstation built on NVIDIA GB10); the headset receives its own pairing token. A public generation endpoint has been prepared separately, but it is not part of the standalone first-use experience.</p>
 </section><section id="the-physical-motion-and-its-virtual-reconstruction" class="level2"><h2 class="anchored" data-anchor-id="the-physical-motion-and-its-virtual-reconstruction">The physical motion and its virtual reconstruction</h2>
 <div class="paper-figure paper-figure-main">
 <p><a href="assets/04-real-robot-and-vr.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="assets/04-real-robot-and-vr.jpg" class="paper-image img-fluid" loading="lazy" alt="A camera view of the physical SO-101 beside the same policy run replayed on Quest."></a></p>
 <div class="paper-media-caption">
-<p>An edited comparison from the demo, matching the robot camera recording and Quest replay by control time. This comparison is not an in-app synchronized camera player. The measured joints drive the virtual model; the teal tip path remains a forward-kinematics estimate.</p>
+<p>An edited comparison from the demo: the robot camera recording and the Quest replay are matched by control time. This is not an in-app synchronized camera player. The measured joints drive the virtual model; the teal tip path remains a forward-kinematics estimate.</p>
 </div>
 </div>
-<p>A lab-paired headset can also open <strong>Live monitor</strong>. Passthrough reveals the real desk, with a measured SO-101 pose displayed beside the physical Follower. The optional <strong>OpenMV wrist-camera feed</strong> and <strong>Record 20s</strong> capture support bench review. These features require the paired GX10 and robot setup. GhostLab’s connection is read-only and does not command the arm.</p>
+<p>A lab-paired headset can also open <strong>Live monitor</strong>. Passthrough shows the real desk, and the measured SO-101 pose appears beside the physical Follower (the SO-101 follower arm, the one a leader arm drives during teleoperation). The optional <strong>OpenMV wrist-camera feed</strong> and <strong>Record 20s</strong> capture are also available for bench review. These features require the paired GX10 and robot setup. GhostLab’s connection is read-only and does not command the arm.</p>
 </section><section id="a-clearer-first-review-in-0.6.10" class="level2"><h2 class="anchored" data-anchor-id="a-clearer-first-review-in-0.6.10">A clearer first review in 0.6.10</h2>
 <div class="paper-method">
 <div class="paper-method-steps">
@@ -290,18 +290,18 @@ Keep the event, source, interval and tag together. Reopen the observation after 
 <li>
 <strong>Select.</strong> Four slim progress segments and a short instruction identify the next action. The example’s first note is emphasized.</li>
 <li>
-<strong>Replay.</strong> Secondary controls become quieter so the selected joint and front replay control remain prominent.</li>
+<strong>Replay.</strong> Secondary controls fade back so the selected joint and the front replay control stand out.</li>
 <li>
 <strong>Save.</strong> <strong>Saved on this headset</strong> confirms success, and the saved card briefly pulses in teal.</li>
 <li>
-<strong>Reopen.</strong> Opening that card completes the guide. Completion persists after restart, so returning users keep the ordinary controls without repeating the introduction.</li>
+<strong>Reopen.</strong> Opening that card completes the guide. The completed state survives a restart, so returning users get the ordinary controls without sitting through the introduction again.</li>
 </ol>
 <p>The source label and replay stop time remain visible throughout the relevant steps.</p>
 </div>
 <div class="paper-figure">
 <p><a href="assets/review-guide-0.6.10.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="assets/review-guide-0.6.10.png" class="paper-image img-fluid" loading="lazy" alt="The 0.6.10 saved state, with local confirmation, four progress segments and a highlighted review card."></a></p>
 <div class="paper-media-caption">
-<p>Editor render of the 0.6.10 interface. The existing user separately confirmed the guidance, visual emphasis and card reopening on Quest 2.</p>
+<p>Editor render of the 0.6.10 interface. I separately confirmed the guidance, visual emphasis and card reopening on Quest 2.</p>
 </div>
 </div>
 </div>
@@ -324,7 +324,7 @@ Keep the event, source, interval and tag together. Reopen the observation after 
 </tr>
 <tr class="even">
 <td>Quest 2 use</td>
-<td>The existing user completed note selection, replay, saving and reopening with the new guidance</td>
+<td>I completed note selection, replay, saving and reopening with the new guidance</td>
 </tr>
 <tr class="odd">
 <td>Update and restart</td>
@@ -350,7 +350,7 @@ Keep the event, source, interval and tag together. Reopen the observation after 
 </section><section id="observation-and-control" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="observation-and-control">Observation and control</h3>
 <p>The app reviews recorded motion and reads live telemetry. Moving through a clip does not move the physical Follower. Live bench access and wrist video are optional paired features.</p>
 </section><section id="validation-scope" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="validation-scope">Validation scope</h3>
-<p>Automated checks and the existing user’s Quest 2 sessions support the current workflow. They do not establish a general usability success rate, precise tip registration or performance on every headset.</p>
+<p>Automated checks and my own Quest 2 sessions support the current workflow. They do not establish a general usability success rate, precise tip registration or performance on every headset.</p>
 </section>
 </div>
 </section><section id="try-it-on-quest" class="level2"><h2 class="anchored" data-anchor-id="try-it-on-quest">Try it on Quest</h2>
@@ -397,7 +397,7 @@ Keep the event, source, interval and tag together. Reopen the observation after 
 </table>
 </div>
 </section><section id="next-steps" class="level2"><h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
-<p>The next step is to test the first review with new users, then bring recorded review onto the real desk through passthrough. Further work includes inspecting demonstration episodes beside policy runs and exporting human-confirmed observations for learning experiments, beginning in simulation. These are planned extensions to the current review tool.</p>
+<p>Next I want to test the first review with new users, then bring recorded review onto the real desk through passthrough. Planned extensions to the review tool include inspecting demonstration episodes beside policy runs and exporting human-confirmed observations for learning experiments, starting in simulation.</p>
 </section><section id="code-data-and-provenance" class="level2"><h2 class="anchored" data-anchor-id="code-data-and-provenance">Code, data and provenance</h2>
 <ul>
 <li>
@@ -405,11 +405,11 @@ Keep the event, source, interval and tag together. Reopen the observation after 
 <li>
 <a href="https://huggingface.co/datasets/chans/quantgate-so101-coaster">120 SO-101 demonstrations on Hugging Face</a>, released under CC BY 4.0. The bundled example is a separate policy-execution recording, not a demonstration episode.</li>
 <li>
-<a href="https://github.com/goodboychan/nebius-physical-ai">Related QuantGate project</a>, providing the bench and policy-execution context.</li>
+<a href="https://github.com/goodboychan/nebius-physical-ai">Related QuantGate project</a>, for background on the bench and the policy runs.</li>
 <li>
 <a href="https://devpost.com/software/ghostlab-ximb0c">Devpost project</a> and <a href="https://youtu.be/N_KHN0hDETw">narrated demo</a>.</li>
 </ul>
-<p>The logo and Quest footage were supplied or recorded by Chanseok. The six gallery images show 0.6.9; the new guide screenshot is an editor render from 0.6.10. The page layout follows the <a href="https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/">paired-task audits project page</a>.</p>
+<p>I supplied the logo and recorded the Quest footage. The footage and gallery screenshots mix 0.6.8 and 0.6.9, which look the same on these screens; the new guide screenshot is an editor render from 0.6.10. The page layout follows the <a href="https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/">paired-task audits project page</a>.</p>
 <div class="paper-media-caption">
 <p>Project status checked against the repository records on November 18, 2026.</p>
 </div>

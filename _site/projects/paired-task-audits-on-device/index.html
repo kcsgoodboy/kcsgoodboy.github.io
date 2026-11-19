@@ -289,13 +289,13 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 <td>informed</td>
 </tr>
 <tr class="odd">
-<td>Level 0 (forced), all 256 rows</td>
+<td>Level 0 (forced), all 256 rows used</td>
 <td style="text-align: right;">14.97</td>
 <td>[14.35, 15.58]</td>
 <td>informed</td>
 </tr>
 <tr class="even">
-<td>Level 3 AdaRound, all 256 rows</td>
+<td>Level 3 AdaRound, all 256 rows used</td>
 <td style="text-align: right;">14.42</td>
 <td>[13.83, 15.04]</td>
 <td>informed</td>
@@ -402,7 +402,7 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 <figcaption>Three moments of the start shown above. Top row: FP32 policy; bottom row: the Hailo-8 artifact. Each frame states the step and the distance to the goal.</figcaption></figure>
 </div>
 <div class="paper-media-caption">
-<p>Device-in-the-loop follow-up run on this paper’s pipeline: policy seed 202609201, Hailo-8 level-0 build calibrated on 256 phase middle rows, 128 new paired starts, FP32 arm and device arm from identical reset states. The FP32 policy reaches the goal in 128/128 starts, the artifact in 46/128; mean return -1.06 (FP32) versus -11.07 (device). This run illustrates the mechanism; the numbers elsewhere on this page come from the paper’s own cohorts.</p>
+<p>Device-in-the-loop follow-up run on this paper’s pipeline: policy seed 202609201, Hailo-8 level-0 build calibrated on all 256 phase middle rows (calibset_size 256), 128 new paired starts, FP32 arm and device arm from identical reset states. The FP32 policy reaches the goal in 128/128 starts, the artifact in 46/128; mean return -1.06 (FP32) versus -11.07 (device). This run illustrates the mechanism; the numbers elsewhere on this page come from the paper’s own cohorts.</p>
 </div>
 </div>
 <section id="all-128-starts-step-by-step" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="all-128-starts-step-by-step">All 128 starts, step by step</h3>
@@ -477,11 +477,11 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 <li>Fixed-state error matched; task outcomes did not. Audit the complete task, paired, on the device.</li>
 </ul></section><section id="limits" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="limits">Limits</h3>
 <ul>
-<li>The study shows that this can happen, not how often: three tasks, eight policy seeds, two accelerators.</li>
+<li>The study shows that this can happen, not how often: three tasks (FetchReach, FetchPush, Ant), eight policy seeds, two accelerators.</li>
 <li>No GPU-host builds, real-time deadlines, physical robots or foundation-model controllers.</li>
 <li>The qualification rule is illustrated retrospectively, not validated end to end.</li>
 </ul></section><section id="provenance" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="provenance">Provenance</h3>
-<p>Every number on this page is generated from the committed audit outputs by the scripts that build the poster; the poster manifest lists each source file and its hash. Hailo artifacts were built on a CPU-only host with DFC 3.33.1; Edge TPU artifacts with TFLite full-integer PTQ. Scripts, build configurations and per-run records will be released with the paper.</p>
+<p>The numbers in the result cards are generated from the committed audit outputs of the paper’s experiments by the scripts that build the poster; the poster manifest lists each source file and its hash. The reach animation, the filmstrip and the distance chart come from a separate device-in-the-loop follow-up run on the same pipeline, not from the paper’s cohorts; its traces are committed, and the frames are replayed from them. Hailo artifacts were built on a CPU-only host with DFC 3.33.1; Edge TPU artifacts with TFLite full-integer PTQ. Scripts, build configurations and per-run records will be released with the paper.</p>
 </section>
 </div>
 </section><section id="citation" class="level2"><h2 class="anchored" data-anchor-id="citation">Citation</h2>

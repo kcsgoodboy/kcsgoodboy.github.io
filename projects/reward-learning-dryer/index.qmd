@@ -31,7 +31,7 @@ LG Electronics AI Lab
 <div class="paper-links">
   <a class="paper-button" href="https://ieeexplore.ieee.org/document/11704219" target="_blank" rel="noopener"><i class="ai ai-ieee"></i> IEEE</a>
   <a class="paper-button" href="https://doi.org/10.1109/CASE69030.2026.11704219" target="_blank" rel="noopener"><i class="fas fa-link"></i> DOI</a>
-  <!-- Add a local manuscript after placing projects/data-driven-rl-washing-machines/assets/paper.pdf:
+  <!-- Add a local manuscript after placing projects/reward-learning-dryer/assets/paper.pdf:
   <a class="paper-button" href="assets/paper.pdf"><i class="fas fa-file-pdf"></i> PDF</a>
   -->
 </div>
@@ -40,7 +40,7 @@ LG Electronics AI Lab
 ## TL;DR
 
 ::: {.paper-tldr}
-This work transfers human video judgments of laundry motion into a deployable sensor-only reward model, then uses reinforcement learning to improve dryer drum-speed control without requiring video at runtime.
+This work turns human judgments of laundry motion in video into a sensor-only reward model that can be deployed on the dryer, then uses reinforcement learning to improve drum-speed control. No video is needed at runtime.
 :::
 
 ::: {.paper-teaser}
@@ -48,7 +48,7 @@ This work transfers human video judgments of laundry motion into a deployable se
 ![Learning-based reward model pipeline for sensor-only dryer control.](assets/lbrm.png){.paper-image}
 
 ::: {.paper-media-caption}
-Learning-based reward model pipeline: visual supervision is collected during development, distilled into a sensor-only reward model, and used for reinforcement learning.
+Learning-based reward model pipeline. Video supervision collected during development is distilled into a sensor-only reward model, which then supplies the reward for reinforcement learning.
 :::
 :::
 :::
@@ -59,19 +59,19 @@ Learning-based reward model pipeline: visual supervision is collected during dev
 ::: {.paper-summary-card}
 ### Problem
 
-Efficient drying depends on maintaining cataracting laundry motion, but the internal tumble state is not directly observable from production sensors such as motor current and drum-speed signals.
+Efficient drying depends on keeping the laundry in cataracting motion, but production sensors such as motor current and drum speed cannot observe the tumble state inside the drum directly.
 :::
 
 ::: {.paper-summary-card}
 ### Approach
 
-The method collects synchronized sensor trajectories and internal video during development, uses human video labels or preferences to train a sensor-only reward model, and freezes that model during SAC-based policy learning.
+During development, the method records sensor trajectories together with synchronized video from inside the drum. Human labels or preferences on that video train a sensor-only reward model, which stays frozen during SAC-based policy learning.
 :::
 
 ::: {.paper-summary-card}
 ### Outcome
 
-Across five load compositions, the learned controller improved normalized moisture-removal performance by 2.04% on average and 2.86% in the best case compared with an expert-designed baseline.
+Across five load compositions, the learned controller improved normalized moisture-removal performance by 2.15% on average and 2.86% in the best case compared with an expert-designed baseline.
 :::
 :::
 
@@ -83,7 +83,7 @@ Across five load compositions, the learned controller improved normalized moistu
 
 ![Laundry mass follows the drum wall instead of tumbling.](assets/bad_motion1_compress.png){.paper-image}
 
-The laundry remains attached to the drum wall, reducing effective surface exposure to airflow.
+The laundry stays attached to the drum wall, so less of its surface is exposed to the airflow.
 :::
 
 ::: {.paper-result-card}
@@ -99,7 +99,7 @@ The load rolls near the bottom of the drum rather than entering the desired fall
 
 ![Desirable tumbling motion inside the dryer drum.](assets/good_motion_compress.png){.paper-image}
 
-The target motion exposes laundry surfaces more evenly to heated airflow and supports drying efficiency.
+The target motion exposes laundry surfaces more evenly to the heated airflow, which makes drying more efficient.
 :::
 :::
 
@@ -145,7 +145,7 @@ The target motion exposes laundry surfaces more evenly to heated airflow and sup
 ::: {.paper-figure}
 ### Motion Supervision
 
-The key design is to use video only as development-time supervision. Human-readable tumble quality is distilled into a reward model that maps sensor histories to scalar motion quality, so the learned controller remains compatible with production sensing constraints.
+The main design choice is to use video only as supervision during development. Tumble quality that a person can judge from video is distilled into a reward model that maps sensor histories to a scalar motion-quality score, so the learned controller only needs the sensors a production dryer already has.
 
 ::: {.paper-metric-strip}
 ::: {.paper-metric}
@@ -154,7 +154,7 @@ The key design is to use video only as development-time supervision. Human-reada
 :::
 
 ::: {.paper-metric}
-<strong>2.04%</strong>
+<strong>2.15%</strong>
 <span>average relative gain</span>
 :::
 
@@ -176,7 +176,7 @@ The key design is to use video only as development-time supervision. Human-reada
 :::
 
 ::: {.paper-media-caption}
-Real household dryer setup used for collecting synchronized sensor streams, observing internal tumble motion, and evaluating the learned controller.
+Real household dryer used to collect synchronized sensor streams, observe tumble motion inside the drum, and evaluate the learned controller.
 :::
 :::
 
@@ -186,7 +186,7 @@ Real household dryer setup used for collecting synchronized sensor streams, obse
 ::: {.paper-result-card .paper-result-wide}
 ### Moisture-Removal Performance
 
-The proposed controller improved the normalized moisture-removal metric for all five evaluated loads. The mean metric increased from 0.6129 to 0.6261, corresponding to a mean per-load relative improvement of 2.04%.
+The proposed controller improved the normalized moisture-removal metric for all five evaluated loads. The mean metric rose from 0.6129 to 0.6261, a relative improvement of 2.15%.
 :::
 
 ::: {.paper-result-card}
@@ -198,7 +198,7 @@ The experiments cover 3 kg and 5 kg mixed-fabric loads, different cotton-to-poly
 ::: {.paper-result-card}
 ### Preference Reward Check
 
-A preference-based reward model was also validated on the towel-heavy load. It followed the overall trend of binary motion labels and improved performance by 2.10%.
+A preference-based reward model was also validated on the towel-heavy load. Its rewards followed the overall trend of the binary motion labels, and the controller trained with it improved performance by 2.10% over the existing model.
 :::
 
 ::: {.paper-result-card}

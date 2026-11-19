@@ -61,7 +61,7 @@ The skill is "tell me when a package is left at the entrance". The runner here i
 
 ::: {.paper-metric}
 <strong>20 &middot; 4 &middot; 0</strong>
-<span>builds that always-deploy, a false-alert-only gate and the rules would ship from the same records</span>
+<span>builds that would ship from the same records under always-deploy, a false-alert-only gate and the rules</span>
 :::
 :::
 
@@ -83,17 +83,17 @@ Each build is measured on its own device over frozen eval recordings. The result
 ::: {.paper-summary-card}
 ### Outcome
 
-20 builds of four students were measured over 2 h 50 min of eval sessions: TensorRT on a Jetson Orin Nano Super and HEF on a Raspberry Pi 5 with a Hailo-8. None passed. The same records show what simpler policies would have shipped instead.
+We measured 20 builds of four students over 2 h 50 min of eval sessions: TensorRT on a Jetson Orin Nano Super and HEF (Hailo Executable Format) on a Raspberry Pi 5 with a Hailo-8. None passed. The same records also show what simpler policies would have shipped.
 :::
 :::
 
 ## From one sentence to a decision
 
 ::: {.paper-figure}
-![Top: the skill is taught on a GX10 from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer's audit can only turn a PASS into a HOLD.](assets/pipeline.svg){.paper-image}
+![Top: the skill is taught on a GX10 (ASUS Ascent GX10, NVIDIA GB10) from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer's audit can only turn a PASS into a HOLD.](assets/pipeline.svg){.paper-image}
 
 ::: {.paper-media-caption}
-SAM 3.1 labels the train sessions only; a YOLOv8n student is distilled from those labels and exported to ONNX, then compiled to TensorRT FP16 for the Jetson and to an INT8 HEF for the Hailo-8. Eval frames and their ground truth were never used for training or calibration.
+SAM 3.1 labels the train sessions only; YOLOv8n and YOLOv8s students are distilled from those labels and exported to ONNX, then compiled to TensorRT FP16 for the Jetson and to an INT8 HEF for the Hailo-8. Eval frames and their ground truth were never used for training or calibration.
 :::
 :::
 
@@ -103,7 +103,7 @@ SAM 3.1 labels the train sessions only; a YOLOv8n student is distilled from thos
 ::: {.pipeline-stage}
 <span>Measured</span>
 <strong>On the device</strong>
-<p>Every build runs over the same frozen recordings on its own device. Inference, decoding and the arrival rule run and are timed there; the detections are scored into events by the same code for every build.</p>
+<p>Every build runs over the same frozen recordings on its own device. Inference, decoding and the arrival rule run and are timed there; the same code then scores every build's detections into events.</p>
 :::
 
 ::: {.pipeline-arrow}
@@ -135,7 +135,7 @@ SAM 3.1 labels the train sessions only; a YOLOv8n student is distilled from thos
 
 ![Event recall against false alerts per hour for every build measured on eval set v2. The PASS corner is empty.](assets/builds_v2.png){.paper-image}
 
-Eval set v2: sessions e01&ndash;e06 and u01, 2 h 50 min, 26 scored arrivals, covering night with one floor lamp, night with the room lights on, a rainy day and 2 h unattended with no package. The thresholds were not changed at any point.
+Eval set v2: sessions e01&ndash;e06 and u01 (unattended), 2 h 50 min, 26 scored arrivals, covering night with one floor lamp, night with the room lights on, a rainy day and 2 h unattended with no package. The thresholds were not changed at any point.
 :::
 
 ::: {.paper-result-card .paper-result-wide}
@@ -152,7 +152,7 @@ Eval set v2: sessions e01&ndash;e06 and u01, 2 h 50 min, 26 scored arrivals, cov
 | s4 (YOLOv8s) | t01&ndash;t05 | Jetson (TensorRT) | 0.846 | 4.95 | 0 | 22.9 ms | recall, false alerts |
 | | | Hailo-8 | 0.885 | 4.95 | 0 | 21.5 ms | recall, false alerts |
 
-s3 is the one improvement round: after s1 missed arrivals in the dark, two more training nights were recorded and s3 and s4 were trained once on t01&ndash;t05. On the Jetson, recall rose from 0.885 to 0.962 and the duplicate alert went away; the false alerts did not. The ONNX reference on the GX10 gives the same recall and false-alert count as the TensorRT build.
+s3 comes out of the only improvement round: after s1 missed arrivals in the dark, we recorded two more training nights and trained s3 and s4 once on t01&ndash;t05. On the Jetson, recall rose from 0.885 to 0.962 and the duplicate alert went away; the false alerts did not. The ONNX reference on the GX10 gives the same recall and false-alert count as the TensorRT build.
 :::
 
 ::: {.paper-result-card}
@@ -164,7 +164,7 @@ s3 is the one improvement round: after s1 missed arrivals in the dark, two more 
 | The rule: a box set down across the zone line | 3 |
 | Detection in the dark, or a phantom box | 3 |
 
-Each alert was watched frame by frame. All 12 fall in the 50 attended minutes (about 14 an hour while people and boxes move) and none in the 2 unattended hours. Nine come from the event rule meeting hands and edges, so the next fix is the rule, as a new policy version measured on a new session.
+We watched each alert frame by frame. All 12 fall in the 50 attended minutes (about 14 an hour while people and boxes move) and none in the 2 unattended hours. Nine come from the event rule meeting hands and edges, so the next fix goes into the rule: a new policy version, measured on a new session.
 :::
 
 ::: {.paper-result-card}
@@ -210,7 +210,7 @@ From the deciding frame to the push server: **1.2 s**, measured on the live path
 ::: {.paper-result-card}
 ### A swapped file does not run
 
-No real build passed, so the PASS path was run under a labeled test policy whose only change raises the false-alert limit to 5. The real policy held s3's fresh Jetson record, the test policy passed it, `deploy.py` wrote the approval and started the runner, and a replayed arrival was alerted. A different model file against the same approval was refused: `not starting: this model file is not the approved one`.
+No real build passed, so the PASS path was run under a labeled test policy whose only change raises the false-alert limit to 5. The real policy held s3's fresh Jetson record, the test policy passed it, `deploy.py` wrote the approval and started the runner, and the runner alerted on a replayed arrival. A different model file presented with the same approval was refused: `not starting: this model file is not the approved one`.
 :::
 :::
 

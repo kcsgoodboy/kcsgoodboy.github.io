@@ -92,15 +92,15 @@ Bring the recorded arm into a seated Quest workbench. Use hand tracking to move 
 ::: {.paper-summary-card}
 ### Result
 
-A complete note-to-review workflow: select, replay, save and reopen. Version 0.6.10 adds a four-step guide and clearer visual feedback, tested on Quest 2.
+The note-to-review workflow works end to end: select, replay, save and reopen. Version 0.6.10 adds a four-step guide and clearer visual feedback, and was tested on Quest 2.
 :::
 :::
 
 ## From teaching a robot to reviewing its motion
 
-The idea began while I was teleoperating an SO-101. On the bench, we recorded **120 demonstrations** of a can-to-coaster task, published them on Hugging Face, and trained an **ACT policy on 80 of them**. Once the policy ran on its own, I wanted to examine the resulting motion in a virtual environment, using my hands to move through time.
+The idea began while I was teleoperating an SO-101. On the bench, we recorded **120 demonstrations** of a can-to-coaster task, published them on Hugging Face, and trained an **ACT (Action Chunking with Transformers) policy on 80 of them**. Once the policy ran on its own, I wanted to look at the resulting motion in a virtual environment and move through time with my hands.
 
-GhostLab opens on `rollout_main012_1008_004335`: a **learned-policy execution** in which the arm picks up a cola can and stands it upright on a coaster. The public demonstrations are its training-data context; the bundled run is the policy's resulting behavior. Keeping that distinction visible is part of the review.
+GhostLab opens on `rollout_main012_1008_004335`: a **learned-policy execution** in which the arm picks up a cola can and stands it upright on a coaster. The public demonstrations are where its training data came from; the bundled run is what the policy actually did. Keeping that distinction visible is part of the review.
 
 ::: {.paper-pipeline}
 ::: {.pipeline-stage}
@@ -140,7 +140,7 @@ GhostLab opens on `rollout_main012_1008_004335`: a **learned-policy execution** 
 ```
 
 ::: {.paper-media-caption}
-The **2:53 demo** uses human narration, English captions and native Quest 2 footage. Scene 3 was captured on 0.6.8; scenes 4–9 use 0.6.9. The same review flow is available in 0.6.10, with the additional guidance shown below. [Watch on YouTube](https://youtu.be/N_KHN0hDETw).
+The **2:53 demo** uses human narration, English captions and native Quest 2 footage. Scene 3 was captured on 0.6.8; scenes 4–9 use 0.6.9. The two versions differ only in parts the video does not show. The same review flow is available in 0.6.10, with the additional guidance shown below. [Watch on YouTube](https://youtu.be/N_KHN0hDETw).
 :::
 :::
 
@@ -173,7 +173,7 @@ The **4.21s** example selects a gripper reversal. **Replay moment** plays a shor
 ![](assets/05-save-an-observation.jpg){.paper-image loading="lazy" fig-alt="A saved Gripper reversal card with its replay interval and review tag."}
 
 ::: {.paper-media-caption}
-After natural replay completion, the same front button becomes **Save this moment**. A separate press saves the observation. Reopening its named card returns to the original event.
+When the replay finishes on its own, the same front button becomes **Save this moment**. Press it again to save the observation. Opening the named card later takes you back to the original event.
 :::
 :::
 
@@ -183,16 +183,16 @@ After natural replay completion, the same front button becomes **Save this momen
 ![](assets/06-return-offline.jpg){.paper-image loading="lazy" fig-alt="A saved range reopened with its cursor and quarter-speed setting restored."}
 
 ::: {.paper-media-caption}
-For your own interval, pinch and drag the white timeline marker, set start and end, then save a tagged range. The recorded offline check restored **13.7–20.3s**, the **20.3s** cursor and **0.25×** speed.
+For your own interval, pinch and drag the white timeline marker, set start and end, then save a tagged range. In the recorded offline check, the app restored the **13.7–20.3s** range, the **20.3s** cursor and **0.25×** speed.
 :::
 :::
 :::
 
 ## Motion notes connected to evidence
 
-GhostLab analyzes continuous spans of measured joint data before asking a model for language. A reversal requires an excursion of at least **8° on both sides**, or **8 percentage points** for the gripper. Interior reversals can be detected even when the largest excursion occurs at the end of the chosen range. Gaps break the analysis span.
+GhostLab analyzes continuous spans of measured joint data before it asks a model to describe anything. A reversal requires an excursion of at least **8° on both sides**, or **8 percentage points** for the gripper. Interior reversals can be detected even when the largest excursion occurs at the end of the chosen range. Gaps in the data split the analysis span.
 
-When the lab gateway is paired, **Meta Muse Ember** receives up to four measured facts and returns one or two supported English observations. The response is checked against the event IDs, joints, values and permitted wording. Selecting a note returns to the same recorded evidence that supports its description.
+When the lab gateway is paired, **Meta Muse Ember** receives up to four measured facts and returns one or two English observations that those facts support. The response is checked against the event IDs, joints, values and permitted wording. Selecting a note returns to the same recorded evidence that supports its description.
 
 ::: {.paper-figure .ghostlab-table}
 | Label in the app | What it means | Availability |
@@ -202,7 +202,7 @@ When the lab gateway is paired, **Meta Muse Ember** receives up to four measured
 | **Meta · Saved** | A Meta response saved with the user's review | Generation needs the paired gateway; the saved result reopens offline |
 :::
 
-New live Meta generation is an optional lab feature. The model API key stays on the GX10; the headset receives its own pairing token. A public generation endpoint is prepared separately and is not part of the standalone first-use experience.
+Generating new notes live with Meta is an optional lab feature. The model API key stays on the GX10 (an ASUS Ascent GX10 workstation built on NVIDIA GB10); the headset receives its own pairing token. A public generation endpoint has been prepared separately, but it is not part of the standalone first-use experience.
 
 ## The physical motion and its virtual reconstruction
 
@@ -210,20 +210,20 @@ New live Meta generation is an optional lab feature. The model API key stays on 
 ![](assets/04-real-robot-and-vr.jpg){.paper-image loading="lazy" fig-alt="A camera view of the physical SO-101 beside the same policy run replayed on Quest."}
 
 ::: {.paper-media-caption}
-An edited comparison from the demo, matching the robot camera recording and Quest replay by control time. This comparison is not an in-app synchronized camera player. The measured joints drive the virtual model; the teal tip path remains a forward-kinematics estimate.
+An edited comparison from the demo: the robot camera recording and the Quest replay are matched by control time. This is not an in-app synchronized camera player. The measured joints drive the virtual model; the teal tip path remains a forward-kinematics estimate.
 :::
 :::
 
-A lab-paired headset can also open **Live monitor**. Passthrough reveals the real desk, with a measured SO-101 pose displayed beside the physical Follower. The optional **OpenMV wrist-camera feed** and **Record 20s** capture support bench review. These features require the paired GX10 and robot setup. GhostLab's connection is read-only and does not command the arm.
+A lab-paired headset can also open **Live monitor**. Passthrough shows the real desk, and the measured SO-101 pose appears beside the physical Follower (the SO-101 follower arm, the one a leader arm drives during teleoperation). The optional **OpenMV wrist-camera feed** and **Record 20s** capture are also available for bench review. These features require the paired GX10 and robot setup. GhostLab's connection is read-only and does not command the arm.
 
 ## A clearer first review in 0.6.10
 
 ::: {.paper-method}
 ::: {.paper-method-steps}
 1. **Select.** Four slim progress segments and a short instruction identify the next action. The example's first note is emphasized.
-2. **Replay.** Secondary controls become quieter so the selected joint and front replay control remain prominent.
+2. **Replay.** Secondary controls fade back so the selected joint and the front replay control stand out.
 3. **Save.** **Saved on this headset** confirms success, and the saved card briefly pulses in teal.
-4. **Reopen.** Opening that card completes the guide. Completion persists after restart, so returning users keep the ordinary controls without repeating the introduction.
+4. **Reopen.** Opening that card completes the guide. The completed state survives a restart, so returning users get the ordinary controls without sitting through the introduction again.
 
 The source label and replay stop time remain visible throughout the relevant steps.
 :::
@@ -232,7 +232,7 @@ The source label and replay stop time remain visible throughout the relevant ste
 ![](assets/review-guide-0.6.10.png){.paper-image loading="lazy" fig-alt="The 0.6.10 saved state, with local confirmation, four progress segments and a highlighted review card."}
 
 ::: {.paper-media-caption}
-Editor render of the 0.6.10 interface. The existing user separately confirmed the guidance, visual emphasis and card reopening on Quest 2.
+Editor render of the 0.6.10 interface. I separately confirmed the guidance, visual emphasis and card reopening on Quest 2.
 :::
 :::
 :::
@@ -243,7 +243,7 @@ Editor render of the 0.6.10 interface. The existing user separately confirmed th
 | Check | Recorded evidence |
 | --- | --- |
 | Automated behavior | **111 EditMode + 40 PlayMode tests passed** on November 16, 2026 |
-| Quest 2 use | The existing user completed note selection, replay, saving and reopening with the new guidance |
+| Quest 2 use | I completed note selection, replay, saving and reopening with the new guidance |
 | Update and restart | All **18 existing saved files** survived the update; guide completion and the selected review persisted after restart |
 | Short performance sample | **27 reports over 27.329 seconds**, each reporting 72 FPS at 72 Hz; three stale frames in total; app GPU p95 **6.78 ms** |
 | Distribution | Production-signed **0.6.10 (27)** uploaded to the Competition channel on November 16, 2026 |
@@ -267,7 +267,7 @@ The app reviews recorded motion and reads live telemetry. Moving through a clip 
 ::: {.paper-summary-card}
 ### Validation scope
 
-Automated checks and the existing user's Quest 2 sessions support the current workflow. They do not establish a general usability success rate, precise tip registration or performance on every headset.
+Automated checks and my own Quest 2 sessions support the current workflow. They do not establish a general usability success rate, precise tip registration or performance on every headset.
 :::
 :::
 
@@ -295,16 +295,16 @@ Join the [Competition release channel](https://www.meta.com/s/caSHme36e) with a 
 
 ## Next steps
 
-The next step is to test the first review with new users, then bring recorded review onto the real desk through passthrough. Further work includes inspecting demonstration episodes beside policy runs and exporting human-confirmed observations for learning experiments, beginning in simulation. These are planned extensions to the current review tool.
+Next I want to test the first review with new users, then bring recorded review onto the real desk through passthrough. Planned extensions to the review tool include inspecting demonstration episodes beside policy runs and exporting human-confirmed observations for learning experiments, starting in simulation.
 
 ## Code, data and provenance
 
 - [GhostLab source and engineering records](https://github.com/goodboychan/GhostLab). Repository access is currently restricted; public access is pending as of November 18, 2026.
 - [120 SO-101 demonstrations on Hugging Face](https://huggingface.co/datasets/chans/quantgate-so101-coaster), released under CC BY 4.0. The bundled example is a separate policy-execution recording, not a demonstration episode.
-- [Related QuantGate project](https://github.com/goodboychan/nebius-physical-ai), providing the bench and policy-execution context.
+- [Related QuantGate project](https://github.com/goodboychan/nebius-physical-ai), for background on the bench and the policy runs.
 - [Devpost project](https://devpost.com/software/ghostlab-ximb0c) and [narrated demo](https://youtu.be/N_KHN0hDETw).
 
-The logo and Quest footage were supplied or recorded by Chanseok. The six gallery images show 0.6.9; the new guide screenshot is an editor render from 0.6.10. The page layout follows the [paired-task audits project page](https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/).
+I supplied the logo and recorded the Quest footage. The footage and gallery screenshots mix 0.6.8 and 0.6.9, which look the same on these screens; the new guide screenshot is an editor render from 0.6.10. The page layout follows the [paired-task audits project page](https://kcsgoodboy.github.io/projects/paired-task-audits-on-device/).
 
 ::: {.paper-media-caption}
 Project status checked against the repository records on November 18, 2026.

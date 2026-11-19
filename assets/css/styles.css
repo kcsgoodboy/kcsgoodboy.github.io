@@ -22,6 +22,17 @@ d-article a:hover, a:focus { color: var(--bs-secondary); font-weight: 500; borde
   background-color: var(--bs-secondary);
 }
 
+/* Hugging Face logo (not in Font Awesome); follows the link text color */
+.hf-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  background-color: currentColor;
+  -webkit-mask: url("https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/huggingface.svg") no-repeat center / contain;
+          mask: url("https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/huggingface.svg") no-repeat center / contain;
+}
+
 /* Activities */
 .activity-item {
   display: grid;

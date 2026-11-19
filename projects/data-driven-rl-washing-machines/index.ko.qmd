@@ -46,7 +46,7 @@ LG Electronics AI Lab
 ## TL;DR
 
 ::: {.paper-tldr}
-**Delayed Online Update (DOU)**는 실험실 환경에서의 모델 학습과 실제 환경에서 수행시 수집된 데이터를 조합한 Continual Offline Reinforcement Learning으로, 실생활에서 접하게 될 다양한 세탁물의 탈수 환경에서도 진동을 최소화할 수 있도록 load balancing 성능을 개선한 제어 방법입니다.
+**Delayed Online Update (DOU)**는 실험실에서 학습한 모델에 실제 사용 환경에서 모은 데이터를 더해 계속 학습시키는 Continual Offline Reinforcement Learning 방법입니다. 실생활에서 만나는 다양한 세탁물을 탈수할 때도 진동이 적도록 load balancing 성능을 개선했습니다.
 :::
 
 ::: {.paper-teaser}
@@ -54,7 +54,7 @@ LG Electronics AI Lab
 ![Delayed online update framework for continual offline reinforcement learning.](assets/dou_framework.png){.paper-image}
 
 ::: {.paper-media-caption}
-Post-deployment 후에도 지속적으로 강화학습 모델의 성능을 개선할 수 있는 Delayed Online Update (DOU).
+배포 후에도 강화학습 모델의 성능을 계속 개선하는 Delayed Online Update (DOU) 흐름.
 :::
 :::
 :::
@@ -64,19 +64,19 @@ Post-deployment 후에도 지속적으로 강화학습 모델의 성능을 개�
 ::: {.paper-summary-grid}
 ::: {.paper-summary-card}
 ### Problem
-세탁기의 탈수 과정 수행시 발생하는 진동을 줄이기 위해서는 기구 안의 세탁물간의 균형이 이뤄져야 하나, 그 세탁물의 조합은 무한대에 가까우며, 개별 조합에 따른 진동 패턴도 다릅니다. 또한 이 모든 경우의 수에 대응하기 위해서는 세탁기 개발자가 대표적인 세탁물 케이스에 한하여 실제 수행 착오를 겪으면서 성능을 개선하는 User-In-The-Loop(UITP) 과정을 취하고 있습니다. 또한 대량 생산되는 생활가전의 특성상 저사양의 MCU가 일반적으로 사용되기 때문에, 실제로 학습되지 않은 부하에 대해서 제어 성능을 개선하는 데 한계가 있습니다.
+탈수 중 진동을 줄이려면 세탁조 안의 세탁물이 균형을 이뤄야 합니다. 그런데 세탁물 조합은 사실상 무한하고, 조합마다 진동 패턴도 다릅니다. 지금은 세탁기 개발자가 대표적인 세탁물 케이스만 골라 직접 시행착오를 겪으며 성능을 개선하는 Human-in-the-Loop(HITL) 방식에 기대고 있습니다. 게다가 대량 생산되는 가전에는 보통 저사양 MCU가 들어가기 때문에, 학습하지 않은 부하에 대해서는 제어 성능을 끌어올리기 어렵습니다.
 :::
 
 ::: {.paper-summary-card}
 ### Approach
 
-본 논문에서는 Continual Offline Reinforcement Learning을 활용한 세탁기 모터 제어를 통해 다양한 세탁물 탈수시 발생하는 진동을 저감하고자 했으며, 실제 환경에서 쌓이는 unseen transition data를 활용한 delayed online update (DOU) 방식을 통해 기존 데이터와 실제 환경 데이터간의 distribution shift 위험을 줄이고자 했습니다.
+이 논문은 Continual Offline Reinforcement Learning으로 세탁기 모터를 제어해 탈수 중 진동을 줄입니다. 배포 후 실제 환경에서 쌓이는 unseen transition data로 policy를 주기적으로 갱신하는 delayed online update (DOU)를 써서, 기존 데이터와 실제 환경 데이터 사이의 distribution shift 위험을 낮췄습니다.
 :::
 
 ::: {.paper-summary-card}
 ### Outcome
 
-실험실 환경에서 6개의 세탁물을 대상으로 실험한 결과, 평균 $16%$ 정도의 진동을 줄일 수 있었습니다.
+실험실에서 세탁물 6종으로 실험한 결과, DOU를 두 차례 거친 모델의 평균 success rate가 baseline보다 약 16%p 높았습니다.
 :::
 :::
 
@@ -84,17 +84,17 @@ Post-deployment 후에도 지속적으로 강화학습 모델의 성능을 개�
 
 ::: {.paper-method}
 ::: {.paper-method-steps}
-1. 실험실 환경에서 세탁기 운전에서 다양한 세탁물에 대한 transition data를 수집합니다.
-2. 탈수 구간에서 진동을 줄일 수 있도록 Objective를 정의하고 이를 기반으로 Offline RL Policy를 학습합니다.
+1. 실험실에서 세탁기를 돌리며 다양한 세탁물의 transition data를 수집합니다.
+2. 탈수 구간의 진동을 줄이는 objective를 정의하고, 이를 기준으로 offline RL policy를 학습합니다.
 3. 학습된 policy를 실제 환경에 deploy한 후, 새롭게 수집되는 online interaction data를 delay window 동안 누적합니다.
-4. 짧은 online rollout마다 즉시 반응하는 대신 확장된 dataset(기존데이터 + 새로 수집된 데이터)으로 policy를 갱신합니다.
+4. 짧은 online rollout마다 즉시 반응하는 대신 확장된 dataset(기존 데이터 + 새로 수집한 데이터)으로 policy를 갱신합니다.
 :::
 
 ::: {.paper-figure}
 ![Offline and online data distributions across three tasks.](assets/tsne-3tasks.png){.paper-image}
 
 ::: {.paper-media-caption}
-동일한 세탁물에 대해서 실험실 환경에서 수집된 데이터와 실제 환경에서 수집된 데이터간의 분포를 시각화했을 때, 비슷하게 겹치는 세탁물도 있는 반면 둘 간의 분포가 일치하지 않는 현상도 나타났습니다. 이를 통해 Offline Data와 Online Data 간의 Distribution Shift가 발생하고 있는 것을 확인할 수 있었습니다.
+같은 세탁물에 대해 실험실에서 모은 데이터와 실제 환경에서 모은 데이터의 분포를 시각화했습니다. 두 분포가 비슷하게 겹치는 세탁물도 있었지만, 확연히 어긋나는 세탁물도 있었습니다. offline data와 online data 사이에 distribution shift가 실제로 일어나고 있다는 뜻입니다.
 :::
 :::
 :::
@@ -107,28 +107,31 @@ Post-deployment 후에도 지속적으로 강화학습 모델의 성능을 개�
 
 ![Average success rate comparison across laundry tasks.](assets/result_asr.png){.paper-image}
 
-실험실 환경에서 6개의 세탁물을 대상으로 DOU를 두차례 수행했으며, 이에 대한 결과가 초기 baseline보다 높은 평균 success rate($16%$)를 보였습니다.
+실험실에서 세탁물 6종을 대상으로 DOU를 두 차례 수행했고, 평균 success rate가 초기 baseline의 약 0.53에서 0.69로 약 16%p 올랐습니다.
 :::
 
 ::: {.paper-result-card}
 ### Multi-Task Laundry Set
 
 ![Multi-task laundry configurations.](assets/multi_task.png){.paper-image}
-세탁기에 세탁물이 투입되어 있는 형태를 하나의 task를 정의했으며, 실험시 Multi-task 형태로 구성하여 진행했습니다.
+
+세탁조에 세탁물이 들어 있는 배치 하나를 task 하나로 정의하고, 실험은 multi-task로 구성했습니다.
 :::
 
 ::: {.paper-result-card}
 ### Unseen Tasks
 
 ![Unseen laundry configurations.](assets/unseen_task.png){.paper-image}
-학습된 세탁물뿐만 아니라 실생활에서도 접하게 될, unseen 세탁물에 대해서도 성능 평가를 진행하여 Generalization 여부도 확인하고자 했습니다.
+
+학습에 쓴 세탁물 외에, 실생활에서 만날 법한 unseen 세탁물로도 성능을 평가해 generalization 여부를 확인했습니다.
 :::
 
 ::: {.paper-result-card}
 ### Production Device
 
 ![Production-ready washer product using offline reinforcement learning.](assets/nc.png){.paper-image}
-해당 과정을 통해 개선된 강화학습 모델은 실제로 대량생산된 모델에 탑재되어 세계최초로 출시되었습니다.
+
+이 과정으로 개선한 강화학습 모델은 실제 양산 제품에 탑재되어 세계 최초로 출시되었습니다.
 :::
 :::
 

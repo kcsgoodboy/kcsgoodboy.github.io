@@ -200,7 +200,7 @@ EdgeGate: A Deployment Gate for Edge Vision
 <p><strong>12/12</strong> <span>builds broken on purpose (swapped color channels, missing normalization, 4-bit weights, 10 calibration images), all held</span></p>
 </div>
 <div class="paper-metric">
-<p><strong>20 · 4 · 0</strong> <span>builds that always-deploy, a false-alert-only gate and the rules would ship from the same records</span></p>
+<p><strong>20 · 4 · 0</strong> <span>builds that would ship from the same records under always-deploy, a false-alert-only gate and the rules</span></p>
 </div>
 </div>
 </section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
@@ -210,17 +210,17 @@ EdgeGate: A Deployment Gate for Edge Vision
 </section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
 <p>Each build is measured on its own device over frozen eval recordings. The result is a record bound by hash to the model, the compiled file, the device, the runtime, the eval set and the event settings. <strong>Rules written before any candidate was measured</strong> decide PASS or HOLD; Muse Glimmer 30B audits the evidence and can only add a HOLD.</p>
 </section><section id="outcome" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="outcome">Outcome</h3>
-<p>20 builds of four students were measured over 2 h 50 min of eval sessions: TensorRT on a Jetson Orin Nano Super and HEF on a Raspberry Pi 5 with a Hailo-8. None passed. The same records show what simpler policies would have shipped instead.</p>
+<p>We measured 20 builds of four students over 2 h 50 min of eval sessions: TensorRT on a Jetson Orin Nano Super and HEF (Hailo Executable Format) on a Raspberry Pi 5 with a Hailo-8. None passed. The same records also show what simpler policies would have shipped.</p>
 </section>
 </div>
 </section><section id="from-one-sentence-to-a-decision" class="level2"><h2 class="anchored" data-anchor-id="from-one-sentence-to-a-decision">From one sentence to a decision</h2>
 <div class="paper-figure">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="assets/pipeline.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Top: the skill is taught on a GX10 from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer’s audit can only turn a PASS into a HOLD."><img src="assets/pipeline.svg" class="paper-image img-fluid figure-img" alt="Top: the skill is taught on a GX10 from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer’s audit can only turn a PASS into a HOLD."></a></p>
-<figcaption>Top: the skill is taught on a GX10 from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer’s audit can only turn a PASS into a HOLD.</figcaption></figure>
+<figure class="figure"><p><a href="assets/pipeline.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Top: the skill is taught on a GX10 (ASUS Ascent GX10, NVIDIA GB10) from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer’s audit can only turn a PASS into a HOLD."><img src="assets/pipeline.svg" class="paper-image img-fluid figure-img" alt="Top: the skill is taught on a GX10 (ASUS Ascent GX10, NVIDIA GB10) from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer’s audit can only turn a PASS into a HOLD."></a></p>
+<figcaption>Top: the skill is taught on a GX10 (ASUS Ascent GX10, NVIDIA GB10) from our own recordings, compiled per chip, plus fault builds made on purpose. Bottom: every build is measured on its device and the rules decide; Glimmer’s audit can only turn a PASS into a HOLD.</figcaption></figure>
 </div>
 <div class="paper-media-caption">
-<p>SAM 3.1 labels the train sessions only; a YOLOv8n student is distilled from those labels and exported to ONNX, then compiled to TensorRT FP16 for the Jetson and to an INT8 HEF for the Hailo-8. Eval frames and their ground truth were never used for training or calibration.</p>
+<p>SAM 3.1 labels the train sessions only; YOLOv8n and YOLOv8s students are distilled from those labels and exported to ONNX, then compiled to TensorRT FP16 for the Jetson and to an INT8 HEF for the Hailo-8. Eval frames and their ground truth were never used for training or calibration.</p>
 </div>
 </div>
 </section><section id="the-gate-what-a-record-must-match" class="level2"><h2 class="anchored" data-anchor-id="the-gate-what-a-record-must-match">The gate: what a record must match</h2>
@@ -228,7 +228,7 @@ EdgeGate: A Deployment Gate for Edge Vision
 <div class="pipeline-stage">
 <span>Measured</span> <strong>On the device</strong>
 <p>
-Every build runs over the same frozen recordings on its own device. Inference, decoding and the arrival rule run and are timed there; the detections are scored into events by the same code for every build.
+Every build runs over the same frozen recordings on its own device. Inference, decoding and the arrival rule run and are timed there; the same code then scores every build’s detections into events.
 </p>
 </div>
 <div class="pipeline-arrow">
@@ -257,7 +257,7 @@ Event recall ≥ 0.9, ≤ 1 false alert an hour, 0 duplicate alerts, detection d
 <figure class="figure"><p><a href="assets/builds_v2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Event recall against false alerts per hour for every build measured on eval set v2. The PASS corner is empty."><img src="assets/builds_v2.png" class="paper-image img-fluid figure-img" alt="Event recall against false alerts per hour for every build measured on eval set v2. The PASS corner is empty."></a></p>
 <figcaption>Event recall against false alerts per hour for every build measured on eval set v2. The PASS corner is empty.</figcaption></figure>
 </div>
-<p>Eval set v2: sessions e01–e06 and u01, 2 h 50 min, 26 scored arrivals, covering night with one floor lamp, night with the room lights on, a rainy day and 2 h unattended with no package. The thresholds were not changed at any point.</p>
+<p>Eval set v2: sessions e01–e06 and u01 (unattended), 2 h 50 min, 26 scored arrivals, covering night with one floor lamp, night with the room lights on, a rainy day and 2 h unattended with no package. The thresholds were not changed at any point.</p>
 </section><section id="the-four-students" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="the-four-students">The four students</h3>
 <table class="caption-top table">
 <colgroup>
@@ -363,7 +363,7 @@ Event recall ≥ 0.9, ≤ 1 false alert an hour, 0 duplicate alerts, detection d
 </tr>
 </tbody>
 </table>
-<p>s3 is the one improvement round: after s1 missed arrivals in the dark, two more training nights were recorded and s3 and s4 were trained once on t01–t05. On the Jetson, recall rose from 0.885 to 0.962 and the duplicate alert went away; the false alerts did not. The ONNX reference on the GX10 gives the same recall and false-alert count as the TensorRT build.</p>
+<p>s3 comes out of the only improvement round: after s1 missed arrivals in the dark, we recorded two more training nights and trained s3 and s4 once on t01–t05. On the Jetson, recall rose from 0.885 to 0.962 and the duplicate alert went away; the false alerts did not. The ONNX reference on the GX10 gives the same recall and false-alert count as the TensorRT build.</p>
 </section><section id="why-the-best-model-was-held" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="why-the-best-model-was-held">Why the best model was held</h3>
 <table class="caption-top table">
 <thead><tr class="header">
@@ -385,7 +385,7 @@ Event recall ≥ 0.9, ≤ 1 false alert an hour, 0 duplicate alerts, detection d
 </tr>
 </tbody>
 </table>
-<p>Each alert was watched frame by frame. All 12 fall in the 50 attended minutes (about 14 an hour while people and boxes move) and none in the 2 unattended hours. Nine come from the event rule meeting hands and edges, so the next fix is the rule, as a new policy version measured on a new session.</p>
+<p>We watched each alert frame by frame. All 12 fall in the 50 attended minutes (about 14 an hour while people and boxes move) and none in the 2 unattended hours. Nine come from the event rule meeting hands and edges, so the next fix goes into the rule: a new policy version, measured on a new session.</p>
 </section><section id="four-ways-to-decide-same-records" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="four-ways-to-decide-same-records">Four ways to decide, same records</h3>
 <table class="caption-top table">
 <colgroup>
@@ -571,7 +571,7 @@ Event recall ≥ 0.9, ≤ 1 false alert an hour, 0 duplicate alerts, detection d
 </section><section id="alert-delivery-on-one-clock" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="alert-delivery-on-one-clock">Alert delivery, on one clock</h3>
 <p>From the deciding frame to the push server: <strong>1.2 s</strong>, measured on the live path before any candidate and written into the policy. To the phone’s camera-flash notification: <strong>1.7–2.4 s</strong>, 4 of 4 alerts on the 3 November live session. The 10 s requirement in the records is verified to the push server only.</p>
 </section><section id="a-swapped-file-does-not-run" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="a-swapped-file-does-not-run">A swapped file does not run</h3>
-<p>No real build passed, so the PASS path was run under a labeled test policy whose only change raises the false-alert limit to 5. The real policy held s3’s fresh Jetson record, the test policy passed it, <code>deploy.py</code> wrote the approval and started the runner, and a replayed arrival was alerted. A different model file against the same approval was refused: <code>not starting: this model file is not the approved one</code>.</p>
+<p>No real build passed, so the PASS path was run under a labeled test policy whose only change raises the false-alert limit to 5. The real policy held s3’s fresh Jetson record, the test policy passed it, <code>deploy.py</code> wrote the approval and started the runner, and the runner alerted on a replayed arrival. A different model file presented with the same approval was refused: <code>not starting: this model file is not the approved one</code>.</p>
 </section>
 </div>
 </section><section id="trained-on-never-seen" class="level2"><h2 class="anchored" data-anchor-id="trained-on-never-seen">Trained on, never seen</h2>

@@ -164,27 +164,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">LabLens: Inspect the Rollout, Follow the Evidence</h1>
-</div>
-
-<div>
-  <div class="description">
-    Project page for LabLens v1.1: an annotation-aware robot episode investigator that links SO-101 trajectory intervals to exact camera frames and deterministic signal statistics through a bounded two-call Gemini 4 Argon loop on Google Cloud.
-  </div>
-</div>
-
-
-<div class="quarto-title-meta column-page">
-
-    
-  
-    
-  </div>
-  
-
-
-</header><div class="paper-project">
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><div class="paper-project">
 <div class="paper-hero">
 <div class="paper-title">
 <p>LabLens: Inspect the Rollout, Follow the Evidence</p>
@@ -211,7 +191,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <div class="paper-figure paper-figure-main">
 <div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title="LabLens demo: T2012 selection, operator approval, live Gemini 4 Argon run, three-column report, Evidence Map clicks and sanitized JSON export."><source src="assets/demo_lablens_v1_1.mp4"></source></video></div>
 <div class="paper-media-caption">
-<p>One uninterrupted session on rollout_T2012_1014_231614 (policy rollout, supplied outcome: failure): episode selection → question → operator approval → live two-call run → report → Evidence Map (camera node, then numerical node) → sanitized JSON export. The live wait of 115 s is shortened in the video; per-step timings are in the receipts below.</p>
+<p>One uninterrupted session on rollout_T2012_1014_231614 (policy rollout, supplied outcome: failure): episode selection → question → operator approval → live two-call run → report → Evidence Map (camera node, then numerical node) → sanitized JSON export. The video trims the 112.7 s live wait; per-step timings are in the receipts below.</p>
 </div>
 </div>
 </div>
@@ -229,11 +209,11 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <div class="paper-summary-grid">
 <section id="problem" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="problem">Problem</h3>
-<p>A failed SO-101 pick-and-place rollout is ~60 s of two camera streams and 12 joint signals. Reviewers scrub video by hand, and a general-purpose model asked to “explain the failure” mixes <strong>what was recorded</strong> with <strong>what it guesses</strong>, and can confuse a policy rollout with a teleoperation demo, which changes what <code>action.*</code> even means.</p>
+<p>A failed SO-101 pick-and-place rollout is ~60 s of two camera streams and 12 joint signals. Reviewers scrub through the video by hand. A general-purpose model asked to “explain the failure” mixes <strong>what was recorded</strong> with <strong>what it guesses</strong>. It can also mistake a policy rollout for a teleoperation demo, and that changes what <code>action.*</code> even means.</p>
 </section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
-<p>A <strong>bounded investigation loop</strong>. Call 1 (<em>plan</em>) sees the question and 8 overview frames and asks for one signal window and one frame bundle. The server computes them deterministically from the CSV and the original MP4s. Call 2 (<em>review</em>) must tie every claim to the evidence IDs it was given, under a fixed authority class.</p>
+<p>A <strong>bounded investigation loop</strong>. Call 1 (<em>plan</em>) sees the question and 8 overview frames and asks for one signal window and one frame bundle. The server computes them deterministically from the CSV and the original MP4s. Call 2 (<em>review</em>) works one level above the plan call, as the auditor: it must tie every claim to the evidence IDs it was given.</p>
 </section><section id="outcome" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="outcome">Outcome</h3>
-<p>On T2012 the plan call chose samples 1500–1620 and a detail window 1570–1620. The review call reported the can upright through sample 1603 and on its side by sample 1620, aligned with a wrist_flex peak at 1602 and gripper opening toward 1620, and left contact force <strong>explicitly unverified</strong>.</p>
+<p>On T2012 the plan call chose samples 1500–1620 and a detail window 1570–1620. The review call reported the can upright through sample 1603 and on its side by sample 1620, and matched that to a wrist_flex peak at 1602 and the gripper opening toward 1620. It left contact force <strong>explicitly unverified</strong>.</p>
 </section>
 </div>
 </section><section id="what-a-raw-log-leaves-out" class="level2"><h2 class="anchored" data-anchor-id="what-a-raw-log-leaves-out">What a raw log leaves out</h2>
@@ -315,7 +295,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </tr>
 </tbody>
 </table>
-<p>Every row is recomputed by the server from <code>trajectory.csv</code>; the model can cite these numbers but cannot produce them.</p>
+<p>The server recomputes every row from <code>trajectory.csv</code>. The model can cite these numbers but cannot produce them.</p>
 </section><section id="hypotheses-stay-hypotheses" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="hypotheses-stay-hypotheses">Hypotheses stay hypotheses</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><a href="assets/05_visual_hypotheses_receipt.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Visual observations and hypotheses, each with the evidence IDs it rests on and what is missing."><img src="assets/05_visual_hypotheses_receipt.png" class="paper-image img-fluid figure-img" alt="Visual observations and hypotheses, each with the evidence IDs it rests on and what is missing."></a></p>
@@ -348,7 +328,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <li>The operator approves the run with a server-side secret; there is no unattended or batch model call.</li>
 <li>Call 1 (<code>lablens-plan-v1_1</code>) returns one plan; the server runs at most one tool round with at most two tools.</li>
 <li>Call 2 (<code>lablens-review-v1_1</code>) returns the report; any claim without a matching evidence ID, or with a forbidden phrase, fails schema validation.</li>
-<li>Export writes a sanitized JSON bundle: no secrets, no local paths, no project IDs.</li>
+<li>Export writes a sanitized JSON bundle that contains no secrets, local paths or project IDs.</li>
 </ol>
 </div>
 <section id="measured-on-vertex-ai-global-thinking-level-medium" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="measured-on-vertex-ai-global-thinking-level-medium">Measured on Vertex AI (global), thinking level MEDIUM</h3>

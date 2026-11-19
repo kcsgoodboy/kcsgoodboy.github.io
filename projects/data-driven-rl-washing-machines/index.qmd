@@ -65,19 +65,19 @@ Delayed Online Update (DOU) workflow for post-deployment improvement.
 ::: {.paper-summary-card}
 ### Problem
 
-Modern washing machines must keep loads balanced across many operating conditions. Manual trial-and-error tuning can limit how quickly control performance improves after deployment.
+To keep vibration down during the dehydration cycle, a washer has to keep its load balanced, and the number of possible laundry combinations is effectively unlimited. Today developers tune the controller by trial and error on a handful of representative loads (a human-in-the-loop process). Mass-produced appliances also run on low-spec MCUs, so loads the controller was never tuned for are hard to handle well.
 :::
 
 ::: {.paper-summary-card}
 ### Approach
 
-The paper introduces a continual offline reinforcement learning workflow for washer motor control, using logged transition data and delayed online updates to reduce distribution-shift risk.
+The paper introduces a continual offline reinforcement learning workflow for washer motor control. The policy trains on logged transition data, then gets delayed online updates so that distribution shift between lab and field data stays manageable.
 :::
 
 ::: {.paper-summary-card}
 ### Outcome
 
-Experiments report improved balance-maintenance behavior during the dehydration cycle across tasks with different laundry conditions.
+In lab tests on six laundry types, two rounds of DOU raised the average success rate by about 16 percentage points over the baseline.
 :::
 :::
 
@@ -108,7 +108,7 @@ Offline and online data coverage for selected laundry tasks.
 
 ![Average success rate comparison across laundry tasks.](assets/result_asr.png){.paper-image}
 
-DOU variants improve average success rate over the baseline across the evaluated laundry tasks.
+Both DOU rounds beat the baseline on every laundry task. After the second round, the average success rate went from about 0.53 to 0.69.
 :::
 
 ::: {.paper-result-card}
@@ -132,7 +132,7 @@ Unseen laundry combinations for evaluating generalization.
 
 ![Production-ready washer product using offline reinforcement learning.](assets/nc.png){.paper-image}
 
-Production-ready target device with the offline RL control approach.
+The improved model shipped in a mass-produced LG SIGNATURE washer, the first mass-produced home appliance to use this kind of data-driven control.
 :::
 :::
 

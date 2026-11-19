@@ -19,6 +19,20 @@ library(distilltools)
 
 ## 2026
 
+**(2026. 11)** Devpost에서 진행된 Meta VR Start Developer Competition 2026에 참여하여, SO-101 로봇팔에서 수집된 팔의 경로를 실시간으로 확인할 수 있는 VR 어플리케이션인 **GhostLab**을 만들었습니다.
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/ghostlab/", target = "_self")`
+
+**(2026. 11)** Cerebral Valley에서 진행된 Meta Global AI Developer Hackathon에 참여하여 **EdgeGate**라는 감사 프레임워크를 만들었습니다. Muse Glimmer와 SAM 3.1을 사용하여 실제 택배가 정해진 영역에 도달했는지 여부를 판단하는 모델을 학습시키고, 이를 Jetson Orin Nano와 Raspberry PI 5에 배포했을 때 성능차이를 확인하고자 했습니다.
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/edgegate/", target = "_self")`
+`r icon_link(icon = "fas fa-link", text = "CerebralValley", url = "https://cerebralvalley.ai/e/meta-ai-developer-hackathon/hackathon/gallery?q=edgegate&project=1584")`
+
+**(2026. 10)** 한국에서 진행된 Google Deepmind AI Hackathon에 참여하여, SO-101 궤적 구간을 정확한 카메라 프레임과 결정적 신호 통계에 연결시켜주는 주석 인식형 로봇 에피소드 조사 도구인 **LabLens**를 만들었습니다.
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/lablens/", target = "_self")`
+
+**(2026. 10)** Devpost에서 진행된 Nebius &times; NVIDIA Global AI Hackathon: Physical AI track에 참여하여 **QuantGate**라는 일종의 감사 프레임워크를 만들었습니다. 이를 통해서 quantized RL policy가 실제 장비에 올라갔을 때 정상적인 deploy 여부를 확인하고자 하였습니다. 학습을 위해서 실제 SO-101 로봇팔을 활용하여, ACT 모델을 학습시켰고, 학습된 모델을 26개의 양자화된 모델로 변환해 성능을 확인하였습니다. 또한 학습때 사용한 SO-101 데이터셋 (Pick-and-Place)을 허깅페이스 허브에 오픈소스로 공개하였습니다.
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/quantgate/", target = "_self")`
+`r suppressMessages(icon_link(icon = "hf-icon", text = "HuggingFace Hub", url = "https://huggingface.co/datasets/chans/quantgate-so101-coaster"))`
+
 **(2026. 08)** Canada Montreal에서 열린 RLC 2026 Workshop인 [Model-Based RL in the Era of Generative World Models](https://worldmodels-rlc.github.io/)에서 **"When Reward and Safety Need Different Model Horizons: A Selection Theorem for Pessimistic Offline Planning"** 이란 내용으로 포스터 발표를 진행하였습니다.
 
 **(2026. 08)** AutoML 2026에서 진행된 Competition인 [NAS Unseen-Data Challenge 2026](https://www.nascompetition.com/)에 참여하여 25위를 하였습니다.

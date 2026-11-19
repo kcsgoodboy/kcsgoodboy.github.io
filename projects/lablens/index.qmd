@@ -1,8 +1,8 @@
 ---
-title: "LabLens: Inspect the Rollout, Follow the Evidence"
 pagetitle: "LabLens: Inspect the Rollout, Follow the Evidence"
 description: "Project page for LabLens v1.1: an annotation-aware robot episode investigator that links SO-101 trajectory intervals to exact camera frames and deterministic signal statistics through a bounded two-call Gemini 4 Argon loop on Google Cloud."
 image: assets/06_evidence_map_overview.png
+lang: en
 page-layout: full
 title-block-banner: false
 lightbox: true
@@ -50,7 +50,7 @@ A robot rollout log answers *what* the joints did, and the camera answers *what 
 {{< video assets/demo_lablens_v1_1.mp4 title="LabLens demo: T2012 selection, operator approval, live Gemini 4 Argon run, three-column report, Evidence Map clicks and sanitized JSON export." >}}
 
 ::: {.paper-media-caption}
-One uninterrupted session on rollout_T2012_1014_231614 (policy rollout, supplied outcome: failure): episode selection → question → operator approval → live two-call run → report → Evidence Map (camera node, then numerical node) → sanitized JSON export. The live wait of 115 s is shortened in the video; per-step timings are in the receipts below.
+One uninterrupted session on rollout_T2012_1014_231614 (policy rollout, supplied outcome: failure): episode selection → question → operator approval → live two-call run → report → Evidence Map (camera node, then numerical node) → sanitized JSON export. The video trims the 112.7 s live wait; per-step timings are in the receipts below.
 :::
 
 :::
@@ -80,19 +80,19 @@ One uninterrupted session on rollout_T2012_1014_231614 (policy rollout, supplied
 ::: {.paper-summary-card}
 ### Problem
 
-A failed SO-101 pick-and-place rollout is ~60 s of two camera streams and 12 joint signals. Reviewers scrub video by hand, and a general-purpose model asked to "explain the failure" mixes **what was recorded** with **what it guesses**, and can confuse a policy rollout with a teleoperation demo, which changes what `action.*` even means.
+A failed SO-101 pick-and-place rollout is ~60 s of two camera streams and 12 joint signals. Reviewers scrub through the video by hand. A general-purpose model asked to "explain the failure" mixes **what was recorded** with **what it guesses**. It can also mistake a policy rollout for a teleoperation demo, and that changes what `action.*` even means.
 :::
 
 ::: {.paper-summary-card}
 ### Approach
 
-A **bounded investigation loop**. Call 1 (*plan*) sees the question and 8 overview frames and asks for one signal window and one frame bundle. The server computes them deterministically from the CSV and the original MP4s. Call 2 (*review*) must tie every claim to the evidence IDs it was given, under a fixed authority class.
+A **bounded investigation loop**. Call 1 (*plan*) sees the question and 8 overview frames and asks for one signal window and one frame bundle. The server computes them deterministically from the CSV and the original MP4s. Call 2 (*review*) works one level above the plan call, as the auditor: it must tie every claim to the evidence IDs it was given.
 :::
 
 ::: {.paper-summary-card}
 ### Outcome
 
-On T2012 the plan call chose samples 1500–1620 and a detail window 1570–1620. The review call reported the can upright through sample 1603 and on its side by sample 1620, aligned with a wrist_flex peak at 1602 and gripper opening toward 1620, and left contact force **explicitly unverified**.
+On T2012 the plan call chose samples 1500–1620 and a detail window 1570–1620. The review call reported the can upright through sample 1603 and on its side by sample 1620, and matched that to a wrist_flex peak at 1602 and the gripper opening toward 1620. It left contact force **explicitly unverified**.
 :::
 
 :::
@@ -162,7 +162,7 @@ Gemini 4 Argon's answer: *"Inspect model-selected interval [1600, 1620] first, f
 | action.shoulder_pan (deg) | −1.43 | −19.86 | −18.42 | 1610 |
 | state.gripper (% open) | 3.67 | 33.26 | +29.59 | 1620 |
 
-Every row is recomputed by the server from `trajectory.csv`; the model can cite these numbers but cannot produce them.
+The server recomputes every row from `trajectory.csv`. The model can cite these numbers but cannot produce them.
 :::
 
 ::: {.paper-result-card}
@@ -199,7 +199,7 @@ The Evidence Map is bounded to ≤ 20 nodes and ≤ 30 edges with no orphans. So
 2. The operator approves the run with a server-side secret; there is no unattended or batch model call.
 3. Call 1 (`lablens-plan-v1_1`) returns one plan; the server runs at most one tool round with at most two tools.
 4. Call 2 (`lablens-review-v1_1`) returns the report; any claim without a matching evidence ID, or with a forbidden phrase, fails schema validation.
-5. Export writes a sanitized JSON bundle: no secrets, no local paths, no project IDs.
+5. Export writes a sanitized JSON bundle that contains no secrets, local paths or project IDs.
 :::
 
 ::: {.paper-figure}
