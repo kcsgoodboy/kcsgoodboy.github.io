@@ -11,6 +11,15 @@ resources:
 
 ::: {.paper-project}
 
+```{=html}
+<style>
+.paper-project .paper-result-card { min-width: 0; }
+.paper-project .odi-table { overflow-x: auto; }
+.paper-project .odi-table table { font-size: 0.92em; margin-bottom: 0.6rem; }
+@media (min-width: 761px) { .paper-project .odi-results { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+```
+
 ::: {.paper-hero}
 <div class="paper-title">Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control</div>
 
@@ -126,7 +135,7 @@ Eight calibration rules on one policy give eight controllers whose task outcomes
 
 ## Results
 
-::: {.paper-result-grid}
+::: {.paper-result-grid .odi-results}
 ::: {.paper-result-card .paper-result-wide}
 ### Same policy, same path, eight controllers
 
@@ -146,25 +155,22 @@ Prospective replication: three rules and 256 paired starts for each of 8 FetchRe
 ::: {.paper-result-card}
 ### Forcing the compiler harder does not remove it
 
+::: {.odi-table}
 | Hailo DFC build of the eight-rule family | Family range | 95% interval | Status |
 |---|---:|---|---|
 | Level 0 (auto), 64 rows, stride 4 | 14.93 | [14.32, 15.55] | locked |
 | Level 1 (forced), 64 rows, stride 4 | 14.57 | [13.92, 15.21] | informed |
 | Level 0 (forced), all 256 rows used | 14.97 | [14.35, 15.58] | informed |
 | Level 3 AdaRound, all 256 rows used | 14.42 | [13.83, 15.04] | informed |
-
-Forcing level 1 changes every artifact's action field, yet the best-to-worst range stays. Neither the level-0 fallback nor AdaRound clamping alone explains the spread; the "informed" rows were designed after the first result.
 :::
 
-::: {.paper-result-card}
-### The record needs row count, identity *and* order
-
-Supplying the same 256 rows in reverse order changed which 64 rows set the ranges: terminal success **69.9% &rarr; 97.1%** and return +1.23 [1.07, 1.39] on 512 paired starts, while the full-256 build matched an explicit first-64 control on every action and outcome. The toolchain-reported count identifies none of this.
+Forcing level 1 changes every artifact's action field, yet the best-to-worst range stays. Neither the level-0 fallback nor AdaRound clamping alone explains the spread; the "informed" rows were designed after the first result.
 :::
 
 ::: {.paper-result-card .paper-result-wide}
 ### What the failing artifacts change
 
+::: {.odi-table}
 | Calibration rule | Hailo output range | FP32 outside (%) | At bound (%) | Hailo success | Edge TPU success |
 |---|---|---:|---:|---:|---:|
 | Episode head | [-1.01, 1.00] | 1.2 | 0.4 | 92.7 | 91.7 |
@@ -175,8 +181,15 @@ Supplying the same 256 rows in reverse order changed which 64 rows set the range
 | **Phase middle** | [-0.66, 0.20] | 24.2 | 21.1 | **21.4** | 97.9 |
 | **Phase late** | [-0.66, 0.20] | 24.2 | 20.7 | **22.0** | 97.9 |
 | Fixed random | [-1.01, 1.00] | 0.0 | 1.2 | 92.4 | 96.8 |
+:::
 
 Post-outcome inspection on a fixed 800-state early-phase panel. Only the two rules with no early-phase rows calibrate the output (tanh) layer to a restricted range; a quarter of early FP32 outputs then fall outside it and Hailo-8 success collapses, while Edge TPU under the same rules stays near 98%. A contributor, not an isolated cause.
+:::
+
+::: {.paper-result-card}
+### The record needs row count, identity *and* order
+
+Supplying the same 256 rows in reverse order changed which 64 rows set the ranges: terminal success **69.9% &rarr; 97.1%** and return +1.23 [1.07, 1.39] on 512 paired starts, while the full-256 build matched an explicit first-64 control on every action and outcome. The toolchain-reported count identifies none of this.
 :::
 
 ::: {.paper-result-card}
@@ -200,7 +213,8 @@ Device-in-the-loop follow-up run on this paper's pipeline: policy seed 202609201
 ### All 128 starts, step by step
 
 ```{=html}
-<iframe src="assets/reach_interactive.html" title="Interactive reach panel: FP32 policy versus the failing Hailo-8 artifact" style="width:100%;height:600px;border:0" loading="lazy"></iframe>
+<iframe src="assets/reach_interactive.html" title="Interactive reach panel: FP32 policy versus the failing Hailo-8 artifact" id="odi-reach" style="width:100%;height:520px;border:0"></iframe>
+<script>(function(){var f=document.getElementById("odi-reach");function fit(){try{f.style.height=(f.contentDocument.documentElement.scrollHeight+4)+"px";}catch(e){}}f.addEventListener("load",fit);window.addEventListener("resize",fit);if(f.contentDocument&&f.contentDocument.readyState==="complete")fit();})();</script>
 ```
 
 ::: {.paper-media-caption}
