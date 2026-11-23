@@ -160,6 +160,12 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
     
 <!-- main -->
 <main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><div class="paper-project">
+<style>
+.paper-project .paper-result-card { min-width: 0; }
+.paper-project .odi-table { overflow-x: auto; }
+.paper-project .odi-table table { font-size: 0.92em; margin-bottom: 0.6rem; }
+@media (min-width: 761px) { .paper-project .odi-results { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
 <div class="paper-hero">
 <div class="paper-title">
 Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control
@@ -248,7 +254,7 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 </div>
 </div>
 </section><section id="results" class="level2"><h2 class="anchored" data-anchor-id="results">Results</h2>
-<div class="paper-result-grid">
+<div class="paper-result-grid odi-results">
 <section id="same-policy-same-path-eight-controllers" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="same-policy-same-path-eight-controllers">Same policy, same path, eight controllers</h3>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><a href="assets/family.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Terminal success and return loss per calibration rule on Hailo-8 (orange) and Edge TPU (teal)."><img src="assets/family.svg" class="paper-image img-fluid figure-img" alt="Terminal success and return loss per calibration rule on Hailo-8 (orange) and Edge TPU (teal)."></a></p>
@@ -262,6 +268,7 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 </div>
 <p>Prospective replication: three rules and 256 paired starts for each of 8 FetchReach SAC seeds; the Hailo early-minus-middle contrast was the sole confirmatory test. Middle underperforms early in 7/8 policies; policy-mean contrast 8.60 [4.42, 12.51] (≈17 cm), sign-flip p = 0.0156; pooled success 45.9% vs 99.0%.</p>
 </section><section id="forcing-the-compiler-harder-does-not-remove-it" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="forcing-the-compiler-harder-does-not-remove-it">Forcing the compiler harder does not remove it</h3>
+<div class="odi-table">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 23%">
@@ -302,10 +309,10 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 </tr>
 </tbody>
 </table>
+</div>
 <p>Forcing level 1 changes every artifact’s action field, yet the best-to-worst range stays. Neither the level-0 fallback nor AdaRound clamping alone explains the spread; the “informed” rows were designed after the first result.</p>
-</section><section id="the-record-needs-row-count-identity-and-order" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-record-needs-row-count-identity-and-order">The record needs row count, identity <em>and</em> order</h3>
-<p>Supplying the same 256 rows in reverse order changed which 64 rows set the ranges: terminal success <strong>69.9% → 97.1%</strong> and return +1.23 [1.07, 1.39] on 512 paired starts, while the full-256 build matched an explicit first-64 control on every action and outcome. The toolchain-reported count identifies none of this.</p>
 </section><section id="what-the-failing-artifacts-change" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="what-the-failing-artifacts-change">What the failing artifacts change</h3>
+<div class="odi-table">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 13%">
@@ -390,7 +397,10 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 </tr>
 </tbody>
 </table>
+</div>
 <p>Post-outcome inspection on a fixed 800-state early-phase panel. Only the two rules with no early-phase rows calibrate the output (tanh) layer to a restricted range; a quarter of early FP32 outputs then fall outside it and Hailo-8 success collapses, while Edge TPU under the same rules stays near 98%. A contributor, not an isolated cause.</p>
+</section><section id="the-record-needs-row-count-identity-and-order" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="the-record-needs-row-count-identity-and-order">The record needs row count, identity <em>and</em> order</h3>
+<p>Supplying the same 256 rows in reverse order changed which 64 rows set the ranges: terminal success <strong>69.9% → 97.1%</strong> and return +1.23 [1.07, 1.39] on 512 paired starts, while the full-256 build matched an explicit first-64 control on every action and outcome. The toolchain-reported count identifies none of this.</p>
 </section><section id="local-proxies-do-not-qualify-a-deployment-instance" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="local-proxies-do-not-qualify-a-deployment-instance">Local proxies do not qualify a deployment instance</h3>
 <p>5 outcome-blind artifact pairs matched within 10% in mean action-error norm and RMSE still differ by 0.08–0.17 in paired return and by up to 5.0 points in terminal success. A closed-loop amplification diagnostic (CLAE) ranked alerts better than action magnitude in selected windows but missed its pre-specified criterion on fresh data.</p>
 </section>
@@ -406,8 +416,8 @@ Paired return (the whole route; FP32 mean -0.663) and terminal success (the endp
 </div>
 </div>
 <section id="all-128-starts-step-by-step" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="all-128-starts-step-by-step">All 128 starts, step by step</h3>
-<iframe src="assets/reach_interactive.html" title="Interactive reach panel: FP32 policy versus the failing Hailo-8 artifact" style="width:100%;height:600px;border:0" loading="lazy"></iframe>
-<div class="paper-media-caption">
+<iframe src="assets/reach_interactive.html" title="Interactive reach panel: FP32 policy versus the failing Hailo-8 artifact" id="odi-reach" style="width:100%;height:520px;border:0"></iframe>
+<script>(function(){var f=document.getElementById("odi-reach");function fit(){try{f.style.height=(f.contentDocument.documentElement.scrollHeight+4)+"px";}catch(e){}}f.addEventListener("load",fit);window.addEventListener("resize",fit);if(f.contentDocument&&f.contentDocument.readyState==="complete")fit();})();</script><div class="paper-media-caption">
 <p>Left: gripper position relative to the goal (cm), seen from above; the green disc is the 5 cm success radius and 20 device paths leave the ±40 cm frame. Right: distance to the goal over the 50-step episode. Thin lines are single starts, thick lines medians. Press play to replay the episode; the checkbox keeps only the failing starts.</p>
 </div>
 </section></section><section id="qualify-by-paired-outcomes-under-the-applications-contract" class="level2"><h2 class="anchored" data-anchor-id="qualify-by-paired-outcomes-under-the-applications-contract">Qualify by paired outcomes, under the application’s contract</h2>
