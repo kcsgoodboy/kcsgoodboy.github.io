@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="description" content="강화학습과 온디바이스 AI 전문성을 바탕으로 실생활 제어 문제를 해결합니다.">
+<meta name="description" content="강화학습과 온디바이스 AI 전문성을 바탕으로 가전과 로보틱스의 실세계 제어 문제를 해결합니다.">
 <title>소개 – 생각많은 소심남의 연구노트</title>
 <style>
 code{white-space: pre-wrap;}
@@ -70,13 +70,13 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <link rel="stylesheet" href="assets/css/styles.css">
 <meta property="og:title" content="소개 – 생각많은 소심남의 연구노트">
-<meta property="og:description" content="강화학습과 온디바이스 AI 전문성을 바탕으로 실생활 제어 문제를 해결합니다.">
+<meta property="og:description" content="강화학습과 온디바이스 AI 전문성을 바탕으로 가전과 로보틱스의 실세계 제어 문제를 해결합니다.">
 <meta property="og:image" content="https://kcsgoodboy.github.io/ko/contents/images/persona.png">
 <meta property="og:site_name" content="생각많은 소심남의 연구노트">
 <meta property="og:image:height" content="1536">
 <meta property="og:image:width" content="1024">
 <meta name="twitter:title" content="소개 – 생각많은 소심남의 연구노트">
-<meta name="twitter:description" content="강화학습과 온디바이스 AI 전문성을 바탕으로 실생활 제어 문제를 해결합니다.">
+<meta name="twitter:description" content="강화학습과 온디바이스 AI 전문성을 바탕으로 가전과 로보틱스의 실세계 제어 문제를 해결합니다.">
 <meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/contents/images/persona.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image-height" content="1536">
@@ -144,7 +144,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </div>
 <div>
   <div class="description">
-    강화학습과 온디바이스 AI 전문성을 바탕으로 실생활 제어 문제를 해결합니다.
+    강화학습과 온디바이스 AI 전문성을 바탕으로 가전과 로보틱스의 실세계 제어 문제를 해결합니다.
   </div>
 </div>
 <div class="quarto-title-meta">
@@ -170,51 +170,106 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
   </div>
   <div class="about-contents page-columns page-full"><main class="content page-columns page-full" id="quarto-document-content"><div class="column-body-outset">
 <section id="bio" class="level2"><h2 data-anchor-id="bio">Bio</h2>
-<p>저는 <a href="https://www.lge.co.kr/">엘지전자</a> CTO부문에서 AI Engineer로 근무하고 있는 강찬석이라고 합니다. 음성이나 비전 같은 대표적인 인공지능 분야가 아닌 <strong>제어</strong> 라는 분야에 에너지 효율적인 AI 알고리즘을 가전에 적용하고, 양산하는 제품에 탑재하는 경험을 쌓아왔습니다.</p>
-<p>가전에 있어서 제어를 하기 위한 의사 결정의 수단으로써 <strong>강화학습</strong>을 주로 활용하고 있으며, 가전이라는 한정적인 자원을 가진 환경에서 알고리즘을 적용하기 위해 <strong>데이터 기반의 강화학습</strong> 및 <strong>모델 양자화/최적화</strong> 작업을 한 경험이 있습니다. 또한, 과거의 플랫폼 소프트웨어 및 디바이스 드라이버 개발 경험을 활용하여 가전과 PC간의 통신 인터페이스 구축 및 이를 활용한 <strong>세상에 없는 새로운 강화학습 환경</strong>을 구축하는데 전문성을 가지고 있습니다. 대표적인 경험으로는 아래와 같습니다.</p>
+<p>저는 <a href="https://www.lge.co.kr/">엘지전자</a> AI Lab(CTO부문)에서 <strong>책임연구원(Senior AI Software Engineer · 공인 AI Specialist 1기)</strong>으로 근무하고 있는 강찬석입니다. 임베디드 플랫폼 소프트웨어 및 디바이스 드라이버 개발 경험을 토대로, <strong>강화학습(Reinforcement Learning)</strong> 기반의 에너지 효율적 제어 알고리즘을 연구하여 실제 양산 가전에 탑재해 왔습니다.</p>
+<p>최근에는 가전 상용화에서 얻은 문제의식을 확장하여, <strong>엣지 가속기(Jetson, Hailo-8, Coral Edge TPU, Qualcomm QNN) 환경에서의 양자화 정책 검증(Deployment Audit)</strong>과 <strong>결함 격리형 피지컬 AI 로보틱스(SO-101, QNX 8.0 RTOS)</strong>를 집중적으로 탐구하고 있습니다.</p>
 <ul>
-<li>강화학습을 적용한 PID 계수 튜닝을 통해 특정 공간내 HVAC 제어</li>
-<li>데이터 기반 통계 모델을 활용하여 냉장고 부하에 능동적으로 대응할 수 있는 컴프레서 제어</li>
-<li>데이터 기반 강화학습을 활용하여, 다양한 부하 상에서 세탁기 탈수시 발생하는 진동을 줄이고, 실생활 데이터를 통한 지속적인 성능 개선 방법론 개발</li>
-<li>건조기에 강화학습을 적용하여 다양한 부하 환경에서 최적의 건조 모션 개발 및 이를 통한 건조 성능 개선</li>
+<li>
+<strong>온디바이스 신경망 제어 &amp; 피지컬 AI 검증</strong>: 컴파일된 양자화 아티팩트 간 제어 성패 격차 규명(NeurIPS 2026 ODI), 실시간 RTOS 프로세스 격리 기반 로봇 제어(QNX 8.0), 실물 로봇 롤아웃 감사 도구 구축</li>
+<li>
+<strong>양산 가전 강화학습 제어 상용화</strong>: 세계 최초 Offline RL 기반 세탁기 탈수 진동 저감 모델 양산 탑재(PCT 국제특허 제1발명자), 건조기 비디오 라벨 기반 센서 보상학습(IEEE CASE 2026), 냉장고 컴프레서 및 공간 HVAC PID 제어 최적화</li>
+<li>
+<strong>지식 공유 및 학술 기여</strong>: 국제 학회 논문 출간 및 리뷰어(IEEE CASE), 『그로킹 심층 강화학습』(2022 대한민국학술원 우수학술도서) 번역, 35권 이상의 AI·시스템 전문서 기술 검토</li>
 </ul>
-<p>저는 개인의 지속적인 발전을 추구하며, 이를 위해서 다양한 대외활동을 수행하고 있습니다.</p>
-<ul>
-<li>국제 학회 논문 및 특허 다수 (<a href="publications.html">출간물</a> 참고)</li>
-<li>번역서 1건 (그로킹 심층 강화학습, 한빛미디어), 감수 1건 (텐서플로를 활용한 머신러닝, 한빛미디어)</li>
-<li>다양한 기술전문서 검토 (한빛미디어, 제이펍, 길벗 등)</li>
-</ul>
-<p>더 자세한 연구와 기록은 <a href="projects.html">프로젝트</a> 및 <a href="blog.html">블로그</a>를 참고해주시면 감사하겠습니다.</p>
+<p>더 자세한 연구 결과물과 기록은 <a href="projects.html">프로젝트</a>, <a href="publications.html">출간물</a>, <a href="blog.html">연구 노트</a>에서 확인하실 수 있습니다.</p>
+</section><section id="technical-stack-hardware-testbed" class="level2"><h2 data-anchor-id="technical-stack-hardware-testbed">Technical Stack &amp; Hardware Testbed</h2>
+<div class="skills-grid">
+  <div class="skill-card">
+    <div class="skill-card-title">On-Device AI &amp; Quantization</div>
+    <div class="skill-chips">
+      <span class="skill-chip">TensorRT (FP16/INT8)</span>
+      <span class="skill-chip">Hailo-8 Dataflow</span>
+      <span class="skill-chip">Coral Edge TPU</span>
+      <span class="skill-chip">Qualcomm QNN HTP</span>
+      <span class="skill-chip">ONNX Runtime</span>
+      <span class="skill-chip">TFLite / tinyML</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-card-title">Reinforcement Learning &amp; ML</div>
+    <div class="skill-chips">
+      <span class="skill-chip">Offline &amp; Continual RL</span>
+      <span class="skill-chip">Safe &amp; Model-Based RL</span>
+      <span class="skill-chip">Meta-RL</span>
+      <span class="skill-chip">JAX / Flax</span>
+      <span class="skill-chip">PyTorch</span>
+      <span class="skill-chip">LeRobot / ACT</span>
+      <span class="skill-chip">Ray / vLLM</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-card-title">Systems &amp; Real-Time Control</div>
+    <div class="skill-chips">
+      <span class="skill-chip">QNX 8.0 RTOS</span>
+      <span class="skill-chip">Embedded Linux &amp; Kernel</span>
+      <span class="skill-chip">C / Python / R</span>
+      <span class="skill-chip">UART / SRIO Interfaces</span>
+      <span class="skill-chip">Hardware-in-the-Loop</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-card-title">Edge &amp; Robotics Hardware</div>
+    <div class="skill-chips">
+      <span class="skill-chip">NVIDIA Jetson Orin Nano</span>
+      <span class="skill-chip">Raspberry Pi 5 + Hailo-8</span>
+      <span class="skill-chip">ASUS Ascent GX10</span>
+      <span class="skill-chip">Qualcomm QCM6490</span>
+      <span class="skill-chip">SO-101 Robot Arm</span>
+      <span class="skill-chip">Meta Quest XR</span>
+    </div>
+  </div>
+</div>
 </section><section id="experience" class="level2"><h2 data-anchor-id="experience">Experience</h2>
 <div class="cv-timeline">
   <div class="cv-item">
     <div class="cv-item-header">
-      <span>엘지전자 (LG Electronics) · 책임연구원</span>
-      <span class="cv-item-period">2014 – 현재</span>
+      <span>엘지전자 (LG Electronics) · 책임연구원 (AI Specialist)</span>
+      <span class="cv-item-period">2014.12 – 현재</span>
     </div>
-    <div class="cv-item-sub">CTO부문 AI Engineer · 가전 제어용 강화학습 및 온디바이스 AI 최적화</div>
-  </div>
-  <div class="cv-item">
-    <div class="cv-item-header">
-      <span>Carnegie Mellon University (CMU) · 방문연구원</span>
-      <span class="cv-item-period">2019</span>
-    </div>
-  </div>
-  <div class="cv-item">
-    <div class="cv-item-header">
-      <span>한국과학기술연구원 (KIST) · 위촉연구원</span>
-      <span class="cv-item-period">2012</span>
-    </div>
-  </div>
-  <div class="cv-item">
-    <div class="cv-item-header">
-      <span>서울시립대학교 (UoS) · 강사</span>
-      <span class="cv-item-period">2012</span>
+    <div class="cv-item-sub">
+      CTO부문 AI Lab · LG전자 최초 공인 AI 전문가(제어 분야 1기, 12인) 선발
+      <div class="cv-subtracks">
+        <div class="cv-subtrack">
+          <strong>On-Device AI &amp; Edge Accelerator Qualification (2024 – 현재)</strong><br>
+          크로스 백엔드 엣지 가속기(Jetson, Hailo-8, Edge TPU, Qualcomm QNN) 상에서 양자화 신경망 제어 정책의 결정 경계 오차 분석 및 실기기 페어드 태스크 감사 체계 구축
+        </div>
+        <div class="cv-subtrack">
+          <strong>Applied RL for Mass-Produced Home Appliances (2018 – 2024)</strong><br>
+          세계 최초 Offline RL 적용 세탁기 탈수 제어 모델 상용 양산 탑재 및 실환경 데이터 기반 지속 학습 아키텍처 설계(PCT 국제특허 제1발명자), 건조기 드럼 모션 보상학습, 냉장고 컴프레서 및 HVAC 제어 알고리즘 개발
+        </div>
+        <div class="cv-subtrack">
+          <strong>Embedded Platform &amp; RL Environment Engineering (2014 – 2018)</strong><br>
+          임베디드 시스템·디바이스 드라이버 역량을 바탕으로 가전–PC 간 고속 통신 인터페이스(UART, SRIO) 및 실물 연동 강화학습 환경 구축
+        </div>
+      </div>
     </div>
   </div>
   <div class="cv-item">
     <div class="cv-item-header">
-      <span>울산과학기술대학교 (UNIST) · 동계 학부연구원</span>
+      <span>Carnegie Mellon University (CMU) · 방문연구원 (Visiting Researcher)</span>
+      <span class="cv-item-period">2019.04 – 2019.08</span>
+    </div>
+    <div class="cv-item-sub">Pittsburgh, PA · Prof. Bhiksha Ramakrishnan 연구실 · 에너지 효율적 제어를 위한 강화학습 연구 (LG전자 파견)</div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>한국과학기술연구원 (KIST) 위촉연구원 &amp; 서울시립대학교 강사</span>
+      <span class="cv-item-period">2012.02 – 2012.12</span>
+    </div>
+    <div class="cv-item-sub">KIST 양손 제스처 인식 UX 연구 및 50페이지 분량 Kinect C/C++ 개발 가이드 집필, 서울시립대 NUI 프로그래밍 강의, Microsoft Imagine Cup 준결승 진출 팀 리드</div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>울산과학기술원 (UNIST) · 동계 학부연구원</span>
       <span class="cv-item-period">2011</span>
     </div>
   </div>
@@ -223,25 +278,24 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <div class="cv-timeline">
   <div class="cv-item">
     <div class="cv-item-header">
-      <span>서울대학교 · 컴퓨터공학부 석사</span>
-      <span class="cv-item-period">2013 – 2015</span>
+      <span>서울대학교 · 전기·컴퓨터공학부 석사</span>
+      <span class="cv-item-period">2013.03 – 2015.02</span>
     </div>
     <div class="cv-item-sub">
-      주제: 매니코어 기반의 효율적인 전력 관리 프레임워크<br>
-      학위논문: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierarchical Power Management Framework on Manycore systems using OS Migration Techniques</a><br>
+      학위논문: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques</a> (Intel Single-chip Cloud Computer 기반 OS 레벨 DVFS 전력 관리)<br>
       지도교수: <a href="https://csap.snu.ac.kr/bernhard">Bernhard Egger</a>
     </div>
   </div>
   <div class="cv-item">
     <div class="cv-item-header">
       <span>중앙대학교 · 전자전기공학부 학사</span>
-      <span class="cv-item-period">2006 – 2013</span>
+      <span class="cv-item-period">2006 – 2012</span>
     </div>
   </div>
 </div>
 </section><section id="contact" class="level2"><h2 data-anchor-id="contact">Contact</h2>
 <ul>
-<li>블로그에 있는 내용, 혹은 진로, 세미나 관련 문의는 언제든지 환영합니다.</li>
+<li>연구 협업, 기술 블로그 내용, 진로 멘토링 및 세미나/강연 문의는 언제든지 환영합니다.</li>
 <li>
 <code>kcsgoodboy [at] gmail.com</code> 으로 연락주시기 바랍니다.</li>
 </ul></section>
