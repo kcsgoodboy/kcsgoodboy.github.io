@@ -24,11 +24,11 @@ ul.task-list li input[type="checkbox"] {
 </style>
 <script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4f730df2cb3a1c52a5a9a8701728907f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-e41c71cb8966507afff345c1e73c027d.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-c5853d92d9a2d653d7e99eb962b95d90.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e2470ee5f06e35366eb5de6618cfc828.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -61,8 +61,13 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <link rel="stylesheet" href="assets/css/styles.css">
 <meta property="og:title" content="소개 – 생각많은 소심남의 연구노트">
 <meta property="og:description" content="강화학습과 온디바이스 AI 전문성을 바탕으로 실생활 제어 문제를 해결합니다.">
@@ -97,19 +102,23 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </div></li>
 <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">홈</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">소개</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
-<span class="menu-text">블로그</span></a>
+    <a class="nav-link" href="./projects.html"> 
+<span class="menu-text">프로젝트</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./publications.html"> 
 <span class="menu-text">출간물</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./blog.html"> 
+<span class="menu-text">블로그</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./activities.html"> 
@@ -130,7 +139,7 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 <div class="quarto-about-trestles page-columns page-full">
   <div class="about-entity">
     <img src="contents/images/chanseok.jpg" class="about-image
-  rounded " style="width: 200px;;"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+  rounded " style="width: 210px;"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">소개</h1>
 </div>
 <div>
@@ -143,15 +152,19 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </header><div class="about-links">
   <a href="https://github.com/goodboychan" class="about-link" rel="" target="">
     <i class="bi bi-github"></i>
-     <span class="about-link-text"></span>
+     <span class="about-link-text">GitHub</span>
   </a>
   <a href="https://www.linkedin.com/in/chanseokk/" class="about-link" rel="" target="">
     <i class="bi bi-linkedin"></i>
-     <span class="about-link-text"></span>
+     <span class="about-link-text">LinkedIn</span>
+  </a>
+  <a href="https://scholar.google.com/citations?user=tyjigLkAAAAJ&amp;hl=en" class="about-link" rel="" target="">
+    <i class="bi bi-mortarboard-fill"></i>
+     <span class="about-link-text">Scholar</span>
   </a>
   <a href="/contents/files/Chanseok_Kang_CV_20261125.pdf" class="about-link" rel="" target="">
     <i class="bi bi-file-earmark-pdf-fill"></i>
-     <span class="about-link-text"></span>
+     <span class="about-link-text">CV</span>
   </a>
 </div>
   </div>
@@ -167,36 +180,70 @@ gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </ul>
 <p>저는 개인의 지속적인 발전을 추구하며, 이를 위해서 다양한 대외활동을 수행하고 있습니다.</p>
 <ul>
-<li>논문 1건, 특허 1건</li>
+<li>국제 학회 논문 및 특허 다수 (<a href="publications.html">출간물</a> 참고)</li>
 <li>번역서 1건 (그로킹 심층 강화학습, 한빛미디어), 감수 1건 (텐서플로를 활용한 머신러닝, 한빛미디어)</li>
 <li>다양한 기술전문서 검토 (한빛미디어, 제이펍, 길벗 등)</li>
 </ul>
-<p>더 자세한 활동에 대해서는 <a href="blog.html">블로그</a>를 참고해주시면 감사하겠습니다.</p>
+<p>더 자세한 연구와 기록은 <a href="projects.html">프로젝트</a> 및 <a href="blog.html">블로그</a>를 참고해주시면 감사하겠습니다.</p>
+</section><section id="experience" class="level2"><h2 data-anchor-id="experience">Experience</h2>
+<div class="cv-timeline">
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>엘지전자 (LG Electronics) · 책임연구원</span>
+      <span class="cv-item-period">2014 – 현재</span>
+    </div>
+    <div class="cv-item-sub">CTO부문 AI Engineer · 가전 제어용 강화학습 및 온디바이스 AI 최적화</div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>Carnegie Mellon University (CMU) · 방문연구원</span>
+      <span class="cv-item-period">2019</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>한국과학기술연구원 (KIST) · 위촉연구원</span>
+      <span class="cv-item-period">2012</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>서울시립대학교 (UoS) · 강사</span>
+      <span class="cv-item-period">2012</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>울산과학기술대학교 (UNIST) · 동계 학부연구원</span>
+      <span class="cv-item-period">2011</span>
+    </div>
+  </div>
+</div>
 </section><section id="education" class="level2"><h2 data-anchor-id="education">Education</h2>
+<div class="cv-timeline">
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>서울대학교 · 컴퓨터공학부 석사</span>
+      <span class="cv-item-period">2013 – 2015</span>
+    </div>
+    <div class="cv-item-sub">
+      주제: 매니코어 기반의 효율적인 전력 관리 프레임워크<br>
+      학위논문: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierarchical Power Management Framework on Manycore systems using OS Migration Techniques</a><br>
+      지도교수: <a href="https://csap.snu.ac.kr/bernhard">Bernhard Egger</a>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>중앙대학교 · 전자전기공학부 학사</span>
+      <span class="cv-item-period">2006 – 2013</span>
+    </div>
+  </div>
+</div>
+</section><section id="contact" class="level2"><h2 data-anchor-id="contact">Contact</h2>
 <ul>
+<li>블로그에 있는 내용, 혹은 진로, 세미나 관련 문의는 언제든지 환영합니다.</li>
 <li>
-<strong>서울대학교</strong> | 컴퓨터공학부 석사 | 2013년 - 2015년
-<ul>
-<li>주제: 매니코어 기반의 효율적인 전력 관리 프레임워크</li>
-<li>학위논문: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierachical Power Management Framework on Manycore systems using OS Migration Techniques</a>
-</li>
-<li>지도교수: <a href="https://csap.snu.ac.kr/bernhard">Bernhard Egger</a>
-</li>
-</ul>
-</li>
-<li>
-<strong>중앙대학교</strong> | 전자전기공학부 학사 | 2006년 - 2013년</li>
-</ul></section><section id="experience" class="level2"><h2 data-anchor-id="experience">Experience</h2>
-<ul>
-<li><p><strong>엘지전자</strong> | 책임연구원 | 2014년 - (재직중)</p></li>
-<li><p><strong>Carnegie Mellon University (CMU)</strong> | 방문연구원 | 2019년</p></li>
-<li><p><strong>한국과학기술연구원 (KIST)</strong> | 위촉연구원 | 2012년</p></li>
-<li><p><strong>서울시립대학교 (UoS)</strong> | 강사 | 2012년</p></li>
-<li><p><strong>울산과학기술대학교 (UNIST)</strong> | 동계 학부연구원 | 2011년</p></li>
-</ul></section><section id="contact" class="level2"><h2 data-anchor-id="contact">Contact</h2>
-<ul>
-<li><p>블로그에 있는 내용, 혹은 진로, 세미나 관련 문의는 언제든지 환영합니다.</p></li>
-<li><p>kcsgoodboy [at] gmail.com 으로 연락주시기 바랍니다.</p></li>
+<code>kcsgoodboy [at] gmail.com</code> 으로 연락주시기 바랍니다.</li>
 </ul></section>
 </div>
 
@@ -759,9 +806,30 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
-
-
-
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Chanseok Kang · Ascent of Applied Wisdom</p>
+</div>   
+    <div class="nav-footer-center">
+       
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/goodboychan">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
 </body>
 </html>
