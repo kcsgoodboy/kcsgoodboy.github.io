@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<link rel="alternate" hreflang="en" href="https://kcsgoodboy.github.io/projects/qnx-robot-head/index.html" />
+<link rel="alternate" hreflang="ko" href="https://kcsgoodboy.github.io/ko/projects/qnx-robot-head/index.ko.html" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="description" content="Project page for a QNX Global Hackathon 2026 entry: a face-tracking robot head rebuilt from scratch on QNX 8.0 and a Raspberry Pi 5, where the vision and the motion are separate processes and a failing AI cannot move the motors badly.">
+<title>When the AI Crashes, the Robot Doesn’t – Chan's Research Note</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script><script src="../../site_libs/quarto-nav/headroom.min.js"></script><script src="../../site_libs/clipboard/clipboard.min.js"></script><script src="../../site_libs/quarto-search/autocomplete.umd.js"></script><script src="../../site_libs/quarto-search/fuse.min.js"></script><script src="../../site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script><script src="../../site_libs/quarto-html/popper.min.js"></script><script src="../../site_libs/quarto-html/tippy.umd.min.js"></script><script src="../../site_libs/quarto-html/anchor.min.js"></script><link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-4f730df2cb3a1c52a5a9a8701728907f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-e41c71cb8966507afff345c1e73c027d.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script><link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c5853d92d9a2d653d7e99eb962b95d90.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e2470ee5f06e35366eb5de6618cfc828.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script><link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": true,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=G-0JHM3R8BEZ"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
+</script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="../../assets/css/styles.css">
+<meta property="og:title" content="When the AI Crashes, the Robot Doesn’t">
+<meta property="og:description" content="Project page for a QNX Global Hackathon 2026 entry: a face-tracking robot head rebuilt from scratch on QNX 8.0 and a Raspberry Pi 5, where the vision and the motion are separate processes and a failing AI cannot move the motors badly.">
+<meta property="og:image" content="https://kcsgoodboy.github.io/projects/qnx-robot-head/contents/images/persona.png">
+<meta property="og:site_name" content="Chan's Research Note">
+<meta name="twitter:title" content="When the AI Crashes, the Robot Doesn’t">
+<meta name="twitter:description" content="Project page for a QNX Global Hackathon 2026 entry: a face-tracking robot head rebuilt from scratch on QNX 8.0 and a Raspberry Pi 5, where the vision and the motion are separate processes and a failing AI cannot move the motors badly.">
+<meta name="twitter:image" content="https://kcsgoodboy.github.io/projects/qnx-robot-head/contents/images/persona.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Chan’s Research Note</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item"><div class="dropdown" id="languages-links-parent">
+<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="languages-button"><i class="bi bi-globe2"></i> English</button><ul class="dropdown-menu" id="languages-links"><li><a class="dropdown-item" href="https://kcsgoodboy.github.io/ko/projects/qnx-robot-head/index.html" id="language-link-ko">한국어</a></li></ul>
+</div></li>
+<li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html"> 
+<span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../activities.html"> 
+<span class="menu-text">Activities</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto"></ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header><div class="paper-project">
+<div class="paper-hero">
+<div class="paper-title">
+When the AI Crashes, the Robot Doesn’t
+</div>
+<div class="paper-venue">
+<p>QNX Global Hackathon 2026 · Robotics &amp; Medical · November–December 2026</p>
+</div>
+<div class="paper-authors">
+<p><a class="paper-author" href="../../about.html">Chanseok Kang</a></p>
+</div>
+<div class="paper-affiliation">
+<p>Independent project</p>
+</div>
+<div class="paper-links">
+<p><a class="paper-button" href="https://github.com/goodboychan/qnx-hackathon"><i class="fab fa-github"></i> Code and results (GitHub)</a> <a class="paper-button" href="https://www.youtube.com/watch?v=FhvpcueTXqg"><i class="fab fa-youtube"></i> Video (2:55)</a> <a class="paper-button" href="https://github.com/goodboychan/qnx-hackathon/blob/main/docs/codelab.md"><i class="fas fa-book"></i> Codelab</a> <a class="paper-button" href="https://github.com/qnx/bsp_raspberrypi-bcm2712-rpi5/pull/4"><i class="fas fa-code-branch"></i> Upstream BSP fix</a></p>
+</div>
+</div>
+<section id="tldr" class="level2"><h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<div class="paper-tldr">
+<p>A robot that runs AI next to its motors needs the motors to stay safe when the AI fails. We rebuilt a face-tracking robot head from scratch on QNX 8.0 and a Raspberry Pi 5 so that the vision and the motion are separate processes, and the vision never drives a servo. Kill the vision process in the middle of a move and <strong>301 ms</strong> later the servo server turns the head home. QNX’s System Launch and Monitor restarts the tracker, which sees its first frame <strong>610 ms</strong> after it starts and greets the face again, with no reboot. A frozen tracker and an impossible command end the same way: the head goes home or stops at the joint limit.</p>
+</div>
+<div class="paper-teaser">
+<div class="paper-figure paper-figure-main">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/preview.gif" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="The crash from the demo video at a quarter of real speed. The four lines are the robot’s own log for this run."><img src="assets/preview.gif" class="paper-image img-fluid figure-img" alt="The crash from the demo video at a quarter of real speed. The four lines are the robot’s own log for this run."></a></p>
+<figcaption>The crash from the demo video at a quarter of real speed. The four lines are the robot’s own log for this run.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p><code>sudo slay -s KILL tracker</code> at +0.00 s. servod notices the silence and turns the head home, SLM starts a new tracker, and the new tracker finds the face and nods hello. The clock counts real time since the kill.</p>
+</div>
+</div>
+</div>
+<div class="paper-metric-strip">
+<div class="paper-metric">
+<p><strong>301 ms → home</strong> <span>from the kill to servod’s watchdog turning the head home (300 ms timeout)</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>610 ms</strong> <span>from the restart to the new tracker’s first camera frame; 2.0 s after starting it greets the face again</span></p>
+</div>
+<div class="paper-metric">
+<p><strong>5 µs vs 13 µs</strong> <span>worst wake-up of a 1 ms real-time loop on the same Pi 5, idle: QNX 8.0 against Linux and Linux PREEMPT_RT</span></p>
+</div>
+</div>
+</section><section id="overview" class="level2"><h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div class="paper-summary-grid">
+<section id="problem" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="problem">Problem</h3>
+<p>Robots that work beside people run AI right next to their motors, and the AI is the part most likely to crash or stall. When it does, the motors must not follow it. The head we started from came as a kit built to recognize faces through its camera; its maker disappeared, and the promised tutorial never came.</p>
+</section><section id="approach" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="approach">Approach</h3>
+<p>The tracker finds and recognizes faces on the device, but it can only write target angles to <code>/dev/servo</code>. That path belongs to <strong>servod</strong>, a QNX resource manager and the only process that reaches the servos. It clamps every command to the joint’s limits, moves on a smooth profile and sends the head home after 300 ms of silence. QNX’s <strong>SLM</strong> starts both in order and restarts the tracker whenever it exits.</p>
+</section><section id="outcome" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="outcome">Outcome</h3>
+<p>On QNX 8.0 on a Raspberry Pi 5, the head recovers from a killed tracker without a reboot and stays safe through a frozen tracker and an impossible command. Neither process runs as root. On the same Pi, QNX had the shortest worst-case wake-up under every load we tried, and it lost on vision throughput under heavy memory traffic.</p>
+</section>
+</div>
+</section><section id="architecture" class="level2"><h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
+<div class="paper-figure">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/architecture.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Each box is its own process. The tracker’s only way to move the head is a write() to /dev/servo, which QNX delivers to servod as a message."><img src="assets/architecture.png" class="paper-image img-fluid figure-img" alt="Each box is its own process. The tracker’s only way to move the head is a write() to /dev/servo, which QNX delivers to servod as a message."></a></p>
+<figcaption>Each box is its own process. The tracker’s only way to move the head is a write() to /dev/servo, which QNX delivers to servod as a message.</figcaption></figure>
+</div>
+<div class="paper-media-caption">
+<p>The tracker runs UltraFace (face detection, 26 ms per frame at the camera’s 29 fps) and SFace (face recognition) on ONNX Runtime, at <code>SCHED_FIFO</code> priority 60 on CPU 3, as an ordinary user. servod gives up root right after it registers its paths. With autostart enabled, the head is tracking 14 s after power-on.</p>
+</div>
+</div>
+</section><section id="three-ways-for-the-ai-to-fail" class="level2"><h2 class="anchored" data-anchor-id="three-ways-for-the-ai-to-fail">Three ways for the AI to fail</h2>
+<div class="paper-pipeline">
+<div class="pipeline-stage">
+<span>Crash</span> <strong><code>slay -s KILL tracker</code></strong>
+<p>
+servod reports 301 ms of silence and turns the head home. SLM restarts the tracker; its first frame arrives 610 ms after it starts, and 2.0 s in it greets the face again.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>Freeze</span> <strong><code>slay -s STOP tracker</code></strong>
+<p>
+The tracker is alive but silent. 315 ms later servod sends the head home. When the tracker resumes, it sees the gap in its frames and exits, and SLM restarts it with a fresh camera service.
+</p>
+</div>
+<div class="pipeline-arrow">
+<p>→</p>
+</div>
+<div class="pipeline-stage">
+<span>Wild command</span> <strong><code>echo 9999 &gt; /dev/servo/pan</code></strong>
+<p>
+servod clamps the request to the pan limit, 1570 µs, and moves there on its profile. 310 ms after the last write the head goes home again.
+</p>
+</div>
+</div>
+</section><section id="results" class="level2"><h2 class="anchored" data-anchor-id="results">Results</h2>
+<div class="paper-result-grid">
+<section id="the-crash-live" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="the-crash-live">The crash, live</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/crash_live.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Left: the robot. Right: the command terminal and the robot’s log, recorded at the same time. The numbered lines are taken from that log."><img src="assets/crash_live.jpg" class="paper-image img-fluid figure-img" alt="Left: the robot. Right: the command terminal and the robot’s log, recorded at the same time. The numbered lines are taken from that log."></a></p>
+<figcaption>Left: the robot. Right: the command terminal and the robot’s log, recorded at the same time. The numbered lines are taken from that log.</figcaption></figure>
+</div>
+<p>The tracker was killed in the middle of tracking a face. No other process on the Pi noticed: the camera service, servod and the shell kept running, and the head was tracking again about two seconds later. An earlier kill in the same session gave 320 ms and 487 ms.</p>
+</section><section id="freeze-then-an-impossible-angle" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="freeze-then-an-impossible-angle">Freeze, then an impossible angle</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/freeze.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="The tracker is frozen, servod has sent the head home, and 9999 µs requests are held at the pan limit."><img src="assets/freeze.jpg" class="paper-image img-fluid figure-img" alt="The tracker is frozen, servod has sent the head home, and 9999 µs requests are held at the pan limit."></a></p>
+<figcaption>The tracker is frozen, servod has sent the head home, and 9999 µs requests are held at the pan limit.</figcaption></figure>
+</div>
+<p>One shell line freezes the tracker, writes 9999 to <code>/dev/servo/pan</code> sixty times, waits, and lets the tracker go. The head turns only as far as the pan limit and comes back once the writes stop.</p>
+</section><section id="it-runs-on-qnx-8.0-without-root" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="it-runs-on-qnx-8.0-without-root">It runs on QNX 8.0, without root</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/evidence.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="The robot’s terminal: uname, pidin and the SLM component list."><img src="assets/evidence.jpg" class="paper-image img-fluid figure-img" alt="The robot’s terminal: uname, pidin and the SLM component list."></a></p>
+<figcaption>The robot’s terminal: uname, pidin and the SLM component list.</figcaption></figure>
+</div>
+<p><code>uname -a</code> reports QNX 8.0.0 on the Raspberry Pi 5. <code>pidin</code> shows servod and the tracker as uid 1000, and SLM lists the camera setup, servod and the tracker as ACTIVE.</p>
+</section><section id="found-along-the-way" class="level3 paper-result-card"><h3 class="anchored" data-anchor-id="found-along-the-way">Found along the way</h3>
+<ul>
+<li>The Pi 5 Quick Start image does not boot with bootloaders from 2026-06-17 on: its <code>config.txt</code> asks for <code>kernel_address=0x8000000</code>, but the image is linked to run at 0x80000. Setting 0x80000 fixes it.</li>
+<li>QNX starts its graphics stack even with no monitor, and the 1080p scan-out costs about 0.5 GB/s of DRAM bandwidth.</li>
+<li>QNX’s default <code>memset</code> is 8× slower than its NEON variant; <code>LIBC_STRINGS=aarch64_neon</code> selects it.</li>
+</ul></section><section id="scheduling-latency-qnx-8.0-against-linux-on-the-same-pi" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="scheduling-latency-qnx-8.0-against-linux-on-the-same-pi">Scheduling latency: QNX 8.0 against Linux on the same Pi</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/latency.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Worst wake-up of a 1 ms real-time loop, worst of three 5-minute runs per condition."><img src="assets/latency.png" class="paper-image img-fluid figure-img" alt="Worst wake-up of a 1 ms real-time loop, worst of three 5-minute runs per condition."></a></p>
+<figcaption>Worst wake-up of a 1 ms real-time loop, worst of three 5-minute runs per condition.</figcaption></figure>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead><tr class="header">
+<th>Worst wake-up per run (µs)</th>
+<th style="text-align: right;">Idle</th>
+<th style="text-align: right;">Memory 3 × 600 MB/s</th>
+<th style="text-align: right;">Pipe IPC</th>
+<th style="text-align: right;">UDP 20k pps</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Linux stock</td>
+<td style="text-align: right;">13 / 12 / 13</td>
+<td style="text-align: right;">93 / 71 / 83</td>
+<td style="text-align: right;">13 / 13 / 16</td>
+<td style="text-align: right;">15 / 12 / 15</td>
+</tr>
+<tr class="even">
+<td>Linux PREEMPT_RT</td>
+<td style="text-align: right;">13 / 12 / 10</td>
+<td style="text-align: right;">61 / 65 / 102</td>
+<td style="text-align: right;">16 / 15 / 14</td>
+<td style="text-align: right;">13 / 9 / 13</td>
+</tr>
+<tr class="odd">
+<td><strong>QNX 8.0</strong></td>
+<td style="text-align: right;"><strong>5 / 5 / 5</strong></td>
+<td style="text-align: right;"><strong>61 / 63 / 59</strong></td>
+<td style="text-align: right;"><strong>11 / 8 / 8</strong></td>
+<td style="text-align: right;"><strong>8 / 6 / 6</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A 1 ms <code>SCHED_FIFO</code> loop on CPU 3 while CPUs 0 to 2 run a background load, with the CPU fixed at 1.5 GHz: 5 minutes × 3 runs per condition, 900,000 wake-ups each. QNX had the shortest and most repeatable worst case in every condition. Linux had the lower median under memory and IPC load.</p>
+</section><section id="the-whole-robot-loop" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="the-whole-robot-loop">The whole robot loop</h3>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Callback → servo, p50 / max (ms)</th>
+<th style="text-align: right;">Idle</th>
+<th style="text-align: right;">Memory load</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Linux stock</td>
+<td style="text-align: right;">23.2 / 34.4 (28.3 fps)</td>
+<td style="text-align: right;">30.2 / 33.6 (29.3 fps)</td>
+</tr>
+<tr class="even">
+<td>Linux PREEMPT_RT</td>
+<td style="text-align: right;">23.3 / 26.2 (29.4 fps)</td>
+<td style="text-align: right;">32.1 / 35.9 (29.3 fps)</td>
+</tr>
+<tr class="odd">
+<td>QNX 8.0</td>
+<td style="text-align: right;">27.1 / 29.8 (29.3 fps)</td>
+<td style="text-align: right;"><strong>79.6 / 99.4 (12.3 fps)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Camera → face detection → servo command, 60 s × 3 runs per condition, with the same tracker built for each OS.</p>
+</section><section id="where-qnx-lost" class="level3 paper-result-card paper-result-wide"><h3 class="anchored" data-anchor-id="where-qnx-lost">Where QNX lost</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/vision.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Face-tracking frame rate on the robot with three cores copying 600 MB/s each."><img src="assets/vision.png" class="paper-image img-fluid figure-img" alt="Face-tracking frame rate on the robot with three cores copying 600 MB/s each."></a></p>
+<figcaption>Face-tracking frame rate on the robot with three cores copying 600 MB/s each.</figcaption></figure>
+</div>
+<p>Idle, all three keep up with the camera. Under memory load QNX’s face detector slows to a third: on this board QNX’s DRAM write bandwidth is lower than Linux’s, so the same load nearly fills the memory bus. We traced part of it to QNX’s display scan-out, which runs even with no monitor (about 0.5 GB/s), and ruled out five other causes. The motion stays on servod’s own profile, so slower vision means a later reaction, not an unsafe move.</p>
+</section>
+</div>
+</section><section id="the-hardware" class="level2"><h2 class="anchored" data-anchor-id="the-hardware">The hardware</h2>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/head.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="The head: a shell, five hobby servos and a USB eye camera."><img src="assets/head.jpg" class="paper-image img-fluid figure-img" alt="The head: a shell, five hobby servos and a USB eye camera."></a></p>
+<figcaption>The head: a shell, five hobby servos and a USB eye camera.</figcaption></figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="assets/boards.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="The kit’s original boards (left, taped and unused) and their replacement: a Raspberry Pi 5 running QNX 8.0 and an Adafruit CRICKIT HAT."><img src="assets/boards.jpg" class="paper-image img-fluid figure-img" alt="The kit’s original boards (left, taped and unused) and their replacement: a Raspberry Pi 5 running QNX 8.0 and an Adafruit CRICKIT HAT."></a></p>
+<figcaption>The kit’s original boards (left, taped and unused) and their replacement: a Raspberry Pi 5 running QNX 8.0 and an Adafruit CRICKIT HAT.</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<p>We kept the kit’s shell, servos and eye camera and replaced its Arduino Mega and servo board. The CRICKIT drives the servos over I2C from its own 5 V supply, so three jumper wires (SDA, SCL, GND) connect it to the Pi. Hobby servos report no position, so the servo map (home, limits and direction of each joint) was found by moving one joint at a time with the head supported; the <a href="https://github.com/goodboychan/qnx-hackathon/blob/main/docs/codelab.md">codelab</a> walks through it.</p>
+</section><section id="video" class="level2"><h2 class="anchored" data-anchor-id="video">Video</h2>
+<div style="position:relative;width:100%;aspect-ratio:16/9;margin:0.5rem 0 1.5rem">
+  <iframe src="https://www.youtube-nocookie.com/embed/FhvpcueTXqg" title="When the AI Crashes, the Robot Doesn't (2:55)" style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:6px" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+</div>
+</section><section id="how-qnx-8.0-is-used" class="level2"><h2 class="anchored" data-anchor-id="how-qnx-8.0-is-used">How QNX 8.0 is used</h2>
+<div class="paper-method">
+<div class="paper-method-steps">
+<ol type="1">
+<li>
+<strong>Resource manager and message passing.</strong> servod registers <code>/dev/servo/pan</code>, <code>tilt</code> and <code>face</code> with <code>resmgr_attach()</code>. Each <code>write()</code> from the tracker is a Neutrino message: the tracker waits for the reply, and the servod thread that receives it runs at the tracker’s priority. <code>io_write()</code> clamps the value and replies; a separate 50 Hz <code>motion()</code> thread moves the joints and runs the 300 ms watchdog.</li>
+<li>
+<strong>System Launch and Monitor.</strong> <code>nova.slm</code> describes the camera setup, servod and the tracker. <code>waitfor</code> holds the tracker back until <code>/dev/servo/pan</code> exists, and SLM restarts the tracker the moment it exits.</li>
+<li>
+<strong>Abilities and least privilege.</strong> servod keeps root only to register its paths, then switches to an ordinary user and locks itself out of setuid with <code>procmgr_ability()</code>. The tracker never has root.</li>
+<li>
+<strong>Real-time scheduling, the camera API and the BSP’s I2C driver.</strong> The camera callback, including face detection, runs at <code>SCHED_FIFO</code> 60 on one core without root. Frames come from the QNX camera API with capture timestamps, and servod reaches the CRICKIT with <code>devctl(DCMD_I2C_SEND)</code> on <code>/dev/i2c1</code>.</li>
+</ol>
+</div>
+<section id="where-to-look-in-the-code" class="level3 paper-figure"><h3 class="anchored" data-anchor-id="where-to-look-in-the-code">Where to look in the code</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead><tr class="header">
+<th>QNX feature</th>
+<th>Where</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Resource manager</td>
+<td>
+<code>main()</code>, <code>io_write()</code>, <code>motion()</code> in <code>src/servod/servod.c</code>
+</td>
+</tr>
+<tr class="even">
+<td>SLM</td>
+<td>
+<code>tools/nova.slm</code>, started by <code>tools/nova_start.sh</code>
+</td>
+</tr>
+<tr class="odd">
+<td>Abilities</td>
+<td>
+<code>drop_privileges()</code> in <code>servod.c</code>
+</td>
+</tr>
+<tr class="even">
+<td>Camera API</td>
+<td><code>src/tracker/cam_qnx.c</code></td>
+</tr>
+<tr class="odd">
+<td>I2C</td>
+<td>
+<code>i2c_write()</code> in <code>src/tracker/servo.c</code>
+</td>
+</tr>
+<tr class="even">
+<td>High-resolution timers</td>
+<td>
+<code>src/rt_loop.c</code>, the latency benchmark</td>
+</tr>
+<tr class="odd">
+<td>ONNX Runtime package</td>
+<td>
+<code>src/tracker/face_ort.c</code> (<code>apk add onnxruntime</code>)</td>
+</tr>
+</tbody>
+</table></section>
+</div>
+</section><section id="takeaways-and-limits" class="level2"><h2 class="anchored" data-anchor-id="takeaways-and-limits">Takeaways and limits</h2>
+<div class="paper-summary-grid">
+<section id="takeaways" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="takeaways">Takeaways</h3>
+<ul>
+<li>The safety rules live in the one process that can reach the servos, so a crash, a freeze and a bad command from the AI all end the same way.</li>
+<li>On QNX the boundary is a file path. Any client, including a shell, gets the same clamping and the same watchdog.</li>
+<li>Latency and throughput are separate questions. QNX had the tightest worst case on this Pi, and the face detector lost the most under memory load.</li>
+</ul></section><section id="limits" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="limits">Limits</h3>
+<ul>
+<li>One robot, one camera, and a few runs of each failure in the recorded session (kills: 320 and 301 ms; freezes: 315 and 313 ms).</li>
+<li>Hobby servos give no position feedback, so “home” is the position servod commands, not a measured angle.</li>
+<li>A frozen tracker is held safe, but nothing restarts it until it resumes.</li>
+<li>The rest of the vision slowdown under memory load is not explained, and the upstream BSP fix is still an open pull request.</li>
+</ul></section><section id="provenance" class="level3 paper-summary-card"><h3 class="anchored" data-anchor-id="provenance">Provenance</h3>
+<p>Built from scratch for the QNX Global Hackathon 2026 in November and December 2026. Along the way we found why the Raspberry Pi 5 Quick Start image no longer boots on current bootloaders and proposed the fix upstream. The repository has the code, the codelab, the benchmark logs and the results. Code under Apache-2.0.</p>
+</section>
+</div>
+</section><section id="citation" class="level2"><h2 class="anchored" data-anchor-id="citation">Citation</h2>
+<div class="paper-citation">
+<div class="sourceCode" id="cb1"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">@software{kang2026qnxrobothead,</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">  title  = {When the AI Crashes, the Robot Doesn't: A Fail-Safe Robot Head on QNX 8.0},</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">  author = {Kang, Chanseok},</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">  year   = {2026},</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  url    = {https://github.com/goodboychan/qnx-hackathon},</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  note   = {QNX Global Hackathon 2026, Robotics and Medical}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+
+
+
+</main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/kcsgoodboy\.github\.io\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Chanseok Kang · Ascent of Applied Wisdom</p>
+</div>   
+    <div class="nav-footer-center">
+       
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/goodboychan">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer><script>var lightboxQuarto = GLightbox({"closeEffect":"fade","descPosition":"bottom","loop":false,"openEffect":"fade","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+</body>
+</html>
