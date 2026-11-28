@@ -100,7 +100,7 @@ execute:
 
   <div class="section-header">
     <h2>주요 연구 &amp; 프로젝트</h2>
-    <a class="section-more" href="projects.html">전체 프로젝트 (7) &rarr;</a>
+    <a class="section-more" href="projects.html">전체 프로젝트 (8) &rarr;</a>
   </div>
 
   <div class="featured-grid">

@@ -1,6 +1,6 @@
 ---
 title: About
-description: "Learn more about Real World Problem Solving with Reinforcement Learning and On-Device AI."
+description: "Senior AI Software Engineer specializing in Reinforcement Learning, On-Device AI qualification, and real-world physical control."
 lang: en
 about:
   template: trestles
@@ -28,23 +28,66 @@ comments: false
 
 ## Bio
 
-I am Chanseok Kang, an AI Engineer in the CTO Division at [LG Electronics](https://www.lge.co.kr/). Rather than working in headline AI areas such as speech or vision, I specialize in **control**, applying energy‑efficient AI algorithms to home appliances and deploying them in mass‑produced products.
+I am Chanseok Kang, a **Senior AI Software Engineer (Certified AI Specialist)** at [LG Electronics](https://www.lge.co.kr/) AI Lab (CTO Division) since 2014. Building on an early foundation in embedded systems, OS power management, and device drivers, I bring **reinforcement learning (RL)** control into mass‑produced physical systems—most notably shipping the world's first commercial offline RL spin‑cycle controller in LG washing machines.
 
-I usually work with **reinforcement learning (RL)** as a problem solver. To make RL practical on the resource‑constrained hardware found in appliances, I have hands‑on experience with **data‑driven RL pipelines** as well as **model quantization and optimization**. Drawing on my background in platform software and device‑driver development, I also build communication interfaces between appliances and PCs, **creating unique RL environments that did not previously exist**. 
+My current research and engineering focus on **qualifying and deploying quantized neural policies across edge accelerators** (Jetson Orin, Hailo‑8, Coral Edge TPU, Qualcomm QNN) and building **fault‑isolated Physical AI & robotic systems** (SO‑101 manipulation, QNX 8.0 RTOS).
 
-- Selected Experience
-  - Tuned PID coefficients for HVAC systems in confined spaces by combining RL with classic control theory.
-  - Developed a compressor‑control strategy for refrigerators that proactively responds to load changes using data‑driven statistical models.
-  - Reduced spin‑cycle vibration across diverse loads in washing machines through data‑centric RL and devised a methodology for continual improvement with real‑world data.
-  - Designed optimal drying motions for varied laundry loads by applying RL to dryers, resulting in measurable performance gains.
+- **On-Device Neural Control & Physical AI Audits**: Hardware‑in‑the‑loop paired task audits for quantized controllers (NeurIPS 2026 ODI), process‑isolated real‑time robot control on QNX 8.0, and multimodal rollout inspection tooling.
+- **Commercial Appliance RL Deployment**: Continual offline RL for washing‑machine spin vibration suppression (PCT Patent First Inventor), video‑labeled sensor reward learning for household dryers (IEEE CASE 2026), adaptive refrigerator compressor control, and RL‑tuned HVAC PID control.
+- **Academic & Community Contributions**: Conference author and reviewer (IEEE CASE), Korean translator of *Grokking Deep Reinforcement Learning* (2022 NAS Excellent Academic Book), and technical reviewer for 35+ AI and systems books.
 
-I am committed to continuous personal growth through external engagements, including:
+Explore my [projects](projects.html), [publications & patents](publications.html), and [research notes](blog.html) for full details.
 
-- Conference papers & patents (see [Publications](publications.html))
-- Translator of "Grokking Deep Reinforcement Learning" (Hanbit Media) and technical reviewer for "Machine Learning with TensorFlow" (Hanbit Media).
-- Technical reviewer for multiple specialized publications (Hanbit Media, Jpub, Gilbut, and others).
+## Technical Stack &amp; Hardware Testbed
 
-For more details, please explore my [projects](projects.html) and [blog](blog.html).
+```{=html}
+<div class="skills-grid">
+  <div class="skill-card">
+    <div class="skill-card-title">On-Device AI &amp; Quantization</div>
+    <div class="skill-chips">
+      <span class="skill-chip">TensorRT (FP16/INT8)</span>
+      <span class="skill-chip">Hailo-8 Dataflow</span>
+      <span class="skill-chip">Coral Edge TPU</span>
+      <span class="skill-chip">Qualcomm QNN HTP</span>
+      <span class="skill-chip">ONNX Runtime</span>
+      <span class="skill-chip">TFLite / tinyML</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-card-title">Reinforcement Learning &amp; ML</div>
+    <div class="skill-chips">
+      <span class="skill-chip">Offline &amp; Continual RL</span>
+      <span class="skill-chip">Safe &amp; Model-Based RL</span>
+      <span class="skill-chip">Meta-RL</span>
+      <span class="skill-chip">JAX / Flax</span>
+      <span class="skill-chip">PyTorch</span>
+      <span class="skill-chip">LeRobot / ACT</span>
+      <span class="skill-chip">Ray / vLLM</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-card-title">Systems &amp; Real-Time Control</div>
+    <div class="skill-chips">
+      <span class="skill-chip">QNX 8.0 RTOS</span>
+      <span class="skill-chip">Embedded Linux &amp; Kernel</span>
+      <span class="skill-chip">C / Python / R</span>
+      <span class="skill-chip">UART / SRIO Interfaces</span>
+      <span class="skill-chip">Hardware-in-the-Loop</span>
+    </div>
+  </div>
+  <div class="skill-card">
+    <div class="skill-card-title">Edge &amp; Robotics Hardware</div>
+    <div class="skill-chips">
+      <span class="skill-chip">NVIDIA Jetson Orin Nano</span>
+      <span class="skill-chip">Raspberry Pi 5 + Hailo-8</span>
+      <span class="skill-chip">ASUS Ascent GX10</span>
+      <span class="skill-chip">Qualcomm QCM6490</span>
+      <span class="skill-chip">SO-101 Robot Arm</span>
+      <span class="skill-chip">Meta Quest XR</span>
+    </div>
+  </div>
+</div>
+```
 
 ## Experience
 
@@ -52,29 +95,44 @@ For more details, please explore my [projects](projects.html) and [blog](blog.ht
 <div class="cv-timeline">
   <div class="cv-item">
     <div class="cv-item-header">
-      <span>LG Electronics &middot; Professional (Research Engineer)</span>
-      <span class="cv-item-period">2014 – present</span>
+      <span>LG Electronics &middot; Senior AI Software Engineer (AI Specialist)</span>
+      <span class="cv-item-period">Dec 2014 – Present</span>
     </div>
-    <div class="cv-item-sub">CTO Division &middot; Applied Reinforcement Learning &amp; On-Device AI Control</div>
+    <div class="cv-item-sub">
+      AI Lab (CTO Division), Seoul &middot; Selected among LG Electronics' first cohort of 12 certified AI Specialists
+      <div class="cv-subtracks">
+        <div class="cv-subtrack">
+          <strong>On-Device AI &amp; Edge Accelerator Qualification (2024 – Present)</strong><br>
+          Investigating decision-geometry quantization drift and building hardware-in-the-loop deployment gates across Jetson Orin, Hailo-8, Coral Edge TPU, Qualcomm QNN, and GX10.
+        </div>
+        <div class="cv-subtrack">
+          <strong>Applied RL for Mass-Produced Home Appliances (2018 – 2024)</strong><br>
+          Shipped commercial offline RL spin-cycle control in LG washing machines with continual field-data updates (First Inventor on PCT Patent WO 2025/216419 A1); developed RL tumble-motion strategies for dryers, statistical load control for refrigerators, and RL-PID HVAC tuning.
+        </div>
+        <div class="cv-subtrack">
+          <strong>Embedded Platform &amp; RL Environment Engineering (2014 – 2018)</strong><br>
+          Engineered custom appliance–PC communication interfaces (UART, SRIO) and integrated hardware RL environments drawing on embedded Linux and device-driver expertise.
+        </div>
+      </div>
+    </div>
   </div>
+
   <div class="cv-item">
     <div class="cv-item-header">
       <span>Carnegie Mellon University (CMU) &middot; Visiting Researcher</span>
-      <span class="cv-item-period">2019</span>
+      <span class="cv-item-period">Apr 2019 – Aug 2019</span>
     </div>
+    <div class="cv-item-sub">Pittsburgh, PA &middot; Researched reinforcement learning for energy-efficient control with Prof. Bhiksha Ramakrishnan (sponsored by LG Electronics)</div>
   </div>
+
   <div class="cv-item">
     <div class="cv-item-header">
-      <span>Korea Institute of Science and Technology (KIST) &middot; Contract Researcher</span>
-      <span class="cv-item-period">2012</span>
+      <span>Korea Institute of Science and Technology (KIST) &amp; University of Seoul</span>
+      <span class="cv-item-period">Feb 2012 – Dec 2012</span>
     </div>
+    <div class="cv-item-sub">Researched bi-manual gesture UX and authored a 50-page Kinect C/C++ developer guide at KIST; taught NUI programming as Lecturer at UoS; led a team to the Microsoft Imagine Cup semi-finals</div>
   </div>
-  <div class="cv-item">
-    <div class="cv-item-header">
-      <span>University of Seoul (UoS) &middot; Lecturer</span>
-      <span class="cv-item-period">2012</span>
-    </div>
-  </div>
+
   <div class="cv-item">
     <div class="cv-item-header">
       <span>Ulsan National Institute of Science and Technology (UNIST) &middot; Undergraduate Researcher</span>
@@ -90,19 +148,18 @@ For more details, please explore my [projects](projects.html) and [blog](blog.ht
 <div class="cv-timeline">
   <div class="cv-item">
     <div class="cv-item-header">
-      <span>Seoul National University &middot; M.S. in Computer Science</span>
-      <span class="cv-item-period">2013 – 2015</span>
+      <span>Seoul National University &middot; M.S. in Electrical Engineering &amp; Computer Science</span>
+      <span class="cv-item-period">Mar 2013 – Feb 2015</span>
     </div>
     <div class="cv-item-sub">
-      Topic: Manycore-based Efficient Power Management Framework<br>
-      Thesis: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierarchical Power Management Framework on Manycore systems using OS Migration Techniques</a><br>
+      Thesis: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierarchical Power Management Framework on Manycore Systems Using OS Migration Techniques</a> (OS-level DVFS on the Intel Single-chip Cloud Computer)<br>
       Advisor: <a href="https://csap.snu.ac.kr/bernhard">Bernhard Egger</a>
     </div>
   </div>
   <div class="cv-item">
     <div class="cv-item-header">
       <span>Chung-Ang University &middot; B.S. in Electrical and Electronics Engineering</span>
-      <span class="cv-item-period">2006 – 2013</span>
+      <span class="cv-item-period">2006 – 2012</span>
     </div>
   </div>
 </div>
@@ -110,7 +167,7 @@ For more details, please explore my [projects](projects.html) and [blog](blog.ht
 
 ## Contact
 
-- Inquiries about my blog content, career guidance, or seminar invitations are always welcome.
+- Inquiries regarding research collaboration, blog articles, career mentoring, or seminar invitations are always welcome.
 - Please reach me at `kcsgoodboy [at] gmail.com`.
 
 :::

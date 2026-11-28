@@ -26,8 +26,9 @@ library(distilltools)
 
 ## 2026
 
-::: {.activity-card .activity-highlight}
+::: {.activity-card .activity-highlight data-cat="milestone"}
 **(2026. 11)** QNX Global Hackathon 2026에 참여하여, Raspberry PI 5와 Crickit HAT을 사용한 QNX Application인 **When the AI Crashes, the Robot Doesn't**을 만들었습니다.
+
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/qnx-robot-head/", target = "_self")`
 `r icon_link(icon = "fas fa-link", text = "Devpost", url = "https://devpost.com/software/when-the-ai-crashes-the-robot-doesn-t")`
 :::

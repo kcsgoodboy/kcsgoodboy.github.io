@@ -1,6 +1,6 @@
 ---
-title: "Publications"
-description: "A list of academic papers, books, and technical reviews"
+title: "Publications & Patents"
+description: "Academic papers, international patents, books, and technical reviews."
 lang: en
 date: today
 execute:
@@ -17,8 +17,9 @@ library(distilltools)
 ```{=html}
 <div class="pub-toolbar">
   <div class="filter-pills" id="pub-filters">
-    <button class="filter-pill active" data-filter="all" type="button">All (9)</button>
-    <button class="filter-pill" data-filter="paper" type="button">Papers (7)</button>
+    <button class="filter-pill active" data-filter="all" type="button">All (12)</button>
+    <button class="filter-pill" data-filter="paper" type="button">Papers (9)</button>
+    <button class="filter-pill" data-filter="patent" type="button">Patents (1)</button>
     <button class="filter-pill" data-filter="book" type="button">Books &amp; Reviews (2)</button>
   </div>
   <div>
@@ -70,6 +71,17 @@ library(distilltools)
 :::
 :::
 
+## 2025
+
+::: {.pub-card data-type="patent"}
+::: {.pub-card-header}
+<span class="venue-badge badge-teal">PCT Patent &middot; WO 2025/216419 A1</span>
+:::
+<div class="pub-title">Device for Collecting or Transmitting Data for Dehydration Control or Updating Dehydration Control Model Using Collected Data, or Method Therefor</div>
+<div class="pub-authors"><strong>Chanseok Kang</strong>, Dohyeon Son, Daesung Kim, Kyoungwoo Lee, Guntae Bae &middot; LG Electronics</div>
+<div class="pub-venue-detail">PCT/KR2025/001981 (Filed Feb 11, 2025; Published Oct 16, 2025) &middot; National &amp; regional phase: US Appl. No. 19/881,721, EP 25786891, CN 202580025081.7, KR 10-2026-7033261.</div>
+:::
+
 ## 2024
 
 ::: {.pub-card data-type="paper"}
@@ -78,7 +90,7 @@ library(distilltools)
 :::
 <div class="pub-title">Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines</div>
 <div class="pub-authors"><strong>Chanseok Kang</strong>, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun</div>
-<div class="pub-venue-detail">2024 IEEE Conference on Artificial Intelligence (CAI).</div>
+<div class="pub-venue-detail">2024 IEEE Conference on Artificial Intelligence (CAI), pp. 418–424.</div>
 ::: {.pub-links}
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/data-driven-rl-washing-machines/", target = "_self")`
 `r icon_link(icon = "ieee", text = "IEEE", url = "https://ieeexplore.ieee.org/document/10605463/")`
@@ -87,13 +99,13 @@ library(distilltools)
 
 ::: {.pub-card data-type="paper"}
 ::: {.pub-card-header}
-<span class="venue-badge badge-teal">Journal of IEIE 2024</span>
+<span class="venue-badge badge-teal">Magazine of the IEIE 2024</span>
 :::
-<div class="pub-title">Applying Data-Driven Reinforcement Learning Approach in Real World Environment</div>
+<div class="pub-title">Applying Data-Driven Reinforcement Learning in Real-World Environments</div>
 <div class="pub-authors"><strong>Chanseok Kang</strong></div>
-<div class="pub-venue-detail">2024 Journal of the Institute of Electronics and Information Engineers (IEIE).</div>
+<div class="pub-venue-detail">The Magazine of the Institute of Electronics and Information Engineers (IEIE), 51(5), pp. 56–63, 2024.</div>
 ::: {.pub-links}
-`r icon_link(text = "Preprint", url = "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11799172")`
+`r icon_link(text = "Paper", url = "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11799172")`
 :::
 :::
 
@@ -119,7 +131,7 @@ library(distilltools)
 :::
 <div class="pub-title">NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control</div>
 <div class="pub-authors">Changmin Ahn, Seungyul Lee, <strong>Chanseok Kang</strong>, Bernhard Egger</div>
-<div class="pub-venue-detail">International Conference on the Economics of Grids, Clouds, Systems, and Services. Springer International Publishing, 2020.</div>
+<div class="pub-venue-detail">17th International Conference on the Economics of Grids, Clouds, Systems, and Services (GECON). Springer, 2020.</div>
 ::: {.pub-links}
 `r icon_link(icon = "springer", text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-030-63058-4_12")`
 :::
@@ -139,7 +151,18 @@ library(distilltools)
 :::
 :::
 
-## 2017
+## 2018
+
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge badge-teal">SAREK Conference 2018</span>
+:::
+<div class="pub-title">Learning and Auto-Tuning PID Hyper-Parameters from Scratch without Human's Domain Knowledge by Reinforcement Learning</div>
+<div class="pub-authors">B. Kim, D. Lee, <strong>Chanseok Kang</strong>, H. Ko, W. Kim</div>
+<div class="pub-venue-detail">Proceedings of the SAREK Conference, pp. 297–299, 2018.</div>
+:::
+
+## 2015
 
 ::: {.pub-card data-type="paper"}
 ::: {.pub-card-header}
@@ -147,10 +170,21 @@ library(distilltools)
 :::
 <div class="pub-title">Scheduling for Better Energy Efficiency on Many-Core Chips</div>
 <div class="pub-authors"><strong>Chanseok Kang</strong>, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger</div>
-<div class="pub-venue-detail">Workshop on Job Scheduling Strategies for Parallel Processing. Springer International Publishing.</div>
+<div class="pub-venue-detail">19th Workshop on Job Scheduling Strategies for Parallel Processing (JSSPP), pp. 46–68. Springer International Publishing.</div>
 ::: {.pub-links}
 `r icon_link(icon = "springer", text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-319-61756-5_3")`
 :::
+:::
+
+## 2012
+
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge badge-teal">KSCI Review 2012</span>
+:::
+<div class="pub-title">Windows 8 &amp; Kinect for Windows</div>
+<div class="pub-authors">J. Kang, <strong>Chanseok Kang</strong>, E. Seo, W. Lee</div>
+<div class="pub-venue-detail">KSCI Review, 20(1), pp. 39–43, 2012.</div>
 :::
 
 ```{=html}

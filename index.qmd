@@ -100,7 +100,7 @@ execute:
 
   <div class="section-header">
     <h2>Featured Research &amp; Projects</h2>
-    <a class="section-more" href="projects.html">View all 7 projects &rarr;</a>
+    <a class="section-more" href="projects.html">View all 8 projects &rarr;</a>
   </div>
 
   <div class="featured-grid">

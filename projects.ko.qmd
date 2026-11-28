@@ -23,6 +23,18 @@ comments: false
       </div>
     </a>
 
+    <a class="project-hub-card" href="projects/qnx-robot-head/">
+      <img class="project-hub-thumb" src="projects/qnx-robot-head/assets/preview.gif" alt="QNX 8.0 기반 로봇 헤드 크래시 복구 데모">
+      <div class="project-hub-body">
+        <span class="venue-badge badge-teal">QNX Global Hackathon 2026</span>
+        <h3>When the AI Crashes, the Robot Doesn't</h3>
+        <p>QNX 8.0 RTOS와 Raspberry Pi 5 위에서 얼굴 추적 비전과 서보 제어(<code>servod</code>)를 프로세스 단위로 격리했습니다. 비전 프로세스가 죽어도 301 ms 만에 안전 위치로 복귀하고 재부팅 없이 610 ms 만에 재기동합니다.</p>
+        <div class="card-metric-row">
+          <span>QNX 8.0 RTOS</span> &middot; <span>301 ms Watchdog</span> &middot; <span>Upstream BSP PR</span>
+        </div>
+      </div>
+    </a>
+
     <a class="project-hub-card" href="projects/ghostlab/">
       <img class="project-hub-thumb" src="projects/ghostlab/assets/01-ghostlab-cover.jpg" alt="GhostLab Meta Quest 작업대 화면">
       <div class="project-hub-body">
