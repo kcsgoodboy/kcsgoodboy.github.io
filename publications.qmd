@@ -3,9 +3,6 @@ title: "Publications"
 description: "A list of academic papers, books, and technical reviews"
 lang: en
 date: today
-output: distill::distill_article
-editor_options: 
-  chunk_output_type: console
 execute:
   echo: false
 comments: false
@@ -17,63 +14,169 @@ comments: false
 library(distilltools)
 ```
 
+```{=html}
+<div class="pub-toolbar">
+  <div class="filter-pills" id="pub-filters">
+    <button class="filter-pill active" data-filter="all" type="button">All (9)</button>
+    <button class="filter-pill" data-filter="paper" type="button">Papers (7)</button>
+    <button class="filter-pill" data-filter="book" type="button">Books &amp; Reviews (2)</button>
+  </div>
+  <div>
+```
 `r icon_link("google-scholar", "Google Scholar", "https://scholar.google.com/citations?user=tyjigLkAAAAJ&hl=en")`
+```{=html}
+  </div>
+</div>
+```
 
-<!-- Manually add forthcoming pubs, e.g. 
-
-## Forthcoming 
-
-**Nitta, J. H.**, S. W. Laffan, B. D. Mishler, and W. Iwasaki. "canaper: Categorical analysis of neo- and paleo-endemism in R". In-press, *Ecography*.
-
-`r icon_link(text = "Preprint", url = "https://www.biorxiv.org/content/10.1101/2022.10.06.511072v1")`
-`r icon_link(icon = "github", text = "Code", url = "https://github.com/ropensci/canaper")` !-->
 ## 2026
 
-**Chanseok Kang**. (2026) "Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control". To appear at NeurIPS 2026 Workshop: On-Device Intelligence: Foundation Models under Real-World Constraints (ODI), December 2026.
-
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge">NeurIPS 2026 Workshop (ODI)</span>
+:::
+<div class="pub-title">Same Policy, Different Artifacts: Paired Task Audits for On-Device Neural Control</div>
+<div class="pub-authors"><strong>Chanseok Kang</strong></div>
+<div class="pub-venue-detail">To appear at NeurIPS 2026 Workshop: On-Device Intelligence: Foundation Models under Real-World Constraints (ODI), December 2026.</div>
+::: {.pub-links}
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/paired-task-audits-on-device/", target = "_self")`
 `r icon_link(text = "NeurIPS", url = "https://neurips.cc/virtual/2026/loc/sydney/170031")`
 `r icon_link(text = "OpenReview", url = "https://openreview.net/forum?id=gvQyNdXzRc")`
+:::
+:::
 
-**Chanseok Kang**. (2026) "When Reward and Safety Need Different Model Horizons: A Selection Theorem for Pessimistic Offline Planning". Reinforcement Learning Conference 2026 Workshop: Model-based RL in the Era of Generative World Models (WMW), August 2026.
-
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge">RLC 2026 Workshop (WMW)</span>
+:::
+<div class="pub-title">When Reward and Safety Need Different Model Horizons: A Selection Theorem for Pessimistic Offline Planning</div>
+<div class="pub-authors"><strong>Chanseok Kang</strong></div>
+<div class="pub-venue-detail">Reinforcement Learning Conference 2026 Workshop: Model-based RL in the Era of Generative World Models (WMW), August 2026.</div>
+::: {.pub-links}
 `r icon_link(text = "OpenReview", url = "https://openreview.net/forum?id=7PWdqDgrd7")`
+:::
+:::
 
-Jinwoo Lee, **Chanseok Kang**, Guntae Bae. (2026) "Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer". 2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026.
-
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge">IEEE CASE 2026</span>
+:::
+<div class="pub-title">Sensor-Based Reward Learning from Video Labels for Tumble Motion Control in a Household Dryer</div>
+<div class="pub-authors">Jinwoo Lee, <strong>Chanseok Kang</strong>, Guntae Bae</div>
+<div class="pub-venue-detail">2026 IEEE 22nd International Conference on Automation Science and Engineering (CASE), August 2026.</div>
+::: {.pub-links}
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/reward-learning-dryer/", target = "_self")`
 `r icon_link(icon = "ieee", text = "IEEE", url = "https://ieeexplore.ieee.org/document/11704219")`
+:::
+:::
 
 ## 2024
 
-**Chanseok Kang**, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun. (2024) "Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines". 2024 IEEE Conference on Artificial Intelligence (CAI).
-
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge">IEEE CAI 2024</span>
+:::
+<div class="pub-title">Data-Driven Reinforcement Learning for Optimal Motor Control in Washing Machines</div>
+<div class="pub-authors"><strong>Chanseok Kang</strong>, Guntae Bae, Daesung Kim, Kyoungwoo Lee, Dohyeon Son, Chul Lee, Jaeho Lee, Jinwoo Lee, Jae Woong Yun</div>
+<div class="pub-venue-detail">2024 IEEE Conference on Artificial Intelligence (CAI).</div>
+::: {.pub-links}
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/data-driven-rl-washing-machines/", target = "_self")`
 `r icon_link(icon = "ieee", text = "IEEE", url = "https://ieeexplore.ieee.org/document/10605463/")`
+:::
+:::
 
-**Chanseok Kang**. (2024) "Applying Data-Driven Reinforcement Learning Approach in Real World Environment". 2024 Journal of Institute of Electronics and Information Engineers (IEIE).
-
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge badge-teal">Journal of IEIE 2024</span>
+:::
+<div class="pub-title">Applying Data-Driven Reinforcement Learning Approach in Real World Environment</div>
+<div class="pub-authors"><strong>Chanseok Kang</strong></div>
+<div class="pub-venue-detail">2024 Journal of the Institute of Electronics and Information Engineers (IEIE).</div>
+::: {.pub-links}
 `r icon_link(text = "Preprint", url = "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11799172")`
+:::
+:::
 
 ## 2021
 
-**Chanseok Kang**. (2021) "Grokking Deep Reinforcement Learning" (Korean). Hanbit Media.
-
+::: {.pub-card data-type="book"}
+::: {.pub-card-header}
+<span class="venue-badge badge-amber">Translated Book &middot; NAS Excellent Academic Book</span>
+:::
+<div class="pub-title">Grokking Deep Reinforcement Learning (Korean Edition)</div>
+<div class="pub-authors"><strong>Chanseok Kang</strong> (Translator)</div>
+<div class="pub-venue-detail">Hanbit Media, 2021.</div>
+::: {.pub-links}
 `r icon_link(icon = 'book', text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8984169041")`
+:::
+:::
 
 ## 2020
 
-Changmin Ahn, Seungyul Lee, **Chanseok Kang**, Bernhard Egger. (2020) "NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control".  International Conference on the Economics of Grids, Clouds, Systems, and Services. Cham: Springer International Publishing, 2020.
-
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge">GECON 2020 &middot; Springer</span>
+:::
+<div class="pub-title">NuPow: Managing Power on NUMA Multiprocessors with Domain-Level Voltage and Frequency Control</div>
+<div class="pub-authors">Changmin Ahn, Seungyul Lee, <strong>Chanseok Kang</strong>, Bernhard Egger</div>
+<div class="pub-venue-detail">International Conference on the Economics of Grids, Clouds, Systems, and Services. Springer International Publishing, 2020.</div>
+::: {.pub-links}
 `r icon_link(icon = "springer", text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-030-63058-4_12")`
+:::
+:::
 
 ## 2019
 
-Kyo-seok Song, **Chanseok Kang** (Reviewer). (2019) "Machine Learning with Tensorflow" (Korean). Hanbit Media.
+::: {.pub-card data-type="book"}
+::: {.pub-card-header}
+<span class="venue-badge badge-amber">Technical Review</span>
+:::
+<div class="pub-title">Machine Learning with TensorFlow (Korean Edition)</div>
+<div class="pub-authors">Kyo-seok Song, <strong>Chanseok Kang</strong> (Reviewer)</div>
+<div class="pub-venue-detail">Hanbit Media, 2019.</div>
+::: {.pub-links}
 `r icon_link(icon = 'book', text = "Book", url = "https://www.hanbit.co.kr/store/books/look.php?p_code=B8108682495")`
+:::
+:::
 
 ## 2017
 
-**Chanseok Kang**, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger. (2017) "Scheduling for Better Energy Efficiency on Many-Core Chips". Workshop on Job Scheduling Strategies for Parallel Processing. Cham: Springer International Publishing, 2015.
-
+::: {.pub-card data-type="paper"}
+::: {.pub-card-header}
+<span class="venue-badge">JSSPP &middot; Springer</span>
+:::
+<div class="pub-title">Scheduling for Better Energy Efficiency on Many-Core Chips</div>
+<div class="pub-authors"><strong>Chanseok Kang</strong>, Seungyul Lee, Yong-Jun Lee, Jaejin Lee, Bernhard Egger</div>
+<div class="pub-venue-detail">Workshop on Job Scheduling Strategies for Parallel Processing. Springer International Publishing.</div>
+::: {.pub-links}
 `r icon_link(icon = "springer", text = "Preprint", url = "https://link.springer.com/chapter/10.1007/978-3-319-61756-5_3")`
+:::
+:::
+
+```{=html}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll("#pub-filters .filter-pill");
+  const cards = document.querySelectorAll(".pub-card");
+  const sections = document.querySelectorAll("section.level2");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.getAttribute("data-filter");
+      buttons.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      cards.forEach((card) => {
+        const match = filter === "all" || card.getAttribute("data-type") === filter;
+        card.style.display = match ? "" : "none";
+      });
+
+      sections.forEach((sec) => {
+        const visible = sec.querySelectorAll('.pub-card:not([style*="display: none"])');
+        sec.style.display = visible.length > 0 ? "" : "none";
+      });
+    });
+  });
+});
+</script>
+```

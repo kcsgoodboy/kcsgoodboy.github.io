@@ -1,6 +1,6 @@
 ---
-title: "Blog"
-description: "A collection of articles on AI research, implementation, and insights."
+title: "Research Notes"
+description: "A collection of articles on AI research, reinforcement learning implementation, and engineering insights."
 lang: en
 comments: false
 listing:
@@ -9,6 +9,8 @@ listing:
     lang: en
   sort: "date desc"
   type: default
+  fields: [image, date, title, description, categories, reading-time]
+  image-height: "165px"
   categories: true
 format: html
 ---

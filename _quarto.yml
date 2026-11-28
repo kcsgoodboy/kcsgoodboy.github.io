@@ -19,8 +19,15 @@ website:
     image: contents/images/persona.png
     card-style: summary_large_image
   navbar:
-    background: primary
+    background: dark
     right: []
+  page-footer:
+    left: "© 2026 Chanseok Kang · Ascent of Applied Wisdom"
+    right:
+      - icon: github
+        href: https://github.com/goodboychan
+      - icon: linkedin
+        href: https://www.linkedin.com/in/chanseokk/
   google-analytics: "G-0JHM3R8BEZ"
   search:
     location: navbar
@@ -30,8 +37,8 @@ website:
 format:
   html:
     theme:
-      light: flatly
-      dark:  darkly
+      light: [flatly, assets/css/theme-light.scss]
+      dark:  [darkly, assets/css/theme-dark.scss]
     css:  
       - assets/css/styles.css            
     toc: true

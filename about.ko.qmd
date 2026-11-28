@@ -5,18 +5,23 @@ lang: ko
 about:
   template: trestles
   image: "contents/images/chanseok.jpg"
-  image-width: "200px;"
+  image-width: "210px"
   links: 
     - icon: github
+      text: GitHub
       href: https://github.com/goodboychan
     - icon: linkedin
+      text: LinkedIn
       href: https://www.linkedin.com/in/chanseokk/
+    - icon: mortarboard-fill
+      text: Scholar
+      href: https://scholar.google.com/citations?user=tyjigLkAAAAJ&hl=en
     - icon: file-earmark-pdf-fill
+      text: CV
       href: "contents/files/Chanseok_Kang_CV_20261125.pdf"
 execute: 
   echo: false
 comments: false
-
 ---
 
 :::{.column-body-outset}
@@ -34,37 +39,77 @@ comments: false
 
 저는 개인의 지속적인 발전을 추구하며, 이를 위해서 다양한 대외활동을 수행하고 있습니다.
 
-- 논문 1건, 특허 1건
+- 국제 학회 논문 및 특허 다수 ([출간물](publications.html) 참고)
 - 번역서 1건 (그로킹 심층 강화학습, 한빛미디어), 감수 1건 (텐서플로를 활용한 머신러닝, 한빛미디어)
 - 다양한 기술전문서 검토 (한빛미디어, 제이펍, 길벗 등)
   
-더 자세한 활동에 대해서는 [블로그](blog.html)를 참고해주시면 감사하겠습니다.
-
-## Education
-
-- **서울대학교** | 컴퓨터공학부 석사 | 2013년 - 2015년
-  - 주제: 매니코어 기반의 효율적인 전력 관리 프레임워크
-  - 학위논문: [Hierachical Power Management Framework on Manycore systems using OS Migration Techniques](https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf)
-  - 지도교수: [Bernhard Egger](https://csap.snu.ac.kr/bernhard)
-
-- **중앙대학교** | 전자전기공학부 학사 | 2006년 - 2013년
+더 자세한 연구와 기록은 [프로젝트](projects.html) 및 [블로그](blog.html)를 참고해주시면 감사하겠습니다.
 
 ## Experience
 
-- **엘지전자** | 책임연구원 | 2014년 - (재직중)
+```{=html}
+<div class="cv-timeline">
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>엘지전자 (LG Electronics) &middot; 책임연구원</span>
+      <span class="cv-item-period">2014 – 현재</span>
+    </div>
+    <div class="cv-item-sub">CTO부문 AI Engineer &middot; 가전 제어용 강화학습 및 온디바이스 AI 최적화</div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>Carnegie Mellon University (CMU) &middot; 방문연구원</span>
+      <span class="cv-item-period">2019</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>한국과학기술연구원 (KIST) &middot; 위촉연구원</span>
+      <span class="cv-item-period">2012</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>서울시립대학교 (UoS) &middot; 강사</span>
+      <span class="cv-item-period">2012</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>울산과학기술대학교 (UNIST) &middot; 동계 학부연구원</span>
+      <span class="cv-item-period">2011</span>
+    </div>
+  </div>
+</div>
+```
 
-- **Carnegie Mellon University (CMU)** | 방문연구원 | 2019년
+## Education
 
-- **한국과학기술연구원 (KIST)** | 위촉연구원 | 2012년
-
-- **서울시립대학교 (UoS)** | 강사 | 2012년
-
-- **울산과학기술대학교 (UNIST)** | 동계 학부연구원 | 2011년
+```{=html}
+<div class="cv-timeline">
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>서울대학교 &middot; 컴퓨터공학부 석사</span>
+      <span class="cv-item-period">2013 – 2015</span>
+    </div>
+    <div class="cv-item-sub">
+      주제: 매니코어 기반의 효율적인 전력 관리 프레임워크<br>
+      학위논문: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierarchical Power Management Framework on Manycore systems using OS Migration Techniques</a><br>
+      지도교수: <a href="https://csap.snu.ac.kr/bernhard">Bernhard Egger</a>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>중앙대학교 &middot; 전자전기공학부 학사</span>
+      <span class="cv-item-period">2006 – 2013</span>
+    </div>
+  </div>
+</div>
+```
 
 ## Contact
 
 - 블로그에 있는 내용, 혹은 진로, 세미나 관련 문의는 언제든지 환영합니다.
-
-- kcsgoodboy [at] gmail.com 으로 연락주시기 바랍니다.
+- `kcsgoodboy [at] gmail.com` 으로 연락주시기 바랍니다.
 
 :::

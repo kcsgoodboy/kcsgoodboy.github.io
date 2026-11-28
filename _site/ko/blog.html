@@ -7,8 +7,8 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.7.6">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="description" content="AI 연구, 구현 및 통찰을 담은 블로그 포스트 모음입니다.">
-<title>포스트 – 생각많은 소심남의 연구노트</title>
+<meta name="description" content="AI 연구, 강화학습 구현 및 실전 엔지니어링 통찰을 담은 블로그 포스트 모음입니다.">
+<title>연구 노트 – 생각많은 소심남의 연구노트</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,11 +24,11 @@ ul.task-list li input[type="checkbox"] {
 </style>
 <script src="site_libs/quarto-nav/quarto-nav.js"></script><script src="site_libs/quarto-nav/headroom.min.js"></script><script src="site_libs/clipboard/clipboard.min.js"></script><script src="site_libs/quarto-search/autocomplete.umd.js"></script><script src="site_libs/quarto-search/fuse.min.js"></script><script src="site_libs/quarto-search/quarto-search.js"></script><meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-listing/list.min.js"></script><script src="site_libs/quarto-listing/quarto-listing.js"></script><script src="site_libs/quarto-html/quarto.js"></script><script src="site_libs/quarto-html/popper.min.js"></script><script src="site_libs/quarto-html/tippy.umd.min.js"></script><script src="site_libs/quarto-html/anchor.min.js"></script><link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-4f730df2cb3a1c52a5a9a8701728907f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-e41c71cb8966507afff345c1e73c027d.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script><link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d19aaff0441ffe538fac26ca03b5f350.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-e89341beafc15df96e2eb459d0c9c10f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-c5853d92d9a2d653d7e99eb962b95d90.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-e2470ee5f06e35366eb5de6618cfc828.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": true,
@@ -64,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-image','listing-date','listing-title','listing-description','listing-categories','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
@@ -89,8 +89,13 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-0JHM3R8BEZ', { 'anonymize_ip': true});
 </script><meta name="google-site-verification" content="j6oa7KXvUv4cnzg-UF5drnmRDZ6ZK888N9aNaF4j56s">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
@@ -117,14 +122,14 @@ window.Quarto = {
   typesetMath
 };
 </script><link rel="stylesheet" href="assets/css/styles.css">
-<meta property="og:title" content="포스트 – 생각많은 소심남의 연구노트">
-<meta property="og:description" content="AI 연구, 구현 및 통찰을 담은 블로그 포스트 모음입니다.">
+<meta property="og:title" content="연구 노트 – 생각많은 소심남의 연구노트">
+<meta property="og:description" content="AI 연구, 강화학습 구현 및 실전 엔지니어링 통찰을 담은 블로그 포스트 모음입니다.">
 <meta property="og:image" content="https://kcsgoodboy.github.io/ko/contents/images/persona.png">
 <meta property="og:site_name" content="생각많은 소심남의 연구노트">
 <meta property="og:image:height" content="1536">
 <meta property="og:image:width" content="1024">
-<meta name="twitter:title" content="포스트 – 생각많은 소심남의 연구노트">
-<meta name="twitter:description" content="AI 연구, 구현 및 통찰을 담은 블로그 포스트 모음입니다.">
+<meta name="twitter:title" content="연구 노트 – 생각많은 소심남의 연구노트">
+<meta name="twitter:description" content="AI 연구, 강화학습 구현 및 실전 엔지니어링 통찰을 담은 블로그 포스트 모음입니다.">
 <meta name="twitter:image" content="https://kcsgoodboy.github.io/ko/contents/images/persona.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image-height" content="1536">
@@ -150,19 +155,23 @@ window.Quarto = {
 </div></li>
 <li class="nav-item">
     <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">홈</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">소개</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
-<span class="menu-text">블로그</span></a>
+    <a class="nav-link" href="./projects.html"> 
+<span class="menu-text">프로젝트</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./publications.html"> 
 <span class="menu-text">출간물</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+<span class="menu-text">블로그</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./activities.html"> 
@@ -208,12 +217,12 @@ window.Quarto = {
 </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">포스트</h1>
+<h1 class="title">연구 노트</h1>
 </div>
 
 <div>
   <div class="description">
-    AI 연구, 구현 및 통찰을 담은 블로그 포스트 모음입니다.
+    AI 연구, 강화학습 구현 및 실전 엔지니어링 통찰을 담은 블로그 포스트 모음입니다.
   </div>
 </div>
 
@@ -235,7 +244,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-03-24-Model_Based_RL/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-03-24-Model_Based_RL/images/Model_Based_RL_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-03-24-Model_Based_RL/images/Model_Based_RL_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -258,8 +267,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-03-24-Model_Based_RL/post.html" class="no-external">
 <div class="listing-date">2026. 3. 24.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">19 분</div> 
 </a></div>
 
 </div>
@@ -269,7 +278,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-03-19-RL_for_LLMs_Preference_Optimization/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-03-19-RL_for_LLMs_Preference_Optimization/images/Preference_Optimization_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-03-19-RL_for_LLMs_Preference_Optimization/images/Preference_Optimization_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -292,8 +301,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-03-19-RL_for_LLMs_Preference_Optimization/post.html" class="no-external">
 <div class="listing-date">2026. 3. 19.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">15 분</div> 
 </a></div>
 
 </div>
@@ -303,7 +312,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-03-10-Reward_Learning/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-03-10-Reward_Learning/images/Reward_Learning_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-03-10-Reward_Learning/images/Reward_Learning_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -326,8 +335,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-03-10-Reward_Learning/post.html" class="no-external">
 <div class="listing-date">2026. 3. 10.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">16 분</div> 
 </a></div>
 
 </div>
@@ -337,7 +346,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-02-23-Offline_RL/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-02-23-Offline_RL/images/Offline_RL_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-02-23-Offline_RL/images/Offline_RL_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -360,8 +369,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-02-23-Offline_RL/post.html" class="no-external">
 <div class="listing-date">2026. 2. 23.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">16 분</div> 
 </a></div>
 
 </div>
@@ -371,7 +380,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-02-20_Non_Parametric_Few_Shot_Learning/images/Non_Parametric_Few_Shot_Learning_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-02-20_Non_Parametric_Few_Shot_Learning/images/Non_Parametric_Few_Shot_Learning_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -394,8 +403,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-02-20_Non_Parametric_Few_Shot_Learning/post.html" class="no-external">
 <div class="listing-date">2026. 2. 20.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">19 분</div> 
 </a></div>
 
 </div>
@@ -405,7 +414,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-02-10_Q_Learning/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-02-10_Q_Learning/images/Q_Learning_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-02-10_Q_Learning/images/Q_Learning_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -428,8 +437,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-02-10_Q_Learning/post.html" class="no-external">
 <div class="listing-date">2026. 2. 10.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">19 분</div> 
 </a></div>
 
 </div>
@@ -439,7 +448,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-02-09_Optimization_Based_Meta_Learning/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-02-09_Optimization_Based_Meta_Learning/images/optimization_based_meta_learning_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-02-09_Optimization_Based_Meta_Learning/images/optimization_based_meta_learning_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -462,8 +471,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-02-09_Optimization_Based_Meta_Learning/post.html" class="no-external">
 <div class="listing-date">2026. 2. 9.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">17 분</div> 
 </a></div>
 
 </div>
@@ -473,7 +482,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-02-03_Off_Policy_Actor_Critic_Methods/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-02-03_Off_Policy_Actor_Critic_Methods/images/Off_Policy_Actor_Critic_Methods_Overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-02-03_Off_Policy_Actor_Critic_Methods/images/Off_Policy_Actor_Critic_Methods_Overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -496,8 +505,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-02-03_Off_Policy_Actor_Critic_Methods/post.html" class="no-external">
 <div class="listing-date">2026. 2. 3.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">17 분</div> 
 </a></div>
 
 </div>
@@ -507,7 +516,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-02-02_Black_Box_Meta_Learning/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-02-02_Black_Box_Meta_Learning/images/black_box_meta_learning_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-02-02_Black_Box_Meta_Learning/images/black_box_meta_learning_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -530,8 +539,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-02-02_Black_Box_Meta_Learning/post.html" class="no-external">
 <div class="listing-date">2026. 2. 2.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">11 분</div> 
 </a></div>
 
 </div>
@@ -541,7 +550,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-01-28_Actor_Critic_Methods/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-01-28_Actor_Critic_Methods/images/Actor_Critic_Methods_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-01-28_Actor_Critic_Methods/images/Actor_Critic_Methods_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -564,8 +573,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-01-28_Actor_Critic_Methods/post.html" class="no-external">
 <div class="listing-date">2026. 1. 28.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">16 분</div> 
 </a></div>
 
 </div>
@@ -575,7 +584,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-01-23_Transfer_learning/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-01-23_Transfer_learning/images/transfer_learning_overview.ko.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-01-23_Transfer_learning/images/transfer_learning_overview.ko.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -598,8 +607,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-01-23_Transfer_learning/post.html" class="no-external">
 <div class="listing-date">2026. 1. 23.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">11 분</div> 
 </a></div>
 
 </div>
@@ -609,7 +618,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2026-01-20_Multi-task_learning/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2026-01-20_Multi-task_learning/images/11p_all_shared_training.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2026-01-20_Multi-task_learning/images/11p_all_shared_training.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -632,8 +641,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2026-01-20_Multi-task_learning/post.html" class="no-external">
 <div class="listing-date">2026. 1. 20.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">11 분</div> 
 </a></div>
 
 </div>
@@ -643,7 +652,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2025-12-29_retrospective_of_2025/images/tsne_visualization.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2025-12-29_retrospective_of_2025/images/tsne_visualization.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -664,18 +673,18 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2025-12-29_retrospective_of_2025/post.html" class="no-external">
 <div class="listing-date">2025. 12. 29.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">6 분</div> 
 </a></div>
 
 </div>
 
-<div class="quarto-post image-right" data-index="13" data-categories="RWRnZUFJJTJDTGVjdHVyZQ==" data-listing-date-sort="1755097200000" data-listing-file-modified-sort="1757602546927" data-listing-date-modified-sort="1795532400000" data-listing-reading-time-sort="6" data-listing-word-count-sort="1174">
+<div class="quarto-post image-right" data-index="13" data-categories="RWRnZUFJJTJDTGVjdHVyZQ==" data-listing-date-sort="1755097200000" data-listing-file-modified-sort="1757602546927" data-listing-date-modified-sort="1795878000000" data-listing-reading-time-sort="6" data-listing-word-count-sort="1174">
 
 <div class="thumbnail">
 <a href="./posts/2025-08-14_Introduction_to_On_Device_AI/post.ko.html" class="no-external">
 
-<img loading="lazy" src="./posts/2025-08-14_Introduction_to_On_Device_AI/images/device_in_the_loop.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2025-08-14_Introduction_to_On_Device_AI/images/device_in_the_loop.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -698,8 +707,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2025-08-14_Introduction_to_On_Device_AI/post.ko.html" class="no-external">
 <div class="listing-date">2025. 8. 14.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">6 분</div> 
 </a></div>
 
 </div>
@@ -709,7 +718,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2025-08-07_Particle_Tachyon_Unboxing/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2025-08-07_Particle_Tachyon_Unboxing/images/particle.jpg" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2025-08-07_Particle_Tachyon_Unboxing/images/particle.jpg" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -734,8 +743,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2025-08-07_Particle_Tachyon_Unboxing/post.html" class="no-external">
 <div class="listing-date">2025. 8. 7.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">3 분</div> 
 </a></div>
 
 </div>
@@ -745,7 +754,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2025-07-31_Vibe_Coding_Success_Fail/images/orin_case.jpeg" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2025-07-31_Vibe_Coding_Success_Fail/images/orin_case.jpeg" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -768,8 +777,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2025-07-31_Vibe_Coding_Success_Fail/post.html" class="no-external">
 <div class="listing-date">2025. 7. 31.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">5 분</div> 
 </a></div>
 
 </div>
@@ -779,7 +788,7 @@ window.Quarto = {
 <div class="thumbnail">
 <a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">
 
-<img loading="lazy" src="./posts/2025-07-28_taylor_expansion/images/taylor_expansion.png" class="thumbnail-image"></a>
+<img loading="lazy" src="./posts/2025-07-28_taylor_expansion/images/taylor_expansion.png" class="thumbnail-image" style="height: 165px;"></a>
 </div>
 
 <div class="body">
@@ -804,8 +813,8 @@ window.Quarto = {
 </div>
 <div class="metadata"><a href="./posts/2025-07-28_taylor_expansion/post.html" class="no-external">
 <div class="listing-date">2025. 7. 28.</div>
-<div class="listing-author">Chanseok Kang</div>
 
+ <div class="listing-reading-time">5 분</div> 
 </a></div>
 
 </div>
@@ -1376,9 +1385,30 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-
-
-
-
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Chanseok Kang · Ascent of Applied Wisdom</p>
+</div>   
+    <div class="nav-footer-center">
+       
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+<li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/goodboychan">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/chanseokk/">
+      <i class="bi bi-linkedin" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+</div>
+  </div>
+</footer>
 </body>
 </html>

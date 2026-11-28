@@ -1,11 +1,17 @@
 website:
   navbar:
-    background: primary
+    background: dark
     left:
       - href: index.qmd
         text: Home
       - href: about.qmd
-      - href: blog.qmd
+        text: About
+      - href: projects.qmd
+        text: Projects
       - href: publications.qmd
+        text: Publications
+      - href: blog.qmd
+        text: Blog
       - href: activities.qmd
+        text: Activities
 lang: en

@@ -1,0 +1,43 @@
+/*-- scss:defaults --*/
+$font-family-sans-serif: "Pretendard Variable", "Pretendard", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !default;
+$font-family-monospace: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !default;
+
+$primary: #1967d2 !default;
+$secondary: #475569 !default;
+$success: #0f766e !default;
+$info: #0284c7 !default;
+$warning: #d97706 !default;
+$danger: #dc2626 !default;
+
+$body-bg: #f8fafc !default;
+$body-color: #0f172a !default;
+$link-color: #1967d2 !default;
+$link-hover-color: #1557b0 !default;
+
+$navbar-bg: #0c192c !default;
+$navbar-fg: #f1f5f9 !default;
+$navbar-hl: #fbbf24 !default;
+
+$border-color: #e2e8f0 !default;
+$border-radius: 0.625rem !default;
+$border-radius-lg: 0.875rem !default;
+$code-bg: #f1f5f9 !default;
+$code-color: #0f172a !default;
+
+/*-- scss:rules --*/
+:root {
+  --site-surface: #ffffff;
+  --site-surface-subtle: #f1f5f9;
+  --site-surface-elevated: #ffffff;
+  --site-border: #e2e8f0;
+  --site-border-strong: #cbd5e1;
+  --site-muted: #526075;
+  --site-accent: #1967d2;
+  --site-accent-soft: rgba(25, 103, 210, 0.09);
+  --site-amber: #b45309;
+  --site-amber-soft: #fef3c7;
+  --site-teal: #0f766e;
+  --site-teal-soft: #ccfbf1;
+  --site-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
+  --site-shadow-md: 0 12px 28px -10px rgba(15, 23, 42, 0.12), 0 4px 10px -4px rgba(15, 23, 42, 0.05);
+}

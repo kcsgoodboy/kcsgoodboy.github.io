@@ -5,18 +5,23 @@ lang: en
 about:
   template: trestles
   image: "contents/images/chanseok.jpg"
-  image-width: "200px;"
+  image-width: "210px"
   links: 
     - icon: github
+      text: GitHub
       href: https://github.com/goodboychan
     - icon: linkedin
+      text: LinkedIn
       href: https://www.linkedin.com/in/chanseokk/
+    - icon: mortarboard-fill
+      text: Scholar
+      href: https://scholar.google.com/citations?user=tyjigLkAAAAJ&hl=en
     - icon: file-earmark-pdf-fill
+      text: CV
       href: "contents/files/Chanseok_Kang_CV_20261125.pdf"
 execute: 
   echo: false
 comments: false
-
 ---
 
 :::{.column-body-outset}
@@ -35,37 +40,77 @@ I usually work with **reinforcement learning (RL)** as a problem solver. To make
 
 I am committed to continuous personal growth through external engagements, including:
 
-- Some conference papers & patents
+- Conference papers & patents (see [Publications](publications.html))
 - Translator of "Grokking Deep Reinforcement Learning" (Hanbit Media) and technical reviewer for "Machine Learning with TensorFlow" (Hanbit Media).
 - Technical reviewer for multiple specialized publications (Hanbit Media, Jpub, Gilbut, and others).
 
-For more details, please visit my [blog](blog.html).
-
-## Education
-
-- **Seoul National University** | M.S in Computer Science | 2013 - 2015
-  - Topic: Manycore-based efficient Power Management Framework
-  - Thesis: [Hierachical Power Management Framework on Manycore systems using OS Migration Techniques](https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf)
-  - Advisor: [Bernhard Egger](https://csap.snu.ac.kr/bernhard)
-
-- **Chung-Ang University** | B.S in Electrical and Electronics Engineering | 2006 - 2013
+For more details, please explore my [projects](projects.html) and [blog](blog.html).
 
 ## Experience
 
-- **LG Electronics** | Professional | 2014 - present
+```{=html}
+<div class="cv-timeline">
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>LG Electronics &middot; Professional (Research Engineer)</span>
+      <span class="cv-item-period">2014 – present</span>
+    </div>
+    <div class="cv-item-sub">CTO Division &middot; Applied Reinforcement Learning &amp; On-Device AI Control</div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>Carnegie Mellon University (CMU) &middot; Visiting Researcher</span>
+      <span class="cv-item-period">2019</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>Korea Institute of Science and Technology (KIST) &middot; Contract Researcher</span>
+      <span class="cv-item-period">2012</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>University of Seoul (UoS) &middot; Lecturer</span>
+      <span class="cv-item-period">2012</span>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>Ulsan National Institute of Science and Technology (UNIST) &middot; Undergraduate Researcher</span>
+      <span class="cv-item-period">2011</span>
+    </div>
+  </div>
+</div>
+```
 
-- **Carnegie Mellon University (CMU)** | Visiting Researcher | 2019
+## Education
 
-- **Korea Institute of Science and Technology (KIST)** | Contract Researcher | 2012
-
-- **University of Seoul (UoS)** | Lecturer | 2012
-
-- **Ulsan National Institute of Science and Technology (UNIST)** | Undergraduate Researcher | 2011
+```{=html}
+<div class="cv-timeline">
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>Seoul National University &middot; M.S. in Computer Science</span>
+      <span class="cv-item-period">2013 – 2015</span>
+    </div>
+    <div class="cv-item-sub">
+      Topic: Manycore-based Efficient Power Management Framework<br>
+      Thesis: <a href="https://s-space.snu.ac.kr/bitstream/10371/123113/1/000000024733.pdf">Hierarchical Power Management Framework on Manycore systems using OS Migration Techniques</a><br>
+      Advisor: <a href="https://csap.snu.ac.kr/bernhard">Bernhard Egger</a>
+    </div>
+  </div>
+  <div class="cv-item">
+    <div class="cv-item-header">
+      <span>Chung-Ang University &middot; B.S. in Electrical and Electronics Engineering</span>
+      <span class="cv-item-period">2006 – 2013</span>
+    </div>
+  </div>
+</div>
+```
 
 ## Contact
 
 - Inquiries about my blog content, career guidance, or seminar invitations are always welcome.
-
-- Please reach me at kcsgoodboy [at] gmail.com.
+- Please reach me at `kcsgoodboy [at] gmail.com`.
 
 :::
