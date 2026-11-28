@@ -17,6 +17,12 @@ library(distilltools)
 ## 2026
 
 ::: {.activity-card .activity-highlight}
+**(2026. 11)** I participated in QNX Global Hackathon 2026, and built **When the AI Crashes, the Robot Doesn't**, a QNX Application for controlling Robot head with Raspberry PI 5 and Adafruit Crickit HAT.
+`r icon_link(icon = "fas fa-link", text = "Project", url = "projects/qnx-robot-head/", target = "_self")`
+`r icon_link(icon = "fas fa-link", text = "Devpost", url = "https://devpost.com/software/when-the-ai-crashes-the-robot-doesn-t")`
+:::
+
+::: {.activity-card .activity-highlight}
 **(2026. 11)** I participated in Meta VR Start Developer Competition 2026, and built **GhostLab**, a VR application for reviewing Robot Motion with Your Hands.
 
 `r icon_link(icon = "fas fa-link", text = "Project", url = "projects/ghostlab/", target = "_self")`
